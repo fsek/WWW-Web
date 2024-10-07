@@ -2,6 +2,7 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-
+	"forwardPorts": [8000],
+	"runArgs": ["--network=host"],
 	"postCreateCommand": "npm install"
 }

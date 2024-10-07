@@ -2,7 +2,7 @@ import { defineConfig} from '@hey-api/openapi-ts';
 
 export default defineConfig({
   client: '@hey-api/client-fetch',
-  input: 'http://localhost:8000/openapi.json',
+  input: 'http://host.docker.internal:8000/openapi.json',
   output: {path: 'src/api', 
     lint: "biome",
     format: "biome",
@@ -20,7 +20,7 @@ export default defineConfig({
     }
   },
   types: {
-    dates: "types+transform",
+    dates: "types",
     enums: "typescript",
 
   }
