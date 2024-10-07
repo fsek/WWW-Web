@@ -1,0 +1,29 @@
+.sidebar {
+	display: block;
+	text-align: left;
+	background-color: lightgray;
+	max-width: 10%;
+	height: 100vh;
+	flex-grow: 1;
+	overflow-y: auto;
+}
+.sidebar a {
+	text-align: left;
+	display: inline-block;
+	box-sizing: border-box;
+	background: none; /* Remove background color */
+	padding: 10px;
+	height: auto;
+	width: 100%;
+}
+.content {
+	text-align: left;
+	padding: 10px;
+}
+#root {
+	all: unset;
+	display: flex;
+}
+body {
+	all: unset;
+}
