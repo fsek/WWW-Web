@@ -14,7 +14,6 @@
     "@hey-api/client-fetch": "^0.4.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
-    "openapi-ts": "^0.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
@@ -35,6 +34,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "lightningcss": "^1.27.0",
+    "openapi-ts": "^0.3.4",
     "postcss": "^8.4.47",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"

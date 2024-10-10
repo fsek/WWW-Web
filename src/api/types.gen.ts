@@ -121,7 +121,35 @@ export type EventRead = {
 };
 
 export type EventSignupCreate = {
+    user_id?: (number | null);
+    priority?: (string | null);
+    group_name?: (string | null);
+};
+
+export type EventSignupDelete = {
+    user_id?: (number | null);
+};
+
+export type EventSignupRead = {
+    id: number;
+    email: string;
+    is_active?: boolean;
+    is_superuser?: boolean;
+    is_verified?: boolean;
+    first_name: string;
+    last_name: string;
+    telephone_number: string;
+    start_year: number;
+    account_created: Date;
+    program: (string | null);
     priority: (string | null);
+    group_name: (string | null);
+};
+
+export type EventSignupUpdate = {
+    user_id?: (number | null);
+    priority?: (string | null);
+    group_name?: (string | null);
 };
 
 export type EventUpdate = {
@@ -145,6 +173,7 @@ export type MeUpdate = {
     last_name?: (string | null);
     start_year?: (number | null);
     program?: (string | null);
+    notifications?: (boolean | null);
 };
 
 export type NewsCreate = {
@@ -291,20 +320,7 @@ export type UserRead = {
     telephone_number: string;
     start_year: number;
     account_created: Date;
-};
-
-export type UserSignupRead = {
-    id: number;
-    email: string;
-    is_active?: boolean;
-    is_superuser?: boolean;
-    is_verified?: boolean;
-    first_name: string;
-    last_name: string;
-    telephone_number: string;
-    start_year: number;
-    account_created: Date;
-    program: (string | null);
+    want_notifications: boolean;
 };
 
 export type ValidationError = {
@@ -523,13 +539,35 @@ export type EventSignupSignupRouteResponse = (EventRead);
 
 export type EventSignupSignupRouteError = (HTTPValidationError);
 
+export type EventSignupSignoffRouteData = {
+    body: EventSignupDelete;
+    path: {
+        event_id: number;
+    };
+};
+
+export type EventSignupSignoffRouteResponse = (EventRead);
+
+export type EventSignupSignoffRouteError = (HTTPValidationError);
+
+export type EventSignupUpdateSignupData = {
+    body: EventSignupUpdate;
+    path: {
+        event_id: number;
+    };
+};
+
+export type EventSignupUpdateSignupResponse = (EventRead);
+
+export type EventSignupUpdateSignupError = (HTTPValidationError);
+
 export type EventSignupGetAllSignupsData = {
     path: {
         event_id: number;
     };
 };
 
-export type EventSignupGetAllSignupsResponse = (Array<UserSignupRead>);
+export type EventSignupGetAllSignupsResponse = (Array<EventSignupRead>);
 
 export type EventSignupGetAllSignupsError = (HTTPValidationError);
 
@@ -894,249 +932,3 @@ export type MemberOnlymemberOnlyError = unknown;
 export type ManageEventOnlypermissionRouteResponse = (unknown);
 
 export type ManageEventOnlypermissionRouteError = unknown;
-
-export type UsersGetAllUsersResponseTransformer = (data: any) => Promise<UsersGetAllUsersResponse>;
-
-export type UserReadModelResponseTransformer = (data: any) => UserRead;
-
-export const UserReadModelResponseTransformer: UserReadModelResponseTransformer = data => {
-    if (data?.account_created) {
-        data.account_created = new Date(data.account_created);
-    }
-    return data;
-};
-
-export const UsersGetAllUsersResponseTransformer: UsersGetAllUsersResponseTransformer = async (data) => {
-    if (Array.isArray(data)) {
-        data.forEach(UserReadModelResponseTransformer);
-    }
-    return data;
-};
-
-export type UsersGetMeResponseTransformer = (data: any) => Promise<UsersGetMeResponse>;
-
-export const UsersGetMeResponseTransformer: UsersGetMeResponseTransformer = async (data) => {
-    UserReadModelResponseTransformer(data);
-    return data;
-};
-
-export type UsersUpdateMeResponseTransformer = (data: any) => Promise<UsersUpdateMeResponse>;
-
-export const UsersUpdateMeResponseTransformer: UsersUpdateMeResponseTransformer = async (data) => {
-    UserReadModelResponseTransformer(data);
-    return data;
-};
-
-export type AuthRegisterRegisterResponseTransformer = (data: any) => Promise<AuthRegisterRegisterResponse>;
-
-export const AuthRegisterRegisterResponseTransformer: AuthRegisterRegisterResponseTransformer = async (data) => {
-    UserReadModelResponseTransformer(data);
-    return data;
-};
-
-export type AuthVerifyVerifyResponseTransformer = (data: any) => Promise<AuthVerifyVerifyResponse>;
-
-export const AuthVerifyVerifyResponseTransformer: AuthVerifyVerifyResponseTransformer = async (data) => {
-    UserReadModelResponseTransformer(data);
-    return data;
-};
-
-export type EventsGetAllEventsResponseTransformer = (data: any) => Promise<EventsGetAllEventsResponse>;
-
-export type EventReadModelResponseTransformer = (data: any) => EventRead;
-
-export const EventReadModelResponseTransformer: EventReadModelResponseTransformer = data => {
-    if (data?.starts_at) {
-        data.starts_at = new Date(data.starts_at);
-    }
-    if (data?.ends_at) {
-        data.ends_at = new Date(data.ends_at);
-    }
-    if (data?.signup_start) {
-        data.signup_start = new Date(data.signup_start);
-    }
-    if (data?.signup_end) {
-        data.signup_end = new Date(data.signup_end);
-    }
-    return data;
-};
-
-export const EventsGetAllEventsResponseTransformer: EventsGetAllEventsResponseTransformer = async (data) => {
-    if (Array.isArray(data)) {
-        data.forEach(EventReadModelResponseTransformer);
-    }
-    return data;
-};
-
-export type EventsCreateEventResponseTransformer = (data: any) => Promise<EventsCreateEventResponse>;
-
-export const EventsCreateEventResponseTransformer: EventsCreateEventResponseTransformer = async (data) => {
-    EventReadModelResponseTransformer(data);
-    return data;
-};
-
-export type EventsUpdateResponseTransformer = (data: any) => Promise<EventsUpdateResponse>;
-
-export const EventsUpdateResponseTransformer: EventsUpdateResponseTransformer = async (data) => {
-    EventReadModelResponseTransformer(data);
-    return data;
-};
-
-export type EventsGetRandomSignupResponseTransformer = (data: any) => Promise<EventsGetRandomSignupResponse>;
-
-export const EventsGetRandomSignupResponseTransformer: EventsGetRandomSignupResponseTransformer = async (data) => {
-    if (Array.isArray(data)) {
-        data.forEach(UserReadModelResponseTransformer);
-    }
-    return data;
-};
-
-export type EventsGetAllSignupsResponseTransformer = (data: any) => Promise<EventsGetAllSignupsResponse>;
-
-export const EventsGetAllSignupsResponseTransformer: EventsGetAllSignupsResponseTransformer = async (data) => {
-    if (Array.isArray(data)) {
-        data.forEach(UserReadModelResponseTransformer);
-    }
-    return data;
-};
-
-export type EventSignupSignupRouteResponseTransformer = (data: any) => Promise<EventSignupSignupRouteResponse>;
-
-export const EventSignupSignupRouteResponseTransformer: EventSignupSignupRouteResponseTransformer = async (data) => {
-    EventReadModelResponseTransformer(data);
-    return data;
-};
-
-export type EventSignupGetAllSignupsResponseTransformer = (data: any) => Promise<EventSignupGetAllSignupsResponse>;
-
-export type UserSignupReadModelResponseTransformer = (data: any) => UserSignupRead;
-
-export const UserSignupReadModelResponseTransformer: UserSignupReadModelResponseTransformer = data => {
-    if (data?.account_created) {
-        data.account_created = new Date(data.account_created);
-    }
-    return data;
-};
-
-export const EventSignupGetAllSignupsResponseTransformer: EventSignupGetAllSignupsResponseTransformer = async (data) => {
-    if (Array.isArray(data)) {
-        data.forEach(UserSignupReadModelResponseTransformer);
-    }
-    return data;
-};
-
-export type NewsGetAllNewsResponseTransformer = (data: any) => Promise<NewsGetAllNewsResponse>;
-
-export type NewsReadModelResponseTransformer = (data: any) => NewsRead;
-
-export const NewsReadModelResponseTransformer: NewsReadModelResponseTransformer = data => {
-    if (data?.created_at) {
-        data.created_at = new Date(data.created_at);
-    }
-    return data;
-};
-
-export const NewsGetAllNewsResponseTransformer: NewsGetAllNewsResponseTransformer = async (data) => {
-    if (Array.isArray(data)) {
-        data.forEach(NewsReadModelResponseTransformer);
-    }
-    return data;
-};
-
-export type NewsGetAmountOfNewsResponseTransformer = (data: any) => Promise<NewsGetAmountOfNewsResponse>;
-
-export const NewsGetAmountOfNewsResponseTransformer: NewsGetAmountOfNewsResponseTransformer = async (data) => {
-    if (Array.isArray(data)) {
-        data.forEach(NewsReadModelResponseTransformer);
-    }
-    return data;
-};
-
-export type NewsGetNewsResponseTransformer = (data: any) => Promise<NewsGetNewsResponse>;
-
-export const NewsGetNewsResponseTransformer: NewsGetNewsResponseTransformer = async (data) => {
-    NewsReadModelResponseTransformer(data);
-    return data;
-};
-
-export type NewsUpdateNewsResponseTransformer = (data: any) => Promise<NewsUpdateNewsResponse>;
-
-export const NewsUpdateNewsResponseTransformer: NewsUpdateNewsResponseTransformer = async (data) => {
-    NewsReadModelResponseTransformer(data);
-    return data;
-};
-
-export type NewsCreateNewsResponseTransformer = (data: any) => Promise<NewsCreateNewsResponse>;
-
-export const NewsCreateNewsResponseTransformer: NewsCreateNewsResponseTransformer = async (data) => {
-    NewsReadModelResponseTransformer(data);
-    return data;
-};
-
-export type NewsBumpNewsResponseTransformer = (data: any) => Promise<NewsBumpNewsResponse>;
-
-export const NewsBumpNewsResponseTransformer: NewsBumpNewsResponseTransformer = async (data) => {
-    NewsReadModelResponseTransformer(data);
-    return data;
-};
-
-export type CarsGetAllBookingResponseTransformer = (data: any) => Promise<CarsGetAllBookingResponse>;
-
-export type CarReadModelResponseTransformer = (data: any) => CarRead;
-
-export const CarReadModelResponseTransformer: CarReadModelResponseTransformer = data => {
-    if (data?.start_time) {
-        data.start_time = new Date(data.start_time);
-    }
-    if (data?.end_time) {
-        data.end_time = new Date(data.end_time);
-    }
-    return data;
-};
-
-export const CarsGetAllBookingResponseTransformer: CarsGetAllBookingResponseTransformer = async (data) => {
-    if (Array.isArray(data)) {
-        data.forEach(CarReadModelResponseTransformer);
-    }
-    return data;
-};
-
-export type CarsCreateBookingResponseTransformer = (data: any) => Promise<CarsCreateBookingResponse>;
-
-export type CarCreateModelResponseTransformer = (data: any) => CarCreate;
-
-export const CarCreateModelResponseTransformer: CarCreateModelResponseTransformer = data => {
-    if (data?.start_time) {
-        data.start_time = new Date(data.start_time);
-    }
-    if (data?.end_time) {
-        data.end_time = new Date(data.end_time);
-    }
-    return data;
-};
-
-export const CarsCreateBookingResponseTransformer: CarsCreateBookingResponseTransformer = async (data) => {
-    CarCreateModelResponseTransformer(data);
-    return data;
-};
-
-export type CarsGetBookingResponseTransformer = (data: any) => Promise<CarsGetBookingResponse>;
-
-export const CarsGetBookingResponseTransformer: CarsGetBookingResponseTransformer = async (data) => {
-    CarReadModelResponseTransformer(data);
-    return data;
-};
-
-export type CarsRemoveBookingResponseTransformer = (data: any) => Promise<CarsRemoveBookingResponse>;
-
-export const CarsRemoveBookingResponseTransformer: CarsRemoveBookingResponseTransformer = async (data) => {
-    CarReadModelResponseTransformer(data);
-    return data;
-};
-
-export type CarsUpdateBookingResponseTransformer = (data: any) => Promise<CarsUpdateBookingResponse>;
-
-export const CarsUpdateBookingResponseTransformer: CarsUpdateBookingResponseTransformer = async (data) => {
-    CarReadModelResponseTransformer(data);
-    return data;
-};

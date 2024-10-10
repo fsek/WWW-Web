@@ -565,6 +565,17 @@ export const EventReadSchema = {
 
 export const EventSignupCreateSchema = {
     properties: {
+        user_id: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'User Id'
+        },
         priority: {
             anyOf: [
                 {
@@ -575,11 +586,167 @@ export const EventSignupCreateSchema = {
                 }
             ],
             title: 'Priority'
+        },
+        group_name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Group Name'
         }
     },
     type: 'object',
-    required: ['priority'],
     title: 'EventSignupCreate'
+} as const;
+
+export const EventSignupDeleteSchema = {
+    properties: {
+        user_id: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'User Id'
+        }
+    },
+    type: 'object',
+    title: 'EventSignupDelete'
+} as const;
+
+export const EventSignupReadSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        email: {
+            type: 'string',
+            title: 'Email'
+        },
+        is_active: {
+            type: 'boolean',
+            title: 'Is Active',
+            default: true
+        },
+        is_superuser: {
+            type: 'boolean',
+            title: 'Is Superuser',
+            default: false
+        },
+        is_verified: {
+            type: 'boolean',
+            title: 'Is Verified',
+            default: false
+        },
+        first_name: {
+            type: 'string',
+            title: 'First Name'
+        },
+        last_name: {
+            type: 'string',
+            title: 'Last Name'
+        },
+        telephone_number: {
+            type: 'string',
+            maxLength: 64,
+            minLength: 7,
+            format: 'phone',
+            title: 'Telephone Number'
+        },
+        start_year: {
+            type: 'integer',
+            title: 'Start Year'
+        },
+        account_created: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Account Created'
+        },
+        program: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Program'
+        },
+        priority: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Priority'
+        },
+        group_name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Group Name'
+        }
+    },
+    type: 'object',
+    required: ['id', 'email', 'first_name', 'last_name', 'telephone_number', 'start_year', 'account_created', 'program', 'priority', 'group_name'],
+    title: 'EventSignupRead'
+} as const;
+
+export const EventSignupUpdateSchema = {
+    properties: {
+        user_id: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'User Id'
+        },
+        priority: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Priority'
+        },
+        group_name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Group Name'
+        }
+    },
+    type: 'object',
+    title: 'EventSignupUpdate'
 } as const;
 
 export const EventUpdateSchema = {
@@ -719,6 +886,17 @@ export const MeUpdateSchema = {
                 }
             ],
             title: 'Program'
+        },
+        notifications: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Notifications'
         }
     },
     type: 'object',
@@ -1354,77 +1532,15 @@ export const UserReadSchema = {
             type: 'string',
             format: 'date-time',
             title: 'Account Created'
+        },
+        want_notifications: {
+            type: 'boolean',
+            title: 'Want Notifications'
         }
     },
     type: 'object',
-    required: ['id', 'email', 'first_name', 'last_name', 'posts', 'events', 'telephone_number', 'start_year', 'account_created'],
+    required: ['id', 'email', 'first_name', 'last_name', 'posts', 'events', 'telephone_number', 'start_year', 'account_created', 'want_notifications'],
     title: 'UserRead'
-} as const;
-
-export const UserSignupReadSchema = {
-    properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        email: {
-            type: 'string',
-            title: 'Email'
-        },
-        is_active: {
-            type: 'boolean',
-            title: 'Is Active',
-            default: true
-        },
-        is_superuser: {
-            type: 'boolean',
-            title: 'Is Superuser',
-            default: false
-        },
-        is_verified: {
-            type: 'boolean',
-            title: 'Is Verified',
-            default: false
-        },
-        first_name: {
-            type: 'string',
-            title: 'First Name'
-        },
-        last_name: {
-            type: 'string',
-            title: 'Last Name'
-        },
-        telephone_number: {
-            type: 'string',
-            maxLength: 64,
-            minLength: 7,
-            format: 'phone',
-            title: 'Telephone Number'
-        },
-        start_year: {
-            type: 'integer',
-            title: 'Start Year'
-        },
-        account_created: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Account Created'
-        },
-        program: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Program'
-        }
-    },
-    type: 'object',
-    required: ['id', 'email', 'first_name', 'last_name', 'telephone_number', 'start_year', 'account_created', 'program'],
-    title: 'UserSignupRead'
 } as const;
 
 export const ValidationErrorSchema = {
