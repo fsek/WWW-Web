@@ -4,8 +4,10 @@ import App from "./App";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import AdminPage from "./routes/admin/Admin";
-import { AuthService } from "./api";
+import { AuthService, client } from "./api";
 import { OpenAPI } from "./api/core/OpenAPI";
+
+client.setConfig({baseUrl: "http://127.0.0.1:8000"})
 
 const token = await AuthService.authJwtLogin({
 	body: { username: "boss@fsektionen.se", password: "dabdab" },
