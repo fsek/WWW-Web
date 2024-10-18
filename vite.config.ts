@@ -15,4 +15,15 @@ export default defineConfig({
     cssMinify: "lightningcss",
     target: "es2022",
   },
+  server: {
+    port: 5175, 
+    strictPort: true, 
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        ws: true,
+      },
+    },
+  },
 });
