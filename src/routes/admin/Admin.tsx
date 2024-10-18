@@ -56,7 +56,6 @@ export default function AdminPage() {
                 </div>
             )}
             <div className="content">
-                <p>Välkommen till Adminhemsidan.</p>
                 <Routes>
                     <Route index={true} element={<Landing />} />
                     <Route path="news" element={<News />} />
