@@ -7,5 +7,3 @@ RUN apk update && apk upgrade
 RUN apk add git openssh curl iputils
 
 ENV ENV = development
-
-EXPOSE 8001
