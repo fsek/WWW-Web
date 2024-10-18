@@ -36,6 +36,8 @@
     "lightningcss": "^1.27.0",
     "openapi-ts": "^0.3.4",
     "postcss": "^8.4.47",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   }

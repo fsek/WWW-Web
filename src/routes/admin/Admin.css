@@ -1,8 +1,8 @@
-.sidebar {
+/* .sidebar {
 	display: block;
 	text-align: left;
-	background-color: lightgray;
-	max-width: 10%;
+	background-color: orange;
+	max-width: 15%;
 	height: 100vh;
 	flex-grow: 1;
 	overflow-y: auto;
@@ -12,10 +12,10 @@
 	display: inline-block;
 	box-sizing: border-box;
 	background: none; /* Remove background color */
-	padding: 10px;
+	/* padding: 10px;
 	height: auto;
-	width: 100%;
-}
+	width: 100%; */
+/* }
 .content {
 	text-align: left;
 	padding: 10px;
@@ -26,4 +26,70 @@
 }
 body {
 	all: unset;
+} */ 
+
+.sidebar {
+    display: block;
+    text-align: left;
+    background-color: orange;
+    max-width: 15%;
+    height: 100vh;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.sidebar a, .sidebar button {
+    text-align: left;
+    display: inline-block;
+    box-sizing: border-box;
+    background: none; /* Remove background color */
+    padding: 10px;
+    height: auto;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+}
+
+/* Styles for the second sidebar */
+.second-sidebar {
+    display: block;
+    text-align: left;
+    background-color: lightgray;
+    max-width: 15%;
+    height: 100vh;
+    position: absolute; /* Position it absolutely next to the main sidebar */
+    left: 15%; /* Position it right next to the existing sidebar */
+    top: 0;
+    overflow-y: auto;
+    z-index: 1000; /* Ensure it is above other content */
+}
+
+.second-sidebar a {
+    text-align: left;
+    display: inline-block;
+    box-sizing: border-box;
+    background: none; /* Remove background color */
+    padding: 10px;
+    height: auto;
+    width: 100%;
+}
+
+.content {
+    text-align: left;
+    padding: 10px;
+    margin-left: 15%; /* Adjust to give space for the sidebar */
+    transition: margin-left 0.3s;
+}
+
+/* Adjust the margin when the second sidebar is open */
+body.second-sidebar-open .content {
+    margin-left: 30%; /* Double the width since the second sidebar is also open */
+}
+
+#root {
+    all: unset;
+    display: flex;
+}
+body {
+    all: unset;
 }

@@ -2,6 +2,25 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-	"runArgs": ["--network=host"],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"ms-vscode.vscode-typescript-next",
+				"bradlc.vscode-tailwindcss" // Tailwind CSS IntelliSense extension
+			],
+			"settings": {
+				"editor.tabSize": 2,
+				"editor.formatOnSave": true,
+				"css.validate": false,
+				"scss.validate": false,
+				"postcss.validate": false
+			}
+		}
+	},
+	"runArgs": [
+		"--network=host"
+	],
 	"postCreateCommand": "npm install"
 }
