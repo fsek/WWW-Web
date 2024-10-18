@@ -23,7 +23,7 @@ This repo uses VSCode's Dev Containers extension to standardize the development 
 
 4. After configuration has finished in the open terminal, it should say `Done. Press any key to close the terminal`. 
 
-5. Open a new Bash terminal (`Ctrl + Shift + Ö`) and run `npm run dev`.
+5. Open a new Bash terminal (`Ctrl + Shift + Ö`) and run: `npm run generate-api` and then `npm run dev` (backend application need to be active for both of these to work as wanted).
 
 6. Go to http://127.0.0.1:5173/ for the website where you can see the project🎉
 

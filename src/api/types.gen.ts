@@ -66,6 +66,24 @@ export type Body_img_upload_image = {
     file: (Blob | File);
 };
 
+export type CafeShiftCreate = {
+    starts_at: Date;
+    ends_at: Date;
+};
+
+export type CafeShiftRead = {
+    id: number;
+    user_id: (number | null);
+    starts_at: Date;
+    ends_at: Date;
+};
+
+export type CafeShiftUpdate = {
+    starts_at?: (Date | null);
+    ends_at?: (Date | null);
+    user_id?: (number | null);
+};
+
 export type CarCreate = {
     description?: (string | null);
     start_time: Date;
@@ -104,6 +122,15 @@ export type EventCreate = {
     description_en: string;
     max_event_users: number;
     priorities: Array<('photographer' | 'ordförande' | 'dinmamma')>;
+    all_day: boolean;
+    signup_not_opened_yet: boolean;
+    recurring: boolean;
+    drink: boolean;
+    food: boolean;
+    cash: boolean;
+    closed: boolean;
+    can_signup: boolean;
+    drink_package: boolean;
 };
 
 export type EventRead = {
@@ -118,6 +145,15 @@ export type EventRead = {
     description_en: string;
     max_event_users: number;
     priorities: Array<Priority_DB>;
+    all_day: boolean;
+    signup_not_opened_yet: boolean;
+    recurring: boolean;
+    drink: boolean;
+    food: boolean;
+    cash: boolean;
+    closed: boolean;
+    can_signup: boolean;
+    drink_package: boolean;
 };
 
 export type EventSignupCreate = {
@@ -158,6 +194,15 @@ export type EventUpdate = {
     description_sv?: (string | null);
     description_en?: (string | null);
     max_event_users?: (number | null);
+    all_day?: (boolean | null);
+    signup_not_opened_yet?: (boolean | null);
+    recurring?: (boolean | null);
+    drink?: (boolean | null);
+    food?: (boolean | null);
+    cash?: (boolean | null);
+    closed?: (boolean | null);
+    can_signup?: (boolean | null);
+    drink_package?: (boolean | null);
 };
 
 export type HTTPValidationError = {
@@ -209,7 +254,7 @@ export type NewsUpdate = {
 
 export type PermissionCreate = {
     action: 'view' | 'manage';
-    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car';
+    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe';
 };
 
 export enum action {
@@ -226,13 +271,14 @@ export enum target {
     SONG = 'Song',
     ADS = 'Ads',
     GALLERY = 'Gallery',
-    CAR = 'Car'
+    CAR = 'Car',
+    CAFE = 'Cafe'
 }
 
 export type PermissionRead = {
     id: number;
     action: 'view' | 'manage';
-    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car';
+    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe';
 };
 
 export type PostCreate = {
@@ -633,6 +679,80 @@ export type NewsBumpNewsData = {
 export type NewsBumpNewsResponse = (NewsRead);
 
 export type NewsBumpNewsError = (HTTPValidationError);
+
+export type CafeViewAllShiftsResponse = (Array<CafeShiftRead>);
+
+export type CafeViewAllShiftsError = unknown;
+
+export type CafeViewShiftData = {
+    path: {
+        shift_id: number;
+    };
+};
+
+export type CafeViewShiftResponse = (CafeShiftRead);
+
+export type CafeViewShiftError = (HTTPValidationError);
+
+export type CafeDeleteShiftData = {
+    path: {
+        shift_id: number;
+    };
+};
+
+export type CafeDeleteShiftResponse = (void);
+
+export type CafeDeleteShiftError = (HTTPValidationError);
+
+export type CafeViewShiftsBetweenDatesData = {
+    query: {
+        end_date: Date;
+        start_date: Date;
+    };
+};
+
+export type CafeViewShiftsBetweenDatesResponse = (Array<CafeShiftRead>);
+
+export type CafeViewShiftsBetweenDatesError = (HTTPValidationError);
+
+export type CafeCreateShiftData = {
+    body: CafeShiftCreate;
+};
+
+export type CafeCreateShiftResponse = (CafeShiftCreate);
+
+export type CafeCreateShiftError = (HTTPValidationError);
+
+export type CafeUpdateShiftData = {
+    body: CafeShiftUpdate;
+    path: {
+        shift_id: number;
+    };
+};
+
+export type CafeUpdateShiftResponse = (CafeShiftRead);
+
+export type CafeUpdateShiftError = (HTTPValidationError);
+
+export type CafeSignupToShiftData = {
+    path: {
+        shift_id: number;
+    };
+};
+
+export type CafeSignupToShiftResponse = (CafeShiftRead);
+
+export type CafeSignupToShiftError = (HTTPValidationError);
+
+export type CafeSignoffFromShiftData = {
+    path: {
+        shift_id: number;
+    };
+};
+
+export type CafeSignoffFromShiftResponse = (CafeShiftRead);
+
+export type CafeSignoffFromShiftError = (HTTPValidationError);
 
 export type SongsGetAllSongsResponse = (Array<SongRead>);
 

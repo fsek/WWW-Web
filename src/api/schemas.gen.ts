@@ -315,6 +315,99 @@ export const Body_img_upload_imageSchema = {
     title: 'Body_img-upload_image'
 } as const;
 
+export const CafeShiftCreateSchema = {
+    properties: {
+        starts_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Starts At'
+        },
+        ends_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Ends At'
+        }
+    },
+    type: 'object',
+    required: ['starts_at', 'ends_at'],
+    title: 'CafeShiftCreate'
+} as const;
+
+export const CafeShiftReadSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        user_id: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'User Id'
+        },
+        starts_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Starts At'
+        },
+        ends_at: {
+            type: 'string',
+            format: 'date-time',
+            title: 'Ends At'
+        }
+    },
+    type: 'object',
+    required: ['id', 'user_id', 'starts_at', 'ends_at'],
+    title: 'CafeShiftRead'
+} as const;
+
+export const CafeShiftUpdateSchema = {
+    properties: {
+        starts_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Starts At'
+        },
+        ends_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Ends At'
+        },
+        user_id: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'User Id'
+        }
+    },
+    type: 'object',
+    title: 'CafeShiftUpdate'
+} as const;
+
 export const CarCreateSchema = {
     properties: {
         description: {
@@ -497,10 +590,46 @@ export const EventCreateSchema = {
             },
             type: 'array',
             title: 'Priorities'
+        },
+        all_day: {
+            type: 'boolean',
+            title: 'All Day'
+        },
+        signup_not_opened_yet: {
+            type: 'boolean',
+            title: 'Signup Not Opened Yet'
+        },
+        recurring: {
+            type: 'boolean',
+            title: 'Recurring'
+        },
+        drink: {
+            type: 'boolean',
+            title: 'Drink'
+        },
+        food: {
+            type: 'boolean',
+            title: 'Food'
+        },
+        cash: {
+            type: 'boolean',
+            title: 'Cash'
+        },
+        closed: {
+            type: 'boolean',
+            title: 'Closed'
+        },
+        can_signup: {
+            type: 'boolean',
+            title: 'Can Signup'
+        },
+        drink_package: {
+            type: 'boolean',
+            title: 'Drink Package'
         }
     },
     type: 'object',
-    required: ['council_id', 'starts_at', 'ends_at', 'signup_start', 'signup_end', 'title_sv', 'title_en', 'description_sv', 'description_en', 'max_event_users', 'priorities'],
+    required: ['council_id', 'starts_at', 'ends_at', 'signup_start', 'signup_end', 'title_sv', 'title_en', 'description_sv', 'description_en', 'max_event_users', 'priorities', 'all_day', 'signup_not_opened_yet', 'recurring', 'drink', 'food', 'cash', 'closed', 'can_signup', 'drink_package'],
     title: 'EventCreate'
 } as const;
 
@@ -556,10 +685,46 @@ export const EventReadSchema = {
             },
             type: 'array',
             title: 'Priorities'
+        },
+        all_day: {
+            type: 'boolean',
+            title: 'All Day'
+        },
+        signup_not_opened_yet: {
+            type: 'boolean',
+            title: 'Signup Not Opened Yet'
+        },
+        recurring: {
+            type: 'boolean',
+            title: 'Recurring'
+        },
+        drink: {
+            type: 'boolean',
+            title: 'Drink'
+        },
+        food: {
+            type: 'boolean',
+            title: 'Food'
+        },
+        cash: {
+            type: 'boolean',
+            title: 'Cash'
+        },
+        closed: {
+            type: 'boolean',
+            title: 'Closed'
+        },
+        can_signup: {
+            type: 'boolean',
+            title: 'Can Signup'
+        },
+        drink_package: {
+            type: 'boolean',
+            title: 'Drink Package'
         }
     },
     type: 'object',
-    required: ['id', 'starts_at', 'ends_at', 'signup_start', 'signup_end', 'title_sv', 'title_en', 'description_sv', 'description_en', 'max_event_users', 'priorities'],
+    required: ['id', 'starts_at', 'ends_at', 'signup_start', 'signup_end', 'title_sv', 'title_en', 'description_sv', 'description_en', 'max_event_users', 'priorities', 'all_day', 'signup_not_opened_yet', 'recurring', 'drink', 'food', 'cash', 'closed', 'can_signup', 'drink_package'],
     title: 'EventRead'
 } as const;
 
@@ -809,6 +974,105 @@ export const EventUpdateSchema = {
                 }
             ],
             title: 'Max Event Users'
+        },
+        all_day: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'All Day'
+        },
+        signup_not_opened_yet: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Signup Not Opened Yet'
+        },
+        recurring: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Recurring'
+        },
+        drink: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Drink'
+        },
+        food: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Food'
+        },
+        cash: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Cash'
+        },
+        closed: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Closed'
+        },
+        can_signup: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Can Signup'
+        },
+        drink_package: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Drink Package'
         }
     },
     type: 'object',
@@ -1116,7 +1380,7 @@ export const PermissionCreateSchema = {
         },
         target: {
             type: 'string',
-            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car'],
+            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe'],
             title: 'Target'
         }
     },
@@ -1138,7 +1402,7 @@ export const PermissionReadSchema = {
         },
         target: {
             type: 'string',
-            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car'],
+            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe'],
             title: 'Target'
         }
     },
