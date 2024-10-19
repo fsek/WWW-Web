@@ -1,48 +1,19 @@
-/* .sidebar {
-	display: block;
-	text-align: left;
-	background-color: orange;
-	max-width: 15%;
-	height: 100vh;
-	flex-grow: 1;
-	overflow-y: auto;
-}
-.sidebar a {
-	text-align: left;
-	display: inline-block;
-	box-sizing: border-box;
-	background: none; /* Remove background color */
-	/* padding: 10px;
-	height: auto;
-	width: 100%; */
-/* }
-.content {
-	text-align: left;
-	padding: 10px;
-}
-#root {
-	all: unset;
-	display: flex;
-}
-body {
-	all: unset;
-} */ 
-
 .sidebar {
     display: block;
     text-align: left;
     background-color: orange;
-    max-width: 10%;
+    max-width: 15%;
     height: 100vh;
     flex-grow: 1;
     overflow-y: auto;
 }
 
-.sidebar a, .sidebar button {
+.sidebar a,
+.sidebar button {
     text-align: left;
     display: inline-block;
     box-sizing: border-box;
-    background: none; /* Remove background color */
+    background: none;
     padding: 10px;
     height: auto;
     width: 100%;
@@ -57,18 +28,20 @@ body {
     background-color: lightgray;
     max-width: 15%;
     height: 100vh;
-    position: absolute; /* Position it absolutely next to the main sidebar */
-    left: 10%; /* Position it right next to the existing sidebar */
+    position: absolute;
+    left: 15%;
+    /* Position it next to the main sidebar */
     top: 0;
     overflow-y: auto;
-    z-index: 1000; /* Ensure it is above other content */
+    z-index: 1000;
+    /* Ensure it is above other content */
 }
 
 .second-sidebar a {
     text-align: left;
     display: inline-block;
     box-sizing: border-box;
-    background: none; /* Remove background color */
+    background: none;
     padding: 10px;
     height: auto;
     width: 100%;
@@ -77,19 +50,23 @@ body {
 .content {
     text-align: left;
     padding: 10px;
-    margin-left: 10%; /* Adjust to give space for the sidebar */
+    margin-left: 5%;
+    /* Default margin for when only the main sidebar is open */
     transition: margin-left 0.3s;
+    /* Smooth transition */
 }
 
 /* Adjust the margin when the second sidebar is open */
 body.second-sidebar-open .content {
-    margin-left: 30%; /* Double the width since the second sidebar is also open */
+    margin-left: 15%;
+    /* Adjust to accommodate both sidebars */
 }
 
 #root {
     all: unset;
     display: flex;
 }
+
 body {
     all: unset;
 }

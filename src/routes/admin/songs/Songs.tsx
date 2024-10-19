@@ -54,7 +54,7 @@ export default function Songs() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await SongsService.createSong({body: newSong}); // Ändrat från createSong till addSong, justera efter din API-metod
+      const response = await SongsService.createSong({ body: newSong }); // Ändrat från createSong till addSong, justera efter din API-metod
       if (response.data) { // Säkerställ att response.data är definierad
         console.log("Added song:", response.data);
         setSongs((prevSongs) => [...prevSongs, response.data]);
@@ -91,15 +91,17 @@ export default function Songs() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="content">
-      <h1>Administrera sånger</h1>
+    <div className="p-8 bg-white shadow-md rounded-lg">
+      <h1 className="text-2xl font-bold mb-4">Administrera sånger</h1>
       <p>Här kan du skapa nyheter & redigera existerande sånger på hemsidan.</p>
-      <button type="button" onClick={handleAddButtonClick}>
-        Lägg till sång
-      </button>
-      <button type="button">Uppdatera sång</button>
-      <h2>Sånginformation</h2>
 
+      <div className="mb-6 flex gap-4">
+        <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-yellow-600" onClick={handleAddButtonClick}>
+          Lägg till sång
+        </button>
+        <button type="button" className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-blue-600">Uppdatera sång</button>
+      </div>
+      <h2>Sånginformation</h2>
       {/* Lägg till formuläret för att skapa en ny låt */}
       {showAddForm && (
         <form onSubmit={handleFormSubmit} className="add-song-form">
