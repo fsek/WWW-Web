@@ -96,18 +96,17 @@ export default function Songs() {
       <p>Här kan du skapa nyheter & redigera existerande sånger på hemsidan.</p>
 
       <div className="mb-6 flex gap-4">
-        <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-yellow-600" onClick={handleAddButtonClick}>
+        <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-forange" onClick={handleAddButtonClick}>
           Lägg till sång
         </button>
-        <button type="button" className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-blue-600">Uppdatera sång</button>
+        <button type="button" className="bg-forange text-white px-4 py-2 rounded hover:bg-blue-600">Uppdatera sång</button>
       </div>
-      <h2>Sånginformation</h2>
       {/* Lägg till formuläret för att skapa en ny låt */}
       {showAddForm && (
         <form onSubmit={handleFormSubmit} className="add-song-form">
           <h3>Lägg till ny låt</h3>
           <div>
-            <label htmlFor="title">Titel:</label>
+            <label htmlFor="title" className="pr-2">Titel:</label>
             <input
               type="text"
               id="title"
@@ -115,10 +114,11 @@ export default function Songs() {
               value={newSong.title}
               onChange={handleFormChange}
               required
+              className="px-3 border border-gray-700 rounded"
             />
           </div>
           <div>
-            <label htmlFor="artist">Artist:</label> {/* Ändrat från 'author' till 'artist' */}
+            <label htmlFor="artist" className="pr-2">Artist:</label> {/* Ändrat från 'author' till 'artist' */}
             <input
               type="text"
               id="artist"
@@ -126,10 +126,11 @@ export default function Songs() {
               value={newSong.author ?? "Herr bajskorvsson"} // Ändrat från newSong.author till newSong.artist
               onChange={handleFormChange}
               required
+              className="px-3 border border-gray-700 rounded"
             />
           </div>
           <div>
-            <label htmlFor="melody">Melodi:</label>
+            <label htmlFor="melody" className="pr-2">Melodi:</label>
             <input
               type="text"
               id="melody"
@@ -179,6 +180,7 @@ export default function Songs() {
           </div>
         </form>
       )}
+      <h2 className="font-bold">Sånginformation</h2>
 
       {/* Render the song details */}
       <table>
