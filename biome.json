@@ -10,7 +10,7 @@
 		"ignore": ["./src/api"]
 	},
 	"formatter": {
-		"enabled": true,
+		"enabled": false,
 		"indentStyle": "tab"
 	},
 	"organizeImports": {

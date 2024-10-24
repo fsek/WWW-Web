@@ -6,7 +6,7 @@ import "./index.css";
 import AdminPage from "./routes/admin/Admin";
 import { AuthService, client } from "./api";
 
-client.setConfig({baseUrl: "http://127.0.0.1:8000"})
+client.setConfig({ baseUrl: "http://127.0.0.1:8000" });
 
 const token = await AuthService.authJwtLogin({
 	body: { username: "boss@fsektionen.se", password: "dabdab" },
@@ -14,9 +14,12 @@ const token = await AuthService.authJwtLogin({
 
 const myHeaders = new Headers();
 
-myHeaders.append("Authorization", `${token.data!.token_type} ${token.data!.access_token}`)
+myHeaders.append(
+	"Authorization",
+	`${token.data!.token_type} ${token.data!.access_token}`
+);
 
-client.setConfig({headers: myHeaders})
+client.setConfig({ headers: myHeaders });
 
 // OpenAPI.interceptors.request.use((request) => {
 // 	(request.headers as Headers).set(
@@ -38,11 +41,12 @@ const router = createBrowserRouter([
 	},
 ]);
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 if (rootElement) {
 	const root = ReactDOM.createRoot(rootElement);
-	root.render(<React.StrictMode>
-		<RouterProvider router={router} />
-	</React.StrictMode>,)
+	root.render(
+		<React.StrictMode>
+			<RouterProvider router={router} />
+		</React.StrictMode>
+	);
 }
-

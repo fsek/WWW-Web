@@ -47,7 +47,9 @@ function NewsItem(newsItem?: NewsRead) {
 					setNews((prev) => ({ ...prev, content_sv: c.target.value }))
 				}
 			/>
-			<button type="submit" formAction="submit">Spara</button>
+			<button type="submit" formAction="submit">
+				Spara
+			</button>
 		</form>
 	);
 }

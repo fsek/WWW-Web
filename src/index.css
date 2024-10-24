@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-    --wavelength-612-color: #FF5700;
-    --wavelength-612-color-light: #FF7F33;
-    --wavelength-612-color-dark: #CC4700;
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+	--wavelength-612-color: #ff5700;
+	--wavelength-612-color-light: #ff7f33;
+	--wavelength-612-color-dark: #cc4700;
 }

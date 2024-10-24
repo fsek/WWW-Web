@@ -1,72 +1,8 @@
-.sidebar {
-    display: block;
-    text-align: left;
-    background-color: var(--wavelength-612-color);
-    max-width: 10%;
-    height: 100vh;
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-.sidebar a,
-.sidebar button {
-    text-align: left;
-    display: inline-block;
-    box-sizing: border-box;
-    background: none;
-    padding: 10px;
-    height: auto;
-    width: 100%;
-    border: none;
-    cursor: pointer;
-}
-
-/* Styles for the second sidebar */
-.second-sidebar {
-    display: block;
-    text-align: left;
-    background-color: lightgray;
-    max-width: 15%;
-    height: 100vh;
-    position: absolute;
-    left: 10%;
-    /* Position it next to the main sidebar */
-    top: 0;
-    overflow-y: auto;
-    z-index: 1000;
-    /* Ensure it is above other content */
-}
-
-.second-sidebar a {
-    text-align: left;
-    display: inline-block;
-    box-sizing: border-box;
-    background: none;
-    padding: 10px;
-    height: auto;
-    width: 100%;
-}
-
-.content {
-    text-align: left;
-    padding: 10px;
-    margin-left: 5%;
-    /* Default margin for when only the main sidebar is open */
-    transition: margin-left 0.3s;
-    /* Smooth transition */
-}
-
-/* Adjust the margin when the second sidebar is open */
-body.second-sidebar-open .content {
-    margin-left: 15%;
-    /* Adjust to accommodate both sidebars */
-}
-
 #root {
-    all: unset;
-    display: flex;
+	all: unset;
+	display: flex;
 }
 
 body {
-    all: unset;
+	all: unset;
 }

@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "lint": "biome lint --write ./src",
     "preview": "vite preview",
-    "generate-api": "openapi-ts"
+    "generate-api": "openapi-ts",
+    "format": "prettier --write src/**/*.{js,jsx,ts,tsx,css,html}"
   },
   "dependencies": {
     "@hey-api/client-fetch": "^0.4.0",
@@ -17,7 +18,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
-    "sort-by": "^1.2.0",
+    "sort-by": "^0.0.2",
     "tailwindcss": "^3.4.14"
   },
   "devDependencies": {
