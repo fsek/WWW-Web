@@ -15,9 +15,9 @@ export default function AdminPage() {
 	};
 
 	return (
-		<div className="flex h-screen">
+		<div className="flex h-screen w-screen">
 			{/* Sidebar */}
-			<div className="flex h-full w-40 flex-col overflow-y-auto bg-forange md:w-1/6 lg:w-1/12">
+			<div className="h-full w-1/6 flex-none overflow-y-auto bg-forange md:w-fit lg:w-1/6 divide-y divide-solid divide-orange-700">
 				<Link to="" className="block w-full p-2">
 					Home
 				</Link>
