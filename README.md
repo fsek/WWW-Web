@@ -30,6 +30,11 @@ This repo uses VSCode's Dev Containers extension to standardize the development 
 
 7. From now on, whenever you want to open this project: Open a new VSCode window and in Recent, find `WWW-Web in a unique volume [Dev Container]`. Don't re-run `Clone Repository...` from step 3.
 
-## If something doesn't work
+## Troubleshooting
 - `Ctrl + Shift + P` and type `Rebuild Container`.
 - Check if you alredy have an open port in the port window in VSCode. Delete it, press `Ctrl + Shift + P` and type `Rebuild Container`.
+
+## Working on WWW-Web
+- To install new components:
+    - Go to https://ui.shadcn.com/
+    - Follow the instructions there
