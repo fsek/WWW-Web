@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../Admin.css";
 import {
-	SongCreate,
-	SongsGetAllSongsResponse,
+	type SongCreate,
+	type SongsGetAllSongsResponse,
 	SongsService,
 } from "../../../api"; // Adjust your import path as needed
+import { Skeleton,  } from "@/components/ui/skeleton";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 // Main Songs Component
 export default function Songs() {
@@ -31,6 +34,7 @@ export default function Songs() {
 				console.error("Failed to fetch songs:", error);
 				setError("Failed to fetch songs. Please try again later.");
 			} finally {
+
 				setLoading(false);
 			}
 		};
@@ -91,12 +95,117 @@ export default function Songs() {
 	};
 
 	// Conditional rendering based on the loading, error, and data state
-	if (loading) return <p>Loading...</p>;
 	if (error) return <p>{error}</p>;
 
-	if (showAddForm) {
-		return (
-			<div className="rounded-lg bg-white p-8 shadow-md">
+	const Form = () => { 
+		return( <div className="">
+			<Dialog>
+				<DialogTrigger>Lägg till sång</DialogTrigger>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>
+							Lägg till ny låt
+						</DialogTitle>
+						<form onSubmit={handleFormSubmit} className="add-song-form">
+					<div className="mb-3 flex items-center">
+						<label htmlFor="title" className="w-1/4 pr-2">
+							Titel:
+						</label>
+						<input
+							type="text"
+							id="title"
+							name="title"
+							value={newSong.title}
+							onChange={handleFormChange}
+							required
+							className="w-3/4 rounded border border-gray-300 px-3 py-2"
+						/>
+					</div>
+					<div className="mb-3 flex items-center">
+						<label htmlFor="author" className="w-1/4 pr-2">
+							Artist:
+						</label>
+						<input
+							type="text"
+							id="author"
+							name="author"
+							value={newSong.author ?? ""}
+							onChange={handleFormChange}
+							required
+							className="w-3/4 rounded border border-gray-300 px-3 py-2"
+						/>
+					</div>
+					<div className="mb-3 flex items-center">
+						<label htmlFor="melody" className="w-1/4 pr-2">
+							Melodi:
+						</label>
+						<input
+							type="text"
+							id="melody"
+							name="melody"
+							value={newSong.melody ?? ""}
+							onChange={handleFormChange}
+							required
+							className="w-3/4 rounded border border-gray-300 px-3 py-2"
+						/>
+					</div>
+					<div className="mb-3 flex items-center">
+						<label htmlFor="content" className="w-1/4 pr-2">
+							Innehåll:
+						</label>
+						<input
+							type="text"
+							id="content"
+							name="content"
+							value={newSong.content}
+							onChange={handleFormChange}
+							required
+							className="w-3/4 rounded border border-gray-300 px-3 py-2"
+						/>
+					</div>
+					<div className="mb-3 flex items-center">
+						<label htmlFor="category" className="w-1/4 pr-2">
+							Kategori:
+						</label>
+						<select
+							id="category"
+							name="category"
+							value={newSong.category.id ?? 0}
+							onChange={(e) => {
+								const selectedId = Number.parseInt(e.target.value, 10);
+								const selectedCategory = { id: selectedId, name: "SNELA" };
+								setNewSong((prev) => ({
+									...prev,
+									category: selectedCategory,
+								}));
+							}}
+							required
+							className="w-3/4 rounded border border-gray-300 px-3 py-2"
+						>
+							<option value={1}>SNELA</option>
+							{/* Add more categories here */}
+						</select>
+					</div>
+					<div className="mt-3 flex justify-end">
+						<button
+							type="submit"
+							className="mr-2 rounded bg-blue-500 px-4 py-2 text-white"
+						>
+							Spara
+						</button>
+						<button
+							type="button"
+							onClick={handleCancel}
+							className="rounded bg-red-500 px-4 py-2 text-white"
+						>
+							Avbryt
+						</button>
+					</div>
+				</form>
+					</DialogHeader>
+				</DialogContent>
+			</Dialog>
+				<div className="rounded-lg bg-white p-8 shadow-ms w-fit h-fit">
 				<h3 className="mb-4 text-xl font-bold">Lägg till ny låt</h3>
 				<form onSubmit={handleFormSubmit} className="add-song-form">
 					<div className="mb-3 flex items-center">
@@ -164,7 +273,7 @@ export default function Songs() {
 							name="category"
 							value={newSong.category.id ?? 0}
 							onChange={(e) => {
-								const selectedId = parseInt(e.target.value, 10);
+								const selectedId = Number.parseInt(e.target.value, 10);
 								const selectedCategory = { id: selectedId, name: "SNELA" };
 								setNewSong((prev) => ({
 									...prev,
@@ -194,13 +303,12 @@ export default function Songs() {
 						</button>
 					</div>
 				</form>
-			</div>
-		);
-	}
+				</div>
+			
+	
 
-	if (showUpdateForm) {
-		return (
-			<div className="rounded-lg bg-white p-8 shadow-md">
+
+			<dialog open={showUpdateForm} className="rounded-lg bg-white p-8 shadow-md">
 				<h3 className="mb-4 text-xl font-bold">Updatera låt</h3>
 				<form onSubmit={handleFormSubmit} className="add-song-form">
 					<div className="mb-3 flex items-center">
@@ -268,7 +376,7 @@ export default function Songs() {
 							name="category"
 							value={newSong.category.id ?? 0}
 							onChange={(e) => {
-								const selectedId = parseInt(e.target.value, 10);
+								const selectedId = Number.parseInt(e.target.value, 10);
 								const selectedCategory = { id: selectedId, name: "SNELA" };
 								setNewSong((prev) => ({
 									...prev,
@@ -298,13 +406,15 @@ export default function Songs() {
 						</button>
 					</div>
 				</form>
+			</dialog>
 			</div>
 		);
-	}
+	};
 
 	return (
-		<div className="rounded-lg bg-white p-8 shadow-md">
-			<h1 className="mb-4 text-center text-2xl font-bold">
+		<div className="rounded-lg bg-white p-8 shadow-md max-w-[56rem]">
+			<Form/>
+			<h1 className="mb-4 text-left text-2xl font-bold">
 				Administrera sånger
 			</h1>
 			<p className="mb-4 text-gray-700">
@@ -335,20 +445,26 @@ export default function Songs() {
 					<tr className="bg-forange">
 						<th className="ext-left border-b px-4 py-2">Titel</th>
 						<th className="ext-left border-b px-4 py-2">Artist</th>
-						<th className="ext-left border-b px-4 py-2">Id</th>
 						<th className="ext-left border-b px-4 py-2">Lyssningar</th>
 						<th className="ext-left border-b px-4 py-2">Åtgärd</th>
 					</tr>
 				</thead>
 				<tbody>
-					{songs.map((song) => (
+					{ loading ? 
+						<>{[...Array(4)].map((e,i) => <tr key={i} className="transition duration-150 hover:bg-gray-50">
+								<td  className="border-b px-4 py-2"><Skeleton className="w-48 h-[1lh]"/></td>
+								<td className="border-b px-4 py-2"><Skeleton className="w-24 h-[1lh]"/></td>
+								<td className="border-b px-4 py-2"><Skeleton className="w-8 h-[1lh]"/></td>
+								<td className="border-b px-4 py-2"><Skeleton className="w-24 h-8"/></td>
+								</tr>)}
+								</>
+					: songs.map((song) => (
 						<tr
 							className="transition duration-150 hover:bg-gray-50"
 							key={song.id}
 						>
 							<td className="border-b px-4 py-2">{song.title}</td>
 							<td className="border-b px-4 py-2">{song.author}</td>
-							<td className="border-b px-4 py-2">{song.id}</td>
 							<td className="border-b px-4 py-2">{song.views}</td>
 							<td className="border-b px-4 py-2">
 								<button
