@@ -5,8 +5,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"dbaeumer.vscode-eslint",
-				"esbenp.prettier-vscode",
+				"biomejs.biome",
 				"ms-vscode.vscode-typescript-next",
 				"bradlc.vscode-tailwindcss" // Tailwind CSS IntelliSense extension
 			],
@@ -15,7 +14,17 @@
 				"editor.formatOnSave": true,
 				"css.validate": false,
 				"scss.validate": false,
-				"postcss.validate": false
+				"postcss.validate": false,
+				"files.associations": {
+					"*.css": "tailwindcss"
+				},
+				"editor.quickSuggestions": {
+					"strings": "on"
+				},
+				"editor.defaultFormatter": "biomejs.biome",
+				"editor.codeActionsOnSave": {
+					"quickfix.biome": "explicit"
+				}
 			}
 		}
 	},

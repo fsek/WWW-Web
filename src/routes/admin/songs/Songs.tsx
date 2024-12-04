@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import "../Admin.css";
 import {
 	type SongCreate,
@@ -55,7 +56,7 @@ export default function Songs() {
 	};
 
 	const handleFormChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
 	) => {
 		const { name, value } = e.target;
 		setNewSong((prev) => ({

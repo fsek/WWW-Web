@@ -9,7 +9,6 @@ function App() {
 					<h3>Calendar</h3>
 					<p>Wow heres a lot of info about different dates cool</p>
 				</div>
-				<div></div>
 				<div className="col-span-2">
 					<h3>News</h3>
 					<p className="text-balance">

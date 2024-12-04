@@ -7,10 +7,10 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": ["./src/api"]
+		"ignore": ["src/api"]
 	},
 	"formatter": {
-		"enabled": false,
+		"enabled": true,
 		"indentStyle": "tab"
 	},
 	"organizeImports": {

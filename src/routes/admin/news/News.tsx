@@ -2,11 +2,7 @@ import { useState, useEffect } from "react";
 import { type NewsRead, NewsService } from "../../../api";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import {
 	Form,
