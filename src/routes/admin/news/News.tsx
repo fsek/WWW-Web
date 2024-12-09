@@ -1,10 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { type NewsRead, NewsService } from "../../../api";
 import { Button } from "@/components/ui/button";
 import NewsForm from "./NewsForm";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllNewsOptions } from "@/api/@tanstack/react-query.gen";
-
+import {
+	createColumnHelper,
+	useReactTable,
+	flexRender,
+	RowModel,
+	Table,
+	getCoreRowModel,
+} from "@tanstack/react-table";
+import AdminTable from "@/widgets/AdminTable";
 const ACCEPTED_IMAGE_TYPES = [
 	"image/jpeg",
 	"image/jpg",
@@ -19,11 +27,34 @@ export interface NewsItem {
 	id: number;
 }
 
+const columnHelper = createColumnHelper<NewsRead>();
+
+const columns = [
+	columnHelper.accessor((row) => row.title_sv, {
+		id: "title_sv",
+		cell: (info) => info.getValue(),
+		header: () => <span>Svensk titel</span>,
+		//footer: (props) => props.column.id,
+	}),
+	columnHelper.accessor((row) => row.content_sv, {
+		id: "content_sv",
+		cell: (info) => info.getValue(),
+		header: () => <span>Svensk beskrivning</span>,
+		//footer: (props) => props.column.id,
+	}),
+];
+
 export default function News() {
 	const queryClient = useQueryClient();
 
 	const { data, error, isFetching } = useQuery({
 		...getAllNewsOptions(),
+	});
+
+	const table = useReactTable({
+		columns,
+		data: (data as NewsRead[]) ?? [],
+		getCoreRowModel: getCoreRowModel(),
 	});
 
 	if (isFetching) {
@@ -40,13 +71,7 @@ export default function News() {
 			</p>
 			<NewsForm />
 			<Button>Redigera nyheter</Button>
-			<ul>
-				{data?.map((newsItem: NewsRead) => (
-					<li key={newsItem.id}>
-						<h4>{newsItem.title_sv}</h4>
-					</li>
-				))}
-			</ul>
+			<AdminTable table={table} />
 		</div>
 	);
 }
