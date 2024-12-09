@@ -23,3 +23,7 @@ src/api
 *.njsproj
 *.sln
 *.sw?
+
+
+# Temporarily DO NOT HAVE THIS LATER IN DEVELOPMENT
+package-lock.json

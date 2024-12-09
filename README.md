@@ -38,3 +38,7 @@ This repo uses VSCode's Dev Containers extension to standardize the development 
 - To install new components:
     - Go to https://ui.shadcn.com/
     - Follow the instructions there
+
+
+## Tips and tricks
+- Use https://www.creative-tim.com/twcomponents/cheatsheet to find different Tailwind css classes

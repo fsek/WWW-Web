@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import AdminPage from "./routes/admin/Admin";
 import { AuthService, client } from "./api";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 client.setConfig({ baseUrl: "http://127.0.0.1:8000" });
 
@@ -20,6 +21,8 @@ myHeaders.append(
 );
 
 client.setConfig({ headers: myHeaders });
+
+const queryClient = new QueryClient();
 
 // OpenAPI.interceptors.request.use((request) => {
 // 	(request.headers as Headers).set(
@@ -46,7 +49,9 @@ if (rootElement) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<React.StrictMode>
-			<RouterProvider router={router} />
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider router={router} />
+			</QueryClientProvider>
 		</React.StrictMode>,
 	);
 }
