@@ -166,22 +166,6 @@ export type EventSignupDelete = {
     user_id?: (number | null);
 };
 
-export type EventSignupRead = {
-    id: number;
-    email: string;
-    is_active?: boolean;
-    is_superuser?: boolean;
-    is_verified?: boolean;
-    first_name: string;
-    last_name: string;
-    telephone_number: string;
-    start_year: number;
-    account_created: Date;
-    program: (string | null);
-    priority: (string | null);
-    group_name: (string | null);
-};
-
 export type EventSignupUpdate = {
     user_id?: (number | null);
     priority?: (string | null);
@@ -606,16 +590,6 @@ export type EventSignupUpdateSignupData = {
 export type EventSignupUpdateSignupResponse = (EventRead);
 
 export type EventSignupUpdateSignupError = (HTTPValidationError);
-
-export type EventSignupGetAllSignupsData = {
-    path: {
-        event_id: number;
-    };
-};
-
-export type EventSignupGetAllSignupsResponse = (Array<EventSignupRead>);
-
-export type EventSignupGetAllSignupsError = (HTTPValidationError);
 
 export type NewsGetAllNewsResponse = (Array<NewsRead>);
 

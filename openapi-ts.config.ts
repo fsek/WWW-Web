@@ -23,4 +23,5 @@ export default defineConfig({
 		dates: "types",
 		enums: "typescript",
 	},
+	plugins: ["@tanstack/react-query"],
 });

@@ -6,9 +6,7 @@ export default {
 		extend: {
 			colors: {
 				forange: {
-					DEFAULT: "#FF5700",
-					light: "#FF7F33",
-					dark: "#CC4700",
+					DEFAULT: "#FF5700", // isnt used more than for autocompletion unused at the moment FOR REAL CHANGE LOOK IN index.css
 				},
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
@@ -20,10 +18,12 @@ export default {
 					DEFAULT: "hsl(var(--popover))",
 					foreground: "hsl(var(--popover-foreground))",
 				},
+				// used for buttons
 				primary: {
-					DEFAULT: "hsl(var(--primary))",
+					DEFAULT: "rgb(var(--forange))",
 					foreground: "hsl(var(--primary-foreground))",
 				},
+				// used for buttons also
 				secondary: {
 					DEFAULT: "hsl(var(--secondary))",
 					foreground: "hsl(var(--secondary-foreground))",

@@ -1,20 +1,9 @@
 import { useState, useEffect } from "react";
 import { type NewsRead, NewsService } from "../../../api";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
-import { useForm } from "react-hook-form";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { DialogTitle } from "@radix-ui/react-dialog";
+import NewsForm from "./NewsForm";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getAllNewsOptions } from "@/api/@tanstack/react-query.gen";
 
 const ACCEPTED_IMAGE_TYPES = [
 	"image/jpeg",
@@ -30,168 +19,34 @@ export interface NewsItem {
 	id: number;
 }
 
-const newsSchema = z.object({
-	title_sv: z.string().min(2),
-	title_en: z.string().min(2),
-	text_sv: z.string().min(2),
-	text_en: z.string().min(2),
-	picture: z.any().optional(),
-});
-
 export default function News() {
-	const [news, setNews] = useState<Array<NewsRead>>([]);
-	const [loading, setLoading] = useState(true);
-	const newsForm = useForm<z.infer<typeof newsSchema>>({
-		resolver: zodResolver(newsSchema),
+	const queryClient = useQueryClient();
+
+	const { data, error, isFetching } = useQuery({
+		...getAllNewsOptions(),
 	});
-	const [open, setOpen] = useState(false);
-	const [submitEnabled, setSubmitEnabled] = useState(true);
 
-	function onSubmit(values: z.infer<typeof newsSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		setSubmitEnabled(false);
-		console.log(values);
-		new Promise((resolve) => setTimeout(resolve, 5000)).then(() => {
-			setOpen(false);
-			setSubmitEnabled(true);
-		});
-	}
-
-	useEffect(() => {
-		// Fetch news data when the component mounts
-		const fetchNews = async () => {
-			try {
-				const response = await NewsService.getAllNews();
-				setNews(response.data || []);
-			} catch (error) {
-				console.error("Error fetching news:", error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchNews();
-	}, []);
-
-	if (loading) {
-		return <p className="text-center text-gray-600">Loading...</p>;
+	if (isFetching) {
+		return <p> Hämtar</p>;
 	}
 
 	return (
-		<div>
-			<h3>Administrera nyheter</h3>
-			<p>
+		<div className="px-8 space-x-4">
+			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
+				Administrera nyheter
+			</h3>
+			<p className="py-3">
 				Här kan du skapa nyheter & redigera existerande nyheter på hemsidan.
 			</p>
-
-			<Button
-				onClick={() => {
-					newsForm.reset();
-					setOpen(true);
-					setSubmitEnabled(true);
-				}}
-			>
-				Skapa nyhet
-			</Button>
+			<NewsForm />
 			<Button>Redigera nyheter</Button>
-
-			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogContent className="min-w-fit lg:max-w-7xl">
-					<DialogHeader>
-						<DialogTitle>Skapa nyhet</DialogTitle>
-					</DialogHeader>
-					<hr />
-					<Form {...newsForm}>
-						<form
-							onSubmit={newsForm.handleSubmit(onSubmit)}
-							className="grid gap-x-4 gap-y-3 lg:grid-cols-2"
-						>
-							<FormField
-								control={newsForm.control}
-								name="title_sv"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Titel (sv)</FormLabel>
-										<FormControl>
-											<Input placeholder="Titel" {...field} />
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={newsForm.control}
-								name="title_en"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Titel (en)</FormLabel>
-										<FormControl>
-											<Input placeholder="Title" {...field} />
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								control={newsForm.control}
-								name="text_sv"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Text (sv)</FormLabel>
-										<FormControl>
-											<Textarea
-												placeholder="Text"
-												className="h-48"
-												{...field}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={newsForm.control}
-								name="text_en"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Text (en)</FormLabel>
-										<FormControl>
-											<Textarea
-												placeholder="Text"
-												className="h-48"
-												{...field}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={newsForm.control}
-								name="picture"
-								render={({ field }) => (
-									<FormItem className="lg:col-span-2">
-										<FormLabel>Bild</FormLabel>
-										<FormControl>
-											<Input id="picture" type="file" {...field} />
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-								<Button variant="outline" className="w-32 min-w-fit">
-									Förhandsgranska
-								</Button>
-								<Button
-									type="submit"
-									disabled={!submitEnabled}
-									className="w-32 min-w-fit"
-								>
-									Publicera
-								</Button>
-							</div>
-						</form>
-					</Form>
-				</DialogContent>
-			</Dialog>
+			<ul>
+				{data?.map((newsItem: NewsRead) => (
+					<li key={newsItem.id}>
+						<h4>{newsItem.title_sv}</h4>
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 }
