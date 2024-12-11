@@ -66,7 +66,7 @@ export default function NewsForm() {
 	}
 
 	return (
-		<>
+		<div className="p-3">
 			<Button
 				onClick={() => {
 					newsForm.reset();
@@ -173,6 +173,6 @@ export default function NewsForm() {
 					</Form>
 				</DialogContent>
 			</Dialog>
-		</>
+		</div>
 	);
 }

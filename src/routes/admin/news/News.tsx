@@ -70,7 +70,6 @@ export default function News() {
 				Här kan du skapa nyheter & redigera existerande nyheter på hemsidan.
 			</p>
 			<NewsForm />
-			<Button>Redigera nyheter</Button>
 			<AdminTable table={table} />
 		</div>
 	);
