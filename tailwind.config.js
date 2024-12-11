@@ -61,6 +61,17 @@ export default {
 					border: "hsl(var(--sidebar-border))",
 					ring: "hsl(var(--sidebar-ring))",
 				},
+				table: {
+					DEFAULT: "rgb(var(--forange))",
+					//DEFAULT: 'hsl(var(--sidebar-background))',
+					foreground: "hsl(var(--table-foreground))",
+					primary: "hsl(var(--table-primary))",
+					"primary-foreground": "hsl(var(--table-primary-foreground))",
+					accent: "hsl(var(--table-accent))",
+					"accent-foreground": "hsl(var(--table-accent-foreground))",
+					border: "hsl(var(--table-border))",
+					ring: "hsl(var(--table-ring))",
+				},
 			},
 			borderRadius: {
 				lg: "var(--radius)",
