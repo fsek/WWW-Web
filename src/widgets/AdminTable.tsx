@@ -2,7 +2,7 @@ import { flexRender, type Table } from "@tanstack/react-table";
 
 export default function AdminTable<T>({ table }: { table: Table<T> }) {
 	return (
-		<table className="">
+		<table className="border-black border">
 			<thead>
 				{table.getHeaderGroups().map((headerGroup) => (
 					<tr key={headerGroup.id}>

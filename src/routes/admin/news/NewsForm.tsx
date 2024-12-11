@@ -15,6 +15,12 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { z } from "zod";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+	createNewsMutation,
+	createNewsOptions,
+	getAllNewsQueryKey,
+} from "@/api/@tanstack/react-query.gen";
 
 const newsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -31,14 +37,31 @@ export default function NewsForm() {
 		resolver: zodResolver(newsSchema),
 	});
 
+	const createNews = useMutation({
+		...createNewsMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries(getAllNewsQueryKey());
+			setOpen(false);
+			setSubmitEnabled(true);
+		},
+	});
+
+	const queryClient = useQueryClient();
+
 	function onSubmit(values: z.infer<typeof newsSchema>) {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
 		setSubmitEnabled(false);
-		console.log(values);
-		new Promise((resolve) => setTimeout(resolve, 5000)).then(() => {
-			setOpen(false);
-			setSubmitEnabled(true);
+		createNews.mutate({
+			body: {
+				title_sv: values.title_sv,
+				title_en: values.title_en,
+				content_sv: values.text_sv,
+				content_en: values.text_en,
+				pinned_from: undefined,
+				pinned_to: undefined,
+			},
 		});
 	}
 
