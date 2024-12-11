@@ -21,6 +21,7 @@ import {
 	createNewsOptions,
 	getAllNewsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
+import { Plus } from "lucide-react";
 
 const newsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -74,6 +75,7 @@ export default function NewsForm() {
 					setSubmitEnabled(true);
 				}}
 			>
+				<Plus />
 				Skapa nyhet
 			</Button>
 
