@@ -41,7 +41,7 @@ export default function NewsForm() {
 		...createNewsMutation(),
 		throwOnError: false,
 		onSuccess: () => {
-			queryClient.invalidateQueries(getAllNewsQueryKey());
+			queryClient.invalidateQueries({ queryKey: getAllNewsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 		},

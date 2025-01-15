@@ -511,6 +511,18 @@ export const CarUpdateSchema = {
     title: 'CarUpdate'
 } as const;
 
+export const CouncilExempelSchema = {
+    properties: {
+        exemple_value: {
+            type: 'integer',
+            title: 'Exemple Value'
+        }
+    },
+    type: 'object',
+    required: ['exemple_value'],
+    title: 'CouncilExempel'
+} as const;
+
 export const ErrorModelSchema = {
     properties: {
         detail: {
@@ -1073,6 +1085,17 @@ export const MeUpdateSchema = {
                 }
             ],
             title: 'Notifications'
+        },
+        stil_id: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Stil Id'
         }
     },
     type: 'object',
@@ -1712,6 +1735,17 @@ export const UserReadSchema = {
         want_notifications: {
             type: 'boolean',
             title: 'Want Notifications'
+        },
+        stil_id: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Stil Id'
         }
     },
     type: 'object',

@@ -5,6 +5,7 @@ import News from "./news/News";
 import Songs from "./songs/Songs";
 import Test from "./test/Test";
 import AdminLayout from "./AdminLayout";
+import Events from "./events/Events";
 
 // export default function AdminPage() {
 // 	// State to manage which dropdown is open
@@ -68,6 +69,7 @@ export default function AdminPage() {
 					<Route path="test" element={<Test />} />
 					<Route path="news" element={<News />} />
 					<Route path="songs" element={<Songs />} />
+					<Route path="events" element={<Events />} />
 				</Routes>
 			}
 		</AdminLayout>
