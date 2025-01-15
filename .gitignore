@@ -27,3 +27,4 @@ src/api
 
 # Temporarily DO NOT HAVE THIS LATER IN DEVELOPMENT
 package-lock.json
+src/api/*
