@@ -104,6 +104,10 @@ export type CarUpdate = {
     end_time?: (Date | null);
 };
 
+export type CouncilExempel = {
+    exemple_value: number;
+};
+
 export type ErrorModel = {
     detail: (string | {
     [key: string]: (string);
@@ -203,6 +207,7 @@ export type MeUpdate = {
     start_year?: (number | null);
     program?: (string | null);
     notifications?: (boolean | null);
+    stil_id?: (string | null);
 };
 
 export type NewsCreate = {
@@ -351,6 +356,7 @@ export type UserRead = {
     start_year: number;
     account_created: Date;
     want_notifications: boolean;
+    stil_id?: (string | null);
 };
 
 export type ValidationError = {
@@ -1010,6 +1016,10 @@ export type CarsUpdateBookingData = {
 export type CarsUpdateBookingResponse = (CarRead);
 
 export type CarsUpdateBookingError = (HTTPValidationError);
+
+export type CouncilsExempelNamnResponse = (CouncilExempel);
+
+export type CouncilsExempelNamnError = unknown;
 
 export type HelloRouteResponse = (unknown);
 
