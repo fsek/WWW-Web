@@ -14,8 +14,10 @@ import {
 	RowModel,
 	Table,
 	getCoreRowModel,
+	getPaginationRowModel,
 } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
+import formatTime from "@/help_functions/timeFormater";
 const ACCEPTED_IMAGE_TYPES = [
 	"image/jpeg",
 	"image/jpg",
@@ -34,9 +36,23 @@ const columns = [
 	}),
 	columnHelper.accessor((row) => row.starts_at, {
 		id: "starts_at",
-		cell: (info) => info.getValue(),
+		cell: (info) => formatTime(info.getValue()),
 		header: () => <span>Starttid</span>,
-		//footer: (props) => props.column.id,
+	}),
+	columnHelper.accessor((row) => row.ends_at, {
+		id: "ends_at",
+		cell: (info) => formatTime(info.getValue()),
+		header: () => <span>Sluttid</span>,
+	}),
+	columnHelper.accessor((row) => row.signup_start, {
+		id: "signup_start",
+		cell: (info) => formatTime(info.getValue()),
+		header: () => <span>Anmälningsöppning</span>,
+	}),
+	columnHelper.accessor((row) => row.signup_end, {
+		id: "signup_end",
+		cell: (info) => formatTime(info.getValue()),
+		header: () => <span>Anmälningsavslut</span>,
 	}),
 ];
 
@@ -51,10 +67,21 @@ export default function Events() {
 		columns,
 		data: (data as EventRead[]) ?? [],
 		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		initialState: {
+			pagination: {
+				pageIndex: 0, //custom initial page index
+				pageSize: 10, //custom default page size
+			},
+		},
 	});
 
 	if (isFetching) {
 		return <p> Hämtar</p>;
+	}
+
+	if (error) {
+		return <p> Något gick fel :/</p>;
 	}
 
 	return (
