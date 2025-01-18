@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { flexRender, type Table } from "@tanstack/react-table";
 import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
+//https://tanstack.com/table/v8/docs/guide/pagination - Pagination tutorial
+
 const pageSizeOptions = [5, 10, 20, 50];
 
 export default function AdminTable<T>({ table }: { table: Table<T> }) {
