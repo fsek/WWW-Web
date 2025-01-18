@@ -136,7 +136,7 @@ export default function EventsForm() {
 					<Form {...eventsForm}>
 						<form
 							onSubmit={eventsForm.handleSubmit(onSubmit)}
-							className="grid gap-x-4 gap-y-3 lg:grid-cols-2"
+							className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
 						>
 							<FormField
 								control={eventsForm.control}

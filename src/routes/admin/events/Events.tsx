@@ -1,20 +1,14 @@
-import { useState, useEffect, useMemo } from "react";
-import { type EventRead, type NewsRead, NewsService } from "../../../api";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import type { EventRead } from "../../../api";
 import EventsForm from "./EventsForm";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-	getAllEventsOptions,
-	getAllNewsOptions,
-} from "@/api/@tanstack/react-query.gen";
+import { getAllEventsOptions } from "@/api/@tanstack/react-query.gen";
 import {
 	createColumnHelper,
 	useReactTable,
-	flexRender,
-	RowModel,
-	Table,
 	getCoreRowModel,
 	getPaginationRowModel,
+	type SortingState,
 } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import formatTime from "@/help_functions/timeFormater";
@@ -32,27 +26,32 @@ const columns = [
 		id: "title_sv",
 		cell: (info) => info.getValue(),
 		header: () => <span>Svensk titel</span>,
+		size: 110,
 		//footer: (props) => props.column.id,
 	}),
 	columnHelper.accessor((row) => row.starts_at, {
 		id: "starts_at",
 		cell: (info) => formatTime(info.getValue()),
 		header: () => <span>Starttid</span>,
+		size: 60,
 	}),
 	columnHelper.accessor((row) => row.ends_at, {
 		id: "ends_at",
 		cell: (info) => formatTime(info.getValue()),
 		header: () => <span>Sluttid</span>,
+		size: 60,
 	}),
 	columnHelper.accessor((row) => row.signup_start, {
 		id: "signup_start",
 		cell: (info) => formatTime(info.getValue()),
 		header: () => <span>Anmälningsöppning</span>,
+		size: 60,
 	}),
 	columnHelper.accessor((row) => row.signup_end, {
 		id: "signup_end",
 		cell: (info) => formatTime(info.getValue()),
 		header: () => <span>Anmälningsavslut</span>,
+		size: 60,
 	}),
 ];
 
@@ -63,16 +62,23 @@ export default function Events() {
 		...getAllEventsOptions(),
 	});
 
+	const [sorting, setSorting] = useState<SortingState>([]);
+
 	const table = useReactTable({
 		columns,
 		data: (data as EventRead[]) ?? [],
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
+		onSortingChange: setSorting,
 		initialState: {
 			pagination: {
 				pageIndex: 0, //custom initial page index
 				pageSize: 10, //custom default page size
 			},
+			sorting: sorting,
+		},
+		state: {
+			sorting,
 		},
 	});
 
