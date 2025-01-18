@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { flexRender, type Table } from "@tanstack/react-table";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
 //https://tanstack.com/table/v8/docs/guide/pagination - Pagination tutorial
 
@@ -21,14 +21,54 @@ export default function AdminTable<T>({ table }: { table: Table<T> }) {
 									<th
 										key={header.id}
 										className="px-4 py-2 text-left border-r border-table-border last:border-r-0 truncate"
+										colSpan={header.colSpan}
 										style={{ width: header.column.getSize() }}
+										aria-sort={
+											header.column.getIsSorted()
+												? header.column.getIsSorted() === "asc"
+													? "ascending"
+													: "descending"
+												: "none"
+										}
 									>
-										{header.isPlaceholder
-											? null
-											: flexRender(
+										{header.isPlaceholder ? null : (
+											// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+											<div
+												className={
+													header.column.getCanSort()
+														? "cursor-pointer select-none flex items-center"
+														: "flex items-center"
+												}
+												onClick={header.column.getToggleSortingHandler()}
+												title={
+													header.column.getCanSort()
+														? header.column.getNextSortingOrder() === "asc"
+															? "Sort ascending"
+															: header.column.getNextSortingOrder() === "desc"
+																? "Sort descending"
+																: "Clear sort"
+														: undefined
+												}
+											>
+												{flexRender(
 													header.column.columnDef.header,
 													header.getContext(),
 												)}
+												{header.column.getIsSorted() ? (
+													header.column.getIsSorted() === "asc" ? (
+														<ArrowDown
+															className="ml-1 w-4 h-4"
+															aria-label="Sorted ascending"
+														/>
+													) : (
+														<ArrowUp
+															className="ml-1 w-4 h-4"
+															aria-label="Sorted descending"
+														/>
+													)
+												) : null}
+											</div>
+										)}
 									</th>
 								))}
 							</tr>
