@@ -20,10 +20,12 @@ const nollning = [
 	{
 		title: "Pirat",
 		year: 2018,
+		url: "pirat",
 	},
 	{
 		title: "Häst",
 		year: 2015,
+		url: "test",
 	},
 ];
 
@@ -54,7 +56,9 @@ export function AdminSidebar() {
 									{nollning.map((item) => (
 										<SidebarMenuItem key={item.title}>
 											<SidebarMenuButton asChild>
-												<span>{item.title}</span>
+												<Link to={item.url}>
+													<span>{item.title}</span>
+												</Link>
 											</SidebarMenuButton>
 										</SidebarMenuItem>
 									))}

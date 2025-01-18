@@ -6,6 +6,7 @@ import Songs from "./songs/Songs";
 import Test from "./test/Test";
 import AdminLayout from "./AdminLayout";
 import Events from "./events/Events";
+import Pirat from "./pirat/Pirat";
 
 // export default function AdminPage() {
 // 	// State to manage which dropdown is open
@@ -70,6 +71,7 @@ export default function AdminPage() {
 					<Route path="news" element={<News />} />
 					<Route path="songs" element={<Songs />} />
 					<Route path="events" element={<Events />} />
+					<Route path="pirat" element={<Pirat />} />
 				</Routes>
 			}
 		</AdminLayout>
