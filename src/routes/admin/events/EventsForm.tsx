@@ -20,6 +20,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
+import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 
 const eventsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -135,7 +136,7 @@ export default function EventsForm() {
 					<Form {...eventsForm}>
 						<form
 							onSubmit={eventsForm.handleSubmit(onSubmit)}
-							className="grid gap-x-4 gap-y-3 lg:grid-cols-2"
+							className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
 						>
 							<FormField
 								control={eventsForm.control}
@@ -166,7 +167,7 @@ export default function EventsForm() {
 								control={eventsForm.control}
 								name="council_id"
 								render={({ field }) => (
-									<FormItem>
+									<FormItem className="lg:col-span-2">
 										<FormLabel>Council name</FormLabel>
 										<AdminChooseCouncil
 											value={field.value}
@@ -175,6 +176,63 @@ export default function EventsForm() {
 									</FormItem>
 								)}
 							/>
+
+							<FormField
+								control={eventsForm.control}
+								name="starts_at"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Starttime</FormLabel>
+										<AdminChooseDates
+											value={field.value}
+											onChange={field.onChange}
+										/>
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={eventsForm.control}
+								name="ends_at"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Endtime</FormLabel>
+										<AdminChooseDates
+											value={field.value}
+											onChange={field.onChange}
+										/>
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={eventsForm.control}
+								name="signup_start"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Signup start</FormLabel>
+										<AdminChooseDates
+											value={field.value}
+											onChange={field.onChange}
+										/>
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={eventsForm.control}
+								name="signup_end"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Signup end</FormLabel>
+										<AdminChooseDates
+											value={field.value}
+											onChange={field.onChange}
+										/>
+									</FormItem>
+								)}
+							/>
+
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
 								<Button variant="outline" className="w-32 min-w-fit">
 									Förhandsgranska

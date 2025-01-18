@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { type NewsRead, NewsService } from "../../../api";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
@@ -15,10 +14,9 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { z } from "zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
 	createNewsMutation,
-	createNewsOptions,
 	getAllNewsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 
