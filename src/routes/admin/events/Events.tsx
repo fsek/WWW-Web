@@ -9,6 +9,7 @@ import {
 	getCoreRowModel,
 	getPaginationRowModel,
 	type SortingState,
+	getSortedRowModel,
 } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import formatTime from "@/help_functions/timeFormater";
@@ -26,7 +27,7 @@ const columns = [
 		id: "title_sv",
 		cell: (info) => info.getValue(),
 		header: () => <span>Svensk titel</span>,
-		size: 110,
+		size: 60,
 		//footer: (props) => props.column.id,
 	}),
 	columnHelper.accessor((row) => row.starts_at, {
@@ -69,6 +70,7 @@ export default function Events() {
 		data: (data as EventRead[]) ?? [],
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
+		getSortedRowModel: getSortedRowModel(),
 		onSortingChange: setSorting,
 		initialState: {
 			pagination: {
