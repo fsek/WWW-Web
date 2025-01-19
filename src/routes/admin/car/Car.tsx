@@ -1,21 +1,13 @@
+// Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
+
 import { useState } from "react";
 import type { CarRead } from "../../../api";
 import CarForm from "./CarForm.tsx";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllBookingOptions } from "@/api/@tanstack/react-query.gen";
-import {
-	Calendar,
-	CalendarCurrentDate,
-	CalendarDayView,
-	CalendarMonthView,
-	CalendarNextTrigger,
-	CalendarPrevTrigger,
-	CalendarTodayTrigger,
-	CalendarViewTrigger,
-	CalendarWeekView,
-	CalendarYearView,
-	type CalendarEvent,
-} from "../../../components/ui/full-calendar";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar } from "@/components/ui/calendar";
 import {
 	createColumnHelper,
 	useReactTable,
@@ -91,15 +83,15 @@ export default function Events() {
 		return <p> Något gick fel :/</p>;
 	}
 
-	// Transform the fetched data into CalendarEvent type
-	const events: CalendarEvent[] =
-		(data as CarRead[])?.map((car) => ({
-			id: car.start_time.toString(),
-			start: new Date(car.start_time),
-			end: new Date(car.end_time),
-			title: car.description,
-			color: "green", // Change this soon
-		})) ?? [];
+	// // Transform the fetched data into CalendarEvent type
+	// const events: CalendarEvent[] =
+	// 	(data as CarRead[])?.map((car) => ({
+	// 		id: car.start_time.toString(),
+	// 		start: new Date(car.start_time),
+	// 		end: new Date(car.end_time),
+	// 		title: car.description,
+	// 		color: "green", // Change this soon
+	// 	})) ?? [];
 
 	return (
 		<div className="px-8 space-x-4">
@@ -112,7 +104,7 @@ export default function Events() {
 			</p>
 			<CarForm />
 			<AdminTable table={table} />
-			<Calendar events={events}>
+			{/* <Calendar events={events}>
 				<div className="h-dvh py-6 flex flex-col">
 					<div className="flex px-6 items-center gap-2 mb-6">
 						<CalendarViewTrigger
@@ -164,7 +156,50 @@ export default function Events() {
 						<CalendarYearView />
 					</div>
 				</div>
-			</Calendar>
+			</Calendar> */}
+			<div className="py-4">
+				<Tabs
+					defaultValue="calendar"
+					className="flex flex-col w-full items-center"
+				>
+					<TabsList className="flex justify-center mb-2">
+						<TabsTrigger value="calendar">Calendar</TabsTrigger>
+						<TabsTrigger value="schedulingAssistant">
+							Scheduling Assistant
+						</TabsTrigger>
+					</TabsList>
+					<TabsContent value="calendar" className="w-full px-5 space-y-5">
+						<div className="space-y-0">
+							<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+								Calendar
+							</h2>
+							<p className="text-xs md:text-sm font-medium">
+								A flexible calendar component with drag and drop capabilities
+								built using FullCalendar and shacn/ui.
+							</p>
+						</div>
+
+						<Separator />
+						<Calendar />
+					</TabsContent>
+					<TabsContent
+						value="schedulingAssistant"
+						className="w-full px-5 space-y-5"
+					>
+						<div className="space-y-0">
+							<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+								Scheduling Assistant
+							</h2>
+							<p className="text-xs md:text-sm font-medium">
+								A scheduling assistant built to analyze a user&apos;s schedule
+								and automatically show open spots.
+							</p>
+						</div>
+						<Separator />
+						{/* <AvailabilityChecker /> */}
+					</TabsContent>
+				</Tabs>
+			</div>
 		</div>
 	);
 }
