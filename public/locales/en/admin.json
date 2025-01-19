@@ -1,0 +1,10 @@
+{
+	"title": "Admin page",
+	"news": {
+		"self": "News",
+		"page_title": "Administrate news"
+	},
+	"events": {
+		"self": "Events"
+	}
+}

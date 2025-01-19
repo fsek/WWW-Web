@@ -1,0 +1,10 @@
+{
+	"title": "Adminsida",
+	"news": {
+		"self": "Nyheter",
+		"page_title": "Administrera nyheter"
+	},
+	"events": {
+		"self": "Evenemang"
+	}
+}
