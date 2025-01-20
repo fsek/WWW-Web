@@ -38,16 +38,21 @@ export const useEvents = () => {
 	return context;
 };
 
-export const EventsProvider: React.FC<{ children: ReactNode }> = ({
-	children,
-}) => {
+export const EventsProvider: React.FC<{
+	children: ReactNode;
+	initialCalendarEvents?: CalendarEvent[];
+}> = ({ children, initialCalendarEvents }) => {
 	const [events, setEvents] = useState<CalendarEvent[]>(
-		initialEvents.map((event) => ({
+		(initialCalendarEvents ?? initialEvents).map((event) => ({
+			// uses initialEvents from full-calendar-seed.ts if none specified
 			...event,
 			id: String(event.id),
 			color: event.backgroundColor,
 		})),
 	);
+	for (const event of events) {
+		console.log(event.start.toString());
+	}
 	const [eventViewOpen, setEventViewOpen] = useState(false);
 	const [eventAddOpen, setEventAddOpen] = useState(false);
 	const [eventEditOpen, setEventEditOpen] = useState(false);

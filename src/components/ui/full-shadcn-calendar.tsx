@@ -1,5 +1,8 @@
 "use client";
+
 // From: https://github.com/robskinney/shadcn-ui-fullcalendar-example
+
+// Note: As of now, you can not edit, add or delete background events on the calendar permanently.
 
 import { useEvents } from "@/context/full-calendar-event-context";
 import "@/styles/calendar.css";

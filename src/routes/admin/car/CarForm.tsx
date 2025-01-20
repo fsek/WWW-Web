@@ -23,9 +23,9 @@ import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 
 const carSchema = z.object({
-  description: z.string().min(2),
-  start_time: z.date(),
-  end_time: z.date(),
+	description: z.string().min(2),
+	start_time: z.date(),
+	end_time: z.date(),
 });
 
 export default function CarForm() {
@@ -34,14 +34,14 @@ export default function CarForm() {
 
 	const carForm = useForm<z.infer<typeof carSchema>>({
 		resolver: zodResolver(carSchema),
-    defaultValues: {
-			description: "alalalal",
-      start_time: new Date("2025-01-31T18:00"),
-      end_time: new Date("2025-01-31T20:00"),
+		defaultValues: {
+			description: "skriv in en beskrivning",
+			start_time: new Date("2025-01-31T18:00"),
+			end_time: new Date("2025-01-31T20:00"),
 		},
 	});
 
-  // https://next.jqueryscript.net/shadcn-ui/full-calendar-component-shadcn-ui/
+	// https://next.jqueryscript.net/shadcn-ui/full-calendar-component-shadcn-ui/
 
 	const queryClient = useQueryClient();
 
@@ -60,8 +60,8 @@ export default function CarForm() {
 		createBookings.mutate({
 			body: {
 				description: values.description,
-        start_time: values.start_time,
-        end_time: values.end_time,
+				start_time: values.start_time,
+				end_time: values.end_time,
 			},
 		});
 	}

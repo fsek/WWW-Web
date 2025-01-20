@@ -4,8 +4,8 @@ import type { RefObject } from "react";
 export type calendarRef = RefObject<FullCalendar | null>;
 
 // setting earliest / latest available time in minutes since Midnight
-export const earliestTime = 540;
-export const latestTime = 1320;
+export const earliestTime = 0;
+export const latestTime = 24 * 60 - 1;
 
 export const months = [
 	{

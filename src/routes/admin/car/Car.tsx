@@ -7,7 +7,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllBookingOptions } from "@/api/@tanstack/react-query.gen";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar } from "@/components/ui/calendar";
+import Calendar from "@/components/ui/full-shadcn-calendar.tsx";
+import { EventsProvider } from "@/context/full-calendar-event-context.tsx";
 import {
 	createColumnHelper,
 	useReactTable,
@@ -20,6 +21,7 @@ import AdminTable from "@/widgets/AdminTable";
 import formatTime from "@/help_functions/timeFormater";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { start } from "repl";
+import type { CalendarEvent } from "@/utils/full-calendar-seed";
 
 const columnHelper = createColumnHelper<CarRead>();
 
@@ -83,15 +85,15 @@ export default function Events() {
 		return <p> Något gick fel :/</p>;
 	}
 
-	// // Transform the fetched data into CalendarEvent type
-	// const events: CalendarEvent[] =
-	// 	(data as CarRead[])?.map((car) => ({
-	// 		id: car.start_time.toString(),
-	// 		start: new Date(car.start_time),
-	// 		end: new Date(car.end_time),
-	// 		title: car.description,
-	// 		color: "green", // Change this soon
-	// 	})) ?? [];
+	// Transform the fetched data into CalendarEvent type
+	const events: CalendarEvent[] =
+		(data as CarRead[])?.map((car) => ({
+			id: car.booking_id.toString(),
+			title: car.description,
+			start: car.start_time,
+			end: car.end_time,
+			description: "En liten bilbokning",
+		})) ?? [];
 
 	return (
 		<div className="px-8 space-x-4">
@@ -103,103 +105,45 @@ export default function Events() {
 				hemsidan.
 			</p>
 			<CarForm />
-			<AdminTable table={table} />
-			{/* <Calendar events={events}>
-				<div className="h-dvh py-6 flex flex-col">
-					<div className="flex px-6 items-center gap-2 mb-6">
-						<CalendarViewTrigger
-							className="aria-[current=true]:bg-accent"
-							view="day"
-						>
-							Day
-						</CalendarViewTrigger>
-						<CalendarViewTrigger
-							view="week"
-							className="aria-[current=true]:bg-accent"
-						>
-							Week
-						</CalendarViewTrigger>
-						<CalendarViewTrigger
-							view="month"
-							className="aria-[current=true]:bg-accent"
-						>
-							Month
-						</CalendarViewTrigger>
-						<CalendarViewTrigger
-							view="year"
-							className="aria-[current=true]:bg-accent"
-						>
-							Year
-						</CalendarViewTrigger>
-
-						<span className="flex-1" />
-
-						<CalendarCurrentDate />
-
-						<CalendarPrevTrigger>
-							<ChevronLeft size={20} />
-							<span className="sr-only">Previous</span>
-						</CalendarPrevTrigger>
-
-						<CalendarTodayTrigger>Today</CalendarTodayTrigger>
-
-						<CalendarNextTrigger>
-							<ChevronRight size={20} />
-							<span className="sr-only">Next</span>
-						</CalendarNextTrigger>
-					</div>
-
-					<div className="flex-1 overflow-auto px-6 relative">
-						<CalendarDayView />
-						<CalendarWeekView />
-						<CalendarMonthView />
-						<CalendarYearView />
-					</div>
-				</div>
-			</Calendar> */}
-			<div className="py-4">
-				<Tabs
-					defaultValue="calendar"
-					className="flex flex-col w-full items-center"
-				>
-					<TabsList className="flex justify-center mb-2">
-						<TabsTrigger value="calendar">Calendar</TabsTrigger>
-						<TabsTrigger value="schedulingAssistant">
-							Scheduling Assistant
-						</TabsTrigger>
-					</TabsList>
-					<TabsContent value="calendar" className="w-full px-5 space-y-5">
-						<div className="space-y-0">
-							<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
-								Calendar
-							</h2>
-							<p className="text-xs md:text-sm font-medium">
-								A flexible calendar component with drag and drop capabilities
-								built using FullCalendar and shacn/ui.
-							</p>
-						</div>
-
-						<Separator />
-						<Calendar />
-					</TabsContent>
-					<TabsContent
-						value="schedulingAssistant"
-						className="w-full px-5 space-y-5"
+			<Separator />
+			<EventsProvider initialCalendarEvents={events}>
+				<div className="py-4">
+					<Tabs
+						defaultValue="calendar"
+						className="flex flex-col w-f{/* <AvailabilityChecker /> */}ull items-center"
 					>
-						<div className="space-y-0">
-							<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
-								Scheduling Assistant
-							</h2>
-							<p className="text-xs md:text-sm font-medium">
-								A scheduling assistant built to analyze a user&apos;s schedule
-								and automatically show open spots.
-							</p>
-						</div>
-						<Separator />
-						{/* <AvailabilityChecker /> */}
-					</TabsContent>
-				</Tabs>
-			</div>
+						<TabsList className="flex justify-center mb-2">
+							<TabsTrigger value="calendar">Kalender</TabsTrigger>
+							<TabsTrigger value="list">Lista</TabsTrigger>
+						</TabsList>
+						<TabsContent value="calendar" className="w-full px-5 space-y-5">
+							<div className="space-y-0">
+								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+									Kalender
+								</h2>
+								<p className="text-xs md:text-sm font-medium">
+									Denna kalender visar alla bilbokningar som finns i systemet.
+								</p>
+							</div>
+
+							<Separator />
+							<Calendar />
+						</TabsContent>
+						<TabsContent value="list" className="w-full px-5 space-y-5">
+							<div className="space-y-0">
+								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+									Lista
+								</h2>
+								<p className="text-xs md:text-sm font-medium">
+									Detta är en lista över alla bilbokningar som finns i systemet.
+								</p>
+							</div>
+							<Separator />
+							<AdminTable table={table} />
+						</TabsContent>
+					</Tabs>
+				</div>
+			</EventsProvider>
 		</div>
 	);
 }
