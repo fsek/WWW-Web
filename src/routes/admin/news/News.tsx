@@ -13,6 +13,7 @@ import {
 	getCoreRowModel,
 } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
+import { useTranslation } from "react-i18next";
 const ACCEPTED_IMAGE_TYPES = [
 	"image/jpeg",
 	"image/jpg",
@@ -46,6 +47,7 @@ const columns = [
 
 export default function News() {
 	const queryClient = useQueryClient();
+	const { t } = useTranslation();
 
 	const { data, error, isFetching } = useQuery({
 		...getAllNewsOptions(),
@@ -64,7 +66,7 @@ export default function News() {
 	return (
 		<div className="px-8 space-x-4">
 			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-				Administrera nyheter
+				{t("admin:news.page_title")}
 			</h3>
 			<p className="py-3">
 				Här kan du skapa nyheter & redigera existerande nyheter på hemsidan.
