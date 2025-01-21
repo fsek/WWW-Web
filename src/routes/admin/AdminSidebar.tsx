@@ -77,11 +77,7 @@ export function AdminSidebar() {
 										<SidebarMenuItem key={item.title}>
 											<SidebarMenuButton asChild>
 												<Link to={item.url}>
-<<<<<<< HEAD
 													<span>{t(item.title)}</span>
-=======
-													<span>{item.title}</span>
->>>>>>> main
 												</Link>
 											</SidebarMenuButton>
 										</SidebarMenuItem>
