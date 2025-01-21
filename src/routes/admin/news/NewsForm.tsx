@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { type NewsRead, NewsService } from "../../../api";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -19,10 +18,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
 	createNewsMutation,
-	createNewsOptions,
 	getAllNewsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Plus } from "lucide-react";
@@ -46,7 +44,7 @@ export default function NewsForm() {
 		...createNewsMutation(),
 		throwOnError: false,
 		onSuccess: () => {
-			queryClient.invalidateQueries(getAllNewsQueryKey());
+			queryClient.invalidateQueries({ queryKey: getAllNewsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 		},
