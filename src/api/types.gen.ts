@@ -30,26 +30,6 @@ export type AdUpdate = {
     condition?: (number | null);
 };
 
-export type AdventureMissionCreate = {
-    title: string;
-    description: string;
-    max_points: number;
-    min_points: number;
-    nollning_id: number;
-    nollning_week: number;
-};
-
-export type AdventureMissionRead = {
-    id: number;
-    title: string;
-    description: string;
-    max_points: number;
-    min_points: number;
-    nollning_id: number;
-    nollning_week: number;
-    created_at: Date;
-};
-
 export type AlbumCreate = {
     name: string;
 };
@@ -104,35 +84,6 @@ export type CafeShiftUpdate = {
     user_id?: (number | null);
 };
 
-export type CandidateElectionCreate = {
-    post_ids: Array<(number)>;
-};
-
-export type CandidateElectionRead = {
-    candidate_id: number;
-    user_id: number;
-    user: CandidateUserRead;
-    election_posts: Array<api_schemas__candidate_schema__PostRead>;
-};
-
-export type CandidateRead = {
-    candidate_id: number;
-    election_id: number;
-    user_id: number;
-    user: CandidateUserRead;
-    election_posts: Array<api_schemas__candidate_schema__PostRead>;
-};
-
-export type CandidateUserRead = {
-    first_name: string;
-    last_name: string;
-    email: string;
-    telephone_number: string;
-    start_year: number;
-    account_created: Date;
-    want_notifications: boolean;
-};
-
 export type CarCreate = {
     description?: (string | null);
     start_time: Date;
@@ -153,36 +104,8 @@ export type CarUpdate = {
     end_time?: (Date | null);
 };
 
-export type ElectionAddPosts = {
-    posts: Array<ElectionPostCreate>;
-};
-
-export type ElectionCreate = {
-    title: string;
-    start_time: Date;
-    end_time: Date;
-    description: string;
-};
-
-export type ElectionPostCreate = {
-    post_id: number;
-    description?: (string | null);
-};
-
-export type ElectionPostRead = {
-    id: number;
-    name: string;
-    council_id: number;
-};
-
-export type ElectionRead = {
-    election_id: number;
-    title: string;
-    start_time: Date;
-    end_time: Date;
-    description: (string | null);
-    posts: Array<ElectionPostRead>;
-    candidates: Array<CandidateElectionRead>;
+export type CouncilExempel = {
+    exemple_value: number;
 };
 
 export type ErrorModel = {
@@ -216,7 +139,6 @@ export type EventCreate = {
 
 export type EventRead = {
     id: number;
-    council_id: number;
     starts_at: Date;
     ends_at: Date;
     signup_start: Date;
@@ -271,56 +193,6 @@ export type EventUpdate = {
     drink_package?: (boolean | null);
 };
 
-export type GroupAddUser = {
-    user_id: number;
-    group_user_type: 'Mentor' | 'Mentee' | 'Default';
-};
-
-export enum group_user_type {
-    MENTOR = 'Mentor',
-    MENTEE = 'Mentee',
-    DEFAULT = 'Default'
-}
-
-export type GroupCreate = {
-    name: string;
-    group_type: 'Mentor' | 'Mission' | 'Default' | 'Committee';
-};
-
-export enum group_type {
-    MENTOR = 'Mentor',
-    MISSION = 'Mission',
-    DEFAULT = 'Default',
-    COMMITTEE = 'Committee'
-}
-
-export type GroupMissionCreate = {
-    points: number;
-    adventure_mission_id: number;
-};
-
-export type GroupMissionRead = {
-    points: number;
-    adventure_mission: AdventureMissionRead;
-    nollning_group: NollningGroupRead;
-};
-
-export type GroupRead = {
-    id: number;
-    name: string;
-    group_type: 'Mentor' | 'Mission' | 'Default' | 'Committee';
-    group_users: Array<GroupUserRead>;
-};
-
-export type GroupRemoveUser = {
-    user_id: number;
-};
-
-export type GroupUserRead = {
-    user: UserInGroupRead;
-    group_user_type: 'Mentor' | 'Mentee' | 'Default';
-};
-
 export type HTTPValidationError = {
     detail?: Array<ValidationError>;
 };
@@ -369,32 +241,9 @@ export type NewsUpdate = {
     pinned_to?: (Date | null);
 };
 
-export type NollningAddGroup = {
-    group_id: number;
-};
-
-export type NollningCreate = {
-    name: string;
-    description: string;
-};
-
-export type NollningGroupRead = {
-    id: number;
-    group: GroupRead;
-    nollning_id: number;
-};
-
-export type NollningRead = {
-    name: string;
-    description: string;
-    id: number;
-    missions: Array<AdventureMissionRead>;
-    nollning_groups: Array<NollningGroupRead>;
-};
-
 export type PermissionCreate = {
     action: 'view' | 'manage';
-    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe' | 'Election' | 'Groups' | 'Adventure Missions' | 'Nollning';
+    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe';
 };
 
 export enum action {
@@ -412,22 +261,25 @@ export enum target {
     ADS = 'Ads',
     GALLERY = 'Gallery',
     CAR = 'Car',
-    CAFE = 'Cafe',
-    ELECTION = 'Election',
-    GROUPS = 'Groups',
-    ADVENTURE_MISSIONS = 'Adventure Missions',
-    NOLLNING = 'Nollning'
+    CAFE = 'Cafe'
 }
 
 export type PermissionRead = {
     id: number;
     action: 'view' | 'manage';
-    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe' | 'Election' | 'Groups' | 'Adventure Missions' | 'Nollning';
+    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe';
 };
 
 export type PostCreate = {
     name: string;
     council_id: number;
+};
+
+export type PostRead = {
+    id: number;
+    name: string;
+    council_id: number;
+    permissions: Array<_PostPermissionRead>;
 };
 
 export type Priority_DB = {
@@ -490,17 +342,6 @@ export type UserCreate = {
     program?: (string | null);
 };
 
-export type UserInGroupRead = {
-    id: number;
-    email: string;
-    is_active?: boolean;
-    is_superuser?: boolean;
-    is_verified?: boolean;
-    first_name: string;
-    last_name: string;
-    program: (string | null);
-};
-
 export type UserRead = {
     id: number;
     email: string;
@@ -540,18 +381,6 @@ export type _UserPostRead = {
     council_id: number;
 };
 
-export type api_schemas__candidate_schema__PostRead = {
-    post_id: number;
-    election_post_id: number;
-};
-
-export type api_schemas__post_schemas__PostRead = {
-    id: number;
-    name: string;
-    council_id: number;
-    permissions: Array<_PostPermissionRead>;
-};
-
 export type login = {
     grant_type?: (string | null);
     username: string;
@@ -588,7 +417,7 @@ export type UsersUpdateUserResponse = (unknown);
 
 export type UsersUpdateUserError = (HTTPValidationError);
 
-export type PostsGetAllPostsResponse = (Array<api_schemas__post_schemas__PostRead>);
+export type PostsGetAllPostsResponse = (Array<PostRead>);
 
 export type PostsGetAllPostsError = unknown;
 
@@ -596,7 +425,7 @@ export type PostsCreatePostData = {
     body: PostCreate;
 };
 
-export type PostsCreatePostResponse = (api_schemas__post_schemas__PostRead);
+export type PostsCreatePostResponse = (PostRead);
 
 export type PostsCreatePostError = (HTTPValidationError);
 
@@ -1188,263 +1017,9 @@ export type CarsUpdateBookingResponse = (CarRead);
 
 export type CarsUpdateBookingError = (HTTPValidationError);
 
-export type ElectionsGetAllElectionsResponse = (Array<ElectionRead>);
+export type CouncilsExempelNamnResponse = (CouncilExempel);
 
-export type ElectionsGetAllElectionsError = unknown;
-
-export type ElectionsCreateElectionData = {
-    body: ElectionCreate;
-};
-
-export type ElectionsCreateElectionResponse = (ElectionRead);
-
-export type ElectionsCreateElectionError = (HTTPValidationError);
-
-export type ElectionsGetElectionData = {
-    path: {
-        election_id: number;
-    };
-};
-
-export type ElectionsGetElectionResponse = (ElectionRead);
-
-export type ElectionsGetElectionError = (HTTPValidationError);
-
-export type ElectionsDeleteElectionData = {
-    path: {
-        election_id: number;
-    };
-};
-
-export type ElectionsDeleteElectionResponse = (ElectionRead);
-
-export type ElectionsDeleteElectionError = (HTTPValidationError);
-
-export type ElectionsAddPostToElectionData = {
-    body: ElectionAddPosts;
-    path: {
-        election_id: number;
-    };
-};
-
-export type ElectionsAddPostToElectionResponse = (ElectionRead);
-
-export type ElectionsAddPostToElectionError = (HTTPValidationError);
-
-export type CandidatesGetAllCandidationsData = {
-    path: {
-        election_id: number;
-    };
-};
-
-export type CandidatesGetAllCandidationsResponse = (Array<CandidateRead>);
-
-export type CandidatesGetAllCandidationsError = (HTTPValidationError);
-
-export type CandidatesCreateCandidationData = {
-    path: {
-        election_id: number;
-    };
-    query: {
-        post_id: number;
-    };
-};
-
-export type CandidatesCreateCandidationResponse = (CandidateRead);
-
-export type CandidatesCreateCandidationError = (HTTPValidationError);
-
-export type CandidatesCreateCandidationsData = {
-    body: CandidateElectionCreate;
-    path: {
-        election_id: number;
-    };
-};
-
-export type CandidatesCreateCandidationsResponse = (CandidateRead);
-
-export type CandidatesCreateCandidationsError = (HTTPValidationError);
-
-export type AdventureMissionPostAdventureMissionData = {
-    body: AdventureMissionCreate;
-};
-
-export type AdventureMissionPostAdventureMissionResponse = (AdventureMissionRead);
-
-export type AdventureMissionPostAdventureMissionError = (HTTPValidationError);
-
-export type AdventureMissionGetAllAdventureMissionsResponse = (Array<AdventureMissionRead>);
-
-export type AdventureMissionGetAllAdventureMissionsError = unknown;
-
-export type AdventureMissionGetAdventureMissionData = {
-    path: {
-        id: number;
-    };
-};
-
-export type AdventureMissionGetAdventureMissionResponse = (AdventureMissionRead);
-
-export type AdventureMissionGetAdventureMissionError = (HTTPValidationError);
-
-export type AdventureMissionDeleteAdventureMissionData = {
-    path: {
-        id: number;
-    };
-};
-
-export type AdventureMissionDeleteAdventureMissionResponse = (AdventureMissionRead);
-
-export type AdventureMissionDeleteAdventureMissionError = (HTTPValidationError);
-
-export type AdventureMissionPatchAdventureMissionData = {
-    body: AdventureMissionCreate;
-    path: {
-        id: number;
-    };
-};
-
-export type AdventureMissionPatchAdventureMissionResponse = (AdventureMissionRead);
-
-export type AdventureMissionPatchAdventureMissionError = (HTTPValidationError);
-
-export type GroupsUploadGroupData = {
-    body: GroupCreate;
-};
-
-export type GroupsUploadGroupResponse = (GroupRead);
-
-export type GroupsUploadGroupError = (HTTPValidationError);
-
-export type GroupsGetGroupsData = {
-    query?: {
-        group_type?: ('Mentor' | 'Mission' | 'Default' | 'Committee' | null);
-    };
-};
-
-export type GroupsGetGroupsResponse = (Array<GroupRead>);
-
-export type GroupsGetGroupsError = (HTTPValidationError);
-
-export type GroupsGetSingleGroupData = {
-    path: {
-        id: number;
-    };
-};
-
-export type GroupsGetSingleGroupResponse = (GroupRead);
-
-export type GroupsGetSingleGroupError = (HTTPValidationError);
-
-export type GroupsPatchGroupData = {
-    body: GroupCreate;
-    path: {
-        id: number;
-    };
-};
-
-export type GroupsPatchGroupResponse = (GroupRead);
-
-export type GroupsPatchGroupError = (HTTPValidationError);
-
-export type GroupsRemoveGroupData = {
-    path: {
-        id: number;
-    };
-};
-
-export type GroupsRemoveGroupResponse = (GroupRead);
-
-export type GroupsRemoveGroupError = (HTTPValidationError);
-
-export type GroupsAddUserToGroupData = {
-    body: GroupAddUser;
-    path: {
-        id: number;
-    };
-};
-
-export type GroupsAddUserToGroupResponse = (GroupRead);
-
-export type GroupsAddUserToGroupError = (HTTPValidationError);
-
-export type GroupsRemoveUserFromGroupData = {
-    body: GroupRemoveUser;
-    path: {
-        id: number;
-    };
-};
-
-export type GroupsRemoveUserFromGroupResponse = (GroupRead);
-
-export type GroupsRemoveUserFromGroupError = (HTTPValidationError);
-
-export type NollningPostNollningData = {
-    body: NollningCreate;
-};
-
-export type NollningPostNollningResponse = (NollningRead);
-
-export type NollningPostNollningError = (HTTPValidationError);
-
-export type NollningGetAllNollningResponse = (Array<NollningRead>);
-
-export type NollningGetAllNollningError = unknown;
-
-export type NollningPatchNollningData = {
-    body: NollningCreate;
-    path: {
-        id: number;
-    };
-};
-
-export type NollningPatchNollningResponse = (NollningRead);
-
-export type NollningPatchNollningError = (HTTPValidationError);
-
-export type NollningDeleteNollningData = {
-    path: {
-        id: number;
-    };
-};
-
-export type NollningDeleteNollningResponse = ({
-    [key: string]: (string);
-});
-
-export type NollningDeleteNollningError = (HTTPValidationError);
-
-export type NollningAddGroupToNollningData = {
-    body: NollningAddGroup;
-    path: {
-        id: number;
-    };
-};
-
-export type NollningAddGroupToNollningResponse = (NollningRead);
-
-export type NollningAddGroupToNollningError = (HTTPValidationError);
-
-export type NollningAddCompletedMissionData = {
-    body: GroupMissionCreate;
-    path: {
-        id: number;
-    };
-};
-
-export type NollningAddCompletedMissionResponse = (GroupMissionRead);
-
-export type NollningAddCompletedMissionError = (HTTPValidationError);
-
-export type NollningGetCompletedMissionsData = {
-    path: {
-        nollning_id: number;
-    };
-};
-
-export type NollningGetCompletedMissionsResponse = (Array<GroupMissionRead>);
-
-export type NollningGetCompletedMissionsError = (HTTPValidationError);
+export type CouncilsExempelNamnError = unknown;
 
 export type HelloRouteResponse = (unknown);
 

@@ -197,79 +197,6 @@ export const AdUpdateSchema = {
     title: 'AdUpdate'
 } as const;
 
-export const AdventureMissionCreateSchema = {
-    properties: {
-        title: {
-            type: 'string',
-            title: 'Title'
-        },
-        description: {
-            type: 'string',
-            title: 'Description'
-        },
-        max_points: {
-            type: 'integer',
-            title: 'Max Points'
-        },
-        min_points: {
-            type: 'integer',
-            title: 'Min Points'
-        },
-        nollning_id: {
-            type: 'integer',
-            title: 'Nollning Id'
-        },
-        nollning_week: {
-            type: 'integer',
-            title: 'Nollning Week'
-        }
-    },
-    type: 'object',
-    required: ['title', 'description', 'max_points', 'min_points', 'nollning_id', 'nollning_week'],
-    title: 'AdventureMissionCreate'
-} as const;
-
-export const AdventureMissionReadSchema = {
-    properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        title: {
-            type: 'string',
-            title: 'Title'
-        },
-        description: {
-            type: 'string',
-            title: 'Description'
-        },
-        max_points: {
-            type: 'integer',
-            title: 'Max Points'
-        },
-        min_points: {
-            type: 'integer',
-            title: 'Min Points'
-        },
-        nollning_id: {
-            type: 'integer',
-            title: 'Nollning Id'
-        },
-        nollning_week: {
-            type: 'integer',
-            title: 'Nollning Week'
-        },
-        created_at: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Created At'
-        }
-    },
-    type: 'object',
-    required: ['id', 'title', 'description', 'max_points', 'min_points', 'nollning_id', 'nollning_week', 'created_at'],
-    title: 'AdventureMissionRead'
-} as const;
-
 export const AlbumCreateSchema = {
     properties: {
         name: {
@@ -481,117 +408,6 @@ export const CafeShiftUpdateSchema = {
     title: 'CafeShiftUpdate'
 } as const;
 
-export const CandidateElectionCreateSchema = {
-    properties: {
-        post_ids: {
-            items: {
-                type: 'integer'
-            },
-            type: 'array',
-            title: 'Post Ids'
-        }
-    },
-    type: 'object',
-    required: ['post_ids'],
-    title: 'CandidateElectionCreate'
-} as const;
-
-export const CandidateElectionReadSchema = {
-    properties: {
-        candidate_id: {
-            type: 'integer',
-            title: 'Candidate Id'
-        },
-        user_id: {
-            type: 'integer',
-            title: 'User Id'
-        },
-        user: {
-            '$ref': '#/components/schemas/CandidateUserRead'
-        },
-        election_posts: {
-            items: {
-                '$ref': '#/components/schemas/api_schemas__candidate_schema__PostRead'
-            },
-            type: 'array',
-            title: 'Election Posts'
-        }
-    },
-    type: 'object',
-    required: ['candidate_id', 'user_id', 'user', 'election_posts'],
-    title: 'CandidateElectionRead'
-} as const;
-
-export const CandidateReadSchema = {
-    properties: {
-        candidate_id: {
-            type: 'integer',
-            title: 'Candidate Id'
-        },
-        election_id: {
-            type: 'integer',
-            title: 'Election Id'
-        },
-        user_id: {
-            type: 'integer',
-            title: 'User Id'
-        },
-        user: {
-            '$ref': '#/components/schemas/CandidateUserRead'
-        },
-        election_posts: {
-            items: {
-                '$ref': '#/components/schemas/api_schemas__candidate_schema__PostRead'
-            },
-            type: 'array',
-            title: 'Election Posts'
-        }
-    },
-    type: 'object',
-    required: ['candidate_id', 'election_id', 'user_id', 'user', 'election_posts'],
-    title: 'CandidateRead'
-} as const;
-
-export const CandidateUserReadSchema = {
-    properties: {
-        first_name: {
-            type: 'string',
-            title: 'First Name'
-        },
-        last_name: {
-            type: 'string',
-            title: 'Last Name'
-        },
-        email: {
-            type: 'string',
-            title: 'Email'
-        },
-        telephone_number: {
-            type: 'string',
-            maxLength: 64,
-            minLength: 7,
-            format: 'phone',
-            title: 'Telephone Number'
-        },
-        start_year: {
-            type: 'integer',
-            title: 'Start Year'
-        },
-        account_created: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Account Created'
-        },
-        want_notifications: {
-            type: 'boolean',
-            title: 'Want Notifications'
-        }
-    },
-    type: 'object',
-    required: ['first_name', 'last_name', 'email', 'telephone_number', 'start_year', 'account_created', 'want_notifications'],
-    title: 'CandidateUserRead'
-} as const;
-
 export const CarCreateSchema = {
     properties: {
         description: {
@@ -695,139 +511,16 @@ export const CarUpdateSchema = {
     title: 'CarUpdate'
 } as const;
 
-export const ElectionAddPostsSchema = {
+export const CouncilExempelSchema = {
     properties: {
-        posts: {
-            items: {
-                '$ref': '#/components/schemas/ElectionPostCreate'
-            },
-            type: 'array',
-            title: 'Posts'
-        }
-    },
-    type: 'object',
-    required: ['posts'],
-    title: 'ElectionAddPosts'
-} as const;
-
-export const ElectionCreateSchema = {
-    properties: {
-        title: {
-            type: 'string',
-            title: 'Title'
-        },
-        start_time: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Start Time'
-        },
-        end_time: {
-            type: 'string',
-            format: 'date-time',
-            title: 'End Time'
-        },
-        description: {
-            type: 'string',
-            title: 'Description'
-        }
-    },
-    type: 'object',
-    required: ['title', 'start_time', 'end_time', 'description'],
-    title: 'ElectionCreate'
-} as const;
-
-export const ElectionPostCreateSchema = {
-    properties: {
-        post_id: {
+        exemple_value: {
             type: 'integer',
-            title: 'Post Id'
-        },
-        description: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Description'
+            title: 'Exemple Value'
         }
     },
     type: 'object',
-    required: ['post_id'],
-    title: 'ElectionPostCreate'
-} as const;
-
-export const ElectionPostReadSchema = {
-    properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        name: {
-            type: 'string',
-            title: 'Name'
-        },
-        council_id: {
-            type: 'integer',
-            title: 'Council Id'
-        }
-    },
-    type: 'object',
-    required: ['id', 'name', 'council_id'],
-    title: 'ElectionPostRead'
-} as const;
-
-export const ElectionReadSchema = {
-    properties: {
-        election_id: {
-            type: 'integer',
-            title: 'Election Id'
-        },
-        title: {
-            type: 'string',
-            title: 'Title'
-        },
-        start_time: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Start Time'
-        },
-        end_time: {
-            type: 'string',
-            format: 'date-time',
-            title: 'End Time'
-        },
-        description: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Description'
-        },
-        posts: {
-            items: {
-                '$ref': '#/components/schemas/ElectionPostRead'
-            },
-            type: 'array',
-            title: 'Posts'
-        },
-        candidates: {
-            items: {
-                '$ref': '#/components/schemas/CandidateElectionRead'
-            },
-            type: 'array',
-            title: 'Candidates'
-        }
-    },
-    type: 'object',
-    required: ['election_id', 'title', 'start_time', 'end_time', 'description', 'posts', 'candidates'],
-    title: 'ElectionRead'
+    required: ['exemple_value'],
+    title: 'CouncilExempel'
 } as const;
 
 export const ErrorModelSchema = {
@@ -958,10 +651,6 @@ export const EventReadSchema = {
             type: 'integer',
             title: 'Id'
         },
-        council_id: {
-            type: 'integer',
-            title: 'Council Id'
-        },
         starts_at: {
             type: 'string',
             format: 'date-time',
@@ -1047,7 +736,7 @@ export const EventReadSchema = {
         }
     },
     type: 'object',
-    required: ['id', 'council_id', 'starts_at', 'ends_at', 'signup_start', 'signup_end', 'title_sv', 'title_en', 'description_sv', 'description_en', 'max_event_users', 'priorities', 'all_day', 'signup_not_opened_yet', 'recurring', 'drink', 'food', 'cash', 'closed', 'can_signup', 'drink_package'],
+    required: ['id', 'starts_at', 'ends_at', 'signup_start', 'signup_end', 'title_sv', 'title_en', 'description_sv', 'description_en', 'max_event_users', 'priorities', 'all_day', 'signup_not_opened_yet', 'recurring', 'drink', 'food', 'cash', 'closed', 'can_signup', 'drink_package'],
     title: 'EventRead'
 } as const;
 
@@ -1312,131 +1001,6 @@ export const EventUpdateSchema = {
     },
     type: 'object',
     title: 'EventUpdate'
-} as const;
-
-export const GroupAddUserSchema = {
-    properties: {
-        user_id: {
-            type: 'integer',
-            title: 'User Id'
-        },
-        group_user_type: {
-            type: 'string',
-            enum: ['Mentor', 'Mentee', 'Default'],
-            title: 'Group User Type'
-        }
-    },
-    type: 'object',
-    required: ['user_id', 'group_user_type'],
-    title: 'GroupAddUser'
-} as const;
-
-export const GroupCreateSchema = {
-    properties: {
-        name: {
-            type: 'string',
-            maxLength: 200,
-            title: 'Name'
-        },
-        group_type: {
-            type: 'string',
-            enum: ['Mentor', 'Mission', 'Default', 'Committee'],
-            title: 'Group Type'
-        }
-    },
-    type: 'object',
-    required: ['name', 'group_type'],
-    title: 'GroupCreate'
-} as const;
-
-export const GroupMissionCreateSchema = {
-    properties: {
-        points: {
-            type: 'integer',
-            title: 'Points'
-        },
-        adventure_mission_id: {
-            type: 'integer',
-            title: 'Adventure Mission Id'
-        }
-    },
-    type: 'object',
-    required: ['points', 'adventure_mission_id'],
-    title: 'GroupMissionCreate'
-} as const;
-
-export const GroupMissionReadSchema = {
-    properties: {
-        points: {
-            type: 'integer',
-            title: 'Points'
-        },
-        adventure_mission: {
-            '$ref': '#/components/schemas/AdventureMissionRead'
-        },
-        nollning_group: {
-            '$ref': '#/components/schemas/NollningGroupRead'
-        }
-    },
-    type: 'object',
-    required: ['points', 'adventure_mission', 'nollning_group'],
-    title: 'GroupMissionRead'
-} as const;
-
-export const GroupReadSchema = {
-    properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        name: {
-            type: 'string',
-            title: 'Name'
-        },
-        group_type: {
-            type: 'string',
-            enum: ['Mentor', 'Mission', 'Default', 'Committee'],
-            title: 'Group Type'
-        },
-        group_users: {
-            items: {
-                '$ref': '#/components/schemas/GroupUserRead'
-            },
-            type: 'array',
-            title: 'Group Users'
-        }
-    },
-    type: 'object',
-    required: ['id', 'name', 'group_type', 'group_users'],
-    title: 'GroupRead'
-} as const;
-
-export const GroupRemoveUserSchema = {
-    properties: {
-        user_id: {
-            type: 'integer',
-            title: 'User Id'
-        }
-    },
-    type: 'object',
-    required: ['user_id'],
-    title: 'GroupRemoveUser'
-} as const;
-
-export const GroupUserReadSchema = {
-    properties: {
-        user: {
-            '$ref': '#/components/schemas/UserInGroupRead'
-        },
-        group_user_type: {
-            type: 'string',
-            enum: ['Mentor', 'Mentee', 'Default'],
-            title: 'Group User Type'
-        }
-    },
-    type: 'object',
-    required: ['user', 'group_user_type'],
-    title: 'GroupUserRead'
 } as const;
 
 export const HTTPValidationErrorSchema = {
@@ -1742,87 +1306,6 @@ export const NewsUpdateSchema = {
     title: 'NewsUpdate'
 } as const;
 
-export const NollningAddGroupSchema = {
-    properties: {
-        group_id: {
-            type: 'integer',
-            title: 'Group Id'
-        }
-    },
-    type: 'object',
-    required: ['group_id'],
-    title: 'NollningAddGroup'
-} as const;
-
-export const NollningCreateSchema = {
-    properties: {
-        name: {
-            type: 'string',
-            title: 'Name'
-        },
-        description: {
-            type: 'string',
-            title: 'Description'
-        }
-    },
-    type: 'object',
-    required: ['name', 'description'],
-    title: 'NollningCreate'
-} as const;
-
-export const NollningGroupReadSchema = {
-    properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        group: {
-            '$ref': '#/components/schemas/GroupRead'
-        },
-        nollning_id: {
-            type: 'integer',
-            title: 'Nollning Id'
-        }
-    },
-    type: 'object',
-    required: ['id', 'group', 'nollning_id'],
-    title: 'NollningGroupRead'
-} as const;
-
-export const NollningReadSchema = {
-    properties: {
-        name: {
-            type: 'string',
-            title: 'Name'
-        },
-        description: {
-            type: 'string',
-            title: 'Description'
-        },
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        missions: {
-            items: {
-                '$ref': '#/components/schemas/AdventureMissionRead'
-            },
-            type: 'array',
-            title: 'Missions'
-        },
-        nollning_groups: {
-            items: {
-                '$ref': '#/components/schemas/NollningGroupRead'
-            },
-            type: 'array',
-            title: 'Nollning Groups'
-        }
-    },
-    type: 'object',
-    required: ['name', 'description', 'id', 'missions', 'nollning_groups'],
-    title: 'NollningRead'
-} as const;
-
 export const PermissionCreateSchema = {
     properties: {
         action: {
@@ -1832,7 +1315,7 @@ export const PermissionCreateSchema = {
         },
         target: {
             type: 'string',
-            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe', 'Election', 'Groups', 'Adventure Missions', 'Nollning'],
+            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe'],
             title: 'Target'
         }
     },
@@ -1854,7 +1337,7 @@ export const PermissionReadSchema = {
         },
         target: {
             type: 'string',
-            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe', 'Election', 'Groups', 'Adventure Missions', 'Nollning'],
+            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe'],
             title: 'Target'
         }
     },
@@ -1877,6 +1360,33 @@ export const PostCreateSchema = {
     type: 'object',
     required: ['name', 'council_id'],
     title: 'PostCreate'
+} as const;
+
+export const PostReadSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        name: {
+            type: 'string',
+            title: 'Name'
+        },
+        council_id: {
+            type: 'integer',
+            title: 'Council Id'
+        },
+        permissions: {
+            items: {
+                '$ref': '#/components/schemas/_PostPermissionRead'
+            },
+            type: 'array',
+            title: 'Permissions'
+        }
+    },
+    type: 'object',
+    required: ['id', 'name', 'council_id', 'permissions'],
+    title: 'PostRead'
 } as const;
 
 export const Priority_DBSchema = {
@@ -2159,57 +1669,6 @@ export const UserCreateSchema = {
     title: 'UserCreate'
 } as const;
 
-export const UserInGroupReadSchema = {
-    properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        email: {
-            type: 'string',
-            format: 'email',
-            title: 'Email'
-        },
-        is_active: {
-            type: 'boolean',
-            title: 'Is Active',
-            default: true
-        },
-        is_superuser: {
-            type: 'boolean',
-            title: 'Is Superuser',
-            default: false
-        },
-        is_verified: {
-            type: 'boolean',
-            title: 'Is Verified',
-            default: false
-        },
-        first_name: {
-            type: 'string',
-            title: 'First Name'
-        },
-        last_name: {
-            type: 'string',
-            title: 'Last Name'
-        },
-        program: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Program'
-        }
-    },
-    type: 'object',
-    required: ['id', 'email', 'first_name', 'last_name', 'program'],
-    title: 'UserInGroupRead'
-} as const;
-
 export const UserReadSchema = {
     properties: {
         id: {
@@ -2374,49 +1833,6 @@ export const _UserPostReadSchema = {
     type: 'object',
     required: ['id', 'name', 'council_id'],
     title: '_UserPostRead'
-} as const;
-
-export const api_schemas__candidate_schema__PostReadSchema = {
-    properties: {
-        post_id: {
-            type: 'integer',
-            title: 'Post Id'
-        },
-        election_post_id: {
-            type: 'integer',
-            title: 'Election Post Id'
-        }
-    },
-    type: 'object',
-    required: ['post_id', 'election_post_id'],
-    title: 'PostRead'
-} as const;
-
-export const api_schemas__post_schemas__PostReadSchema = {
-    properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        name: {
-            type: 'string',
-            title: 'Name'
-        },
-        council_id: {
-            type: 'integer',
-            title: 'Council Id'
-        },
-        permissions: {
-            items: {
-                '$ref': '#/components/schemas/_PostPermissionRead'
-            },
-            type: 'array',
-            title: 'Permissions'
-        }
-    },
-    type: 'object',
-    required: ['id', 'name', 'council_id', 'permissions'],
-    title: 'PostRead'
 } as const;
 
 export const loginSchema = {

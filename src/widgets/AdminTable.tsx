@@ -1,20 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { flexRender, type Row, type Table } from "@tanstack/react-table";
+import { flexRender, type Table } from "@tanstack/react-table";
 import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
 //https://tanstack.com/table/v8/docs/guide/pagination - Pagination tutorial
 
 const pageSizeOptions = [5, 10, 20, 50];
 
-export default function AdminTable<T>({
-	table,
-	onRowClick,
-}: { table: Table<T>; onRowClick?: (row: Row<T>) => void }) {
+export default function AdminTable<T>({ table }: { table: Table<T> }) {
 	const { pageIndex } = table.getState().pagination;
 	const pageCount = table.getPageCount();
 
 	return (
-		<div className="flex flex-col w-full cursor-pointer">
+		<div className="flex flex-col w-full">
 			<div className="overflow-x-auto">
 				<table className="table-fixed border border-table-border w-full border-collapse">
 					<thead>
@@ -79,12 +76,7 @@ export default function AdminTable<T>({
 					</thead>
 					<tbody>
 						{table.getRowModel().rows.map((row) => (
-							// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-							<tr
-								key={row.id}
-								onClick={() => onRowClick?.(row)}
-								className="border-t"
-							>
+							<tr key={row.id} className="border-t">
 								{row.getVisibleCells().map((cell) => (
 									<td
 										key={cell.id}
