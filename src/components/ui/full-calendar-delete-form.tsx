@@ -26,7 +26,7 @@ export function EventDeleteForm({ id, title }: EventDeleteFormProps) {
 
 	const { toast } = useToast();
 
-	async function onSubmit() {
+	function onSubmit() {
 		deleteEvent(id!);
 		setEventDeleteOpen(false);
 		setEventViewOpen(false);

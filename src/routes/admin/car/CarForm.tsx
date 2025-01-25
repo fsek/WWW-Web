@@ -36,7 +36,7 @@ export default function CarForm() {
 		resolver: zodResolver(carSchema),
 		defaultValues: {
 			description: "skriv in en beskrivning",
-			start_time: new Date("2025-01-31T18:00"),
+			start_time: new Date("2025-01-31T07:00"),
 			end_time: new Date("2025-01-31T20:00"),
 		},
 	});
