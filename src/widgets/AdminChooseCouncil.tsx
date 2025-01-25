@@ -8,7 +8,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 
-const events = [
+const counilcs = [
 	{ id: 0, name: "Piratutskottet" },
 	{ id: 1, name: "Pippi Långstrumputskottet" },
 ];
@@ -33,7 +33,7 @@ export function AdminChooseCouncil({
 			<SelectContent>
 				<SelectGroup>
 					<SelectLabel>Available Councils</SelectLabel>
-					{events.map((item) => (
+					{counilcs.map((item) => (
 						<SelectItem key={item.id} value={item.id.toString()}>
 							{item.name || "Unnamed Council"}
 						</SelectItem>

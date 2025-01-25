@@ -184,23 +184,10 @@ export default function Events() {
 		},
 	});
 
-	// For example, your "update event" function might look like this:
-	// const updateEvent = useMutation({
-	//   ...updateEventMutation(),
-	//   onSuccess: () => queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() }),
-	// });
-
-	// Handler for clicking a row
 	function handleRowClick(row: Row<EventRead>) {
 		setSelectedEvent(row.original);
 		setOpenEditDialog(true);
 	}
-
-	// Example submit handler for the edit form
-	// function handleEditSubmit(updatedValues: any) {
-	//   // Call your mutation here, e.g.:
-	//   // updateEvent.mutate({ ...updatedValues });
-	// }
 
 	if (isFetching) {
 		return <p>Hämtar...</p>;
@@ -218,34 +205,14 @@ export default function Events() {
 			<p className="py-3">
 				Här kan du skapa event & redigera existerande event på hemsidan.
 			</p>
-
-			{/* This is your existing create form */}
 			<EventsForm />
 
-			{/* Table for listing events */}
 			<AdminTable table={table} onRowClick={handleRowClick} />
 
-			{/* Dialog + Form for editing a selected row */}
 			<EventsEditForm
 				open={openEditDialog}
 				onClose={() => setOpenEditDialog(false)}
-				selectedEvent={
-					selectedEvent
-						? {
-								id: selectedEvent.id,
-								title_sv: selectedEvent.title_sv,
-								title_en: selectedEvent.title_en,
-								council_id: selectedEvent.council_id,
-								starts_at: selectedEvent.starts_at,
-								ends_at: selectedEvent.ends_at,
-								signup_start: selectedEvent.signup_start,
-								signup_end: selectedEvent.signup_end,
-								description_sv: selectedEvent.description_sv ?? "",
-								description_en: selectedEvent.description_en ?? "",
-							}
-						: undefined
-				}
-				// onSubmit={handleEditSubmit}  // If you have an update mutation
+				selectedEvent={selectedEvent as EventRead}
 			/>
 		</div>
 	);

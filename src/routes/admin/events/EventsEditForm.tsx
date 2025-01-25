@@ -16,10 +16,17 @@ import { Input } from "@/components/ui/input";
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+	getAllEventsQueryKey,
+	removeMutation,
+	updateMutation,
+} from "@/api/@tanstack/react-query.gen";
+import type { EventRead, EventUpdate } from "../../../api";
 
 // Example: you might have a "full" schema with more fields
 const eventsEditSchema = z.object({
-	id: z.number().optional(), // Because when editing, you have an ID
+	id: z.number(), // Because when editing, you have an ID
 	title_sv: z.string().min(2),
 	title_en: z.string().min(2),
 	council_id: z.number().int(),
@@ -33,19 +40,16 @@ const eventsEditSchema = z.object({
 
 type EventsEditFormType = z.infer<typeof eventsEditSchema>;
 
-// You can shape this to match your "EventRead" type if needed
 interface EventsEditFormProps {
 	open: boolean;
 	onClose: () => void;
-	selectedEvent?: EventsEditFormType | null;
-	onSubmit?: (values: EventsEditFormType) => void; // or do your own mutation inside
+	selectedEvent: EventRead;
 }
 
 export default function EventsEditForm({
 	open,
 	onClose,
 	selectedEvent,
-	onSubmit,
 }: EventsEditFormProps) {
 	const form = useForm<EventsEditFormType>({
 		resolver: zodResolver(eventsEditSchema),
@@ -61,21 +65,61 @@ export default function EventsEditForm({
 		},
 	});
 
-	// Whenever the dialog opens or the selectedEvent changes,
-	// reset the form with the selectedEvent's data:
+	const queryClient = useQueryClient();
+
+	const updateEvent = useMutation({
+		...updateMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
+		},
+	});
+
+	const removeEvent = useMutation({
+		...removeMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
+		},
+	});
+
 	useEffect(() => {
 		if (selectedEvent) {
-			form.reset(selectedEvent);
+			form.reset({
+				...selectedEvent,
+				starts_at: new Date(selectedEvent.starts_at).toISOString(),
+				ends_at: new Date(selectedEvent.ends_at).toISOString(),
+				signup_start: new Date(selectedEvent.signup_start).toISOString(),
+				signup_end: new Date(selectedEvent.signup_end).toISOString(),
+			});
 		}
 	}, [selectedEvent, form]);
 
 	function handleFormSubmit(values: EventsEditFormType) {
-		// If you have an actual mutation (e.g., "updateEventMutation"), call it here.
-		// For now, let's just console.log or call a parent onSubmit:
-		if (onSubmit) {
-			onSubmit(values);
-		}
+		const updatedEvent: EventUpdate = {
+			title_sv: values.title_sv,
+			title_en: values.title_en,
+			description_sv: values.description_sv,
+			description_en: values.description_en,
+		};
+
+		updateEvent.mutate({
+			path: { event_id: values.id },
+			body: updatedEvent,
+		});
+
 		onClose();
+	}
+
+	function handleRemoveSubmit() {
+		removeEvent.mutate(
+			{ path: { event_id: form.getValues("id") } },
+			{
+				onSuccess: () => {
+					onClose();
+				},
+			},
+		);
 	}
 
 	return (
@@ -201,6 +245,16 @@ export default function EventsEditForm({
 							>
 								Förhandsgranska
 							</Button>
+
+							<Button
+								variant="destructive"
+								type="button"
+								className="w-32 min-w-fit"
+								onClick={handleRemoveSubmit}
+							>
+								Remove event
+							</Button>
+
 							<Button type="submit" className="w-32 min-w-fit">
 								Spara
 							</Button>
