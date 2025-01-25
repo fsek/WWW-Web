@@ -69,7 +69,7 @@ export function EventEditForm({
 	isDrag,
 	displayButton,
 }: EventEditFormProps) {
-	const { addEvent, deleteEvent } = useEvents();
+	const { addEvent, deleteEvent, editEvent } = useEvents();
 	const { eventEditOpen, setEventEditOpen } = useEvents();
 
 	const { toast } = useToast();
@@ -79,6 +79,7 @@ export function EventEditForm({
 	});
 
 	const handleEditCancellation = () => {
+		// Not sure if this is needed but it seems to work
 		if (isDrag && oldEvent) {
 			const resetEvent = {
 				id: oldEvent.id,
@@ -89,8 +90,10 @@ export function EventEditForm({
 				color: oldEvent.backgroundColor!,
 			};
 
-			deleteEvent(oldEvent.id);
-			addEvent(resetEvent);
+			// deleteEvent(oldEvent.id);
+			// addEvent(resetEvent);
+
+			editEvent(resetEvent);
 		}
 		setEventEditOpen(false);
 	};
@@ -108,15 +111,14 @@ export function EventEditForm({
 
 	async function onSubmit(data: EventEditFormValues) {
 		const newEvent = {
-			id: data.id,
+			id: oldEvent ? oldEvent.id : data.id,
 			title: data.title,
 			description: data.description,
 			start: data.start,
 			end: data.end,
 			color: data.color,
 		};
-		deleteEvent(data.id);
-		addEvent(newEvent);
+		editEvent(newEvent);
 		setEventEditOpen(false);
 
 		toast({
@@ -229,7 +231,7 @@ export function EventEditForm({
 													<div
 														className={`w-5 h-5 rounded-full cursor-pointer`}
 														style={{ backgroundColor: field.value }}
-													></div>
+													/>
 													<Input {...field} />
 												</div>
 											</PopoverTrigger>

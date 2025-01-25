@@ -1,5 +1,6 @@
 "use client";
 import { type CalendarEvent, initialEvents } from "@/utils/full-calendar-seed";
+import { Hand } from "lucide-react";
 import type React from "react";
 import { createContext, type ReactNode, useContext, useState } from "react";
 
@@ -16,6 +17,7 @@ interface EventsContextType {
 	events: CalendarEvent[];
 	addEvent: (event: Event) => void;
 	deleteEvent: (id: string) => void;
+	editEvent: (event: Event) => void;
 	eventViewOpen: boolean;
 	setEventViewOpen: (value: boolean) => void;
 	eventAddOpen: boolean;
@@ -41,7 +43,9 @@ export const useEvents = () => {
 export const EventsProvider: React.FC<{
 	children: ReactNode;
 	initialCalendarEvents?: CalendarEvent[];
-}> = ({ children, initialCalendarEvents }) => {
+	handleDelete?: (id: string) => void;
+	handleEdit?: (event: Event) => void;
+}> = ({ children, initialCalendarEvents, handleDelete, handleEdit }) => {
 	const [events, setEvents] = useState<CalendarEvent[]>(
 		(initialCalendarEvents ?? initialEvents).map((event) => ({
 			// uses initialEvents from full-calendar-seed.ts if none specified
@@ -50,9 +54,6 @@ export const EventsProvider: React.FC<{
 			color: event.backgroundColor,
 		})),
 	);
-	for (const event of events) {
-		console.log(event.start.toString());
-	}
 	const [eventViewOpen, setEventViewOpen] = useState(false);
 	const [eventAddOpen, setEventAddOpen] = useState(false);
 	const [eventEditOpen, setEventEditOpen] = useState(false);
@@ -65,9 +66,41 @@ export const EventsProvider: React.FC<{
 	};
 
 	const deleteEvent = (id: string) => {
-		setEvents((prevEvents) =>
-			prevEvents.filter((event) => Number(event.id) !== Number(id)),
-		);
+		try {
+			if (handleDelete) {
+				handleDelete({ id });
+			}
+			setEvents((prevEvents) =>
+				prevEvents.filter((event) => Number(event.id) !== Number(id)),
+			);
+		} catch (error) {
+			console.error("Error deleting event:", error);
+		}
+	};
+
+	const editEvent = (event: Event) => {
+		try {
+			// Backend magic here
+			if (handleEdit) {
+				handleEdit(event);
+			}
+			// Frontend magic here
+			setEvents((prevEvents) =>
+				prevEvents.map((prevEvent) =>
+					Number(prevEvent.id) === Number(event.id)
+						? {
+								...prevEvent,
+								title: event.title,
+								description: event.description,
+								start: event.start,
+								end: event.end,
+							}
+						: prevEvent,
+				),
+			);
+		} catch (error) {
+			console.error("Error editing event:", error);
+		}
 	};
 
 	return (
@@ -76,6 +109,7 @@ export const EventsProvider: React.FC<{
 				events,
 				addEvent,
 				deleteEvent,
+				editEvent,
 				eventViewOpen,
 				setEventViewOpen,
 				eventAddOpen,

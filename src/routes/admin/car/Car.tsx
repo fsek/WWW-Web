@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { CarRead } from "../../../api";
 import CarForm from "./CarForm.tsx";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllBookingOptions } from "@/api/@tanstack/react-query.gen";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,6 +17,11 @@ import {
 	type SortingState,
 	getSortedRowModel,
 } from "@tanstack/react-table";
+import {
+	removeBookingMutation,
+	getAllBookingQueryKey,
+	updateBookingMutation,
+} from "@/api/@tanstack/react-query.gen";
 import AdminTable from "@/widgets/AdminTable";
 import formatTime from "@/help_functions/timeFormater";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -51,9 +56,31 @@ const columns = [
 
 export default function Events() {
 	const queryClient = useQueryClient();
+	const [open, setOpen] = useState(false);
+	const [submitEnabled, setSubmitEnabled] = useState(true);
 
 	const { data, error, isFetching } = useQuery({
 		...getAllBookingOptions(),
+	});
+
+	const handleEventDelete = useMutation({
+		...removeBookingMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			setOpen(false);
+			setSubmitEnabled(true);
+		},
+	});
+
+	const handleEventEdit = useMutation({
+		...updateBookingMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			setOpen(false);
+			setSubmitEnabled(true);
+		},
 	});
 
 	const [sorting, setSorting] = useState<SortingState>([]);
@@ -106,7 +133,51 @@ export default function Events() {
 			</p>
 			<CarForm />
 			<Separator />
-			<EventsProvider initialCalendarEvents={events}>
+			<EventsProvider
+				initialCalendarEvents={events}
+				handleDelete={(event) => {
+					handleEventDelete.mutate(
+						{ path: { booking_id: Number(event.id) } },
+						{
+							onError: (error) => {
+								console.error(
+									`Failed to delete event with ID: ${event.id}`,
+									error,
+								);
+								// TODO: Show error message to user
+							},
+						},
+					);
+				}}
+				handleEdit={(event) => {
+					if (!event.id) {
+						console.error("Missing event ID:", event);
+						return;
+					}
+
+					console.log("Event ID:", event.id);
+
+					handleEventEdit.mutate(
+						{
+							path: { booking_id: Number(event.id) },
+							body: {
+								description: event.title,
+								start_time: event.start,
+								end_time: event.end,
+							},
+						},
+						{
+							onError: (error) => {
+								console.error(
+									`Failed to edit event with ID: ${event.id}`,
+									error,
+								);
+								// TODO: Show error message to user
+							},
+						},
+					);
+				}}
+			>
 				<div className="py-4">
 					<Tabs
 						defaultValue="calendar"
