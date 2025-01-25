@@ -40,14 +40,20 @@ const columns = [
 	}),
 	columnHelper.accessor((row) => row.start_time, {
 		id: "start_time",
-		cell: (info) => info.getValue(),
+		cell: (info) => {
+			const date = new Date(info.getValue());
+			return date.toLocaleString();
+		},
 		header: () => <span>start_time</span>,
 		size: 60,
 		//footer: (props) => props.column.id,
 	}),
 	columnHelper.accessor((row) => row.end_time, {
 		id: "end_time",
-		cell: (info) => info.getValue(),
+		cell: (info) => {
+			const date = new Date(info.getValue());
+			return date.toLocaleString();
+		},
 		header: () => <span>end_time</span>,
 		size: 60,
 		//footer: (props) => props.column.id,
