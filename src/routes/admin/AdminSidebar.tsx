@@ -14,6 +14,7 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@radix-ui/react-collapsible";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const nollning = [
@@ -29,11 +30,11 @@ const nollning = [
 
 const allmänt = [
 	{
-		title: "Nyheter",
+		title: "admin:news.self",
 		url: "news",
 	},
 	{
-		title: "Evenemang",
+		title: "admin:events.self",
 		url: "events",
 	},
 	{
@@ -43,9 +44,10 @@ const allmänt = [
 ];
 
 export function AdminSidebar() {
+	const { t } = useTranslation();
 	return (
 		<Sidebar>
-			<SidebarHeader>Adminpage</SidebarHeader>
+			<SidebarHeader>{t("admin:title")}</SidebarHeader>
 			<SidebarContent>
 				<Collapsible>
 					<SidebarGroup>
@@ -79,7 +81,7 @@ export function AdminSidebar() {
 										<SidebarMenuItem key={item.title}>
 											<SidebarMenuButton asChild>
 												<Link to={item.url}>
-													<span>{item.title}</span>
+													<span>{t(item.title)}</span>
 												</Link>
 											</SidebarMenuButton>
 										</SidebarMenuItem>
