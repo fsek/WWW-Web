@@ -12,8 +12,9 @@ function App() {
 				<div className="col-span-2">
 					<h3>News</h3>
 					<p className="text-balance">
-						Wow heres a lot of info about different dates cool, you know, theres
-						tons of info here if you want to take a look
+						Go to <a href="http://localhost:5175/admin">the admin page</a> to
+						see the part of the website that is currently being worked on. This
+						is just a placeholder for now.
 					</p>
 				</div>
 				<div className="col-span-2 box-border grid aspect-square rounded-lg bg-blue-200 shadow-md">

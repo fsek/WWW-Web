@@ -37,6 +37,10 @@ const allmänt = [
 		title: "admin:events.self",
 		url: "events",
 	},
+	{
+		title: "Bilbokning",
+		url: "car",
+	},
 ];
 
 export function AdminSidebar() {
