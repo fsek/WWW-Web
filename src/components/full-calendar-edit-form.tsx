@@ -14,8 +14,8 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "./textarea";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Textarea } from "./ui/textarea";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { HexColorPicker } from "react-colorful";
 import {
 	AlertDialog,
@@ -29,9 +29,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { DateTimePicker } from "./full-calendar-date-picker";
 import { useEvents } from "@/context/full-calendar-event-context";
-import { ToastAction } from "./toast";
+import { ToastAction } from "./ui/toast";
 import type { CalendarEvent } from "@/utils/full-calendar-seed";
-import { Button } from "./button";
+import { Button } from "./ui/button";
 
 const eventEditFormSchema = z.object({
 	id: z.string(),

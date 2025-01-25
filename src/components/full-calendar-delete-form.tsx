@@ -13,7 +13,7 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useEvents } from "@/context/full-calendar-event-context";
-import { ToastAction } from "./toast";
+import { ToastAction } from "./ui/toast";
 
 interface EventDeleteFormProps {
 	id?: string;

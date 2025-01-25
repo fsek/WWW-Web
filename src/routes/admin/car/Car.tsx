@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllBookingOptions } from "@/api/@tanstack/react-query.gen";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Calendar from "@/components/ui/full-shadcn-calendar.tsx";
+import Calendar from "@/components/full-calendar.tsx";
 import { EventsProvider } from "@/context/full-calendar-event-context.tsx";
 import {
 	createColumnHelper,

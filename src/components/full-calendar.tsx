@@ -22,14 +22,14 @@ import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
 import { useRef, useState } from "react";
-import CalendarNav from "./full-shadcn-calendar-nav";
+import CalendarNav from "./full-calendar-nav";
 import {
 	type CalendarEvent,
 	earliestTime,
 	latestTime,
 } from "@/utils/full-calendar-seed";
 import { getDateFromMinutes } from "@/lib/utils";
-import { Card } from "./card";
+import { Card } from "./ui/card";
 import { EventEditForm } from "./full-calendar-edit-form";
 import { EventView } from "./full-calendar-event-view";
 
