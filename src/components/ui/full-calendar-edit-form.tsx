@@ -69,7 +69,7 @@ export function EventEditForm({
 	isDrag,
 	displayButton,
 }: EventEditFormProps) {
-	const { addEvent, deleteEvent, editEvent } = useEvents();
+	const { editEvent } = useEvents();
 	const { eventEditOpen, setEventEditOpen } = useEvents();
 
 	const { toast } = useToast();
@@ -170,7 +170,7 @@ export function EventEditForm({
 							name="description"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Description</FormLabel>
+									<FormLabel>Description (ignored)</FormLabel>
 									<FormControl>
 										<Textarea
 											placeholder="Daily session"
@@ -223,7 +223,7 @@ export function EventEditForm({
 							name="color"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Color</FormLabel>
+									<FormLabel>Color (ignored)</FormLabel>
 									<FormControl>
 										<Popover>
 											<PopoverTrigger asChild className="cursor-pointer">
