@@ -8,7 +8,11 @@ import { AuthService, client } from "./api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./i18n";
 
-client.setConfig({ baseUrl: "http://127.0.0.1:8000" });
+client.setConfig({
+	baseUrl: import.meta.env.PROD
+		? "http://server.fsek.studentorg.lu.se:8081"
+		: "http://127.0.0.1:8000",
+});
 
 const token = await AuthService.authJwtLogin({
 	body: { username: "boss@fsektionen.se", password: "dabdab" },
