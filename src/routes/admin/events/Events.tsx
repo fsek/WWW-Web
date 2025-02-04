@@ -51,6 +51,11 @@ export default function Events() {
 		setOpenEditDialog(true);
 	}
 
+	function handleClose() {
+		setOpenEditDialog(false);
+		setSelectedEvent(null);
+	}
+
 	if (isFetching) {
 		return <p>Hämtar...</p>;
 	}
@@ -73,7 +78,7 @@ export default function Events() {
 
 			<EventsEditForm
 				open={openEditDialog}
-				onClose={() => setOpenEditDialog(false)}
+				onClose={() => handleClose()}
 				selectedEvent={selectedEvent as EventRead}
 			/>
 		</div>

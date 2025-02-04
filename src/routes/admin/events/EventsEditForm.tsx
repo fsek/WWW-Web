@@ -64,6 +64,18 @@ export default function EventsEditForm({
 		},
 	});
 
+	useEffect(() => {
+		if (open && selectedEvent) {
+			form.reset({
+				...selectedEvent,
+				starts_at: new Date(selectedEvent.starts_at).toISOString(),
+				ends_at: new Date(selectedEvent.ends_at).toISOString(),
+				signup_start: new Date(selectedEvent.signup_start).toISOString(),
+				signup_end: new Date(selectedEvent.signup_end).toISOString(),
+			});
+		}
+	}, [selectedEvent, form, open]);
+
 	const queryClient = useQueryClient();
 
 	const updateEvent = useMutation({
@@ -71,6 +83,9 @@ export default function EventsEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
+		},
+		onError: () => {
+			onClose();
 		},
 	});
 
@@ -80,19 +95,10 @@ export default function EventsEditForm({
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
 		},
+		onError: () => {
+			onClose();
+		},
 	});
-
-	useEffect(() => {
-		if (selectedEvent) {
-			form.reset({
-				...selectedEvent,
-				starts_at: new Date(selectedEvent.starts_at).toISOString(),
-				ends_at: new Date(selectedEvent.ends_at).toISOString(),
-				signup_start: new Date(selectedEvent.signup_start).toISOString(),
-				signup_end: new Date(selectedEvent.signup_end).toISOString(),
-			});
-		}
-	}, [selectedEvent, form]);
 
 	function handleFormSubmit(values: EventsEditFormType) {
 		const updatedEvent: EventUpdate = {
@@ -102,12 +108,17 @@ export default function EventsEditForm({
 			description_en: values.description_en,
 		};
 
-		updateEvent.mutate({
-			path: { event_id: values.id },
-			body: updatedEvent,
-		});
-
-		onClose();
+		updateEvent.mutate(
+			{
+				path: { event_id: values.id },
+				body: updatedEvent,
+			},
+			{
+				onSuccess: () => {
+					onClose();
+				},
+			},
+		);
 	}
 
 	function handleRemoveSubmit() {
@@ -122,7 +133,15 @@ export default function EventsEditForm({
 	}
 
 	return (
-		<Dialog open={open} onOpenChange={onClose}>
+		<Dialog
+			open={open}
+			onOpenChange={(isOpen) => {
+				if (!isOpen) {
+					onClose();
+				}
+			}}
+		>
+			{" "}
 			<DialogContent className="min-w-fit lg:max-w-7xl">
 				<DialogHeader>
 					<DialogTitle>Redigera event</DialogTitle>
