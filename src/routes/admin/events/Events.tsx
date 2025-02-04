@@ -1,24 +1,14 @@
 import { useState } from "react";
-import EventsForm from "./EventsForm"; // Your create form
-import EventsEditForm from "./EventsEditForm"; // The editing form from above
-import {
-	getAllEventsOptions,
-	// Possibly an "updateEventMutation" if you have it
-} from "@/api/@tanstack/react-query.gen";
+import EventsForm from "./EventsForm";
+import EventsEditForm from "./EventsEditForm";
+import { getAllEventsOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-	createColumnHelper,
-	useReactTable,
-	getCoreRowModel,
-	getPaginationRowModel,
-	getSortedRowModel,
-	type SortingState,
-	type Row,
-} from "@tanstack/react-table";
+import { createColumnHelper, type Row } from "@tanstack/react-table";
 
 import AdminTable from "@/widgets/AdminTable";
 import formatTime from "@/help_functions/timeFormater";
 import type { EventRead } from "../../../api";
+import createTable from "@/widgets/createTable";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
@@ -51,28 +41,10 @@ export default function Events() {
 		...getAllEventsOptions(),
 	});
 
-	const [sorting, setSorting] = useState<SortingState>([]);
 	const [openEditDialog, setOpenEditDialog] = useState(false);
 	const [selectedEvent, setSelectedEvent] = useState<EventRead | null>(null);
 
-	const table = useReactTable({
-		data: data ?? [],
-		columns,
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		onSortingChange: setSorting,
-		initialState: {
-			pagination: {
-				pageIndex: 0,
-				pageSize: 10,
-			},
-			sorting,
-		},
-		state: {
-			sorting,
-		},
-	});
+	const table = createTable({ data: data ?? [], columns });
 
 	function handleRowClick(row: Row<EventRead>) {
 		setSelectedEvent(row.original);
