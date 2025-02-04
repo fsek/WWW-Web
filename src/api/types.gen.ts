@@ -254,6 +254,10 @@ export type EventSignupUpdate = {
     group_name?: (string | null);
 };
 
+export type EventTagRead = {
+    event: EventRead;
+};
+
 export type EventUpdate = {
     title_sv?: (string | null);
     title_en?: (string | null);
@@ -360,6 +364,10 @@ export type NewsRead = {
     pinned_to: (Date | null);
 };
 
+export type NewsTagRead = {
+    news: NewsRead;
+};
+
 export type NewsUpdate = {
     title_sv?: (string | null);
     title_en?: (string | null);
@@ -460,6 +468,17 @@ export type SongRead = {
     content: string;
     category: (SongCategoryRead | null);
     views: number;
+};
+
+export type TagCreate = {
+    name: string;
+};
+
+export type TagRead = {
+    id: number;
+    name: string;
+    news_tags: Array<NewsTagRead>;
+    event_tags: Array<EventTagRead>;
 };
 
 export type UpdatePermission = {
@@ -772,16 +791,6 @@ export type NewsGetAllNewsResponse = (Array<NewsRead>);
 
 export type NewsGetAllNewsError = unknown;
 
-export type NewsGetAmountOfNewsData = {
-    path: {
-        amount: number;
-    };
-};
-
-export type NewsGetAmountOfNewsResponse = (Array<NewsRead>);
-
-export type NewsGetAmountOfNewsError = (HTTPValidationError);
-
 export type NewsGetNewsData = {
     path: {
         news_id: number;
@@ -830,6 +839,16 @@ export type NewsBumpNewsData = {
 export type NewsBumpNewsResponse = (NewsRead);
 
 export type NewsBumpNewsError = (HTTPValidationError);
+
+export type NewsGetPaginatedNewsData = {
+    path: {
+        page_nbr: number;
+    };
+};
+
+export type NewsGetPaginatedNewsResponse = (Array<NewsRead>);
+
+export type NewsGetPaginatedNewsError = (HTTPValidationError);
 
 export type CafeViewAllShiftsResponse = (Array<CafeShiftRead>);
 
@@ -1445,6 +1464,18 @@ export type NollningGetCompletedMissionsData = {
 export type NollningGetCompletedMissionsResponse = (Array<GroupMissionRead>);
 
 export type NollningGetCompletedMissionsError = (HTTPValidationError);
+
+export type TagsGetTagsResponse = (Array<TagRead>);
+
+export type TagsGetTagsError = unknown;
+
+export type TagsPostTagData = {
+    body: TagCreate;
+};
+
+export type TagsPostTagResponse = (TagRead);
+
+export type TagsPostTagError = (HTTPValidationError);
 
 export type HelloRouteResponse = (unknown);
 

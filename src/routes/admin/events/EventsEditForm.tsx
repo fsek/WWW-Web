@@ -24,9 +24,8 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import type { EventRead, EventUpdate } from "../../../api";
 
-// Example: you might have a "full" schema with more fields
 const eventsEditSchema = z.object({
-	id: z.number(), // Because when editing, you have an ID
+	id: z.number(),
 	title_sv: z.string().min(2),
 	title_en: z.string().min(2),
 	council_id: z.number().int(),

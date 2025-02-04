@@ -1149,6 +1149,17 @@ export const EventSignupUpdateSchema = {
     title: 'EventSignupUpdate'
 } as const;
 
+export const EventTagReadSchema = {
+    properties: {
+        event: {
+            '$ref': '#/components/schemas/EventRead'
+        }
+    },
+    type: 'object',
+    required: ['event'],
+    title: 'EventTagRead'
+} as const;
+
 export const EventUpdateSchema = {
     properties: {
         title_sv: {
@@ -1663,6 +1674,17 @@ export const NewsReadSchema = {
     title: 'NewsRead'
 } as const;
 
+export const NewsTagReadSchema = {
+    properties: {
+        news: {
+            '$ref': '#/components/schemas/NewsRead'
+        }
+    },
+    type: 'object',
+    required: ['news'],
+    title: 'NewsTagRead'
+} as const;
+
 export const NewsUpdateSchema = {
     properties: {
         title_sv: {
@@ -2025,6 +2047,48 @@ export const SongReadSchema = {
     type: 'object',
     required: ['id', 'title', 'author', 'melody', 'content', 'category', 'views'],
     title: 'SongRead'
+} as const;
+
+export const TagCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            title: 'Name'
+        }
+    },
+    type: 'object',
+    required: ['name'],
+    title: 'TagCreate'
+} as const;
+
+export const TagReadSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        name: {
+            type: 'string',
+            title: 'Name'
+        },
+        news_tags: {
+            items: {
+                '$ref': '#/components/schemas/NewsTagRead'
+            },
+            type: 'array',
+            title: 'News Tags'
+        },
+        event_tags: {
+            items: {
+                '$ref': '#/components/schemas/EventTagRead'
+            },
+            type: 'array',
+            title: 'Event Tags'
+        }
+    },
+    type: 'object',
+    required: ['id', 'name', 'news_tags', 'event_tags'],
+    title: 'TagRead'
 } as const;
 
 export const UpdatePermissionSchema = {

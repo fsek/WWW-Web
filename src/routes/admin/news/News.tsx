@@ -1,16 +1,12 @@
-import { useState, useEffect, useMemo } from "react";
-import { type NewsRead, NewsService } from "../../../api";
-import { Button } from "@/components/ui/button";
+import type { NewsRead } from "../../../api";
 import NewsForm from "./NewsForm";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllNewsOptions } from "@/api/@tanstack/react-query.gen";
 import {
 	createColumnHelper,
 	useReactTable,
-	flexRender,
-	RowModel,
-	Table,
 	getCoreRowModel,
+	getPaginationRowModel,
 } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 const ACCEPTED_IMAGE_TYPES = [
@@ -55,6 +51,13 @@ export default function News() {
 		columns,
 		data: (data as NewsRead[]) ?? [],
 		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		initialState: {
+			pagination: {
+				pageIndex: 0,
+				pageSize: 10,
+			},
+		},
 	});
 
 	if (isFetching) {
