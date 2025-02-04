@@ -1,9 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
 
 export default defineConfig({
-	plugins: [react()],
+	plugins: [react(), tailwindcss()],
 	optimizeDeps: {
 		esbuildOptions: {
 			target: "esnext",
@@ -13,9 +14,6 @@ export default defineConfig({
 		alias: {
 			"@": path.resolve(__dirname, "./src"),
 		},
-	},
-	css: {
-		transformer: "postcss",
 	},
 	server: {
 		port: 5175,
