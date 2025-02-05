@@ -7,21 +7,25 @@ const locale = "sv" satisfies Locale;
 const i18nNamespaces = ["admin"] satisfies Namespace[];
 
 export default async function AdminLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  const { resources } = await initTranslations(locale, i18nNamespaces);
+	const { resources } = await initTranslations(locale, i18nNamespaces);
 
-  return (
-    <TranslationsProvider namespaces={i18nNamespaces} locale={locale} resources={resources}>
-      <SidebarProvider>
-        <AdminSidebar />
-        <main>
-          <SidebarTrigger />
-          {children}
-        </main>
-      </SidebarProvider>
-    </TranslationsProvider>
-  );
+	return (
+		<TranslationsProvider
+			namespaces={i18nNamespaces}
+			locale={locale}
+			resources={resources}
+		>
+			<SidebarProvider>
+				<AdminSidebar />
+				<main>
+					<SidebarTrigger />
+					{children}
+				</main>
+			</SidebarProvider>
+		</TranslationsProvider>
+	);
 }

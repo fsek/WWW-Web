@@ -1,10 +1,6 @@
 "use client";
 
-import {
-	Calendar,
-	ChevronDown,
-	Newspaper,
-} from "lucide-react";
+import { Calendar, ChevronDown, Newspaper } from "lucide-react";
 
 import {
 	Sidebar,

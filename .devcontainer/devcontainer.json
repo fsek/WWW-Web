@@ -29,5 +29,5 @@
 		}
 	},
 	"runArgs": ["--network=host"],
-	"postCreateCommand": "npm install"
+	"postCreateCommand": "bun install"
 }

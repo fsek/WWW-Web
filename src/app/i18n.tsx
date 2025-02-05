@@ -20,8 +20,8 @@ export default async function initTranslations(
 		i18nInstance.use(
 			resourcesToBackend(
 				(locale: Locale, namespace: Namespace) =>
-					import(`@/locales/${locale}/${namespace}.json`)
-			)
+					import(`@/locales/${locale}/${namespace}.json`),
+			),
 		);
 	}
 
@@ -33,13 +33,13 @@ export default async function initTranslations(
 		defaultNS: namespaces[0],
 		fallbackNS: namespaces[0],
 		ns: namespaces,
-		preload: resources ? [] : i18nConfig.locales
+		preload: resources ? [] : i18nConfig.locales,
 	});
 
 	return {
 		i18n: i18nInstance,
 		resources: i18nInstance.services.resourceStore.data,
-		t: i18nInstance.t
+		t: i18nInstance.t,
 	};
 }
 
