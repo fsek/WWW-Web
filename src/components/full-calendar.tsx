@@ -2,8 +2,6 @@
 
 // From: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
-// Note: As of now, you can not edit, add or delete background events on the calendar permanently.
-
 import { useEvents } from "@/context/full-calendar-event-context";
 import "@/styles/calendar.css";
 import type {
@@ -32,6 +30,8 @@ import { getDateFromMinutes } from "@/lib/utils";
 import { Card } from "./ui/card";
 import { EventEditForm } from "./full-calendar-edit-form";
 import { EventView } from "./full-calendar-event-view";
+// Add this import:
+import { EventAddForm } from "./full-calendar-add-form";
 
 type EventItemProps = {
 	info: EventContentArg;
@@ -268,6 +268,10 @@ export default function Calendar() {
 					selectable
 				/>
 			</Card>
+
+			{/* Render the EventAddForm so it can appear when eventAddOpen is toggled */}
+			<EventAddForm start={selectedStart} end={selectedEnd} />
+
 			<EventEditForm
 				oldEvent={selectedOldEvent}
 				event={selectedEvent}

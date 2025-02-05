@@ -29,8 +29,8 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { DateTimePicker } from "./date-picker";
-import { useEvents } from "@/context/events-context";
+import { DateTimePicker } from "./full-calendar-date-picker";
+import { useEvents } from "@/context/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
 
 const eventAddFormSchema = z.object({
