@@ -5,6 +5,9 @@ import {
 	QueryClientProvider as ReactQueryClientProvider,
 } from "@tanstack/react-query";
 import { PropsWithChildren } from "react";
+import { client } from "@/api";
+
+client.setConfig({ baseUrl: "http://localhost:8000" });
 
 const queryClient = new QueryClient();
 

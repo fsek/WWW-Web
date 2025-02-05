@@ -36,6 +36,8 @@ export default function News() {
 		...getAllNewsOptions(),
 	});
 
+	console.log(data);
+
 	const table = useCreateTable({ data: data ?? [], columns });
 
 	if (isFetching) {
