@@ -1,18 +1,10 @@
-import { useState, useEffect, useMemo } from "react";
-import { type NewsRead, NewsService } from "../../../api";
-import { Button } from "@/components/ui/button";
+import type { NewsRead } from "../../../api";
 import NewsForm from "./NewsForm";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllNewsOptions } from "@/api/@tanstack/react-query.gen";
-import {
-	createColumnHelper,
-	useReactTable,
-	flexRender,
-	RowModel,
-	Table,
-	getCoreRowModel,
-} from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
+import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
 const ACCEPTED_IMAGE_TYPES = [
 	"image/jpeg",
@@ -31,17 +23,13 @@ export interface NewsItem {
 const columnHelper = createColumnHelper<NewsRead>();
 
 const columns = [
-	columnHelper.accessor((row) => row.title_sv, {
-		id: "title_sv",
+	columnHelper.accessor("title_sv", {
+		header: "Svensk titel",
 		cell: (info) => info.getValue(),
-		header: () => <span>Svensk titel</span>,
-		//footer: (props) => props.column.id,
 	}),
-	columnHelper.accessor((row) => row.content_sv, {
-		id: "content_sv",
+	columnHelper.accessor("content_sv", {
+		header: "Svensk beskrivning",
 		cell: (info) => info.getValue(),
-		header: () => <span>Svensk beskrivning</span>,
-		//footer: (props) => props.column.id,
 	}),
 ];
 
@@ -53,11 +41,7 @@ export default function News() {
 		...getAllNewsOptions(),
 	});
 
-	const table = useReactTable({
-		columns,
-		data: (data as NewsRead[]) ?? [],
-		getCoreRowModel: getCoreRowModel(),
-	});
+	const table = useCreateTable({ data: data ?? [], columns });
 
 	if (isFetching) {
 		return <p> Hämtar</p>;

@@ -1,95 +1,67 @@
 import { useState } from "react";
-import type { EventRead } from "../../../api";
 import EventsForm from "./EventsForm";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import EventsEditForm from "./EventsEditForm";
 import { getAllEventsOptions } from "@/api/@tanstack/react-query.gen";
-import {
-	createColumnHelper,
-	useReactTable,
-	getCoreRowModel,
-	getPaginationRowModel,
-	type SortingState,
-	getSortedRowModel,
-} from "@tanstack/react-table";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { createColumnHelper, type Row } from "@tanstack/react-table";
+
 import AdminTable from "@/widgets/AdminTable";
 import formatTime from "@/help_functions/timeFormater";
-const ACCEPTED_IMAGE_TYPES = [
-	"image/jpeg",
-	"image/jpg",
-	"image/png",
-	"image/webp",
-];
+import type { EventRead } from "../../../api";
+import useCreateTable from "@/widgets/useCreateTable";
 
+// Column setup
 const columnHelper = createColumnHelper<EventRead>();
-
 const columns = [
-	columnHelper.accessor((row) => row.title_sv, {
-		id: "title_sv",
+	columnHelper.accessor("title_sv", {
+		header: "Svensk titel",
 		cell: (info) => info.getValue(),
-		header: () => <span>Svensk titel</span>,
-		size: 60,
-		//footer: (props) => props.column.id,
 	}),
-	columnHelper.accessor((row) => row.starts_at, {
-		id: "starts_at",
+	columnHelper.accessor("starts_at", {
+		header: "Starttid",
 		cell: (info) => formatTime(info.getValue()),
-		header: () => <span>Starttid</span>,
-		size: 60,
 	}),
-	columnHelper.accessor((row) => row.ends_at, {
-		id: "ends_at",
+	columnHelper.accessor("ends_at", {
+		header: "Sluttid",
 		cell: (info) => formatTime(info.getValue()),
-		header: () => <span>Sluttid</span>,
-		size: 60,
 	}),
-	columnHelper.accessor((row) => row.signup_start, {
-		id: "signup_start",
+	columnHelper.accessor("signup_start", {
+		header: "Anmälningsöppning",
 		cell: (info) => formatTime(info.getValue()),
-		header: () => <span>Anmälningsöppning</span>,
-		size: 60,
 	}),
-	columnHelper.accessor((row) => row.signup_end, {
-		id: "signup_end",
+	columnHelper.accessor("signup_end", {
+		header: "Anmälningsavslut",
 		cell: (info) => formatTime(info.getValue()),
-		header: () => <span>Anmälningsavslut</span>,
-		size: 60,
 	}),
 ];
 
 export default function Events() {
 	const queryClient = useQueryClient();
-
 	const { data, error, isFetching } = useQuery({
 		...getAllEventsOptions(),
 	});
 
-	const [sorting, setSorting] = useState<SortingState>([]);
+	const [openEditDialog, setOpenEditDialog] = useState(false);
+	const [selectedEvent, setSelectedEvent] = useState<EventRead | null>(null);
 
-	const table = useReactTable({
-		columns,
-		data: (data as EventRead[]) ?? [],
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		onSortingChange: setSorting,
-		initialState: {
-			pagination: {
-				pageIndex: 0, //custom initial page index
-				pageSize: 10, //custom default page size
-			},
-			sorting: sorting,
-		},
-		state: {
-			sorting,
-		},
-	});
+	const table = useCreateTable({ data: data ?? [], columns });
+
+	function handleRowClick(row: Row<EventRead>) {
+		setSelectedEvent(row.original);
+		setOpenEditDialog(true);
+	}
+
+	function handleClose() {
+		setOpenEditDialog(false);
+		setSelectedEvent(null);
+	}
 
 	if (isFetching) {
-		return <p> Hämtar</p>;
+		return <p>Hämtar...</p>;
 	}
 
 	if (error) {
-		return <p> Något gick fel :/</p>;
+		return <p>Något gick fel :/</p>;
 	}
 
 	return (
@@ -101,7 +73,14 @@ export default function Events() {
 				Här kan du skapa event & redigera existerande event på hemsidan.
 			</p>
 			<EventsForm />
-			<AdminTable table={table} />
+
+			<AdminTable table={table} onRowClick={handleRowClick} />
+
+			<EventsEditForm
+				open={openEditDialog}
+				onClose={() => handleClose()}
+				selectedEvent={selectedEvent as EventRead}
+			/>
 		</div>
 	);
 }

@@ -79,9 +79,12 @@ export default function EventsForm() {
 
 	const createEvents = useMutation({
 		...createEventMutation(),
-		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
+			setOpen(false);
+			setSubmitEnabled(true);
+		},
+		onError: () => {
 			setOpen(false);
 			setSubmitEnabled(true);
 		},

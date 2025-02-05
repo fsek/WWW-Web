@@ -18,7 +18,7 @@ const myHeaders = new Headers();
 
 myHeaders.append(
 	"Authorization",
-	`${token.data!.token_type} ${token.data!.access_token}`,
+	`${token.data?.token_type} ${token.data?.access_token}`,
 );
 
 client.setConfig({ headers: myHeaders });
