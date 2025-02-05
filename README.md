@@ -26,7 +26,7 @@ This repo uses VSCode's Dev Containers extension to standardize the development 
 
     - If you start WebWebWeb in a VSCode window, closing the window or switching to WWW-Web in the same VSCode window will terminate the backend. Open another window instead.
 
-6. Go to http://127.0.0.1:5173/ (or http://localhost:5175/admin) for the website where you can see the project🎉🥳🇱 🇬 🇹 🇲
+6. Go to http://127.0.0.1:3000/ (or http://localhost:3000/admin) for the website where you can see the project🎉🥳🇱 🇬 🇹 🇲
 
 7. From now on, whenever you want to open this project: Open a new VSCode window and in Recent, find `WWW-Web in a unique volume [Dev Container]`. Don't re-run `Clone Repository...` from step 3.
 
