@@ -83,7 +83,7 @@ export default function AdminTable<T>({
 							<tr
 								key={row.id}
 								onClick={() => onRowClick?.(row)}
-								className="border-t"
+								className="border-t hover:bg-gray-50"
 							>
 								{row.getVisibleCells().map((cell) => (
 									<td
