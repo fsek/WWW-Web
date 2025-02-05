@@ -8,7 +8,7 @@ import { createColumnHelper, type Row } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import formatTime from "@/help_functions/timeFormater";
 import type { EventRead } from "../../../api";
-import createTable from "@/widgets/createTable";
+import useCreateTable from "@/widgets/useCreateTable";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
@@ -44,7 +44,7 @@ export default function Events() {
 	const [openEditDialog, setOpenEditDialog] = useState(false);
 	const [selectedEvent, setSelectedEvent] = useState<EventRead | null>(null);
 
-	const table = createTable({ data: data ?? [], columns });
+	const table = useCreateTable({ data: data ?? [], columns });
 
 	function handleRowClick(row: Row<EventRead>) {
 		setSelectedEvent(row.original);

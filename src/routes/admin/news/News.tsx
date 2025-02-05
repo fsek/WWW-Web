@@ -2,14 +2,9 @@ import type { NewsRead } from "../../../api";
 import NewsForm from "./NewsForm";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllNewsOptions } from "@/api/@tanstack/react-query.gen";
-import {
-	createColumnHelper,
-	useReactTable,
-	getCoreRowModel,
-	getPaginationRowModel,
-} from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
-import createTable from "@/widgets/createTable";
+import useCreateTable from "@/widgets/useCreateTable";
 const ACCEPTED_IMAGE_TYPES = [
 	"image/jpeg",
 	"image/jpg",
@@ -44,7 +39,7 @@ export default function News() {
 		...getAllNewsOptions(),
 	});
 
-	const table = createTable({ data: data ?? [], columns });
+	const table = useCreateTable({ data: data ?? [], columns });
 
 	if (isFetching) {
 		return <p> Hämtar</p>;
