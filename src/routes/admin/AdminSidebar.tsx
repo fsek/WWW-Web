@@ -1,4 +1,15 @@
 import {
+	Calendar,
+	ChevronDown,
+	Home,
+	Inbox,
+	Newspaper,
+	Rss,
+	Search,
+	Settings,
+} from "lucide-react";
+
+import {
 	Sidebar,
 	SidebarContent,
 	SidebarGroup,
@@ -13,78 +24,62 @@ import {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
-} from "@radix-ui/react-collapsible";
+} from "@/components/ui/collapsible";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-const nollning = [
-	{
-		title: "Pirat",
-		year: 2018,
-	},
-	{
-		title: "Häst",
-		year: 2015,
-	},
-];
-
-const allmänt = [
-	{
-		title: "Nyheter",
-		url: "news",
-	},
-	{
-		title: "Evenemang",
-		url: "events",
-	},
-];
+const groups = {
+	Allmänt: [
+		{
+			title: "admin:news.self",
+			url: "news",
+			icon: Newspaper,
+		},
+		{
+			title: "admin:events.self",
+			url: "events",
+			icon: Calendar,
+		},
+	],
+};
 
 export function AdminSidebar() {
+	const { t } = useTranslation();
+
 	return (
 		<Sidebar>
-			<SidebarHeader>Adminpage</SidebarHeader>
+			<SidebarHeader>{t("admin:title")}</SidebarHeader>
 			<SidebarContent>
-				<Collapsible>
-					<SidebarGroup>
-						<SidebarGroupLabel>
-							<CollapsibleTrigger>Nollning</CollapsibleTrigger>
-						</SidebarGroupLabel>
-						<CollapsibleContent>
-							<SidebarGroupContent>
-								<SidebarMenu>
-									{nollning.map((item) => (
-										<SidebarMenuItem key={item.title}>
-											<SidebarMenuButton asChild>
-												<span>{item.title}</span>
-											</SidebarMenuButton>
-										</SidebarMenuItem>
-									))}
-								</SidebarMenu>
-							</SidebarGroupContent>
-						</CollapsibleContent>
-					</SidebarGroup>
-				</Collapsible>
-				<Collapsible>
-					<SidebarGroup>
-						<SidebarGroupLabel>
-							<CollapsibleTrigger>Allmänt</CollapsibleTrigger>
-						</SidebarGroupLabel>
-						<CollapsibleContent>
-							<SidebarGroupContent>
-								<SidebarMenu>
-									{allmänt.map((item) => (
-										<SidebarMenuItem key={item.title}>
-											<SidebarMenuButton asChild>
-												<Link to={item.url}>
-													<span>{item.title}</span>
-												</Link>
-											</SidebarMenuButton>
-										</SidebarMenuItem>
-									))}
-								</SidebarMenu>
-							</SidebarGroupContent>
-						</CollapsibleContent>
-					</SidebarGroup>
-				</Collapsible>
+				{Object.entries(groups).map(([group, items]) => (
+					<Collapsible defaultOpen className="group/collapsible">
+						<SidebarGroup>
+							<SidebarGroupLabel asChild>
+								<CollapsibleTrigger>
+									{group}
+									<ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+								</CollapsibleTrigger>
+							</SidebarGroupLabel>
+							<CollapsibleContent>
+								<SidebarGroup>
+									<SidebarGroupContent>
+										<SidebarMenu>
+											{items.map((item) => (
+												<SidebarMenuItem key={item.title}>
+													<SidebarMenuButton asChild>
+														<Link to={item.url}>
+															{<item.icon />}
+															<span>{t(item.title)}</span>
+														</Link>
+													</SidebarMenuButton>
+												</SidebarMenuItem>
+											))}
+										</SidebarMenu>
+									</SidebarGroupContent>
+								</SidebarGroup>
+							</CollapsibleContent>
+						</SidebarGroup>
+					</Collapsible>
+				))}
 			</SidebarContent>
 		</Sidebar>
 	);

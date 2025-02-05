@@ -36,7 +36,7 @@ function Nav() {
 							{/* Mobile menu button*/}
 							<button
 								type="button"
-								className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+								className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-white"
 								aria-controls="mobile-menu"
 								aria-expanded="false"
 							>
@@ -85,7 +85,7 @@ function Nav() {
 							</button>
 						</div>
 						<div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-							<div className="flex flex-shrink-0 items-center">
+							<div className="flex shrink-0 items-center">
 								<img
 									className="h-8 w-auto"
 									src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
@@ -126,7 +126,7 @@ function Nav() {
 						<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 							<button
 								type="button"
-								className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+								className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-hidden focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
 							>
 								<span className="absolute -inset-1.5"></span>
 								<span className="sr-only">View notifications</span>
@@ -152,7 +152,7 @@ function Nav() {
 								<div>
 									<button
 										type="button"
-										className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+										className="relative flex rounded-full bg-gray-800 text-sm focus:outline-hidden focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
 										id="user-menu-button"
 										aria-expanded="false"
 										aria-haspopup="true"
@@ -178,7 +178,7 @@ function Nav() {
             To: "transform opacity-0 scale-95"
             */}
 								<div
-									className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+									className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-hidden"
 									role="menu"
 									aria-orientation="vertical"
 									aria-labelledby="user-menu-button"

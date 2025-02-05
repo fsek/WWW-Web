@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
 import {
 	Form,
@@ -12,13 +17,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DialogTitle } from "@radix-ui/react-dialog";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
 	createNewsMutation,
 	getAllNewsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
+import { Plus } from "lucide-react";
 
 const newsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -72,6 +77,7 @@ export default function NewsForm() {
 					setSubmitEnabled(true);
 				}}
 			>
+				<Plus />
 				Skapa nyhet
 			</Button>
 
