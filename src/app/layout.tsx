@@ -7,7 +7,7 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	client.setConfig({ baseUrl: "http://localhost:8000" });
+	client.setConfig({ baseUrl: "http://host.docker.internal:8000" });
 
 	// FIXME: TEMPORARY
 	const token = await AuthService.authJwtLogin({

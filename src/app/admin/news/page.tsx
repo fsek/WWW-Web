@@ -32,7 +32,7 @@ const columns = [
 export default function News() {
 	const { t } = useTranslation();
 
-	const { data, error, isFetching } = useQuery({
+	const { data, error, isPending } = useQuery({
 		...getAllNewsOptions(),
 	});
 
@@ -40,7 +40,7 @@ export default function News() {
 
 	const table = useCreateTable({ data: data ?? [], columns });
 
-	if (isFetching) {
+	if (isPending) {
 		return <p> Hämtar</p>;
 	}
 

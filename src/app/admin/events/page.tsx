@@ -38,7 +38,7 @@ const columns = [
 ];
 
 export default function Events() {
-	const { data, error, isFetching } = useQuery({
+	const { data, error, isPending } = useQuery({
 		...getAllEventsOptions(),
 	});
 
@@ -57,7 +57,7 @@ export default function Events() {
 		setSelectedEvent(null);
 	}
 
-	if (isFetching) {
+	if (isPending) {
 		return <p>Hämtar...</p>;
 	}
 
