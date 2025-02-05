@@ -1,8 +1,10 @@
+"use client";
+
 import { useState } from "react";
 import EventsForm from "./EventsForm";
 import EventsEditForm from "./EventsEditForm";
 import { getAllEventsOptions } from "@/api/@tanstack/react-query.gen";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 
 import AdminTable from "@/widgets/AdminTable";
@@ -36,8 +38,7 @@ const columns = [
 ];
 
 export default function Events() {
-	const queryClient = useQueryClient();
-	const { data, error, isFetching } = useQuery({
+	const { data, error, isPending } = useQuery({
 		...getAllEventsOptions(),
 	});
 
@@ -56,7 +57,7 @@ export default function Events() {
 		setSelectedEvent(null);
 	}
 
-	if (isFetching) {
+	if (isPending) {
 		return <p>Hämtar...</p>;
 	}
 

@@ -4,10 +4,9 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
-		"build": "tsc && vite build",
-		"lint": "biome lint --write ./src",
-		"preview": "vite preview",
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
 		"generate-api": "openapi-ts"
 	},
 	"dependencies": {
@@ -29,24 +28,21 @@
 		"clsx": "^2.1.1",
 		"date-fns": "^3.6.0",
 		"i18next": "^24.2.1",
-		"i18next-browser-languagedetector": "^8.0.2",
-		"i18next-fs-backend": "^2.6.0",
-		"i18next-http-backend": "^3.0.1",
+		"i18next-resources-to-backend": "^1.2.1",
 		"localforage": "^1.10.0",
 		"lucide-react": "^0.454.0",
 		"match-sorter": "^6.3.4",
+		"next": "^15.1.6",
 		"react": "^18.2.0",
 		"react-day-picker": "^9.5.0",
 		"react-dom": "^18.2.0",
 		"react-hook-form": "^7.53.2",
 		"react-i18next": "^15.4.0",
-		"react-router-dom": "^6.23.1",
 		"sort-by": "^0.0.2",
 		"tailwind-merge": "^2.5.4",
 		"tailwindcss": "^4.0.0",
 		"tailwindcss-animate": "^1.0.7",
-		"zod": "^3.23.8",
-		"zustand": "^5.0.1"
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.3",
@@ -54,12 +50,9 @@
 		"@types/node": "^22.8.7",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.2.22",
-		"@vitejs/plugin-react": "^4.2.1",
-		"@vitejs/plugin-react-swc": "^3.6.0",
 		"lightningcss": "^1.27.0",
 		"openapi-ts": "^0.3.4",
 		"postcss": "^8.4.47",
-		"typescript": "^5.2.2",
-		"vite": "^5.2.0"
+		"typescript": "^5.2.2"
 	}
 }

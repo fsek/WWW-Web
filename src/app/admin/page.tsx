@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
-export default function Landing() {
+export default function AdminLanding() {
 	return (
 		<div>
 			<p>
 				Hej! 👋 Du 🫵 ser 👀 denna 📄 sida 📘 för 💡 att ✨ du 🫶 är 🧊 cool 😎
 				och 🕸️ spindel 🕷️.
 			</p>
-			<Link to="news">Goto news</Link>
+			<Link href="news">Goto news</Link>
 		</div>
 	);
 }

@@ -22,11 +22,11 @@ This repo uses VSCode's Dev Containers extension to standardize the development 
 
 4. After configuration has finished in the open terminal, it should say `Done. Press any key to close the terminal`. 
 
-5. Open a new Bash terminal (`Ctrl + Shift + Ö`) and run: `npm install`, `npm run generate-api` and then `npm run dev` ([backend application](https://github.com/fsek/WebWebWeb) needs to be active for both of these to work as wanted).
+5. Open a new Bash terminal (`Ctrl + Shift + Ö`) and run: `bun install`, `bun run generate-api` and then `bun run dev` ([backend application](https://github.com/fsek/WebWebWeb) needs to be active for both of these to work as wanted).
 
     - If you start WebWebWeb in a VSCode window, closing the window or switching to WWW-Web in the same VSCode window will terminate the backend. Open another window instead.
 
-6. Go to http://127.0.0.1:5173/ (or http://localhost:5175/admin) for the website where you can see the project🎉🥳🇱 🇬 🇹 🇲
+6. Go to http://127.0.0.1:3000/ (or http://localhost:3000/admin) for the website where you can see the project🎉🥳🇱 🇬 🇹 🇲
 
 7. From now on, whenever you want to open this project: Open a new VSCode window and in Recent, find `WWW-Web in a unique volume [Dev Container]`. Don't re-run `Clone Repository...` from step 3.
 

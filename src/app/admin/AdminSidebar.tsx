@@ -1,13 +1,6 @@
-import {
-	Calendar,
-	ChevronDown,
-	Home,
-	Inbox,
-	Newspaper,
-	Rss,
-	Search,
-	Settings,
-} from "lucide-react";
+"use client";
+
+import { Calendar, ChevronDown, Newspaper } from "lucide-react";
 
 import {
 	Sidebar,
@@ -25,19 +18,19 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
 
 const groups = {
 	Allmänt: [
 		{
 			title: "admin:news.self",
-			url: "news",
+			url: "/admin/news",
 			icon: Newspaper,
 		},
 		{
 			title: "admin:events.self",
-			url: "events",
+			url: "/admin/events",
 			icon: Calendar,
 		},
 	],
@@ -51,7 +44,7 @@ export function AdminSidebar() {
 			<SidebarHeader>{t("admin:title")}</SidebarHeader>
 			<SidebarContent>
 				{Object.entries(groups).map(([group, items]) => (
-					<Collapsible defaultOpen className="group/collapsible">
+					<Collapsible defaultOpen className="group/collapsible" key={group}>
 						<SidebarGroup>
 							<SidebarGroupLabel asChild>
 								<CollapsibleTrigger>
@@ -66,7 +59,7 @@ export function AdminSidebar() {
 											{items.map((item) => (
 												<SidebarMenuItem key={item.title}>
 													<SidebarMenuButton asChild>
-														<Link to={item.url}>
+														<Link href={item.url}>
 															{<item.icon />}
 															<span>{t(item.title)}</span>
 														</Link>

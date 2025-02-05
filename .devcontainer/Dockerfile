@@ -1,9 +1,8 @@
-FROM node:20-alpine
+FROM oven/bun:latest
 
 # To get fresh apk
-RUN apk update && apk upgrade
+RUN apt update
 
-#iputils is for ping
-RUN apk add git openssh curl iputils
+RUN apt install -y git openssh-client curl iputils-ping
 
-ENV ENV = development
+ENV ENV=development

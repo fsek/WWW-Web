@@ -32,3 +32,8 @@ package-lock.json
 package-lock.json
 package-lock.json
 package-lock.json
+
+
+.next
+next-env.d.ts
+dist
