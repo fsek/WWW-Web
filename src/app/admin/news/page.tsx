@@ -1,17 +1,13 @@
+"use client";
+
 import type { NewsRead } from "../../../api";
 import NewsForm from "./NewsForm";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getAllNewsOptions } from "@/api/@tanstack/react-query.gen";
 import { createColumnHelper } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
-const ACCEPTED_IMAGE_TYPES = [
-	"image/jpeg",
-	"image/jpg",
-	"image/png",
-	"image/webp",
-];
 
 export interface NewsItem {
 	title: string;
@@ -34,7 +30,6 @@ const columns = [
 ];
 
 export default function News() {
-	const queryClient = useQueryClient();
 	const { t } = useTranslation();
 
 	const { data, error, isFetching } = useQuery({
