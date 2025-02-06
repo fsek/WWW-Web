@@ -1,6 +1,6 @@
 import QueryClientProvider from "@/components/QueryClientProvider";
 import "./globals.css";
-import { AuthService, client } from "@/api";
+import { client } from "@/api";
 
 export default async function RootLayout({
 	children,
@@ -10,18 +10,6 @@ export default async function RootLayout({
 	client.setConfig({ baseUrl: "http://host.docker.internal:8000" });
 
 	// FIXME: TEMPORARY
-	const token = await AuthService.authJwtLogin({
-		body: { username: "boss@fsektionen.se", password: "dabdab" },
-	});
-
-	const myHeaders = new Headers();
-
-	myHeaders.append(
-		"Authorization",
-		`${token.data?.token_type} ${token.data?.access_token}`,
-	);
-
-	client.setConfig({ headers: myHeaders });
 
 	return (
 		<QueryClientProvider>
