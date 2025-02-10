@@ -6,5 +6,8 @@
 	},
 	"events": {
 		"self": "Events"
+	},
+	"songs": {
+		"self": "Songs"
 	}
 }

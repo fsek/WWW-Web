@@ -6,5 +6,8 @@
 	},
 	"events": {
 		"self": "Evenemang"
+	},
+	"songs": {
+		"self": "Sånger"
 	}
 }
