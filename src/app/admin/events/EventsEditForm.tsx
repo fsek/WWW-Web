@@ -68,10 +68,10 @@ export default function EventsEditForm({
 		if (open && selectedEvent) {
 			form.reset({
 				...selectedEvent,
-				starts_at: new Date(selectedEvent.starts_at).toLocaleString(),
-				ends_at: new Date(selectedEvent.ends_at).toLocaleString(),
-				signup_start: new Date(selectedEvent.signup_start).toLocaleString(),
-				signup_end: new Date(selectedEvent.signup_end).toLocaleString(),
+				starts_at: new Date(selectedEvent.starts_at).toISOString(),
+				ends_at: new Date(selectedEvent.ends_at).toISOString(),
+				signup_start: new Date(selectedEvent.signup_start).toISOString(),
+				signup_end: new Date(selectedEvent.signup_end).toISOString(),
 			});
 		}
 	}, [selectedEvent, form, open]);

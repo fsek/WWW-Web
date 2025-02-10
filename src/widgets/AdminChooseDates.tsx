@@ -15,10 +15,7 @@ export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
 
 	const handleDateChange = (newDate: Date | undefined) => {
 		if (newDate) {
-			const adjustedDate = new Date(newDate.getTime());
-			onChange(adjustedDate.toLocaleString());
-		} else {
-			onChange("");
+			onChange(newDate.toLocaleString());
 		}
 		setDate(newDate);
 	};
