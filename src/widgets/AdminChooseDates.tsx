@@ -15,11 +15,7 @@ export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
 
 	const handleDateChange = (newDate: Date | undefined) => {
 		if (newDate) {
-			const adjustedDate = new Date(newDate.getTime() + 60 * 60 * 1000);
-			console.log("Adjusted Date (UTC+1):", adjustedDate.toISOString());
-			onChange(adjustedDate.toISOString());
-		} else {
-			onChange("");
+			onChange(newDate.toLocaleString());
 		}
 		setDate(newDate);
 	};
