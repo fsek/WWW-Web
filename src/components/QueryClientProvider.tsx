@@ -5,24 +5,23 @@ import {
 	QueryClientProvider as ReactQueryClientProvider,
 } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
-import { AuthService, client } from "@/api";
+import { client } from "@/api";
+import { getAuthorizationHeader } from "@/lib/auth";
 
 client.setConfig({ baseUrl: "http://localhost:8000" });
 
 const queryClient = new QueryClient();
 
-const token = await AuthService.authJwtLogin({
-	body: { username: "boss@fsektionen.se", password: "dabdab" },
+client.interceptors.request.use((request, _options) => {
+	if (typeof window !== "undefined") {
+		const authorization = getAuthorizationHeader();
+
+		if (authorization) {
+			request.headers.set("Authorization", authorization);
+		}
+	}
+	return request;
 });
-
-const myHeaders = new Headers();
-
-myHeaders.append(
-	"Authorization",
-	`${token.data?.token_type} ${token.data?.access_token}`,
-);
-
-client.setConfig({ headers: myHeaders });
 
 export default function QueryClientProvider({ children }: PropsWithChildren) {
 	return (

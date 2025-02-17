@@ -16,13 +16,13 @@ import { Input } from "@/components/ui/input";
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
 	getAllEventsQueryKey,
 	removeMutation,
 	updateMutation,
 } from "@/api/@tanstack/react-query.gen";
 import type { EventRead, EventUpdate } from "../../../api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
