@@ -1,10 +1,15 @@
 {
 	"title": "Adminsida",
+	"general": "Allmänt",
 	"news": {
 		"self": "Nyheter",
-		"page_title": "Administrera nyheter"
+		"page_title": "Administrera nyheter",
+		"create": "Skapa nyhet"
 	},
 	"events": {
-		"self": "Evenemang"
-	}
+		"self": "Evenemang",
+		"create": "Skapa event"
+	},
+	"preview": "Förhandsgranska",
+	"publish": "Publicera"
 }
