@@ -26,10 +26,10 @@ const eventsSchema = z.object({
 	title_sv: z.string().min(2),
 	title_en: z.string().min(2),
 	council_id: z.number().int(),
-	starts_at: z.date(),
-	ends_at: z.date(),
-	signup_start: z.date(),
-	signup_end: z.date(),
+	starts_at: z.string(),
+	ends_at: z.string(),
+	signup_start: z.string(),
+	signup_end: z.string(),
 	description_sv: z.string().max(1000),
 	description_en: z.string().max(1000),
 	max_event_users: z.number(),
@@ -55,10 +55,10 @@ export default function EventsForm() {
 			title_sv: "",
 			title_en: "",
 			council_id: 0,
-			starts_at: new Date("2025-01-31T18:00"),
-			ends_at: new Date("2025-01-31T20:00"),
-			signup_start: new Date("2025-01-31T18:00"),
-			signup_end: new Date("2025-01-31T20:00"),
+			starts_at: new Date().toISOString(),
+			ends_at: new Date().toISOString(),
+			signup_start: new Date().toISOString(),
+			signup_end: new Date().toISOString(),
 			description_sv: "",
 			description_en: "",
 			max_event_users: 0,
@@ -79,9 +79,12 @@ export default function EventsForm() {
 
 	const createEvents = useMutation({
 		...createEventMutation(),
-		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
+			setOpen(false);
+			setSubmitEnabled(true);
+		},
+		onError: () => {
 			setOpen(false);
 			setSubmitEnabled(true);
 		},
@@ -94,10 +97,10 @@ export default function EventsForm() {
 				title_sv: values.title_sv,
 				title_en: values.title_en,
 				council_id: values.council_id,
-				starts_at: values.starts_at,
-				ends_at: values.ends_at,
-				signup_start: values.signup_start,
-				signup_end: values.signup_end,
+				starts_at: new Date(values.starts_at),
+				ends_at: new Date(values.ends_at),
+				signup_start: new Date(values.signup_start),
+				signup_end: new Date(values.signup_end),
 				description_sv: values.description_sv,
 				description_en: values.description_en,
 				max_event_users: values.max_event_users,

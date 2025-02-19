@@ -28,8 +28,6 @@
 			}
 		}
 	},
-	"runArgs": [
-		"--network=host"
-	],
-	"postCreateCommand": "npm install"
+	"runArgs": ["--network=host"],
+	"postCreateCommand": "bun install"
 }
