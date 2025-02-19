@@ -2,6 +2,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AdminSidebar } from "./AdminSidebar";
 import initTranslations, { Locale, Namespace } from "../i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
+import LoginWall from "@/components/LoginWall";
 
 const locale = "sv" satisfies Locale;
 const i18nNamespaces = ["admin"] satisfies Namespace[];
@@ -19,13 +20,15 @@ export default async function AdminLayout({
 			locale={locale}
 			resources={resources}
 		>
-			<SidebarProvider>
-				<AdminSidebar />
-				<main>
-					<SidebarTrigger />
-					{children}
-				</main>
-			</SidebarProvider>
+			<LoginWall>
+				<SidebarProvider>
+					<AdminSidebar />
+					<main>
+						<SidebarTrigger />
+						{children}
+					</main>
+				</SidebarProvider>
+			</LoginWall>
 		</TranslationsProvider>
 	);
 }
