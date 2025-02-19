@@ -1,0 +1,12 @@
+{
+	"title": "Main page",
+	"navbar": {
+		"sektionen": "Sektionen",
+		"engage": "Engagera dig",
+		"companies": "Företag",
+		"login": "Logga in!",
+		"booking": "Bokningar",
+		"documents": "Dokument",
+		"contact": "Kontakt"
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"title": "Main page",
+	"navbar": {
+		"sektionen": "Guild",
+		"engage": "Engadge",
+		"companies": "Companies",
+		"login": "Login!",
+		"booking": "Bookings",
+		"documents": "Documents",
+		"contact": "Contact"
+	}
+}
