@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+
 import { cn } from "@/lib/utils";
 import {
 	NavigationMenu,
@@ -12,31 +13,6 @@ import {
 	NavigationMenuTrigger,
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import FLogga from "@/assets/f-logga";
-import { useTranslation } from "react-i18next";
-
-const bar = [
-	{
-		title: "main:navbar:sektionen",
-		things: [
-			{
-				title: "Lol",
-				href: "/docs/primitives/hover-card",
-				description: "Läs detta",
-			},
-			{
-				title: "Hej",
-				href: "/docs/primitives/hover-card",
-				description: "Sjunger",
-			},
-		],
-	},
-	{ title: "main:navbar:companies", things: [] },
-	{ title: "main:navbar:engage", things: [] },
-	{ title: "main:navbar:booking", things: [] },
-	{ title: "main:navbar:documents", things: [] },
-	{ title: "main:navbar:contact", things: [] },
-];
 
 const components: { title: string; href: string; description: string }[] = [
 	{
@@ -77,45 +53,99 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export function NavigationMenuDemo() {
-	const { t } = useTranslation();
+	function onNavChange() {
+		setTimeout(() => {
+			// Select elements with the state "open"
+			const triggers = document.querySelectorAll(
+				'.submenu-trigger[data-state="open"]',
+			);
+			const dropdowns = document.querySelectorAll(
+				'.nav-viewport[data-state="open"]',
+			);
+
+			if (!triggers.length || !dropdowns.length) return;
+
+			const { offsetLeft, offsetWidth } = triggers[0] as HTMLElement;
+			const menuWidth = dropdowns[0].children[0].clientWidth;
+			const menuLeftPosition = offsetLeft + offsetWidth / 2 - menuWidth / 2;
+
+			// Apply the calculated position
+			document.documentElement.style.setProperty(
+				"--menu-left-position",
+				`${menuLeftPosition}px`,
+			);
+		});
+	}
 
 	return (
-		<header className="flex items-center justify-between p-4">
-			{/* Logo on the left */}
-			<FLogga className="w-auto" />
-
-			{/* Navigation menu on the right */}
-			<NavigationMenu>
-				<NavigationMenuList className="flex items-center space-x-4">
-					{bar.map((item) => (
-						<NavigationMenuItem key={item.title}>
-							<NavigationMenuTrigger>{t(item.title)}</NavigationMenuTrigger>
-							<NavigationMenuContent>
-								<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-									{components.map((component) => (
-										<ListItem
-											key={component.title}
-											title={component.title}
-											href={component.href}
+		<div>
+			<NavigationMenu
+				onValueChange={onNavChange}
+				className="w-full max-w-full py-2"
+			>
+				<NavigationMenuList>
+					<NavigationMenuItem>
+						<NavigationMenuTrigger className="submenu-trigger">
+							Getting started
+						</NavigationMenuTrigger>
+						<NavigationMenuContent>
+							<ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+								<li className="row-span-3">
+									<NavigationMenuLink asChild>
+										<a
+											className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+											href="/"
 										>
-											{component.description}
-										</ListItem>
-									))}
-								</ul>
-							</NavigationMenuContent>
-						</NavigationMenuItem>
-					))}
-
+											<div className="mb-2 mt-4 text-lg font-medium">
+												shadcn/ui
+											</div>
+											<p className="text-sm leading-tight text-muted-foreground">
+												Beautifully designed components built with Radix UI and
+												Tailwind CSS.
+											</p>
+										</a>
+									</NavigationMenuLink>
+								</li>
+								<ListItem href="/docs" title="Introduction">
+									Re-usable components built using Radix UI and Tailwind CSS.
+								</ListItem>
+								<ListItem href="/docs/installation" title="Installation">
+									How to install dependencies and structure your app.
+								</ListItem>
+								<ListItem href="/docs/primitives/typography" title="Typography">
+									Styles for headings, paragraphs, lists...etc
+								</ListItem>
+							</ul>
+						</NavigationMenuContent>
+					</NavigationMenuItem>
+					<NavigationMenuItem>
+						<NavigationMenuTrigger className="submenu-trigger">
+							Components
+						</NavigationMenuTrigger>
+						<NavigationMenuContent>
+							<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+								{components.map((component) => (
+									<ListItem
+										key={component.title}
+										title={component.title}
+										href={component.href}
+									>
+										{component.description}
+									</ListItem>
+								))}
+							</ul>
+						</NavigationMenuContent>
+					</NavigationMenuItem>
 					<NavigationMenuItem>
 						<Link href="/docs" legacyBehavior passHref>
 							<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-								{t("navbar.login")}
+								Documentation
 							</NavigationMenuLink>
 						</Link>
 					</NavigationMenuItem>
 				</NavigationMenuList>
 			</NavigationMenu>
-		</header>
+		</div>
 	);
 }
 
