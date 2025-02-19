@@ -75,7 +75,7 @@ export interface CalendarEvent {
 export const initialEvents: CalendarEvent[] = [
 	{
 		id: "1",
-		title: "Daily Standup Meeting",
+		title: "These are fake events",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -95,7 +95,7 @@ export const initialEvents: CalendarEvent[] = [
 	},
 	{
 		id: "2",
-		title: "Client Lunch",
+		title: "If these show up, you need to add an event source",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),

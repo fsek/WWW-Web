@@ -45,7 +45,13 @@ type DayRenderProps = {
 	info: DayCellContentArg;
 };
 
-export default function Calendar() {
+interface CalendarProps {
+	showDescription: boolean;
+	handleOpenDetails?: (event?: CalendarEvent) => void;
+	disableEdit?: boolean;
+}
+
+export default function Calendar({ showDescription, handleOpenDetails, disableEdit }: CalendarProps) {
 	const { events, setEventAddOpen, setEventEditOpen, setEventViewOpen } =
 		useEvents();
 
@@ -262,23 +268,38 @@ export default function Calendar() {
 					eventChange={(eventInfo) => handleEventChange(eventInfo)}
 					select={handleDateSelect}
 					datesSet={(dates) => setViewedDate(dates.start)}
-					dateClick={() => setEventAddOpen(true)}
+					dateClick={(!disableEdit ?? true) ? () => setEventAddOpen(true) : undefined}
 					nowIndicator
-					editable
+					editable={!disableEdit ?? true} 
 					selectable
 				/>
 			</Card>
 
 			{/* Render the EventAddForm so it can appear when eventAddOpen is toggled */}
-			<EventAddForm start={selectedStart} end={selectedEnd} />
+			{(!disableEdit) && (
+				<EventAddForm
+					start={selectedStart}
+					end={selectedEnd}
+					showDescription={showDescription}
+				/>
+			)}
 
-			<EventEditForm
-				oldEvent={selectedOldEvent}
-				event={selectedEvent}
-				isDrag={isDrag}
-				displayButton={false}
+			{(disableEdit) && (
+				<EventEditForm
+					oldEvent={selectedOldEvent}
+					event={selectedEvent}
+					isDrag={isDrag}
+					displayButton={false}
+					showDescription={showDescription}
+				/>
+			)}
+
+			<EventView 
+				event={selectedEvent} 
+				showDescription={showDescription} 
+				handleOpenDetails={handleOpenDetails}
+				disableEdit={disableEdit ?? false}
 			/>
-			<EventView event={selectedEvent} />
 		</div>
 	);
 }

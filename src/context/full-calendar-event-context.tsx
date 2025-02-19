@@ -40,18 +40,29 @@ export const useEvents = () => {
 	return context;
 };
 
-export const EventsProvider: React.FC<{
+interface EventsProviderProps {
 	children: ReactNode;
 	initialCalendarEvents?: CalendarEvent[];
+	eventColor?: string;
 	handleDelete?: (id: string) => void;
 	handleEdit?: (event: Event) => void;
-}> = ({ children, initialCalendarEvents, handleDelete, handleEdit }) => {
+	handleAdd?: (event: Event) => void;
+}
+
+export const EventsProvider: React.FC<EventsProviderProps> = ({
+	children,
+	initialCalendarEvents,
+	eventColor,
+	handleDelete,
+	handleEdit,
+	handleAdd,
+}) => {
 	const [events, setEvents] = useState<CalendarEvent[]>(
 		(initialCalendarEvents ?? initialEvents).map((event) => ({
 			// uses initialEvents from full-calendar-seed.ts if none specified
 			...event,
 			id: String(event.id),
-			color: event.backgroundColor,
+			color: eventColor ?? "#76c7ef",
 		})),
 	);
 	const [eventViewOpen, setEventViewOpen] = useState(false);
@@ -62,7 +73,15 @@ export const EventsProvider: React.FC<{
 		useState(false);
 
 	const addEvent = (event: CalendarEvent) => {
-		setEvents((prevEvents) => [...prevEvents, event]);
+		try {
+			if (handleAdd) {
+				// if handleAdd is defined, call it
+				handleAdd(event);
+			}
+			setEvents((prevEvents) => [...prevEvents, event]);
+		} catch (error) {
+			console.error("Error adding event:", error);
+		}
 	};
 
 	const deleteEvent = (id: string) => {

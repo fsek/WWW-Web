@@ -61,6 +61,7 @@ interface EventEditFormProps {
 	event?: CalendarEvent;
 	isDrag: boolean;
 	displayButton: boolean;
+	showDescription: boolean;
 }
 
 export function EventEditForm({
@@ -68,9 +69,11 @@ export function EventEditForm({
 	event,
 	isDrag,
 	displayButton,
+	showDescription,
 }: EventEditFormProps) {
 	const { editEvent } = useEvents();
 	const { eventEditOpen, setEventEditOpen } = useEvents();
+	const { eventViewOpen, setEventViewOpen } = useEvents();
 
 	const { toast } = useToast();
 
@@ -133,12 +136,15 @@ export function EventEditForm({
 
 	return (
 		<AlertDialog open={eventEditOpen}>
-			{displayButton && (
+			{(displayButton) && (
 				<AlertDialogTrigger asChild>
 					<Button
 						className="w-full sm:w-24 text-xs md:text-sm mb-1"
 						variant="default"
-						onClick={() => setEventEditOpen(true)}
+						onClick={() => {
+							setEventViewOpen(false);
+							setEventEditOpen(true);
+							}}
 					>
 						Edit Event
 					</Button>
@@ -165,23 +171,25 @@ export function EventEditForm({
 								</FormItem>
 							)}
 						/>
-						<FormField
-							control={form.control}
-							name="description"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Description (ignored)</FormLabel>
-									<FormControl>
-										<Textarea
-											placeholder="Daily session"
-											className="resize-none"
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						{(showDescription) && (
+							<FormField
+								control={form.control}
+								name="description"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Description</FormLabel>
+										<FormControl>
+											<Textarea
+												placeholder="Daily session"
+												className="resize-none"
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						)}
 						<FormField
 							control={form.control}
 							name="start"
@@ -218,6 +226,7 @@ export function EventEditForm({
 								</FormItem>
 							)}
 						/>
+						{/* Not used
 						<FormField
 							control={form.control}
 							name="color"
@@ -248,6 +257,7 @@ export function EventEditForm({
 								</FormItem>
 							)}
 						/>
+						*/}
 						<AlertDialogFooter className="pt-2">
 							<AlertDialogCancel onClick={() => handleEditCancellation()}>
 								Cancel

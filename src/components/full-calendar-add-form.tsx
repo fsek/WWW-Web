@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -58,9 +58,14 @@ type EventAddFormValues = z.infer<typeof eventAddFormSchema>;
 interface EventAddFormProps {
 	start: Date;
 	end: Date;
+	showDescription: boolean;
 }
 
-export function EventAddForm({ start, end }: EventAddFormProps) {
+export function EventAddForm({
+	start,
+	end,
+	showDescription,
+}: EventAddFormProps) {
 	const { events, addEvent } = useEvents();
 	const { eventAddOpen, setEventAddOpen } = useEvents();
 
@@ -70,17 +75,22 @@ export function EventAddForm({ start, end }: EventAddFormProps) {
 		resolver: zodResolver(eventAddFormSchema),
 	});
 
+	const effectRun = useRef(false);
+
 	useEffect(() => {
-		form.reset({
-			title: "",
-			description: "",
-			start: start,
-			end: end,
-			color: "#76c7ef",
-		});
+		if (!effectRun.current) {
+			form.reset({
+				title: "",
+				description: "",
+				start: start,
+				end: end,
+				color: "#76c7ef",
+			});
+			effectRun.current = true;
+		}
 	}, [form, start, end]);
 
-	async function onSubmit(data: EventAddFormValues) {
+	const onSubmit = useCallback(async (data: EventAddFormValues) => {
 		const newEvent = {
 			id: String(events.length + 1),
 			title: data.title,
@@ -99,7 +109,8 @@ export function EventAddForm({ start, end }: EventAddFormProps) {
 				</ToastAction>
 			),
 		});
-	}
+	}, [events, addEvent, setEventAddOpen, toast]);
+
 
 	return (
 		<AlertDialog open={eventAddOpen}>
@@ -133,23 +144,25 @@ export function EventAddForm({ start, end }: EventAddFormProps) {
 								</FormItem>
 							)}
 						/>
-						<FormField
-							control={form.control}
-							name="description"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Description</FormLabel>
-									<FormControl>
-										<Textarea
-											placeholder="Daily session"
-											className="max-h-36"
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						{(showDescription) && (
+							<FormField
+								control={form.control}
+								name="description"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Description</FormLabel>
+										<FormControl>
+											<Textarea
+												placeholder="Daily session"
+												className="max-h-36"
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						)}
 						<FormField
 							control={form.control}
 							name="start"
@@ -186,6 +199,7 @@ export function EventAddForm({ start, end }: EventAddFormProps) {
 								</FormItem>
 							)}
 						/>
+						{/* Not used
 						<FormField
 							control={form.control}
 							name="color"
@@ -216,6 +230,7 @@ export function EventAddForm({ start, end }: EventAddFormProps) {
 								</FormItem>
 							)}
 						/>
+						*/}
 						<AlertDialogFooter className="pt-2">
 							<AlertDialogCancel onClick={() => setEventAddOpen(false)}>
 								Cancel

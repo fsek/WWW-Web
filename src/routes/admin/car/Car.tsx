@@ -4,7 +4,10 @@ import { useState } from "react";
 import type { CarRead } from "../../../api";
 import CarForm from "./CarForm.tsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAllBookingOptions } from "@/api/@tanstack/react-query.gen";
+import {
+	createBookingMutation,
+	getAllBookingOptions,
+} from "@/api/@tanstack/react-query.gen";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Calendar from "@/components/full-calendar.tsx";
@@ -67,6 +70,16 @@ export default function Events() {
 
 	const { data, error, isFetching } = useQuery({
 		...getAllBookingOptions(),
+	});
+
+	const handleEventAdd = useMutation({
+		...createBookingMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			setOpen(false);
+			setSubmitEnabled(true);
+		},
 	});
 
 	const handleEventDelete = useMutation({
@@ -141,6 +154,23 @@ export default function Events() {
 			<Separator />
 			<EventsProvider
 				initialCalendarEvents={events}
+				eventColor="#f6ad55" // TODO: use tailwind
+				handleAdd={(event) => {
+					handleEventAdd.mutate(
+						{
+							body: {
+								description: event.title,
+								start_time: event.start,
+								end_time: event.end,
+							},
+						},
+						{
+							onError: (error) => {
+								console.error("Failed to add event", error);
+							},
+						},
+					);
+				}}
 				handleDelete={(event) => {
 					handleEventDelete.mutate(
 						{ path: { booking_id: Number(event.id) } },
@@ -160,8 +190,6 @@ export default function Events() {
 						console.error("Missing event ID:", event);
 						return;
 					}
-
-					console.log("Event ID:", event.id);
 
 					handleEventEdit.mutate(
 						{
@@ -204,7 +232,11 @@ export default function Events() {
 							</div>
 
 							<Separator />
-							<Calendar />
+							<Calendar 
+								showDescription={false} 
+								// handleOpenDetails={() => {}}
+								disableEdit={true} // Also disables delete, add and drag-and-drop
+							/>
 						</TabsContent>
 						<TabsContent value="list" className="w-full px-5 space-y-5">
 							<div className="space-y-0">
