@@ -30,6 +30,11 @@ export type AdUpdate = {
     condition?: (number | null);
 };
 
+export type AddEventTag = {
+    event_id: number;
+    tag_id: number;
+};
+
 export type AdventureMissionCreate = {
     title: string;
     description: string;
@@ -112,7 +117,12 @@ export type CandidateElectionRead = {
     candidate_id: number;
     user_id: number;
     user: CandidateUserRead;
-    election_posts: Array<api_schemas__candidate_schema__PostRead>;
+    election_posts: Array<CandidatePostRead>;
+};
+
+export type CandidatePostRead = {
+    post_id: number;
+    election_post_id: number;
 };
 
 export type CandidateRead = {
@@ -120,7 +130,7 @@ export type CandidateRead = {
     election_id: number;
     user_id: number;
     user: CandidateUserRead;
-    election_posts: Array<api_schemas__candidate_schema__PostRead>;
+    election_posts: Array<CandidatePostRead>;
 };
 
 export type CandidateUserRead = {
@@ -151,6 +161,17 @@ export type CarUpdate = {
     description?: (string | null);
     start_time?: (Date | null);
     end_time?: (Date | null);
+};
+
+export type CouncilCreate = {
+    name: string;
+};
+
+export type CouncilRead = {
+    id: number;
+    name: string;
+    posts: Array<PostRead>;
+    events: Array<EventRead>;
 };
 
 export type ElectionAddPosts = {
@@ -259,6 +280,10 @@ export type EventTagRead = {
 };
 
 export type EventUpdate = {
+    starts_at?: (Date | null);
+    ends_at?: (Date | null);
+    signup_start?: (Date | null);
+    signup_end?: (Date | null);
     title_sv?: (string | null);
     title_en?: (string | null);
     description_sv?: (string | null);
@@ -299,6 +324,11 @@ export enum group_type {
 }
 
 export type GroupMissionCreate = {
+    points: number;
+    adventure_mission_id: number;
+};
+
+export type GroupMissionEdit = {
     points: number;
     adventure_mission_id: number;
 };
@@ -386,6 +416,11 @@ export type NollningCreate = {
     description: string;
 };
 
+export type NollningDeleteMission = {
+    group_id: number;
+    mission_id: number;
+};
+
 export type NollningGroupRead = {
     id: number;
     group: GroupRead;
@@ -402,7 +437,7 @@ export type NollningRead = {
 
 export type PermissionCreate = {
     action: 'view' | 'manage';
-    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe' | 'Election' | 'Groups' | 'Adventure Missions' | 'Nollning';
+    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe' | 'Election' | 'Groups' | 'Adventure Missions' | 'Nollning' | 'Tags' | 'Council';
 };
 
 export enum action {
@@ -424,16 +459,30 @@ export enum target {
     ELECTION = 'Election',
     GROUPS = 'Groups',
     ADVENTURE_MISSIONS = 'Adventure Missions',
-    NOLLNING = 'Nollning'
+    NOLLNING = 'Nollning',
+    TAGS = 'Tags',
+    COUNCIL = 'Council'
 }
 
 export type PermissionRead = {
     id: number;
     action: 'view' | 'manage';
-    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe' | 'Election' | 'Groups' | 'Adventure Missions' | 'Nollning';
+    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe' | 'Election' | 'Groups' | 'Adventure Missions' | 'Nollning' | 'Tags' | 'Council';
 };
 
 export type PostCreate = {
+    name: string;
+    council_id: number;
+};
+
+export type PostRead = {
+    id: number;
+    name: string;
+    council_id: number;
+    permissions: Array<_PostPermissionRead>;
+};
+
+export type PostUpdate = {
     name: string;
     council_id: number;
 };
@@ -448,7 +497,7 @@ export type SongCategoryCreate = {
 };
 
 export type SongCategoryRead = {
-    id: (number | null);
+    id: number;
     name: string;
 };
 
@@ -457,7 +506,7 @@ export type SongCreate = {
     author: (string | null);
     melody: (string | null);
     content: string;
-    category: SongCategoryRead;
+    category_id: number;
 };
 
 export type SongRead = {
@@ -471,6 +520,11 @@ export type SongRead = {
 };
 
 export type TagCreate = {
+    name: string;
+};
+
+export type TagEdit = {
+    id: number;
     name: string;
 };
 
@@ -559,18 +613,6 @@ export type _UserPostRead = {
     council_id: number;
 };
 
-export type api_schemas__candidate_schema__PostRead = {
-    post_id: number;
-    election_post_id: number;
-};
-
-export type api_schemas__post_schemas__PostRead = {
-    id: number;
-    name: string;
-    council_id: number;
-    permissions: Array<_PostPermissionRead>;
-};
-
 export type login = {
     grant_type?: (string | null);
     username: string;
@@ -607,7 +649,7 @@ export type UsersUpdateUserResponse = (unknown);
 
 export type UsersUpdateUserError = (HTTPValidationError);
 
-export type PostsGetAllPostsResponse = (Array<api_schemas__post_schemas__PostRead>);
+export type PostsGetAllPostsResponse = (Array<PostRead>);
 
 export type PostsGetAllPostsError = unknown;
 
@@ -615,7 +657,7 @@ export type PostsCreatePostData = {
     body: PostCreate;
 };
 
-export type PostsCreatePostResponse = (api_schemas__post_schemas__PostRead);
+export type PostsCreatePostResponse = (PostRead);
 
 export type PostsCreatePostError = (HTTPValidationError);
 
@@ -628,6 +670,17 @@ export type PostsDeletePostData = {
 export type PostsDeletePostResponse = (void);
 
 export type PostsDeletePostError = (HTTPValidationError);
+
+export type PostsUpdatePostData = {
+    body: PostUpdate;
+    path: {
+        post_id: number;
+    };
+};
+
+export type PostsUpdatePostResponse = (PostRead);
+
+export type PostsUpdatePostError = (HTTPValidationError);
 
 export type PermissionsGetAllPermissionsResponse = (Array<PermissionRead>);
 
@@ -713,79 +766,97 @@ export type EventsCreateEventResponse = (EventRead);
 
 export type EventsCreateEventError = (HTTPValidationError);
 
-export type EventsRemoveData = {
+export type EventsEventRemoveData = {
     path: {
         event_id: number;
     };
 };
 
-export type EventsRemoveResponse = (void);
+export type EventsEventRemoveResponse = (EventRead);
 
-export type EventsRemoveError = (HTTPValidationError);
+export type EventsEventRemoveError = (HTTPValidationError);
 
-export type EventsUpdateData = {
+export type EventsEventUpdateData = {
     body: EventUpdate;
     path: {
         event_id: number;
     };
 };
 
-export type EventsUpdateResponse = (EventRead);
+export type EventsEventUpdateResponse = (EventRead);
 
-export type EventsUpdateError = (HTTPValidationError);
+export type EventsEventUpdateError = (HTTPValidationError);
 
-export type EventsGetRandomSignupData = {
+export type EventsGetRandomEventSignupData = {
     path: {
         event_id: number;
     };
 };
 
-export type EventsGetRandomSignupResponse = (Array<UserRead>);
+export type EventsGetRandomEventSignupResponse = (Array<UserRead>);
 
-export type EventsGetRandomSignupError = (HTTPValidationError);
+export type EventsGetRandomEventSignupError = (HTTPValidationError);
 
-export type EventsGetAllSignupsData = {
+export type EventsGetAllEventSignupsData = {
     path: {
         event_id: number;
     };
 };
 
-export type EventsGetAllSignupsResponse = (Array<UserRead>);
+export type EventsGetAllEventSignupsResponse = (Array<UserRead>);
 
-export type EventsGetAllSignupsError = (HTTPValidationError);
+export type EventsGetAllEventSignupsError = (HTTPValidationError);
 
-export type EventSignupSignupRouteData = {
+export type EventsAddTagToEventData = {
+    body: AddEventTag;
+};
+
+export type EventsAddTagToEventResponse = (AddEventTag);
+
+export type EventsAddTagToEventError = (HTTPValidationError);
+
+export type EventsGetEventTagsData = {
+    path: {
+        event_id: number;
+    };
+};
+
+export type EventsGetEventTagsResponse = (Array<EventTagRead>);
+
+export type EventsGetEventTagsError = (HTTPValidationError);
+
+export type EventSignupEventSignupRouteData = {
     body: EventSignupCreate;
     path: {
         event_id: number;
     };
 };
 
-export type EventSignupSignupRouteResponse = (EventRead);
+export type EventSignupEventSignupRouteResponse = (EventRead);
 
-export type EventSignupSignupRouteError = (HTTPValidationError);
+export type EventSignupEventSignupRouteError = (HTTPValidationError);
 
-export type EventSignupSignoffRouteData = {
+export type EventSignupEventSignoffRouteData = {
     body: EventSignupDelete;
     path: {
         event_id: number;
     };
 };
 
-export type EventSignupSignoffRouteResponse = (EventRead);
+export type EventSignupEventSignoffRouteResponse = (EventRead);
 
-export type EventSignupSignoffRouteError = (HTTPValidationError);
+export type EventSignupEventSignoffRouteError = (HTTPValidationError);
 
-export type EventSignupUpdateSignupData = {
+export type EventSignupUpdateEventSignupRouteData = {
     body: EventSignupUpdate;
     path: {
         event_id: number;
     };
 };
 
-export type EventSignupUpdateSignupResponse = (EventRead);
+export type EventSignupUpdateEventSignupRouteResponse = (EventRead);
 
-export type EventSignupUpdateSignupError = (HTTPValidationError);
+export type EventSignupUpdateEventSignupRouteError = (HTTPValidationError);
 
 export type NewsGetAllNewsResponse = (Array<NewsRead>);
 
@@ -1444,6 +1515,17 @@ export type NollningAddGroupToNollningResponse = (NollningRead);
 
 export type NollningAddGroupToNollningError = (HTTPValidationError);
 
+export type NollningDeleteGroupMissionData = {
+    body: NollningDeleteMission;
+    path: {
+        id: number;
+    };
+};
+
+export type NollningDeleteGroupMissionResponse = (NollningDeleteMission);
+
+export type NollningDeleteGroupMissionError = (HTTPValidationError);
+
 export type NollningAddCompletedMissionData = {
     body: GroupMissionCreate;
     path: {
@@ -1454,6 +1536,17 @@ export type NollningAddCompletedMissionData = {
 export type NollningAddCompletedMissionResponse = (GroupMissionRead);
 
 export type NollningAddCompletedMissionError = (HTTPValidationError);
+
+export type NollningEditCompletedMissionData = {
+    body: GroupMissionEdit;
+    path: {
+        id: number;
+    };
+};
+
+export type NollningEditCompletedMissionResponse = (GroupMissionRead);
+
+export type NollningEditCompletedMissionError = (HTTPValidationError);
 
 export type NollningGetCompletedMissionsData = {
     path: {
@@ -1476,6 +1569,46 @@ export type TagsPostTagData = {
 export type TagsPostTagResponse = (TagRead);
 
 export type TagsPostTagError = (HTTPValidationError);
+
+export type TagsEditTagData = {
+    body: TagEdit;
+};
+
+export type TagsEditTagResponse = (TagRead);
+
+export type TagsEditTagError = (HTTPValidationError);
+
+export type TagsDeleteTagData = {
+    path: {
+        tag_id: number;
+    };
+};
+
+export type TagsDeleteTagResponse = (TagRead);
+
+export type TagsDeleteTagError = (HTTPValidationError);
+
+export type CouncilGetAllCouncilsResponse = (Array<CouncilRead>);
+
+export type CouncilGetAllCouncilsError = unknown;
+
+export type CouncilCreateCouncilData = {
+    body: CouncilCreate;
+};
+
+export type CouncilCreateCouncilResponse = (CouncilRead);
+
+export type CouncilCreateCouncilError = (HTTPValidationError);
+
+export type CouncilGetCouncilData = {
+    path: {
+        council_id: number;
+    };
+};
+
+export type CouncilGetCouncilResponse = (CouncilRead);
+
+export type CouncilGetCouncilError = (HTTPValidationError);
 
 export type HelloRouteResponse = (unknown);
 

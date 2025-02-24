@@ -20,7 +20,7 @@ import {
 	removeMutation,
 	updateMutation,
 } from "@/api/@tanstack/react-query.gen";
-import type { SongRead } from "../../../api";
+import type { SongRead, <UpdateSong></UpdateSong> } from "../../../api";
 
 const songEditSchema = z.object({
 	id: z.string().min(2),

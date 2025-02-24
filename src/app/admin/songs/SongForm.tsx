@@ -19,11 +19,16 @@ import {
 	getAllSongsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 
+import { SongCategoryRead } from "@/api/types.gen";
+
+import { AdminChooseSongCategory } from "@/widgets/AdminChooseSongCategory";
+
 const songSchema = z.object({
 	title: z.string().min(2),
 	author: z.string().min(2),
 	melody: z.string(),
 	content: z.string(),
+	category: z.number(),
 });
 
 export default function SongForm() {
@@ -63,7 +68,7 @@ export default function SongForm() {
 				author: values.author,
 				melody: values.melody,
 				content: values.content,
-				category: { id: 1, name: "hej" },
+				category_id: values.category,
 			},
 		});
 	}
@@ -113,6 +118,20 @@ export default function SongForm() {
 										<FormControl>
 											<Input placeholder="Författare" {...field} />
 										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={songForm.control}
+								name="category"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2">
+										<FormLabel>Category</FormLabel>
+										<AdminChooseSongCategory
+											value={field.value}
+											onChange={field.onChange}
+										/>
 									</FormItem>
 								)}
 							/>
