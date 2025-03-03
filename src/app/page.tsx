@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NavigationMenuDemo } from "../components/NavBar";
+import FormulaBackground from "@/components/misc/FormulaBackground";
 
 export default function MainLanding() {
 	return (
@@ -11,6 +12,7 @@ export default function MainLanding() {
 					😎 och 🕸️ spindel 🕷️.
 				</p>
 				<Link href="news">Goto news</Link>
+				<FormulaBackground />
 			</div>
 		</>
 	);
