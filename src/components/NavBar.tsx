@@ -65,9 +65,15 @@ export function NavigationMenuDemo() {
 
 			if (!triggers.length || !dropdowns.length) return;
 
-			const { offsetLeft, offsetWidth } = triggers[0] as HTMLElement;
+			const padding = 16;
+			const { x, width } = (triggers[0] as HTMLElement).getBoundingClientRect();
 			const menuWidth = dropdowns[0].children[0].clientWidth;
-			const menuLeftPosition = offsetLeft + offsetWidth / 2 - menuWidth / 2;
+			let menuLeftPosition = x + width / 2 - menuWidth / 2;
+			if (menuLeftPosition < padding) {
+				menuLeftPosition = padding;
+			} else if (menuLeftPosition + menuWidth > window.innerWidth - padding) {
+				menuLeftPosition = window.innerWidth - menuWidth - padding;
+			}
 
 			// Apply the calculated position
 			document.documentElement.style.setProperty(
