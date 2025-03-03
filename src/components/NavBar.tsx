@@ -31,7 +31,7 @@ type NavSection = {
 export function NavBar() {
 	return (
 		<div className="flex justify-between">
-			<FLogga />
+			<FLogga className="mt-2 ml-2" />
 			<NavBarMenu />
 			<LoginAndLang />
 		</div>
@@ -42,7 +42,7 @@ function LoginAndLang() {
 	const { t } = useTranslation();
 
 	return (
-		<Button className="mt-2 mr-2">
+		<Button className="mt-6 mr-2">
 			<LogIn />
 			<span>{t("navbar.login")}</span>
 		</Button>
@@ -95,10 +95,9 @@ export function NavBarMenu() {
 		<div>
 			<NavigationMenu
 				onValueChange={onNavChange}
-				className="w-full max-w-full py-2"
+				className="w-full max-w-full py-2 mt-4"
 			>
 				{sections.map(([sectionKey, section]) => {
-					// Exclude the "self" property and cast the remaining entries as [string, NavItem][]
 					const items = Object.entries(section).filter(
 						([key]) => key !== "self",
 					) as [string, NavItem][];
