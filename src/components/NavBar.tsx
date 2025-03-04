@@ -66,27 +66,31 @@ export function NavBarMenu() {
 	function onNavChange() {
 		setTimeout(() => {
 			const triggers = document.querySelectorAll(
-				'.submenu-trigger[data-state="open"]',
+				'[data-slot="navigation-menu-trigger"][data-state="open"]',
 			);
 			const dropdowns = document.querySelectorAll(
-				'.nav-viewport[data-state="open"]',
+				'[data-slot="navigation-menu-viewport"][data-state="open"]',
 			);
 
 			if (!triggers.length || !dropdowns.length) return;
 
 			const padding = 16;
 			const { x, width } = (triggers[0] as HTMLElement).getBoundingClientRect();
-			const menuWidth = dropdowns[0].children[0].clientWidth;
-			let menuLeftPosition = x + width / 2 - menuWidth / 2;
-			if (menuLeftPosition < padding) {
-				menuLeftPosition = padding;
-			} else if (menuLeftPosition + menuWidth > window.innerWidth - padding) {
-				menuLeftPosition = window.innerWidth - menuWidth - padding;
+			const dropdown = dropdowns[0] as HTMLElement;
+			const menuWidth = dropdown.children[0].clientWidth;
+			const parentLeft =
+				dropdown.offsetParent?.getBoundingClientRect().left || 0;
+
+			let viewportLeft = x + width / 2 - menuWidth / 2;
+			if (viewportLeft < padding) {
+				viewportLeft = padding;
+			} else if (viewportLeft + menuWidth > window.innerWidth - padding) {
+				viewportLeft = window.innerWidth - menuWidth - padding;
 			}
 
 			document.documentElement.style.setProperty(
 				"--menu-left-position",
-				`${menuLeftPosition}px`,
+				`${viewportLeft - parentLeft}px`,
 			);
 		});
 	}
@@ -97,16 +101,14 @@ export function NavBarMenu() {
 				onValueChange={onNavChange}
 				className="w-full max-w-full py-2 mt-4"
 			>
-				{sections.map(([sectionKey, section]) => {
-					const items = Object.entries(section).filter(
-						([key]) => key !== "self",
-					) as [string, NavItem][];
-					return (
-						<NavigationMenuList key={sectionKey}>
-							<NavigationMenuItem>
-								<NavigationMenuTrigger className="submenu-trigger">
-									{section.self}
-								</NavigationMenuTrigger>
+				<NavigationMenuList>
+					{sections.map(([sectionKey, section]) => {
+						const items = Object.entries(section).filter(
+							([key]) => key !== "self",
+						) as [string, NavItem][];
+						return (
+							<NavigationMenuItem key={sectionKey}>
+								<NavigationMenuTrigger>{section.self}</NavigationMenuTrigger>
 								<NavigationMenuContent>
 									<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
 										{items.map(([itemKey, item]) => (
@@ -121,10 +123,8 @@ export function NavBarMenu() {
 									</ul>
 								</NavigationMenuContent>
 							</NavigationMenuItem>
-						</NavigationMenuList>
-					);
-				})}
-				<NavigationMenuList>
+						);
+					})}
 					<NavigationMenuItem>
 						<Link href="/docs" legacyBehavior passHref>
 							<NavigationMenuLink className={navigationMenuTriggerStyle()}>
