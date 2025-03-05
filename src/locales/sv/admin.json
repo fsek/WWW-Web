@@ -6,5 +6,9 @@
 	},
 	"events": {
 		"self": "Evenemang"
+	},
+	"posts": {
+		"self": "Poster",
+		"page_title": "Administrera poster"
 	}
 }

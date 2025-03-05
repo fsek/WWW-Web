@@ -6,5 +6,9 @@
 	},
 	"events": {
 		"self": "Events"
+	},
+	"posts": {
+		"self": "Posts",
+		"page_title": "Administrate posts"
 	}
 }
