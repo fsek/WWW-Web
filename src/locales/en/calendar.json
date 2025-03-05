@@ -1,0 +1,35 @@
+{
+	"test": "testsauhaish",
+	"error": {
+		"day_not_found": "No day found.",
+		"month_not_found": "No month found.",
+		"select_month": "Select month...",
+		"select_day": "Select day..."
+	},
+	"nav": {
+		"search_month": "Search month...",
+		"search_day": "Search day..."
+	},
+	"view": {
+		"time": "Time:",
+		"description": "Description:",
+		"details": "Detaljer"
+	},
+	"edit": {
+		"succes": "Event edited!",
+		"dismiss": "Dismiss",
+		"dismiss_alt": "Click here to dismiss the notification.",
+		"edit_button": "Edit",
+		"edit": "Edit",
+		"title": "Title:",
+		"title_placeholder": "Enter a title...",
+		"description": "Description:",
+		"description_placeholder": "Enter a description..."
+	},
+	"day": "Day",
+	"week": "Week",
+	"month": "Month",
+	"today": "Today",
+	"this_week": "This week",
+	"this_month": "This month"
+}

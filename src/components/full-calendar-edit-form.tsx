@@ -32,6 +32,7 @@ import { useEvents } from "@/context/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
 import type { CalendarEvent } from "@/utils/full-calendar-seed";
 import { Button } from "./ui/button";
+import { useTranslation } from "react-i18next";
 
 const eventEditFormSchema = z.object({
 	id: z.string(),
@@ -71,6 +72,7 @@ export function EventEditForm({
 	displayButton,
 	showDescription,
 }: EventEditFormProps) {
+	const { t } = useTranslation();
 	const { editEvent } = useEvents();
 	const { eventEditOpen, setEventEditOpen } = useEvents();
 	const { eventViewOpen, setEventViewOpen } = useEvents();
@@ -125,10 +127,10 @@ export function EventEditForm({
 		setEventEditOpen(false);
 
 		toast({
-			title: "Event edited!",
+			title: t("calendar:edit.success"),
 			action: (
-				<ToastAction altText={"Click here to dismiss notification"}>
-					Dismiss
+				<ToastAction altText={t("calendar:edit.dismiss_alt")}>
+					{t("calendar:edit.dismiss")}
 				</ToastAction>
 			),
 		});
@@ -146,14 +148,14 @@ export function EventEditForm({
 							setEventEditOpen(true);
 							}}
 					>
-						Edit Event
+						{t("calendar:edit.edit_button")}
 					</Button>
 				</AlertDialogTrigger>
 			)}
 
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Edit {event?.title}</AlertDialogTitle>
+					<AlertDialogTitle>{t("calendar:edit.edit")} {event?.title}</AlertDialogTitle>
 				</AlertDialogHeader>
 
 				<Form {...form}>
@@ -163,9 +165,9 @@ export function EventEditForm({
 							name="title"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Title</FormLabel>
+									<FormLabel>{t("calendar:edit.title")}</FormLabel>
 									<FormControl>
-										<Input placeholder="Standup Meeting" {...field} />
+										<Input placeholder={t("calendar:edit.title_placeholder")} {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -177,10 +179,10 @@ export function EventEditForm({
 								name="description"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Description</FormLabel>
+										<FormLabel>{t("calendar:edit.description")}</FormLabel>
 										<FormControl>
 											<Textarea
-												placeholder="Daily session"
+												placeholder={t("calendar:edit.description_placeholder")}
 												className="resize-none"
 												{...field}
 											/>

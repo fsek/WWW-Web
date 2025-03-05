@@ -40,6 +40,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useTranslation } from "react-i18next";
 // import { EventAddForm } from "./event-add-form";
 
 interface CalendarNavProps {
@@ -53,6 +54,8 @@ export default function CalendarNav({
 	calendarRef,
 	viewedDate,
 }: CalendarNavProps) {
+	const { t } = useTranslation();
+
 	const [currentView, setCurrentView] = useState("timeGridWeek");
 
 	const selectedMonth = viewedDate.getMonth() + 1;
@@ -93,15 +96,15 @@ export default function CalendarNav({
 								{selectedDay
 									? dayOptions.find((day) => day.value === String(selectedDay))
 											?.label
-									: "Select day..."}
+									: t("calendar:error.select_day")}
 								<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent className="w-[200px] p-0">
 							<Command>
-								<CommandInput placeholder="Search day..." />
+								<CommandInput placeholder={t("calendar:nav.search_day")} />
 								<CommandList>
-									<CommandEmpty>No day found.</CommandEmpty>
+									<CommandEmpty>{t("calendar:error.day_not_found")}</CommandEmpty>
 									<CommandGroup>
 										{dayOptions.map((day) => (
 											<CommandItem
@@ -147,15 +150,15 @@ export default function CalendarNav({
 							{selectedMonth
 								? months.find((month) => month.value === String(selectedMonth))
 										?.label
-								: "Select month..."}
+								: t("calendar:error.select_month")}
 							<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 						</Button>
 					</PopoverTrigger>
 					<PopoverContent className="w-[200px] p-0">
 						<Command>
-							<CommandInput placeholder="Search month..." />
+							<CommandInput placeholder= {t("calendar:nav.search_month")} />
 							<CommandList>
-								<CommandEmpty>No month found.</CommandEmpty>
+								<CommandEmpty>{t("calendar:error.month_not_found")}</CommandEmpty>
 								<CommandGroup>
 									{months.map((month) => (
 										<CommandItem
@@ -214,18 +217,18 @@ export default function CalendarNav({
 				{/* Button to go to current date */}
 
 				<Button
-					className="w-[90px] text-xs md:text-sm"
+					className="w-[110px] text-xs md:text-sm"
 					variant="outline"
 					onClick={() => {
 						goToday(calendarRef);
 					}}
 				>
 					{currentView === "timeGridDay"
-						? "Today"
+						? t("calendar:today")
 						: currentView === "timeGridWeek"
-							? "This Week"
+							? t("calendar:this_week")
 							: currentView === "dayGridMonth"
-								? "This Month"
+								? t("calendar:this_month")
 								: null}
 				</Button>
 
@@ -244,7 +247,7 @@ export default function CalendarNav({
 						>
 							<GalleryVertical className="h-5 w-5" />
 							{currentView === "timeGridDay" && (
-								<p className="text-xs md:text-sm">Day</p>
+								<p className="text-xs md:text-sm">{t("calendar:day")}</p>
 							)}
 						</TabsTrigger>
 						<TabsTrigger
@@ -258,7 +261,7 @@ export default function CalendarNav({
 						>
 							<Tally3 className="h-5 w-5" />
 							{currentView === "timeGridWeek" && (
-								<p className="text-xs md:text-sm">Week</p>
+								<p className="text-xs md:text-sm">{t("calendar:week")}</p>
 							)}
 						</TabsTrigger>
 						<TabsTrigger
@@ -272,7 +275,7 @@ export default function CalendarNav({
 						>
 							<Table className="h-5 w-5 rotate-90" />
 							{currentView === "dayGridMonth" && (
-								<p className="text-xs md:text-sm">Month</p>
+								<p className="text-xs md:text-sm">{t("calendar:month")}</p>
 							)}
 						</TabsTrigger>
 					</TabsList>

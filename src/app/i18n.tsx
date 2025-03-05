@@ -4,7 +4,7 @@ import i18nConfig from "@/i18nConfig";
 import resourcesToBackend from "i18next-resources-to-backend";
 
 export type Locale = "en" | "sv";
-export type Namespace = "admin"; // todo: add more namespaces
+export type Namespace = "calendar" | "admin";
 
 export default async function initTranslations(
 	locale: Locale,

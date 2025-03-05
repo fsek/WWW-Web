@@ -1,0 +1,35 @@
+{
+	"test": "tesoijsaoijdt",
+	"error": {
+		"day_not_found": "Ingen dag hittades.",
+		"month_not_found": "Ingen månad hittades",
+		"select_month": "Välj en månad...",
+		"select_day": "Välj en dag..."
+	},
+	"nav": {
+		"search_month": "Sök månad...",
+		"search_day": "Sök dag..."
+	},
+	"view": {
+		"time": "Tid:",
+		"description": "Beskrivning:",
+		"details": "Detaljer"
+	},
+	"edit": {
+		"succes": "Händelsen redigerades!",
+		"dismiss": "Avfärda",
+		"dismiss_alt": "Klicka här för att avfärda meddelandet.",
+		"edit_button": "Redigera",
+		"edit": "Redigera",
+		"title": "Titel:",
+		"title_placeholder": "Skriv en titel...",
+		"description": "Beskrivning:",
+		"description_placeholder": "Skriv en beskrivning..."
+	},
+	"day": "Dag",
+	"week": "Vecka",
+	"month": "Månad",
+	"today": "Idag",
+	"this_week": "Denna vecka",
+	"this_month": "Denna månad"
+}
