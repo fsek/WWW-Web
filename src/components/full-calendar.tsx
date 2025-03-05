@@ -3,7 +3,7 @@
 // From: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
 import { useEvents } from "@/context/full-calendar-event-context";
-import "@/styles/calendar.css";
+// import "@/styles/calendar.css";
 import type {
 	DateSelectArg,
 	DayCellContentArg,
@@ -30,7 +30,6 @@ import { getDateFromMinutes } from "@/lib/utils";
 import { Card } from "./ui/card";
 import { EventEditForm } from "./full-calendar-edit-form";
 import { EventView } from "./full-calendar-event-view";
-// Add this import:
 import { EventAddForm } from "./full-calendar-add-form";
 
 type EventItemProps = {
@@ -117,7 +116,7 @@ export default function Calendar({ showDescription, handleOpenDetails, disableEd
 				{info.view.type === "dayGridMonth" ? (
 					<div
 						style={{ backgroundColor: info.backgroundColor }}
-						className={`flex flex-col rounded-md w-full px-2 py-1 line-clamp-1 text-[0.5rem] sm:text-[0.6rem] md:text-xs`}
+						className={"flex flex-col rounded-md w-full px-2 py-1 line-clamp-1 text-[0.5rem] sm:text-[0.6rem] md:text-xs"}
 					>
 						<p className="font-semibold text-gray-950 line-clamp-1 w-11/12">
 							{event.title}

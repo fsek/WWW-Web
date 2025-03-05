@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 
@@ -318,12 +320,13 @@ function Calendar({
 				...classNames,
 			}}
 			components={{
-				IconLeft: ({ ...props }) => (
-					<ChevronLeft className="h-4 w-4" {...props} />
-				),
-				IconRight: ({ ...props }) => (
-					<ChevronRight className="size-4" {...props} />
-				),
+				Chevron: ({ orientation, ...props }) => {
+					if (orientation === "left") {
+						return <ChevronLeft className="h-4 w-4" {...props} />
+					}
+					// else
+					return <ChevronRight className="size-4" {...props} />
+				},
 				MonthCaption: ({
 					calendarMonth,
 				}: {

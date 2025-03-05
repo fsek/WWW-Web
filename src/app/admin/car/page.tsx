@@ -1,8 +1,10 @@
+"use client";
+
 // Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
 import { useState } from "react";
-import type { CarRead } from "../../../api";
-import CarForm from "./CarForm.tsx";
+import type { CarRead } from "../../../api/index";
+import CarForm from "./CarForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createBookingMutation,
@@ -10,8 +12,8 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Calendar from "@/components/full-calendar.tsx";
-import { EventsProvider } from "@/context/full-calendar-event-context.tsx";
+import Calendar from "@/components/full-calendar";
+import { EventsProvider } from "@/context/full-calendar-event-context";
 import {
 	createColumnHelper,
 	useReactTable,
@@ -26,9 +28,6 @@ import {
 	updateBookingMutation,
 } from "@/api/@tanstack/react-query.gen";
 import AdminTable from "@/widgets/AdminTable";
-import formatTime from "@/help_functions/timeFormater";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { start } from "repl";
 import type { CalendarEvent } from "@/utils/full-calendar-seed";
 
 const columnHelper = createColumnHelper<CarRead>();
@@ -63,10 +62,10 @@ const columns = [
 	}),
 ];
 
-export default function Events() {
+export default function Car() {
 	const queryClient = useQueryClient();
-	const [open, setOpen] = useState(false);
-	const [submitEnabled, setSubmitEnabled] = useState(true);
+	const [, setOpen] = useState(false);
+	const [, setSubmitEnabled] = useState(true);
 
 	const { data, error, isFetching } = useQuery({
 		...getAllBookingOptions(),
@@ -171,13 +170,13 @@ export default function Events() {
 						},
 					);
 				}}
-				handleDelete={(event) => {
+				handleDelete={(id) => {
 					handleEventDelete.mutate(
-						{ path: { booking_id: Number(event.id) } },
+						{ path: { booking_id: Number(id) } },
 						{
 							onError: (error) => {
 								console.error(
-									`Failed to delete event with ID: ${event.id}`,
+									`Failed to delete event with ID: ${id}`,
 									error,
 								);
 								// TODO: Show error message to user
@@ -233,9 +232,9 @@ export default function Events() {
 
 							<Separator />
 							<Calendar 
-								showDescription={false} 
-								// handleOpenDetails={() => {}}
-								disableEdit={true} // Also disables delete, add and drag-and-drop
+								showDescription={true} 
+								handleOpenDetails={() => {}}
+								disableEdit={false} // Also disables delete, add and drag-and-drop
 							/>
 						</TabsContent>
 						<TabsContent value="list" className="w-full px-5 space-y-5">

@@ -19,7 +19,6 @@ import {
 	getAllBookingQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 
-import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 
 const carSchema = z.object({

@@ -1,6 +1,5 @@
 "use client";
-import { type CalendarEvent, initialEvents } from "@/utils/full-calendar-seed";
-import { Hand } from "lucide-react";
+import { type CalendarEvent, initialEvents } from "@/utils/full-calendar-seed";       
 import type React from "react";
 import { createContext, type ReactNode, useContext, useState } from "react";
 
@@ -10,7 +9,7 @@ interface Event {
 	description: string;
 	start: Date;
 	end: Date;
-	color: string;
+	color?: string;
 }
 
 interface EventsContextType {
@@ -87,7 +86,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 	const deleteEvent = (id: string) => {
 		try {
 			if (handleDelete) {
-				handleDelete({ id });
+				handleDelete(id);
 			}
 			setEvents((prevEvents) =>
 				prevEvents.filter((event) => Number(event.id) !== Number(id)),

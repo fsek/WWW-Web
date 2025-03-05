@@ -1,4 +1,4 @@
-import * as React from "react";
+import type * as React from "react";
 import { DayPicker } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
@@ -58,12 +58,13 @@ function Calendar({
 				...classNames,
 			}}
 			components={{
-				IconLeft: ({ className, ...props }) => (
-					<ChevronLeftIcon className={cn("h-4 w-4", className)} {...props} />
-				),
-				IconRight: ({ className, ...props }) => (
-					<ChevronRightIcon className={cn("h-4 w-4", className)} {...props} />
-				),
+				Chevron: ({ orientation, ...props }) => {
+					if (orientation === "left") {
+						return <ChevronLeftIcon className="h-4 w-4" {...props} />
+					}
+					// else
+					return <ChevronRightIcon className="size-4" {...props} />
+				},
 			}}
 			{...props}
 		/>
