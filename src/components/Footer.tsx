@@ -23,18 +23,18 @@ const App = () => {
 		<footer className="bg-sidebar text-foreground py-8 w-full">
 			<div className="flex justify-between">
 				<div>
-					<h1 className="text-xl font-bold ml-6">F-sektionen 1961</h1>
+					<h1 className="text-l font-bold ml-6">F-sektionen 1961</h1>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 					<div>
-						<h3 className="text-xl font-bold mb-4">Address</h3>
+						<h3 className="text-l font-bold mb-4">Address</h3>
 						<p> Mattehuset</p>
 						<p> Sölvegatan 18A</p>
 						<p>223 62 Lund, Sweden</p>
 					</div>
 
 					<div>
-						<h3 className="text-xl font-bold mb-4">
+						<h3 className="text-l font-bold mb-4">
 							{t("main:footer.contact")}{" "}
 						</h3>
 						<p> {t("main:footer.emergencycontact")}</p>
@@ -42,7 +42,7 @@ const App = () => {
 					</div>
 					<div className="">
 						<div className="pb-6">
-							<h3 className="text-xl font-bold mb-4">
+							<h3 className="text-l font-bold mb-4">
 								{t("main:footer.ansvar")}{" "}
 							</h3>
 							<p> Esther Hagberg</p>
@@ -50,7 +50,7 @@ const App = () => {
 						</div>
 
 						<div>
-							<h3 className="text-xl font-bold mb-4">
+							<h3 className="text-l font-bold mb-4">
 								{t("main:footer.webansvar")}{" "}
 							</h3>
 							<p> Benjamin Halasz</p>
