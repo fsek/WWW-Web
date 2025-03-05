@@ -16,8 +16,9 @@ import FLogga from "@/assets/f-logga";
 import { LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import LoginWall from "./LoginWall";
+import { useState } from "react";
 
-// Define types for navigation items and sections
 type NavItem = {
 	self: string;
 	desc: string;
@@ -40,24 +41,29 @@ export function NavBar() {
 
 function LoginAndLang() {
 	const { t } = useTranslation();
+	const [showLoginWall, setShowLoginWall] = useState(false);
+
+	function handleLoginClick() {
+		setShowLoginWall(true);
+	}
 
 	return (
-		<Button className="mt-6 mr-2">
-			<LogIn />
-			<span>{t("navbar.login")}</span>
-		</Button>
+		<>
+			<Button className="mt-6 mr-2" onClick={handleLoginClick}>
+				<span>{t("navbar.login")}</span>
+			</Button>
+			{showLoginWall && <LoginWall />}
+		</>
 	);
 }
 
 export function NavBarMenu() {
 	const { t } = useTranslation();
-	// Assert the translation result as a record of NavSections
 	const navbarData = t("navbar", { returnObjects: true }) as Record<
 		string,
 		NavSection
 	>;
 
-	// Filter out keys that are objects (the dropdown sections)
 	const sections = Object.entries(navbarData).filter(
 		([, value]) =>
 			typeof value === "object" && value !== null && !Array.isArray(value),

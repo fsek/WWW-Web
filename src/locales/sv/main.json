@@ -115,5 +115,12 @@
 		"login": "Logga In",
 		"booking": "Bokningar",
 		"documents": "Dokument"
+	},
+	"footer": {
+		"contact": "Kontakt",
+		"emergencycontact": "Nödkontakt",
+		"companies": "För företag",
+		"webansvar": "Webbansvarig",
+		"ansvar": "Ansvarig utgivare"
 	}
 }
