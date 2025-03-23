@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { NavigationMenuDemo } from "../components/NavBar";
+import { NavBar } from "../components/NavBar";
 
 export default function MainLanding() {
 	return (
 		<>
-			<NavigationMenuDemo />
+			<NavBar />
 			<div>
 				<p>
 					Hej! 👋 Du 🫵 ser 👀 denna 📄 sida 📘 för 💡 att ✨ du 🫶 är 🧊 cool

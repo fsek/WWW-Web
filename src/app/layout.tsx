@@ -1,7 +1,6 @@
 import QueryClientProvider from "@/components/QueryClientProvider";
 import "./globals.css";
 import { client } from "@/api";
-import { NavigationMenuDemo } from "../components/NavBar";
 import initTranslations, { type Locale, type Namespace } from "./i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
 
