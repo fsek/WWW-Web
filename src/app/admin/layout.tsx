@@ -1,6 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AdminSidebar } from "./AdminSidebar";
-import initTranslations, { Locale, Namespace } from "../i18n";
+import initTranslations, { type Locale, type Namespace } from "../i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
 import LoginWall from "@/components/LoginWall";
 

@@ -1,0 +1,119 @@
+{
+	"title": "Main Page",
+	"navbar": {
+		"sections": {
+			"self": "Sections",
+			"about": {
+				"self": "About Us",
+				"desc": "Welcome to our community—discover our story and values."
+			},
+			"news": {
+				"self": "News",
+				"desc": "Stay updated with the latest announcements and events."
+			},
+			"councils": {
+				"self": "Committees",
+				"desc": "Explore the dedicated teams that drive our initiatives."
+			},
+			"blog": {
+				"self": "Blog",
+				"desc": "Read inspiring stories and insights from our members."
+			},
+			"privacy": {
+				"self": "Privacy Policy",
+				"desc": "Learn how we protect your data and ensure your confidentiality."
+			}
+		},
+		"engage": {
+			"self": "Get Involved",
+			"cafe": {
+				"self": "Community Cafe",
+				"desc": "Join us for a friendly chat and connect with others."
+			},
+			"posts": {
+				"self": "Posts",
+				"desc": "Catch up on updates and interesting discussions."
+			},
+			"volunteers": {
+				"self": "Orientation Volunteers",
+				"desc": "Meet the welcoming team ready to help new members."
+			},
+			"elections": {
+				"self": "Elections",
+				"desc": "Participate in shaping our future through a transparent process."
+			},
+			"projects": {
+				"self": "Projects",
+				"desc": "Discover innovative initiatives and collaborative efforts."
+			}
+		},
+		"services": {
+			"self": "Services",
+			"car": {
+				"self": "Car Rentals",
+				"desc": "Easily book vehicles for your travel and daily needs."
+			},
+			"rooms": {
+				"self": "Room Bookings",
+				"desc": "Reserve meeting or event spaces with just a few clicks."
+			},
+			"tools": {
+				"self": "Tool Library",
+				"desc": "Borrow high-quality tools to help bring your projects to life."
+			},
+			"equipment": {
+				"self": "Equipment Hire",
+				"desc": "Rent state-of-the-art equipment to get the job done efficiently."
+			},
+			"specialrooms": {
+				"self": "Quiet/Prayer Rooms",
+				"desc": "Find a peaceful space for reflection or private prayer."
+			}
+		},
+		"companies": {
+			"self": "Companies",
+			"aboutCompany": {
+				"self": "About Our Company",
+				"desc": "Discover our mission, values, and commitment to excellence."
+			},
+			"offerings": {
+				"self": "Our Offerings",
+				"desc": "Explore the diverse range of products and services we provide."
+			},
+			"farad": {
+				"self": "Farad",
+				"desc": "Learn about Farad’s innovative solutions and industry leadership."
+			},
+			"contact": {
+				"self": "Business Contact",
+				"desc": "Reach out to us for partnership and business inquiries."
+			}
+		},
+		"contact": {
+			"self": "Contact",
+			"contactPage": {
+				"self": "Contact Page",
+				"desc": "Find all the information you need to get in touch with us."
+			},
+			"president": {
+				"self": "President",
+				"desc": "Meet our leader and learn about our strategic vision."
+			},
+			"webmaster": {
+				"self": "Webmaster",
+				"desc": "Connect with the creative mind behind our website."
+			},
+			"anonymousForm": {
+				"self": "Anonymous Contact",
+				"desc": "Share your feedback or concerns confidentially."
+			},
+			"complaints": {
+				"self": "Complaints",
+				"desc": "Let us know how we can improve our services and support."
+			}
+		},
+		"login": "Log In",
+		"booking": "Bookings",
+		"documents": "Documents"
+	}
+}

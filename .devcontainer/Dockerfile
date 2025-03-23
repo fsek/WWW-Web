@@ -1,8 +1,14 @@
 FROM oven/bun:latest
 
-# To get fresh apk
-RUN apt update
+# Update packages and install prerequisites
+RUN apt update && apt install -y \
+  curl \
+  git \
+  openssh-client \
+  iputils-ping
 
-RUN apt install -y git openssh-client curl iputils-ping
+# Install Node.js 18.x (includes a newer npm)
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
 ENV ENV=development

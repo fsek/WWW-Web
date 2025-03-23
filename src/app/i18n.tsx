@@ -1,10 +1,10 @@
-import { createInstance, i18n, Resource } from "i18next";
+import { createInstance, type i18n, type Resource } from "i18next";
 import { initReactI18next } from "react-i18next/initReactI18next";
 import i18nConfig from "@/i18nConfig";
 import resourcesToBackend from "i18next-resources-to-backend";
 
 export type Locale = "en" | "sv";
-export type Namespace = "calendar" | "admin";
+export type Namespace = "admin" | "main" | "calendar";
 
 export default async function initTranslations(
 	locale: Locale,
