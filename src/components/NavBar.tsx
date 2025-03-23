@@ -13,7 +13,7 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import FLogga from "@/assets/f-logga";
-import { LogIn } from "lucide-react";
+import { LogIn, LogInIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import LoginWall from "./LoginWall";
@@ -50,7 +50,8 @@ function LoginAndLang() {
 	return (
 		<>
 			<Button className="mt-6 mr-2" onClick={handleLoginClick}>
-				<span>{t("navbar.login")}</span>
+				<LogInIcon />
+				<span> {t("navbar.login")}</span>
 			</Button>
 			{showLoginWall && <LoginWall />}
 		</>
