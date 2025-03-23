@@ -72,27 +72,31 @@ export function NavBarMenu() {
 	function onNavChange() {
 		setTimeout(() => {
 			const triggers = document.querySelectorAll(
-				'.submenu-trigger[data-state="open"]',
+				'[data-slot="navigation-menu-trigger"][data-state="open"]',
 			);
 			const dropdowns = document.querySelectorAll(
-				'.nav-viewport[data-state="open"]',
+				'[data-slot="navigation-menu-viewport"][data-state="open"]',
 			);
 
 			if (!triggers.length || !dropdowns.length) return;
 
 			const padding = 16;
 			const { x, width } = (triggers[0] as HTMLElement).getBoundingClientRect();
-			const menuWidth = dropdowns[0].children[0].clientWidth;
-			let menuLeftPosition = x + width / 2 - menuWidth / 2;
-			if (menuLeftPosition < padding) {
-				menuLeftPosition = padding;
-			} else if (menuLeftPosition + menuWidth > window.innerWidth - padding) {
-				menuLeftPosition = window.innerWidth - menuWidth - padding;
+			const dropdown = dropdowns[0] as HTMLElement;
+			const menuWidth = dropdown.children[0].clientWidth;
+			const parentLeft =
+				dropdown.offsetParent?.getBoundingClientRect().left || 0;
+
+			let viewportLeft = x + width / 2 - menuWidth / 2;
+			if (viewportLeft < padding) {
+				viewportLeft = padding;
+			} else if (viewportLeft + menuWidth > window.innerWidth - padding) {
+				viewportLeft = window.innerWidth - menuWidth - padding;
 			}
 
 			document.documentElement.style.setProperty(
 				"--menu-left-position",
-				`${menuLeftPosition}px`,
+				`${viewportLeft - parentLeft}px`,
 			);
 		});
 	}
