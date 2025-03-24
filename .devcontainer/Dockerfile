@@ -10,6 +10,6 @@ RUN apt update && apt install -y \
 
 # Install Node.js 18.x (includes a newer npm)
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs
+    apt-get install -y nodejs 
 
 ENV ENV=development
