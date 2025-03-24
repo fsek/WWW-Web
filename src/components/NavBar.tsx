@@ -13,11 +13,12 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import FLogga from "@/assets/f-logga";
-import { LogIn } from "lucide-react";
+import { LogIn, LogInIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import LoginWall from "./LoginWall";
+import { useState } from "react";
 
-// Define types for navigation items and sections
 type NavItem = {
 	self: string;
 	desc: string;
@@ -40,24 +41,30 @@ export function NavBar() {
 
 function LoginAndLang() {
 	const { t } = useTranslation();
+	const [showLoginWall, setShowLoginWall] = useState(false);
+
+	function handleLoginClick() {
+		setShowLoginWall(true);
+	}
 
 	return (
-		<Button className="mt-6 mr-2">
-			<LogIn />
-			<span>{t("navbar.login")}</span>
-		</Button>
+		<>
+			<Button className="mt-6 mr-2" onClick={handleLoginClick}>
+				<LogInIcon />
+				<span> {t("navbar.login")}</span>
+			</Button>
+			{showLoginWall && <LoginWall />}
+		</>
 	);
 }
 
 export function NavBarMenu() {
 	const { t } = useTranslation();
-	// Assert the translation result as a record of NavSections
 	const navbarData = t("navbar", { returnObjects: true }) as Record<
 		string,
 		NavSection
 	>;
 
-	// Filter out keys that are objects (the dropdown sections)
 	const sections = Object.entries(navbarData).filter(
 		([, value]) =>
 			typeof value === "object" && value !== null && !Array.isArray(value),
@@ -101,14 +108,16 @@ export function NavBarMenu() {
 				onValueChange={onNavChange}
 				className="w-full max-w-full py-2 mt-4"
 			>
-				<NavigationMenuList>
-					{sections.map(([sectionKey, section]) => {
-						const items = Object.entries(section).filter(
-							([key]) => key !== "self",
-						) as [string, NavItem][];
-						return (
-							<NavigationMenuItem key={sectionKey}>
-								<NavigationMenuTrigger>{section.self}</NavigationMenuTrigger>
+				{sections.map(([sectionKey, section]) => {
+					const items = Object.entries(section).filter(
+						([key]) => key !== "self",
+					) as [string, NavItem][];
+					return (
+						<NavigationMenuList key={sectionKey}>
+							<NavigationMenuItem>
+								<NavigationMenuTrigger className="submenu-trigger">
+									{section.self}
+								</NavigationMenuTrigger>
 								<NavigationMenuContent>
 									<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
 										{items.map(([itemKey, item]) => (
@@ -123,8 +132,10 @@ export function NavBarMenu() {
 									</ul>
 								</NavigationMenuContent>
 							</NavigationMenuItem>
-						);
-					})}
+						</NavigationMenuList>
+					);
+				})}
+				<NavigationMenuList>
 					<NavigationMenuItem>
 						<Link href="/docs" legacyBehavior passHref>
 							<NavigationMenuLink className={navigationMenuTriggerStyle()}>

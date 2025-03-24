@@ -197,6 +197,22 @@ export const AdUpdateSchema = {
     title: 'AdUpdate'
 } as const;
 
+export const AddEventTagSchema = {
+    properties: {
+        event_id: {
+            type: 'integer',
+            title: 'Event Id'
+        },
+        tag_id: {
+            type: 'integer',
+            title: 'Tag Id'
+        }
+    },
+    type: 'object',
+    required: ['event_id', 'tag_id'],
+    title: 'AddEventTag'
+} as const;
+
 export const AdventureMissionCreateSchema = {
     properties: {
         title: {
@@ -511,7 +527,7 @@ export const CandidateElectionReadSchema = {
         },
         election_posts: {
             items: {
-                '$ref': '#/components/schemas/api_schemas__candidate_schema__PostRead'
+                '$ref': '#/components/schemas/CandidatePostRead'
             },
             type: 'array',
             title: 'Election Posts'
@@ -520,6 +536,22 @@ export const CandidateElectionReadSchema = {
     type: 'object',
     required: ['candidate_id', 'user_id', 'user', 'election_posts'],
     title: 'CandidateElectionRead'
+} as const;
+
+export const CandidatePostReadSchema = {
+    properties: {
+        post_id: {
+            type: 'integer',
+            title: 'Post Id'
+        },
+        election_post_id: {
+            type: 'integer',
+            title: 'Election Post Id'
+        }
+    },
+    type: 'object',
+    required: ['post_id', 'election_post_id'],
+    title: 'CandidatePostRead'
 } as const;
 
 export const CandidateReadSchema = {
@@ -541,7 +573,7 @@ export const CandidateReadSchema = {
         },
         election_posts: {
             items: {
-                '$ref': '#/components/schemas/api_schemas__candidate_schema__PostRead'
+                '$ref': '#/components/schemas/CandidatePostRead'
             },
             type: 'array',
             title: 'Election Posts'
@@ -693,6 +725,48 @@ export const CarUpdateSchema = {
     },
     type: 'object',
     title: 'CarUpdate'
+} as const;
+
+export const CouncilCreateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            title: 'Name'
+        }
+    },
+    type: 'object',
+    required: ['name'],
+    title: 'CouncilCreate'
+} as const;
+
+export const CouncilReadSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        name: {
+            type: 'string',
+            title: 'Name'
+        },
+        posts: {
+            items: {
+                '$ref': '#/components/schemas/PostRead'
+            },
+            type: 'array',
+            title: 'Posts'
+        },
+        events: {
+            items: {
+                '$ref': '#/components/schemas/EventRead'
+            },
+            type: 'array',
+            title: 'Events'
+        }
+    },
+    type: 'object',
+    required: ['id', 'name', 'posts', 'events'],
+    title: 'CouncilRead'
 } as const;
 
 export const ElectionAddPostsSchema = {
@@ -1162,6 +1236,54 @@ export const EventTagReadSchema = {
 
 export const EventUpdateSchema = {
     properties: {
+        starts_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Starts At'
+        },
+        ends_at: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Ends At'
+        },
+        signup_start: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Signup Start'
+        },
+        signup_end: {
+            anyOf: [
+                {
+                    type: 'string',
+                    format: 'date-time'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Signup End'
+        },
         title_sv: {
             anyOf: [
                 {
@@ -1374,6 +1496,22 @@ export const GroupMissionCreateSchema = {
     type: 'object',
     required: ['points', 'adventure_mission_id'],
     title: 'GroupMissionCreate'
+} as const;
+
+export const GroupMissionEditSchema = {
+    properties: {
+        points: {
+            type: 'integer',
+            title: 'Points'
+        },
+        adventure_mission_id: {
+            type: 'integer',
+            title: 'Adventure Mission Id'
+        }
+    },
+    type: 'object',
+    required: ['points', 'adventure_mission_id'],
+    title: 'GroupMissionEdit'
 } as const;
 
 export const GroupMissionReadSchema = {
@@ -1792,6 +1930,22 @@ export const NollningCreateSchema = {
     title: 'NollningCreate'
 } as const;
 
+export const NollningDeleteMissionSchema = {
+    properties: {
+        group_id: {
+            type: 'integer',
+            title: 'Group Id'
+        },
+        mission_id: {
+            type: 'integer',
+            title: 'Mission Id'
+        }
+    },
+    type: 'object',
+    required: ['group_id', 'mission_id'],
+    title: 'NollningDeleteMission'
+} as const;
+
 export const NollningGroupReadSchema = {
     properties: {
         id: {
@@ -1854,7 +2008,7 @@ export const PermissionCreateSchema = {
         },
         target: {
             type: 'string',
-            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe', 'Election', 'Groups', 'Adventure Missions', 'Nollning'],
+            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe', 'Election', 'Groups', 'Adventure Missions', 'Nollning', 'Tags', 'Council'],
             title: 'Target'
         }
     },
@@ -1876,7 +2030,7 @@ export const PermissionReadSchema = {
         },
         target: {
             type: 'string',
-            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe', 'Election', 'Groups', 'Adventure Missions', 'Nollning'],
+            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe', 'Election', 'Groups', 'Adventure Missions', 'Nollning', 'Tags', 'Council'],
             title: 'Target'
         }
     },
@@ -1899,6 +2053,49 @@ export const PostCreateSchema = {
     type: 'object',
     required: ['name', 'council_id'],
     title: 'PostCreate'
+} as const;
+
+export const PostReadSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        name: {
+            type: 'string',
+            title: 'Name'
+        },
+        council_id: {
+            type: 'integer',
+            title: 'Council Id'
+        },
+        permissions: {
+            items: {
+                '$ref': '#/components/schemas/_PostPermissionRead'
+            },
+            type: 'array',
+            title: 'Permissions'
+        }
+    },
+    type: 'object',
+    required: ['id', 'name', 'council_id', 'permissions'],
+    title: 'PostRead'
+} as const;
+
+export const PostUpdateSchema = {
+    properties: {
+        name: {
+            type: 'string',
+            title: 'Name'
+        },
+        council_id: {
+            type: 'integer',
+            title: 'Council Id'
+        }
+    },
+    type: 'object',
+    required: ['name', 'council_id'],
+    title: 'PostUpdate'
 } as const;
 
 export const Priority_DBSchema = {
@@ -1932,14 +2129,7 @@ export const SongCategoryCreateSchema = {
 export const SongCategoryReadSchema = {
     properties: {
         id: {
-            anyOf: [
-                {
-                    type: 'integer'
-                },
-                {
-                    type: 'null'
-                }
-            ],
+            type: 'integer',
             title: 'Id'
         },
         name: {
@@ -1984,12 +2174,13 @@ export const SongCreateSchema = {
             type: 'string',
             title: 'Content'
         },
-        category: {
-            '$ref': '#/components/schemas/SongCategoryRead'
+        category_id: {
+            type: 'integer',
+            title: 'Category Id'
         }
     },
     type: 'object',
-    required: ['title', 'author', 'melody', 'content', 'category'],
+    required: ['title', 'author', 'melody', 'content', 'category_id'],
     title: 'SongCreate'
 } as const;
 
@@ -2059,6 +2250,22 @@ export const TagCreateSchema = {
     type: 'object',
     required: ['name'],
     title: 'TagCreate'
+} as const;
+
+export const TagEditSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        name: {
+            type: 'string',
+            title: 'Name'
+        }
+    },
+    type: 'object',
+    required: ['id', 'name'],
+    title: 'TagEdit'
 } as const;
 
 export const TagReadSchema = {
@@ -2438,49 +2645,6 @@ export const _UserPostReadSchema = {
     type: 'object',
     required: ['id', 'name', 'council_id'],
     title: '_UserPostRead'
-} as const;
-
-export const api_schemas__candidate_schema__PostReadSchema = {
-    properties: {
-        post_id: {
-            type: 'integer',
-            title: 'Post Id'
-        },
-        election_post_id: {
-            type: 'integer',
-            title: 'Election Post Id'
-        }
-    },
-    type: 'object',
-    required: ['post_id', 'election_post_id'],
-    title: 'PostRead'
-} as const;
-
-export const api_schemas__post_schemas__PostReadSchema = {
-    properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        name: {
-            type: 'string',
-            title: 'Name'
-        },
-        council_id: {
-            type: 'integer',
-            title: 'Council Id'
-        },
-        permissions: {
-            items: {
-                '$ref': '#/components/schemas/_PostPermissionRead'
-            },
-            type: 'array',
-            title: 'Permissions'
-        }
-    },
-    type: 'object',
-    required: ['id', 'name', 'council_id', 'permissions'],
-    title: 'PostRead'
 } as const;
 
 export const loginSchema = {

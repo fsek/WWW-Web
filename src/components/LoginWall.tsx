@@ -2,7 +2,7 @@
 
 import { useAuthState } from "@/lib/auth";
 import { usePathname, useRouter } from "next/navigation";
-import { PropsWithChildren, useEffect } from "react";
+import { type PropsWithChildren, useEffect } from "react";
 
 export default function LoginWall({ children }: PropsWithChildren) {
 	const isAuthenticated = useAuthState();

@@ -28,6 +28,6 @@
 			}
 		}
 	},
-	"runArgs": ["--network=host"],
+	"runArgs": ["--network=host", "--add-host=host.docker.internal:host-gateway"],
 	"postCreateCommand": "bun install"
 }

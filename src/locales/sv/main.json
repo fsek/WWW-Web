@@ -4,7 +4,7 @@
 		"sektionen": {
 			"self": "Sektionen",
 			"about": {
-				"self": "Om oss",
+				"self": "Om Oss",
 				"desc": "Välkommen till vår sektion – lär känna oss och våra värderingar."
 			},
 			"news": {
@@ -25,7 +25,7 @@
 			}
 		},
 		"engage": {
-			"self": "Engagera dig",
+			"self": "Engagera Dig",
 			"hilbertcafe": {
 				"self": "Hilbert Café",
 				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär."
@@ -66,7 +66,7 @@
 				"desc": "Hyra modern utrustning för att effektivisera ditt arbete."
 			},
 			"specialrooms": {
-				"self": "Stilla rum/bönerum",
+				"self": "Stilla Rum/Bönerum",
 				"desc": "Hitta en lugn plats för reflektion eller bön."
 			}
 		},
@@ -77,7 +77,7 @@
 				"desc": "Läs om vår mission, våra värderingar och vårt engagemang."
 			},
 			"wehave": {
-				"self": "Våra erbjudanden",
+				"self": "Våra Erbjudanden",
 				"desc": "Upptäck de tjänster och produkter vi stolt erbjuder."
 			},
 			"farad": {
@@ -104,7 +104,7 @@
 				"desc": "Lär känna personen bakom vår webbplats och digitala närvaro."
 			},
 			"anonform": {
-				"self": "Anonymt kontaktformulär",
+				"self": "Anonymt Kontaktformulär",
 				"desc": "Skicka feedback eller frågor konfidentiellt via vårt formulär."
 			},
 			"klaga": {
@@ -112,8 +112,15 @@
 				"desc": "Berätta för oss hur vi kan förbättra våra tjänster och support."
 			}
 		},
-		"login": "Logga in",
+		"login": "Logga In",
 		"booking": "Bokningar",
 		"documents": "Dokument"
+	},
+	"footer": {
+		"contact": "Kontakt",
+		"emergencycontact": "Nödkontakt",
+		"companies": "För företag",
+		"webansvar": "Webbansvarig",
+		"ansvar": "Ansvarig utgivare"
 	}
 }
