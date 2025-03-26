@@ -3,6 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
+	"icon": "public/favicon.png",
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
@@ -44,7 +45,7 @@
 		"localforage": "^1.10.0",
 		"lucide-react": "^0.454.0",
 		"match-sorter": "^6.3.4",
-		"next": "^15.1.6",
+		"next": "^15.2.3",
 		"react": "^18.2.0",
 		"react-colorful": "^5.6.1",
 		"react-day-picker": "^9.5.0",
