@@ -29,7 +29,7 @@ export default function Songs() {
 		author: "",
 		melody: "",
 		content: "",
-		category: { id: 1, name: "SNELA" },
+		category_id: 1,
 	});
 
 	useEffect(() => {
@@ -79,7 +79,7 @@ export default function Songs() {
 					author: "",
 					melody: "",
 					content: "",
-					category: { id: 1, name: "SNELA" },
+					category_id: 1,
 				});
 			} else {
 				throw new Error("Response data is undefined");
@@ -97,7 +97,7 @@ export default function Songs() {
 			author: "",
 			melody: "",
 			content: "",
-			category: { id: 1, name: "SNELA" },
+			category_id: 1,
 		});
 	};
 
@@ -176,7 +176,7 @@ export default function Songs() {
 									<select
 										id="category"
 										name="category"
-										value={newSong.category.id ?? 0}
+										value={newSong.category_id ?? 0}
 										onChange={(e) => {
 											const selectedId = Number.parseInt(e.target.value, 10);
 											const selectedCategory = {
@@ -280,7 +280,7 @@ export default function Songs() {
 							<select
 								id="category"
 								name="category"
-								value={newSong.category.id ?? 0}
+								value={newSong.category_id ?? 0}
 								onChange={(e) => {
 									const selectedId = Number.parseInt(e.target.value, 10);
 									const selectedCategory = { id: selectedId, name: "SNELA" };
@@ -383,7 +383,7 @@ export default function Songs() {
 							<select
 								id="category"
 								name="category"
-								value={newSong.category.id ?? 0}
+								value={newSong.category_id ?? 0}
 								onChange={(e) => {
 									const selectedId = Number.parseInt(e.target.value, 10);
 									const selectedCategory = { id: selectedId, name: "SNELA" };
