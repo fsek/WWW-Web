@@ -187,7 +187,7 @@ export default function EventsForm() {
 									<FormItem>
 										<FormLabel>Starttime</FormLabel>
 										<AdminChooseDates
-											value={field.value}
+											value={new Date(field.value)}
 											onChange={field.onChange}
 										/>
 									</FormItem>
@@ -201,7 +201,7 @@ export default function EventsForm() {
 									<FormItem>
 										<FormLabel>Endtime</FormLabel>
 										<AdminChooseDates
-											value={field.value}
+											value={new Date(field.value)}
 											onChange={field.onChange}
 										/>
 									</FormItem>
@@ -215,7 +215,7 @@ export default function EventsForm() {
 									<FormItem>
 										<FormLabel>Signup start</FormLabel>
 										<AdminChooseDates
-											value={field.value}
+											value={new Date(field.value)}
 											onChange={field.onChange}
 										/>
 									</FormItem>
@@ -229,7 +229,7 @@ export default function EventsForm() {
 									<FormItem>
 										<FormLabel>Signup end</FormLabel>
 										<AdminChooseDates
-											value={field.value}
+											value={new Date(field.value)}
 											onChange={field.onChange}
 										/>
 									</FormItem>

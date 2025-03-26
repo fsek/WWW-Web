@@ -32,7 +32,7 @@ const columns = [
 export default function News() {
 	const { t } = useTranslation();
 
-	const { data, error, isPending } = useQuery({
+	const { data, isPending } = useQuery({
 		...getAllNewsOptions(),
 	});
 

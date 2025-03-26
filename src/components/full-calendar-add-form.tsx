@@ -16,9 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { PlusIcon } from "lucide-react";
-import { HexColorPicker } from "react-colorful";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -173,7 +171,7 @@ export function EventAddForm({
 										<DateTimePicker
 											value={field.value}
 											onChange={field.onChange}
-											hourCycle={12}
+											hourCycle={24}
 											granularity="minute"
 										/>
 									</FormControl>
@@ -191,7 +189,7 @@ export function EventAddForm({
 										<DateTimePicker
 											value={field.value}
 											onChange={field.onChange}
-											hourCycle={12}
+											hourCycle={24}
 											granularity="minute"
 										/>
 									</FormControl>

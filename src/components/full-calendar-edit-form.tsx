@@ -15,8 +15,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { HexColorPicker } from "react-colorful";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -75,7 +73,7 @@ export function EventEditForm({
 	const { t } = useTranslation();
 	const { editEvent } = useEvents();
 	const { eventEditOpen, setEventEditOpen } = useEvents();
-	const { eventViewOpen, setEventViewOpen } = useEvents();
+	const { setEventViewOpen } = useEvents();
 
 	const { toast } = useToast();
 

@@ -32,8 +32,15 @@ package-lock.json
 package-lock.json
 package-lock.json
 package-lock.json
+bun.lock
 
-
-.next
+# build files?
 next-env.d.ts
+
+# build files
+.next
 dist
+out
+tsconfig.tsbuildinfo
+
+

@@ -267,13 +267,12 @@ export default function Calendar({ showDescription, handleOpenDetails, disableEd
 					eventChange={(eventInfo) => handleEventChange(eventInfo)}
 					select={handleDateSelect}
 					datesSet={(dates) => setViewedDate(dates.start)}
-					dateClick={(!disableEdit ?? true) ? () => setEventAddOpen(true) : undefined}
+					dateClick={(!disableEdit) ? () => setEventAddOpen(true) : undefined}
 					nowIndicator
-					editable={!disableEdit ?? true} 
-					selectable
+					editable={!disableEdit} 
+					selectable // I think this is unused
 				/>
 			</Card>
-
 			{/* Render the EventAddForm so it can appear when eventAddOpen is toggled */}
 			{(!disableEdit) && (
 				<EventAddForm

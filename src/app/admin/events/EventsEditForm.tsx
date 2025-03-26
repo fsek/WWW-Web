@@ -18,8 +18,8 @@ import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import {
 	getAllEventsQueryKey,
-	removeMutation,
-	updateMutation,
+	eventRemoveMutation,
+	eventUpdateMutation,
 } from "@/api/@tanstack/react-query.gen";
 import type { EventRead, EventUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -79,7 +79,7 @@ export default function EventsEditForm({
 	const queryClient = useQueryClient();
 
 	const updateEvent = useMutation({
-		...updateMutation(),
+		...eventUpdateMutation(),
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
@@ -90,7 +90,7 @@ export default function EventsEditForm({
 	});
 
 	const removeEvent = useMutation({
-		...removeMutation(),
+		...eventRemoveMutation(),
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
@@ -203,7 +203,7 @@ export default function EventsEditForm({
 								<FormItem>
 									<FormLabel>Start time</FormLabel>
 									<AdminChooseDates
-										value={field.value}
+										value={new Date(field.value)}
 										onChange={field.onChange}
 									/>
 								</FormItem>
@@ -218,7 +218,7 @@ export default function EventsEditForm({
 								<FormItem>
 									<FormLabel>End time</FormLabel>
 									<AdminChooseDates
-										value={field.value}
+										value={new Date(field.value)}
 										onChange={field.onChange}
 									/>
 								</FormItem>
@@ -233,7 +233,7 @@ export default function EventsEditForm({
 								<FormItem>
 									<FormLabel>Signup start</FormLabel>
 									<AdminChooseDates
-										value={field.value}
+										value={new Date(field.value)}
 										onChange={field.onChange}
 									/>
 								</FormItem>
@@ -248,7 +248,7 @@ export default function EventsEditForm({
 								<FormItem>
 									<FormLabel>Signup end</FormLabel>
 									<AdminChooseDates
-										value={field.value}
+										value={new Date(field.value)}
 										onChange={field.onChange}
 									/>
 								</FormItem>
