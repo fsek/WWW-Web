@@ -1,0 +1,126 @@
+{
+	"title": "Huvudsida",
+	"navbar": {
+		"sektionen": {
+			"self": "Sektionen",
+			"about": {
+				"self": "Om Oss",
+				"desc": "Välkommen till vår sektion – lär känna oss och våra värderingar."
+			},
+			"news": {
+				"self": "Nyheter",
+				"desc": "Håll dig uppdaterad med de senaste nyheterna och evenemangen."
+			},
+			"councils": {
+				"self": "Utskott",
+				"desc": "Utforska våra utskotts dedikerade arbete och engagemang."
+			},
+			"blogg": {
+				"self": "Blogg",
+				"desc": "Läs inspirerande berättelser och insikter från våra medlemmar."
+			},
+			"secrecy": {
+				"self": "Sekretessvillkor",
+				"desc": "Läs hur vi skyddar din information och upprätthåller integriteten."
+			}
+		},
+		"engage": {
+			"self": "Engagera Dig",
+			"hilbertcafe": {
+				"self": "Hilbert Café",
+				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär."
+			},
+			"posts": {
+				"self": "Inlägg",
+				"desc": "Följ våra senaste inlägg och engagerande diskussioner."
+			},
+			"nollningsvol": {
+				"self": "Nollningsvolontärer",
+				"desc": "Möt teamet som välkomnar nya medlemmar med öppna armar."
+			},
+			"elections": {
+				"self": "Val",
+				"desc": "Delta i vårt demokratiska val och påverka vår framtid."
+			},
+			"projects": {
+				"self": "Projekt",
+				"desc": "Upptäck spännande initiativ och samarbeten inom sektionen."
+			}
+		},
+		"services": {
+			"self": "Tjänster",
+			"car": {
+				"self": "Bilbokning",
+				"desc": "Boka bil enkelt och smidigt för dina resor och behov."
+			},
+			"rooms": {
+				"self": "Lokalbokning",
+				"desc": "Boka mötes- eller evenemangsutrymmen med ett klick."
+			},
+			"tools": {
+				"self": "Verktygsutlåning",
+				"desc": "Låna högkvalitativa verktyg för dina projekt."
+			},
+			"equipment": {
+				"self": "Utrustningsuthyrning",
+				"desc": "Hyra modern utrustning för att effektivisera ditt arbete."
+			},
+			"specialrooms": {
+				"self": "Stilla Rum/Bönerum",
+				"desc": "Hitta en lugn plats för reflektion eller bön."
+			}
+		},
+		"companies": {
+			"self": "Företag",
+			"fsek": {
+				"self": "Om F-sektionen",
+				"desc": "Läs om vår mission, våra värderingar och vårt engagemang."
+			},
+			"wehave": {
+				"self": "Våra Erbjudanden",
+				"desc": "Upptäck de tjänster och produkter vi stolt erbjuder."
+			},
+			"farad": {
+				"self": "Farad",
+				"desc": "Lär dig mer om Farads innovativa lösningar och marknadsposition."
+			},
+			"contact": {
+				"self": "Företagskontakt",
+				"desc": "Kontakta oss för affärsförfrågningar och samarbeten."
+			}
+		},
+		"contact": {
+			"self": "Kontakt",
+			"contactsite": {
+				"self": "Kontaktsida",
+				"desc": "Här hittar du all information du behöver för att nå oss."
+			},
+			"ordf": {
+				"self": "Ordförande",
+				"desc": "Möt vår ledare och läs om vår strategiska vision."
+			},
+			"web": {
+				"self": "Webbansvarig",
+				"desc": "Lär känna personen bakom vår webbplats och digitala närvaro."
+			},
+			"anonform": {
+				"self": "Anonymt Kontaktformulär",
+				"desc": "Skicka feedback eller frågor konfidentiellt via vårt formulär."
+			},
+			"klaga": {
+				"self": "Klagomål",
+				"desc": "Berätta för oss hur vi kan förbättra våra tjänster och support."
+			}
+		},
+		"login": "Logga In",
+		"booking": "Bokningar",
+		"documents": "Dokument"
+	},
+	"footer": {
+		"contact": "Kontakt",
+		"emergencycontact": "Nödkontakt",
+		"companies": "För företag",
+		"webansvar": "Webbansvarig",
+		"ansvar": "Ansvarig utgivare"
+	}
+}
