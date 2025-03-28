@@ -1,5 +1,6 @@
 {
 	"title": "Adminsida",
+	"submit": "Skapa",
 	"news": {
 		"self": "Nyheter",
 		"page_title": "Administrera nyheter"
@@ -16,7 +17,6 @@
 		"public": "Offentlig",
 		"file_type_error": "Ogiltig filtyp. Tillåtna filtyper är: .pdf, .jpg, .png",
 		"file_size_error": "Filstorleken får inte överstiga 5 MB",
-		"create": "Skapa dokument",
-		"submit": "Skapa"
+		"create": "Skapa dokument"
 	}
 }

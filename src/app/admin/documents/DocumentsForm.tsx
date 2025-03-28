@@ -149,7 +149,7 @@ export default function DocumentsForm() {
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									{t("admin:documents.submit")}
+									{t("admin:submit")}
 								</Button>
 							</div>
 						</form>
