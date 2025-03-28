@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import EventsForm from "./EventsForm";
-import EventsEditForm from "./EventsEditForm";
+import DocumentsForm from "./DocumentsForm";
+import DocumentsEditForm from "./DocumentsEditForm";
 import { getAllEventsOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
@@ -68,16 +68,16 @@ export default function Events() {
 	return (
 		<div className="px-8 space-x-4">
 			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-				Administrera event
+				Administrera dokument
 			</h3>
 			<p className="py-3">
-				Här kan du skapa event & redigera existerande event på hemsidan.
+				Här kan du ladda upp dokument & redigera existerande dokument på hemsidan.
 			</p>
-			<EventsForm />
+			<DocumentsForm />
 
 			<AdminTable table={table} onRowClick={handleRowClick} />
 
-			<EventsEditForm
+			<DocumentsEditForm
 				open={openEditDialog}
 				onClose={() => handleClose()}
 				selectedEvent={selectedEvent as EventRead}
