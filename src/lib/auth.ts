@@ -1,6 +1,6 @@
 "use client";
 
-import { BearerResponse } from "@/api";
+import type { BearerResponse } from "@/api";
 import { useEffect, useState } from "react";
 
 export function handleBearerResponse(data: BearerResponse) {

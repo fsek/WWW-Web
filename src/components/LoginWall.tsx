@@ -14,7 +14,7 @@ export default function LoginWall({ children }: PropsWithChildren) {
 			// TODO: add a query parameter to redirect back to the current page after login
 			router.push(`/login?next=${pathname}`);
 		}
-	}, [isAuthenticated]);
+	}, [isAuthenticated, pathname, router.push]);
 
 	if (isAuthenticated === true) {
 		return <>{children}</>;
