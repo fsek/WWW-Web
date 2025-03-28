@@ -49,7 +49,7 @@ export default function DocumentsEditForm({
 			)
 			.refine(
 				(file) =>
-					["application/pdf", "image/jpeg", "image/png"].includes(file.type),
+					["application/pdf", "image/jpeg", "image/png", "text/plain"].includes(file.type),
 				t("admin:documents.file_type_error"),
 			),
 		public: z.boolean(),

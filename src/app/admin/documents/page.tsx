@@ -80,7 +80,7 @@ export default function Events() {
 			<DocumentsEditForm
 				open={openEditDialog}
 				onClose={() => handleClose()}
-				selectedEvent={selectedEvent as EventRead}
+				// selectedDocument={selectedDocument as EventRead}
 			/>
 		</div>
 	);
