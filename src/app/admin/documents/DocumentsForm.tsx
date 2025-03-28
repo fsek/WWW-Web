@@ -42,9 +42,6 @@ export default function DocumentsForm() {
 				t("admin:documents.file_type_error"),
 			),
 		public: z.boolean(),
-		uploader_id: z.string(),
-		upload_date: z.string(),
-		edit_date: z.string(),
 	});
 
 	const documentsForm = useForm<z.infer<typeof documentsSchema>>({

@@ -16,120 +16,126 @@ import { Input } from "@/components/ui/input";
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
-import {
-	getAllEventsQueryKey,
-	eventUpdateMutation,
-	eventRemoveMutation,
-} from "@/api/@tanstack/react-query.gen";
-import type { EventRead, EventUpdate } from "../../../api";
+// import {
+// 	getAllEventsQueryKey,
+// 	eventUpdateMutation,
+// 	eventRemoveMutation,
+// } from "@/api/@tanstack/react-query.gen";
+// import type { DocumentRead, DocumentUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
-const eventsEditSchema = z.object({
-	id: z.number(),
-	title_sv: z.string().min(2),
-	title_en: z.string().min(2),
-	council_id: z.number().int(),
-	starts_at: z.string(),
-	ends_at: z.string(),
-	signup_start: z.string(),
-	signup_end: z.string(),
-	description_sv: z.string().max(1000).optional(),
-	description_en: z.string().max(1000).optional(),
-});
-
-type EventsEditFormType = z.infer<typeof eventsEditSchema>;
-
-interface EventsEditFormProps {
+interface DocumentsEditFormProps {
 	open: boolean;
 	onClose: () => void;
-	selectedEvent: EventRead;
+	// selectedDocument: DocumentRead;
 }
 
-export default function EventsEditForm({
+export default function DocumentsEditForm({
 	open,
 	onClose,
-	selectedEvent,
-}: EventsEditFormProps) {
-	const form = useForm<EventsEditFormType>({
-		resolver: zodResolver(eventsEditSchema),
+	// selectedDocument,
+}: DocumentsEditFormProps) {
+	const { t } = useTranslation();
+
+	const documentsEditSchema = z.object({
+		title: z.string(),
+		// description: "",
+		file: z
+			.instanceof(File)
+			.refine(
+				(file) => file.size <= 5 * 1024 * 1024,
+				t("admin:documents.file_size_error"),
+			)
+			.refine(
+				(file) =>
+					["application/pdf", "image/jpeg", "image/png"].includes(file.type),
+				t("admin:documents.file_type_error"),
+			),
+		public: z.boolean(),
+	});
+
+	type DocumentsEditFormType = z.infer<typeof documentsEditSchema>;
+
+	const documentsEditForm = useForm<DocumentsEditFormType>({
+		resolver: zodResolver(documentsEditSchema),
 		defaultValues: {
-			title_sv: "",
-			title_en: "",
-			starts_at: "",
-			ends_at: "",
-			signup_start: "",
-			signup_end: "",
-			description_sv: "",
-			description_en: "",
+			title: "",
+			// description: "",
+			file: new File(
+				["This is an example file. You may treat getting this as an error."],
+				"sample.txt",
+			),
+			public: false,
 		},
 	});
 
-	useEffect(() => {
-		if (open && selectedEvent) {
-			form.reset({
-				...selectedEvent,
-				starts_at: new Date(selectedEvent.starts_at).toISOString(),
-				ends_at: new Date(selectedEvent.ends_at).toISOString(),
-				signup_start: new Date(selectedEvent.signup_start).toISOString(),
-				signup_end: new Date(selectedEvent.signup_end).toISOString(),
-			});
-		}
-	}, [selectedEvent, form, open]);
+	// useEffect(() => {
+	// 	if (open && selectedDocument) {
+	// 		form.reset({
+	// 			...selectedDocument,
+	// 			starts_at: new Date(selectedDocument.starts_at).toISOString(),
+	// 			ends_at: new Date(selectedDocument.ends_at).toISOString(),
+	// 			signup_start: new Date(selectedDocument.signup_start).toISOString(),
+	// 			signup_end: new Date(selectedDocument.signup_end).toISOString(),
+	// 		});
+	// 	}
+	// }, [selectedDocument, form, open]);
 
 	const queryClient = useQueryClient();
 
-	const updateEvent = useMutation({
-		...eventUpdateMutation(),
-		throwOnError: false,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
-		},
-		onError: () => {
-			onClose();
-		},
-	});
+	// const updateDocument = useMutation({
+	// 	...documentUpdateMutation(),
+	// 	throwOnError: false,
+	// 	onSuccess: () => {
+	// 		queryClient.invalidateQueries({ queryKey: getAllDocumentsQueryKey() });
+	// 	},
+	// 	onError: () => {
+	// 		onClose();
+	// 	},
+	// });
 
-	const removeEvent = useMutation({
-		...eventRemoveMutation(),
-		throwOnError: false,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
-		},
-		onError: () => {
-			onClose();
-		},
-	});
+	// const removeDocument = useMutation({
+	// 	...documentRemoveMutation(),
+	// 	throwOnError: false,
+	// 	onSuccess: () => {
+	// 		queryClient.invalidateQueries({ queryKey: getAllDocumentsQueryKey() });
+	// 	},
+	// 	onError: () => {
+	// 		onClose();
+	// 	},
+	// });
 
-	function handleFormSubmit(values: EventsEditFormType) {
-		const updatedEvent: EventUpdate = {
-			title_sv: values.title_sv,
-			title_en: values.title_en,
-			description_sv: values.description_sv,
-			description_en: values.description_en,
-		};
+	function handleFormSubmit(values: DocumentsEditFormType) {
+		// const updatedDocument: DocumentUpdate = {
+		// 	title: values.title,
+		// 	file: values.file,
+		// };
 
-		updateEvent.mutate(
-			{
-				path: { event_id: values.id },
-				body: updatedEvent,
-			},
-			{
-				onSuccess: () => {
-					onClose();
-				},
-			},
-		);
+		// updateDocument.mutate(
+		// 	{
+		// 		path: { event_id: values.id },
+		// 		body: updatedDocument,
+		// 	},
+		// 	{
+		// 		onSuccess: () => {
+		// 			onClose();
+		// 		},
+		// 	},
+		// );
+		console.log("Form submitted", values);
 	}
 
 	function handleRemoveSubmit() {
-		removeEvent.mutate(
-			{ path: { event_id: form.getValues("id") } },
-			{
-				onSuccess: () => {
-					onClose();
-				},
-			},
-		);
+		// removeDocument.mutate(
+		// 	{ path: { event_id: form.getValues("id") } },
+		// 	{
+		// 		onSuccess: () => {
+		// 			onClose();
+		// 		},
+		// 	},
+		// );
+		console.log("Remove document", documentsEditForm.getValues("id"));
 	}
 
 	return (
@@ -144,116 +150,48 @@ export default function EventsEditForm({
 			{" "}
 			<DialogContent className="min-w-fit lg:max-w-7xl">
 				<DialogHeader>
-					<DialogTitle>Redigera event</DialogTitle>
+					<DialogTitle>Redigera dokument</DialogTitle>
 				</DialogHeader>
 				<hr />
-				<Form {...form}>
+				<Form {...documentsEditForm}>
 					<form
-						onSubmit={form.handleSubmit(handleFormSubmit)}
+						onSubmit={documentsEditForm.handleSubmit(handleFormSubmit)}
 						className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
 					>
-						{/* Title (sv) */}
-						<FormField
-							control={form.control}
-							name="title_sv"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Titel (sv)</FormLabel>
-									<FormControl>
-										<Input placeholder="Titel" {...field} />
-									</FormControl>
-								</FormItem>
-							)}
-						/>
+							<FormField
+								control={documentsEditForm.control}
+								name="title"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("admin:documents.title")}</FormLabel>
+										<FormControl>
+											<Input
+												placeholder={t("admin:documents.title")}
+												{...field}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
 
-						{/* Title (en) */}
-						<FormField
-							control={form.control}
-							name="title_en"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Titel (en)</FormLabel>
-									<FormControl>
-										<Input placeholder="Title" {...field} />
-									</FormControl>
-								</FormItem>
-							)}
-						/>
+							<FormField
+								control={documentsEditForm.control}
+								name="file"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2">
+										<FormLabel>{t("admin:documents.file")}</FormLabel>
+										<FormControl>
+											<Input
+												id="document"
+												type="file"
+												onChange={(e) => field.onChange(e.target.files?.[0])}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
 
-						{/* Council */}
-						<FormField
-							control={form.control}
-							name="council_id"
-							render={({ field }) => (
-								<FormItem className="lg:col-span-2">
-									<FormLabel>Council</FormLabel>
-									<AdminChooseCouncil
-										value={field.value}
-										onChange={field.onChange}
-									/>
-								</FormItem>
-							)}
-						/>
-
-						{/* Starts at */}
-						<FormField
-							control={form.control}
-							name="starts_at"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Start time</FormLabel>
-									<AdminChooseDates
-										value={field.value}
-										onChange={field.onChange}
-									/>
-								</FormItem>
-							)}
-						/>
-
-						{/* Ends at */}
-						<FormField
-							control={form.control}
-							name="ends_at"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>End time</FormLabel>
-									<AdminChooseDates
-										value={field.value}
-										onChange={field.onChange}
-									/>
-								</FormItem>
-							)}
-						/>
-
-						{/* Signup start */}
-						<FormField
-							control={form.control}
-							name="signup_start"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Signup start</FormLabel>
-									<AdminChooseDates
-										value={field.value}
-										onChange={field.onChange}
-									/>
-								</FormItem>
-							)}
-						/>
-
-						{/* Signup end */}
-						<FormField
-							control={form.control}
-							name="signup_end"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Signup end</FormLabel>
-									<AdminChooseDates
-										value={field.value}
-										onChange={field.onChange}
-									/>
-								</FormItem>
-							)}
-						/>
+						{/* Public */}
 
 						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
 							<Button
@@ -270,7 +208,7 @@ export default function EventsEditForm({
 								className="w-32 min-w-fit"
 								onClick={handleRemoveSubmit}
 							>
-								Remove event
+								Remove document
 							</Button>
 
 							<Button type="submit" className="w-32 min-w-fit">
