@@ -769,6 +769,24 @@ export const CouncilReadSchema = {
     title: 'CouncilRead'
 } as const;
 
+export const CouncilUpdateSchema = {
+    properties: {
+        name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        }
+    },
+    type: 'object',
+    title: 'CouncilUpdate'
+} as const;
+
 export const ElectionAddPostsSchema = {
     properties: {
         posts: {
@@ -2037,6 +2055,24 @@ export const PermissionReadSchema = {
     type: 'object',
     required: ['id', 'action', 'target'],
     title: 'PermissionRead'
+} as const;
+
+export const PermissionRemoveSchema = {
+    properties: {
+        action: {
+            type: 'string',
+            enum: ['view', 'manage'],
+            title: 'Action'
+        },
+        target: {
+            type: 'string',
+            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe', 'Election', 'Groups', 'Adventure Missions', 'Nollning', 'Tags', 'Council'],
+            title: 'Target'
+        }
+    },
+    type: 'object',
+    required: ['action', 'target'],
+    title: 'PermissionRemove'
 } as const;
 
 export const PostCreateSchema = {

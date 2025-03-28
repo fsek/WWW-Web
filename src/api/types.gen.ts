@@ -174,6 +174,10 @@ export type CouncilRead = {
     events: Array<EventRead>;
 };
 
+export type CouncilUpdate = {
+    name?: (string | null);
+};
+
 export type ElectionAddPosts = {
     posts: Array<ElectionPostCreate>;
 };
@@ -470,6 +474,11 @@ export type PermissionRead = {
     target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe' | 'Election' | 'Groups' | 'Adventure Missions' | 'Nollning' | 'Tags' | 'Council';
 };
 
+export type PermissionRemove = {
+    action: 'view' | 'manage';
+    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe' | 'Election' | 'Groups' | 'Adventure Missions' | 'Nollning' | 'Tags' | 'Council';
+};
+
 export type PostCreate = {
     name: string;
     council_id: number;
@@ -693,6 +702,14 @@ export type PermissionsCreatePermissionData = {
 export type PermissionsCreatePermissionResponse = (PermissionRead);
 
 export type PermissionsCreatePermissionError = (HTTPValidationError);
+
+export type PermissionsRemovePermissionData = {
+    body: PermissionRemove;
+};
+
+export type PermissionsRemovePermissionResponse = (PermissionRead);
+
+export type PermissionsRemovePermissionError = (HTTPValidationError);
 
 export type PermissionsChangePostPermissionData = {
     body: UpdatePermission;
@@ -1227,7 +1244,7 @@ export type AdsRemoveAdSuperUserError = (HTTPValidationError);
 export type AdsUpdateAdData = {
     body: AdUpdate;
     path: {
-        id: number;
+        ad_id: number;
     };
 };
 
@@ -1609,6 +1626,17 @@ export type CouncilGetCouncilData = {
 export type CouncilGetCouncilResponse = (CouncilRead);
 
 export type CouncilGetCouncilError = (HTTPValidationError);
+
+export type CouncilUpdateCouncilData = {
+    body: CouncilUpdate;
+    path: {
+        council_id: number;
+    };
+};
+
+export type CouncilUpdateCouncilResponse = (CouncilRead);
+
+export type CouncilUpdateCouncilError = (HTTPValidationError);
 
 export type HelloRouteResponse = (unknown);
 
