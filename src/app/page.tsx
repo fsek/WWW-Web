@@ -11,7 +11,8 @@ export default function MainLanding() {
 					Hej! 👋 Du 🫵 ser 👀 denna 📄 sida 📘 för 💡 att ✨ du 🫶 är 🧊 cool
 					😎 och 🕸️ spindel 🕷️.
 				</p>
-				<Link href="news">Goto news</Link>
+				<p>👉👈</p>
+				<Link href="admin/documents">Goto news</Link>
 			</div>
 			<Footer />
 		</div>
