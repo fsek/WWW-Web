@@ -142,7 +142,24 @@ export default function DocumentsForm() {
 									</FormItem>
 								)}
 							/>
-
+							<FormField
+								control={documentsForm.control}
+								name="public"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2">
+										<FormLabel>{t("admin:documents.public")}</FormLabel>
+										<FormControl>
+											<Input
+												id="public"
+												type="checkbox"
+												checked={field.value}
+												onChange={field.onChange}
+												ref={field.ref}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
 								<Button
 									type="submit"
