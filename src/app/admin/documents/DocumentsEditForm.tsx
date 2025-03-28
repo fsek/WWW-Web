@@ -39,6 +39,7 @@ export default function DocumentsEditForm({
 	const { t } = useTranslation();
 
 	const documentsEditSchema = z.object({
+		id: z.number(),
 		title: z.string(),
 		// description: "",
 		file: z
