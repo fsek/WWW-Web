@@ -13,26 +13,22 @@ import type { EventRead } from "../../../api";
 import useCreateTable from "@/widgets/useCreateTable";
 
 // Column setup
-const columnHelper = createColumnHelper<EventRead>();
+const columnHelper = createColumnHelper<DocumentsRead>();
 const columns = [
-	columnHelper.accessor("title_sv", {
-		header: "Svensk titel",
+	columnHelper.accessor("title", {
+		header: "Namn",
 		cell: (info) => info.getValue(),
 	}),
-	columnHelper.accessor("starts_at", {
-		header: "Starttid",
+	columnHelper.accessor("created_at", {
+		header: "Skapad",
 		cell: (info) => formatTime(info.getValue()),
 	}),
-	columnHelper.accessor("ends_at", {
-		header: "Sluttid",
+	columnHelper.accessor("public", {
+		header: "Offentlig",
 		cell: (info) => formatTime(info.getValue()),
 	}),
-	columnHelper.accessor("signup_start", {
-		header: "Anmälningsöppning",
-		cell: (info) => formatTime(info.getValue()),
-	}),
-	columnHelper.accessor("signup_end", {
-		header: "Anmälningsavslut",
+	columnHelper.accessor("created_by", {
+		header: "Skapad av",
 		cell: (info) => formatTime(info.getValue()),
 	}),
 ];
@@ -71,7 +67,8 @@ export default function Events() {
 				Administrera dokument
 			</h3>
 			<p className="py-3">
-				Här kan du ladda upp dokument & redigera existerande dokument på hemsidan.
+				Här kan du ladda upp dokument & redigera existerande dokument på
+				hemsidan.
 			</p>
 			<DocumentsForm />
 
