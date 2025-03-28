@@ -20,19 +20,30 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 // } from "@/api/@tanstack/react-query.gen";
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
-
+import { useTranslation } from "react-i18next";
 
 const documentsSchema = z.object({
-  title: z.string(),
-  // description: "",
-  file: z.instanceof(File),
-  public: z.boolean(),
-  uploader_id: z.string(),
-  upload_date: z.string(),
-  edit_date: z.string(),
+	title: z.string(),
+	// description: "",
+	file: z
+		.instanceof(File)
+		.refine(
+			(file) => file.size <= 5 * 1024 * 1024,
+			"Filen får inte vara större än 5MB",
+		)
+		.refine(
+			(file) =>
+				["application/pdf", "image/jpeg", "image/png"].includes(file.type),
+			"Endast PDF, JPEG och PNG är tillåtna.",
+		),
+	public: z.boolean(),
+	uploader_id: z.string(),
+	upload_date: z.string(),
+	edit_date: z.string(),
 });
 
 export default function DocumentsForm() {
+	const { t } = useTranslation();
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 
@@ -41,8 +52,11 @@ export default function DocumentsForm() {
 		defaultValues: {
 			title: "",
 			// description: "",
-      file: new File(["This is an example file. You may treat getting this as an error."], "sample.txt"),
-      public: false,
+			file: new File(
+				["This is an example file. You may treat getting this as an error."],
+				"sample.txt",
+			),
+			public: false,
 		},
 	});
 
@@ -66,15 +80,14 @@ export default function DocumentsForm() {
 		// createDocuments.mutate({
 		// 	body: {
 		// 		title: values.title,
-    //     // description: values.description,
-    //     file: values.file,
-    //     public: values.public,
-    //     uploader_id: values.uploader_id,
-    //     upload_date: values.upload_date,
-    //     edit_date: values.edit_date,
+		//     // description: values.description,
+		//     file: values.file,
+		//     public: values.public,
+		//     uploader_id: values.uploader_id,
+		//     upload_date: values.upload_date,
+		//     edit_date: values.edit_date,
 		// 	},
 		// });
-    
 	}
 
 	return (
@@ -120,8 +133,12 @@ export default function DocumentsForm() {
 									<FormItem className="lg:col-span-2">
 										<FormLabel>Fil</FormLabel>
 										<FormControl>
-                      <Input id="file" type="file" {...field} /> 
-                    </FormControl>
+											<Input
+												id="document"
+												type="file"
+												onChange={(e) => field.onChange(e.target.files?.[0])}
+											/>
+										</FormControl>
 									</FormItem>
 								)}
 							/>
@@ -138,7 +155,6 @@ export default function DocumentsForm() {
 									Publicera
 								</Button>
 							</div>
-
 						</form>
 					</Form>
 				</DialogContent>
