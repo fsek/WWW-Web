@@ -151,7 +151,7 @@ export default function DocumentsEditForm({
 			{" "}
 			<DialogContent className="min-w-fit lg:max-w-7xl">
 				<DialogHeader>
-					<DialogTitle>Redigera dokument</DialogTitle>
+					<DialogTitle>{t("admin:documents.edit_document")}</DialogTitle>
 				</DialogHeader>
 				<hr />
 				<Form {...documentsEditForm}>
@@ -200,7 +200,7 @@ export default function DocumentsEditForm({
 								className="w-32 min-w-fit"
 								onClick={() => console.log("Preview clicked")}
 							>
-								Förhandsgranska
+								{t("admin:preview")}
 							</Button>
 
 							<Button
@@ -209,11 +209,11 @@ export default function DocumentsEditForm({
 								className="w-32 min-w-fit"
 								onClick={handleRemoveSubmit}
 							>
-								Remove document
+								{t("admin:documents.remove_document")}
 							</Button>
 
 							<Button type="submit" className="w-32 min-w-fit">
-								Spara
+								{t("admin:submit")}
 							</Button>
 						</div>
 					</form>

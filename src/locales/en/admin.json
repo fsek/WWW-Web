@@ -1,10 +1,30 @@
 {
-	"title": "Admin page",
+	"title": "Admin Page",
+	"submit": "Create",
+	"loading": "Loading...",
+	"error": "Something went wrong :/",
+	"preview": "Preview",
 	"news": {
 		"self": "News",
-		"page_title": "Administrate news"
+		"page_title": "Manage News"
 	},
 	"events": {
 		"self": "Events"
+	},
+	"documents": {
+		"self": "Documents",
+		"page_title": "Manage Documents",
+		"description": "Here you can manage documents available for download.",
+		"title": "Title",
+		"file": "File",
+		"name": "Name",
+		"public": "Public",
+		"file_type_error": "Invalid file type. Allowed file types are: .pdf, .jpg, .png, .txt",
+		"file_size_error": "File size must not exceed 5 MB",
+		"create": "Create Document",
+		"remove_document": "Remove Document",
+		"edit_document": "Edit Document",
+		"created_at": "Created at",
+		"edited_by": "Last edited by"
 	}
 }

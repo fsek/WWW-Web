@@ -98,7 +98,7 @@ export default function DocumentsForm() {
 					setSubmitEnabled(true);
 				}}
 			>
-				Skapa event
+				{t("admin:documents.create")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
