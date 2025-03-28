@@ -22,30 +22,30 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { useTranslation } from "react-i18next";
 
-const documentsSchema = z.object({
-	title: z.string(),
-	// description: "",
-	file: z
-		.instanceof(File)
-		.refine(
-			(file) => file.size <= 5 * 1024 * 1024,
-			"Filen får inte vara större än 5MB",
-		)
-		.refine(
-			(file) =>
-				["application/pdf", "image/jpeg", "image/png"].includes(file.type),
-			"Endast PDF, JPEG och PNG är tillåtna.",
-		),
-	public: z.boolean(),
-	uploader_id: z.string(),
-	upload_date: z.string(),
-	edit_date: z.string(),
-});
-
 export default function DocumentsForm() {
 	const { t } = useTranslation();
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
+
+	const documentsSchema = z.object({
+		title: z.string(),
+		// description: "",
+		file: z
+			.instanceof(File)
+			.refine(
+				(file) => file.size <= 5 * 1024 * 1024,
+				t("admin:documents.file_size_error"),
+			)
+			.refine(
+				(file) =>
+					["application/pdf", "image/jpeg", "image/png"].includes(file.type),
+				t("admin:documents.file_type_error"),
+			),
+		public: z.boolean(),
+		uploader_id: z.string(),
+		upload_date: z.string(),
+		edit_date: z.string(),
+	});
 
 	const documentsForm = useForm<z.infer<typeof documentsSchema>>({
 		resolver: zodResolver(documentsSchema),
@@ -105,7 +105,7 @@ export default function DocumentsForm() {
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="min-w-fit lg:max-w-7xl">
 					<DialogHeader>
-						<DialogTitle>Skapa event</DialogTitle>
+						<DialogTitle>{t("admin:documents.create")}</DialogTitle>
 					</DialogHeader>
 					<hr />
 					<Form {...documentsForm}>
@@ -118,9 +118,12 @@ export default function DocumentsForm() {
 								name="title"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Titel</FormLabel>
+										<FormLabel>{t("admin:documents.title")}</FormLabel>
 										<FormControl>
-											<Input placeholder="Titel" {...field} />
+											<Input
+												placeholder={t("admin:documents.title")}
+												{...field}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -131,7 +134,7 @@ export default function DocumentsForm() {
 								name="file"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
-										<FormLabel>Fil</FormLabel>
+										<FormLabel>{t("admin:documents.file")}</FormLabel>
 										<FormControl>
 											<Input
 												id="document"
@@ -144,15 +147,12 @@ export default function DocumentsForm() {
 							/>
 
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-								<Button variant="outline" className="w-32 min-w-fit">
-									Förhandsgranska
-								</Button>
 								<Button
 									type="submit"
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									Publicera
+									{t("admin:documents.submit")}
 								</Button>
 							</div>
 						</form>
