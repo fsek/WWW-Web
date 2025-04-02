@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { NavBar } from "../components/NavBar";
+import WaveAnimation from "../components/WaveAnimation";
+
 import Footer from "@/components/Footer";
 
 export default function MainLanding() {
@@ -12,6 +14,9 @@ export default function MainLanding() {
 					😎 och 🕸️ spindel 🕷️.
 				</p>
 				<Link href="news">Goto news</Link>
+			</div>
+			<div className="">
+				<WaveAnimation />
 			</div>
 			<Footer />
 		</div>
