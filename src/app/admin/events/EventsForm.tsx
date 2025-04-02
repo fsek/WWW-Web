@@ -21,6 +21,7 @@ import {
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
+import { useTranslation } from "react-i18next";
 
 const eventsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -48,6 +49,7 @@ const eventsSchema = z.object({
 export default function EventsForm() {
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
+	const { t } = useTranslation();
 
 	const eventsForm = useForm<z.infer<typeof eventsSchema>>({
 		resolver: zodResolver(eventsSchema),
@@ -127,7 +129,7 @@ export default function EventsForm() {
 					setSubmitEnabled(true);
 				}}
 			>
-				Skapa event
+				{t("events.create")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
@@ -238,14 +240,14 @@ export default function EventsForm() {
 
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
 								<Button variant="outline" className="w-32 min-w-fit">
-									Förhandsgranska
+									{t("preview")}
 								</Button>
 								<Button
 									type="submit"
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									Publicera
+									{t("publish")}
 								</Button>
 							</div>
 						</form>

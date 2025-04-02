@@ -1,10 +1,15 @@
 {
 	"title": "Admin page",
+	"general": "General",
 	"news": {
 		"self": "News",
-		"page_title": "Administrate news"
+		"page_title": "Administrate news",
+		"create": "Create news article"
 	},
 	"events": {
-		"self": "Events"
-	}
+		"self": "Events",
+		"create": "Create event"
+	},
+	"preview": "Preview",
+	"publish": "Publish"
 }
