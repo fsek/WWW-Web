@@ -19,13 +19,22 @@
 		"allowJs": true,
 		"forceConsistentCasingInFileNames": true,
 		"incremental": true,
-		"plugins": [{ "name": "next" }],
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
 		/*shadcn/ui*/
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"]
 		}
 	},
-	"include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts"],
+	"include": [
+		"./dist/types/**/*.ts",
+		"./next-env.d.ts",
+		"./src",
+		".next/types/**/*.ts"
+	],
 	"exclude": ["./node_modules"]
 }

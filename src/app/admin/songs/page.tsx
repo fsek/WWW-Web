@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useEffect, useState } from "react";
-import "../Admin.css";
+//import "../Admin.css";
 import {
 	type SongCreate,
 	type SongsGetAllSongsResponse,
@@ -459,7 +459,7 @@ export default function Songs() {
 				<tbody>
 					{loading ? (
 						<>
-							{[...Array(4)].map((e, i) => (
+							{[...Array(4)].map((_e, i) => (
 								<tr
 									key={i}
 									className="transition duration-150 hover:bg-gray-50"
