@@ -18,9 +18,11 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 
 			const canvas = canvasRef.current;
 			const padding = 20;
-			canvas.width = windowWidth * window.devicePixelRatio;
-			canvas.height = (200 + padding * 2) * window.devicePixelRatio;
-			console.log(window.devicePixelRatio);
+			const width = windowWidth;
+			const height = 200 + padding * 2;
+			canvas.width = width * window.devicePixelRatio;
+			canvas.height = height * window.devicePixelRatio;
+			ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 			ctx.lineWidth = 1;
 
 			const wave_number = 0.015;
@@ -34,38 +36,34 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 
 			// Roof
 			const render = () => {
-				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				ctx.clearRect(0, 0, width, height);
 				ctx.beginPath();
 				// Circle
-				ctx.lineTo(canvas.width, canvas.height * 0.5);
+				ctx.lineTo(width, height * 0.5);
 				ctx.stroke();
 				ctx.beginPath();
 				ctx.arc(
 					start + padding,
-					canvas.height / 2,
-					canvas.height * 0.5 - padding,
+					height / 2,
+					height * 0.5 - padding,
 					0,
 					2 * Math.PI,
 				);
 
 				// Cross
-				ctx.moveTo(0, canvas.height * 0.5);
-				ctx.lineTo(canvas.width, canvas.height * 0.5);
+				ctx.moveTo(0, height * 0.5);
+				ctx.lineTo(width, height * 0.5);
 				ctx.moveTo(start + padding, 0);
-				ctx.lineTo(start + padding, canvas.height);
+				ctx.lineTo(start + padding, height);
 
 				function scaled_point(x: number, power: number) {
-					return (
-						start +
-						padding +
-						x ** power * (canvas.width - 2 * (start + padding))
-					);
+					return start + padding + x ** power * (width - 2 * (start + padding));
 				}
 				ctx.stroke();
 				ctx.beginPath();
 
 				// Wave
-				ctx.moveTo(start + padding, canvas.height * 0.5);
+				ctx.moveTo(start + padding, height * 0.5);
 				for (let i = 0; i < num_points + 1; i++) {
 					const relative_x =
 						num_points_inv *
@@ -80,13 +78,13 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 
 					ctx.lineTo(
 						point,
-						canvas.height * 0.5 + wave1 * (canvas.height - padding * 2) * 0.5,
+						height * 0.5 + wave1 * (height - padding * 2) * 0.5,
 					);
 					ctx.stroke();
 					if (relative_x > 0.1) {
 						ctx.setLineDash([relative_x ** 4 * 10, relative_x ** 4 * 10]);
 						ctx.lineDashOffset = -Math.abs(
-							wave1 * relative_x ** 4 * (canvas.height - padding * 2) * 0.25,
+							wave1 * relative_x ** 4 * (height - padding * 2) * 0.25,
 						);
 					}
 					ctx.strokeStyle = `rgba(0, 0, 0, ${1 - relative_x ** 4})`;
@@ -95,16 +93,16 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 					ctx.beginPath();
 					ctx.moveTo(
 						point,
-						canvas.height * 0.5 + wave1 * (canvas.height - padding * 2) * 0.5,
+						height * 0.5 + wave1 * (height - padding * 2) * 0.5,
 					);
-					ctx.lineTo(point, canvas.height * 0.5);
+					ctx.lineTo(point, height * 0.5);
 					ctx.stroke();
 					ctx.setLineDash([]);
 					//ctx.strokeStyle = "black";
 					ctx.beginPath();
 					ctx.moveTo(
 						point,
-						canvas.height * 0.5 + wave1 * (canvas.height - padding * 2) * 0.5,
+						height * 0.5 + wave1 * (height - padding * 2) * 0.5,
 					);
 				}
 				ctx.strokeStyle = "rgba(0, 0, 0, 1)";
