@@ -28,7 +28,7 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { DateTimePicker } from "./full-calendar-date-picker";
-import { useEvents } from "@/context/full-calendar-event-context";
+import { useEvents } from "@/utils/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
 import type { CalendarEvent } from "@/utils/full-calendar-seed";
 import { Button } from "./ui/button";
@@ -136,15 +136,14 @@ export function EventEditForm({
 
 	return (
 		<AlertDialog open={eventEditOpen}>
-			{(displayButton) && (
+			{displayButton && (
 				<AlertDialogTrigger asChild>
 					<Button
 						className="w-full sm:w-24 text-xs md:text-sm mb-1"
 						variant="default"
 						onClick={() => {
-							setEventViewOpen(false);
 							setEventEditOpen(true);
-							}}
+						}}
 					>
 						Edit Event
 					</Button>
@@ -171,7 +170,7 @@ export function EventEditForm({
 								</FormItem>
 							)}
 						/>
-						{(showDescription) && (
+						{showDescription && (
 							<FormField
 								control={form.control}
 								name="description"
@@ -200,7 +199,7 @@ export function EventEditForm({
 										<DateTimePicker
 											value={field.value}
 											onChange={field.onChange}
-											hourCycle={12}
+											hourCycle={24}
 											granularity="minute"
 										/>
 									</FormControl>
@@ -218,7 +217,7 @@ export function EventEditForm({
 										<DateTimePicker
 											value={field.value}
 											onChange={field.onChange}
-											hourCycle={12}
+											hourCycle={24}
 											granularity="minute"
 										/>
 									</FormControl>

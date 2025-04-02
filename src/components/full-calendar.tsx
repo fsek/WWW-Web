@@ -2,7 +2,7 @@
 
 // From: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
-import { useEvents } from "@/context/full-calendar-event-context";
+import { useEvents } from "@/utils/full-calendar-event-context";
 // import "@/styles/calendar.css";
 import type {
 	DateSelectArg,
@@ -50,7 +50,11 @@ interface CalendarProps {
 	disableEdit?: boolean;
 }
 
-export default function Calendar({ showDescription, handleOpenDetails, disableEdit }: CalendarProps) {
+export default function Calendar({
+	showDescription,
+	handleOpenDetails,
+	disableEdit,
+}: CalendarProps) {
 	const { events, setEventAddOpen, setEventEditOpen, setEventViewOpen } =
 		useEvents();
 
@@ -116,7 +120,9 @@ export default function Calendar({ showDescription, handleOpenDetails, disableEd
 				{info.view.type === "dayGridMonth" ? (
 					<div
 						style={{ backgroundColor: info.backgroundColor }}
-						className={"flex flex-col rounded-md w-full px-2 py-1 line-clamp-1 text-[0.5rem] sm:text-[0.6rem] md:text-xs"}
+						className={
+							"flex flex-col rounded-md w-full px-2 py-1 line-clamp-1 text-[0.5rem] sm:text-[0.6rem] md:text-xs"
+						}
 					>
 						<p className="font-semibold text-gray-950 line-clamp-1 w-11/12">
 							{event.title}
@@ -267,15 +273,17 @@ export default function Calendar({ showDescription, handleOpenDetails, disableEd
 					eventChange={(eventInfo) => handleEventChange(eventInfo)}
 					select={handleDateSelect}
 					datesSet={(dates) => setViewedDate(dates.start)}
-					dateClick={(!disableEdit ?? true) ? () => setEventAddOpen(true) : undefined}
+					dateClick={
+						(!disableEdit ?? true) ? () => setEventAddOpen(true) : undefined
+					}
 					nowIndicator
-					editable={!disableEdit ?? true} 
+					editable={!disableEdit ?? true}
 					selectable
 				/>
 			</Card>
 
 			{/* Render the EventAddForm so it can appear when eventAddOpen is toggled */}
-			{(!disableEdit) && (
+			{!disableEdit && (
 				<EventAddForm
 					start={selectedStart}
 					end={selectedEnd}
@@ -283,7 +291,7 @@ export default function Calendar({ showDescription, handleOpenDetails, disableEd
 				/>
 			)}
 
-			{(disableEdit) && (
+			{disableEdit && (
 				<EventEditForm
 					oldEvent={selectedOldEvent}
 					event={selectedEvent}
@@ -293,9 +301,9 @@ export default function Calendar({ showDescription, handleOpenDetails, disableEd
 				/>
 			)}
 
-			<EventView 
-				event={selectedEvent} 
-				showDescription={showDescription} 
+			<EventView
+				event={selectedEvent}
+				showDescription={showDescription}
 				handleOpenDetails={handleOpenDetails}
 				disableEdit={disableEdit ?? false}
 			/>

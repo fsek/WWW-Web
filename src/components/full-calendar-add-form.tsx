@@ -30,7 +30,7 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { DateTimePicker } from "./full-calendar-date-picker";
-import { useEvents } from "@/context/full-calendar-event-context";
+import { useEvents } from "@/utils/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
 
 const eventAddFormSchema = z.object({
@@ -90,27 +90,29 @@ export function EventAddForm({
 		}
 	}, [form, start, end]);
 
-	const onSubmit = useCallback(async (data: EventAddFormValues) => {
-		const newEvent = {
-			id: String(events.length + 1),
-			title: data.title,
-			description: data.description,
-			start: data.start,
-			end: data.end,
-			color: data.color,
-		};
-		addEvent(newEvent);
-		setEventAddOpen(false);
-		toast({
-			title: "Event added!",
-			action: (
-				<ToastAction altText={"Click here to dismiss notification"}>
-					Dismiss
-				</ToastAction>
-			),
-		});
-	}, [events, addEvent, setEventAddOpen, toast]);
-
+	const onSubmit = useCallback(
+		async (data: EventAddFormValues) => {
+			const newEvent = {
+				id: String(events.length + 1),
+				title: data.title,
+				description: data.description,
+				start: data.start,
+				end: data.end,
+				color: data.color,
+			};
+			addEvent(newEvent);
+			setEventAddOpen(false);
+			toast({
+				title: "Event added!",
+				action: (
+					<ToastAction altText={"Click here to dismiss notification"}>
+						Dismiss
+					</ToastAction>
+				),
+			});
+		},
+		[events, addEvent, setEventAddOpen, toast],
+	);
 
 	return (
 		<AlertDialog open={eventAddOpen}>
@@ -144,7 +146,7 @@ export function EventAddForm({
 								</FormItem>
 							)}
 						/>
-						{(showDescription) && (
+						{showDescription && (
 							<FormField
 								control={form.control}
 								name="description"
@@ -173,7 +175,7 @@ export function EventAddForm({
 										<DateTimePicker
 											value={field.value}
 											onChange={field.onChange}
-											hourCycle={12}
+											hourCycle={24}
 											granularity="minute"
 										/>
 									</FormControl>
@@ -191,7 +193,7 @@ export function EventAddForm({
 										<DateTimePicker
 											value={field.value}
 											onChange={field.onChange}
-											hourCycle={12}
+											hourCycle={24}
 											granularity="minute"
 										/>
 									</FormControl>

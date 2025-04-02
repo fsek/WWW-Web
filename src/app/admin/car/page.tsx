@@ -13,7 +13,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Calendar from "@/components/full-calendar";
-import { EventsProvider } from "@/context/full-calendar-event-context";
+import { EventsProvider } from "@/utils/full-calendar-event-context";
 import {
 	createColumnHelper,
 	useReactTable,
@@ -132,13 +132,15 @@ export default function Car() {
 
 	// Transform the fetched data into CalendarEvent type
 	const events: CalendarEvent[] =
-		(data as CarRead[])?.map((car) => ({
-			id: car.booking_id.toString(),
-			title: car.description,
-			start: car.start_time,
-			end: car.end_time,
-			description: "En liten bilbokning",
-		})) ?? [];
+		(data as CarRead[])?.map((car) => {
+			return {
+				id: car.booking_id.toString(),
+				title: car.description,
+				start: car.start_time,
+				end: car.end_time,
+				description: `user_id av bokare: ${car.user_id.toString()}`,
+			};
+		}) ?? [];
 
 	return (
 		<div className="px-8 space-x-4">
@@ -175,10 +177,7 @@ export default function Car() {
 						{ path: { booking_id: Number(id) } },
 						{
 							onError: (error) => {
-								console.error(
-									`Failed to delete event with ID: ${id}`,
-									error,
-								);
+								console.error(`Failed to delete event with ID: ${id}`, error);
 								// TODO: Show error message to user
 							},
 						},
@@ -231,8 +230,8 @@ export default function Car() {
 							</div>
 
 							<Separator />
-							<Calendar 
-								showDescription={true} 
+							<Calendar
+								showDescription={true}
 								handleOpenDetails={() => {}}
 								disableEdit={false} // Also disables delete, add and drag-and-drop
 							/>

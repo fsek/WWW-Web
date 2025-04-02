@@ -11,7 +11,7 @@ import {
 import type { CalendarEvent } from "@/utils/full-calendar-seed";
 import { EventDeleteForm } from "./full-calendar-delete-form";
 import { EventEditForm } from "./full-calendar-edit-form";
-import { useEvents } from "@/context/full-calendar-event-context";
+import { useEvents } from "@/utils/full-calendar-event-context";
 import { X } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -22,7 +22,12 @@ interface EventViewProps {
 	disableEdit: boolean;
 }
 
-export function EventView({ event, showDescription, handleOpenDetails, disableEdit }: EventViewProps) {
+export function EventView({
+	event,
+	showDescription,
+	handleOpenDetails,
+	disableEdit,
+}: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 
 	return (
@@ -32,7 +37,11 @@ export function EventView({ event, showDescription, handleOpenDetails, disableEd
 					<AlertDialogHeader>
 						<AlertDialogTitle className="flex flex-row justify-between items-center">
 							{event?.title}
-							<AlertDialogCancel onClick={() => {setEventViewOpen(false)}}>
+							<AlertDialogCancel
+								onClick={() => {
+									setEventViewOpen(false);
+								}}
+							>
 								<X className="h-5 w-5" />
 							</AlertDialogCancel>
 						</AlertDialogTitle>
@@ -42,7 +51,7 @@ export function EventView({ event, showDescription, handleOpenDetails, disableEd
 									<th>Time:</th>
 									<td>{`${event?.start.toLocaleTimeString()} - ${event?.end.toLocaleTimeString()}`}</td>
 								</tr>
-								{(showDescription) && (
+								{showDescription && (
 									<tr>
 										<th>Description:</th>
 										<td>{event?.description}</td>
@@ -63,13 +72,16 @@ export function EventView({ event, showDescription, handleOpenDetails, disableEd
 						</table>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
-						{(handleOpenDetails != null) && (
-							<Button variant="outline" onClick={() => handleOpenDetails(event)}>
+						{handleOpenDetails != null && (
+							<Button
+								variant="outline"
+								onClick={() => handleOpenDetails(event)}
+							>
 								Details
-							</Button>)
-						}
-						{(!disableEdit) && (
-						<EventDeleteForm id={event?.id} title={event?.title}/>
+							</Button>
+						)}
+						{!disableEdit && (
+							<EventDeleteForm id={event?.id} title={event?.title} />
 						)}
 						<EventEditForm
 							oldEvent={event}
