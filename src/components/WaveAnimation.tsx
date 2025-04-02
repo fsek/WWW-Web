@@ -18,9 +18,9 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 
 			const canvas = canvasRef.current;
 			const padding = 20;
-			canvas.width = windowWidth;
-			canvas.height = 200 + padding * 2;
-
+			canvas.width = windowWidth * window.devicePixelRatio;
+			canvas.height = 200 + padding * 2 * window.devicePixelRatio;
+			console.log(window.devicePixelRatio);
 			ctx.lineWidth = 1;
 
 			const wave_number = 0.015;
@@ -118,7 +118,7 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 		}
 	}, []);
 
-	return <canvas ref={canvasRef} />;
+	return <canvas className="wave-animation" ref={canvasRef} />;
 };
 
 export default SimpleCanvasExample;
