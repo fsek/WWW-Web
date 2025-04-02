@@ -16,21 +16,18 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 			const ctx = canvasCtxRef.current;
 			if (ctx == null) throw new Error("Could not get context");
 			const windowWidth = window.innerWidth;
-			const scale = window.devicePixelRatio;
 
 			const canvas = canvasRef.current;
+			const padding = 50;
+			canvas.width = windowWidth;
+			canvas.height = 200 + padding * 2;
 
-			const width = windowWidth;
-			const height = width * 0.2; //200 + padding * 2;
-			const padding = width * 0.005;
-			canvas.width = width * scale;
-			canvas.height = height * scale;
-			ctx.scale(scale, scale);
 			ctx.lineWidth = 1;
 
-			const wave_number = 20.0;
-			const speed_scale = 0.004;
-			const num_points = 100;
+			const wave_number = 0.015;
+			const start = 100;
+			const speed_scale = 4.0;
+			const num_points = 69;
 			const num_points_inv = 1.0 / num_points;
 			const phasing_rate = 0.2;
 			//const moose = new Image();
@@ -47,7 +44,9 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 			let phase = 0;
 
 			function scaled_point(x: number, power: number) {
-				return padding + x ** power * (width - 2 * padding);
+				return (
+					start + padding + x ** power * (canvas.width - 2 * (start + padding))
+				);
 			}
 
 			const render = () => {
@@ -60,45 +59,100 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 						moose_frame = 0;
 					}
 				}
-				const sawtooth_morph = ((1 - Math.cos(tick_count * 0.002)) * 0.5) ** 4;
+				const sawtooth_morph = ((1 - Math.cos(tick_count * 0.01)) * 0.5) ** 4;
 
-				ctx.clearRect(0, 0, width, height);
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
 				ctx.lineWidth = 2.0;
 
+				// Moose
+				//const moose = new JumpingMoose("src/assets/moose_frames.png");
+
+				// if (moose.complete) {
+				// 	ctx.drawImage(
+				// 		moose,
+				// 		canvas.width - start - padding,
+				// 		canvas.height * 0.5 - 24,
+				// 	);
+				// }
+
 				ctx.beginPath();
+				// Circle
+				ctx.lineTo(canvas.width, canvas.height * 0.5);
+				ctx.stroke();
+				ctx.beginPath();
+				ctx.arc(
+					start + padding,
+					canvas.height / 2,
+					canvas.height * 0.5 - padding,
+					0,
+					2 * Math.PI,
+				);
+
 				// Cross
-				ctx.moveTo(padding, height * 0.5);
-				ctx.lineTo(width, height * 0.5);
-				ctx.moveTo(padding, 0);
-				ctx.lineTo(padding, height);
+				ctx.moveTo(0, canvas.height * 0.5);
+				ctx.lineTo(canvas.width, canvas.height * 0.5);
+				ctx.moveTo(start + padding, 0);
+				ctx.lineTo(start + padding, canvas.height);
 
 				ctx.stroke();
 				ctx.beginPath();
 
 				function wave_function(relative_x: number) {
-					return Math.sin(relative_x ** 0.5 * wave_number + phase);
-					// *(1 -
-					//	Math.exp((padding - scaled_point(relative_x, 2)) * wave_number)
+					return (
+						Math.sin(scaled_point(relative_x, 2) * wave_number + phase) *
+						(1 -
+							Math.exp(
+								(start + padding - scaled_point(relative_x, 2)) * wave_number,
+							))
+					);
 				}
 
 				// Wave
-				ctx.moveTo(padding, height * 0.5);
+				ctx.moveTo(start + padding, canvas.height * 0.5);
 				for (let i = 0; i < num_points + 1; i++) {
-					const relative_x = num_points_inv * i;
-					const point = scaled_point(relative_x, 1);
+					const relative_x =
+						num_points_inv *
+						(i - (phase * phasing_rate - Math.floor(phase * phasing_rate)));
+					const point = scaled_point(relative_x, 4);
 					const wave1 = wave_function(relative_x);
-					ctx.strokeStyle = `rgba(0, 0, 0, ${1 - relative_x ** 0.1})`;
-					ctx.lineWidth = 2.0;
+					ctx.lineWidth = 3.0;
 					ctx.lineTo(
 						point,
-						height * 0.5 +
-							wave1 * (height - padding * 2) * 0.5 * (1 - sawtooth_morph),
+						canvas.height * 0.5 +
+							wave1 *
+								(canvas.height - padding * 2) *
+								0.5 *
+								(1 - sawtooth_morph),
 					);
 					ctx.stroke();
+					ctx.lineWidth = 1.0;
+					if (relative_x > 0.1) {
+						ctx.setLineDash([relative_x ** 4 * 10, relative_x ** 4 * 10]);
+						ctx.lineDashOffset = -Math.abs(
+							wave1 * relative_x ** 4 * (canvas.height - padding * 2) * 0.25,
+						);
+					}
+					ctx.strokeStyle = `rgba(0, 0, 0, ${1 - relative_x ** 4})`;
+
+					//ctx.strokeStyle = "red";
+					ctx.beginPath();
+					ctx.moveTo(
+						point,
+						canvas.height * 0.5 + wave1 * (canvas.height - padding * 2) * 0.5,
+					);
+					ctx.lineTo(point, canvas.height * 0.5);
+					ctx.stroke();
+					ctx.setLineDash([]);
+					//ctx.strokeStyle = "black";
+					ctx.beginPath();
+					ctx.moveTo(
+						point,
+						canvas.height * 0.5 + wave1 * (canvas.height - padding * 2) * 0.5,
+					);
 				}
 				ctx.strokeStyle = "rgba(0, 0, 0, 1)";
 
-				//ctx.stroke();
+				ctx.stroke();
 				phase -= wave_number * speed_scale;
 
 				const moose_wave = wave_function(scuffed_moose_x_location + 0.001);
@@ -115,25 +169,25 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 						ctx,
 						moose_frame,
 						moose_x,
-						height * 0.5 + moose_y * height * 0.36,
+						canvas.height * 0.5 + moose_y * canvas.height * 0.36,
 					);
 				} else if (moose_y < last_moose_y + 0.025) {
 					moose.drawSprite(
 						ctx,
 						4,
 						moose_x,
-						height * 0.5 + moose_y * height * 0.36,
+						canvas.height * 0.5 + moose_y * canvas.height * 0.36,
 					);
 				} else {
 					moose.drawSprite(
 						ctx,
 						5,
 						moose_x,
-						height * 0.5 + moose_y * height * 0.36,
+						canvas.height * 0.5 + moose_y * canvas.height * 0.36,
 					);
 				}
-				//ctx.beginPath();
-				//ctx.arc(moose_x, moose_y, 10, 0, 2 * Math.PI);
+				ctx.beginPath();
+				ctx.arc(moose_x, moose_y, 10, 0, 2 * Math.PI);
 				frame = requestAnimationFrame(render);
 				last_moose_y = moose_y;
 			};
@@ -143,7 +197,7 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 		return () => cancelAnimationFrame(frame);
 	}, []);
 
-	return <canvas className="max-w-screen" ref={canvasRef} />;
+	return <canvas ref={canvasRef} />;
 };
 
 export default SimpleCanvasExample;
