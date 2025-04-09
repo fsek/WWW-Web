@@ -1,10 +1,31 @@
 {
 	"title": "Adminsida",
+	"submit": "Skapa",
+	"preview": "Förhandsgranska",
+	"loading": "Hämtar...",
+	"error": "Något gick fel :/",
 	"news": {
 		"self": "Nyheter",
 		"page_title": "Administrera nyheter"
 	},
 	"events": {
 		"self": "Evenemang"
+	},
+	"documents": {
+		"self": "Dokument",
+		"page_title": "Administrera dokument",
+		"description": "Här kan du hantera dokument som är tillgängliga för nedladdning.",
+		"crate": "Skapa dokument",
+		"title": "Titel",
+		"file": "Fil",
+		"name": "Namn",
+		"public": "Offentlig",
+		"file_type_error": "Ogiltig filtyp. Tillåtna filtyper är: .pdf, .jpg, .png, .txt",
+		"file_size_error": "Filstorleken får inte överstiga 5 MB",
+		"create": "Skapa dokument",
+		"remove_document": "Ta bort dokument",
+		"edit_document": "Redigera dokument",
+		"created_at": "Skapad",
+		"edited_by": "Senast redigerad av"
 	}
 }
