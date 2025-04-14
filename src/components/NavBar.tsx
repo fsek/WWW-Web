@@ -51,7 +51,7 @@ function LoginAndLang() {
 		<>
 			<Button className="mt-6 mr-2" onClick={handleLoginClick}>
 				<LogInIcon />
-				<span> {t("navbar.login")}</span>
+				<span> {t("login.login")}</span>
 			</Button>
 			{showLoginWall && <LoginWall />}
 		</>

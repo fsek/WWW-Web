@@ -7,10 +7,8 @@ interface FLoggaProps {
 	className?: string;
 }
 
-export default function FLogga({ className = "" }: FLoggaProps) {
+export default function FLogga({ className }: FLoggaProps) {
 	return (
-		<div className={cn(className)}>
-			<Image src={fLoggaSrc} alt="" width={100} height={100} />
-		</div>
+		<Image src={fLoggaSrc} className={cn("size-25", className)} alt="F-sektionen" />
 	);
 }

@@ -16,6 +16,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { z } from "zod";
 
 const emailPasswordSchema = z.object({
@@ -24,6 +25,7 @@ const emailPasswordSchema = z.object({
 });
 
 export default function LoginForm() {
+	const { t } = useTranslation();
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const [submitEnabled, setSubmitEnabled] = useState(true);
@@ -46,7 +48,7 @@ export default function LoginForm() {
 				case "LOGIN_BAD_CREDENTIALS":
 					form.setError("root", {
 						type: "value",
-						message: "Invalid email or password",
+						message: t("login.invalid-email-or-password"),
 					});
 					break;
 				default:
@@ -75,43 +77,42 @@ export default function LoginForm() {
 	}
 
 	return (
-		<div>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-					<FormField
-						control={form.control}
-						name="email"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Email</FormLabel>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="password"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Password</FormLabel>
-								<FormControl>
-									<Input {...field} type="password" />
-								</FormControl>
-							</FormItem>
-						)}
-					/>
-					{form.formState.errors.root && (
-						<div className="text-red-500">
-							{form.formState.errors.root.message}
-						</div>
+		<Form {...form}>
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
+			<h1 className="text-3xl font-bold text-center">{t("login.title")}</h1>
+				<FormField
+					control={form.control}
+					name="email"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>{t("login.email")}</FormLabel>
+							<FormControl>
+								<Input {...field} className="bg-neutral-100" />
+							</FormControl>
+						</FormItem>
 					)}
-					<Button type="submit" disabled={!submitEnabled}>
-						Log in
-					</Button>
-				</form>
-			</Form>
-		</div>
+				/>
+				<FormField
+					control={form.control}
+					name="password"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>{t("login.password")}</FormLabel>
+							<FormControl>
+								<Input {...field} className="bg-neutral-100" type="password" />
+							</FormControl>
+						</FormItem>
+					)}
+				/>
+				{form.formState.errors.root && (
+					<div className="text-red-500">
+						{form.formState.errors.root.message}
+					</div>
+				)}
+				<Button type="submit" disabled={!submitEnabled}>
+					{t("login.login")}
+				</Button>
+			</form>
+		</Form>
 	);
 }
