@@ -37,8 +37,7 @@ export default function MainLanding() {
 						</p>
 					</>
 				}
-				className="p-14"
-				gap="gap-12"
+				className="p-14 gap-12"
 			/>
 			<Footer />
 		</div>

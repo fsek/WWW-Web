@@ -18,11 +18,10 @@ interface TwoColumnLayoutProps {
 const TwoColumnLayout: React.FC<TwoColumnLayoutProps> = ({
   leftColumnContent,
   rightColumnContent,
-  className = '',
-  gap = 'gap-12' 
+  className = 'gap-12',
 }) => {
   return (
-    <div className={`flex flex-col md:flex-row ${gap} ${className}`}>
+    <div className={`flex flex-col md:flex-row ${className}`}>
 
       <div className="w-full md:w-2/3">
         {leftColumnContent}
