@@ -22,20 +22,20 @@ export default function MainLanding() {
 			</div>
 			<TwoColumnLayout
 				leftColumnContent={
-					<div className="w-full">
+					<>
 						<h1 className="text-4xl font-bold">Welcome to the App</h1>
 						<p className="mt-4">
 							This is a simple two-column layout example using Tailwind CSS.
 						</p>
-					</div>
+					</>
 				}
 				rightColumnContent={
-					<div className="w-full">
+					<>
 						<h2 className="text-2xl font-semibold">Right Column</h2>
 						<p className="mt-4">
 							This is the right column content. You can add any content here.
 						</p>
-					</div>
+					</>
 				}
 				className="p-14"
 				gap="gap-12"
