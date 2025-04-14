@@ -732,6 +732,17 @@ export const CouncilCreateSchema = {
         name: {
             type: 'string',
             title: 'Name'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
         }
     },
     type: 'object',
@@ -762,11 +773,51 @@ export const CouncilReadSchema = {
             },
             type: 'array',
             title: 'Events'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
         }
     },
     type: 'object',
-    required: ['id', 'name', 'posts', 'events'],
+    required: ['id', 'name', 'posts', 'events', 'description'],
     title: 'CouncilRead'
+} as const;
+
+export const CouncilUpdateSchema = {
+    properties: {
+        name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Name'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Description'
+        }
+    },
+    type: 'object',
+    title: 'CouncilUpdate'
 } as const;
 
 export const ElectionAddPostsSchema = {
@@ -1614,79 +1665,6 @@ export const ImgInAlbumSchema = {
     title: 'ImgInAlbum'
 } as const;
 
-export const MeUpdateSchema = {
-    properties: {
-        first_name: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'First Name'
-        },
-        last_name: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Last Name'
-        },
-        start_year: {
-            anyOf: [
-                {
-                    type: 'integer'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Start Year'
-        },
-        program: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Program'
-        },
-        notifications: {
-            anyOf: [
-                {
-                    type: 'boolean'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Notifications'
-        },
-        stil_id: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Stil Id'
-        }
-    },
-    type: 'object',
-    title: 'MeUpdate'
-} as const;
-
 export const NewsCreateSchema = {
     properties: {
         title_sv: {
@@ -1765,6 +1743,9 @@ export const NewsReadSchema = {
             type: 'integer',
             title: 'Author Id'
         },
+        author: {
+            '$ref': '#/components/schemas/UserInNewsRead'
+        },
         created_at: {
             type: 'string',
             format: 'date-time',
@@ -1808,7 +1789,7 @@ export const NewsReadSchema = {
         }
     },
     type: 'object',
-    required: ['id', 'title_sv', 'title_en', 'content_sv', 'content_en', 'author_id', 'created_at', 'bumped_at', 'pinned_from', 'pinned_to'],
+    required: ['id', 'title_sv', 'title_en', 'content_sv', 'content_en', 'author_id', 'author', 'created_at', 'bumped_at', 'pinned_from', 'pinned_to'],
     title: 'NewsRead'
 } as const;
 
@@ -2037,6 +2018,24 @@ export const PermissionReadSchema = {
     type: 'object',
     required: ['id', 'action', 'target'],
     title: 'PermissionRead'
+} as const;
+
+export const PermissionRemoveSchema = {
+    properties: {
+        action: {
+            type: 'string',
+            enum: ['view', 'manage'],
+            title: 'Action'
+        },
+        target: {
+            type: 'string',
+            enum: ['Event', 'User', 'Post', 'Permission', 'News', 'Song', 'Ads', 'Gallery', 'Car', 'Cafe', 'Election', 'Groups', 'Adventure Missions', 'Nollning', 'Tags', 'Council'],
+            title: 'Target'
+        }
+    },
+    type: 'object',
+    required: ['action', 'target'],
+    title: 'PermissionRemove'
 } as const;
 
 export const PostCreateSchema = {
@@ -2481,6 +2480,26 @@ export const UserInGroupReadSchema = {
     title: 'UserInGroupRead'
 } as const;
 
+export const UserInNewsReadSchema = {
+    properties: {
+        id: {
+            type: 'integer',
+            title: 'Id'
+        },
+        first_name: {
+            type: 'string',
+            title: 'First Name'
+        },
+        last_name: {
+            type: 'string',
+            title: 'Last Name'
+        }
+    },
+    type: 'object',
+    required: ['id', 'first_name', 'last_name'],
+    title: 'UserInNewsRead'
+} as const;
+
 export const UserReadSchema = {
     properties: {
         id: {
@@ -2563,6 +2582,79 @@ export const UserReadSchema = {
     type: 'object',
     required: ['id', 'email', 'first_name', 'last_name', 'posts', 'events', 'telephone_number', 'start_year', 'account_created', 'want_notifications'],
     title: 'UserRead'
+} as const;
+
+export const UserUpdateSchema = {
+    properties: {
+        first_name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'First Name'
+        },
+        last_name: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Last Name'
+        },
+        start_year: {
+            anyOf: [
+                {
+                    type: 'integer'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Start Year'
+        },
+        program: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Program'
+        },
+        notifications: {
+            anyOf: [
+                {
+                    type: 'boolean'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Notifications'
+        },
+        stil_id: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Stil Id'
+        }
+    },
+    type: 'object',
+    title: 'UserUpdate'
 } as const;
 
 export const ValidationErrorSchema = {

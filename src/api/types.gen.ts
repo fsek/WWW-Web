@@ -165,6 +165,7 @@ export type CarUpdate = {
 
 export type CouncilCreate = {
     name: string;
+    description?: (string | null);
 };
 
 export type CouncilRead = {
@@ -172,6 +173,12 @@ export type CouncilRead = {
     name: string;
     posts: Array<PostRead>;
     events: Array<EventRead>;
+    description: (string | null);
+};
+
+export type CouncilUpdate = {
+    name?: (string | null);
+    description?: (string | null);
 };
 
 export type ElectionAddPosts = {
@@ -363,15 +370,6 @@ export type ImgInAlbum = {
     id: number;
 };
 
-export type MeUpdate = {
-    first_name?: (string | null);
-    last_name?: (string | null);
-    start_year?: (number | null);
-    program?: (string | null);
-    notifications?: (boolean | null);
-    stil_id?: (string | null);
-};
-
 export type NewsCreate = {
     title_sv: string;
     title_en: string;
@@ -388,6 +386,7 @@ export type NewsRead = {
     content_sv: string;
     content_en: string;
     author_id: number;
+    author: UserInNewsRead;
     created_at: Date;
     bumped_at: (Date | null);
     pinned_from: (Date | null);
@@ -466,6 +465,11 @@ export enum target {
 
 export type PermissionRead = {
     id: number;
+    action: 'view' | 'manage';
+    target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe' | 'Election' | 'Groups' | 'Adventure Missions' | 'Nollning' | 'Tags' | 'Council';
+};
+
+export type PermissionRemove = {
     action: 'view' | 'manage';
     target: 'Event' | 'User' | 'Post' | 'Permission' | 'News' | 'Song' | 'Ads' | 'Gallery' | 'Car' | 'Cafe' | 'Election' | 'Groups' | 'Adventure Missions' | 'Nollning' | 'Tags' | 'Council';
 };
@@ -574,6 +578,12 @@ export type UserInGroupRead = {
     program: (string | null);
 };
 
+export type UserInNewsRead = {
+    id: number;
+    first_name: string;
+    last_name: string;
+};
+
 export type UserRead = {
     id: number;
     email: string;
@@ -588,6 +598,15 @@ export type UserRead = {
     start_year: number;
     account_created: Date;
     want_notifications: boolean;
+    stil_id?: (string | null);
+};
+
+export type UserUpdate = {
+    first_name?: (string | null);
+    last_name?: (string | null);
+    start_year?: (number | null);
+    program?: (string | null);
+    notifications?: (boolean | null);
     stil_id?: (string | null);
 };
 
@@ -630,24 +649,35 @@ export type UsersGetMeResponse = (UserRead);
 
 export type UsersGetMeError = unknown;
 
-export type UsersUpdateMeData = {
-    body: MeUpdate;
+export type UsersUpdateSelfData = {
+    body: UserUpdate;
 };
 
-export type UsersUpdateMeResponse = (UserRead);
+export type UsersUpdateSelfResponse = (UserRead);
 
-export type UsersUpdateMeError = (HTTPValidationError);
+export type UsersUpdateSelfError = (HTTPValidationError);
 
 export type UsersUpdateUserData = {
+    body: UserUpdate;
+    path: {
+        user_id: number;
+    };
+};
+
+export type UsersUpdateUserResponse = (UserRead);
+
+export type UsersUpdateUserError = (HTTPValidationError);
+
+export type UsersUpdateUserStatusData = {
     body: UpdateUserMember;
     path: {
         user_id: number;
     };
 };
 
-export type UsersUpdateUserResponse = (unknown);
+export type UsersUpdateUserStatusResponse = (UserRead);
 
-export type UsersUpdateUserError = (HTTPValidationError);
+export type UsersUpdateUserStatusError = (HTTPValidationError);
 
 export type PostsGetAllPostsResponse = (Array<PostRead>);
 
@@ -693,6 +723,14 @@ export type PermissionsCreatePermissionData = {
 export type PermissionsCreatePermissionResponse = (PermissionRead);
 
 export type PermissionsCreatePermissionError = (HTTPValidationError);
+
+export type PermissionsRemovePermissionData = {
+    body: PermissionRemove;
+};
+
+export type PermissionsRemovePermissionResponse = (PermissionRead);
+
+export type PermissionsRemovePermissionError = (HTTPValidationError);
 
 export type PermissionsChangePostPermissionData = {
     body: UpdatePermission;
@@ -825,6 +863,16 @@ export type EventsGetEventTagsResponse = (Array<EventTagRead>);
 
 export type EventsGetEventTagsError = (HTTPValidationError);
 
+export type EventsGetEventCsvData = {
+    path: {
+        event_id: number;
+    };
+};
+
+export type EventsGetEventCsvResponse = (unknown);
+
+export type EventsGetEventCsvError = (HTTPValidationError);
+
 export type EventSignupEventSignupRouteData = {
     body: EventSignupCreate;
     path: {
@@ -920,6 +968,10 @@ export type NewsGetPaginatedNewsData = {
 export type NewsGetPaginatedNewsResponse = (Array<NewsRead>);
 
 export type NewsGetPaginatedNewsError = (HTTPValidationError);
+
+export type NewsGetPinnedNewsResponse = (Array<NewsRead>);
+
+export type NewsGetPinnedNewsError = unknown;
 
 export type CafeViewAllShiftsResponse = (Array<CafeShiftRead>);
 
@@ -1126,9 +1178,13 @@ export type AlbumsCreateAlbumResponse = ({
 
 export type AlbumsCreateAlbumError = (HTTPValidationError);
 
+export type AlbumsGetAlbumsResponse = (Array<AlbumRead>);
+
+export type AlbumsGetAlbumsError = unknown;
+
 export type AlbumsGetOneAlbumData = {
-    query: {
-        id: number;
+    path: {
+        album_id: number;
     };
 };
 
@@ -1136,13 +1192,9 @@ export type AlbumsGetOneAlbumResponse = (AlbumRead);
 
 export type AlbumsGetOneAlbumError = (HTTPValidationError);
 
-export type AlbumsGetAlbumsResponse = (Array<AlbumRead>);
-
-export type AlbumsGetAlbumsError = unknown;
-
 export type AlbumsDeleteOneAlbumData = {
-    query: {
-        id: number;
+    path: {
+        album_id: number;
     };
 };
 
@@ -1227,7 +1279,7 @@ export type AdsRemoveAdSuperUserError = (HTTPValidationError);
 export type AdsUpdateAdData = {
     body: AdUpdate;
     path: {
-        id: number;
+        ad_id: number;
     };
 };
 
@@ -1609,6 +1661,17 @@ export type CouncilGetCouncilData = {
 export type CouncilGetCouncilResponse = (CouncilRead);
 
 export type CouncilGetCouncilError = (HTTPValidationError);
+
+export type CouncilUpdateCouncilData = {
+    body: CouncilUpdate;
+    path: {
+        council_id: number;
+    };
+};
+
+export type CouncilUpdateCouncilResponse = (CouncilRead);
+
+export type CouncilUpdateCouncilError = (HTTPValidationError);
 
 export type HelloRouteResponse = (unknown);
 
