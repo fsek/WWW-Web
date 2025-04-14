@@ -27,13 +27,16 @@ const CustomTitle: FC<CustomTitleProps> = ({ text, className }) => {
       setAnimationState('text-width');
       
       // Then enable the transition and animate to full width
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         if (underlineRef.current) {
           underlineRef.current.style.transition = 'width 700ms ease-in-out';
           setAnimationState('full-width');
         }
       }, 1000);
-    });
+      
+      return () => {
+        clearTimeout(timeoutId);
+      };
   }, []);
 
   return (
