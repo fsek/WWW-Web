@@ -121,5 +121,12 @@
 		"email": "Email",
 		"password": "Password",
 		"title": "Log in"
+	},
+	"namnden": {
+		"title": "The Council of Executives",
+		"about_title": "About the Council of Executives",
+		"about": "The Council of Executives consists of all the head of the committees, the president of the guild, the vice president and the secretary, and was introduced in the guild in 2017. It's the members in The Council of Executives that handle the operative activities, which include everything from sittings and the introduction to bike fixing days and LaTeX workshops. We don't take any formal decisions, that is handled by The Board.In the council of executives we discuss what happens in the committees, how they can collaborate, what they can learn from each other and how the board can assist them in their work. Contact the <0>Vice President</0> for any questions you might have. Above is the whole management team, which consists of both The Council of Executives and The Board",
+		"contact_title": "Contact",
+		"contact": "Vice President: Name Nameson"
 	}
 }
