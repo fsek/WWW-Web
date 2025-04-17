@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState, useRef } from "react";
+import { type FC, useEffect, useState, useRef } from "react";
 
 interface CustomTitleProps {
   text: string;
@@ -25,6 +25,7 @@ const CustomTitle: FC<CustomTitleProps> = ({ text, className }) => {
     // Small delay to ensure the text width is applied before animation
     requestAnimationFrame(() => {
       setAnimationState('text-width');
+    });
       
       // Then enable the transition and animate to full width
       const timeoutId = setTimeout(() => {

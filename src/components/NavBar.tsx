@@ -18,6 +18,8 @@ import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import LoginWall from "./LoginWall";
 import { useState } from "react";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
 
 type NavItem = {
 	self: string;
@@ -49,6 +51,8 @@ function LoginAndLang() {
 
 	return (
 		<>
+			<ThemeToggle />
+			<LanguageSwitcher />
 			<Button className="mt-6 mr-2" onClick={handleLoginClick}>
 				<LogInIcon />
 				<span> {t("login.login")}</span>
