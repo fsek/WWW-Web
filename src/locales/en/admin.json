@@ -26,5 +26,11 @@
 		"edit_document": "Edit Document",
 		"created_at": "Created at",
 		"edited_by": "Last edited by"
+	},
+	"posts": {
+		"self": "Posts"
+	},
+	"permissions": {
+		"self": "Permissions"
 	}
 }

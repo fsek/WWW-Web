@@ -27,5 +27,11 @@
 		"edit_document": "Redigera dokument",
 		"created_at": "Skapad",
 		"edited_by": "Senast redigerad av"
+	},
+	"posts": {
+		"self": "Poster"
+	},
+	"permissions": {
+		"self": "Permissions"
 	}
 }
