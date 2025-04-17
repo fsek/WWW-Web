@@ -128,12 +128,5 @@
 		"email": "E-postadress",
 		"password": "Lösenord",
 		"title": "Logga in"
-	},
-	"namnden": {
-		"title": "Nämnden",
-		"about_title": "Om Nämnden",
-		"about": "Nämnden består av alla utskottsordföranden, ordförande, vice ordförande sekreterare, styrelsepreses, projektledare FARAD samt spindelförman och infördes på sektionen år 2017. Det är medlemmarna i nämnden som sköter sektionens operativa verksamhet, det vill säga allt från sittningar och nollning, till cykelfixardagar och Latexworkshops. Här fattas alltså inga formella beslut, det är det styrelsen gör.I nämnden diskuteras utskottsverksamheten; hur utskotten kan samarbeta, vad de kan lära av varandra, och hur styrelsen kan bistå dem i sitt arbete. Finns det något du skulle vilja ta upp på ett nämndmöte så kontaktar du <0>vice ordförande</0>. Ovan syns hela ledningen, vilken består av både nämnden och styrelsen.",
-		"contact_title": "Kontakt",
-		"contact": "Vice ordförande: Namn Namnsson"
 	}
 }
