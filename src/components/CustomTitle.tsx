@@ -1,16 +1,21 @@
 "use client";
 
-import { FC, useEffect, useState, useRef } from "react";
+import { type FC, useEffect, useState, useRef } from "react";
 
 interface CustomTitleProps {
   text: string;
   className?: string;
+  size?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
-const CustomTitle: FC<CustomTitleProps> = ({ text, className }) => {
+const CustomTitle: FC<CustomTitleProps> = ({ text, className, size = 3 }) => {
   const [animationState, setAnimationState] = useState<'initial' | 'text-width' | 'full-width'>('initial');
   const textRef = useRef<HTMLDivElement>(null);
   const underlineRef = useRef<HTMLDivElement>(null);
+  
+  const getSizeClass = () => {
+    return size === 1 ? 'text-xl' : `text-${size}xl`;
+  };
   
   useEffect(() => {
     if (!textRef.current) return;
@@ -25,25 +30,26 @@ const CustomTitle: FC<CustomTitleProps> = ({ text, className }) => {
     // Small delay to ensure the text width is applied before animation
     requestAnimationFrame(() => {
       setAnimationState('text-width');
+    });
       
-      // Then enable the transition and animate to full width
-      const timeoutId = setTimeout(() => {
-        if (underlineRef.current) {
-          underlineRef.current.style.transition = 'width 700ms ease-in-out';
-          setAnimationState('full-width');
-        }
-      }, 1000);
-      
-      return () => {
-        clearTimeout(timeoutId);
-      };
+    // Then enable the transition and animate to full width
+    const timeoutId = setTimeout(() => {
+      if (underlineRef.current) {
+        underlineRef.current.style.transition = 'width 700ms ease-in-out';
+        setAnimationState('full-width');
+      }
+    }, 1000);
+    
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   return (
     <div className="w-full">
       <div 
         ref={textRef} 
-        className={`inline-block text-2xl font-bold text-left text-orange-500 ${className}`}
+        className={`inline-block font-bold text-left text-orange-500 ${getSizeClass()} ${className}`}
       >
         {text}
       </div>
