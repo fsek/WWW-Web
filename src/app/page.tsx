@@ -42,7 +42,6 @@ export default function MainLanding() {
 				}
 				className="p-14 gap-12"
 			/>
-			<Footer />
 		</div>
 	);
 }
