@@ -11,6 +11,7 @@ import AdminTable from "@/widgets/AdminTable";
 import formatTime from "@/help_functions/timeFormater";
 import type { EventRead } from "../../../api";
 import useCreateTable from "@/widgets/useCreateTable";
+import PermissionWall from "@/components/PermissionWall";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
@@ -66,22 +67,26 @@ export default function Events() {
 	}
 
 	return (
-		<div className="px-8 space-x-4">
-			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-				Administrera event
-			</h3>
-			<p className="py-3">
-				Här kan du skapa event & redigera existerande event på hemsidan.
-			</p>
-			<EventsForm />
+		<PermissionWall
+			requiredPermissions={[{ id: 0, target: "Event", action: "manage" }]}
+		>
+			<div className="px-8 space-x-4">
+				<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
+					Administrera event
+				</h3>
+				<p className="py-3">
+					Här kan du skapa event & redigera existerande event på hemsidan.
+				</p>
+				<EventsForm />
 
-			<AdminTable table={table} onRowClick={handleRowClick} />
+				<AdminTable table={table} onRowClick={handleRowClick} />
 
-			<EventsEditForm
-				open={openEditDialog}
-				onClose={() => handleClose()}
-				selectedEvent={selectedEvent as EventRead}
-			/>
-		</div>
+				<EventsEditForm
+					open={openEditDialog}
+					onClose={() => handleClose()}
+					selectedEvent={selectedEvent as EventRead}
+				/>
+			</div>
+		</PermissionWall>
 	);
 }

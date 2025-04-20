@@ -4,6 +4,7 @@
 	"preview": "Förhandsgranska",
 	"loading": "Hämtar...",
 	"error": "Något gick fel :/",
+	"insufficiont_permissions": "Du har inte tillräckliga rättigheter för att utföra denna åtgärd.",
 	"news": {
 		"self": "Nyheter",
 		"page_title": "Administrera nyheter"
