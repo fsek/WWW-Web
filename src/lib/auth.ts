@@ -4,11 +4,12 @@ import {
 	type BearerResponse,
 	type PermissionRead,
 	PermissionReadSchema,
+	type PermissionsGetAllPermissionsError,
 	type PermissionsGetAllPermissionsResponse,
 	PermissionsService,
 } from "@/api";
 import { getAllPermissionsOptions } from "@/api/@tanstack/react-query.gen";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 export function handleBearerResponse(data: BearerResponse) {
@@ -32,27 +33,9 @@ export function useAuthState() {
 	return isAuthenticated;
 }
 
-export type Permissions = Record<
-	PermissionRead["target"],
-	PermissionRead["action"]
->;
-
 export function usePermissions() {
-	const [permissions, setPermissions] = useState<Permissions>();
-	const permissionsQuery = useQuery({
+	const query = useSuspenseQuery({
 		...getAllPermissionsOptions(),
-		enabled: !!getAuthorizationHeader(),
 	});
-	useEffect(() => {
-		if (permissionsQuery.isSuccess) {
-			const recievedPermissions = permissionsQuery.data;
-			setPermissions(
-				recievedPermissions.reduce((acc, permission) => {
-					acc[permission.target] = permission.action;
-					return acc;
-				}, {} as Permissions),
-			);
-		}
-	}, [permissionsQuery.isSuccess, permissionsQuery.data]);
-	return permissions;
+	return query.data ?? [];
 }

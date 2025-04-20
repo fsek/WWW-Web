@@ -9,16 +9,19 @@ export default function PermissionWall({
 }: { children: ReactNode; requiredPermissions: PermissionRead[] }) {
 	const { t } = useTranslation("admin");
 	const permissions = usePermissions();
-	if (permissions) {
-		const hasPermission = requiredPermissions.every((requiredPermission) => {
+
+	const hasPermission = requiredPermissions.every((requiredPermission) => {
+		return permissions.some((permission) => {
 			return (
-				permissions[requiredPermission.target] === requiredPermission.action
+				permission.target === requiredPermission.target &&
+				permission.action === requiredPermission.action
 			);
 		});
-		console.log("hasPermission", hasPermission);
-		if (hasPermission) {
-			return <>{children}</>;
-		}
+	});
+
+	if (hasPermission) {
+		return <>{children}</>;
 	}
+
 	return <div>{t("insufficient_permissions")}</div>;
 }

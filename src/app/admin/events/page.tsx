@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import EventsForm from "./EventsForm";
 import EventsEditForm from "./EventsEditForm";
 import { getAllEventsOptions } from "@/api/@tanstack/react-query.gen";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 
 import AdminTable from "@/widgets/AdminTable";
@@ -39,7 +39,7 @@ const columns = [
 ];
 
 export default function Events() {
-	const { data, error, isPending } = useQuery({
+	const { data, error } = useSuspenseQuery({
 		...getAllEventsOptions(),
 	});
 
@@ -58,35 +58,33 @@ export default function Events() {
 		setSelectedEvent(null);
 	}
 
-	if (isPending) {
-		return <p>Hämtar...</p>;
-	}
-
 	if (error) {
 		return <p>Något gick fel :/</p>;
 	}
 
 	return (
-		<PermissionWall
-			requiredPermissions={[{ id: 0, target: "Event", action: "manage" }]}
-		>
-			<div className="px-8 space-x-4">
-				<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-					Administrera event
-				</h3>
-				<p className="py-3">
-					Här kan du skapa event & redigera existerande event på hemsidan.
-				</p>
-				<EventsForm />
+		<Suspense fallback={<p>Loading...</p>}>
+			<PermissionWall
+				requiredPermissions={[{ id: 0, target: "Event", action: "manage" }]}
+			>
+				<div className="px-8 space-x-4">
+					<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
+						Administrera event
+					</h3>
+					<p className="py-3">
+						Här kan du skapa event & redigera existerande event på hemsidan.
+					</p>
+					<EventsForm />
 
-				<AdminTable table={table} onRowClick={handleRowClick} />
+					<AdminTable table={table} onRowClick={handleRowClick} />
 
-				<EventsEditForm
-					open={openEditDialog}
-					onClose={() => handleClose()}
-					selectedEvent={selectedEvent as EventRead}
-				/>
-			</div>
-		</PermissionWall>
+					<EventsEditForm
+						open={openEditDialog}
+						onClose={() => handleClose()}
+						selectedEvent={selectedEvent as EventRead}
+					/>
+				</div>
+			</PermissionWall>
+		</Suspense>
 	);
 }
