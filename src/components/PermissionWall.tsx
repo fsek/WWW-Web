@@ -6,17 +6,20 @@ import { useTranslation } from "react-i18next";
 export default function PermissionWall({
 	children,
 	requiredPermissions,
-}: { children: ReactNode; requiredPermissions: PermissionRead[] }) {
+}: {
+	children: ReactNode;
+	requiredPermissions: {
+		target: PermissionRead["target"];
+		action: PermissionRead["action"];
+	}[];
+}) {
 	const { t } = useTranslation("admin");
 	const permissions = usePermissions();
 
 	const hasPermission = requiredPermissions.every((requiredPermission) => {
-		return permissions.some((permission) => {
-			return (
-				permission.target === requiredPermission.target &&
-				permission.action === requiredPermission.action
-			);
-		});
+		return (
+			permissions.get(requiredPermission.target) === requiredPermission.action
+		);
 	});
 
 	if (hasPermission) {

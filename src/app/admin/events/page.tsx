@@ -65,7 +65,7 @@ export default function Events() {
 	return (
 		<Suspense fallback={<p>Loading...</p>}>
 			<PermissionWall
-				requiredPermissions={[{ id: 0, target: "Event", action: "manage" }]}
+				requiredPermissions={[{ target: "Event", action: "manage" }]}
 			>
 				<div className="px-8 space-x-4">
 					<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">

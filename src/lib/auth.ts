@@ -1,16 +1,17 @@
 "use client";
 
 import {
+	_PostPermissionReadSchema,
+	type _UserPostRead,
 	type BearerResponse,
 	type PermissionRead,
-	PermissionReadSchema,
-	type PermissionsGetAllPermissionsError,
-	type PermissionsGetAllPermissionsResponse,
-	PermissionsService,
 } from "@/api";
-import { getAllPermissionsOptions } from "@/api/@tanstack/react-query.gen";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import {
+	getAllPostsOptions,
+	getMeOptions,
+} from "@/api/@tanstack/react-query.gen";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useEffect, useMemo, useState } from "react";
 
 export function handleBearerResponse(data: BearerResponse) {
 	localStorage.setItem(
@@ -34,8 +35,42 @@ export function useAuthState() {
 }
 
 export function usePermissions() {
-	const query = useSuspenseQuery({
-		...getAllPermissionsOptions(),
+	const meQuery = useSuspenseQuery({
+		...getMeOptions(),
 	});
-	return query.data ?? [];
+	const postsQuery = useSuspenseQuery({
+		...getAllPostsOptions(),
+	});
+	/*const permissions = useSuspenseQueries({queries: meQuery.data ? meQuery.data.posts.map((post) => {
+		return {
+			...getAllPostsOptions()
+		}
+	})})*/
+	const posts = useMemo(() => {
+		return new Map(
+			postsQuery.data.map((post) => [post.id, post.permissions] as const),
+		);
+	}, [postsQuery.data]);
+
+	const permissions: Map<PermissionRead["target"], PermissionRead["action"]> =
+		useMemo(() => {
+			return new Map(
+				meQuery.data?.posts
+					.flatMap(
+						(post) =>
+							posts.get(post.id)?.map((permission) => {
+								const target = <PermissionRead["target"]>permission.target;
+								const action = <PermissionRead["action"]>permission.action;
+								return [target, action] as const;
+							}) ?? [],
+					)
+					.filter(
+						(
+							entry,
+						): entry is [PermissionRead["target"], PermissionRead["action"]] =>
+							entry !== undefined,
+					),
+			);
+		}, [meQuery.data, posts]);
+	return permissions ?? [];
 }

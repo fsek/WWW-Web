@@ -27,13 +27,20 @@ const groups = {
 			title: "admin:news.self",
 			url: "/admin/news",
 			icon: Newspaper,
+			permissions: [{ target: "News", action: "manage" }],
 		},
 		{
 			title: "admin:events.self",
 			url: "/admin/events",
 			icon: Calendar,
+			permissions: [{ target: "Event", action: "manage" }],
 		},
-		{ title: "admin:documents.self", url: "/admin/documents", icon: FileText },
+		{
+			title: "admin:documents.self",
+			url: "/admin/documents",
+			icon: FileText,
+			permissions: [{ target: "Document", action: "manage" }],
+		},
 	],
 };
 
