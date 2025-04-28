@@ -4,7 +4,7 @@
 		"sektionen": {
 			"self": "Sektionen",
 			"about": {
-				"self": "Om Oss",
+				"self": "Om oss",
 				"desc": "Välkommen till vår sektion – lär känna oss och våra värderingar."
 			},
 			"news": {
@@ -77,7 +77,7 @@
 				"desc": "Läs om vår mission, våra värderingar och vårt engagemang."
 			},
 			"wehave": {
-				"self": "Våra Erbjudanden",
+				"self": "Våra erbjudanden",
 				"desc": "Upptäck de tjänster och produkter vi stolt erbjuder."
 			},
 			"farad": {
@@ -104,7 +104,7 @@
 				"desc": "Lär känna personen bakom vår webbplats och digitala närvaro."
 			},
 			"anonform": {
-				"self": "Anonymt Kontaktformulär",
+				"self": "Anonymt kontaktformulär",
 				"desc": "Skicka feedback eller frågor konfidentiellt via vårt formulär."
 			},
 			"klaga": {
@@ -112,7 +112,6 @@
 				"desc": "Berätta för oss hur vi kan förbättra våra tjänster och support."
 			}
 		},
-		"login": "Logga In",
 		"booking": "Bokningar",
 		"documents": "Dokument"
 	},
@@ -122,5 +121,12 @@
 		"companies": "För företag",
 		"webansvar": "Webbansvarig",
 		"ansvar": "Ansvarig utgivare"
+	},
+	"login": {
+		"login": "Logga in",
+		"invalid-email-or-password": "Fel e-postadress eller lösenord",
+		"email": "E-postadress",
+		"password": "Lösenord",
+		"title": "Logga in"
 	}
 }

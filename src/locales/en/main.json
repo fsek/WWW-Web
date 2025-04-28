@@ -112,8 +112,14 @@
 				"desc": "Let us know how we can improve our services and support."
 			}
 		},
-		"login": "Log In",
 		"booking": "Bookings",
 		"documents": "Documents"
+	},
+	"login": {
+		"login": "Log in",
+		"invalid-email-or-password": "Invalid email address or password",
+		"email": "Email",
+		"password": "Password",
+		"title": "Log in"
 	}
 }

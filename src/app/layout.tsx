@@ -3,9 +3,11 @@ import "./globals.css";
 import { client } from "@/api";
 import initTranslations, { type Locale, type Namespace } from "./i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
+import { NavBar } from "../components/NavBar";
+import Footer from "@/components/Footer";
 
 const locale = "sv" satisfies Locale;
-const i18nNamespaces = ["main"] satisfies Namespace[];
+const i18nNamespaces = ["main", "namnden"] satisfies Namespace[];
 
 export default async function RootLayout({
 	children,
@@ -35,7 +37,11 @@ export default async function RootLayout({
 						/>
 					</head>
 					<body>
-						<div id="root">{children}</div>
+						<div id="root" className="flex flex-col min-h-screen">
+							<NavBar />
+							<div className="flex-grow">{children}</div>
+							<Footer />
+						</div>
 					</body>
 				</html>
 			</QueryClientProvider>
