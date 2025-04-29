@@ -5,7 +5,7 @@ import TranslationsProvider from "@/components/TranslationsProvider";
 import LoginWall from "@/components/LoginWall";
 
 const locale = "sv" satisfies Locale;
-const i18nNamespaces = ["admin"] satisfies Namespace[];
+const i18nNamespaces = ["admin", "calendar"] satisfies Namespace[];
 
 export default async function AdminLayout({
 	children,

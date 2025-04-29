@@ -20,6 +20,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
+import { useTranslation } from "react-i18next";
 
 const carSchema = z.object({
 	description: z.string().min(2),
@@ -28,13 +29,14 @@ const carSchema = z.object({
 });
 
 export default function CarForm() {
+	const { t } = useTranslation();
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 
 	const carForm = useForm<z.infer<typeof carSchema>>({
 		resolver: zodResolver(carSchema),
 		defaultValues: {
-			description: "skriv in en beskrivning",
+			description: t("admin:car.default_description"),
 			start_time: new Date(Date.now()),
 			end_time: new Date(Date.now() + 1000 * 60 * 60 * 3),
 		},
@@ -74,13 +76,13 @@ export default function CarForm() {
 					setSubmitEnabled(true);
 				}}
 			>
-				Skapa bokning
+				{t("admin:car.create_booking")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="min-w-fit lg:max-w-7xl">
 					<DialogHeader>
-						<DialogTitle>Skapa bokning</DialogTitle>
+						<DialogTitle>{t("admin:car.create_booking")}</DialogTitle>
 					</DialogHeader>
 					<hr />
 					<Form {...carForm}>
@@ -93,9 +95,9 @@ export default function CarForm() {
 								name="description"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Beskrivning</FormLabel>
+										<FormLabel>{t("admin:description")}</FormLabel>
 										<FormControl>
-											<Input placeholder="Beskrivning..." {...field} />
+											<Input placeholder={t("admin:description")} {...field} />
 										</FormControl>
 									</FormItem>
 								)}
@@ -106,7 +108,7 @@ export default function CarForm() {
 								name="start_time"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Start time</FormLabel>
+										<FormLabel>{t("admin:car.start_time")}</FormLabel>
 										<AdminChooseDates
 											value={field.value}
 											onChange={field.onChange}
@@ -119,7 +121,7 @@ export default function CarForm() {
 								name="end_time"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>End time</FormLabel>
+										<FormLabel>{t("admin:car.end_time")}</FormLabel>
 										<AdminChooseDates
 											value={field.value}
 											onChange={field.onChange}
@@ -130,14 +132,14 @@ export default function CarForm() {
 
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
 								<Button variant="outline" className="w-32 min-w-fit">
-									Förhandsgranska
+									{t("admin:preview")}
 								</Button>
 								<Button
 									type="submit"
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									Publicera
+									{t("admin:submit")}
 								</Button>
 							</div>
 						</form>

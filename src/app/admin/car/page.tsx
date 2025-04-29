@@ -29,6 +29,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import AdminTable from "@/widgets/AdminTable";
 import type { CalendarEvent } from "@/utils/full-calendar-seed";
+import { useTranslation } from "react-i18next";
 
 const columnHelper = createColumnHelper<CarRead>();
 
@@ -63,6 +64,7 @@ const columns = [
 ];
 
 export default function Car() {
+	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 	const [, setOpen] = useState(false);
 	const [, setSubmitEnabled] = useState(true);
@@ -123,11 +125,11 @@ export default function Car() {
 	});
 
 	if (isFetching) {
-		return <p> Hämtar</p>;
+		return <p> {t("admin:loading")}</p>;
 	}
 
 	if (error) {
-		return <p> Något gick fel :/</p>;
+		return <p> {t("admin:error")}</p>;
 	}
 
 	// Transform the fetched data into CalendarEvent type
@@ -145,11 +147,10 @@ export default function Car() {
 	return (
 		<div className="px-8 space-x-4">
 			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-				Administrera bilbokningar
+				{t("admin:car.title")}
 			</h3>
 			<p className="py-3">
-				Här kan du skapa bilbokningar & redigera existerande bilbokningar på
-				hemsidan.
+				{t("admin:car.description")}
 			</p>
 			<CarForm />
 			<Separator />
@@ -167,7 +168,7 @@ export default function Car() {
 						},
 						{
 							onError: (error) => {
-								console.error("Failed to add event", error);
+								console.error(t("admin:car.error_add"), error);
 							},
 						},
 					);
@@ -177,7 +178,7 @@ export default function Car() {
 						{ path: { booking_id: Number(id) } },
 						{
 							onError: (error) => {
-								console.error(`Failed to delete event with ID: ${id}`, error);
+								console.error(`${t("admin:car.error_add")} ${id}`, error);
 								// TODO: Show error message to user
 							},
 						},
@@ -185,7 +186,7 @@ export default function Car() {
 				}}
 				handleEdit={(event) => {
 					if (!event.id) {
-						console.error("Missing event ID:", event);
+						console.error(t("admin:car.error_missing_id"), event);
 						return;
 					}
 
@@ -201,7 +202,7 @@ export default function Car() {
 						{
 							onError: (error) => {
 								console.error(
-									`Failed to edit event with ID: ${event.id}`,
+									`${t("admin:car.error_edit")} ${event.id}`,
 									error,
 								);
 								// TODO: Show error message to user
@@ -216,16 +217,16 @@ export default function Car() {
 						className="flex flex-col w-f{/* <AvailabilityChecker /> */}ull items-center"
 					>
 						<TabsList className="flex justify-center mb-2">
-							<TabsTrigger value="calendar">Kalender</TabsTrigger>
-							<TabsTrigger value="list">Lista</TabsTrigger>
+							<TabsTrigger value="calendar">{t("admin:car.calendar")}</TabsTrigger>
+							<TabsTrigger value="list">{t("admin:car.list")}</TabsTrigger>
 						</TabsList>
 						<TabsContent value="calendar" className="w-full px-5 space-y-5">
 							<div className="space-y-0">
 								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
-									Kalender
+									{t("admin:car.calendar")}
 								</h2>
 								<p className="text-xs md:text-sm font-medium">
-									Denna kalender visar alla bilbokningar som finns i systemet.
+									{t("admin:car.calendar_description")}
 								</p>
 							</div>
 
@@ -239,10 +240,10 @@ export default function Car() {
 						<TabsContent value="list" className="w-full px-5 space-y-5">
 							<div className="space-y-0">
 								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
-									Lista
+									{t("admin:car.list")}
 								</h2>
 								<p className="text-xs md:text-sm font-medium">
-									Detta är en lista över alla bilbokningar som finns i systemet.
+									{t("admin:car.list_description")}
 								</p>
 							</div>
 							<Separator />

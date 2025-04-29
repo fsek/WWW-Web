@@ -2,6 +2,7 @@
 	"title": "Adminsida",
 	"submit": "Skapa",
 	"preview": "Förhandsgranska",
+	"description": "Beskrivning",
 	"loading": "Hämtar...",
 	"error": "Något gick fel :/",
 	"news": {
@@ -27,5 +28,22 @@
 		"edit_document": "Redigera dokument",
 		"created_at": "Skapad",
 		"edited_by": "Senast redigerad av"
+	},
+	"car": {
+		"self": "Bilbokningar",
+		"title": "Hantera bilbokningar",
+		"description": "Här kan du skapa och hantera bilbokningar.",
+		"default_description": "Ange bilbeskrivning här",
+		"create_booking": "Skapa bokning",
+		"start_time": "Starttid",
+		"end_time": "Sluttid",
+		"error_add": "Misslyckades att lägga till bokning.",
+		"error_delete": "Misslyckades att ta bort bokning med id: ",
+		"error_missing_id": "Boknings-id saknas.",
+		"error_edit": "Misslyckades att redigera bokning med id: ",
+		"calendar": "Kalender",
+		"calendar_description": "Denna kalender visar alla bokningar. Klicka på en bokning för att redigera den.",
+		"list": "Lista",
+		"list_description": "Denna lista visar alla bokningar."
 	}
 }
