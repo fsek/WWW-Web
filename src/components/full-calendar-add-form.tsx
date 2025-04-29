@@ -24,12 +24,14 @@ import {
 	AlertDialogAction,
 	AlertDialogCancel,
 	AlertDialogContent,
+	AlertDialogDescription,
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { DateTimePicker } from "./full-calendar-date-picker";
+// import { DateTimePicker } from "./full-calendar-date-picker";
+import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { useEvents } from "@/utils/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
 import { useTranslation } from "react-i18next";
@@ -129,6 +131,9 @@ export function EventAddForm({
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent>
+				<AlertDialogDescription className="sr-only">
+					A popup dialog to add a new event of some kind.
+				</AlertDialogDescription>
 				<AlertDialogHeader>
 					<AlertDialogTitle>{t("add.add")}</AlertDialogTitle>
 				</AlertDialogHeader>
@@ -174,11 +179,9 @@ export function EventAddForm({
 								<FormItem className="flex flex-col">
 									<FormLabel htmlFor="datetime">{t("add.start_time")}</FormLabel>
 									<FormControl>
-										<DateTimePicker
+										<AdminChooseDates
 											value={field.value}
 											onChange={field.onChange}
-											hourCycle={24}
-											granularity="minute"
 										/>
 									</FormControl>
 									<FormMessage />
@@ -192,11 +195,9 @@ export function EventAddForm({
 								<FormItem className="flex flex-col">
 									<FormLabel htmlFor="datetime">{t("add.end_time")}</FormLabel>
 									<FormControl>
-										<DateTimePicker
+										<AdminChooseDates
 											value={field.value}
 											onChange={field.onChange}
-											hourCycle={24}
-											granularity="minute"
 										/>
 									</FormControl>
 									<FormMessage />

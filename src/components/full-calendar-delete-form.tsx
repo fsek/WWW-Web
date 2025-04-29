@@ -7,6 +7,7 @@ import {
 	AlertDialog,
 	AlertDialogCancel,
 	AlertDialogContent,
+	AlertDialogDescription,
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
@@ -48,6 +49,9 @@ export function EventDeleteForm({ id, title }: EventDeleteFormProps) {
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent>
+				<AlertDialogDescription className="sr-only">
+					A popup dialog confirming the deletion of an event.
+				</AlertDialogDescription>
 				<AlertDialogHeader>
 					<AlertDialogTitle className="flex flex-row justify-between items-center">
 						{t("delete.delete")} "{title}"

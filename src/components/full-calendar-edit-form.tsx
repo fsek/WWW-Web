@@ -22,12 +22,14 @@ import {
 	AlertDialogAction,
 	AlertDialogCancel,
 	AlertDialogContent,
+	AlertDialogDescription,
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { DateTimePicker } from "./full-calendar-date-picker";
+//import { DateTimePicker } from "./full-calendar-date-picker";
+import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { useEvents } from "@/utils/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
 import type { CalendarEvent } from "@/utils/full-calendar-seed";
@@ -155,6 +157,9 @@ export function EventEditForm({
 			)}
 
 			<AlertDialogContent>
+				<AlertDialogDescription className="sr-only">
+					A popup dialog to edit an event.
+				</AlertDialogDescription>
 				<AlertDialogHeader>
 					<AlertDialogTitle>{t("edit.edit")} "{event?.title}"</AlertDialogTitle>
 				</AlertDialogHeader>
@@ -200,11 +205,9 @@ export function EventEditForm({
 								<FormItem className="flex flex-col">
 									<FormLabel htmlFor="datetime">{t("edit.start_time")}</FormLabel>
 									<FormControl>
-										<DateTimePicker
+										<AdminChooseDates
 											value={field.value}
 											onChange={field.onChange}
-											hourCycle={24}
-											granularity="minute"
 										/>
 									</FormControl>
 									<FormMessage />
@@ -218,11 +221,9 @@ export function EventEditForm({
 								<FormItem className="flex flex-col">
 									<FormLabel htmlFor="datetime">{t("edit.end_time")}</FormLabel>
 									<FormControl>
-										<DateTimePicker
+										<AdminChooseDates
 											value={field.value}
 											onChange={field.onChange}
-											hourCycle={24}
-											granularity="minute"
 										/>
 									</FormControl>
 									<FormMessage />

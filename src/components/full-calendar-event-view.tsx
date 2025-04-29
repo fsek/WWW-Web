@@ -4,6 +4,7 @@ import {
 	AlertDialog,
 	AlertDialogCancel,
 	AlertDialogContent,
+	AlertDialogDescription,
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
@@ -36,6 +37,9 @@ export function EventView({
 		<>
 			<AlertDialog open={eventViewOpen}>
 				<AlertDialogContent>
+					<AlertDialogDescription className="sr-only">
+						A popup dialog showing details about an event of some kind.
+					</AlertDialogDescription>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="flex flex-row justify-between items-center">
 							{event?.title}
