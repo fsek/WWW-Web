@@ -32,28 +32,7 @@ import {
 import { DateTimePicker } from "./full-calendar-date-picker";
 import { useEvents } from "@/utils/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
-
-const eventAddFormSchema = z.object({
-	title: z
-		.string({ required_error: "Please enter a title." })
-		.min(1, { message: "Must provide a title for this event." }),
-	description: z
-		.string({ required_error: "Please enter a description." })
-		.min(1, { message: "Must provide a description for this event." }),
-	start: z.date({
-		required_error: "Please select a start time",
-		invalid_type_error: "That's not a date!",
-	}),
-	end: z.date({
-		required_error: "Please select an end time",
-		invalid_type_error: "That's not a date!",
-	}),
-	color: z
-		.string({ required_error: "Please select an event color." })
-		.min(1, { message: "Must provide a title for this event." }),
-});
-
-type EventAddFormValues = z.infer<typeof eventAddFormSchema>;
+import { useTranslation } from "react-i18next";
 
 interface EventAddFormProps {
 	start: Date;
@@ -66,6 +45,29 @@ export function EventAddForm({
 	end,
 	showDescription,
 }: EventAddFormProps) {
+	const { t } = useTranslation("calendar");
+
+	const eventAddFormSchema = z.object({
+		title: z
+			.string({ required_error: t("add.error_title") })
+			.min(1, { message: t("add.error_title") }),
+		description: z
+			.string({ required_error: t("add.error_description") })
+			.min(1, { message: t("add.error_description") }),
+		start: z.date({
+			required_error: t("add.error_start_time"),
+			invalid_type_error: t("add.error_not_date"),
+		}),
+		end: z.date({
+			required_error: t("add.error_end_time"),
+			invalid_type_error: t("add.error_not_date"),
+		}),
+		color: z
+			.string({ required_error: "Please select an event color." })
+			.min(1, { message: "Must provide a title for this event." }),
+	});
+
+	type EventAddFormValues = z.infer<typeof eventAddFormSchema>;
 	const { events, addEvent } = useEvents();
 	const { eventAddOpen, setEventAddOpen } = useEvents();
 
@@ -103,10 +105,10 @@ export function EventAddForm({
 			addEvent(newEvent);
 			setEventAddOpen(false);
 			toast({
-				title: "Event added!",
+				title: t("add.toast.title"),
 				action: (
-					<ToastAction altText={"Click here to dismiss notification"}>
-						Dismiss
+					<ToastAction altText={t("add.toast.dismiss_alt")}>
+						{t("add.toast.dismiss")}
 					</ToastAction>
 				),
 			});
@@ -123,12 +125,12 @@ export function EventAddForm({
 					onClick={() => setEventAddOpen(true)}
 				>
 					<PlusIcon className="md:h-5 md:w-5 h-3 w-3" />
-					<p>Add Event</p>
+					<p>{t("add.button")}</p>
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Add Event</AlertDialogTitle>
+					<AlertDialogTitle>{t("add.add")}</AlertDialogTitle>
 				</AlertDialogHeader>
 
 				<Form {...form}>
@@ -138,9 +140,9 @@ export function EventAddForm({
 							name="title"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Title</FormLabel>
+									<FormLabel>{t("add.title")}</FormLabel>
 									<FormControl>
-										<Input placeholder="Standup Meeting" {...field} />
+										<Input placeholder={t("add.placeholder.title")} {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -152,10 +154,10 @@ export function EventAddForm({
 								name="description"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Description</FormLabel>
+										<FormLabel>{t("add.description")}</FormLabel>
 										<FormControl>
 											<Textarea
-												placeholder="Daily session"
+												placeholder={t("add.placeholder.description")}
 												className="max-h-36"
 												{...field}
 											/>
@@ -170,7 +172,7 @@ export function EventAddForm({
 							name="start"
 							render={({ field }) => (
 								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">Start</FormLabel>
+									<FormLabel htmlFor="datetime">{t("add.start_time")}</FormLabel>
 									<FormControl>
 										<DateTimePicker
 											value={field.value}
@@ -188,7 +190,7 @@ export function EventAddForm({
 							name="end"
 							render={({ field }) => (
 								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">End</FormLabel>
+									<FormLabel htmlFor="datetime">{t("add.end_time")}</FormLabel>
 									<FormControl>
 										<DateTimePicker
 											value={field.value}
@@ -235,9 +237,9 @@ export function EventAddForm({
 						*/}
 						<AlertDialogFooter className="pt-2">
 							<AlertDialogCancel onClick={() => setEventAddOpen(false)}>
-								Cancel
+								{t("cancel")}
 							</AlertDialogCancel>
-							<AlertDialogAction type="submit">Add Event</AlertDialogAction>
+							<AlertDialogAction type="submit">{t("add.add")}</AlertDialogAction>
 						</AlertDialogFooter>
 					</form>
 				</Form>

@@ -14,6 +14,7 @@ import { EventEditForm } from "./full-calendar-edit-form";
 import { useEvents } from "@/utils/full-calendar-event-context";
 import { X } from "lucide-react";
 import { Button } from "./ui/button";
+import { useTranslation } from "react-i18next";
 
 interface EventViewProps {
 	event?: CalendarEvent;
@@ -29,6 +30,7 @@ export function EventView({
 	disableEdit,
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
+	const { t } = useTranslation("calendar");
 
 	return (
 		<>
@@ -48,12 +50,12 @@ export function EventView({
 						<table>
 							<tbody>
 								<tr>
-									<th>Time:</th>
+									<th>{t("view.time")}</th>
 									<td>{`${event?.start.toLocaleTimeString()} - ${event?.end.toLocaleTimeString()}`}</td>
 								</tr>
 								{showDescription && (
 									<tr>
-										<th>Description:</th>
+										<th>{t("view.description")}</th>
 										<td>{event?.description}</td>
 									</tr>
 								)}
@@ -77,7 +79,7 @@ export function EventView({
 								variant="outline"
 								onClick={() => handleOpenDetails(event)}
 							>
-								Details
+								{t("details")}
 							</Button>
 						)}
 						{!disableEdit && (

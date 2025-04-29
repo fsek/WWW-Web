@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useEvents } from "@/utils/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
+import { useTranslation } from "react-i18next";
 
 interface EventDeleteFormProps {
 	id?: string;
@@ -21,6 +22,7 @@ interface EventDeleteFormProps {
 }
 
 export function EventDeleteForm({ id, title }: EventDeleteFormProps) {
+	const { t } = useTranslation("calendar");
 	const { deleteEvent } = useEvents();
 	const { eventDeleteOpen, setEventDeleteOpen, setEventViewOpen } = useEvents();
 
@@ -31,9 +33,9 @@ export function EventDeleteForm({ id, title }: EventDeleteFormProps) {
 		setEventDeleteOpen(false);
 		setEventViewOpen(false);
 		toast({
-			title: "Event deleted!",
+			title: t("delete.toast.title"),
 			action: (
-				<ToastAction altText={"Dismiss notification."}>Dismiss</ToastAction>
+				<ToastAction altText={t("delete.toast.dismiss_alt")}>{t("delete.toast.dismiss")}</ToastAction>
 			),
 		});
 	}
@@ -42,22 +44,22 @@ export function EventDeleteForm({ id, title }: EventDeleteFormProps) {
 		<AlertDialog open={eventDeleteOpen}>
 			<AlertDialogTrigger asChild>
 				<Button variant="destructive" onClick={() => setEventDeleteOpen(true)}>
-					Delete Event
+					{t("delete.button")}
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<AlertDialogTitle className="flex flex-row justify-between items-center">
-						Delete {title}
+						{t("delete.delete")} "{title}"
 					</AlertDialogTitle>
-					Are you sure you want to delete this event?
+					{t("delete.are_you_sure")}
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel onClick={() => setEventDeleteOpen(false)}>
-						Cancel
+						{t("cancel")}
 					</AlertDialogCancel>
 					<Button variant="destructive" onClick={() => onSubmit()}>
-						Delete
+						{t("delete.delete")}
 					</Button>
 				</AlertDialogFooter>
 			</AlertDialogContent>

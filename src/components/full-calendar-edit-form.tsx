@@ -32,29 +32,8 @@ import { useEvents } from "@/utils/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
 import type { CalendarEvent } from "@/utils/full-calendar-seed";
 import { Button } from "./ui/button";
+import { useTranslation } from "react-i18next";
 
-const eventEditFormSchema = z.object({
-	id: z.string(),
-	title: z
-		.string({ required_error: "Please enter a title." })
-		.min(1, { message: "Must provide a title for this event." }),
-	description: z
-		.string({ required_error: "Please enter a description." })
-		.min(1, { message: "Must provide a description for this event." }),
-	start: z.date({
-		required_error: "Please select a start time",
-		invalid_type_error: "That's not a date!",
-	}),
-	end: z.date({
-		required_error: "Please select an end time",
-		invalid_type_error: "That's not a date!",
-	}),
-	color: z
-		.string({ required_error: "Please select an event color." })
-		.min(1, { message: "Must provide a title for this event." }),
-});
-
-type EventEditFormValues = z.infer<typeof eventEditFormSchema>;
 
 interface EventEditFormProps {
 	oldEvent?: CalendarEvent;
@@ -71,6 +50,31 @@ export function EventEditForm({
 	displayButton,
 	showDescription,
 }: EventEditFormProps) {
+	const { t } = useTranslation("calendar");
+
+	const eventEditFormSchema = z.object({
+		id: z.string(),
+		title: z
+			.string({ required_error: t("edit.error_title") })
+			.min(1, { message: t("edit.error_title") }),
+		description: z
+			.string({ required_error: t("edit.error_description") })
+			.min(1, { message: t("edit.error_description") }),
+		start: z.date({
+			required_error: t("edit.error_start_time"),
+			invalid_type_error: t("edit.error_not_date"),
+		}),
+		end: z.date({
+			required_error: t("edit.error_end_time"),
+			invalid_type_error: t("edit.error_not_date"),
+		}),
+		color: z
+			.string({ required_error: "Please select an event color." })
+			.min(1, { message: "Must provide a title for this event." }),
+	});
+
+	type EventEditFormValues = z.infer<typeof eventEditFormSchema>;
+
 	const { editEvent } = useEvents();
 	const { eventEditOpen, setEventEditOpen } = useEvents();
 	const { eventViewOpen, setEventViewOpen } = useEvents();
@@ -124,11 +128,11 @@ export function EventEditForm({
 		editEvent(newEvent);
 		setEventEditOpen(false);
 
-		toast({
-			title: "Event edited!",
+		toast({ 
+			title: t("edit.toast.title"),
 			action: (
-				<ToastAction altText={"Click here to dismiss notification"}>
-					Dismiss
+				<ToastAction altText={t("edit.toast.dismiss_alt")}>
+					{t("edit.toast.dismiss")}
 				</ToastAction>
 			),
 		});
@@ -145,14 +149,14 @@ export function EventEditForm({
 							setEventEditOpen(true);
 						}}
 					>
-						Edit Event
+						{t("edit.button")}
 					</Button>
 				</AlertDialogTrigger>
 			)}
 
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Edit {event?.title}</AlertDialogTitle>
+					<AlertDialogTitle>{t("edit.edit")} "{event?.title}"</AlertDialogTitle>
 				</AlertDialogHeader>
 
 				<Form {...form}>
@@ -162,9 +166,9 @@ export function EventEditForm({
 							name="title"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Title</FormLabel>
+									<FormLabel>{t("edit.title")}</FormLabel>
 									<FormControl>
-										<Input placeholder="Standup Meeting" {...field} />
+										<Input placeholder={t("edit.placeholder.title")} {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -176,10 +180,10 @@ export function EventEditForm({
 								name="description"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Description</FormLabel>
+										<FormLabel>{t("edit.description")}</FormLabel>
 										<FormControl>
 											<Textarea
-												placeholder="Daily session"
+												placeholder={t("edit.placeholder.description")}
 												className="resize-none"
 												{...field}
 											/>
@@ -194,7 +198,7 @@ export function EventEditForm({
 							name="start"
 							render={({ field }) => (
 								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">Start</FormLabel>
+									<FormLabel htmlFor="datetime">{t("edit.start_time")}</FormLabel>
 									<FormControl>
 										<DateTimePicker
 											value={field.value}
@@ -212,7 +216,7 @@ export function EventEditForm({
 							name="end"
 							render={({ field }) => (
 								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">End</FormLabel>
+									<FormLabel htmlFor="datetime">{t("edit.end_time")}</FormLabel>
 									<FormControl>
 										<DateTimePicker
 											value={field.value}
@@ -259,9 +263,9 @@ export function EventEditForm({
 						*/}
 						<AlertDialogFooter className="pt-2">
 							<AlertDialogCancel onClick={() => handleEditCancellation()}>
-								Cancel
+								{t("cancel")}
 							</AlertDialogCancel>
-							<AlertDialogAction type="submit">Save</AlertDialogAction>
+							<AlertDialogAction type="submit">{t("save")}</AlertDialogAction>
 						</AlertDialogFooter>
 					</form>
 				</Form>
