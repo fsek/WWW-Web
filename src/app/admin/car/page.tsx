@@ -21,6 +21,7 @@ import {
 	getPaginationRowModel,
 	type SortingState,
 	getSortedRowModel,
+	type Row,
 } from "@tanstack/react-table";
 import {
 	removeBookingMutation,
@@ -30,6 +31,7 @@ import {
 import AdminTable from "@/widgets/AdminTable";
 import type { CalendarEvent } from "@/utils/full-calendar-seed";
 import { useTranslation } from "react-i18next";
+import CarEditForm from "./CarEditForm";
 
 const columnHelper = createColumnHelper<CarRead>();
 
@@ -68,6 +70,8 @@ export default function Car() {
 	const queryClient = useQueryClient();
 	const [, setOpen] = useState(false);
 	const [, setSubmitEnabled] = useState(true);
+	const [openEditDialog, setOpenEditDialog] = useState(false);
+	const [selectedBooking, setselectedBooking] = useState<CarRead | null>(null);
 
 	const { data, error, isFetching } = useQuery({
 		...getAllBookingOptions(),
@@ -102,6 +106,16 @@ export default function Car() {
 			setSubmitEnabled(true);
 		},
 	});
+
+	function handleRowClick(row: Row<CarRead>) {
+		setselectedBooking(row.original);
+		setOpenEditDialog(true);
+	}
+
+	function handleClose() {
+		setOpenEditDialog(false);
+		setselectedBooking(null);
+	}
 
 	const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -214,7 +228,7 @@ export default function Car() {
 				<div className="py-4">
 					<Tabs
 						defaultValue="calendar"
-						className="flex flex-col w-f{/* <AvailabilityChecker /> */}ull items-center"
+						className="flex flex-col w-full items-center"
 					>
 						<TabsList className="flex justify-center mb-2">
 							<TabsTrigger value="calendar">{t("admin:car.calendar")}</TabsTrigger>
@@ -247,7 +261,12 @@ export default function Car() {
 								</p>
 							</div>
 							<Separator />
-							<AdminTable table={table} />
+							<AdminTable table={table} onRowClick={handleRowClick} />
+							<CarEditForm
+								open={openEditDialog}
+								onClose={() => handleClose()}
+								selectedBooking={selectedBooking as CarRead}
+							/>
 						</TabsContent>
 					</Tabs>
 				</div>

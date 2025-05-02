@@ -79,7 +79,6 @@ export function EventEditForm({
 
 	const { editEvent } = useEvents();
 	const { eventEditOpen, setEventEditOpen } = useEvents();
-	const { eventViewOpen, setEventViewOpen } = useEvents();
 
 	const { toast } = useToast();
 

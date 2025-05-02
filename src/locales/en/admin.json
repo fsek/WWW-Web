@@ -5,6 +5,9 @@
 	"error": "Something went wrong :/",
 	"preview": "Preview",
 	"description": "Description",
+	"save": "Save",
+	"cancel": "Cancel",
+	"remove": "Remove",
 	"news": {
 		"self": "News",
 		"page_title": "Manage News"
@@ -34,6 +37,7 @@
 		"description": "Here you can create and manage car bookings.",
 		"default_description": "Enter car description here",
 		"create_booking": "Create Booking",
+		"edit_booking": "Edit Booking",
 		"start_time": "Start Time",
 		"end_time": "End Time",
 		"error_add": "Failed to add booking.",
