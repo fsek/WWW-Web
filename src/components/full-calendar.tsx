@@ -232,6 +232,7 @@ export default function Calendar({
 				start={selectedStart}
 				end={selectedEnd}
 				viewedDate={viewedDate}
+				editDescription={editDescription ?? false}
 			/>
 
 			<Card className="p-3">

@@ -82,19 +82,14 @@ export function EventAddForm({
 		resolver: zodResolver(eventAddFormSchema),
 	});
 
-	const effectRun = useRef(false);
-
 	useEffect(() => {
-		if (!effectRun.current) {
-			form.reset({
-				title: "",
-				description: "",
-				start: start,
-				end: end,
-				color: "#76c7ef",
-			});
-			effectRun.current = true;
-		}
+		form.reset({
+      title: "",
+      description: "",
+      start: start,
+      end: end,
+      color: "#76c7ef"
+    });
 	}, [form, start, end]);
 
 	const onSubmit = useCallback(

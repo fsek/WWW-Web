@@ -41,18 +41,22 @@ import {
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslation } from "react-i18next";
-// import { EventAddForm } from "./event-add-form";
+import { EventAddForm } from "./full-calendar-add-form";
 
 interface CalendarNavProps {
 	calendarRef: calendarRef;
 	start: Date;
 	end: Date;
 	viewedDate: Date;
+	editDescription?: boolean;
 }
 
 export default function CalendarNav({
 	calendarRef,
+	start,
+	end,
 	viewedDate,
+	editDescription = false,
 }: CalendarNavProps) {
 	const { t } = useTranslation("calendar");
 	const [currentView, setCurrentView] = useState("timeGridWeek");
@@ -282,7 +286,7 @@ export default function CalendarNav({
 
 				{/* Add event button  */}
 
-				{/* <EventAddForm start={start} end={end} /> */}
+				<EventAddForm start={start} end={end} editDescription={editDescription}/>
 			</div>
 		</div>
 	);
