@@ -1,3 +1,5 @@
+/* For the custom fullcalendar component. Not actually used, this is here as a guide for future styling of the calendar */
+
 :root {
   --fc-border-color: lightgray;
   --fc-page-bg-color: none;

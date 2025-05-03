@@ -15,6 +15,9 @@ export default async function AdminLayout({
 	// const { resources } = await initTranslations(locale, i18nNamespaces);
 
 	return (
+		// Removing this because it caused some problems when switching locales.
+		// See https://github.com/fsek/WWW-Web/pull/51
+
 		// <TranslationsProvider
 		// 	namespaces={i18nNamespaces}
 		// 	locale={locale}

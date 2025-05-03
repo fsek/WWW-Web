@@ -59,7 +59,7 @@ export default function Calendar({
 	disableEdit,
 	enableAllDay = true,
 }: CalendarProps) {
-	const { events, setEventAddOpen, setEventEditOpen, setEventViewOpen } =
+	const { events, setEventAddOpen, setEventEditOpen, eventViewOpen, setEventViewOpen } =
 		useEvents();
 
 	const calendarRef = useRef<FullCalendar | null>(null);
@@ -305,7 +305,7 @@ export default function Calendar({
 				/>
 			)} This is rendered in calendar nav already*/}
 
-			{!disableEdit && (
+			{(!disableEdit && !eventViewOpen) && (
 				<EventEditForm
 					oldEvent={selectedOldEvent}
 					event={selectedEvent}

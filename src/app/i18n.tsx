@@ -6,7 +6,8 @@ import resourcesToBackend from "i18next-resources-to-backend";
 export type Locale = "en" | "sv";
 export type Namespace = "admin" | "main" | "namnden" | "calendar";
 // todo: add more namespaces
-// If you add more you probably also have to add them to the layout.tsx file corresponding to the page you are on
+// If you add more you probably also have to add them to the layout.tsx file corresponding to the page you are on 
+// (or only the main one, try that first)
 
 export default async function initTranslations(
 	locale: Locale,
