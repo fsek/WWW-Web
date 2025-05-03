@@ -55,9 +55,10 @@ export function EventAddForm({
 		title: z
 			.string({ required_error: t("add.error_title") })
 			.min(1, { message: t("add.error_title") }),
-		description: z
-			.string({ required_error: t("add.error_description") })
-			.min(1, { message: t("add.error_description") }),
+		description: editDescription 
+			? z.string({ required_error: t("add.error_description") })
+				.min(1, { message: t("add.error_description") })
+			: z.string().optional().default(""),
 		start: z.date({
 			required_error: t("add.error_start_time"),
 			invalid_type_error: t("add.error_not_date"),
@@ -101,7 +102,7 @@ export function EventAddForm({
 			const newEvent = {
 				id: String(events.length + 1),
 				title: data.title,
-				description: data.description,
+				description: editDescription ? data.description : "",
 				start: data.start,
 				end: data.end,
 				color: data.color,
@@ -117,7 +118,7 @@ export function EventAddForm({
 				),
 			});
 		},
-		[events, addEvent, setEventAddOpen, toast],
+		[events, addEvent, setEventAddOpen, toast, editDescription, t],
 	);
 
 	return (
