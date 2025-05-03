@@ -14,7 +14,7 @@ import useCreateTable from "@/widgets/useCreateTable";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
-const columns = [
+const columns = [ // This might not be the best way to do this, see the car booking page for alternative
 	columnHelper.accessor("title_sv", {
 		header: "Svensk titel",
 		cell: (info) => info.getValue(),

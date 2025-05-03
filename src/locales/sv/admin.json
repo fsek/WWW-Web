@@ -41,6 +41,7 @@
 		"edit_booking": "Redigera bokning",
 		"start_time": "Starttid",
 		"end_time": "Sluttid",
+		"booked_by": "Bokad av användar-id:",
 		"error_add": "Misslyckades att lägga till bokning.",
 		"error_delete": "Misslyckades att ta bort bokning med id: ",
 		"error_missing_id": "Boknings-id saknas.",
@@ -49,6 +50,6 @@
 		"calendar": "Kalender",
 		"calendar_description": "Denna kalender visar alla bokningar. Klicka på en bokning för att redigera den. Klicka eller dra på kalendern för att välja ett tidsintervall, klicka sedan på 'Lägg till event'. Blåa bokningar kanske inte har kommit till backenden än.",
 		"list": "Lista",
-		"list_description": "Denna lista visar alla bokningar."
+		"list_description": "Denna lista visar alla bokningar. Klicka på en bokning för att redigera den."
 	}
 }

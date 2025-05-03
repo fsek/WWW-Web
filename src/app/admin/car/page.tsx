@@ -35,36 +35,6 @@ import CarEditForm from "./CarEditForm";
 
 const columnHelper = createColumnHelper<CarRead>();
 
-const columns = [
-	columnHelper.accessor((row) => row.description, {
-		id: "description",
-		cell: (info) => info.getValue(),
-		header: () => <span>beskrivnig</span>,
-		size: 60,
-		//footer: (props) => props.column.id,
-	}),
-	columnHelper.accessor((row) => row.start_time, {
-		id: "start_time",
-		cell: (info) => {
-			const date = new Date(info.getValue());
-			return date.toLocaleString();
-		},
-		header: () => <span>start_time</span>,
-		size: 60,
-		//footer: (props) => props.column.id,
-	}),
-	columnHelper.accessor((row) => row.end_time, {
-		id: "end_time",
-		cell: (info) => {
-			const date = new Date(info.getValue());
-			return date.toLocaleString();
-		},
-		header: () => <span>end_time</span>,
-		size: 60,
-		//footer: (props) => props.column.id,
-	}),
-];
-
 export default function Car() {
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
@@ -72,6 +42,40 @@ export default function Car() {
 	const [, setSubmitEnabled] = useState(true);
 	const [openEditDialog, setOpenEditDialog] = useState(false);
 	const [selectedBooking, setselectedBooking] = useState<CarRead | null>(null);
+
+	// Column setup
+	const columns = [
+		columnHelper.accessor("description", {
+			header: t("admin:description"),
+			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor("start_time", {
+			header: t("admin:car.start_time"),
+			cell: (info) =>
+				new Date(info.getValue()).toLocaleString("sv-SE", {
+					hour: "2-digit",
+					minute: "2-digit",
+					year: "numeric",
+					month: "2-digit",
+					day: "2-digit",
+				}),
+		}),
+		columnHelper.accessor("end_time", {
+			header: t("admin:car.end_time"),
+			cell: (info) =>
+				new Date(info.getValue()).toLocaleString("sv-SE", {
+					hour: "2-digit",
+					minute: "2-digit",
+					year: "numeric",
+					month: "2-digit",
+					day: "2-digit",
+				}),
+		}),
+		columnHelper.accessor("user_id", {
+			header: t("admin:car.booked_by"),
+			cell: (info) => info.getValue(),
+		}),
+	];
 
 	const { data, error, isFetching } = useQuery({
 		...getAllBookingOptions(),
