@@ -41,6 +41,7 @@ interface EventAddFormProps {
 	end: Date;
 	editDescription: boolean;
 	showButton?: boolean;
+	enableAllDay?: boolean;
 }
 
 export function EventAddForm({
@@ -48,6 +49,7 @@ export function EventAddForm({
 	end,
 	editDescription,
 	showButton = true,
+	enableAllDay = true,
 }: EventAddFormProps) {
 	const { t } = useTranslation("calendar");
 
@@ -67,6 +69,7 @@ export function EventAddForm({
 			required_error: t("add.error_end_time"),
 			invalid_type_error: t("add.error_not_date"),
 		}),
+		allDay: z.boolean().default(false),
 		color: z
 			.string({ required_error: "Please select an event color." })
 			.min(1, { message: "Must provide a title for this event." }),
@@ -88,6 +91,7 @@ export function EventAddForm({
       description: "",
       start: start,
       end: end,
+			allDay: false,
       color: "#76c7ef"
     });
 	}, [form, start, end]);
@@ -100,6 +104,7 @@ export function EventAddForm({
 				description: editDescription ? data.description : "",
 				start: data.start,
 				end: data.end,
+				allDay: data.allDay,
 				color: data.color,
 			};
 			addEvent(newEvent);
@@ -204,6 +209,25 @@ export function EventAddForm({
 								</FormItem>
 							)}
 						/>
+						{enableAllDay && (
+							<FormField
+								control={form.control}
+								name="allDay"
+								render={({ field }) => (
+									<FormItem className="flex flex-row items-center space-x-2">
+										<FormControl>
+											<input
+												type="checkbox"
+												className="cursor-pointer"
+												checked={field.value}
+												onChange={(e) => field.onChange(e.target.checked)}
+											/>
+										</FormControl>
+										<FormLabel>{t("add.all_day")}</FormLabel>
+									</FormItem>
+								)}
+							/>
+						)}
 						{/* Not used
 						<FormField
 							control={form.control}

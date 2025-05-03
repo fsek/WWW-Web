@@ -68,6 +68,7 @@ export interface CalendarEvent {
 	title: string;
 	start: Date;
 	end: Date;
+	allDay: boolean;
 	backgroundColor?: string;
 	description: string;
 }
@@ -90,6 +91,7 @@ export const initialEvents: CalendarEvent[] = [
 			13,
 			0,
 		),
+		allDay: false,
 		backgroundColor: "#AEC6E4",
 		description: "This is a daily meeting to go over today's tasks.",
 	},
@@ -110,6 +112,7 @@ export const initialEvents: CalendarEvent[] = [
 			17,
 			30,
 		),
+		allDay: false,
 		backgroundColor: "#FFD1DC",
 		description: "Lunch at Cracker Barrel with integration clients.",
 	},
@@ -130,6 +133,7 @@ export const initialEvents: CalendarEvent[] = [
 			18,
 			45,
 		),
+		allDay: false,
 		backgroundColor: "#B2E0B2",
 		description: "Conversation with counselor about progression.",
 	},
@@ -150,6 +154,7 @@ export const initialEvents: CalendarEvent[] = [
 			18,
 			45,
 		),
+		allDay: false,
 		backgroundColor: "#FFB3BA",
 		description: "Team bonding and strategic planning.",
 	},
@@ -170,6 +175,7 @@ export const initialEvents: CalendarEvent[] = [
 			15,
 			30,
 		),
+		allDay: false,
 		backgroundColor: "#FFDFBA",
 		description:
 			"Improve your productivity with effective time management techniques.",
@@ -191,6 +197,7 @@ export const initialEvents: CalendarEvent[] = [
 			15,
 			0,
 		),
+		allDay: false,
 		backgroundColor: "#B9FBC0",
 		description: "Explore health resources and wellness activities.",
 	},
@@ -211,6 +218,7 @@ export const initialEvents: CalendarEvent[] = [
 			20,
 			0,
 		),
+		allDay: false,
 		backgroundColor: "#C3B1E1",
 		description: "Discussing this month's book selection with the club.",
 	},
@@ -231,6 +239,7 @@ export const initialEvents: CalendarEvent[] = [
 			16,
 			0,
 		),
+		allDay: false,
 		backgroundColor: "#B2E7E0",
 		description: "Join us for a weekend of creative writing exercises.",
 	},
@@ -251,6 +260,7 @@ export const initialEvents: CalendarEvent[] = [
 			22,
 			0,
 		),
+		allDay: false,
 		backgroundColor: "#F6C9D8",
 		description: "An evening of fun to raise funds for a good cause.",
 	},

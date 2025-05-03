@@ -154,6 +154,7 @@ export default function Car() {
 				title: car.description,
 				start: car.start_time,
 				end: car.end_time,
+				allDay: false,
 				description: `user_id av bokare: ${car.user_id.toString()}`,
 			};
 		}) ?? [];
@@ -250,6 +251,7 @@ export default function Car() {
 								editDescription={false}
 								handleOpenDetails={() => {}}
 								disableEdit={false} // Also disables delete, add and drag-and-drop
+								enableAllDay={false}
 							/>
 						</TabsContent>
 						<TabsContent value="list" className="w-full px-5 space-y-5">

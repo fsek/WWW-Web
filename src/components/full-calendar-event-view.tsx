@@ -23,6 +23,7 @@ interface EventViewProps {
 	editDescription: boolean;
 	handleOpenDetails?: (event?: CalendarEvent) => void;
 	disableEdit: boolean;
+	enableAllDay?: boolean;
 }
 
 export function EventView({
@@ -31,6 +32,7 @@ export function EventView({
 	editDescription,
 	handleOpenDetails,
 	disableEdit,
+	enableAllDay = true,
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 	const { t } = useTranslation("calendar");
@@ -65,6 +67,12 @@ export function EventView({
 										<td>{event?.description}</td>
 									</tr>
 								)}
+								{(event?.allDay && enableAllDay) && (
+									<tr>
+										<th>{t("view.all_day")}</th>
+										<td>{event.allDay ? t("yes") : t("no")}</td>
+									</tr>
+								)}
 								{/* Not used
 								<tr>
 									<th>Color:</th>
@@ -97,6 +105,7 @@ export function EventView({
 								event={event}
 								isDrag={false}
 								editDescription={editDescription}
+								enableAllDay={enableAllDay}
 							/>
 						)}
 					</AlertDialogFooter>

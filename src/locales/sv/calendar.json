@@ -2,9 +2,12 @@
 	"details": "Detaljer",
 	"cancel": "Avbryt",
 	"save": "Spara",
+	"yes": "Ja",
+	"no": "Nej",
 	"view": {
 		"time": "Tid",
-		"description": "Beskrivning"
+		"description": "Beskrivning",
+		"all_day": "Heldag"
 	},
 	"edit": {
 		"error_title": "Vänligen ange en titel.",
@@ -23,6 +26,7 @@
 		"description": "Beskrivning",
 		"start_time": "Starttid",
 		"end_time": "Sluttid",
+		"all_day": "Heldag",
 		"placeholder": {
 			"title": "Picknick på månen",
 			"description": "Ta med rep för Hilbert Älg!"
@@ -69,6 +73,7 @@
 		"description": "Beskrivning",
 		"start_time": "Starttid",
 		"end_time": "Sluttid",
+		"all_day": "Heldag",
 		"placeholder": {
 			"title": "Picknick på månen",
 			"description": "Ta med rep för Hilbert Älg!"

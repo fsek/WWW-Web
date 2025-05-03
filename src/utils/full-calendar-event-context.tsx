@@ -9,6 +9,7 @@ interface Event {
 	description: string;
 	start: Date;
 	end: Date;
+	allDay: boolean;
 	color?: string;
 }
 
@@ -62,6 +63,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 			...event,
 			id: String(event.id),
 			color: eventColor ?? "#76c7ef",
+			allDay: event.allDay ?? false,
 		})),
 	);
 	const [eventViewOpen, setEventViewOpen] = useState(false);
@@ -112,6 +114,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 								description: event.description,
 								start: event.start,
 								end: event.end,
+								allDay: event.allDay,
 							}
 						: prevEvent,
 				),

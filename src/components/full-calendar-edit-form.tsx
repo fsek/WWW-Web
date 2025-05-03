@@ -43,6 +43,7 @@ interface EventEditFormProps {
 	isDrag: boolean;
 	editDescription: boolean;
 	showButton?: boolean;
+	enableAllDay?: boolean;
 }
 
 export function EventEditForm({
@@ -51,6 +52,7 @@ export function EventEditForm({
 	isDrag,
 	editDescription,
 	showButton = true,
+	enableAllDay = true,
 }: EventEditFormProps) {
 	const { t } = useTranslation("calendar");
 
@@ -70,6 +72,7 @@ export function EventEditForm({
 			required_error: t("edit.error_end_time"),
 			invalid_type_error: t("edit.error_not_date"),
 		}),
+		allDay: z.boolean().default(false),
 		color: z
 			.string({ required_error: "Please select an event color." })
 			.min(1, { message: "Must provide a title for this event." }),
@@ -95,6 +98,7 @@ export function EventEditForm({
 				description: oldEvent.description,
 				start: oldEvent.start,
 				end: oldEvent.end,
+				allDay: oldEvent.allDay,
 				color: oldEvent.backgroundColor!,
 			};
 
@@ -113,6 +117,7 @@ export function EventEditForm({
 			description: event?.description,
 			start: event?.start as Date,
 			end: event?.end as Date,
+			allDay: event?.allDay,
 			color: event?.backgroundColor,
 		});
 	}, [form, event]);
@@ -124,6 +129,7 @@ export function EventEditForm({
 			description: data.description,
 			start: data.start,
 			end: data.end,
+			allDay: data.allDay ?? false,
 			color: data.color,
 		};
 		editEvent(newEvent);
@@ -229,6 +235,25 @@ export function EventEditForm({
 								</FormItem>
 							)}
 						/>
+						{enableAllDay && (
+							<FormField
+								control={form.control}
+								name="allDay"
+								render={({ field }) => (
+									<FormItem className="flex flex-row items-center space-x-2">
+										<FormControl>
+											<input
+												type="checkbox"
+												className="cursor-pointer"
+												checked={field.value}
+												onChange={(e) => field.onChange(e.target.checked)}
+											/>
+										</FormControl>
+										<FormLabel>{t("edit.all_day")}</FormLabel>
+									</FormItem>
+								)}
+							/>
+						)}
 						{/* Not used
 						<FormField
 							control={form.control}

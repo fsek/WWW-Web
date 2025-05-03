@@ -49,6 +49,7 @@ interface CalendarProps {
 	editDescription?: boolean;
 	handleOpenDetails?: (event?: CalendarEvent) => void;
 	disableEdit?: boolean;
+	enableAllDay?: boolean;
 }
 
 export default function Calendar({
@@ -56,6 +57,7 @@ export default function Calendar({
 	editDescription,
 	handleOpenDetails,
 	disableEdit,
+	enableAllDay = true,
 }: CalendarProps) {
 	const { events, setEventAddOpen, setEventEditOpen, setEventViewOpen } =
 		useEvents();
@@ -80,6 +82,7 @@ export default function Calendar({
 			backgroundColor: info.event.backgroundColor,
 			start: info.event.start!,
 			end: info.event.end!,
+			allDay: info.event.allDay,
 		};
 
 		setIsDrag(false);
@@ -96,6 +99,7 @@ export default function Calendar({
 			backgroundColor: info.event.backgroundColor,
 			start: info.event.start!,
 			end: info.event.end!,
+			allDay: info.event.allDay,
 		};
 
 		const oldEvent: CalendarEvent = {
@@ -105,6 +109,7 @@ export default function Calendar({
 			backgroundColor: info.oldEvent.backgroundColor,
 			start: info.oldEvent.start!,
 			end: info.oldEvent.end!,
+			allDay: info.oldEvent.allDay,
 		};
 
 		setIsDrag(true);
@@ -233,6 +238,8 @@ export default function Calendar({
 				end={selectedEnd}
 				viewedDate={viewedDate}
 				editDescription={editDescription ?? false}
+				disableEdit={disableEdit}
+				enableAllDay={enableAllDay}
 			/>
 
 			<Card className="p-3">
@@ -250,7 +257,9 @@ export default function Calendar({
 					headerToolbar={false}
 					slotMinTime={calendarEarliestTime}
 					slotMaxTime={calendarLatestTime}
-					allDaySlot={false}
+					allDaySlot={enableAllDay} // Default is true
+					allDayMaintainDuration={true}
+					forceEventDuration={true}
 					firstDay={1}
 					height={"32vh"}
 					displayEventEnd={true}
@@ -286,14 +295,15 @@ export default function Calendar({
 			</Card>
 
 			{/* Render the EventAddForm and EventEditForm so it can appear when eventAddOpen is toggled (when clicking empty slots or dragging events) */}
-			{!disableEdit && (
+			{/* {!disableEdit && (
 				<EventAddForm
 					start={selectedStart}
 					end={selectedEnd}
 					editDescription={editDescription ?? false}
 					showButton={false}
+					enableAllDay={enableAllDay}
 				/>
-			)}
+			)} This is rendered in calendar nav already*/}
 
 			{!disableEdit && (
 				<EventEditForm
@@ -302,6 +312,7 @@ export default function Calendar({
 					isDrag={isDrag}
 					editDescription={editDescription ?? false}
 					showButton={false}
+					enableAllDay={enableAllDay}
 				/>
 			)}
 
@@ -311,6 +322,7 @@ export default function Calendar({
 				editDescription={editDescription ?? false}
 				handleOpenDetails={handleOpenDetails}
 				disableEdit={disableEdit ?? false}
+				enableAllDay={enableAllDay}
 			/>
 		</div>
 	);

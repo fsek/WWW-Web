@@ -2,9 +2,12 @@
 	"details": "Details",
 	"cancel": "Cancel",
 	"save": "Save",
+	"yes": "Yes",
+	"no": "No",
 	"view": {
 		"time": "Time",
-		"description": "Description"
+		"description": "Description",
+		"all_day": "All Day"
 	},
 	"edit": {
 		"error_title": "Please enter a title.",
@@ -23,6 +26,7 @@
 		"description": "Description",
 		"start_time": "Start Time",
 		"end_time": "End Time",
+		"all_day": "All Day",
 		"placeholder": {
 			"title": "Picnic on the moon",
 			"description": "Bring a lead for Hilbert the moose!"
@@ -69,6 +73,7 @@
 		"description": "Description",
 		"start_time": "Start Time",
 		"end_time": "End Time",
+		"all_day": "All Day",
 		"placeholder": {
 			"title": "Picnic on the moon",
 			"description": "Bring a lead for Hilbert the moose!"
