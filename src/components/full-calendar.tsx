@@ -46,12 +46,14 @@ type DayRenderProps = {
 
 interface CalendarProps {
 	showDescription: boolean;
+	editDescription?: boolean;
 	handleOpenDetails?: (event?: CalendarEvent) => void;
 	disableEdit?: boolean;
 }
 
 export default function Calendar({
 	showDescription,
+	editDescription,
 	handleOpenDetails,
 	disableEdit,
 }: CalendarProps) {
@@ -282,28 +284,30 @@ export default function Calendar({
 				/>
 			</Card>
 
-			{/* Render the EventAddForm so it can appear when eventAddOpen is toggled */}
+			{/* Render the EventAddForm and EventEditForm so it can appear when eventAddOpen is toggled (when clicking empty slots or dragging events) */}
 			{!disableEdit && (
 				<EventAddForm
 					start={selectedStart}
 					end={selectedEnd}
-					showDescription={showDescription}
+					editDescription={editDescription ?? false}
+					showButton={false}
 				/>
 			)}
 
-			{disableEdit && (
+			{!disableEdit && (
 				<EventEditForm
 					oldEvent={selectedOldEvent}
 					event={selectedEvent}
 					isDrag={isDrag}
-					displayButton={false}
-					showDescription={showDescription}
+					editDescription={editDescription ?? false}
+					showButton={false}
 				/>
 			)}
 
 			<EventView
 				event={selectedEvent}
 				showDescription={showDescription}
+				editDescription={editDescription ?? false}
 				handleOpenDetails={handleOpenDetails}
 				disableEdit={disableEdit ?? false}
 			/>

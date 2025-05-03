@@ -41,16 +41,16 @@ interface EventEditFormProps {
 	oldEvent?: CalendarEvent;
 	event?: CalendarEvent;
 	isDrag: boolean;
-	displayButton: boolean;
-	showDescription: boolean;
+	editDescription: boolean;
+	showButton?: boolean;
 }
 
 export function EventEditForm({
 	oldEvent,
 	event,
 	isDrag,
-	displayButton,
-	showDescription,
+	editDescription,
+	showButton = true,
 }: EventEditFormProps) {
 	const { t } = useTranslation("calendar");
 
@@ -141,7 +141,7 @@ export function EventEditForm({
 
 	return (
 		<AlertDialog open={eventEditOpen}>
-			{displayButton && (
+			{showButton && (
 				<AlertDialogTrigger asChild>
 					<Button
 						className="w-full sm:w-24 text-xs md:text-sm mb-1"
@@ -178,7 +178,7 @@ export function EventEditForm({
 								</FormItem>
 							)}
 						/>
-						{showDescription && (
+						{editDescription && (
 							<FormField
 								control={form.control}
 								name="description"

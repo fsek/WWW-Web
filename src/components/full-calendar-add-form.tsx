@@ -39,13 +39,15 @@ import { useTranslation } from "react-i18next";
 interface EventAddFormProps {
 	start: Date;
 	end: Date;
-	showDescription: boolean;
+	editDescription: boolean;
+	showButton?: boolean;
 }
 
 export function EventAddForm({
 	start,
 	end,
-	showDescription,
+	editDescription,
+	showButton = true,
 }: EventAddFormProps) {
 	const { t } = useTranslation("calendar");
 
@@ -120,16 +122,18 @@ export function EventAddForm({
 
 	return (
 		<AlertDialog open={eventAddOpen}>
-			<AlertDialogTrigger className="flex" asChild>
-				<Button
-					className="w-24 md:w-28 text-xs md:text-sm"
-					variant="default"
-					onClick={() => setEventAddOpen(true)}
-				>
-					<PlusIcon className="md:h-5 md:w-5 h-3 w-3" />
-					<p>{t("add.button")}</p>
-				</Button>
-			</AlertDialogTrigger>
+			{showButton && (
+				<AlertDialogTrigger className="flex" asChild>
+					<Button
+						className="w-24 md:w-28 text-xs md:text-sm"
+						variant="default"
+						onClick={() => setEventAddOpen(true)}
+					>
+						<PlusIcon className="md:h-5 md:w-5 h-3 w-3" />
+						<p>{t("add.button")}</p>
+					</Button>
+				</AlertDialogTrigger>
+			)}
 			<AlertDialogContent>
 				<AlertDialogDescription className="sr-only">
 					A popup dialog to add a new event of some kind.
@@ -153,7 +157,7 @@ export function EventAddForm({
 								</FormItem>
 							)}
 						/>
-						{showDescription && (
+						{editDescription && (
 							<FormField
 								control={form.control}
 								name="description"

@@ -20,6 +20,7 @@ import { useTranslation } from "react-i18next";
 interface EventViewProps {
 	event?: CalendarEvent;
 	showDescription: boolean;
+	editDescription: boolean;
 	handleOpenDetails?: (event?: CalendarEvent) => void;
 	disableEdit: boolean;
 }
@@ -27,6 +28,7 @@ interface EventViewProps {
 export function EventView({
 	event,
 	showDescription,
+	editDescription,
 	handleOpenDetails,
 	disableEdit,
 }: EventViewProps) {
@@ -89,13 +91,14 @@ export function EventView({
 						{!disableEdit && (
 							<EventDeleteForm id={event?.id} title={event?.title} />
 						)}
-						<EventEditForm
-							oldEvent={event}
-							event={event}
-							isDrag={false}
-							displayButton={!disableEdit}
-							showDescription={showDescription}
-						/>
+						{!disableEdit && (
+							<EventEditForm
+								oldEvent={event}
+								event={event}
+								isDrag={false}
+								editDescription={editDescription}
+							/>
+						)}
 					</AlertDialogFooter>
 				</AlertDialogContent>
 			</AlertDialog>

@@ -247,6 +247,7 @@ export default function Car() {
 							<Separator />
 							<Calendar
 								showDescription={true}
+								editDescription={false}
 								handleOpenDetails={() => {}}
 								disableEdit={false} // Also disables delete, add and drag-and-drop
 							/>
