@@ -76,7 +76,25 @@ export function EventEditForm({
 		color: z
 			.string({ required_error: "Please select an event color." })
 			.min(1, { message: "Must provide a title for this event." }),
-	});
+	}).refine(
+		(data) => {
+			// Check if start time equals end time
+			if (data.start.getTime() === data.end.getTime()) {
+				return false;
+			}
+
+			// Check if start time is after end time
+			if (data.start.getTime() > data.end.getTime()) {
+				return false;
+			}
+
+			return true;
+		},
+		{
+			message: t("error_start_end"),
+			path: ["end"] // Shows the error on the end time field
+		}
+	);
 
 	type EventEditFormValues = z.infer<typeof eventEditFormSchema>;
 

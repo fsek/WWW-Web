@@ -4,6 +4,7 @@
 	"save": "Spara",
 	"yes": "Ja",
 	"no": "Nej",
+	"error_start_end": "Sluttiden måste vara efter starttiden.",
 	"view": {
 		"time": "Tid",
 		"description": "Beskrivning",

@@ -8,6 +8,7 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,14 +23,33 @@ import {
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { useTranslation } from "react-i18next";
 
-const carSchema = z.object({
-	description: z.string().min(2),
-	start_time: z.date(),
-	end_time: z.date(),
-});
-
 export default function CarForm() {
 	const { t } = useTranslation();
+
+	const carSchema = z.object({
+		description: z.string().min(1),
+		start_time: z.date(),
+		end_time: z.date(),
+	}).refine(
+    (data) => {
+      // Check if start time equals end time
+      if (new Date(data.start_time).getTime() === new Date(data.end_time).getTime()) {
+        return false;
+      }
+
+      // Check if start time is after end time
+      if (new Date(data.start_time).getTime() > new Date(data.end_time).getTime()) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: t("admin:car.error_start_end"),
+      path: ["end_time"] // Shows the error on the end time field
+    }
+  );;
+
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 
@@ -99,6 +119,7 @@ export default function CarForm() {
 										<FormControl>
 											<Input placeholder={t("admin:description")} {...field} />
 										</FormControl>
+										<FormMessage />
 									</FormItem>
 								)}
 							/>
@@ -113,6 +134,7 @@ export default function CarForm() {
 											value={field.value}
 											onChange={field.onChange}
 										/>
+										<FormMessage />
 									</FormItem>
 								)}
 							/>
@@ -126,6 +148,7 @@ export default function CarForm() {
 											value={field.value}
 											onChange={field.onChange}
 										/>
+										<FormMessage />
 									</FormItem>
 								)}
 							/>

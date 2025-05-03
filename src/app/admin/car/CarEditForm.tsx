@@ -11,6 +11,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
@@ -24,15 +25,6 @@ import type { CarRead, CarUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
-const carEditSchema = z.object({
-  id: z.number().int(),
-  description: z.string().min(2),
-  start_time: z.string(),
-  end_time: z.string(),
-});
-
-type CarEditFormType = z.infer<typeof carEditSchema>;
-
 interface CarEditFormProps {
   open: boolean;
   onClose: () => void;
@@ -45,6 +37,34 @@ export default function CarEditForm({
   selectedBooking,
 }: CarEditFormProps) {
   const { t } = useTranslation();
+
+  const carEditSchema = z.object({
+    id: z.number().int(),
+    description: z.string().min(1),
+    start_time: z.string(),
+    end_time: z.string(),
+  }).refine(
+    (data) => {
+      // Check if start time equals end time
+      if (new Date(data.start_time).getTime() === new Date(data.end_time).getTime()) {
+        return false;
+      }
+
+      // Check if start time is after end time
+      if (new Date(data.start_time).getTime() > new Date(data.end_time).getTime()) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: t("admin:car.error_start_end"),
+      path: ["end_time"] // Shows the error on the end time field
+    }
+  );
+
+  type CarEditFormType = z.infer<typeof carEditSchema>;
+
   const form = useForm<CarEditFormType>({
     resolver: zodResolver(carEditSchema),
     defaultValues: {
@@ -155,6 +175,7 @@ export default function CarEditForm({
                   <FormControl>
                     <Input placeholder={t("admin:description")} {...field} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -170,6 +191,7 @@ export default function CarEditForm({
                     value={new Date(field.value)}
                     onChange={field.onChange}
                   />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -185,6 +207,7 @@ export default function CarEditForm({
                     value={new Date(field.value)}
                     onChange={field.onChange}
                   />
+                  <FormMessage />
                 </FormItem>
               )}
             />

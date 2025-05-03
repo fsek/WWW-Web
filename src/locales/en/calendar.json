@@ -4,6 +4,7 @@
 	"save": "Save",
 	"yes": "Yes",
 	"no": "No",
+	"error_start_end": "The end time must be after the start time.",
 	"view": {
 		"time": "Time",
 		"description": "Description",

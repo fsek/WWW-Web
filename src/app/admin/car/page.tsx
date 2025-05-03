@@ -167,7 +167,6 @@ export default function Car() {
 			<p className="py-3">
 				{t("admin:car.description")}
 			</p>
-			<CarForm />
 			<Separator />
 			<EventsProvider
 				initialCalendarEvents={events}
@@ -250,7 +249,7 @@ export default function Car() {
 								showDescription={true}
 								editDescription={false}
 								handleOpenDetails={() => {}}
-								disableEdit={false} // Also disables delete, add and drag-and-drop
+								disableEdit={false} // Also disables delete, add and dragging
 								enableAllDay={false}
 							/>
 						</TabsContent>
@@ -263,6 +262,7 @@ export default function Car() {
 									{t("admin:car.list_description")}
 								</p>
 							</div>
+							<CarForm />
 							<Separator />
 							<AdminTable table={table} onRowClick={handleRowClick} />
 							<CarEditForm
