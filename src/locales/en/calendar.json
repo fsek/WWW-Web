@@ -1,0 +1,83 @@
+{
+	"details": "Details",
+	"cancel": "Cancel",
+	"save": "Save",
+	"yes": "Yes",
+	"no": "No",
+	"error_start_end": "The end time must be after the start time.",
+	"view": {
+		"time": "Time",
+		"description": "Description",
+		"all_day": "All Day"
+	},
+	"edit": {
+		"error_title": "Please enter a title.",
+		"error_description": "Please enter a description.",
+		"error_start_time": "Please select a start time.",
+		"error_end_time": "Please select an end time.",
+		"error_not_date": "Input does not match date format.",
+		"toast": {
+			"title": "Event updated (locally).",
+			"dismiss": "Dismiss",
+			"dismiss_alt": "Click here to dismiss."
+		},
+		"button": "Edit Event",
+		"edit": "Edit ",
+		"title": "Title",
+		"description": "Description",
+		"start_time": "Start Time",
+		"end_time": "End Time",
+		"all_day": "All Day",
+		"placeholder": {
+			"title": "Picnic on the moon",
+			"description": "Bring a lead for Hilbert the moose!"
+		}
+	},
+	"delete": {
+		"toast": {
+			"title": "Event deleted (locally).",
+			"dismiss": "Dismiss",
+			"dismiss_alt": "Click here to dismiss."
+		},
+		"button": "Delete Event",
+		"delete": "Delete",
+		"are_you_sure": "Are you sure you want to delete this event?"
+	},
+	"nav": {
+		"select_day": "Select a day...",
+		"select_month": "Select a month...",
+		"search_day": "Search for a day...",
+		"search_month": "Search for a month...",
+		"day_not_found": "No day found.",
+		"month_not_found": "No month found.",
+		"today": "Today",
+		"this_week": "This week",
+		"this_month": "This month",
+		"day": "Day",
+		"week": "Week",
+		"month": "Month"
+	},
+	"add": {
+		"error_title": "Please enter a title.",
+		"error_description": "Please enter a description.",
+		"error_start_time": "Please select a start time.",
+		"error_end_time": "Please select an end time.",
+		"error_not_date": "Input does not match date format.",
+		"toast": {
+			"title": "Event added (locally).",
+			"dismiss": "Dismiss",
+			"dismiss_alt": "Click here to dismiss."
+		},
+		"button": "Add Event",
+		"add": "Add Event",
+		"title": "Title",
+		"description": "Description",
+		"start_time": "Start Time",
+		"end_time": "End Time",
+		"all_day": "All Day",
+		"placeholder": {
+			"title": "Picnic on the moon",
+			"description": "Bring a lead for Hilbert the moose!"
+		}
+	}
+}

@@ -2,6 +2,10 @@
 	"title": "Adminsida",
 	"submit": "Skapa",
 	"preview": "Förhandsgranska",
+	"description": "Beskrivning",
+	"save": "Spara",
+	"cancel": "Avbryt",
+	"remove": "Ta bort",
 	"loading": "Hämtar...",
 	"error": "Något gick fel :/",
 	"news": {
@@ -27,5 +31,25 @@
 		"edit_document": "Redigera dokument",
 		"created_at": "Skapad",
 		"edited_by": "Senast redigerad av"
+	},
+	"car": {
+		"self": "Bilbokningar",
+		"title": "Hantera bilbokningar",
+		"description": "Här kan du skapa och hantera bilbokningar.",
+		"default_description": "Ange bilbeskrivning här",
+		"create_booking": "Skapa bokning",
+		"edit_booking": "Redigera bokning",
+		"start_time": "Starttid",
+		"end_time": "Sluttid",
+		"booked_by": "Bokad av användar-id:",
+		"error_add": "Misslyckades att lägga till bokning.",
+		"error_delete": "Misslyckades att ta bort bokning med id: ",
+		"error_missing_id": "Boknings-id saknas.",
+		"error_edit": "Misslyckades att redigera bokning med id: ",
+		"error_start_end": "Sluttiden måste vara efter starttiden.",
+		"calendar": "Kalender",
+		"calendar_description": "Denna kalender visar alla bokningar. Klicka på en bokning för att redigera den. Klicka eller dra på kalendern för att välja ett tidsintervall, klicka sedan på 'Lägg till event'. Blåa bokningar kanske inte har kommit till backenden än.",
+		"list": "Lista",
+		"list_description": "Denna lista visar alla bokningar. Klicka på en bokning för att redigera den."
 	}
 }
