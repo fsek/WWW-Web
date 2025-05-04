@@ -3,6 +3,7 @@
 	"submit": "Create",
 	"loading": "Loading...",
 	"error": "Something went wrong :/",
+	"insufficient_permissions": "You do not have sufficient permissions to perform this action.",
 	"preview": "Preview",
 	"news": {
 		"self": "News",
