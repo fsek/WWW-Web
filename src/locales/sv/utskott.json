@@ -1,0 +1,66 @@
+{
+	"title": "Om utskotten",
+	"about": "Fyll i",
+	"sub_title": "Utskott",
+	"contact_title": "Kontakt",
+	"poster": "Poster",
+	"beskrivning": "Beskrivning",
+	"vemhar": "Vem har posten?",
+
+	"bokforlaget": {
+		"self": "Bokförlaget",
+		"about": "Fyll i",
+		"contact": "Kassör: Anton Sundström"
+	},
+	"cafem": {
+		"self": "Cafemästeriet",
+		"about": "fyll i, såhär gör man en länk <0> hej </0>",
+		"contact": "Cafemästare: Sixten Georgesson",
+		"contact2": "Vice-Cafemästare: fyll i",
+		"post_besk": "Här ska det stå massa info om posterna"
+	},
+	"externa-rep": {
+		"self": "Externa representanter",
+		"about": "Fyll i"
+	},
+	"foset": {
+		"self": "Föset",
+		"about": "Fyll i"
+	},
+	"kulturm": {
+		"self": "Kulturministeriet",
+		"about": "Fyll i"
+	},
+	"fnu": {
+		"self": "Näringslivsutskottet",
+		"about": "Fyll i"
+	},
+	"prylm": {
+		"self": "Prylmästeriet",
+		"about": "Fyll i"
+	},
+	"samvetet": {
+		"self": "Samvetet",
+		"about": "Fyll i"
+	},
+	"sanningsm": {
+		"self": "Sanningministeriet",
+		"about": "Fyll i"
+	},
+	"secretservice": {
+		"self": "Secret Service",
+		"about": "Fyll i"
+	},
+	"studieradet": {
+		"self": "Studierådet",
+		"about": "Fyll i"
+	},
+	"styrelsen": {
+		"self": "Styrelsen",
+		"about": "Fyll i"
+	},
+	"ovriga": {
+		"self": "Övriga",
+		"about": "Fyll i"
+	}
+}

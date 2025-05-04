@@ -1,0 +1,58 @@
+{
+	"title": "About the councils",
+	"about": "Fyll i",
+	"sub_title": "Councils",
+
+	"bokforlaget": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"cafem": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"externa-rep": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"foset": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"kulturm": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"fnu": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"prylm": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"samvetet": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"sanningsm": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"secretservice": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"studieradet": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"styrelsen": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	},
+	"ovriga": {
+		"self": "Fyll i",
+		"about": "Fyll i"
+	}
+}
