@@ -108,7 +108,7 @@ export function EventEditForm({
 	});
 
 	const handleEditCancellation = () => {
-		// Not sure if this is needed but it seems to work
+		// I think this code resets the event to its original state if it was dragged, and the editing was canceled. 
 		if (isDrag && oldEvent) {
 			const resetEvent = {
 				id: oldEvent.id,

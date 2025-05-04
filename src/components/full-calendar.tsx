@@ -286,10 +286,10 @@ export default function Calendar({
 					select={handleDateSelect}
 					datesSet={(dates) => setViewedDate(dates.start)}
 					dateClick={
-						(!disableEdit ?? true) ? () => setEventAddOpen(true) : undefined
+						!disableEdit ? () => setEventAddOpen(true) : undefined
 					}
 					nowIndicator
-					editable={!disableEdit ?? true}
+					editable={!disableEdit}
 					selectable
 				/>
 			</Card>

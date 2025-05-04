@@ -48,7 +48,7 @@ export default function CarForm() {
       message: t("admin:car.error_start_end"),
       path: ["end_time"] // Shows the error on the end time field
     }
-  );;
+  );
 
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
