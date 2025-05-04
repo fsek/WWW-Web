@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import {
 	getAllCouncilsOptions,
 	getAllPostsOptions,
+	getPostOptions,
 } from "@/api/@tanstack/react-query.gen";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 
 import AdminTable from "@/widgets/AdminTable";
 import useCreateTable from "@/widgets/useCreateTable";
-import { _PostPermissionRead, PermissionRead, PostRead } from "@/api";
+import { type _PostPermissionRead, PermissionRead, type PostRead } from "@/api";
+import PostPermissionForm from "./PostPermissionForm";
 
 function CouncilName({ councilId }: { councilId: number }) {
 	const { data } = useQuery({
@@ -26,38 +28,54 @@ function CouncilName({ councilId }: { councilId: number }) {
 const columnHelper = createColumnHelper<_PostPermissionRead>();
 const columns = [
 	columnHelper.accessor("target", {
-		header: "Post",
+		header: "Target",
 		cell: (info) => info.getValue(),
 	}),
 	columnHelper.accessor("action", {
-		header: "Council name",
+		header: "Action",
 		cell: (info) => info.getValue(),
 	}),
 ];
 
 export default function PostPermissions() {
-	const [selectedPost, setSelectedPost] = useState<PostRead| null>(null);
+	const queryClient = useQueryClient();
+	const selectedPostFromCache = queryClient.getQueryData<PostRead>([
+		"selectedPost",
+	]);
 
-	useEffect(() => {
-		const storedPost = sessionStorage.getItem("selectedPost");
-		if (storedPost) {
-      setSelectedPost(JSON.parse(storedPost) as PostRead);
-			// Optionally clear the stored data if not needed later:
-			sessionStorage.removeItem("selectedPost");
-		}
-	}, []);
+	const {
+		data: selectedPost,
+		isLoading,
+		error,
+	} = useQuery({
+		...getPostOptions({
+			path: { post_id: selectedPostFromCache?.id ?? -1 },
+		}),
+		enabled: !!selectedPostFromCache,
+	});
 
-  const [openEditDialog, setOpenEditDialog] = useState(false);
-	const [selectedPermission, setSelectedPermission] = useState<_PostPermissionRead | null>(null);
+	const permissions = selectedPost?.permissions ?? [];
+	const table = useCreateTable({
+		data: permissions,
+		columns,
+	});
 
-  const table = useCreateTable({ data: selectedPost?.permissions ?? [], columns });
-  
+	if (!selectedPostFromCache) {
+		return (
+			<div>Ingen post vald. Gå tillbaka och välj en post att administrera.</div>
+		);
+	}
+	if (isLoading) {
+		return <div>Läser in post...</div>;
+	}
+	if (error || !selectedPost) {
+		return <div>Det gick inte att hämta posten.</div>;
+	}
 
-  function handleRowClick(row: Row<_PostPermissionRead>) {
-      setSelectedPermission(row.original);
-      setOpenEditDialog(true);
-    }
-
+	// 4) And finally render the UI that uses all those hooks
+	function handleRowClick(row: Row<_PostPermissionRead>) {
+		// …
+	}
 
 	return (
 		<div className="px-8 space-x-4">
@@ -68,15 +86,8 @@ export default function PostPermissions() {
 				Här kan du uppdatera posters rättigheter & ta bort existerande
 				rättigheter på hemsidan.
 			</p>
-			{/* <PostForm /> */}
-			
+			<PostPermissionForm post_values={selectedPost} />
 			<AdminTable table={table} onRowClick={handleRowClick} />
-
-			{/* <PostEditForm
-				open={openEditDialog}
-				onClose={() => handleClose()}
-				selectedPost={selectedEvent as PostRead}
-			/> */}
 		</div>
 	);
 }

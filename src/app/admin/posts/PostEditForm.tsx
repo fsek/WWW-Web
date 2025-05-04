@@ -117,8 +117,8 @@ export default function PostEditForm({
 
 	function viewPermissions() {
 		// Save the complete object in session storage
-		sessionStorage.setItem("selectedPost", JSON.stringify(selectedPost));
-		router.push("posts/post-permissions");
+		queryClient.setQueryData<PostRead>(["selectedPost"], selectedPost);
+		router.push("/admin/posts/post-permissions");
 	}
 
 	return (

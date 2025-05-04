@@ -15,14 +15,11 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-	createEventMutation,
 	createPostMutation,
-	getAllEventsQueryKey,
 	getAllPostsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
-import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 
 const postSchema = z.object({
 	name: z.string().min(2),
