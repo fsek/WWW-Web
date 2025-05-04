@@ -143,7 +143,7 @@ export default function PostPermissionForm({
 									render={() => (
 										<FormItem>
 											<FormLabel htmlFor={`perm-${permission.id}`}>
-												{permission.target}
+												{permission.target} {permission.action}
 											</FormLabel>
 											<FormControl>
 												<Checkbox
