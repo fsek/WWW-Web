@@ -5,7 +5,13 @@ import initTranslations, { type Locale, type Namespace } from "./i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
 
 const locale = "sv" satisfies Locale;
-const i18nNamespaces = ["main", "namnden", "admin", "calendar"] satisfies Namespace[];
+const i18nNamespaces = [
+	"main",
+	"namnden",
+	"admin",
+	"calendar",
+	"utskott",
+] satisfies Namespace[];
 
 export default async function RootLayout({
 	children,
