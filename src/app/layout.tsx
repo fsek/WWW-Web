@@ -3,8 +3,6 @@ import "./globals.css";
 import { client } from "@/api";
 import initTranslations, { type Locale, type Namespace } from "./i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
-import { NavBar } from "../components/NavBar";
-import Footer from "@/components/Footer";
 
 const locale = "sv" satisfies Locale;
 const i18nNamespaces = ["main", "namnden", "admin", "calendar"] satisfies Namespace[];
@@ -16,7 +14,6 @@ export default async function RootLayout({
 }) {
 	client.setConfig({ baseUrl: "http://host.docker.internal:8000" });
 
-	// FIXME: TEMPORARY
 	const { resources } = await initTranslations(locale, i18nNamespaces);
 
 	return (
