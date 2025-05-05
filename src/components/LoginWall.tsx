@@ -4,6 +4,11 @@ import { useAuthState } from "@/lib/auth";
 import { usePathname, useRouter } from "next/navigation";
 import { type PropsWithChildren, useEffect } from "react";
 
+/**
+ * Any children of this component will only be rendered if the user is authenticated.
+ *
+ * If the user is not authenticated, they will be redirected to the login page.
+ */
 export default function LoginWall({ children }: PropsWithChildren) {
 	const isAuthenticated = useAuthState();
 	const router = useRouter();

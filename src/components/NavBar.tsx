@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
 	NavigationMenu,
@@ -13,11 +12,9 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import FLogga from "@/assets/f-logga";
-import { LogIn, LogInIcon } from "lucide-react";
+import { LogInIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
-import LoginWall from "./LoginWall";
-import { useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
 import { usePathname, useRouter } from "next/navigation";
