@@ -1,6 +1,13 @@
 "use client";
 
-import { Calendar, ChevronDown, Newspaper } from "lucide-react";
+import {
+	Calendar,
+	ChevronDown,
+	Newspaper,
+	FileText, Car,
+	Briefcase,
+	FolderLock,
+} from "lucide-react";
 
 import {
 	Sidebar,
@@ -32,6 +39,18 @@ const groups = {
 			title: "admin:events.self",
 			url: "/admin/events",
 			icon: Calendar,
+		},
+		{ title: "admin:documents.self", url: "/admin/documents", icon: FileText },
+		{
+			title: "admin:car.self",
+			url: "/admin/car",
+			icon: Car,
+		},
+		{ title: "admin:posts.self", url: "/admin/posts", icon: Briefcase },
+		{
+			title: "admin:permissions.self",
+			url: "/admin/permissions",
+			icon: FolderLock,
 		},
 	],
 } as const;

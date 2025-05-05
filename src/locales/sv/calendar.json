@@ -1,0 +1,83 @@
+{
+	"details": "Detaljer",
+	"cancel": "Avbryt",
+	"save": "Spara",
+	"yes": "Ja",
+	"no": "Nej",
+	"error_start_end": "Sluttiden måste vara efter starttiden.",
+	"view": {
+		"time": "Tid",
+		"description": "Beskrivning",
+		"all_day": "Heldag"
+	},
+	"edit": {
+		"error_title": "Vänligen ange en titel.",
+		"error_description": "Vänligen ange en beskrivning.",
+		"error_start_time": "Vänligen välj en starttid.",
+		"error_end_time": "Vänligen välj en sluttid.",
+		"error_not_date": "Inmatningen matchar inte datumformatet.",
+		"toast": {
+			"title": "Event uppdaterat (lokalt).",
+			"dismiss": "Avfärda",
+			"dismiss_alt": "Klicka här för att avfärda meddelandet."
+		},
+		"button": "Redigera",
+		"edit": "Redigera ",
+		"title": "Titel",
+		"description": "Beskrivning",
+		"start_time": "Starttid",
+		"end_time": "Sluttid",
+		"all_day": "Heldag",
+		"placeholder": {
+			"title": "Picknick på månen",
+			"description": "Ta med rep för Hilbert Älg!"
+		}
+	},
+	"delete": {
+		"toast": {
+			"title": "Event raderat (lokalt).",
+			"dismiss": "Avfärda",
+			"dismiss_alt": "Klicka här för att avfärda meddelandet."
+		},
+		"button": "Radera event",
+		"delete": "Radera",
+		"are_you_sure": "Är du säker på att du vill radera detta event?"
+	},
+	"nav": {
+		"select_day": "Välj en dag...",
+		"select_month": "Välj en månad...",
+		"search_day": "Sök efter en dag...",
+		"search_month": "Sök efter en månad...",
+		"day_not_found": "Ingen dag hittades.",
+		"month_not_found": "Ingen månad hittades.",
+		"today": "Idag",
+		"this_week": "Denna vecka",
+		"this_month": "Denna månad",
+		"day": "Dag",
+		"week": "Vecka",
+		"month": "Månad"
+	},
+	"add": {
+		"error_title": "Vänligen ange en titel.",
+		"error_description": "Vänligen ange en beskrivning.",
+		"error_start_time": "Vänligen välj en starttid.",
+		"error_end_time": "Vänligen välj en sluttid.",
+		"error_not_date": "Inmatningen matchar inte datumformatet.",
+		"toast": {
+			"title": "Event tillagt (lokalt).",
+			"dismiss": "Stäng",
+			"dismiss_alt": "Klicka här för att stänga."
+		},
+		"button": "Lägg till event",
+		"add": "Lägg till event",
+		"title": "Titel",
+		"description": "Beskrivning",
+		"start_time": "Starttid",
+		"end_time": "Sluttid",
+		"all_day": "Heldag",
+		"placeholder": {
+			"title": "Picknick på månen",
+			"description": "Ta med rep för Hilbert Älg!"
+		}
+	}
+}

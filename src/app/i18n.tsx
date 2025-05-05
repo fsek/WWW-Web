@@ -1,10 +1,13 @@
-import { createInstance, i18n, Resource } from "i18next";
+import { createInstance, type i18n, type Resource } from "i18next";
 import { initReactI18next } from "react-i18next/initReactI18next";
 import i18nConfig from "@/i18nConfig";
 import resourcesToBackend from "i18next-resources-to-backend";
 
 export type Locale = "en" | "sv";
-export type Namespace = "admin"; // todo: add more namespaces
+export type Namespace = "admin" | "main" | "namnden" | "calendar" | "utskott";
+// todo: add more namespaces
+// If you add more you probably also have to add them to the layout.tsx file corresponding to the page you are on
+// (or only the main one, try that first)
 
 export default async function initTranslations(
 	locale: Locale,

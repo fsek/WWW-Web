@@ -16,13 +16,13 @@ import { Input } from "@/components/ui/input";
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
 	getAllEventsQueryKey,
-	removeMutation,
-	updateMutation,
+	eventUpdateMutation,
+	eventRemoveMutation,
 } from "@/api/@tanstack/react-query.gen";
 import type { EventRead, EventUpdate } from "../../../api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
@@ -79,7 +79,7 @@ export default function EventsEditForm({
 	const queryClient = useQueryClient();
 
 	const updateEvent = useMutation({
-		...updateMutation(),
+		...eventUpdateMutation(),
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
@@ -90,7 +90,7 @@ export default function EventsEditForm({
 	});
 
 	const removeEvent = useMutation({
-		...removeMutation(),
+		...eventRemoveMutation(),
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
