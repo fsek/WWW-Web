@@ -4,8 +4,8 @@ import React from "react";
 import { DateTimePicker } from "@/components/ui/datetime-picker";
 
 interface AdminChooseDatesProps {
-	value: string;
-	onChange: (value: string) => void;
+	value: Date;
+	onChange: (value: Date) => void;
 }
 
 export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
@@ -15,7 +15,12 @@ export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
 
 	const handleDateChange = (newDate: Date | undefined) => {
 		if (newDate) {
-			onChange(newDate.toLocaleString());
+			const adjustedDate = new Date(newDate.getTime());
+			console.log("Adjusted Date (UTC+1):", adjustedDate.toISOString());
+			onChange(adjustedDate);
+		} else {
+			// placeholder for invalid date
+			onChange(new Date());
 		}
 		setDate(newDate);
 	};
