@@ -117,7 +117,7 @@
 	},
 	"footer": {
 		"contact": "Contact",
-		"emergencyContact": "Emergency Contact",
+		"emergencycontact": "Emergency Contact",
 		"companies": "For Companies",
 		"webansvar": "Webmaster",
 		"ansvar": "Executive Publisher"
