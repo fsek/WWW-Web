@@ -2,19 +2,16 @@
 
 import Link from "next/link";
 
-import { NavBar } from "../components/NavBar";
-import WaveAnimation from "../components/WaveAnimation";
-import TwoColumnLayout from "../components/TwoColumnLayout";
+import WaveAnimation from "@/components/WaveAnimation";
+import TwoColumnLayout from "@/components/TwoColumnLayout";
 
-import Footer from "@/components/Footer";
 import CustomTitle from "@/components/CustomTitle";
 import { useTranslation } from "react-i18next";
 
 export default function MainLanding() {
 	const { t } = useTranslation();
 	return (
-		<div className="flex flex-col min-h-screen">
-			<NavBar />
+		<>
 			<div className="flex-grow">
 				<p>
 					{t("main_page.welcome")}
@@ -26,7 +23,7 @@ export default function MainLanding() {
 				<CustomTitle text={t("main_page.title2")} className="mt-4" />
 				<p>👉👈</p>
 				<Link href="admin/documents">Goto news</Link>
-			</div>
+			</div >
 			<div className="">
 				<WaveAnimation />
 			</div>
@@ -49,7 +46,6 @@ export default function MainLanding() {
 				}
 				className="p-14 gap-12"
 			/>
-			<Footer />
-		</div>
+		</>
 	);
 }
