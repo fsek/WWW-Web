@@ -4,7 +4,7 @@ const nextConfig = {
 	distDir: "./dist", // Changes the build output directory to `./dist/`.
 	images: {
 		unoptimized: true, // Next.js image optimization is unsupported when static export is enabled.
-	}
+	},
 };
 
 export default nextConfig;

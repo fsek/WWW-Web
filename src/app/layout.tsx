@@ -7,7 +7,13 @@ import { NavBar } from "../components/NavBar";
 import Footer from "@/components/Footer";
 
 const locale = "sv" satisfies Locale;
-const i18nNamespaces = ["main", "namnden", "admin", "calendar"] satisfies Namespace[];
+const i18nNamespaces = [
+	"main",
+	"namnden",
+	"admin",
+	"calendar",
+	"utskott",
+] satisfies Namespace[];
 
 export default async function RootLayout({
 	children,
