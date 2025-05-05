@@ -20,6 +20,7 @@ import LoginWall from "./LoginWall";
 import { useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
+import { usePathname, useRouter } from "next/navigation";
 
 type NavItem = {
 	self: string;
@@ -43,10 +44,11 @@ export function NavBar() {
 
 function LoginAndLang() {
 	const { t } = useTranslation();
-	const [showLoginWall, setShowLoginWall] = useState(false);
+	const pathname = usePathname();
+	const router = useRouter();
 
 	function handleLoginClick() {
-		setShowLoginWall(true);
+		router.push(`/login?next=${pathname}`);
 	}
 
 	return (
@@ -57,7 +59,6 @@ function LoginAndLang() {
 				<LogInIcon />
 				<span> {t("login.login")}</span>
 			</Button>
-			{showLoginWall && <LoginWall />}
 		</>
 	);
 }
@@ -141,7 +142,10 @@ export function NavBarMenu() {
 				})}
 				<NavigationMenuList>
 					<NavigationMenuItem>
-						<NavigationMenuLink className={navigationMenuTriggerStyle()} href="/docs">
+						<NavigationMenuLink
+							className={navigationMenuTriggerStyle()}
+							href="/docs"
+						>
 							Documentation
 						</NavigationMenuLink>
 					</NavigationMenuItem>
