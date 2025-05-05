@@ -22,7 +22,7 @@ const columns = [
 	}),
 ];
 
-export default function Events() {
+export default function Permissions() {
 	const { data, error, isPending } = useQuery({
 		...getAllPermissionsOptions(),
 	});
