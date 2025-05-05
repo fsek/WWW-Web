@@ -10,15 +10,13 @@ export default function LoginWall({ children }: PropsWithChildren) {
 	const pathname = usePathname();
 
 	useEffect(() => {
-		if (isAuthenticated === false) {
-			// TODO: add a query parameter to redirect back to the current page after login
-			router.push(`/login?next=${pathname}`);
+		if (isAuthenticated === false && !pathname.startsWith("/login")) {
+			router.push(`/login?next=${encodeURIComponent(pathname)}`);
 		}
-	}, [isAuthenticated, pathname, router.push]);
+	}, [isAuthenticated, pathname, router]);
 
-	if (isAuthenticated === true) {
+	if (isAuthenticated) {
 		return <>{children}</>;
 	}
-
 	return null;
 }

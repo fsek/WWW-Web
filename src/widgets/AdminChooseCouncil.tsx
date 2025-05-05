@@ -1,3 +1,4 @@
+import { getAllCouncilsOptions } from "@/api/@tanstack/react-query.gen";
 import {
 	Select,
 	SelectContent,
@@ -7,11 +8,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-const counilcs = [
-	{ id: 0, name: "Piratutskottet" },
-	{ id: 1, name: "Pippi Långstrumputskottet" },
-];
+// const counilcs = [
+// 	{ id: 0, name: "Piratutskottet" },
+// 	{ id: 1, name: "Pippi Långstrumputskottet" },
+// ];
 
 interface AdminChooseCouncilProps {
 	value: number;
@@ -22,6 +24,20 @@ export function AdminChooseCouncil({
 	value,
 	onChange,
 }: AdminChooseCouncilProps) {
+	const queryClient = useQueryClient();
+
+	const {
+		data: councils,
+		error,
+		isPending,
+	} = useQuery({
+		...getAllCouncilsOptions(),
+	});
+
+	if (error) {
+		return <p>Hämtar...</p>;
+	}
+
 	return (
 		<Select
 			value={value.toString()}
@@ -33,7 +49,7 @@ export function AdminChooseCouncil({
 			<SelectContent>
 				<SelectGroup>
 					<SelectLabel>Available Councils</SelectLabel>
-					{counilcs.map((item) => (
+					{councils?.map((item) => (
 						<SelectItem key={item.id} value={item.id.toString()}>
 							{item.name || "Unnamed Council"}
 						</SelectItem>

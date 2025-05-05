@@ -51,5 +51,11 @@
 		"calendar_description": "Denna kalender visar alla bokningar. Klicka på en bokning för att redigera den. Klicka eller dra på kalendern för att välja ett tidsintervall, klicka sedan på 'Lägg till event'. Blåa bokningar kanske inte har kommit till backenden än.",
 		"list": "Lista",
 		"list_description": "Denna lista visar alla bokningar. Klicka på en bokning för att redigera den."
+	},
+	"posts": {
+		"self": "Poster"
+	},
+	"permissions": {
+		"self": "Permissions"
 	}
 }
