@@ -32,16 +32,12 @@ export default function NamndenPage() {
 								{/*Inline translated link example*/}
 								<Trans i18nKey="namnden:about">
 									<a
-										href="/admin"
+										href="/admin" //TODO: UPDATERA DENNA TILL ATT PEKA RÄTT
 										className="underline text-orange-500 hover:text-orange-400"
 										target="_blank"
 										rel="noreferrer"
 									>
-										This text here can be whatever, it will however show up if
-										the translation is not found. This is a fake link to the
-										page of the vice president (replace with real link). NOTE:
-										You do need some text, even just a single character here,
-										otherwise the translation will not work.
+										Ingen text kunde hittas :/
 										{/* When writing the language file for a component like this, the elements within Trans are numbered
 										and you can write the text to be inputted to them <0>in xlm</0> tags, then 1, 2, 3 etc.
 										NOTE 2: Comments in curly brackets (like this one) count as elements. Yes, really. */}
