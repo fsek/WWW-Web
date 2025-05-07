@@ -6,8 +6,9 @@ import { NavBar } from "../components/NavBar";
 import WaveAnimation from "../components/WaveAnimation";
 import TwoColumnLayout from "../components/TwoColumnLayout";
 import mh from "@/assets/mh.jpg";
+import WaveAnimation from "@/components/WaveAnimation";
+import TwoColumnLayout from "@/components/TwoColumnLayout";
 
-import Footer from "@/components/Footer";
 import CustomTitle from "@/components/CustomTitle";
 import TitleBanner from "@/components/TitleBanner";
 import { useTranslation } from "react-i18next";
@@ -18,7 +19,7 @@ export default function MainLanding() {
 	const { t } = useTranslation();
 
 	return (
-		<div className="flex flex-col min-h-screen">
+		<>
 			<NavBar />
 			
 			<TitleBanner
@@ -40,7 +41,7 @@ export default function MainLanding() {
 				<CustomTitle text="eller lite" className="mt-4" />
 				<p>👉👈</p>
 				<Link href="admin/documents">Goto news</Link>
-			</div>
+			</div >
 			<div className="">
 				<WaveAnimation />
 			</div>
@@ -63,7 +64,6 @@ export default function MainLanding() {
 				}
 				className="p-14 gap-12"
 			/>
-			<Footer />
-		</div>
+		</>
 	);
 }
