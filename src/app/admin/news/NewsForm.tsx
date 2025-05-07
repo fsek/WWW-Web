@@ -24,6 +24,7 @@ import {
 	getAllNewsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const newsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -39,6 +40,7 @@ export default function NewsForm() {
 	const newsForm = useForm<z.infer<typeof newsSchema>>({
 		resolver: zodResolver(newsSchema),
 	});
+	const { t } = useTranslation("admin");
 
 	const createNews = useMutation({
 		...createNewsMutation(),
@@ -78,7 +80,7 @@ export default function NewsForm() {
 				}}
 			>
 				<Plus />
-				Skapa nyhet
+				{t("news.create")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>

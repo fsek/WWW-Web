@@ -1,23 +1,26 @@
+"use client";
+
 import Link from "next/link";
 
 import WaveAnimation from "@/components/WaveAnimation";
 import TwoColumnLayout from "@/components/TwoColumnLayout";
 
 import CustomTitle from "@/components/CustomTitle";
+import { useTranslation } from "react-i18next";
 
 export default function MainLanding() {
+	const { t } = useTranslation();
 	return (
 		<>
 			<div className="flex-grow">
 				<p>
-					Hej! 👋 Du 🫵 ser 👀 denna 📄 sida 📘 för 💡 att ✨ du 🫶 är 🧊 cool
-					😎 och 🕸️ spindel 🕷️.
+					{t("main_page.welcome")}
 				</p>
 				<CustomTitle
-					text="Välkommen till F-sektionens fantastiska hemsida! Wow vad mycket text man kan få plats med"
+					text={t("main_page.title1")}
 					className="mt-4"
 				/>
-				<CustomTitle text="eller lite" className="mt-4" />
+				<CustomTitle text={t("main_page.title2")} className="mt-4" />
 				<p>👉👈</p>
 				<Link href="admin/documents">Goto news</Link>
 			</div >

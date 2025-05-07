@@ -29,7 +29,7 @@ import { useTranslation } from "react-i18next";
 import Link from "next/link";
 
 const groups = {
-	Allmänt: [
+	general: [
 		{
 			title: "admin:news.self",
 			url: "/admin/news",
@@ -53,7 +53,7 @@ const groups = {
 			icon: FolderLock,
 		},
 	],
-};
+} as const;
 
 export function AdminSidebar() {
 	const { t } = useTranslation();
@@ -67,7 +67,7 @@ export function AdminSidebar() {
 						<SidebarGroup>
 							<SidebarGroupLabel asChild>
 								<CollapsibleTrigger>
-									{group}
+									{t(group)}
 									<ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
 								</CollapsibleTrigger>
 							</SidebarGroupLabel>

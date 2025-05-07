@@ -122,6 +122,11 @@
 		"webansvar": "Webbansvarig",
 		"ansvar": "Ansvarig utgivare"
 	},
+	"main_page": {
+		"welcome": "Hej! 👋 Du 🫵 ser 👀 denna 📄 sida 📘 för 💡 att ✨ du 🫶 är 🧊 cool 😎 och 🕸️ spindel 🕷️.",
+		"title1": "Välkommen till F-sektionens fantastiska hemsida! Wow vad mycket text man kan få plats med",
+		"title2": "eller lite"
+	},
 	"login": {
 		"login": "Logga in",
 		"invalid-email-or-password": "Fel e-postadress eller lösenord",

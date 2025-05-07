@@ -8,12 +8,15 @@
 	"save": "Save",
 	"cancel": "Cancel",
 	"remove": "Remove",
+	"general": "General",
 	"news": {
 		"self": "News",
-		"page_title": "Manage News"
+		"page_title": "Administrate news",
+		"create": "Create news article"
 	},
 	"events": {
-		"self": "Events"
+		"self": "Events",
+		"create": "Create event"
 	},
 	"documents": {
 		"self": "Documents",
@@ -56,5 +59,7 @@
 	},
 	"permissions": {
 		"self": "Permissions"
-	}
+	},
+	"preview": "Preview",
+	"publish": "Publish"
 }

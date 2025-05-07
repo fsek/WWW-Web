@@ -115,6 +115,18 @@
 		"booking": "Bookings",
 		"documents": "Documents"
 	},
+	"footer": {
+		"contact": "Contact",
+		"emergencycontact": "Emergency Contact",
+		"companies": "For Companies",
+		"webansvar": "Webmaster",
+		"ansvar": "Executive Publisher"
+	},
+	"main_page": {
+		"welcome": "Hello! 👋 You 🫵 are 👀 seeing 📄 this 📘 page 📘 because 💡 you 🫶 are 🧊 cool 😎 and 🕸️ spider 🕷️.",
+		"title1": "Welcome to the amazing F-section website! Wow, how much text can fit here",
+		"title2": "or a little"
+	},
 	"login": {
 		"login": "Log in",
 		"invalid-email-or-password": "Invalid email address or password",

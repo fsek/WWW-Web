@@ -8,12 +8,15 @@
 	"remove": "Ta bort",
 	"loading": "Hämtar...",
 	"error": "Något gick fel :/",
+	"general": "Allmänt",
 	"news": {
 		"self": "Nyheter",
-		"page_title": "Administrera nyheter"
+		"page_title": "Administrera nyheter",
+		"create": "Skapa nyhet"
 	},
 	"events": {
-		"self": "Evenemang"
+		"self": "Evenemang",
+		"create": "Skapa event"
 	},
 	"documents": {
 		"self": "Dokument",
@@ -57,5 +60,7 @@
 	},
 	"permissions": {
 		"self": "Permissions"
-	}
+	},
+	"preview": "Förhandsgranska",
+	"publish": "Publicera"
 }
