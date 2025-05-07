@@ -19,6 +19,8 @@ export default function MainLanding() {
 
 	return (
 		<div className="flex flex-col min-h-screen">
+			<NavBar />
+			
 			<TitleBanner
 				title={t("main:fsek")}
 				imageUrl={mh.src}

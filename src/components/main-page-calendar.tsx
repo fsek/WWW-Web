@@ -2,18 +2,18 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-	createBookingMutation,
-	getAllBookingOptions,
-	getAllBookingQueryKey,
-	removeBookingMutation,
-	updateBookingMutation,
+	createEventMutation,
+	getAllEventsOptions,
+	getAllEventsQueryKey,
+	eventRemoveMutation,
+	eventUpdateMutation,
 } from "@/api/@tanstack/react-query.gen";
 import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
 import { EventsProvider } from "@/utils/full-calendar-event-context";
 import type { CalendarEvent } from "@/utils/full-calendar-seed";
 import { useTranslation } from "react-i18next";
-import type { CarRead } from "@/api";
+import type { EventRead } from "@/api";
 
 export default function MainPageCalendar() {
 	const { t } = useTranslation();
@@ -21,30 +21,30 @@ export default function MainPageCalendar() {
 
 	// Fetch booking data
 	const { data, error, isFetching } = useQuery({
-		...getAllBookingOptions(),
+		...getAllEventsOptions(),
 	});
 
 	// Mutations for adding, deleting, and editing bookings
 	const addBooking = useMutation({
-		...createBookingMutation(),
+		...createEventMutation(),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
 		},
 		throwOnError: false,
 	});
 
 	const deleteBooking = useMutation({
-		...removeBookingMutation(),
+		...eventRemoveMutation(),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
 		},
 		throwOnError: false,
 	});
 
 	const editBooking = useMutation({
-		...updateBookingMutation(),
+		...eventUpdateMutation(),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
 		},
 		throwOnError: false,
 	});
@@ -59,13 +59,13 @@ export default function MainPageCalendar() {
 
 	// Map fetched bookings to calendar events
 	const events: CalendarEvent[] =
-		(data as CarRead[])?.map((car) => ({
-			id: car.booking_id.toString(),
-			title: car.description,
-			start: car.start_time,
-			end: car.end_time,
-			allDay: false,
-			description: `user_id av bokare: ${car.user_id}`,
+		(data as EventRead[])?.map((event) => ({
+			id: event.id.toString(),
+			title: event.title_sv,
+			start: event.starts_at,
+			end: event.ends_at,
+			allDay: event.all_day,
+			description: event.description_sv,
 		})) ?? [];
 
 	return (
@@ -79,9 +79,27 @@ export default function MainPageCalendar() {
 					addBooking.mutate(
 						{
 							body: {
-								description: event.title,
-								start_time: event.start,
-								end_time: event.end,
+								council_id: 1,
+								starts_at: event.start,
+								ends_at: event.end,
+								signup_start: event.start,
+								signup_end: event.end,
+								title_sv: event.title,
+								title_en: event.title,
+								description_sv: "test",
+								description_en: "test",
+								location: "test",
+								max_event_users: 1,
+								priorities: [],
+								all_day: event.allDay,
+								signup_not_opened_yet: true,
+								recurring: false,
+								drink: false,
+								food: false,
+								cash: false,
+								closed: false,
+								can_signup: false,
+								drink_package: false,
 							},
 						},
 						{
@@ -91,7 +109,7 @@ export default function MainPageCalendar() {
 				}
 				handleDelete={(id) =>
 					deleteBooking.mutate(
-						{ path: { booking_id: Number(id) } },
+						{ path: { event_id: Number(id) } },
 						{
 							onError: (err) =>
 								console.error(`${t("admin:car.error_delete")} ${id}`, err),
@@ -105,11 +123,27 @@ export default function MainPageCalendar() {
 					}
 					editBooking.mutate(
 						{
-							path: { booking_id: Number(event.id) },
+							path: { event_id: Number(event.id) },
 							body: {
-								description: event.title,
-								start_time: event.start,
-								end_time: event.end,
+								starts_at: event.start,
+								ends_at: event.end,
+								signup_start: event.start,
+								signup_end: event.end,
+								title_sv: event.title,
+								title_en: event.title,
+								description_sv: "test",
+								description_en: "test",
+								location: "test",
+								max_event_users: 1,
+								all_day: event.allDay,
+								signup_not_opened_yet: true,
+								recurring: false,
+								drink: false,
+								food: false,
+								cash: false,
+								closed: false,
+								can_signup: false,
+								drink_package: false,
 							},
 						},
 						{
@@ -122,7 +156,7 @@ export default function MainPageCalendar() {
 				<div className="py-4">
 					<Calendar
 						showDescription={true}
-						editDescription={false}
+						editDescription={true}
 						handleOpenDetails={() => {}}
 						disableEdit={false}
 						enableAllDay={false}
