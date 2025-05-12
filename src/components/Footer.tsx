@@ -1,80 +1,99 @@
 "use client";
 
+import FLogga from "@/assets/f-logga";
 import {
 	GitHubLogoIcon,
 	InstagramLogoIcon,
 	LinkedInLogoIcon,
-	TwitterLogoIcon,
 } from "@radix-ui/react-icons";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
+type NavItem = {
+	self: string;
+	desc: string;
+	href?: string;
+};
+
+type NavSection = {
+	self: string;
+} & Record<string, NavItem>;
+
 export function Footer() {
-	return (
-		<div className="">
-			<App />
-		</div>
-	);
-}
-
-const App = () => {
 	const { t } = useTranslation();
+	const navbarData = t("navbar", { returnObjects: true }) as Record<
+		string,
+		NavSection
+	>;
+
+	const sections = Object.entries(navbarData).filter(
+		([, value]) =>
+			typeof value === "object" && value !== null && !Array.isArray(value),
+	);
 
 	return (
-		<footer className="bg-sidebar text-foreground py-8 w-full">
-			<div className="flex justify-between">
-				<div className="flex">
-					<h1 className="text-l  ml-6">F-sektionen </h1>
-					<h2 className="text-l font-thin ml-3"> 1961 </h2>
-				</div>
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-4 m-2">
-					<div>
-						<h3 className="text-l font-bold mb-1">Address</h3>
-						<p> Mattehuset</p>
-						<p> Sölvegatan 18A</p>
-						<p>223 62 Lund, Sweden</p>
-					</div>
-
-					{/* <div>
-						<h3 className="text-l font-bold mb-1">
-							{t("main:footer.contact")} <ArrowLeft />
-						</h3>
-						<p>
-							{" "}
-							{t("main:footer.emergencycontact")}
-							<ArrowLeft />
-						</p>
-						<p>
-							{" "}
-							{t("main:footer.companies")}
-							<ArrowLeft />
-						</p>
-					</div> */}
-					<div>
-						<h3 className="text-l font-bold mb-1">
-							<a href="/contact" className="hover:underline flex items-center">
-								{t("main:footer.contact")}
-								<ArrowRight className="ml-1 w-4 h-4" />
-							</a>
-						</h3>
-						<p>
+		<footer className="bg-neutral-50 dark:bg-neutral-800 py-8 px-4 w-full text-sm text-neutral-600 dark:text-neutral-400 border-t border-neutral-200 dark:border-neutral-700">
+			<div className="max-w-screen-xl mx-auto space-y-8">
+				<div className="flex gap-8 flex-col-reverse md:flex-row">
+					<div className="md:basis-xs lg:basis-sm flex flex-col gap-4 md:gap-8">
+						<FLogga className="size-16" />
+						<div>
+							F-sektionen <br />
+							Mattehuset <br />
+							Sölvegatan 18A <br />
+							223 62 Lund, Sweden
+						</div>
+						<div className="flex space-x-4 mt-auto">
 							<a
-								href="mailto:emergency@fsektionen.se"
-								className="hover:underline flex items-center"
+								href="https://github.com/fsek/"
+								target="_blank"
+								rel="noopener noreferrer"
 							>
-								{t("main:footer.emergencycontact")}
-								<ArrowRight className="ml-1 w-4 h-4" />
+								<GitHubLogoIcon className="text-foreground size-4" />
 							</a>
-						</p>
-						<p>
-							<span className="flex items-center">
-								{t("main:footer.companies")}
-								<ArrowRight className="ml-1 w-4 h-4" />
-							</span>
-						</p>
+							<a
+								href="https://www.instagram.com/fsektionen/"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<InstagramLogoIcon className="text-foreground size-4" />
+							</a>
+							<a
+								href="https://www.linkedin.com/groups/3694965/"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<LinkedInLogoIcon className="text-foreground size-4" />
+							</a>
+						</div>
 					</div>
+					<div className="columns-[18ch] gap-4 space-y-4 flex-1">
+						{sections.map(([sectionKey, section]) => {
+							const items = Object.entries(section).filter(
+								([key]) => key !== "self",
+							) as [string, NavItem][];
 
-					<div className="">
+							return (
+								<div key={sectionKey} className="break-inside-avoid-column">
+									<h3 className="font-medium mb-3 text-foreground">
+										{section.self}
+									</h3>
+									<ul className="space-y-2">
+										{items.map(([itemKey, item]) => (
+											<li key={itemKey}>
+												<a
+													href={item.href || "#"}
+													className="hover:text-foreground"
+												>
+													{item.self}
+												</a>
+											</li>
+										))}
+									</ul>
+								</div>
+							);
+						})}
+
+						{/* <div>
 						<div className="pb-6">
 							<h3 className="text-l font-bold mb-1">
 								{t("main:footer.ansvar")}{" "}
@@ -90,43 +109,10 @@ const App = () => {
 							<p> Benjamin Halasz</p>
 							<p> spindelforman@fsektionen.se</p>
 						</div>
+					</div> */}
 					</div>
-				</div>
-			</div>
-			<div>
-				<div className="flex space-x-4 ml-6">
-					<a
-						href="https://github.com"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<GitHubLogoIcon className="text-foreground text-2xl hover:text-gray-300" />
-					</a>
-					<a
-						href="https://twitter.com"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<TwitterLogoIcon className="text-foreground text-2xl hover:text-gray-300" />
-					</a>
-					<a
-						href="https://instagram.com"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<InstagramLogoIcon className="text-foreground text-2xl hover:text-gray-300" />
-					</a>
-					<a
-						href="https://linkedin.com"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<LinkedInLogoIcon className="text-foreground text-2xl hover:text-gray-300" />
-					</a>
 				</div>
 			</div>
 		</footer>
 	);
-};
-
-export default App;
+}

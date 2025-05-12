@@ -25,7 +25,7 @@
 			}
 		},
 		"engage": {
-			"self": "Engagera Dig",
+			"self": "Engagera dig",
 			"hilbertcafe": {
 				"self": "Hilbert Café",
 				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär."
@@ -66,7 +66,7 @@
 				"desc": "Hyra modern utrustning för att effektivisera ditt arbete."
 			},
 			"specialrooms": {
-				"self": "Stilla Rum/Bönerum",
+				"self": "Stillarum/Bönerum",
 				"desc": "Hitta en lugn plats för reflektion eller bön."
 			}
 		},
