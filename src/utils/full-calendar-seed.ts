@@ -7,7 +7,8 @@ export type calendarRef = RefObject<FullCalendar | null>;
 export const earliestTime = 0;
 export const latestTime = 24 * 60 - 1;
 
-export const months = [
+// This is kinda cursed imo
+export const months_en = [
 	{
 		value: "1",
 		label: "January",
@@ -58,25 +59,80 @@ export const months = [
 	},
 ];
 
+export const months_sv = [
+	{
+		value: "1",
+		label: "Januari",
+	},
+	{
+		value: "2",
+		label: "Februari",
+	},
+	{
+		value: "3",
+		label: "Mars",
+	},
+	{
+		value: "4",
+		label: "April",
+	},
+	{
+		value: "5",
+		label: "Maj",
+	},
+	{
+		value: "6",
+		label: "Juni",
+	},
+	{
+		value: "7",
+		label: "Juli",
+	},
+	{
+		value: "8",
+		label: "Augusti",
+	},
+	{
+		value: "9",
+		label: "September",
+	},
+	{
+		value: "10",
+		label: "Oktober",
+	},
+	{
+		value: "11",
+		label: "November",
+	},
+	{
+		value: "12",
+		label: "December",
+	},
+];
+
 const getRandomDays = (min: number, max: number) =>
 	Math.floor(Math.random() * (max - min + 1)) + min;
 
 const currentDate = new Date();
 
-export interface CalendarEvent {
+export interface BaseEventData {
 	id: string;
-	title: string;
+	title_sv: string;
 	start: Date;
 	end: Date;
 	allDay: boolean;
+	description_sv: string;
 	backgroundColor?: string;
-	description: string;
 }
 
-export const initialEvents: CalendarEvent[] = [
+export type CalendarEvent<
+	TCustomData extends object = Record<string, unknown>,
+> = BaseEventData & TCustomData;
+
+export const initialEvents: CalendarEvent<Record<string, unknown>>[] = [
 	{
 		id: "1",
-		title: "These are fake events",
+		title_sv: "These are fake events",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -93,11 +149,11 @@ export const initialEvents: CalendarEvent[] = [
 		),
 		allDay: false,
 		backgroundColor: "#AEC6E4",
-		description: "This is a daily meeting to go over today's tasks.",
+		description_sv: "This is a daily meeting to go over today's tasks.",
 	},
 	{
 		id: "2",
-		title: "If these show up, you need to add an event source",
+		title_sv: "If these show up, you need to add an event source",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -114,11 +170,11 @@ export const initialEvents: CalendarEvent[] = [
 		),
 		allDay: false,
 		backgroundColor: "#FFD1DC",
-		description: "Lunch at Cracker Barrel with integration clients.",
+		description_sv: "Lunch at Cracker Barrel with integration clients.",
 	},
 	{
 		id: "3",
-		title: "Counselor Meetup",
+		title_sv: "Counselor Meetup",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -135,11 +191,11 @@ export const initialEvents: CalendarEvent[] = [
 		),
 		allDay: false,
 		backgroundColor: "#B2E0B2",
-		description: "Conversation with counselor about progression.",
+		description_sv: "Conversation with counselor about progression.",
 	},
 	{
 		id: "4",
-		title: "Team Retreat",
+		title_sv: "Team Retreat",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -156,11 +212,11 @@ export const initialEvents: CalendarEvent[] = [
 		),
 		allDay: false,
 		backgroundColor: "#FFB3BA",
-		description: "Team bonding and strategic planning.",
+		description_sv: "Team bonding and strategic planning.",
 	},
 	{
 		id: "5",
-		title: "Time Management Workshop",
+		title_sv: "Time Management Workshop",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -177,12 +233,12 @@ export const initialEvents: CalendarEvent[] = [
 		),
 		allDay: false,
 		backgroundColor: "#FFDFBA",
-		description:
+		description_sv:
 			"Improve your productivity with effective time management techniques.",
 	},
 	{
 		id: "6",
-		title: "Health and Wellness Fair",
+		title_sv: "Health and Wellness Fair",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -199,11 +255,11 @@ export const initialEvents: CalendarEvent[] = [
 		),
 		allDay: false,
 		backgroundColor: "#B9FBC0",
-		description: "Explore health resources and wellness activities.",
+		description_sv: "Explore health resources and wellness activities.",
 	},
 	{
 		id: "7",
-		title: "Book Club Discussion",
+		title_sv: "Book Club Discussion",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -220,11 +276,11 @@ export const initialEvents: CalendarEvent[] = [
 		),
 		allDay: false,
 		backgroundColor: "#C3B1E1",
-		description: "Discussing this month's book selection with the club.",
+		description_sv: "Discussing this month's book selection with the club.",
 	},
 	{
 		id: "8",
-		title: "Creative Writing Workshop",
+		title_sv: "Creative Writing Workshop",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -241,11 +297,11 @@ export const initialEvents: CalendarEvent[] = [
 		),
 		allDay: false,
 		backgroundColor: "#B2E7E0",
-		description: "Join us for a weekend of creative writing exercises.",
+		description_sv: "Join us for a weekend of creative writing exercises.",
 	},
 	{
 		id: "9",
-		title: "Charity Fundraiser",
+		title_sv: "Charity Fundraiser",
 		start: new Date(
 			currentDate.getFullYear(),
 			currentDate.getMonth(),
@@ -262,6 +318,6 @@ export const initialEvents: CalendarEvent[] = [
 		),
 		allDay: false,
 		backgroundColor: "#F6C9D8",
-		description: "An evening of fun to raise funds for a good cause.",
+		description_sv: "An evening of fun to raise funds for a good cause.",
 	},
 ];

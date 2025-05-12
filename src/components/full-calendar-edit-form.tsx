@@ -58,10 +58,10 @@ export function EventEditForm({
 
 	const eventEditFormSchema = z.object({
 		id: z.string(),
-		title: z
+		title_sv: z
 			.string({ required_error: t("edit.error_title") })
 			.min(1, { message: t("edit.error_title") }),
-		description: z
+		description_sv: z
 			.string({ required_error: t("edit.error_description") })
 			.min(1, { message: t("edit.error_description") }),
 		start: z.date({
@@ -112,8 +112,8 @@ export function EventEditForm({
 		if (isDrag && oldEvent) {
 			const resetEvent = {
 				id: oldEvent.id,
-				title: oldEvent.title,
-				description: oldEvent.description,
+				title_sv: oldEvent.title_sv,
+				description_sv: oldEvent.description_sv,
 				start: oldEvent.start,
 				end: oldEvent.end,
 				allDay: oldEvent.allDay,
@@ -131,8 +131,8 @@ export function EventEditForm({
 	useEffect(() => {
 		form.reset({
 			id: event?.id,
-			title: event?.title,
-			description: event?.description,
+			title_sv: event?.title_sv,
+			description_sv: event?.description_sv,
 			start: event?.start as Date,
 			end: event?.end as Date,
 			allDay: event?.allDay,
@@ -143,8 +143,8 @@ export function EventEditForm({
 	async function onSubmit(data: EventEditFormValues) {
 		const newEvent = {
 			id: oldEvent ? oldEvent.id : data.id,
-			title: data.title,
-			description: data.description,
+			title_sv: data.title_sv,
+			description_sv: data.description_sv,
 			start: data.start,
 			end: data.end,
 			allDay: data.allDay ?? false,
@@ -184,14 +184,14 @@ export function EventEditForm({
 					A popup dialog to edit an event.
 				</AlertDialogDescription>
 				<AlertDialogHeader>
-					<AlertDialogTitle>{t("edit.edit")} "{event?.title}"</AlertDialogTitle>
+					<AlertDialogTitle>{t("edit.edit")} "{event?.title_sv}"</AlertDialogTitle>
 				</AlertDialogHeader>
 
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2.5">
 						<FormField
 							control={form.control}
-							name="title"
+							name="title_sv"
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>{t("edit.title")}</FormLabel>
@@ -205,7 +205,7 @@ export function EventEditForm({
 						{editDescription && (
 							<FormField
 								control={form.control}
-								name="description"
+								name="description_sv"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>{t("edit.description")}</FormLabel>

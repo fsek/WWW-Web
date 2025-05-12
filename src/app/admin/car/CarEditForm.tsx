@@ -39,19 +39,19 @@ export default function CarEditForm({
   const { t } = useTranslation();
 
   const carEditSchema = z.object({
-    id: z.number().int(),
+    booking_id: z.number(),
     description: z.string().min(1),
-    start_time: z.string(),
-    end_time: z.string(),
+    start_time: z.date(),
+    end_time: z.date(),
   }).refine(
     (data) => {
       // Check if start time equals end time
-      if (new Date(data.start_time).getTime() === new Date(data.end_time).getTime()) {
+      if (data.start_time.getTime() === data.end_time.getTime()) {
         return false;
       }
 
       // Check if start time is after end time
-      if (new Date(data.start_time).getTime() > new Date(data.end_time).getTime()) {
+      if (data.start_time.getTime() > data.end_time.getTime()) {
         return false;
       }
 
@@ -68,10 +68,9 @@ export default function CarEditForm({
   const form = useForm<CarEditFormType>({
     resolver: zodResolver(carEditSchema),
     defaultValues: {
-      id: 0,
       description: "",
-      start_time: "",
-      end_time: "",
+      start_time: new Date(Date.now()),
+      end_time: new Date(Date.now() + 60 * 60 * 1000),
     },
   });
 
@@ -79,9 +78,9 @@ export default function CarEditForm({
     if (open && selectedBooking) {
       form.reset({
         ...selectedBooking,
-        id: selectedBooking.id,
-        start_time: new Date(selectedBooking.start_time).toISOString(),
-        end_time: new Date(selectedBooking.end_time).toISOString(),
+        booking_id: selectedBooking.booking_id,
+        start_time: new Date(selectedBooking.start_time),
+        end_time: new Date(selectedBooking.end_time),
       });
     }
   }, [selectedBooking, form, open]);
@@ -119,7 +118,7 @@ export default function CarEditForm({
 
     updateBooking.mutate(
       {
-        path: { booking_id: values.id },
+        path: { booking_id: values.booking_id },
         body: updatedBooking,
       },
       {
@@ -131,7 +130,7 @@ export default function CarEditForm({
   }
 
   function handleRemoveSubmit() {
-    const bookingId = form.getValues("id");
+    const bookingId = form.getValues("booking_id");
     if (bookingId) {
       removeBooking.mutate(
         { path: { booking_id: bookingId } },

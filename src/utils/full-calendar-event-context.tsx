@@ -3,21 +3,21 @@ import { type CalendarEvent, initialEvents } from "@/utils/full-calendar-seed";
 import type React from "react";
 import { createContext, type ReactNode, useContext, useState } from "react";
 
-interface Event {
-	id: string;
-	title: string;
-	description: string;
-	start: Date;
-	end: Date;
-	allDay: boolean;
-	color?: string;
-}
+// interface Event { // I think this is fine to remove
+// 	id: string;
+// 	title_sv: string;
+// 	description_sv: string;
+// 	start: Date;
+// 	end: Date;
+// 	allDay: boolean;
+// 	backgroundColor?: string;
+// }
 
 interface EventsContextType {
 	events: CalendarEvent[];
-	addEvent: (event: Event) => void;
+	addEvent: (event: CalendarEvent) => void;
 	deleteEvent: (id: string) => void;
-	editEvent: (event: Event) => void;
+	editEvent: (event: CalendarEvent) => void;
 	eventViewOpen: boolean;
 	setEventViewOpen: (value: boolean) => void;
 	eventAddOpen: boolean;
@@ -45,8 +45,8 @@ interface EventsProviderProps {
 	initialCalendarEvents?: CalendarEvent[];
 	eventColor?: string;
 	handleDelete?: (id: string) => void;
-	handleEdit?: (event: Event) => void;
-	handleAdd?: (event: Event) => void;
+	handleEdit?: (event: CalendarEvent) => void;
+	handleAdd?: (event: CalendarEvent) => void;
 }
 
 export const EventsProvider: React.FC<EventsProviderProps> = ({
@@ -61,8 +61,9 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 		(initialCalendarEvents ?? initialEvents).map((event) => ({
 			// uses initialEvents from full-calendar-seed.ts if none specified
 			...event,
+			title: event.title_sv,
 			id: String(event.id),
-			color: eventColor ?? "#76c7ef",
+			backgroundColor: eventColor ?? "#76c7ef",
 			allDay: event.allDay ?? false,
 		})),
 	);
@@ -98,7 +99,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 		}
 	};
 
-	const editEvent = (event: Event) => {
+	const editEvent = (event: CalendarEvent) => {
 		try {
 			// Backend magic here
 			if (handleEdit) {
@@ -110,8 +111,8 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 					Number(prevEvent.id) === Number(event.id)
 						? {
 								...prevEvent,
-								title: event.title,
-								description: event.description,
+								title_sv: event.title_sv,
+								description_sv: event.description_sv,
 								start: event.start,
 								end: event.end,
 								allDay: event.allDay,

@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { months } from "@/utils/full-calendar-seed";
+import { months_en, months_sv } from "@/utils/full-calendar-seed";
 import type { calendarRef } from "@/utils/full-calendar-seed";
 import { Button } from "@/components/ui/button";
 import {
@@ -62,7 +62,7 @@ export default function CalendarNav({
 	disableEdit = false,
 	enableAllDay = true,
 }: CalendarNavProps) {
-	const { t } = useTranslation("calendar");
+	const { t, i18n } = useTranslation("calendar");
 	const [currentView, setCurrentView] = useState("timeGridWeek");
 
 	const selectedMonth = viewedDate.getMonth() + 1;
@@ -155,8 +155,8 @@ export default function CalendarNav({
 							className="flex w-[105px] justify-between overflow-hidden p-2 text-xs font-semibold md:text-sm md:w-[120px]"
 						>
 							{selectedMonth
-								? months.find((month) => month.value === String(selectedMonth))
-										?.label
+								? (i18n.language === "en" ? months_en.find((month) => month.value === String(selectedMonth))
+										 											: months_sv.find((month) => month.value === String(selectedMonth)))?.label
 								: t("nav.select_month")}
 							<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 						</Button>
@@ -167,7 +167,7 @@ export default function CalendarNav({
 							<CommandList>
 								<CommandEmpty>{t("nav.month_not_found")}</CommandEmpty>
 								<CommandGroup>
-									{months.map((month) => (
+									{(i18n.language === "en" ? months_en : months_sv).map((month) => (
 										<CommandItem
 											key={month.value}
 											value={month.value}

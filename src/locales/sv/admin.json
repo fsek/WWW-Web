@@ -36,7 +36,7 @@
 		"self": "Bilbokningar",
 		"title": "Hantera bilbokningar",
 		"description": "Här kan du skapa och hantera bilbokningar.",
-		"default_description": "Ange bilbeskrivning här",
+		"default_description": "Ange bokningstitel här (öppet synlig)",
 		"create_booking": "Skapa bokning",
 		"edit_booking": "Redigera bokning",
 		"start_time": "Starttid",

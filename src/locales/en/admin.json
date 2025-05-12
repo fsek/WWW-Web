@@ -35,7 +35,7 @@
 		"self": "Car bookings",
 		"title": "Manage Car Bookings",
 		"description": "Here you can create and manage car bookings.",
-		"default_description": "Enter car description here",
+		"default_description": "Enter title of car booking here (publicly visible)",
 		"create_booking": "Create Booking",
 		"edit_booking": "Edit Booking",
 		"start_time": "Start Time",

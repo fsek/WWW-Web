@@ -118,8 +118,8 @@ export function EventAddForm({
 		async (data: EventAddFormValues) => {
 			const newEvent = {
 				id: String(events.length + 1),
-				title: data.title,
-				description: editDescription ? data.description : "",
+				title_sv: data.title,
+				description_sv: editDescription ? data.description : "",
 				start: data.start,
 				end: data.end,
 				allDay: data.allDay,

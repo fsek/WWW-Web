@@ -77,8 +77,8 @@ export default function Calendar({
 	const handleEventClick = (info: EventClickArg) => {
 		const event: CalendarEvent = {
 			id: info.event.id,
-			title: info.event.title,
-			description: info.event.extendedProps.description,
+			title_sv: info.event.title,
+			description_sv: info.event.extendedProps.description_sv,
 			backgroundColor: info.event.backgroundColor,
 			start: info.event.start!,
 			end: info.event.end!,
@@ -94,8 +94,8 @@ export default function Calendar({
 	const handleEventChange = (info: EventChangeArg) => {
 		const event: CalendarEvent = {
 			id: info.event.id,
-			title: info.event.title,
-			description: info.event.extendedProps.description,
+			title_sv: info.event.title,
+			description_sv: info.event.extendedProps.description_sv,
 			backgroundColor: info.event.backgroundColor,
 			start: info.event.start!,
 			end: info.event.end!,
@@ -104,8 +104,8 @@ export default function Calendar({
 
 		const oldEvent: CalendarEvent = {
 			id: info.oldEvent.id,
-			title: info.oldEvent.title,
-			description: info.oldEvent.extendedProps.description,
+			title_sv: info.oldEvent.title,
+			description_sv: info.oldEvent.extendedProps.description_sv,
 			backgroundColor: info.oldEvent.backgroundColor,
 			start: info.oldEvent.start!,
 			end: info.oldEvent.end!,

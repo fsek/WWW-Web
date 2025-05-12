@@ -2,9 +2,6 @@
 
 import Link from "next/link";
 
-import { NavBar } from "../components/NavBar";
-import WaveAnimation from "../components/WaveAnimation";
-import TwoColumnLayout from "../components/TwoColumnLayout";
 import mh from "@/assets/mh.jpg";
 import WaveAnimation from "@/components/WaveAnimation";
 import TwoColumnLayout from "@/components/TwoColumnLayout";
@@ -12,16 +9,13 @@ import TwoColumnLayout from "@/components/TwoColumnLayout";
 import CustomTitle from "@/components/CustomTitle";
 import TitleBanner from "@/components/TitleBanner";
 import { useTranslation } from "react-i18next";
-import Calendar from "@/components/full-calendar";
 import MainPageCalendar from "@/components/main-page-calendar";
 
 export default function MainLanding() {
 	const { t } = useTranslation();
 
 	return (
-		<>
-			<NavBar />
-			
+		<>			
 			<TitleBanner
 				title={t("main:fsek")}
 				imageUrl={mh.src}

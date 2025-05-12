@@ -46,7 +46,7 @@ export function EventView({
 					</AlertDialogDescription>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="flex flex-row justify-between items-center">
-							{event?.title}
+							{event?.title_sv}
 							<AlertDialogCancel
 								onClick={() => {
 									setEventViewOpen(false);
@@ -64,7 +64,7 @@ export function EventView({
 								{showDescription && (
 									<tr>
 										<th>{t("view.description")}</th>
-										<td>{event?.description}</td>
+										<td>{event?.description_sv}</td>
 									</tr>
 								)}
 								{(event?.allDay && enableAllDay) && (
@@ -97,7 +97,7 @@ export function EventView({
 							</Button>
 						)}
 						{!disableEdit && (
-							<EventDeleteForm id={event?.id} title={event?.title} />
+							<EventDeleteForm id={event?.id} title_sv={event?.title_sv} />
 						)}
 						{!disableEdit && (
 							<EventEditForm
