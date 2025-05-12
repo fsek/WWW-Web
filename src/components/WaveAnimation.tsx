@@ -21,8 +21,8 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 			const canvas = canvasRef.current;
 
 			const width = windowWidth;
-			const height = width * 0.2; //200 + padding * 2;
-			const padding = width * 0.005;
+			const height = width * 0.12; //200 + padding * 2;
+			const padding = width * 0.002;
 			canvas.width = width * scale;
 			canvas.height = height * scale;
 			ctx.scale(scale, scale);
@@ -73,10 +73,9 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 				ctx.lineTo(padding, height);
 
 				ctx.stroke();
-				ctx.beginPath();
 
 				function wave_function(relative_x: number) {
-					return Math.sin(relative_x ** 0.5 * wave_number + phase);
+					return Math.sin(relative_x * wave_number + phase);
 					// *(1 -
 					//	Math.exp((padding - scaled_point(relative_x, 2)) * wave_number)
 				}
@@ -84,18 +83,19 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 				// Wave
 				ctx.moveTo(padding, height * 0.5);
 				for (let i = 0; i < num_points + 1; i++) {
+					ctx.beginPath();
 					const relative_x = num_points_inv * i;
 					const point = scaled_point(relative_x, 1);
 					const wave1 = wave_function(relative_x);
-					ctx.strokeStyle = `rgba(0, 0, 0, ${1 - relative_x ** 0.1})`;
+					//ctx.strokeStyle = `rgba(0, 0, 0, ${1})`;
 					ctx.lineWidth = 2.0;
 					ctx.lineTo(
 						point,
-						height * 0.5 +
-							wave1 * (height - padding * 2) * 0.5 * (1 - sawtooth_morph),
+						height * 0.5 + wave1 * (height - padding * 2) * 0.5,
 					);
 					ctx.stroke();
 				}
+
 				ctx.strokeStyle = "rgba(0, 0, 0, 1)";
 
 				//ctx.stroke();
