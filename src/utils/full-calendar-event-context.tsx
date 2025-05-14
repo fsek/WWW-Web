@@ -1,7 +1,8 @@
 "use client";
 import { type CalendarEvent, initialEvents } from "@/utils/full-calendar-seed";       
 import type React from "react";
-import { createContext, type ReactNode, useContext, useState } from "react";
+import { createContext, type ReactNode, useContext, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 // interface Event { // I think this is fine to remove
 // 	id: string;
@@ -57,6 +58,9 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 	handleEdit,
 	handleAdd,
 }) => {
+  const { i18n } = useTranslation(); 
+	const prevLangRef = useRef(i18n.language); 
+
 	const [events, setEvents] = useState<CalendarEvent[]>(
 		(initialCalendarEvents ?? initialEvents).map((event) => ({
 			// uses initialEvents from full-calendar-seed.ts if none specified
@@ -67,6 +71,24 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 			allDay: event.allDay ?? false,
 		})),
 	);
+
+	// Update events when language changes
+  useEffect(() => {
+    const currentLang = i18n.language;
+
+		// Only update if language has changed from previous value (dont just update when events change)
+    if (prevLangRef.current !== currentLang) {
+      prevLangRef.current = currentLang; 
+    
+			const transformedEvents = events.map(event => ({
+				...event,
+				title: currentLang === 'sv' ? event.title_sv : event.title_en
+			}));
+			
+			setEvents(transformedEvents);
+		}
+  }, [i18n.language, events]);
+
 	const [eventViewOpen, setEventViewOpen] = useState(false);
 	const [eventAddOpen, setEventAddOpen] = useState(false);
 	const [eventEditOpen, setEventEditOpen] = useState(false);
