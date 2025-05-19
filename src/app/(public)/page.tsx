@@ -1,25 +1,26 @@
 import Link from "next/link";
 
-import { NavBar } from "../components/NavBar";
-import WaveAnimation from "../components/WaveAnimation";
-import TwoColumnLayout from "../components/TwoColumnLayout";
+import WaveAnimation from "@/components/WaveAnimation";
+import TwoColumnLayout from "@/components/TwoColumnLayout";
 
-import Footer from "@/components/Footer";
 import CustomTitle from "@/components/CustomTitle";
 
 export default function MainLanding() {
 	return (
-		<div className="flex flex-col min-h-screen">
+		<>
 			<div className="flex-grow">
 				<p>
 					Hej! 👋 Du 🫵 ser 👀 denna 📄 sida 📘 för 💡 att ✨ du 🫶 är 🧊 cool
 					😎 och 🕸️ spindel 🕷️.
 				</p>
-				<CustomTitle text="Välkommen till F-sektionens fantastiska hemsida! Wow vad mycket text man kan få plats med" className="mt-4" />
+				<CustomTitle
+					text="Välkommen till F-sektionens fantastiska hemsida! Wow vad mycket text man kan få plats med"
+					className="mt-4"
+				/>
 				<CustomTitle text="eller lite" className="mt-4" />
 				<p>👉👈</p>
 				<Link href="admin/documents">Goto news</Link>
-			</div>
+			</div >
 			<div className="">
 				<WaveAnimation />
 			</div>
@@ -42,6 +43,6 @@ export default function MainLanding() {
 				}
 				className="p-14 gap-12"
 			/>
-		</div>
+		</>
 	);
 }

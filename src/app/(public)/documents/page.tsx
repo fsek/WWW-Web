@@ -1,7 +1,4 @@
-import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import ListTable from "@/widgets/Table";
-import createTable from "@/widgets/useCreateStandardTable";
 
 export default function DocumentPage() {
   const { t } = useTranslation();

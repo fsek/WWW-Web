@@ -6,6 +6,10 @@
 	"insufficient_permissions": "You do not have sufficient permissions to perform this action.",
 	"preview": "Preview",
 	"general": "General",
+	"description": "Description",
+	"save": "Save",
+	"cancel": "Cancel",
+	"remove": "Remove",
 	"news": {
 		"self": "News",
 		"page_title": "Manage News"
@@ -28,5 +32,31 @@
 		"edit_document": "Edit Document",
 		"created_at": "Created at",
 		"edited_by": "Last edited by"
+	},
+	"car": {
+		"self": "Car bookings",
+		"title": "Manage Car Bookings",
+		"description": "Here you can create and manage car bookings.",
+		"default_description": "Enter car description here",
+		"create_booking": "Create Booking",
+		"edit_booking": "Edit Booking",
+		"start_time": "Start Time",
+		"end_time": "End Time",
+		"booked_by": "Booked by user id:",
+		"error_add": "Failed to add booking.",
+		"error_delete": "Failed to delete booking with id: ",
+		"error_missing_id": "Missing booking id.",
+		"error_edit": "Failed to edit booking with id: ",
+		"error_start_end": "The end time must be after the start time.",
+		"calendar": "Calendar",
+		"calendar_description": "This calendar shows all bookings. Click on a booking to edit it. Click or drag on the calendar to select a time range, then click on 'Add Event'. Blue bookings may not have reached the backend yet.",
+		"list": "List",
+		"list_description": "This list shows all bookings. Click on a booking to edit it."
+	},
+	"posts": {
+		"self": "Posts"
+	},
+	"permissions": {
+		"self": "Permissions"
 	}
 }

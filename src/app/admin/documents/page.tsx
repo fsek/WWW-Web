@@ -14,7 +14,8 @@ import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
 
 
-export default function Events() {
+export default function Documents() {
+	// TODO: Fix this page lmao
 	const { t } = useTranslation();
 	const { data, error, isPending } = useQuery({
 		...getAllEventsOptions(),

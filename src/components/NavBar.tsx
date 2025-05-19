@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
 	NavigationMenu,
@@ -13,13 +12,12 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import FLogga from "@/assets/f-logga";
-import { LogIn, LogInIcon } from "lucide-react";
+import { LogInIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
-import LoginWall from "./LoginWall";
-import { useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
+import { usePathname, useRouter } from "next/navigation";
 
 type NavItem = {
 	self: string;
@@ -43,10 +41,11 @@ export function NavBar() {
 
 function LoginAndLang() {
 	const { t } = useTranslation();
-	const [showLoginWall, setShowLoginWall] = useState(false);
+	const pathname = usePathname();
+	const router = useRouter();
 
 	function handleLoginClick() {
-		setShowLoginWall(true);
+		router.push(`/login?next=${pathname}`);
 	}
 
 	return (
@@ -57,7 +56,6 @@ function LoginAndLang() {
 				<LogInIcon />
 				<span> {t("login.login")}</span>
 			</Button>
-			{showLoginWall && <LoginWall />}
 		</>
 	);
 }
@@ -139,15 +137,6 @@ export function NavBarMenu() {
 						</NavigationMenuList>
 					);
 				})}
-				<NavigationMenuList>
-					<NavigationMenuItem>
-						<Link href="/docs" legacyBehavior passHref>
-							<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-								Documentation
-							</NavigationMenuLink>
-						</Link>
-					</NavigationMenuItem>
-				</NavigationMenuList>
 			</NavigationMenu>
 		</div>
 	);

@@ -1,6 +1,13 @@
 "use client";
 
-import { Calendar, ChevronDown, Newspaper, FileText } from "lucide-react";
+import {
+	Calendar,
+	ChevronDown,
+	Newspaper,
+	FileText, Car,
+	Briefcase,
+	FolderLock,
+} from "lucide-react";
 
 import {
 	Sidebar,
@@ -23,6 +30,7 @@ import Link from "next/link";
 import { usePermissions } from "@/lib/auth";
 import type { PermissionRead } from "@/api";
 import { useMemo } from "react";
+
 
 interface SidebarItem {
 	title: string;
@@ -55,9 +63,25 @@ const groups: { title: string; content: SidebarItem[] }[] = [
 				icon: FileText,
 				permissions: [{ target: "Document", action: "manage" }],
 			},
+      {
+			  title: "admin:car.self",
+			  url: "/admin/car",
+			  icon: Car,
+        permissions: [{target: "Car", action: "manage"}]
+		  },
+      { title: "admin:posts.self", url: "/admin/posts", icon: Briefcase,
+        permissions: [{target: "Post", action: "manage"}]
+      },
+      {
+			  title: "admin:permissions.self",
+			  url: "/admin/permissions",
+			  icon: FolderLock,
+        permissions: [{target: "Permission", action: "manage"}]
+		},
 		],
 	},
 ];
+
 
 export function AdminSidebar() {
 	const { t } = useTranslation();
