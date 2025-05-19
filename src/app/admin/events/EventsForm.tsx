@@ -21,18 +21,21 @@ import {
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useTranslation } from "react-i18next";
 
 const eventsSchema = z.object({
 	title_sv: z.string().min(2),
 	title_en: z.string().min(2),
-	council_id: z.number().int(),
-	starts_at: z.string(),
-	ends_at: z.string(),
-	signup_start: z.string(),
-	signup_end: z.string(),
+	council_id: z.number().int().positive(),
+	starts_at: z.date(),
+	ends_at: z.date(),
+	signup_start: z.date(),
+	signup_end: z.date(),
 	description_sv: z.string().max(1000),
 	description_en: z.string().max(1000),
-	max_event_users: z.number(),
+	location: z.string().max(100),
+	max_event_users: z.coerce.number(),
 	priorities: z.array(z.string()),
 	all_day: z.boolean(),
 	signup_not_opened_yet: z.boolean(),
@@ -43,9 +46,11 @@ const eventsSchema = z.object({
 	closed: z.boolean(),
 	can_signup: z.boolean(),
 	drink_package: z.boolean(),
+	is_nollning_event: z.boolean(),
 });
 
 export default function EventsForm() {
+	const { t } = useTranslation();
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 
@@ -55,12 +60,13 @@ export default function EventsForm() {
 			title_sv: "",
 			title_en: "",
 			council_id: 0,
-			starts_at: new Date().toISOString(),
-			ends_at: new Date().toISOString(),
-			signup_start: new Date().toISOString(),
-			signup_end: new Date().toISOString(),
+			starts_at: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later 
+			ends_at: new Date(Date.now() + 1000 * 60 * 60 * 5), // 5 hours later
+			signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later 
+			signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later 
 			description_sv: "",
 			description_en: "",
+			location: "",
 			max_event_users: 0,
 			priorities: [],
 			all_day: false,
@@ -72,8 +78,22 @@ export default function EventsForm() {
 			closed: false,
 			can_signup: false,
 			drink_package: false,
+			is_nollning_event: false,
 		},
 	});
+
+	const checkboxFields = [
+		"all_day",
+		"signup_not_opened_yet",
+		"recurring",
+		"drink",
+		"food",
+		"cash",
+		"closed",
+		"can_signup",
+		"drink_package",
+		"is_nollning_event"
+	] as const;
 
 	const queryClient = useQueryClient();
 
@@ -97,12 +117,13 @@ export default function EventsForm() {
 				title_sv: values.title_sv,
 				title_en: values.title_en,
 				council_id: values.council_id,
-				starts_at: new Date(values.starts_at),
-				ends_at: new Date(values.ends_at),
-				signup_start: new Date(values.signup_start),
-				signup_end: new Date(values.signup_end),
+				starts_at: values.starts_at,
+				ends_at: values.ends_at,
+				signup_start: values.signup_start,
+				signup_end: values.signup_end,
 				description_sv: values.description_sv,
 				description_en: values.description_en,
+				location: values.location,
 				max_event_users: values.max_event_users,
 				priorities: [],
 				all_day: values.all_day,
@@ -114,6 +135,7 @@ export default function EventsForm() {
 				closed: values.closed,
 				can_signup: values.can_signup,
 				drink_package: values.drink_package,
+				is_nollning_event: values.is_nollning_event,
 			},
 		});
 	}
@@ -127,13 +149,13 @@ export default function EventsForm() {
 					setSubmitEnabled(true);
 				}}
 			>
-				Skapa event
+				{t("admin:events.create_event")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="min-w-fit lg:max-w-7xl">
 					<DialogHeader>
-						<DialogTitle>Skapa event</DialogTitle>
+						<DialogTitle>{t("admin:events.create_event")}</DialogTitle>
 					</DialogHeader>
 					<hr />
 					<Form {...eventsForm}>
@@ -146,9 +168,9 @@ export default function EventsForm() {
 								name="title_sv"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Titel (sv)</FormLabel>
+										<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 										<FormControl>
-											<Input placeholder="Titel" {...field} />
+											<Input placeholder={t("admin:events.title_sv")} {...field} />
 										</FormControl>
 									</FormItem>
 								)}
@@ -158,9 +180,9 @@ export default function EventsForm() {
 								name="title_en"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Titel (en)</FormLabel>
+										<FormLabel>{t("admin:events.title_en")}</FormLabel>
 										<FormControl>
-											<Input placeholder="Title" {...field} />
+											<Input placeholder={t("admin:events.title_en")} {...field} />
 										</FormControl>
 									</FormItem>
 								)}
@@ -171,7 +193,7 @@ export default function EventsForm() {
 								name="council_id"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
-										<FormLabel>Council name</FormLabel>
+										<FormLabel>{t("admin:events.council")}</FormLabel>
 										<AdminChooseCouncil
 											value={field.value}
 											onChange={field.onChange}
@@ -185,7 +207,7 @@ export default function EventsForm() {
 								name="starts_at"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Starttime</FormLabel>
+										<FormLabel>{t("admin:events.start_time")}</FormLabel>
 										<AdminChooseDates
 											value={field.value}
 											onChange={field.onChange}
@@ -199,7 +221,7 @@ export default function EventsForm() {
 								name="ends_at"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Endtime</FormLabel>
+										<FormLabel>{t("admin:events.end_time")}</FormLabel>
 										<AdminChooseDates
 											value={field.value}
 											onChange={field.onChange}
@@ -213,7 +235,7 @@ export default function EventsForm() {
 								name="signup_start"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Signup start</FormLabel>
+										<FormLabel>{t("admin:events.signup_start")}</FormLabel>
 										<AdminChooseDates
 											value={field.value}
 											onChange={field.onChange}
@@ -227,7 +249,7 @@ export default function EventsForm() {
 								name="signup_end"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Signup end</FormLabel>
+										<FormLabel>{t("admin:events.signup_end")}</FormLabel>
 										<AdminChooseDates
 											value={field.value}
 											onChange={field.onChange}
@@ -236,16 +258,96 @@ export default function EventsForm() {
 								)}
 							/>
 
+							{/* Description (sv) */}
+							<FormField
+								control={eventsForm.control}
+								name="description_sv"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2">
+										<FormLabel>{t("admin:events.description_sv")}</FormLabel>
+										<FormControl>
+											<Input placeholder={t("admin:events.description_sv")} {...field} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Description (en) */}
+							<FormField
+								control={eventsForm.control}
+								name="description_en"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2">
+										<FormLabel>{t("admin:events.description_en")}</FormLabel>
+										<FormControl>
+											<Input placeholder={t("admin:events.description_en")} {...field} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Location */}
+							<FormField
+								control={eventsForm.control}
+								name="location"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("admin:events.location")}</FormLabel>
+										<FormControl>
+											<Input placeholder={t("admin:events.location")} {...field} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Max event users */}
+							<FormField
+								control={eventsForm.control}
+								name="max_event_users"
+								render={({ field }) => (	
+									<FormItem>
+										<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
+										<FormControl>
+											<Input
+												type="number"
+												placeholder={t("admin:events.max_event_users")}
+												{...field}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Checkbox fields */}
+							{checkboxFields.map((fieldName) => (
+								<FormField
+									key={fieldName}
+									control={eventsForm.control}
+									name={fieldName}
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>{t(`admin:events.${fieldName}`)}</FormLabel>
+											<FormControl>
+												<Checkbox
+													checked={field.value}
+													onCheckedChange={field.onChange}
+												/>
+											</FormControl>
+										</FormItem>
+									)}
+								/>
+							))}
+
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
 								<Button variant="outline" className="w-32 min-w-fit">
-									Förhandsgranska
+									{t("admin:preview")}
 								</Button>
 								<Button
 									type="submit"
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									Publicera
+									{t("admin:submit")}
 								</Button>
 							</div>
 						</form>

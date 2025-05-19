@@ -21,20 +21,34 @@ import {
 	eventUpdateMutation,
 	eventRemoveMutation,
 } from "@/api/@tanstack/react-query.gen";
-import type { EventRead, EventUpdate } from "../../../api";
+import type { EventRead, EventUpdate } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
 	title_sv: z.string().min(2),
 	title_en: z.string().min(2),
-	council_id: z.number().int(),
-	starts_at: z.string(),
-	ends_at: z.string(),
-	signup_start: z.string(),
-	signup_end: z.string(),
-	description_sv: z.string().max(1000).optional(),
-	description_en: z.string().max(1000).optional(),
+	council_id: z.number().int().positive(),
+	starts_at: z.date(),
+	ends_at: z.date(),
+	signup_start: z.date(),
+	signup_end: z.date(),
+	description_sv: z.string().max(1000),
+	description_en: z.string().max(1000),
+	location: z.string().max(100),
+	max_event_users: z.coerce.number(),
+	all_day: z.boolean(),
+	signup_not_opened_yet: z.boolean(),
+	recurring: z.boolean(),
+	drink: z.boolean(),
+	food: z.boolean(),
+	cash: z.boolean(),
+	closed: z.boolean(),
+	can_signup: z.boolean(),
+	drink_package: z.boolean(),
+	is_nollning_event: z.boolean(),
 });
 
 type EventsEditFormType = z.infer<typeof eventsEditSchema>;
@@ -50,28 +64,56 @@ export default function EventsEditForm({
 	onClose,
 	selectedEvent,
 }: EventsEditFormProps) {
+	const { t } = useTranslation();
+
 	const form = useForm<EventsEditFormType>({
 		resolver: zodResolver(eventsEditSchema),
-		defaultValues: {
+		defaultValues: { // Values for when no event is selected
 			title_sv: "",
 			title_en: "",
-			starts_at: "",
-			ends_at: "",
-			signup_start: "",
-			signup_end: "",
+			council_id: 0,
+			starts_at: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later 
+			ends_at: new Date(Date.now() + 1000 * 60 * 60 * 5), // 5 hours later
+			signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later 
+			signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later 
 			description_sv: "",
 			description_en: "",
+			location: "",
+			max_event_users: 0,
+			all_day: false,
+			signup_not_opened_yet: false,
+			recurring: false,
+			drink: false,
+			food: false,
+			cash: false,
+			closed: false,
+			can_signup: false,
+			drink_package: false,
+			is_nollning_event: false,
 		},
 	});
+
+	const checkboxFields = [
+		"all_day",
+		"signup_not_opened_yet",
+		"recurring",
+		"drink",
+		"food",
+		"cash",
+		"closed",
+		"can_signup",
+		"drink_package",
+		"is_nollning_event"
+	] as const;
 
 	useEffect(() => {
 		if (open && selectedEvent) {
 			form.reset({
 				...selectedEvent,
-				starts_at: new Date(selectedEvent.starts_at).toISOString(),
-				ends_at: new Date(selectedEvent.ends_at).toISOString(),
-				signup_start: new Date(selectedEvent.signup_start).toISOString(),
-				signup_end: new Date(selectedEvent.signup_end).toISOString(),
+				starts_at: new Date(selectedEvent.starts_at),
+				ends_at: new Date(selectedEvent.ends_at),
+				signup_start: new Date(selectedEvent.signup_start),
+				signup_end: new Date(selectedEvent.signup_end),
 			});
 		}
 	}, [selectedEvent, form, open]);
@@ -102,10 +144,7 @@ export default function EventsEditForm({
 
 	function handleFormSubmit(values: EventsEditFormType) {
 		const updatedEvent: EventUpdate = {
-			title_sv: values.title_sv,
-			title_en: values.title_en,
-			description_sv: values.description_sv,
-			description_en: values.description_en,
+			...values,
 		};
 
 		updateEvent.mutate(
@@ -144,7 +183,7 @@ export default function EventsEditForm({
 			{" "}
 			<DialogContent className="min-w-fit lg:max-w-7xl">
 				<DialogHeader>
-					<DialogTitle>Redigera event</DialogTitle>
+					<DialogTitle>{t("admin:event.edit_booking")}</DialogTitle>
 				</DialogHeader>
 				<hr />
 				<Form {...form}>
@@ -158,9 +197,9 @@ export default function EventsEditForm({
 							name="title_sv"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Titel (sv)</FormLabel>
+									<FormLabel>{t("admin:event.title_sv")}</FormLabel>
 									<FormControl>
-										<Input placeholder="Titel" {...field} />
+										<Input placeholder={t("admin:event.title_sv")} {...field} />
 									</FormControl>
 								</FormItem>
 							)}
@@ -172,9 +211,9 @@ export default function EventsEditForm({
 							name="title_en"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Titel (en)</FormLabel>
+									<FormLabel>{t("admin:event.title_en")}</FormLabel>
 									<FormControl>
-										<Input placeholder="Title" {...field} />
+										<Input placeholder={t("admin:event.title_en")} {...field} />
 									</FormControl>
 								</FormItem>
 							)}
@@ -186,10 +225,15 @@ export default function EventsEditForm({
 							name="council_id"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
-									<FormLabel>Council</FormLabel>
+									<FormLabel>{t("admin:event.council")}</FormLabel>
 									<AdminChooseCouncil
 										value={field.value}
-										onChange={field.onChange}
+										onChange={
+											(value: number) => {
+												console.log("Council ID:", value);
+												field.onChange(value);
+											}
+										}
 									/>
 								</FormItem>
 							)}
@@ -201,7 +245,7 @@ export default function EventsEditForm({
 							name="starts_at"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Start time</FormLabel>
+									<FormLabel>{t("admin:event.start_time")}</FormLabel>
 									<AdminChooseDates
 										value={field.value}
 										onChange={field.onChange}
@@ -216,7 +260,7 @@ export default function EventsEditForm({
 							name="ends_at"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>End time</FormLabel>
+									<FormLabel>{t("admin:event.end_time")}</FormLabel>
 									<AdminChooseDates
 										value={field.value}
 										onChange={field.onChange}
@@ -231,7 +275,7 @@ export default function EventsEditForm({
 							name="signup_start"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Signup start</FormLabel>
+									<FormLabel>{t("admin:event.signup_start")}</FormLabel>
 									<AdminChooseDates
 										value={field.value}
 										onChange={field.onChange}
@@ -246,7 +290,7 @@ export default function EventsEditForm({
 							name="signup_end"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Signup end</FormLabel>
+									<FormLabel>{t("admin:event.signup_end")}</FormLabel>
 									<AdminChooseDates
 										value={field.value}
 										onChange={field.onChange}
@@ -255,13 +299,94 @@ export default function EventsEditForm({
 							)}
 						/>
 
+						{/* Description (sv) */}
+						<FormField
+							control={form.control}
+							name="description_sv"
+							render={({ field }) => (
+								<FormItem className="lg:col-span-2">
+									<FormLabel>{t("admin:event.description_sv")}</FormLabel>
+									<FormControl>
+										<Input placeholder={t("admin:event.description_sv")} {...field} />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Description (en) */}
+						<FormField
+							control={form.control}
+							name="description_en"
+							render={({ field }) => (
+								<FormItem className="lg:col-span-2">
+									<FormLabel>{t("admin:event.description_en")}</FormLabel>
+									<FormControl>
+										<Input placeholder={t("admin:event.description_en")} {...field} />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Location */}
+						<FormField
+							control={form.control}
+							name="location"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("admin:event.location")}</FormLabel>
+									<FormControl>
+										<Input placeholder={t("admin:event.location")} {...field} />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Max event users */}
+						<FormField
+							control={form.control}
+							name="max_event_users"
+							render={({ field }) => (	
+								<FormItem>
+									<FormLabel>{t("admin:event.max_event_users")}</FormLabel>
+									<FormControl>
+										<Input
+											type="number"
+											placeholder={t("admin:event.max_event_users")}
+											{...field}
+          						// value={Number(field.value)}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Checkbox fields */}
+						{checkboxFields.map((fieldName) => (
+							<FormField
+								key={fieldName}
+								control={form.control}
+								name={fieldName}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t(`admin:event.${fieldName}`)}</FormLabel>
+										<FormControl>
+											<Checkbox
+												checked={field.value}
+												onCheckedChange={field.onChange}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+						))}
+
 						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
 							<Button
 								variant="outline"
 								className="w-32 min-w-fit"
 								onClick={() => console.log("Preview clicked")}
 							>
-								Förhandsgranska
+								{t("admin:preview")}
 							</Button>
 
 							<Button
@@ -270,11 +395,11 @@ export default function EventsEditForm({
 								className="w-32 min-w-fit"
 								onClick={handleRemoveSubmit}
 							>
-								Remove event
+								{t("admin:remove")}
 							</Button>
 
 							<Button type="submit" className="w-32 min-w-fit">
-								Spara
+								{t("admin:save")}
 							</Button>
 						</div>
 					</form>
