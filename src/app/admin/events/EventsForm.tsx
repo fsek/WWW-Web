@@ -35,7 +35,7 @@ const eventsSchema = z.object({
 	description_sv: z.string().max(1000),
 	description_en: z.string().max(1000),
 	location: z.string().max(100),
-	max_event_users: z.coerce.number(),
+	max_event_users: z.coerce.number().nonnegative(),
 	priorities: z.array(z.string()),
 	all_day: z.boolean(),
 	signup_not_opened_yet: z.boolean(),
