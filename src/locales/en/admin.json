@@ -5,6 +5,7 @@
 	"error": "Something went wrong :/",
 	"insufficient_permissions": "You do not have sufficient permissions to perform this action.",
 	"preview": "Preview",
+	"general": "General",
 	"news": {
 		"self": "News",
 		"page_title": "Manage News"
