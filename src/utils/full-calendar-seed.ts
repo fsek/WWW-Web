@@ -120,14 +120,14 @@ export interface BaseEventData {
 	title_sv: string;
 	start: Date;
 	end: Date;
-	allDay: boolean;
 	description_sv: string;
 	backgroundColor?: string;
 }
 
-export type CalendarEvent<
-	TCustomData extends object = Record<string, unknown>,
-> = BaseEventData & TCustomData;
+export type CustomEventData = Record<string, unknown>;
+
+export type CalendarEvent<TCustomData extends object = CustomEventData> =
+	BaseEventData & TCustomData;
 
 export const initialEvents: CalendarEvent<Record<string, unknown>>[] = [
 	{

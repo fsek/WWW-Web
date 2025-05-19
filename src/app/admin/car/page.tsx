@@ -3,7 +3,7 @@
 // Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
 import { useState } from "react";
-import type { CarRead } from "../../../api/index";
+import type { CarRead } from "@/api/index";
 import CarForm from "./CarForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {

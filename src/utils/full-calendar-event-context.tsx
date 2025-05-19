@@ -1,5 +1,5 @@
 "use client";
-import { type CalendarEvent, initialEvents } from "@/utils/full-calendar-seed";       
+import { type CalendarEvent, type CustomEventData, initialEvents } from "@/utils/full-calendar-seed";       
 import type React from "react";
 import { createContext, type ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -43,11 +43,11 @@ export const useEvents = () => {
 
 interface EventsProviderProps {
 	children: ReactNode;
-	initialCalendarEvents?: CalendarEvent[];
+	initialCalendarEvents?: CalendarEvent<CustomEventData>[];
 	eventColor?: string;
 	handleDelete?: (id: string) => void;
-	handleEdit?: (event: CalendarEvent) => void;
-	handleAdd?: (event: CalendarEvent) => void;
+	handleEdit?: (event: CalendarEvent<CustomEventData>) => void;
+	handleAdd?: (event: CalendarEvent<CustomEventData>) => void;
 }
 
 export const EventsProvider: React.FC<EventsProviderProps> = ({
@@ -61,7 +61,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
   const { i18n } = useTranslation(); 
 	const prevLangRef = useRef(i18n.language); 
 
-	const [events, setEvents] = useState<CalendarEvent[]>(
+	const [events, setEvents] = useState<CalendarEvent<CustomEventData>[]>(
 		(initialCalendarEvents ?? initialEvents).map((event) => ({
 			// uses initialEvents from full-calendar-seed.ts if none specified
 			...event,
@@ -96,7 +96,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 	const [availabilityCheckerEventAddOpen, setAvailabilityCheckerEventAddOpen] =
 		useState(false);
 
-	const addEvent = (event: CalendarEvent) => {
+	const addEvent = (event: CalendarEvent<CustomEventData>) => {
 		try {
 			if (handleAdd) {
 				// if handleAdd is defined, call it
@@ -121,7 +121,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 		}
 	};
 
-	const editEvent = (event: CalendarEvent) => {
+	const editEvent = (event: CalendarEvent<CustomEventData>) => {
 		try {
 			// Backend magic here
 			if (handleEdit) {

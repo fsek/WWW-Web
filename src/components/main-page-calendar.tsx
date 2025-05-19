@@ -11,9 +11,9 @@ import {
 import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
 import { EventsProvider } from "@/utils/full-calendar-event-context";
-import type { CalendarEvent } from "@/utils/full-calendar-seed";
+import type { CalendarEvent, CustomEventData } from "@/utils/full-calendar-seed";
 import { useTranslation } from "react-i18next";
-import type { EventRead } from "@/api";
+import type { EventCreate, EventRead} from "@/api";
 
 export default function MainPageCalendar() {
 	const { t } = useTranslation();
@@ -57,15 +57,51 @@ export default function MainPageCalendar() {
 		return <p>{t("admin:error")}</p>;
 	}
 
+	interface CustomEventData_ extends CustomEventData { 
+		// We define these manually to avoid having start_time and start as different fields
+		title_en: string;
+		signup_start: Date;
+		signup_end: Date;
+		allDay: boolean;
+		description_en: string;
+		location: string;
+		max_event_users: number;
+		priorities: EventCreate["priorities"];
+		signup_not_opened_yet: boolean;
+		recurring: boolean;
+		drink: boolean;
+		food: boolean;
+		cash: boolean;
+		closed: boolean;
+		can_signup: boolean;
+		drink_package: boolean;
+	};
+
 	// Map fetched bookings to calendar events
-	const events: CalendarEvent[] =
+	const events: CalendarEvent<CustomEventData_>[] =
 		(data as EventRead[])?.map((event) => ({
 			id: event.id.toString(),
-			title: event.title_sv,
+			title_sv: event.title_sv,
+			title_en: event.title_en,
 			start: event.starts_at,
 			end: event.ends_at,
+			signup_start: event.signup_start,
+			signup_end: event.signup_end,
 			allDay: event.all_day,
-			description: event.description_sv,
+			description_sv: event.description_sv,
+			description_en: event.description_en,
+			location: event.location,
+			max_event_users: event.max_event_users,
+			priorities: event.priorities.map(p => p.priority) as EventCreate["priorities"],
+			signup_not_opened_yet: event.signup_not_opened_yet,
+			recurring: event.recurring,
+			drink: event.drink,
+			food: event.food,
+			cash: event.cash,
+			closed: event.closed,
+			can_signup: event.can_signup,
+			drink_package: event.drink_package,
+			is_nollning_event: event.is_nollning_event,
 		})) ?? [];
 
 	return (
@@ -78,28 +114,29 @@ export default function MainPageCalendar() {
 				handleAdd={(event) =>
 					addBooking.mutate(
 						{
-							body: {
+							body: { // Having to define this sux, having to type "as string" also does. Basically TODO: fix pls
 								council_id: 1,
 								starts_at: event.start,
 								ends_at: event.end,
 								signup_start: event.start,
 								signup_end: event.end,
-								title_sv: event.title,
-								title_en: event.title,
-								description_sv: "test",
-								description_en: "test",
-								location: "test",
-								max_event_users: 1,
-								priorities: [],
-								all_day: event.allDay,
-								signup_not_opened_yet: true,
-								recurring: false,
-								drink: false,
-								food: false,
-								cash: false,
-								closed: false,
-								can_signup: false,
-								drink_package: false,
+								title_sv: event.title_sv,
+								title_en: event.title_en as string,
+								description_sv: event.description_sv,
+								description_en: event.description_en as string,
+								location: event.location as string,
+								max_event_users: event.max_event_users as number,
+								priorities: event.priorities as EventCreate['priorities'], // This might just work
+								all_day: event.allDay as boolean,
+								signup_not_opened_yet: event.signup_not_opened_yet as boolean,
+								recurring: event.recurring as boolean,
+								drink: event.drink as boolean,
+								food: event.food as boolean,
+								cash: event.cash as boolean,
+								closed: event.closed as boolean,
+								can_signup: event.can_signup as boolean,
+								drink_package: event.drink_package as boolean,
+								is_nollning_event: event.is_nollning_event as boolean,
 							},
 						},
 						{
@@ -129,21 +166,22 @@ export default function MainPageCalendar() {
 								ends_at: event.end,
 								signup_start: event.start,
 								signup_end: event.end,
-								title_sv: event.title,
-								title_en: event.title,
-								description_sv: "test",
-								description_en: "test",
-								location: "test",
-								max_event_users: 1,
-								all_day: event.allDay,
-								signup_not_opened_yet: true,
-								recurring: false,
-								drink: false,
-								food: false,
-								cash: false,
-								closed: false,
-								can_signup: false,
-								drink_package: false,
+								title_sv: event.title_sv,
+								title_en: event.title_en as string,
+								description_sv: event.description_sv,
+								description_en: event.description_en as string,
+								location: event.location as string,
+								max_event_users: event.max_event_users as number,
+								all_day: event.allDay as boolean,
+								signup_not_opened_yet: event.signup_not_opened_yet as boolean,
+								recurring: event.recurring as boolean,
+								drink: event.drink as boolean,
+								food: event.food as boolean,
+								cash: event.cash as boolean,
+								closed: event.closed as boolean,
+								can_signup: event.can_signup as boolean,
+								drink_package: event.drink_package as boolean,
+								is_nollning_event: event.is_nollning_event as boolean,
 							},
 						},
 						{
