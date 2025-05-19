@@ -20,8 +20,8 @@ export default function MainLanding() {
 				<CustomTitle text="eller lite" className="mt-4" />
 				<p>👉👈</p>
 				<Link href="admin/documents">Goto news</Link>
-			</div >
-			<div className="">
+			</div>
+			<div className="flex-grow">
 				<WaveAnimation />
 			</div>
 			<TwoColumnLayout
