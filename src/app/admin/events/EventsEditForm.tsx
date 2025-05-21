@@ -28,8 +28,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
-	title_sv: z.string().min(2),
-	title_en: z.string().min(2),
+	title_sv: z.string().min(1),
+	title_en: z.string().min(1),
 	council_id: z.number().int().positive(),
 	starts_at: z.date(),
 	ends_at: z.date(),
@@ -171,6 +171,7 @@ export default function EventsEditForm({
 		);
 	}
 
+	// TODO: Fix how this entire form is created in code. Way too much code duplication.
 	return (
 		<Dialog
 			open={open}

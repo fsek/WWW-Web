@@ -158,7 +158,7 @@ export default function Car() {
 				title_sv: car.description,
 				start: car.start_time,
 				end: car.end_time,
-				allDay: false,
+				all_day: false,
 				description_sv: `user_id av bokare: ${car.user_id.toString()}`,
 			};
 		}) ?? [];

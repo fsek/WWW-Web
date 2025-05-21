@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 // 	description_sv: string;
 // 	start: Date;
 // 	end: Date;
-// 	allDay: boolean;
+// 	all_day: boolean;
 // 	backgroundColor?: string;
 // }
 
@@ -62,14 +62,17 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 	const prevLangRef = useRef(i18n.language); 
 
 	const [events, setEvents] = useState<CalendarEvent<CustomEventData>[]>(
-		(initialCalendarEvents ?? initialEvents).map((event) => ({
-			// uses initialEvents from full-calendar-seed.ts if none specified
-			...event,
-			title: event.title_sv,
-			id: String(event.id),
-			backgroundColor: eventColor ?? "#76c7ef",
-			allDay: event.allDay ?? false,
-		})),
+		(initialCalendarEvents ?? initialEvents).map((event) => {
+			return {
+				...event,
+				title: event.title_sv,
+				id: String(event.id),
+				backgroundColor: eventColor ?? "#76c7ef",
+				allDay: event.all_day ?? false,
+				start: new Date(event.start),
+				end: new Date(event.end),
+			};
+		}),
 	);
 
 	// Update events when language changes
@@ -137,7 +140,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 								description_sv: event.description_sv,
 								start: event.start,
 								end: event.end,
-								allDay: event.allDay,
+								all_day: event.all_day,
 							}
 						: prevEvent,
 				),

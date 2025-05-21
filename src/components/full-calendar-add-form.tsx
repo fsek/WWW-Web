@@ -69,7 +69,7 @@ export function EventAddForm({
 			required_error: t("add.error_end_time"),
 			invalid_type_error: t("add.error_not_date"),
 		}),
-		allDay: z.boolean().default(false),
+		all_day: z.boolean().default(false),
 		color: z
 			.string({ required_error: "Please select an event color." })
 			.min(1, { message: "Must provide a title for this event." }),
@@ -109,7 +109,7 @@ export function EventAddForm({
       description: "",
       start: start,
       end: end,
-			allDay: false,
+			all_day: false,
       color: "#76c7ef"
     });
 	}, [form, start, end]);
@@ -122,7 +122,7 @@ export function EventAddForm({
 				description_sv: editDescription ? data.description : "",
 				start: data.start,
 				end: data.end,
-				allDay: data.allDay,
+				all_day: data.all_day,
 				color: data.color,
 			};
 			addEvent(newEvent);
@@ -230,7 +230,7 @@ export function EventAddForm({
 						{enableAllDay && (
 							<FormField
 								control={form.control}
-								name="allDay"
+								name="all_day"
 								render={({ field }) => (
 									<FormItem className="flex flex-row items-center space-x-2">
 										<FormControl>

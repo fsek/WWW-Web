@@ -62,7 +62,7 @@ export default function MainPageCalendar() {
 		title_en: string;
 		signup_start: Date;
 		signup_end: Date;
-		allDay: boolean;
+		all_day: boolean;
 		description_en: string;
 		location: string;
 		max_event_users: number;
@@ -75,6 +75,7 @@ export default function MainPageCalendar() {
 		closed: boolean;
 		can_signup: boolean;
 		drink_package: boolean;
+		is_nollning_event: boolean;
 	};
 
 	// Map fetched bookings to calendar events
@@ -87,7 +88,7 @@ export default function MainPageCalendar() {
 			end: event.ends_at,
 			signup_start: event.signup_start,
 			signup_end: event.signup_end,
-			allDay: event.all_day,
+			all_day: event.all_day,
 			description_sv: event.description_sv,
 			description_en: event.description_en,
 			location: event.location,
@@ -127,7 +128,7 @@ export default function MainPageCalendar() {
 								location: event.location as string,
 								max_event_users: event.max_event_users as number,
 								priorities: event.priorities as EventCreate['priorities'], // This might just work
-								all_day: event.allDay as boolean,
+								all_day: event.all_day as boolean,
 								signup_not_opened_yet: event.signup_not_opened_yet as boolean,
 								recurring: event.recurring as boolean,
 								drink: event.drink as boolean,
@@ -172,7 +173,7 @@ export default function MainPageCalendar() {
 								description_en: event.description_en as string,
 								location: event.location as string,
 								max_event_users: event.max_event_users as number,
-								all_day: event.allDay as boolean,
+								all_day: event.all_day as boolean,
 								signup_not_opened_yet: event.signup_not_opened_yet as boolean,
 								recurring: event.recurring as boolean,
 								drink: event.drink as boolean,
@@ -197,7 +198,8 @@ export default function MainPageCalendar() {
 						editDescription={true}
 						handleOpenDetails={() => {}}
 						disableEdit={false}
-						enableAllDay={false}
+						enableAllDay={true}
+						enableTrueEventProperties={true}
 					/>
 				</div>
 			</EventsProvider>

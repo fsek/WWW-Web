@@ -50,6 +50,7 @@ interface CalendarProps {
 	handleOpenDetails?: (event?: CalendarEvent) => void;
 	disableEdit?: boolean;
 	enableAllDay?: boolean;
+	enableTrueEventProperties?: boolean;
 }
 
 export default function Calendar({
@@ -58,6 +59,7 @@ export default function Calendar({
 	handleOpenDetails,
 	disableEdit,
 	enableAllDay = true,
+	enableTrueEventProperties = false,
 }: CalendarProps) {
 	const { events, setEventAddOpen, setEventEditOpen, eventViewOpen, setEventViewOpen } =
 		useEvents();
@@ -82,7 +84,26 @@ export default function Calendar({
 			backgroundColor: info.event.backgroundColor,
 			start: info.event.start!,
 			end: info.event.end!,
-			allDay: info.event.allDay,
+			all_day: info.event.allDay,
+			...(enableTrueEventProperties ? {
+				title_en: info.event.extendedProps.title_en,
+				description_en: info.event.extendedProps.description_en,
+				location: info.event.extendedProps.location,
+				max_event_users: info.event.extendedProps.max_event_users,
+				priorities: info.event.extendedProps.priorities,
+				signup_start: new Date(info.event.extendedProps.signup_start),
+				signup_end: new Date(info.event.extendedProps.signup_end),
+				signup_not_opened_yet: info.event.extendedProps.signup_not_opened_yet,
+				recurring: info.event.extendedProps.recurring,
+				drink: info.event.extendedProps.drink,
+				food: info.event.extendedProps.food,
+				cash: info.event.extendedProps.cash,
+				closed: info.event.extendedProps.closed,
+				can_signup: info.event.extendedProps.can_signup,
+				drink_package: info.event.extendedProps.drink_package,
+				is_nollning_event: info.event.extendedProps.is_nollning_event,
+
+			} : {})
 		};
 
 		setIsDrag(false);
@@ -99,7 +120,26 @@ export default function Calendar({
 			backgroundColor: info.event.backgroundColor,
 			start: info.event.start!,
 			end: info.event.end!,
-			allDay: info.event.allDay,
+			all_day: info.event.allDay,
+			...(enableTrueEventProperties ? {
+				title_en: info.event.extendedProps.title_en,
+				description_en: info.event.extendedProps.description_en,
+				location: info.event.extendedProps.location,
+				max_event_users: info.event.extendedProps.max_event_users,
+				priorities: info.event.extendedProps.priorities,
+				signup_start: new Date(info.event.extendedProps.signup_start),
+				signup_end: new Date(info.event.extendedProps.signup_end),
+				signup_not_opened_yet: info.event.extendedProps.signup_not_opened_yet,
+				recurring: info.event.extendedProps.recurring,
+				drink: info.event.extendedProps.drink,
+				food: info.event.extendedProps.food,
+				cash: info.event.extendedProps.cash,
+				closed: info.event.extendedProps.closed,
+				can_signup: info.event.extendedProps.can_signup,
+				drink_package: info.event.extendedProps.drink_package,
+				is_nollning_event: info.event.extendedProps.is_nollning_event,
+
+			} : {})
 		};
 
 		const oldEvent: CalendarEvent = {
@@ -109,7 +149,26 @@ export default function Calendar({
 			backgroundColor: info.oldEvent.backgroundColor,
 			start: info.oldEvent.start!,
 			end: info.oldEvent.end!,
-			allDay: info.oldEvent.allDay,
+			all_day: info.oldEvent.allDay,
+			...(enableTrueEventProperties ? {
+				title_en: info.oldEvent.extendedProps.title_en,
+				description_en: info.oldEvent.extendedProps.description_en,
+				location: info.oldEvent.extendedProps.location,
+				max_event_users: info.oldEvent.extendedProps.max_event_users,
+				priorities: info.oldEvent.extendedProps.priorities,
+				signup_start: new Date(info.oldEvent.extendedProps.signup_start),
+				signup_end: new Date(info.oldEvent.extendedProps.signup_end),
+				signup_not_opened_yet: info.oldEvent.extendedProps.signup_not_opened_yet,
+				recurring: info.oldEvent.extendedProps.recurring,
+				drink: info.oldEvent.extendedProps.drink,
+				food: info.oldEvent.extendedProps.food,
+				cash: info.oldEvent.extendedProps.cash,
+				closed: info.oldEvent.extendedProps.closed,
+				can_signup: info.oldEvent.extendedProps.can_signup,
+				drink_package: info.oldEvent.extendedProps.drink_package,
+				is_nollning_event: info.oldEvent.extendedProps.is_nollning_event,
+
+			} : {})
 		};
 
 		setIsDrag(true);
@@ -313,6 +372,7 @@ export default function Calendar({
 					editDescription={editDescription ?? false}
 					showButton={false}
 					enableAllDay={enableAllDay}
+					enableTrueEventProperties={enableTrueEventProperties}
 				/>
 			)}
 
@@ -323,6 +383,7 @@ export default function Calendar({
 				handleOpenDetails={handleOpenDetails}
 				disableEdit={disableEdit ?? false}
 				enableAllDay={enableAllDay}
+				enableTrueEventProperties={enableTrueEventProperties}
 			/>
 		</div>
 	);
