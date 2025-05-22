@@ -329,18 +329,18 @@ export function EventEditForm({
 
 						{/* Title (en) */}
 						{enableTrueEventProperties && (
-						<FormField
-							control={form.control}
-							name="title_en"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("edit.title_en")}</FormLabel>
-									<FormControl>
-										<Input placeholder={t("edit:placeholder.title")} {...field} value={field.value as string} />
-									</FormControl>
-								</FormItem>
-							)}
-						/>
+							<FormField
+								control={form.control}
+								name="title_en"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("edit.title_en")}</FormLabel>
+										<FormControl>
+											<Input placeholder={t("edit:placeholder.title")} {...field} value={field.value as string} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
 						)}
 
 						{editDescription && (
@@ -512,7 +512,7 @@ export function EventEditForm({
 								name={fieldName}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t(`admin:event.${fieldName}`)}</FormLabel>
+										<FormLabel>{t(`edit.${fieldName}`)}</FormLabel>
 										<FormControl>
 											<Checkbox
 												checked={field.value}

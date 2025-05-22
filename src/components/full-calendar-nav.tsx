@@ -51,6 +51,7 @@ interface CalendarNavProps {
 	editDescription?: boolean;
 	disableEdit?: boolean;
 	enableAllDay?: boolean;
+	enableTrueEventProperties?: boolean;
 }
 
 export default function CalendarNav({
@@ -61,6 +62,7 @@ export default function CalendarNav({
 	editDescription = false,
 	disableEdit = false,
 	enableAllDay = true,
+	enableTrueEventProperties = false,
 }: CalendarNavProps) {
 	const { t, i18n } = useTranslation("calendar");
 	const [currentView, setCurrentView] = useState("timeGridWeek");
@@ -290,7 +292,13 @@ export default function CalendarNav({
 
 				{/* Add event button  */}
 				{!disableEdit && (
-				<EventAddForm start={start} end={end} editDescription={editDescription} enableAllDay={enableAllDay}/>
+				<EventAddForm 
+					start={start} 
+					end={end} 
+					editDescription={editDescription} 
+					enableAllDay={enableAllDay}
+					enableTrueEventProperties={enableTrueEventProperties}
+				/>
 				)}
 			</div>
 		</div>

@@ -299,6 +299,7 @@ export default function Calendar({
 				editDescription={editDescription ?? false}
 				disableEdit={disableEdit}
 				enableAllDay={enableAllDay}
+				enableTrueEventProperties={enableTrueEventProperties}
 			/>
 
 			<Card className="p-3">
