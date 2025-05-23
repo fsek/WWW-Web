@@ -37,7 +37,7 @@ export function EventView({
 	enableTrueEventProperties = false,
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
-	const { t } = useTranslation("calendar");
+	const { t, i18n } = useTranslation("calendar");
 
 	return (
 		<>
@@ -48,7 +48,9 @@ export function EventView({
 					</AlertDialogDescription>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="flex flex-row justify-between items-center">
-							{event?.title_sv}
+							{i18n.language === "en" && event?.title_en
+								? (event?.title_en as string)
+								: (event?.title_sv as string)}
 							<AlertDialogCancel
 								onClick={() => {
 									setEventViewOpen(false);
@@ -66,14 +68,70 @@ export function EventView({
 								{showDescription && (
 									<tr>
 										<th>{t("view.description")}</th>
-										<td>{event?.description_sv}</td>
+										<td>{i18n.language === "en" && event?.description_en
+											? (event?.description_en as string)
+											: (event?.description_sv as string)}
+										</td>
 									</tr>
 								)}
-								{(event?.all_day && enableAllDay) && (
+								{(event && event?.all_day as boolean && enableAllDay) && (
 									<tr>
 										<th>{t("view.all_day")}</th>
 										<td>{event.all_day ? t("yes") : t("no")}</td>
 									</tr>
+								)}
+								{(event && enableTrueEventProperties) && (
+									<> 
+										{/* These are all temporary and should be changed at some point */}
+										<tr>
+											<th>{t("view.location")}</th>
+											<td>{event.location as string}</td>
+										</tr>
+										<tr>
+											<th>{t("view.max_event_users")}</th>
+											<td>{event.max_event_users as number}</td>
+										</tr>
+										<tr>
+											<th>{t("view.signup_start")}</th>
+											<td>{(event.signup_start as Date).toLocaleString()}</td>
+										</tr>
+										<tr>
+											<th>{t("view.signup_end")}</th>
+											<td>{(event.signup_end as Date).toLocaleString()}</td>
+										</tr>
+										<tr>
+											<th>{t("view.signup_not_opened_yet")}</th>
+											<td>{event.signup_not_opened_yet as boolean ? t("yes") : t("no")}</td>
+										</tr>
+										<tr>
+											<th>{t("view.closed")}</th>
+											<td>{event.closed as boolean ? t("yes") : t("no")}</td>
+										</tr>
+										<tr>
+											<th>{t("view.can_signup")}</th>
+											<td>{event.can_signup as boolean ? t("yes") : t("no")}</td>
+										</tr>
+										<tr>
+											<th>{t("view.drink")}</th>
+											<td>{event.drink as boolean ? t("yes") : t("no")}</td>
+										</tr>
+										<tr>
+											<th>{t("view.food")}</th>
+											<td>{event.food as boolean ? t("yes") : t("no")}</td>
+										</tr>
+										<tr>
+											<th>{t("view.cash")}</th>
+											<td>{event.cash as boolean ? t("yes") : t("no")}</td>
+										</tr>
+										<tr>
+											<th>{t("view.drink_package")}</th>
+											<td>{event.drink_package as boolean ? t("yes") : t("no")}</td>
+										</tr>
+										<tr>
+											<th>{t("view.is_nollning_event")}</th>
+											<td>{event.is_nollning_event as boolean ? t("yes") : t("no")}</td>
+										</tr>
+									</>
 								)}
 								{/* Not used
 								<tr>

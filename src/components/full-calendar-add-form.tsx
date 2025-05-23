@@ -221,7 +221,7 @@ export function EventAddForm({
 						can_signup: data.can_signup,
 						drink_package: data.drink_package,
 						is_nollning_event: data.is_nollning_event,
-						priorities: []
+						priorities: [] // TODO: Make this work everywhere
 				  }
 				: {}),
 			};
