@@ -24,6 +24,7 @@ interface EventViewProps {
 	handleOpenDetails?: (event?: CalendarEvent) => void;
 	disableEdit: boolean;
 	enableAllDay?: boolean;
+	enableTrueEventProperties?: boolean;
 }
 
 export function EventView({
@@ -33,6 +34,7 @@ export function EventView({
 	handleOpenDetails,
 	disableEdit,
 	enableAllDay = true,
+	enableTrueEventProperties = false,
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 	const { t } = useTranslation("calendar");
@@ -46,7 +48,7 @@ export function EventView({
 					</AlertDialogDescription>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="flex flex-row justify-between items-center">
-							{event?.title}
+							{event?.title_sv}
 							<AlertDialogCancel
 								onClick={() => {
 									setEventViewOpen(false);
@@ -64,13 +66,13 @@ export function EventView({
 								{showDescription && (
 									<tr>
 										<th>{t("view.description")}</th>
-										<td>{event?.description}</td>
+										<td>{event?.description_sv}</td>
 									</tr>
 								)}
-								{(event?.allDay && enableAllDay) && (
+								{(event?.all_day && enableAllDay) && (
 									<tr>
 										<th>{t("view.all_day")}</th>
-										<td>{event.allDay ? t("yes") : t("no")}</td>
+										<td>{event.all_day ? t("yes") : t("no")}</td>
 									</tr>
 								)}
 								{/* Not used
@@ -97,7 +99,7 @@ export function EventView({
 							</Button>
 						)}
 						{!disableEdit && (
-							<EventDeleteForm id={event?.id} title={event?.title} />
+							<EventDeleteForm id={event?.id} title_sv={event?.title_sv} />
 						)}
 						{!disableEdit && (
 							<EventEditForm
@@ -106,6 +108,7 @@ export function EventView({
 								isDrag={false}
 								editDescription={editDescription}
 								enableAllDay={enableAllDay}
+								enableTrueEventProperties={enableTrueEventProperties}
 							/>
 						)}
 					</AlertDialogFooter>
