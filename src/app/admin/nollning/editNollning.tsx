@@ -63,7 +63,7 @@ const EditNollning = ({ nollning }: Props) => {
 
 	const onSubmit = (values: z.infer<typeof nollningSchema>) => {
 		editNollning.mutate({
-			path: { id: values.id },
+			path: { nollning_id: values.id },
 			body: {
 				name: values.name,
 				description: values.description,

@@ -64,7 +64,7 @@ const DeleteNollning = ({ nollning }: Props) => {
 								className="w-32 min-w-fit"
 								onClick={() =>
 									deleteNollning.mutate({
-										path: { id: nollning.id },
+										path: { nollning_id: nollning.id },
 									})
 								}
 							>
