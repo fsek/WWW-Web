@@ -462,7 +462,6 @@ export function EventEditForm({
 											value={field.value as number}
 											onChange={
 												(value: number) => {
-													console.log("Council ID:", value);
 													field.onChange(value);
 												}
 											}

@@ -86,6 +86,7 @@ export default function Calendar({
 			end: info.event.end!,
 			all_day: info.event.allDay,
 			...(enableTrueEventProperties ? {
+				council_id: info.event.extendedProps.council_id,
 				title_en: info.event.extendedProps.title_en,
 				description_en: info.event.extendedProps.description_en,
 				location: info.event.extendedProps.location,
@@ -122,6 +123,7 @@ export default function Calendar({
 			end: info.event.end!,
 			all_day: info.event.allDay,
 			...(enableTrueEventProperties ? {
+				council_id: info.event.extendedProps.council_id,
 				title_en: info.event.extendedProps.title_en,
 				description_en: info.event.extendedProps.description_en,
 				location: info.event.extendedProps.location,
@@ -151,6 +153,7 @@ export default function Calendar({
 			end: info.oldEvent.end!,
 			all_day: info.oldEvent.allDay,
 			...(enableTrueEventProperties ? {
+				council_id: info.oldEvent.extendedProps.council_id,
 				title_en: info.oldEvent.extendedProps.title_en,
 				description_en: info.oldEvent.extendedProps.description_en,
 				location: info.oldEvent.extendedProps.location,

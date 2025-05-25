@@ -84,6 +84,11 @@ export function EventView({
 									<> 
 										{/* These are all temporary and should be changed at some point */}
 										<tr>
+											{/* TODO: Change this to actually display the proper text pls */}
+											<th>{t("view.council_id")}</th> 
+											<td>{event.council_id as number}</td>
+										</tr>
+										<tr>
 											<th>{t("view.location")}</th>
 											<td>{event.location as string}</td>
 										</tr>

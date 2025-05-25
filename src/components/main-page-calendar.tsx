@@ -59,6 +59,7 @@ export default function MainPageCalendar() {
 
 	interface CustomEventData_ extends CustomEventData { 
 		// We define these manually to avoid having start_time and start as different fields
+		council_id: number;
 		title_en: string;
 		signup_start: Date;
 		signup_end: Date;
@@ -82,6 +83,7 @@ export default function MainPageCalendar() {
 	const events: CalendarEvent<CustomEventData_>[] =
 		(data as EventRead[])?.map((event) => ({
 			id: event.id.toString(),
+			council_id: event.council_id,
 			title_sv: event.title_sv,
 			title_en: event.title_en,
 			start: event.starts_at,
@@ -112,92 +114,26 @@ export default function MainPageCalendar() {
 			<EventsProvider
 				initialCalendarEvents={events}
 				eventColor="#f6ad55"
-				handleAdd={(event) =>
-					addBooking.mutate(
-						{
-							body: { // Having to define this sux, having to type "as string" also does. Basically TODO: fix pls
-								council_id: 1,
-								starts_at: event.start,
-								ends_at: event.end,
-								signup_start: event.start,
-								signup_end: event.end,
-								title_sv: event.title_sv,
-								title_en: event.title_en as string,
-								description_sv: event.description_sv,
-								description_en: event.description_en as string,
-								location: event.location as string,
-								max_event_users: event.max_event_users as number,
-								priorities: event.priorities as EventCreate['priorities'], // This might just work
-								all_day: event.all_day as boolean,
-								signup_not_opened_yet: event.signup_not_opened_yet as boolean,
-								recurring: event.recurring as boolean,
-								drink: event.drink as boolean,
-								food: event.food as boolean,
-								cash: event.cash as boolean,
-								closed: event.closed as boolean,
-								can_signup: event.can_signup as boolean,
-								drink_package: event.drink_package as boolean,
-								is_nollning_event: event.is_nollning_event as boolean,
-							},
-						},
-						{
-							onError: (err) => console.error(t("admin:car.error_add"), err),
-						},
-					)
+				handleAdd={(event) => {
+					console.error("Non-editable calendar, add not supported.", event);
+					return;
 				}
-				handleDelete={(id) =>
-					deleteBooking.mutate(
-						{ path: { event_id: Number(id) } },
-						{
-							onError: (err) =>
-								console.error(`${t("admin:car.error_delete")} ${id}`, err),
-						},
-					)
 				}
+				handleDelete={(id) => {
+					console.error("Non-editable calendar, delete not supported.", id);
+					return;
+				}}
 				handleEdit={(event) => {
-					if (!event.id) {
-						console.error(t("admin:car.error_missing_id"), event);
-						return;
-					}
-					editBooking.mutate(
-						{
-							path: { event_id: Number(event.id) },
-							body: {
-								starts_at: event.start,
-								ends_at: event.end,
-								signup_start: event.start,
-								signup_end: event.end,
-								title_sv: event.title_sv,
-								title_en: event.title_en as string,
-								description_sv: event.description_sv,
-								description_en: event.description_en as string,
-								location: event.location as string,
-								max_event_users: event.max_event_users as number,
-								all_day: event.all_day as boolean,
-								signup_not_opened_yet: event.signup_not_opened_yet as boolean,
-								recurring: event.recurring as boolean,
-								drink: event.drink as boolean,
-								food: event.food as boolean,
-								cash: event.cash as boolean,
-								closed: event.closed as boolean,
-								can_signup: event.can_signup as boolean,
-								drink_package: event.drink_package as boolean,
-								is_nollning_event: event.is_nollning_event as boolean,
-							},
-						},
-						{
-							onError: (err) =>
-								console.error(`${t("admin:car.error_edit")} ${event.id}`, err),
-						},
-					);
+					console.error("Non-editable calendar, edit not supported.", event);
+					return;
 				}}
 			>
 				<div className="py-4">
 					<Calendar
 						showDescription={true}
-						editDescription={true}
+						editDescription={false}
 						handleOpenDetails={() => {}}
-						disableEdit={false}
+						disableEdit={true}
 						enableAllDay={true}
 						enableTrueEventProperties={true}
 					/>
