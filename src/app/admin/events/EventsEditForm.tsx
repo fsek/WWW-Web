@@ -184,7 +184,7 @@ export default function EventsEditForm({
 			{" "}
 			<DialogContent className="min-w-fit lg:max-w-7xl">
 				<DialogHeader>
-					<DialogTitle>{t("admin:event.edit_booking")}</DialogTitle>
+					<DialogTitle>{t("admin:events.edit_booking")}</DialogTitle>
 				</DialogHeader>
 				<hr />
 				<Form {...form}>
@@ -198,9 +198,9 @@ export default function EventsEditForm({
 							name="title_sv"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("admin:event.title_sv")}</FormLabel>
+									<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("admin:event.title_sv")} {...field} />
+										<Input placeholder={t("admin:events.title_sv")} {...field} />
 									</FormControl>
 								</FormItem>
 							)}
@@ -212,9 +212,9 @@ export default function EventsEditForm({
 							name="title_en"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("admin:event.title_en")}</FormLabel>
+									<FormLabel>{t("admin:events.title_en")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("admin:event.title_en")} {...field} />
+										<Input placeholder={t("admin:events.title_en")} {...field} />
 									</FormControl>
 								</FormItem>
 							)}
@@ -226,7 +226,7 @@ export default function EventsEditForm({
 							name="council_id"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
-									<FormLabel>{t("admin:event.council")}</FormLabel>
+									<FormLabel>{t("admin:events.council")}</FormLabel>
 									<AdminChooseCouncil
 										value={field.value}
 										onChange={
@@ -246,7 +246,7 @@ export default function EventsEditForm({
 							name="starts_at"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("admin:event.start_time")}</FormLabel>
+									<FormLabel>{t("admin:events.start_time")}</FormLabel>
 									<AdminChooseDates
 										value={field.value}
 										onChange={field.onChange}
@@ -261,7 +261,7 @@ export default function EventsEditForm({
 							name="ends_at"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("admin:event.end_time")}</FormLabel>
+									<FormLabel>{t("admin:events.end_time")}</FormLabel>
 									<AdminChooseDates
 										value={field.value}
 										onChange={field.onChange}
@@ -276,7 +276,7 @@ export default function EventsEditForm({
 							name="signup_start"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("admin:event.signup_start")}</FormLabel>
+									<FormLabel>{t("admin:events.signup_start")}</FormLabel>
 									<AdminChooseDates
 										value={field.value}
 										onChange={field.onChange}
@@ -291,7 +291,7 @@ export default function EventsEditForm({
 							name="signup_end"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("admin:event.signup_end")}</FormLabel>
+									<FormLabel>{t("admin:events.signup_end")}</FormLabel>
 									<AdminChooseDates
 										value={field.value}
 										onChange={field.onChange}
@@ -306,9 +306,9 @@ export default function EventsEditForm({
 							name="description_sv"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
-									<FormLabel>{t("admin:event.description_sv")}</FormLabel>
+									<FormLabel>{t("admin:events.description_sv")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("admin:event.description_sv")} {...field} />
+										<Input placeholder={t("admin:events.description_sv")} {...field} />
 									</FormControl>
 								</FormItem>
 							)}
@@ -320,9 +320,9 @@ export default function EventsEditForm({
 							name="description_en"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
-									<FormLabel>{t("admin:event.description_en")}</FormLabel>
+									<FormLabel>{t("admin:events.description_en")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("admin:event.description_en")} {...field} />
+										<Input placeholder={t("admin:events.description_en")} {...field} />
 									</FormControl>
 								</FormItem>
 							)}
@@ -334,9 +334,9 @@ export default function EventsEditForm({
 							name="location"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("admin:event.location")}</FormLabel>
+									<FormLabel>{t("admin:events.location")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("admin:event.location")} {...field} />
+										<Input placeholder={t("admin:events.location")} {...field} />
 									</FormControl>
 								</FormItem>
 							)}
@@ -348,11 +348,11 @@ export default function EventsEditForm({
 							name="max_event_users"
 							render={({ field }) => (	
 								<FormItem>
-									<FormLabel>{t("admin:event.max_event_users")}</FormLabel>
+									<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
 									<FormControl>
 										<Input
 											type="number"
-											placeholder={t("admin:event.max_event_users")}
+											placeholder={t("admin:events.max_event_users")}
 											{...field}
           						// value={Number(field.value)}
 										/>
@@ -369,7 +369,7 @@ export default function EventsEditForm({
 								name={fieldName}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t(`admin:event.${fieldName}`)}</FormLabel>
+										<FormLabel>{t(`admin:events.${fieldName}`)}</FormLabel>
 										<FormControl>
 											<Checkbox
 												checked={field.value}
