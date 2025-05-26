@@ -68,9 +68,16 @@ export function EventView({
 								{showDescription && (
 									<tr>
 										<th>{t("view.description")}</th>
-										<td>{i18n.language === "en" && event?.description_en
-											? (event?.description_en as string)
-											: (event?.description_sv as string)}
+										<td>
+											{(() => {
+												const raw =
+													i18n.language === "en"
+														? event?.description_en
+														: event?.description_sv;
+												const desc = typeof raw === "string" ? raw : "";
+												// truncate if too long
+												return desc.length > 30 ? `${desc.slice(0, 30)}…` : desc;
+											})()}
 										</td>
 									</tr>
 								)}
