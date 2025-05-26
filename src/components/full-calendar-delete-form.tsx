@@ -19,10 +19,10 @@ import { useTranslation } from "react-i18next";
 
 interface EventDeleteFormProps {
 	id?: string;
-	title?: string;
+	title_sv?: string;
 }
 
-export function EventDeleteForm({ id, title }: EventDeleteFormProps) {
+export function EventDeleteForm({ id, title_sv }: EventDeleteFormProps) {
 	const { t } = useTranslation("calendar");
 	const { deleteEvent } = useEvents();
 	const { eventDeleteOpen, setEventDeleteOpen, setEventViewOpen } = useEvents();
@@ -54,7 +54,7 @@ export function EventDeleteForm({ id, title }: EventDeleteFormProps) {
 				</AlertDialogDescription>
 				<AlertDialogHeader>
 					<AlertDialogTitle className="flex flex-row justify-between items-center">
-						{t("delete.delete")} "{title}"
+						{t("delete.delete")} "{title_sv}"
 					</AlertDialogTitle>
 					{t("delete.are_you_sure")}
 				</AlertDialogHeader>
