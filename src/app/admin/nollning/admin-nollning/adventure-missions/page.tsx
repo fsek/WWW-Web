@@ -36,13 +36,15 @@ const page = () => {
 			header: "Uppdrag",
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.accessor("min_points", {
-			header: "Min points",
-			cell: (info) => info.getValue(),
-		}),
-		columnHelper.accessor("max_points", {
-			header: "Max points",
-			cell: (info) => info.getValue(),
+		columnHelper.display({
+			id: "points",
+			header: "Poäng",
+			cell: (info) => {
+				const row = info.row.original;
+				return row.min_points === row.max_points
+					? `${row.max_points}`
+					: `${row.min_points}–${row.max_points}`;
+			},
 		}),
 		columnHelper.accessor("nollning_week", {
 			header: "Vecka",

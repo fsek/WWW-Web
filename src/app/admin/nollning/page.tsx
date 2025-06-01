@@ -14,7 +14,7 @@ const Nollning = () => {
 
 	return (
 		<Suspense>
-			<div className="px-8 space-x-4">
+			<div className="px-8 space-x-4 space-y-4 w-full">
 				<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
 					Nollningar
 				</h3>

@@ -56,5 +56,8 @@
 	},
 	"permissions": {
 		"self": "Permissions"
+	},
+	"nollning": {
+		"self": "Nollning"
 	}
 }
