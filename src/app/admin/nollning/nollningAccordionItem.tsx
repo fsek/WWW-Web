@@ -25,9 +25,13 @@ const NollningAccordionItem = ({ nollning }: Props) => {
 			className="w-full border-b transition duration-200 hover:bg-gray-50"
 			value={nollning.name}
 		>
-			<AccordionTrigger className="w-full">{nollning.name}</AccordionTrigger>
-			<AccordionContent className="w-full">
-				{nollning.description}
+			<AccordionTrigger className="flex w-full px-4">
+				<p className="text-base">{nollning.name}</p>
+			</AccordionTrigger>
+			<AccordionContent className="w-full px-4 space-y-4">
+				<div>
+					<p className="w-full break-words">{nollning.description}</p>
+				</div>
 				<div className="space-x-3 lg:col-span-3 flex">
 					<EditNollning nollning={nollning} />
 					<DeleteNollning nollning={nollning} />

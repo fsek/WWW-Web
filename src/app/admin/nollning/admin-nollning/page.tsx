@@ -4,7 +4,7 @@ import { getNollningOptions } from "@/api/@tanstack/react-query.gen";
 import React, { Suspense, useState } from "react";
 import type { GroupRead, NollningGroupRead } from "@/api";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createColumnHelper, type Row } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import useCreateTable from "@/widgets/useCreateTable";
 import AdminTable from "@/widgets/AdminTable";
 import { useSearchParams } from "next/navigation";
@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import CreateGroup from "./groups/CreateGroup";
 import EditGroup from "./groups/editGroup";
+import { ArrowLeft } from "lucide-react";
 
 export default function Page() {
 	const searchParams = useSearchParams();
@@ -28,6 +29,11 @@ export default function Page() {
 		}),
 	});
 
+	const handleEditGroup = (group: GroupRead) => {
+		setSelectedGroup(group);
+		setOpen(true);
+	};
+
 	const columnHelper = createColumnHelper<NollningGroupRead>();
 	const columns = [
 		columnHelper.accessor("group.name", {
@@ -35,6 +41,7 @@ export default function Page() {
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("group.group_type", {
+			header: "Group Type",
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("group.group_users", {
@@ -56,18 +63,33 @@ export default function Page() {
 		setSelectedGroup(null);
 	}
 
-	const onRowClick = (e: Row<NollningGroupRead>) => {
-		setSelectedGroup(e.original.group);
-		setOpen(true);
+	const routerPush = (subPage: string) => {
+		const params = new URLSearchParams({
+			id: `${nollningID}`,
+			group: `${selectedGroup?.id ?? 0}`,
+		});
+		router.push(
+			`/admin/nollning/admin-nollning/${subPage}?${params.toString()}`,
+		);
 	};
 
 	return (
 		<Suspense fallback={<div>{"Ingen nollning vald :(("}</div>}>
-			<div className="px-8 space-x-4 space-y-4">
-				<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-					Administrera "{data.name}"
-				</h3>
-				<p className="py-3">
+			<div className="px-12 py-4 space-x-4 space-y-4">
+				<div className="justify-between w-full flex flex-row">
+					<h3 className="text-xl underline underline-offset-4 decoration-sidebar">
+						Administrera "{data.name}"
+					</h3>
+					<Button
+						variant="ghost"
+						className="flex items-center gap-2"
+						onClick={() => router.push("/admin/nollning")}
+					>
+						<ArrowLeft className="w-4 h-4" />
+						Tillbaka
+					</Button>
+				</div>
+				<p className="">
 					Här kan du skapa och redigera faddergrupper och äventyrsuppdrag
 				</p>
 				<div className="space-x-2 lg:col-span-2 flex">
@@ -78,22 +100,29 @@ export default function Page() {
 				</div>
 				<AdminTable
 					table={table}
-					onRowClick={(row) => {
-						const params = new URLSearchParams({
-							id: `${nollningID}`,
-							group: `${row.original.group.id}`,
-						});
-						router.push(
-							`/admin/nollning/admin-nollning/completed-missions?${params.toString()}`,
-						);
-					}}
+					onRowClick={(row) => handleEditGroup(row.original.group)}
 				/>
 				<EditGroup
 					open={open}
 					onClose={onClose}
 					selectedGroup={selectedGroup as GroupRead}
-					nollning_id={0}
-				/>
+					nollning_id={nollningID}
+				>
+					<div className="flex felx-row space-x-2 w-full">
+						<Button
+							className="flex-1"
+							onClick={() => routerPush("completed-missions")}
+						>
+							Avklarade Uppdrag
+						</Button>
+						<Button
+							className="flex-1"
+							onClick={() => routerPush("group-users")}
+						>
+							Medlemmar
+						</Button>
+					</div>
+				</EditGroup>
 			</div>
 		</Suspense>
 	);

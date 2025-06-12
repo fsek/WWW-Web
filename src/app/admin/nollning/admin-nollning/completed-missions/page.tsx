@@ -16,13 +16,14 @@ import {
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useState } from "react";
 import idAsNumber from "../idAsNumber";
 import useCreateTable from "@/widgets/useCreateTable";
 import AdminTable from "@/widgets/AdminTable";
 import MissionPointRangeDialog from "./missionPointRangeDialog";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 const page = () => {
 	const searchParams = useSearchParams();
@@ -60,7 +61,7 @@ const page = () => {
 
 	function rowColor(row: Row<AdventureMissionRead>) {
 		if (completedMissionsID.includes(row.original.id)) {
-			return "bg-green-100";
+			return "bg-sidebar";
 		}
 		return "white";
 	}
@@ -105,12 +106,10 @@ const page = () => {
 
 	const mutationOptions = {
 		onSuccess: () => {
-			console.log("Yay!!");
 			setEditDialogOpen(false);
 			setSelectedMission(null);
 		},
 		onError: () => {
-			console.log("oopsie");
 			setEditDialogOpen(false);
 			setSelectedMission(null);
 		},
@@ -118,9 +117,6 @@ const page = () => {
 
 	function handleRowClickFixedPoints(row: Row<AdventureMissionRead>) {
 		if (completedMissionsID.includes(row.original.id)) {
-			console.log(nollningID);
-			console.log(groupID);
-			console.log(row.original.id);
 			removeCompletedMission.mutate(
 				{
 					path: {
@@ -136,7 +132,6 @@ const page = () => {
 				mutationOptions,
 			);
 		} else {
-			console.log("hejHej");
 			addCompletedMission.mutate(
 				{
 					path: { group_id: groupID },
@@ -153,10 +148,8 @@ const page = () => {
 	function handleRowClickPointRange(row: Row<AdventureMissionRead>) {
 		setSelectedMission(row.original);
 		if (completedMissionsID.includes(row.original.id)) {
-			console.log("tabort/ändra");
 			setEditDialogOpen(true);
 		} else {
-			console.log("läggtill");
 			setAddDialogOpen(true);
 		}
 	}
@@ -198,12 +191,28 @@ const page = () => {
 		columns,
 	});
 
+	const router = useRouter();
+
 	return (
-		<Suspense fallback={<div>{"Ingen nollning vald :(("}</div>}>
-			<div className="px-8 space-x-4 space-y-4">
-				<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-					Äventyrsuppdrag för "{group.data.name}"
-				</h3>
+		<Suspense
+			fallback={<div>{"Ingen faddergrupp (eller nollning) vald :(("}</div>}
+		>
+			<div className="px-12 py-4 space-x-4 space-y-4">
+				<div className="justify-between w-full flex flex-row">
+					<h3 className="text-xl underline underline-offset-4 decoration-sidebar">
+						Äventyrsuppdrag för "{group.data.name}"
+					</h3>
+					<Button
+						variant="ghost"
+						className="flex items-center gap-2"
+						onClick={() =>
+							router.push(`/admin/nollning/admin-nollning/?id=${nollningID}`)
+						}
+					>
+						<ArrowLeft className="w-4 h-4" />
+						Tillbaka
+					</Button>
+				</div>
 				<p className="py-3">
 					Här kan du skapa och redigera faddergrupper och äventyrsuppdrag
 				</p>
@@ -213,7 +222,6 @@ const page = () => {
 					onRowClick={(row) => {
 						if (row.original.min_points !== row.original.max_points) {
 							handleRowClickPointRange(row);
-							console.log("hejhejhej");
 						} else {
 							handleRowClickFixedPoints(row);
 						}

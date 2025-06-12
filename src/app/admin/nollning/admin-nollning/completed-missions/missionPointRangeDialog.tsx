@@ -73,9 +73,11 @@ const MissionPointRangeDialog = ({
 				}
 			}}
 		>
-			<DialogContent>
+			<DialogContent className="px-10 py-8">
 				<DialogHeader>
-					<DialogTitle>{title}</DialogTitle>
+					<DialogTitle className="text-xl underline underline-offset-4 decoration-sidebar">
+						{title}
+					</DialogTitle>
 				</DialogHeader>
 				<Form {...form}>
 					<form
@@ -83,7 +85,7 @@ const MissionPointRangeDialog = ({
 							console.log(error),
 						)}
 					>
-						<div className="px-8 space-x-4 space-y-4">
+						<div className="space-x-4 space-y-4">
 							<FormField
 								control={form.control}
 								name={"points"}

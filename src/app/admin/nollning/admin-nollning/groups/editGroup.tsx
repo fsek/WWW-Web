@@ -9,7 +9,6 @@ import {
 	Dialog,
 	DialogContent,
 	DialogTitle,
-	DialogClose,
 	DialogHeader,
 } from "@/components/ui/dialog";
 import {
@@ -22,7 +21,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import type React from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import GroupTypeSelect from "./GroupTypeSelect";
@@ -38,9 +38,16 @@ interface Props {
 	onClose: () => void;
 	selectedGroup: GroupRead;
 	nollning_id: number;
+	children?: React.ReactNode;
 }
 
-const EditGroup = ({ open, onClose, selectedGroup, nollning_id }: Props) => {
+const EditGroup = ({
+	open,
+	onClose,
+	selectedGroup,
+	nollning_id,
+	children,
+}: Props) => {
 	const form = useForm<z.infer<typeof GroupSchema>>({
 		resolver: zodResolver(GroupSchema),
 		defaultValues: {
@@ -127,15 +134,29 @@ const EditGroup = ({ open, onClose, selectedGroup, nollning_id }: Props) => {
 					}
 				}}
 			>
-				<DialogContent>
+				<DialogContent className="px-10 py-8 space-y-2">
 					<DialogHeader>
-						<DialogTitle className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-							Skapa Faddergrupp
+						<DialogTitle className=" px-4 text-2xl underline underline-offset-4 decoration-sidebar">
+							{selectedGroup?.name ?? "ingen grupp vald :(("}
 						</DialogTitle>
 					</DialogHeader>
+					<div className="border border-gray-300 rounded-lg">
+						<div className="space-y-4 p-4">
+							<h3 className="underline underline-offset-2 decoration-sidebar">
+								Administrera faddergrupp
+							</h3>
+							{children}
+						</div>
+					</div>
 					<Form {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)}>
-							<div className="px-8 space-x-4 space-y-4">
+						<form
+							className="border border-gray-300 rounded-lg "
+							onSubmit={form.handleSubmit(onSubmit)}
+						>
+							<div className="space-x-4 space-y-4 p-4">
+								<h3 className="underline underline-offset-2 decoration-sidebar">
+									Redigera Faddergrupp
+								</h3>
 								<FormField
 									control={form.control}
 									name={"name"}
@@ -162,13 +183,18 @@ const EditGroup = ({ open, onClose, selectedGroup, nollning_id }: Props) => {
 									)}
 								/>
 
-								<Button type="submit" className="w-32 min-w-fit">
-									Skapa
-								</Button>
-								<Button variant="destructive" onClick={onDelete}>
-									Förinta
-								</Button>
-								<DialogClose>Avbryt</DialogClose>
+								<div className=" space-x-2 flex flex-row w-full">
+									<Button type="submit" className="flex-1">
+										Spara ändringar
+									</Button>
+									<Button
+										variant="destructive"
+										className="flex-1"
+										onClick={onDelete}
+									>
+										Förinta
+									</Button>
+								</div>
 							</div>
 						</form>
 					</Form>

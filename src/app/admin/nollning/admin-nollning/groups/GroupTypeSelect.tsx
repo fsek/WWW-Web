@@ -21,7 +21,7 @@ const GroupTypeSelect = ({ value, onChange }: Props) => {
 
 	return (
 		<Select value={value.toString()} onValueChange={(val) => onChange(val)}>
-			<SelectTrigger className="w-[280px]">
+			<SelectTrigger className="w-full">
 				<SelectValue placeholder="Select a Council" />
 			</SelectTrigger>
 			<SelectContent>

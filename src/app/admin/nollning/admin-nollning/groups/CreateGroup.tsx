@@ -113,7 +113,7 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 					</DialogHeader>
 					<Form {...groupForm}>
 						<form onSubmit={groupForm.handleSubmit(onSubmit)}>
-							<div className="px-8 space-x-4">
+							<div className="px-8 space-x-4 space-y-4">
 								<FormField
 									control={groupForm.control}
 									name={"name"}

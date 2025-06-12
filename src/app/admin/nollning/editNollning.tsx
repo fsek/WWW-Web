@@ -91,7 +91,7 @@ const EditNollning = ({ nollning }: Props) => {
 					</DialogHeader>
 					<Form {...nollningForm}>
 						<form onSubmit={nollningForm.handleSubmit(onSubmit)}>
-							<div className="px-8 space-x-4">
+							<div className="px-8 space-x-4 space-y-4">
 								<FormField
 									control={nollningForm.control}
 									name={"name"}

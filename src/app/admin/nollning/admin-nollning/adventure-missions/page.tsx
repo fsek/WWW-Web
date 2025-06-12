@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useState } from "react";
 import idAsNumber from "../idAsNumber";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -11,6 +11,8 @@ import useCreateTable from "@/widgets/useCreateTable";
 import AdminTable from "@/widgets/AdminTable";
 import CreateAdventureMission from "./createAdventureMission";
 import EditAdventureMission from "./editAdventureMission";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 const page = () => {
 	const searchParams = useSearchParams();
@@ -59,26 +61,46 @@ const page = () => {
 		setSelectedMission(null);
 	}
 
+	const router = useRouter();
+
 	return (
-		<Suspense fallback={<div>Nollning finns ej</div>}>
-			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-				Administrera äventyrsuppdrag för "{data.name}"
-			</h3>
-			<p className="py-3">Här kan du skapa äventyrsuppdrag</p>
-			<CreateAdventureMission nollningID={nollningID} />
-			<AdminTable
-				table={table}
-				onRowClick={(e) => {
-					setSelectedMission(e.original);
-					setOpen(true);
-				}}
-			/>
-			<EditAdventureMission
-				open={open}
-				onClose={onClose}
-				selectedMission={selectedMission as AdventureMissionRead}
-				nollning_id={nollningID}
-			/>
+		<Suspense fallback={<div>{"Ingen nollning vald :(("}</div>}>
+			<div className="px-12 py-4 space-x-4 space-y-4">
+				<div className="justify-between w-full flex flex-row">
+					<h3 className="text-xl underline underline-offset-4 decoration-sidebar">
+						Administrera äventyrsuppdrag för "{data.name}"
+					</h3>
+					<Button
+						variant="ghost"
+						className="flex items-center gap-2"
+						onClick={() =>
+							router.push(`/admin/nollning/admin-nollning?id=${nollningID}`)
+						}
+					>
+						<ArrowLeft className="w-4 h-4" />
+						Tillbaka
+					</Button>
+				</div>
+				<div className="flex flex-row w-full justify-between items-end">
+					<p className="">
+						Klicka på ett uppdrag för att redigera eller förinta det!
+					</p>
+					<CreateAdventureMission nollningID={nollningID} />
+				</div>
+				<AdminTable
+					table={table}
+					onRowClick={(e) => {
+						setSelectedMission(e.original);
+						setOpen(true);
+					}}
+				/>
+				<EditAdventureMission
+					open={open}
+					onClose={onClose}
+					selectedMission={selectedMission as AdventureMissionRead}
+					nollning_id={nollningID}
+				/>
+			</div>
 		</Suspense>
 	);
 };
