@@ -4,8 +4,7 @@ import {
 	getPaginationRowModel,
 	getSortedRowModel,
 	type SortingState,
-	type AccessorKeyColumnDefBase,
-	type IdIdentifier,
+	type ColumnDef,
 } from "@tanstack/react-table";
 import { useState } from "react";
 
@@ -14,10 +13,9 @@ export default function createTable<T>({
 	columns,
 }: {
 	data: T[];
-	columns: Array<
-		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-		AccessorKeyColumnDefBase<T, any> & Partial<IdIdentifier<T, any>>
-	>;
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	columns: ColumnDef<T, any>[];
+	//Array<AccessorKeyColumnDefBase<T, any> & Partial<IdIdentifier<T, any>>>;
 }) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 

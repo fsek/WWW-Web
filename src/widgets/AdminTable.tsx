@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { flexRender, type Row, type Table } from "@tanstack/react-table";
 import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 
@@ -9,7 +10,12 @@ const pageSizeOptions = [5, 10, 20, 50];
 export default function AdminTable<T>({
 	table,
 	onRowClick,
-}: { table: Table<T>; onRowClick?: (row: Row<T>) => void }) {
+	rowClassName,
+}: {
+	table: Table<T>;
+	onRowClick?: (row: Row<T>) => void;
+	rowClassName?: (row: Row<T>) => string;
+}) {
 	const { pageIndex } = table.getState().pagination;
 	const pageCount = table.getPageCount();
 
@@ -83,7 +89,7 @@ export default function AdminTable<T>({
 							<tr
 								key={row.id}
 								onClick={() => onRowClick?.(row)}
-								className="border-t hover:bg-gray-50"
+								className={cn("border-t hover:bg-gray-50", rowClassName?.(row))}
 							>
 								{row.getVisibleCells().map((cell) => (
 									<td
