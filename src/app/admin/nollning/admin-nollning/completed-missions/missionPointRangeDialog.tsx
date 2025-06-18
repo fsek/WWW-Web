@@ -21,15 +21,13 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const editCompletedMissionSchema = z.object({
-	points: z.number().int(),
-});
-
 interface Props {
 	title: string;
 	open: boolean;
 	onClose: () => void;
 	defaultPoints?: number;
+	maxPoints?: number;
+	minPoints?: number;
 	selectedMission: AdventureMissionRead;
 	children?: React.ReactNode;
 	onSubmit: (points: number, adventure_mission_id: number) => void;
@@ -40,10 +38,30 @@ const MissionPointRangeDialog = ({
 	open,
 	selectedMission,
 	defaultPoints = 0,
+	maxPoints,
+	minPoints,
 	children,
 	onSubmit,
 	onClose,
 }: Props) => {
+
+	const editCompletedMissionSchema = z.object({
+		points: z.number().int(),
+	}).refine((data) => {
+		// Enforce point limitations
+		if (maxPoints && data.points > maxPoints) {
+			return false;
+		}
+		if (minPoints && data.points < minPoints) {
+			return false;
+		}
+		return true;
+	},
+	{
+		message: `Points must be between ${minPoints ?? 0} and ${maxPoints ?? "∞"}.`,
+		path: ["points"]
+	});
+
 	const form = useForm<z.infer<typeof editCompletedMissionSchema>>({
 		resolver: zodResolver(editCompletedMissionSchema),
 		defaultValues: {
@@ -100,6 +118,11 @@ const MissionPointRangeDialog = ({
 												onChange={(e) => field.onChange(e.target.valueAsNumber)}
 											/>
 										</FormControl>
+										{form.formState.errors.points && (
+											<p className="text-red-500 text-sm">
+												{form.formState.errors.points.message}
+											</p>
+										)}
 									</FormItem>
 								)}
 							/>

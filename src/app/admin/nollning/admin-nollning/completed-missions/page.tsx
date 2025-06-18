@@ -236,6 +236,8 @@ const page = () => {
 							(e) => e.adventure_mission.id === selectedMission?.id,
 						)?.points ?? 0
 					}
+					maxPoints={selectedMission?.max_points ?? 0}
+					minPoints={selectedMission?.min_points ?? 0}
 					onClose={() => {
 						setEditDialogOpen(false);
 						setSelectedMission(null);
