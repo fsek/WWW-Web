@@ -110,8 +110,12 @@ const CreateNollning = () => {
 										</FormItem>
 									)}
 								/>
-								<Button type="submit" className="w-32 min-w-fit">
-									Skapa
+								<Button 
+									type="submit" 
+									className="w-32 min-w-fit"
+									disabled={createNollning.isPending}
+								>
+									{createNollning.isPending ? "Skapar..." : "Skapa"}
 								</Button>
 								<DialogClose>Avbryt</DialogClose>
 							</div>
