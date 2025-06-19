@@ -15,38 +15,18 @@ import type { CalendarEvent, CustomEventData } from "@/utils/full-calendar-seed"
 import { useTranslation } from "react-i18next";
 import type { EventCreate, EventRead} from "@/api";
 
-export default function MainPageCalendar() {
+interface MainPageCalendarProps {
+	mini?: boolean;
+}
+
+export default function MainPageCalendar({
+	mini = false,
+}: MainPageCalendarProps) {
 	const { t } = useTranslation();
-	const queryClient = useQueryClient();
 
 	// Fetch booking data
 	const { data, error, isFetching } = useQuery({
 		...getAllEventsOptions(),
-	});
-
-	// Mutations for adding, deleting, and editing bookings
-	const addBooking = useMutation({
-		...createEventMutation(),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
-		},
-		throwOnError: false,
-	});
-
-	const deleteBooking = useMutation({
-		...eventRemoveMutation(),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
-		},
-		throwOnError: false,
-	});
-
-	const editBooking = useMutation({
-		...eventUpdateMutation(),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
-		},
-		throwOnError: false,
 	});
 
 	if (isFetching) {
@@ -108,7 +88,7 @@ export default function MainPageCalendar() {
 		})) ?? [];
 
 	return (
-		<div className="px-8">
+		<div className={`px-8 ${mini ? "h-full flex flex-col" : ""}`}>
 			<Separator />
 
 			<EventsProvider
@@ -128,7 +108,7 @@ export default function MainPageCalendar() {
 					return;
 				}}
 			>
-				<div className="py-4">
+				<div className={`py-4 ${mini ? "flex-1 flex flex-col h-full" : ""}`}>
 					<Calendar
 						showDescription={true}
 						editDescription={false}
@@ -136,6 +116,7 @@ export default function MainPageCalendar() {
 						disableEdit={true}
 						enableAllDay={true}
 						enableTrueEventProperties={true}
+						mini={mini}
 					/>
 				</div>
 			</EventsProvider>

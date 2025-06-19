@@ -30,7 +30,7 @@ import { getDateFromMinutes } from "@/lib/utils";
 import { Card } from "./ui/card";
 import { EventEditForm } from "./full-calendar-edit-form";
 import { EventView } from "./full-calendar-event-view";
-import { EventAddForm } from "./full-calendar-add-form";
+import { useTranslation } from "react-i18next";
 
 type EventItemProps = {
 	info: EventContentArg;
@@ -51,6 +51,7 @@ interface CalendarProps {
 	disableEdit?: boolean;
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
+	mini?: boolean; 
 }
 
 export default function Calendar({
@@ -60,7 +61,9 @@ export default function Calendar({
 	disableEdit,
 	enableAllDay = true,
 	enableTrueEventProperties = false,
+	mini = false, 
 }: CalendarProps) {
+	const { i18n, t } = useTranslation();
 	const { events, setEventAddOpen, setEventEditOpen, eventViewOpen, setEventViewOpen } =
 		useEvents();
 
@@ -103,7 +106,6 @@ export default function Calendar({
 				can_signup: info.event.extendedProps.can_signup,
 				drink_package: info.event.extendedProps.drink_package,
 				is_nollning_event: info.event.extendedProps.is_nollning_event,
-
 			} : {})
 		};
 
@@ -140,7 +142,6 @@ export default function Calendar({
 				can_signup: info.event.extendedProps.can_signup,
 				drink_package: info.event.extendedProps.drink_package,
 				is_nollning_event: info.event.extendedProps.is_nollning_event,
-
 			} : {})
 		};
 
@@ -170,7 +171,6 @@ export default function Calendar({
 				can_signup: info.oldEvent.extendedProps.can_signup,
 				drink_package: info.oldEvent.extendedProps.drink_package,
 				is_nollning_event: info.oldEvent.extendedProps.is_nollning_event,
-
 			} : {})
 		};
 
@@ -186,7 +186,7 @@ export default function Calendar({
 
 		return (
 			<div className="overflow-hidden w-full">
-				{info.view.type === "dayGridMonth" ? (
+				{info.view.type === "dayGridMonth" || info.view.type === "dayGridWeek"? (
 					<div
 						style={{ backgroundColor: info.backgroundColor }}
 						className={
@@ -227,7 +227,7 @@ export default function Calendar({
 							})}
 						</p>
 					</div>
-				) : info.view.type === "timeGridWeek" ? (
+				) : info.view.type === "timeGridWeek" || info.view.type === "dayGridWeek" ? (
 					<div className="flex flex-col space-y-0.5 rounded-sm items-center w-full text-xs sm:text-sm md:text-md">
 						<p className="flex font-semibold">{weekday}</p>
 						{info.isToday ? (
@@ -252,6 +252,10 @@ export default function Calendar({
 	};
 
 	const DayRender = ({ info }: DayRenderProps) => {
+		if (mini) {
+			return null;
+		}
+		
 		return (
 			<div className="flex">
 				{info.view.type === "dayGridMonth" && info.isToday ? (
@@ -293,7 +297,7 @@ export default function Calendar({
 	const calendarLatestTime = `${latestHour}:${latestMin}`;
 
 	return (
-		<div className="space-y-5">
+		<div className="space-y-5 flex-1 flex flex-col">
 			<CalendarNav
 				calendarRef={calendarRef}
 				start={selectedStart}
@@ -303,12 +307,14 @@ export default function Calendar({
 				disableEdit={disableEdit}
 				enableAllDay={enableAllDay}
 				enableTrueEventProperties={enableTrueEventProperties}
+				mini={mini}
 			/>
 
-			<Card className="p-3">
+			<Card className="p-3 flex-1">
 				<FullCalendar
 					ref={calendarRef}
 					timeZone="local"
+					locale={i18n.language}
 					plugins={[
 						dayGridPlugin,
 						timeGridPlugin,
@@ -316,7 +322,7 @@ export default function Calendar({
 						interactionPlugin,
 						listPlugin,
 					]}
-					initialView="timeGridWeek"
+					initialView={mini ? "dayGridWeek" : "timeGridWeek" }
 					headerToolbar={false}
 					slotMinTime={calendarEarliestTime}
 					slotMaxTime={calendarLatestTime}
@@ -324,7 +330,12 @@ export default function Calendar({
 					allDayMaintainDuration={true}
 					forceEventDuration={true}
 					firstDay={1}
-					height={"32vh"}
+					height={mini ? "100%" : "32vh"}
+					contentHeight={mini ? "100%": "auto"}
+					dayHeaderFormat={{
+						weekday: "long",
+					}}
+					allDayContent={t("calendar:all_day")}
 					displayEventEnd={true}
 					windowResizeDelay={0}
 					events={events}
@@ -339,7 +350,6 @@ export default function Calendar({
 						hour12: false,
 					}}
 					eventBorderColor={"black"}
-					contentHeight={"auto"}
 					expandRows={true}
 					dayCellContent={(dayInfo) => <DayRender info={dayInfo} />}
 					eventContent={(eventInfo) => <EventItem info={eventInfo} />}

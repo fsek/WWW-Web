@@ -52,6 +52,7 @@ interface CalendarNavProps {
 	disableEdit?: boolean;
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
+	mini?: boolean;
 }
 
 export default function CalendarNav({
@@ -63,6 +64,7 @@ export default function CalendarNav({
 	disableEdit = false,
 	enableAllDay = true,
 	enableTrueEventProperties = false,
+	mini = false,
 }: CalendarNavProps) {
 	const { t, i18n } = useTranslation("calendar");
 	const [currentView, setCurrentView] = useState("timeGridWeek");
@@ -94,7 +96,7 @@ export default function CalendarNav({
 
 				{/* Day Lookup */}
 
-				{currentView === "timeGridDay" && (
+				{currentView === "timeGridDay" || currentView === "dayGridWeek" && (
 					<Popover open={daySelectOpen} onOpenChange={setDaySelectOpen}>
 						<PopoverTrigger asChild>
 							<Button
@@ -243,62 +245,64 @@ export default function CalendarNav({
 
 				{/* Change view with tabs */}
 
-				<Tabs defaultValue="timeGridWeek">
-					<TabsList className="flex w-44 md:w-64">
-						<TabsTrigger
-							value="timeGridDay"
-							onClick={() =>
-								setView(calendarRef, "timeGridDay", setCurrentView)
-							}
-							className={`space-x-1 ${
-								currentView === "timeGridDay" ? "w-1/2" : "w-1/4"
-							}`}
-						>
-							<GalleryVertical className="h-5 w-5" />
-							{currentView === "timeGridDay" && (
-								<p className="text-xs md:text-sm">{t("nav.day")}</p>
-							)}
-						</TabsTrigger>
-						<TabsTrigger
-							value="timeGridWeek"
-							onClick={() =>
-								setView(calendarRef, "timeGridWeek", setCurrentView)
-							}
-							className={`space-x-1 ${
-								currentView === "timeGridWeek" ? "w-1/2" : "w-1/4"
-							}`}
-						>
-							<Tally3 className="h-5 w-5" />
-							{currentView === "timeGridWeek" && (
-								<p className="text-xs md:text-sm">{t("nav.week")}</p>
-							)}
-						</TabsTrigger>
-						<TabsTrigger
-							value="dayGridMonth"
-							onClick={() =>
-								setView(calendarRef, "dayGridMonth", setCurrentView)
-							}
-							className={`space-x-1 ${
-								currentView === "dayGridMonth" ? "w-1/2" : "w-1/4"
-							}`}
-						>
-							<Table className="h-5 w-5 rotate-90" />
-							{currentView === "dayGridMonth" && (
-								<p className="text-xs md:text-sm">{t("nav.month")}</p>
-							)}
-						</TabsTrigger>
-					</TabsList>
-				</Tabs>
+				{!mini && (
+					<Tabs defaultValue="timeGridWeek">
+						<TabsList className="flex w-44 md:w-64">
+							<TabsTrigger
+								value="timeGridDay"
+								onClick={() =>
+									setView(calendarRef, "timeGridDay", setCurrentView)
+								}
+								className={`space-x-1 ${
+									currentView === "timeGridDay" ? "w-1/2" : "w-1/4"
+								}`}
+							>
+								<GalleryVertical className="h-5 w-5" />
+								{currentView === "timeGridDay" && (
+									<p className="text-xs md:text-sm">{t("nav.day")}</p>
+								)}
+							</TabsTrigger>
+							<TabsTrigger
+								value="timeGridWeek"
+								onClick={() =>
+									setView(calendarRef, "timeGridWeek", setCurrentView)
+								}
+								className={`space-x-1 ${
+									currentView === "timeGridWeek" ? "w-1/2" : "w-1/4"
+								}`}
+							>
+								<Tally3 className="h-5 w-5" />
+								{currentView === "timeGridWeek" && (
+									<p className="text-xs md:text-sm">{t("nav.week")}</p>
+								)}
+							</TabsTrigger>
+							<TabsTrigger
+								value="dayGridMonth"
+								onClick={() =>
+									setView(calendarRef, "dayGridMonth", setCurrentView)
+								}
+								className={`space-x-1 ${
+									currentView === "dayGridMonth" ? "w-1/2" : "w-1/4"
+								}`}
+							>
+								<Table className="h-5 w-5 rotate-90" />
+								{currentView === "dayGridMonth" && (
+									<p className="text-xs md:text-sm">{t("nav.month")}</p>
+								)}
+							</TabsTrigger>
+						</TabsList>
+					</Tabs>
+				)}
 
 				{/* Add event button  */}
 				{!disableEdit && (
-				<EventAddForm 
-					start={start} 
-					end={end} 
-					editDescription={editDescription} 
-					enableAllDay={enableAllDay}
-					enableTrueEventProperties={enableTrueEventProperties}
-				/>
+					<EventAddForm 
+						start={start} 
+						end={end} 
+						editDescription={editDescription} 
+						enableAllDay={enableAllDay}
+						enableTrueEventProperties={enableTrueEventProperties}
+					/>
 				)}
 			</div>
 		</div>

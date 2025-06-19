@@ -21,7 +21,9 @@ export default function MainLanding() {
 				imageUrl={mh.src}
 				className="relative h-[30vh] bg-cover bg-center mt-4"
 			/>
-			<MainPageCalendar />
+			<div className="my-20 mx-[10%] overflow-hidden h-[35vh]">
+				<MainPageCalendar mini={true} />
+			</div>
 
 			<div className="flex-grow">
 				<p>
