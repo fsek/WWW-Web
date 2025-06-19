@@ -13,7 +13,7 @@ import {
 	FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
+import { Textarea } from "@/components/ui/textarea";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import {
@@ -35,8 +35,8 @@ const eventsEditSchema = z.object({
 	ends_at: z.date(),
 	signup_start: z.date(),
 	signup_end: z.date(),
-	description_sv: z.string().max(1000),
-	description_en: z.string().max(1000),
+	description_sv: z.string().max(1000).min(1),
+	description_en: z.string().max(1000).min(1),
 	location: z.string().max(100),
 	max_event_users: z.coerce.number().nonnegative(),
 	all_day: z.boolean(),
@@ -308,7 +308,12 @@ export default function EventsEditForm({
 								<FormItem className="lg:col-span-2">
 									<FormLabel>{t("admin:events.description_sv")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("admin:events.description_sv")} {...field} />
+										<Textarea
+											placeholder={t("admin:events.description_sv")}
+											className="max-h-36"
+											{...field}
+											value={field.value as string}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -322,7 +327,12 @@ export default function EventsEditForm({
 								<FormItem className="lg:col-span-2">
 									<FormLabel>{t("admin:events.description_en")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("admin:events.description_en")} {...field} />
+										<Textarea
+											placeholder={t("admin:events.description_en")}
+											className="max-h-36"
+											{...field}
+											value={field.value as string}
+										/>
 									</FormControl>
 								</FormItem>
 							)}

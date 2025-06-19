@@ -266,7 +266,7 @@ export default function Events() {
 							<Separator />
 							<Calendar
 								showDescription={true}
-								editDescription={true} // Note that setting this to false wont work with events. 
+								editDescription={true} // Note that setting this to false wont work with events. (not implemented in the list view)
 								handleOpenDetails={() => {}}
 								disableEdit={false} // Also disables delete, add and dragging
 								enableAllDay={true}

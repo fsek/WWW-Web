@@ -5,6 +5,7 @@
 	"yes": "Ja",
 	"no": "Nej",
 	"error_start_end": "Sluttiden måste vara efter starttiden.",
+	"error_past_event": "Starttiden måste vara i framtiden.",
 	"view": {
 		"time": "Tid",
 		"description": "Beskrivning",

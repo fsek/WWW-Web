@@ -78,6 +78,7 @@
 		"error_missing_id": "Boknings-id saknas.",
 		"error_edit": "Misslyckades att redigera bokning med id: ",
 		"error_start_end": "Sluttiden måste vara efter starttiden.",
+		"error_past_event": "Starttiden måste vara i framtiden.",
 		"calendar": "Kalender",
 		"calendar_description": "Denna kalender visar alla bokningar. Klicka på en bokning för att redigera den. Klicka eller dra på kalendern för att välja ett tidsintervall, klicka sedan på 'Lägg till event'. Blåa bokningar kanske inte har kommit till backenden än.",
 		"list": "Lista",

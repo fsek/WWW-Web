@@ -64,6 +64,7 @@ export function EventAddForm({
 		description_sv: editDescription 
 			? z.string({ required_error: t("add.error_description") })
 				.min(1, { message: t("add.error_description") })
+				.max(1000)
 			: z.string().optional().default(""),
 		start: z.date({
 			required_error: t("add.error_start_time"),
@@ -83,7 +84,11 @@ export function EventAddForm({
 					signup_start: z.date(),
 					signup_end: z.date(),
 					title_en: z.string().min(1),
-					description_en: z.string().max(1000),
+					description_en: editDescription 
+						? z.string({ required_error: t("add.error_description") })
+							.min(1, { message: t("add.error_description") })
+							.max(1000)
+						: z.string().optional().default(""),
 					location: z.string().max(100),
 					max_event_users: z.coerce.number().nonnegative(),
 					signup_not_opened_yet: z.boolean(),
@@ -114,6 +119,20 @@ export function EventAddForm({
 		{
 			message: t("error_start_end"),
 			path: ["end"] // Shows the error on the end time field
+		}
+	).refine(
+		(data) => {
+			if (enableTrueEventProperties) {
+				// Check if event is in the past
+				if (data.start.getTime() < Date.now()) {
+					return false;
+				}
+			}
+			return true;
+		},
+		{
+			message: t("error_past_event"),
+			path: ["start"]
 		}
 	);
 
@@ -320,7 +339,12 @@ export function EventAddForm({
 											<FormItem>
 												<FormLabel>{t("add.description_en")}</FormLabel>
 												<FormControl>
-													<Input placeholder={t("add.placeholder.description")} {...field} value={field.value as string} />
+													<Textarea
+														placeholder={t("add.placeholder.description")}
+														className="max-h-36"
+														{...field}
+														value={field.value as string}
+													/>
 												</FormControl>
 												<FormMessage />
 											</FormItem>

@@ -77,6 +77,7 @@
 		"error_missing_id": "Missing booking id.",
 		"error_edit": "Failed to edit booking with id: ",
 		"error_start_end": "The end time must be after the start time.",
+		"error_past_event": "The start time must be in the future.",
 		"calendar": "Calendar",
 		"calendar_description": "This calendar shows all bookings. Click on a booking to edit it. Click or drag on the calendar to select a time range, then click on 'Add Event'. Blue bookings may not have reached the backend yet.",
 		"list": "List",

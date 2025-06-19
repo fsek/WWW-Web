@@ -85,7 +85,11 @@ export function EventEditForm({
 					signup_start: z.date(),
 					signup_end: z.date(),
 					title_en: z.string().min(1),
-					description_en: z.string().max(1000),
+					description_en: editDescription 
+						? z.string({ required_error: t("add.error_description") })
+							.min(1, { message: t("add.error_description") })
+							.max(1000)
+						: z.string().optional().default(""),
 					location: z.string().max(100),
 					max_event_users: z.coerce.number().nonnegative(),
 					signup_not_opened_yet: z.boolean(),
@@ -354,7 +358,7 @@ export function EventEditForm({
 											<FormControl>
 												<Textarea
 													placeholder={t("edit.placeholder.description")}
-													className="resize-none"
+													className="max-h-36"
 													{...field}
 												/>
 											</FormControl>
@@ -371,7 +375,12 @@ export function EventEditForm({
 											<FormItem className="">
 												<FormLabel>{t("edit.description_en")}</FormLabel>
 												<FormControl>
-													<Input placeholder={t("edit.placeholder.description")} {...field} value={field.value as string} />
+													<Textarea
+														placeholder={t("edit.placeholder.description")}
+														className="max-h-36"
+														{...field}
+														value={field.value as string}
+													/>
 												</FormControl>
 											</FormItem>
 										)}
