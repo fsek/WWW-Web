@@ -14,6 +14,7 @@ import { EventsProvider } from "@/utils/full-calendar-event-context";
 import type { CalendarEvent, CustomEventData } from "@/utils/full-calendar-seed";
 import { useTranslation } from "react-i18next";
 import type { EventCreate, EventRead} from "@/api";
+import { useRouter } from "next/navigation";
 
 interface MainPageCalendarProps {
 	mini?: boolean;
@@ -24,6 +25,7 @@ export default function MainPageCalendar({
 	mini = false,
 	zoomWorkHours = false,
 }: MainPageCalendarProps) {
+	const router = useRouter();
 	const { t } = useTranslation();
 
 	// Fetch booking data
@@ -114,7 +116,11 @@ export default function MainPageCalendar({
 					<Calendar
 						showDescription={true}
 						editDescription={false}
-						handleOpenDetails={() => {}}
+						handleOpenDetails={(event) => {
+							if (event) {
+								router.push("/calendar/event-details?id=" + event.id)
+							}
+						}}
 						disableEdit={true}
 						enableAllDay={true}
 						enableTrueEventProperties={true}

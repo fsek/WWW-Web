@@ -17,6 +17,7 @@ import { EventsProvider } from "@/utils/full-calendar-event-context";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
+import { useRouter } from "next/navigation";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
@@ -44,6 +45,7 @@ const columns = [ // This might not be the best way to do this, see the car book
 ];
 
 export default function Events() {
+	const router = useRouter();
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 
@@ -267,7 +269,11 @@ export default function Events() {
 							<Calendar
 								showDescription={true}
 								editDescription={true} // Note that setting this to false wont work with events. (not implemented in the list view)
-								handleOpenDetails={() => {}}
+								handleOpenDetails={(event) => {
+									if (event) {
+										router.push("/calendar/event-details?id=" + event.id)
+									}
+								}}
 								disableEdit={false} // Also disables delete, add and dragging
 								enableAllDay={true}
 								enableTrueEventProperties={true}
