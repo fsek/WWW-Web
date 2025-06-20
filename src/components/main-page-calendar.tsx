@@ -17,10 +17,12 @@ import type { EventCreate, EventRead} from "@/api";
 
 interface MainPageCalendarProps {
 	mini?: boolean;
+	zoomWorkHours?: boolean;
 }
 
 export default function MainPageCalendar({
 	mini = false,
+	zoomWorkHours = false,
 }: MainPageCalendarProps) {
 	const { t } = useTranslation();
 
@@ -88,7 +90,7 @@ export default function MainPageCalendar({
 		})) ?? [];
 
 	return (
-		<div className={`px-8 ${mini ? "h-full flex flex-col" : ""}`}>
+		<div className={`px-8 ${mini || zoomWorkHours ? "h-full flex flex-col" : ""}`}>
 			<Separator />
 
 			<EventsProvider
@@ -108,7 +110,7 @@ export default function MainPageCalendar({
 					return;
 				}}
 			>
-				<div className={`py-4 ${mini ? "flex-1 flex flex-col h-full" : ""}`}>
+				<div className={`py-4 ${mini || zoomWorkHours ? "flex-1 flex flex-col h-full" : ""}`}>
 					<Calendar
 						showDescription={true}
 						editDescription={false}
@@ -117,6 +119,7 @@ export default function MainPageCalendar({
 						enableAllDay={true}
 						enableTrueEventProperties={true}
 						mini={mini}
+						zoomWorkHours={zoomWorkHours}
 					/>
 				</div>
 			</EventsProvider>

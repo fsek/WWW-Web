@@ -52,6 +52,7 @@ interface CalendarProps {
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
 	mini?: boolean; 
+	zoomWorkHours?: boolean;
 }
 
 export default function Calendar({
@@ -62,6 +63,7 @@ export default function Calendar({
 	enableAllDay = true,
 	enableTrueEventProperties = false,
 	mini = false, 
+	zoomWorkHours = false,
 }: CalendarProps) {
 	const { i18n, t } = useTranslation();
 	const { events, setEventAddOpen, setEventEditOpen, eventViewOpen, setEventViewOpen } =
@@ -329,9 +331,10 @@ export default function Calendar({
 					allDaySlot={enableAllDay} // Default is true
 					allDayMaintainDuration={true}
 					forceEventDuration={true}
+					scrollTime={zoomWorkHours ? "08:00" : undefined}
 					firstDay={1}
-					height={mini ? "100%" : "32vh"}
-					contentHeight={mini ? "100%": "auto"}
+					height={mini || zoomWorkHours ? "100%" : "32vh"}
+					contentHeight={mini || zoomWorkHours ? "100%": "auto"}
 					dayHeaderFormat={{
 						weekday: "long",
 					}}

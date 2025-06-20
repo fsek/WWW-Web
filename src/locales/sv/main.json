@@ -1,6 +1,7 @@
 {
 	"fsek": "F-sektionen",
 	"title": "Huvudsida",
+	"calendar": "Kalender",
 	"navbar": {
 		"sektionen": {
 			"self": "Sektionen",

@@ -294,6 +294,18 @@ export default function CalendarNav({
 					</Tabs>
 				)}
 
+				{/* GoTo full calendar button */}
+				{mini && enableTrueEventProperties && (
+					<Button
+						className="w-fit text-xs md:text-sm"
+						onClick={() => {
+							window.location.href = "/calendar";
+						}}
+					>
+						{t("nav.full_calendar")}
+					</Button>
+				)}
+
 				{/* Add event button  */}
 				{!disableEdit && (
 					<EventAddForm 
