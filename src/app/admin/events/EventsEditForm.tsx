@@ -25,6 +25,7 @@ import type { EventRead, EventUpdate } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "@/components/ui/checkbox";
+import AdminChoosePriorities from "@/widgets/AdminChoosePriorities";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
@@ -39,6 +40,7 @@ const eventsEditSchema = z.object({
 	description_en: z.string().max(1000).min(1),
 	location: z.string().max(100),
 	max_event_users: z.coerce.number().nonnegative(),
+	priorities: z.array(z.string()).optional().default([]),
 	all_day: z.boolean(),
 	signup_not_opened_yet: z.boolean(),
 	recurring: z.boolean(),
@@ -80,6 +82,7 @@ export default function EventsEditForm({
 			description_en: "",
 			location: "",
 			max_event_users: 0,
+			priorities: [],
 			all_day: false,
 			signup_not_opened_yet: false,
 			recurring: false,
@@ -114,6 +117,7 @@ export default function EventsEditForm({
 				ends_at: new Date(selectedEvent.ends_at),
 				signup_start: new Date(selectedEvent.signup_start),
 				signup_end: new Date(selectedEvent.signup_end),
+				priorities: selectedEvent.priorities.map((i) => i.priority),
 			});
 		}
 	}, [selectedEvent, form, open]);
@@ -145,6 +149,7 @@ export default function EventsEditForm({
 	function handleFormSubmit(values: EventsEditFormType) {
 		const updatedEvent: EventUpdate = {
 			...values,
+			priorities: values.priorities as EventUpdate["priorities"],
 		};
 
 		updateEvent.mutate(
@@ -235,6 +240,22 @@ export default function EventsEditForm({
 												field.onChange(value);
 											}
 										}
+									/>
+								</FormItem>
+							)}
+						/>
+
+						{/* Priorities */}
+						<FormField
+							control={form.control}
+							name="priorities"
+							render={({ field }) => (
+								<FormItem className="lg:col-span-2 w-full">
+									<FormLabel>{t("admin:events.priorities")}</FormLabel>
+									<AdminChoosePriorities
+										value={field.value as string[] ?? []}
+										onChange={(value) => field.onChange(value)}
+										className="text-sm"
 									/>
 								</FormItem>
 							)}

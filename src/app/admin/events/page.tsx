@@ -237,6 +237,7 @@ export default function Events() {
 								can_signup: event.can_signup as boolean,
 								drink_package: event.drink_package as boolean,
 								is_nollning_event: event.is_nollning_event as boolean,
+								priorities: event.priorities as EventCreate['priorities'], // This might just work
 							},
 						},
 						{

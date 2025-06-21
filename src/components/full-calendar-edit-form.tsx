@@ -35,6 +35,7 @@ import { Button } from "./ui/button";
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "./ui/checkbox";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
+import { AdminChoosePriorities } from "@/widgets/AdminChoosePriorities";
 
 
 interface EventEditFormProps {
@@ -101,6 +102,7 @@ export function EventEditForm({
 					can_signup: z.boolean(),
 					drink_package: z.boolean(),
 					is_nollning_event: z.boolean(),
+					priorities: z.array(z.string()).optional().default([]),
 				}
 			: {}),
 	}).refine(
@@ -170,6 +172,7 @@ export function EventEditForm({
 			can_signup: false,
 			drink_package: false,
 			is_nollning_event: false,
+			priorities: [],
 		},
 	});
 
@@ -202,6 +205,7 @@ export function EventEditForm({
 							can_signup: oldEvent.can_signup,
 							drink_package: oldEvent.drink_package,
 							is_nollning_event: oldEvent.is_nollning_event,
+							priorities: oldEvent.priorities,
 					  }
 					: {}),
 			};
@@ -242,6 +246,7 @@ export function EventEditForm({
 						can_signup: event?.can_signup || false,
 						drink_package: event?.drink_package || false,
 						is_nollning_event: event?.is_nollning_event || false,
+						priorities: event?.priorities || [],
 				  }
 				: {}),
 		});
@@ -274,6 +279,7 @@ export function EventEditForm({
 						can_signup: data.can_signup,
 						drink_package: data.drink_package,
 						is_nollning_event: data.is_nollning_event,
+						priorities: data.priorities,
 				  }
 				: {}),
 		};
@@ -474,6 +480,24 @@ export function EventEditForm({
 													field.onChange(value);
 												}
 											}
+										/>
+									</FormItem>
+								)}
+							/>
+						)}
+
+						{/* Priorities */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="priorities"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2 w-full">
+										<FormLabel>{t("edit.priorities")}</FormLabel>
+										<AdminChoosePriorities
+											value={field.value as string[] ?? []}
+											onChange={(value) => field.onChange(value)}
+											className="text-sm"
 										/>
 									</FormItem>
 								)}

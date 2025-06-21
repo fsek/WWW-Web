@@ -8,6 +8,7 @@
 	"remove": "Ta bort",
 	"loading": "Hämtar...",
 	"error": "Något gick fel :/",
+	"choose_priorities": "Välj prioriterade grupper",
 	"news": {
 		"self": "Nyheter",
 		"page_title": "Administrera nyheter"

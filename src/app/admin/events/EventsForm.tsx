@@ -25,6 +25,8 @@ import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslation } from "react-i18next";
+import { AdminChoosePriorities } from "@/widgets/AdminChoosePriorities";
+import { EventCreate } from "@/api/types.gen";
 
 const eventsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -38,7 +40,7 @@ const eventsSchema = z.object({
 	description_en: z.string().max(1000).min(1),
 	location: z.string().max(100),
 	max_event_users: z.coerce.number().nonnegative(),
-	priorities: z.array(z.string()),
+	priorities: z.array(z.string()).optional().default([]),
 	all_day: z.boolean(),
 	signup_not_opened_yet: z.boolean(),
 	recurring: z.boolean(),
@@ -139,7 +141,7 @@ export default function EventsForm() {
 				description_en: values.description_en,
 				location: values.location,
 				max_event_users: values.max_event_users,
-				priorities: [],
+				priorities: values.priorities as EventCreate["priorities"],
 				all_day: values.all_day,
 				signup_not_opened_yet: values.signup_not_opened_yet,
 				recurring: values.recurring,
@@ -215,6 +217,23 @@ export default function EventsForm() {
 									</FormItem>
 								)}
 							/>
+
+							{/* Priorities */}
+							<FormField
+								control={eventsForm.control}
+								name="priorities"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2 w-full">
+										<FormLabel>{t("admin:events.priorities")}</FormLabel>
+										<AdminChoosePriorities
+											value={field.value as string[] ?? []}
+											onChange={(value) => field.onChange(value)}
+											className="text-sm"
+										/>
+									</FormItem>
+								)}
+							/>
+							
 
 							<FormField
 								control={eventsForm.control}

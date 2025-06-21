@@ -8,6 +8,7 @@
 	"save": "Save",
 	"cancel": "Cancel",
 	"remove": "Remove",
+	"choose_priorities": "Choose prioritized groups",
 	"news": {
 		"self": "News",
 		"page_title": "Manage News"

@@ -16,9 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { PlusIcon } from "lucide-react";
-import { HexColorPicker } from "react-colorful";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -37,6 +35,7 @@ import { ToastAction } from "./ui/toast";
 import { useTranslation } from "react-i18next";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { Checkbox } from "./ui/checkbox";
+import AdminChoosePriorities from "@/widgets/AdminChoosePriorities";
 
 interface EventAddFormProps {
 	start: Date;
@@ -100,6 +99,7 @@ export function EventAddForm({
 					can_signup: z.boolean(),
 					drink_package: z.boolean(),
 					is_nollning_event: z.boolean(),
+					priorities: z.array(z.string()).optional().default([]),
 				}
 			: {}),
 	}).refine(
@@ -182,6 +182,7 @@ export function EventAddForm({
 			can_signup: false,
 			drink_package: false,
 			is_nollning_event: false,
+			priorities: [],
 		},
 	});
 
@@ -208,6 +209,7 @@ export function EventAddForm({
 				can_signup: false,
 				drink_package: false,
 				is_nollning_event: false,
+				priorities: [],
 			} : {}),
     });
 	}, [form, start, end, enableTrueEventProperties]);
@@ -240,7 +242,7 @@ export function EventAddForm({
 						can_signup: data.can_signup,
 						drink_package: data.drink_package,
 						is_nollning_event: data.is_nollning_event,
-						priorities: [] // TODO: Make this work everywhere
+						priorities: data.priorities ?? [],
 				  }
 				: {}),
 			};
@@ -438,6 +440,24 @@ export function EventAddForm({
 													field.onChange(value);
 												}
 											}
+										/>
+									</FormItem>
+								)}
+							/>
+						)}
+
+						{/* Priorities */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="priorities"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2 w-full">
+										<FormLabel>{t("add.priorities")}</FormLabel>
+										<AdminChoosePriorities
+											value={field.value as string[] ?? []}
+											onChange={(value) => field.onChange(value)}
+											className="text-sm"
 										/>
 									</FormItem>
 								)}
