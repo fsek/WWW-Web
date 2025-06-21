@@ -289,7 +289,7 @@ export function EventAddForm({
 							name="title_sv"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("add.title_sv")}</FormLabel>
+									<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 									<FormControl>
 										<Input placeholder={t("add.placeholder.title")} {...field} />
 									</FormControl>
@@ -305,7 +305,7 @@ export function EventAddForm({
 								name="title_en"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("add.title_en")}</FormLabel>
+										<FormLabel>{t("admin:events.title_en")}</FormLabel>
 										<FormControl>
 											<Input placeholder={t("add.placeholder.title")} {...field} value={field.value as string} />
 										</FormControl>
@@ -321,7 +321,7 @@ export function EventAddForm({
 									name="description_sv"
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>{t("add.description_sv")}</FormLabel>
+											<FormLabel>{t("admin:events.description_sv")}</FormLabel>
 											<FormControl>
 												<Textarea
 													placeholder={t("add.placeholder.description")}
@@ -339,7 +339,7 @@ export function EventAddForm({
 										name="description_en"
 										render={({ field }) => (
 											<FormItem>
-												<FormLabel>{t("add.description_en")}</FormLabel>
+												<FormLabel>{t("admin:events.description_en")}</FormLabel>
 												<FormControl>
 													<Textarea
 														placeholder={t("add.placeholder.description")}
@@ -360,7 +360,7 @@ export function EventAddForm({
 							name="start"
 							render={({ field }) => (
 								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">{t("add.start_time")}</FormLabel>
+									<FormLabel htmlFor="datetime">{t("admin:events.start_time")}</FormLabel>
 									<FormControl>
 										<AdminChooseDates
 											value={field.value as Date}
@@ -376,7 +376,7 @@ export function EventAddForm({
 							name="end"
 							render={({ field }) => (
 								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">{t("add.end_time")}</FormLabel>
+									<FormLabel htmlFor="datetime">{t("admin:events.end_time")}</FormLabel>
 									<FormControl>
 										<AdminChooseDates
 											value={field.value as Date}
@@ -394,7 +394,7 @@ export function EventAddForm({
 									name="signup_start"
 									render={({ field }) => (
 										<FormItem className="flex flex-col">
-											<FormLabel htmlFor="datetime">{t("add.signup_start")}</FormLabel>
+											<FormLabel htmlFor="datetime">{t("admin:events.signup_start")}</FormLabel>
 											<FormControl>
 												<AdminChooseDates
 													value={field.value as Date}
@@ -410,7 +410,7 @@ export function EventAddForm({
 									name="signup_end"
 									render={({ field }) => (
 										<FormItem className="flex flex-col">
-											<FormLabel htmlFor="datetime">{t("add.signup_end")}</FormLabel>
+											<FormLabel htmlFor="datetime">{t("admin:events.signup_end")}</FormLabel>
 											<FormControl>
 												<AdminChooseDates
 													value={field.value as Date}
@@ -431,7 +431,7 @@ export function EventAddForm({
 								name="council_id"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
-										<FormLabel>{t("add.council")}</FormLabel>
+										<FormLabel>{t("admin:events.council")}</FormLabel>
 										<AdminChooseCouncil
 											value={field.value as number}
 											onChange={
@@ -453,7 +453,7 @@ export function EventAddForm({
 								name="priorities"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2 w-full">
-										<FormLabel>{t("add.priorities")}</FormLabel>
+										<FormLabel>{t("admin:events.priorities")}</FormLabel>
 										<AdminChoosePriorities
 											value={field.value as string[] ?? []}
 											onChange={(value) => field.onChange(value)}
@@ -471,7 +471,7 @@ export function EventAddForm({
 								name="location"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("add.location")}</FormLabel>
+										<FormLabel>{t("admin:events.location")}</FormLabel>
 										<FormControl>
 											<Input {...field} value={field.value as string} />
 										</FormControl>
@@ -487,7 +487,7 @@ export function EventAddForm({
 								name="max_event_users"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("add.max_event_users")}</FormLabel>
+										<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
 										<FormControl>
 											<Input type="number" {...field} value={field.value as number} />
 										</FormControl>
@@ -504,7 +504,7 @@ export function EventAddForm({
 								name={fieldName}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t(`add.${fieldName}`)}</FormLabel>
+										<FormLabel>{t(`admin:events.${fieldName}`)}</FormLabel>
 										<FormControl>
 											<Checkbox
 												checked={field.value}

@@ -81,7 +81,7 @@ export function EventView({
 								</tr>
 								{showDescription && (
 									<tr>
-										<th>{t("view.description")}</th>
+										<th>{t("admin:events.description")}</th>
 										<td>
 											{(() => {
 												const raw =
@@ -97,7 +97,7 @@ export function EventView({
 								)}
 								{(event && enableTrueEventProperties) && (
 									<tr>
-										<th>{t("view.features")}</th>
+										<th>{t("admin:events.features")}</th>
 										<td>
 											{!(
 												event.all_day ||
@@ -171,15 +171,15 @@ export function EventView({
 									<> 
 										{/* These are all temporary and should be changed at some point */}
 										<tr>
-											<th>{t("view.council")}</th> 
+											<th>{t("admin:events.council")}</th> 
 											<td>{event.council_name as string}</td>
 										</tr>
 										<tr>
-											<th>{t("view.location")}</th>
+											<th>{t("admin:events.location")}</th>
 											<td>
 												{!(event.location as string) ? (
 													<span className="text-muted-foreground text-sm">
-														{t("view.no_location")}
+														{t("admin:events.no_location")}
 													</span>
 												) : (
 													<>
@@ -189,15 +189,15 @@ export function EventView({
 											</td>
 										</tr>
 										<tr>
-											<th>{t("view.max_event_users")}</th>
+											<th>{t("admin:events.max_event_users")}</th>
 											<td>{event.max_event_users as number}</td>
 										</tr>
 										<tr>
-											<th>{t("view.signup_start")}</th>
+											<th>{t("admin:events.signup_start")}</th>
 											<td>{(event.signup_start as Date).toLocaleString()}</td>
 										</tr>
 										<tr>
-											<th>{t("view.signup_end")}</th>
+											<th>{t("admin:events.signup_end")}</th>
 											<td>{(event.signup_end as Date).toLocaleString()}</td>
 										</tr>
 									</>
