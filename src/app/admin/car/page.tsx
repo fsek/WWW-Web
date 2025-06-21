@@ -3,7 +3,7 @@
 // Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
 import { useState } from "react";
-import type { CarRead } from "../../../api/index";
+import type { CarRead } from "@/api/index";
 import CarForm from "./CarForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -155,11 +155,11 @@ export default function Car() {
 		(data as CarRead[])?.map((car) => {
 			return {
 				id: car.booking_id.toString(),
-				title: car.description,
+				title_sv: car.description,
 				start: car.start_time,
 				end: car.end_time,
-				allDay: false,
-				description: `user_id av bokare: ${car.user_id.toString()}`,
+				all_day: false,
+				description_sv: `user_id av bokare: ${car.user_id.toString()}`,
 			};
 		}) ?? [];
 
@@ -176,10 +176,13 @@ export default function Car() {
 				initialCalendarEvents={events}
 				eventColor="#f6ad55" // TODO: use tailwind
 				handleAdd={(event) => {
+					if (!event.title_sv) {
+						throw new Error("Missing title");
+					}
 					handleEventAdd.mutate(
 						{
 							body: {
-								description: event.title,
+								description: event.title_sv,
 								start_time: event.start,
 								end_time: event.end,
 							},
@@ -208,11 +211,15 @@ export default function Car() {
 						return;
 					}
 
+					if (!event.title_sv) {
+						throw new Error("Missing title");
+					}
+
 					handleEventEdit.mutate(
 						{
 							path: { booking_id: Number(event.id) },
 							body: {
-								description: event.title,
+								description: event.title_sv,
 								start_time: event.start,
 								end_time: event.end,
 							},
@@ -252,7 +259,7 @@ export default function Car() {
 							<Calendar
 								showDescription={true}
 								editDescription={false}
-								handleOpenDetails={() => {}}
+								handleOpenDetails={null}
 								disableEdit={false} // Also disables delete, add and dragging
 								enableAllDay={false}
 							/>

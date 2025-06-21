@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { months } from "@/utils/full-calendar-seed";
+import { months_en, months_sv } from "@/utils/full-calendar-seed";
 import type { calendarRef } from "@/utils/full-calendar-seed";
 import { Button } from "@/components/ui/button";
 import {
@@ -51,6 +51,8 @@ interface CalendarNavProps {
 	editDescription?: boolean;
 	disableEdit?: boolean;
 	enableAllDay?: boolean;
+	enableTrueEventProperties?: boolean;
+	mini?: boolean;
 }
 
 export default function CalendarNav({
@@ -61,8 +63,10 @@ export default function CalendarNav({
 	editDescription = false,
 	disableEdit = false,
 	enableAllDay = true,
+	enableTrueEventProperties = false,
+	mini = false,
 }: CalendarNavProps) {
-	const { t } = useTranslation("calendar");
+	const { t, i18n } = useTranslation("calendar");
 	const [currentView, setCurrentView] = useState("timeGridWeek");
 
 	const selectedMonth = viewedDate.getMonth() + 1;
@@ -92,7 +96,7 @@ export default function CalendarNav({
 
 				{/* Day Lookup */}
 
-				{currentView === "timeGridDay" && (
+				{currentView === "timeGridDay" || currentView === "dayGridWeek" && (
 					<Popover open={daySelectOpen} onOpenChange={setDaySelectOpen}>
 						<PopoverTrigger asChild>
 							<Button
@@ -155,8 +159,8 @@ export default function CalendarNav({
 							className="flex w-[105px] justify-between overflow-hidden p-2 text-xs font-semibold md:text-sm md:w-[120px]"
 						>
 							{selectedMonth
-								? months.find((month) => month.value === String(selectedMonth))
-										?.label
+								? (i18n.language === "en" ? months_en.find((month) => month.value === String(selectedMonth))
+										 											: months_sv.find((month) => month.value === String(selectedMonth)))?.label
 								: t("nav.select_month")}
 							<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 						</Button>
@@ -167,7 +171,7 @@ export default function CalendarNav({
 							<CommandList>
 								<CommandEmpty>{t("nav.month_not_found")}</CommandEmpty>
 								<CommandGroup>
-									{months.map((month) => (
+									{(i18n.language === "en" ? months_en : months_sv).map((month) => (
 										<CommandItem
 											key={month.value}
 											value={month.value}
@@ -241,56 +245,76 @@ export default function CalendarNav({
 
 				{/* Change view with tabs */}
 
-				<Tabs defaultValue="timeGridWeek">
-					<TabsList className="flex w-44 md:w-64">
-						<TabsTrigger
-							value="timeGridDay"
-							onClick={() =>
-								setView(calendarRef, "timeGridDay", setCurrentView)
-							}
-							className={`space-x-1 ${
-								currentView === "timeGridDay" ? "w-1/2" : "w-1/4"
-							}`}
-						>
-							<GalleryVertical className="h-5 w-5" />
-							{currentView === "timeGridDay" && (
-								<p className="text-xs md:text-sm">{t("nav.day")}</p>
-							)}
-						</TabsTrigger>
-						<TabsTrigger
-							value="timeGridWeek"
-							onClick={() =>
-								setView(calendarRef, "timeGridWeek", setCurrentView)
-							}
-							className={`space-x-1 ${
-								currentView === "timeGridWeek" ? "w-1/2" : "w-1/4"
-							}`}
-						>
-							<Tally3 className="h-5 w-5" />
-							{currentView === "timeGridWeek" && (
-								<p className="text-xs md:text-sm">{t("nav.week")}</p>
-							)}
-						</TabsTrigger>
-						<TabsTrigger
-							value="dayGridMonth"
-							onClick={() =>
-								setView(calendarRef, "dayGridMonth", setCurrentView)
-							}
-							className={`space-x-1 ${
-								currentView === "dayGridMonth" ? "w-1/2" : "w-1/4"
-							}`}
-						>
-							<Table className="h-5 w-5 rotate-90" />
-							{currentView === "dayGridMonth" && (
-								<p className="text-xs md:text-sm">{t("nav.month")}</p>
-							)}
-						</TabsTrigger>
-					</TabsList>
-				</Tabs>
+				{!mini && (
+					<Tabs defaultValue="timeGridWeek">
+						<TabsList className="flex w-44 md:w-64">
+							<TabsTrigger
+								value="timeGridDay"
+								onClick={() =>
+									setView(calendarRef, "timeGridDay", setCurrentView)
+								}
+								className={`space-x-1 ${
+									currentView === "timeGridDay" ? "w-1/2" : "w-1/4"
+								}`}
+							>
+								<GalleryVertical className="h-5 w-5" />
+								{currentView === "timeGridDay" && (
+									<p className="text-xs md:text-sm">{t("nav.day")}</p>
+								)}
+							</TabsTrigger>
+							<TabsTrigger
+								value="timeGridWeek"
+								onClick={() =>
+									setView(calendarRef, "timeGridWeek", setCurrentView)
+								}
+								className={`space-x-1 ${
+									currentView === "timeGridWeek" ? "w-1/2" : "w-1/4"
+								}`}
+							>
+								<Tally3 className="h-5 w-5" />
+								{currentView === "timeGridWeek" && (
+									<p className="text-xs md:text-sm">{t("nav.week")}</p>
+								)}
+							</TabsTrigger>
+							<TabsTrigger
+								value="dayGridMonth"
+								onClick={() =>
+									setView(calendarRef, "dayGridMonth", setCurrentView)
+								}
+								className={`space-x-1 ${
+									currentView === "dayGridMonth" ? "w-1/2" : "w-1/4"
+								}`}
+							>
+								<Table className="h-5 w-5 rotate-90" />
+								{currentView === "dayGridMonth" && (
+									<p className="text-xs md:text-sm">{t("nav.month")}</p>
+								)}
+							</TabsTrigger>
+						</TabsList>
+					</Tabs>
+				)}
+
+				{/* GoTo full calendar button */}
+				{mini && enableTrueEventProperties && (
+					<Button
+						className="w-fit text-xs md:text-sm"
+						onClick={() => {
+							window.location.href = "/calendar";
+						}}
+					>
+						{t("nav.full_calendar")}
+					</Button>
+				)}
 
 				{/* Add event button  */}
 				{!disableEdit && (
-				<EventAddForm start={start} end={end} editDescription={editDescription} enableAllDay={enableAllDay}/>
+					<EventAddForm 
+						start={start} 
+						end={end} 
+						editDescription={editDescription} 
+						enableAllDay={enableAllDay}
+						enableTrueEventProperties={enableTrueEventProperties}
+					/>
 				)}
 			</div>
 		</div>
