@@ -189,7 +189,9 @@ export function EventAddForm({
 	useEffect(() => {
 		form.reset({
       title_sv: "",
+      title_en: "",
       description_sv: "",
+      description_en: "",
       start: start,
       end: end,
 			all_day: false,
