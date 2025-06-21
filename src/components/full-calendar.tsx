@@ -47,7 +47,7 @@ type DayRenderProps = {
 interface CalendarProps {
 	showDescription: boolean;
 	editDescription?: boolean;
-	handleOpenDetails?: (event?: CalendarEvent) => void;
+	handleOpenDetails?: ((event?: CalendarEvent) => void) | null;
 	disableEdit?: boolean;
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
@@ -92,6 +92,7 @@ export default function Calendar({
 			all_day: info.event.allDay,
 			...(enableTrueEventProperties ? {
 				council_id: info.event.extendedProps.council_id,
+				council_name: info.event.extendedProps.council_name,
 				title_en: info.event.extendedProps.title_en,
 				description_en: info.event.extendedProps.description_en,
 				location: info.event.extendedProps.location,
@@ -128,6 +129,7 @@ export default function Calendar({
 			all_day: info.event.allDay,
 			...(enableTrueEventProperties ? {
 				council_id: info.event.extendedProps.council_id,
+				council_name: info.event.extendedProps.council_name,
 				title_en: info.event.extendedProps.title_en,
 				description_en: info.event.extendedProps.description_en,
 				location: info.event.extendedProps.location,
@@ -157,6 +159,7 @@ export default function Calendar({
 			all_day: info.oldEvent.allDay,
 			...(enableTrueEventProperties ? {
 				council_id: info.oldEvent.extendedProps.council_id,
+				council_name: info.oldEvent.extendedProps.council_name,
 				title_en: info.oldEvent.extendedProps.title_en,
 				description_en: info.oldEvent.extendedProps.description_en,
 				location: info.oldEvent.extendedProps.location,

@@ -105,6 +105,7 @@ export default function Events() {
 	interface CustomEventData_ extends CustomEventData { 
 		// We define these manually to avoid having start_time and start as different fields
 		council_id: number;
+		council_name: string; 
 		title_en: string;
 		signup_start: Date;
 		signup_end: Date;
@@ -129,6 +130,7 @@ export default function Events() {
 		(data as EventRead[])?.map((event) => ({
 			id: event.id.toString(),
 			council_id: event.council_id, // Might need to change this later
+			council_name: event.council?.name || "None",
 			title_sv: event.title_sv,
 			title_en: event.title_en,
 			start: event.starts_at,

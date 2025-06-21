@@ -27,6 +27,7 @@
 		"description_sv": "Description (Swedish)",
 		"description_en": "Description (English)",
 		"location": "Location",
+		"no_location": "No Location to Display",
 		"max_event_users": "Max Event Users",
 		"all_day": "All Day",
 		"signup_not_opened_yet": "Signup Not Open Yet",

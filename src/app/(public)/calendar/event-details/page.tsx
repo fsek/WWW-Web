@@ -105,7 +105,19 @@ export default function Page() {
 							
 							<div className="flex items-center gap-2">
 								<MapPin className="w-4 h-4 text-muted-foreground" />
-								<span>{t("admin:events.location_title") + data.location}</span>
+								<span>
+									{t("admin:events.location_title") + data.location}
+									{!(data.location) ? (
+										<span className="text-muted-foreground">
+											{t("admin:events.no_location")}
+										</span>
+									) : (
+										<>
+											{t("admin:events.location_title") + data.location}
+										</>
+									)}
+									</span>
+								
 							</div>
 
 							<div className="flex items-center gap-2">

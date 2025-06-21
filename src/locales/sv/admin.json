@@ -27,6 +27,7 @@
 		"description_sv": "Beskrivning (svenska)",
 		"description_en": "Beskrivning (engelska)",
 		"location": "Plats",
+		"no_location": "Ingen plats att visa",
 		"max_event_users": "Max antal deltagare",
 		"all_day": "Heldag",
 		"signup_not_opened_yet": "Anmälan ej öppnad än",

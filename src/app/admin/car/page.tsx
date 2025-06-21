@@ -259,7 +259,7 @@ export default function Car() {
 							<Calendar
 								showDescription={true}
 								editDescription={false}
-								handleOpenDetails={() => {}}
+								handleOpenDetails={null}
 								disableEdit={false} // Also disables delete, add and dragging
 								enableAllDay={false}
 							/>
