@@ -55,6 +55,7 @@
 		"to": "to",
 		"signup_information": "Signup Information",
 		"signup_period": "Signup Ongoing from: ",
+		"no_features": "No features to show",
 		"event_not_found": "Event not found.",
 		"no_event_selected": "No event selected."
 	},

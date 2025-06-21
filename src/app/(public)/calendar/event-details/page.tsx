@@ -132,56 +132,71 @@ export default function Page() {
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<div className="flex flex-wrap gap-2">
-								{data.all_day && (
-									<Badge variant="secondary" className={featureDivClassName}>
-                    <Calendar className={featureClassName} />
-										{t("admin:events.all_day")}
-									</Badge>
-								)}
-								{data.recurring && (
-									<Badge variant="secondary" className={featureDivClassName}>
-										<Repeat className={featureClassName} />
-										{t("admin:events.recurring")}
-									</Badge>
-								)}
-								{data.is_nollning_event && (
-									<Badge variant="secondary" className={featureDivClassName}>
-										<Star className={featureClassName} />
-										{t("admin:events.is_nollning_event")}
-									</Badge>
-								)}
-								{data.food && (
-									<Badge variant="outline" className={featureDivClassName}>
-										<Utensils className={featureClassName} />
-										{t("admin:events.food")}
-									</Badge>
-								)}
-								{data.drink && (
-									<Badge variant="outline" className={featureDivClassName}>
-										<Beer className={featureClassName} />
-										{t("admin:events.drink")}
-									</Badge>
-								)}
-								{data.drink_package && (
-									<Badge variant="outline" className={featureDivClassName}>
-                    <HandCoins className={featureClassName} />
-										{t("admin:events.drink_package")}
-									</Badge>
-								)}
-								{data.cash && (
-									<Badge variant="outline" className={featureDivClassName}>
-										<CreditCard className={featureClassName} />
-										{t("admin:events.cash")}
-									</Badge>
-								)}
-								{data.closed && (
-									<Badge variant="destructive" className={featureDivClassName}>
-										<Lock className={featureClassName} />
-										{t("admin:events.closed")}
-									</Badge>
-								)}
-							</div>
+							{!(
+								data.all_day ||
+								data.recurring ||
+								data.is_nollning_event ||
+								data.food ||
+								data.drink ||
+								data.drink_package ||
+								data.cash ||
+								data.closed
+							) ? (
+								<p className="text-muted-foreground text-sm">
+									{t("admin:events.no_features")}
+								</p>
+							) : (
+								<div className="flex flex-wrap gap-2">
+									{data.all_day && (
+										<Badge variant="secondary" className={featureDivClassName}>
+											<Calendar className={featureClassName} />
+											{t("admin:events.all_day")}
+										</Badge>
+									)}
+									{data.recurring && (
+										<Badge variant="secondary" className={featureDivClassName}>
+											<Repeat className={featureClassName} />
+											{t("admin:events.recurring")}
+										</Badge>
+									)}
+									{data.is_nollning_event && (
+										<Badge variant="secondary" className={featureDivClassName}>
+											<Star className={featureClassName} />
+											{t("admin:events.is_nollning_event")}
+										</Badge>
+									)}
+									{data.food && (
+										<Badge variant="outline" className={featureDivClassName}>
+											<Utensils className={featureClassName} />
+											{t("admin:events.food")}
+										</Badge>
+									)}
+									{data.drink && (
+										<Badge variant="outline" className={featureDivClassName}>
+											<Beer className={featureClassName} />
+											{t("admin:events.drink")}
+										</Badge>
+									)}
+									{data.drink_package && (
+										<Badge variant="outline" className={featureDivClassName}>
+											<HandCoins className={featureClassName} />
+											{t("admin:events.drink_package")}
+										</Badge>
+									)}
+									{data.cash && (
+										<Badge variant="outline" className={featureDivClassName}>
+											<CreditCard className={featureClassName} />
+											{t("admin:events.cash")}
+										</Badge>
+									)}
+									{data.closed && (
+										<Badge variant="destructive" className={featureDivClassName}>
+											<Lock className={featureClassName} />
+											{t("admin:events.closed")}
+										</Badge>
+									)}
+								</div>
+							)}
 						</CardContent>
 					</Card>
 
