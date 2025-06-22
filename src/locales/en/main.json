@@ -1,5 +1,7 @@
 {
+	"fsek": "F-Guild",
 	"title": "Main Page",
+	"calendar": "Calendar",
 	"navbar": {
 		"sections": {
 			"self": "Sections",

@@ -1,13 +1,30 @@
+"use client";
+
 import Link from "next/link";
 
+import mh from "@/assets/mh.jpg";
 import WaveAnimation from "@/components/WaveAnimation";
 import TwoColumnLayout from "@/components/TwoColumnLayout";
 
 import CustomTitle from "@/components/CustomTitle";
+import TitleBanner from "@/components/TitleBanner";
+import { useTranslation } from "react-i18next";
+import MainPageCalendar from "@/components/main-page-calendar";
 
 export default function MainLanding() {
+	const { t } = useTranslation();
+
 	return (
-		<>
+		<>			
+			<TitleBanner
+				title={t("main:fsek")}
+				imageUrl={mh.src}
+				className="relative h-[30vh] bg-cover bg-center mt-4"
+			/>
+			<div className="my-20 mx-[10%] overflow-hidden h-[35vh]">
+				<MainPageCalendar mini={true} />
+			</div>
+
 			<div className="flex-grow">
 				<p>
 					Hej! 👋 Du 🫵 ser 👀 denna 📄 sida 📘 för 💡 att ✨ du 🫶 är 🧊 cool

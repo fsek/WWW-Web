@@ -12,6 +12,7 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import FLogga from "@/assets/f-logga";
+import Link from "next/link";
 import { LogInIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
@@ -32,7 +33,9 @@ type NavSection = {
 export function NavBar() {
 	return (
 		<div className="flex justify-between">
-			<FLogga className="mt-2 ml-2" />
+			<Link href="/">
+				<FLogga className="mt-2 ml-2" />
+			</Link>
 			<NavBarMenu />
 			<LoginAndLang />
 		</div>
