@@ -267,7 +267,7 @@ export function EventAddForm({
 			{showButton && (
 				<AlertDialogTrigger className="flex" asChild>
 					<Button
-						className="w-24 md:w-28 text-xs md:text-sm"
+						className="w-fit text-xs md:text-sm"
 						variant="default"
 						onClick={() => setEventAddOpen(true)}
 					>

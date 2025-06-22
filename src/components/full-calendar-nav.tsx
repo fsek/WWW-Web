@@ -67,7 +67,7 @@ export default function CalendarNav({
 	mini = false,
 }: CalendarNavProps) {
 	const { t, i18n } = useTranslation("calendar");
-	const [currentView, setCurrentView] = useState("timeGridWeek");
+	const [currentView, setCurrentView] = useState(mini ? "dayGridWeek" : "timeGridWeek");
 
 	const selectedMonth = viewedDate.getMonth() + 1;
 	const selectedDay = viewedDate.getDate();
@@ -96,7 +96,7 @@ export default function CalendarNav({
 
 				{/* Day Lookup */}
 
-				{currentView === "timeGridDay" || currentView === "dayGridWeek" && (
+				{(currentView === "timeGridDay" || currentView === "dayGridWeek") && (
 					<Popover open={daySelectOpen} onOpenChange={setDaySelectOpen}>
 						<PopoverTrigger asChild>
 							<Button
@@ -228,7 +228,7 @@ export default function CalendarNav({
 				{/* Button to go to current date */}
 
 				<Button
-					className="w-[90px] text-xs md:text-sm"
+					className="w-fit text-xs md:text-sm"
 					variant="outline"
 					onClick={() => {
 						goToday(calendarRef);
@@ -236,7 +236,8 @@ export default function CalendarNav({
 				>
 					{currentView === "timeGridDay"
 						? t("nav.today")
-						: currentView === "timeGridWeek"
+						: (currentView === "timeGridWeek" ||
+							currentView === "dayGridWeek")
 							? t("nav.this_week")
 							: currentView === "dayGridMonth"
 								? t("nav.this_month")

@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import Select from 'react-select'
+import Select, { OnChangeValue } from 'react-select'
+
+type Option = { value: string; label: string };
 import { useQuery } from "@tanstack/react-query";
 import { getEventPrioritiesOptions } from "@/api/@tanstack/react-query.gen";
 
@@ -40,16 +42,15 @@ export function AdminChoosePriorities({
 	const selectedValues = Array.isArray(value) ? value : value ? [value] : [];
 	
 	// Convert current values to options format
-	const selectedOptions = selectedValues.map(v => ({ value: v, label: v }));
+	const selectedOptions: Option[] = selectedValues.map((val) => ({
+		value: val,
+		label: val,
+	}));
 
-	const handleChange = (selected: any) => {
+	const handleChange = (selected: OnChangeValue<Option, true>) => {
 		if (!onChange) return;
-		
-		// If multiselect, return array of values, otherwise single value
-		const newValues = selected ? 
-			(Array.isArray(selected) ? selected.map(option => option.value) : selected.value) :
-			[];
-			
+
+		const newValues = selected ? selected.map(option => option.value) : [];
 		onChange(newValues);
 	};
 

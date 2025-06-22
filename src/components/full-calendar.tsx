@@ -191,7 +191,7 @@ export default function Calendar({
 
 		return (
 			<div className="overflow-hidden w-full">
-				{info.view.type === "dayGridMonth" || info.view.type === "dayGridWeek"? (
+				{(info.view.type === "dayGridMonth" || info.view.type === "dayGridWeek") ? (
 					<div
 						style={{ backgroundColor: info.backgroundColor }}
 						className={
