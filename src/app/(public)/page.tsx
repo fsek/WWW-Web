@@ -4,6 +4,7 @@ import WaveAnimation from "@/components/WaveAnimation";
 import TwoColumnLayout from "@/components/TwoColumnLayout";
 
 import CustomTitle from "@/components/CustomTitle";
+import { TitleWithTypewriter } from "@/components/Typewriter";
 
 export default function MainLanding() {
 	return (
@@ -13,14 +14,14 @@ export default function MainLanding() {
 					Hej! 👋 Du 🫵 ser 👀 denna 📄 sida 📘 för 💡 att ✨ du 🫶 är 🧊 cool
 					😎 och 🕸️ spindel 🕷️.
 				</p>
-				<CustomTitle
-					text="Välkommen till F-sektionens fantastiska hemsida! Wow vad mycket text man kan få plats med"
-					className="mt-4"
+				<TitleWithTypewriter
+					staticText="Teknisk"
+					strings={["fysik", "matematik", "nanovetenskap"]}
 				/>
 				<CustomTitle text="eller lite" className="mt-4" />
 				<p>👉👈</p>
 				<Link href="admin/documents">Goto news</Link>
-			</div >
+			</div>
 			<div className="">
 				<WaveAnimation />
 			</div>
