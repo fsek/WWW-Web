@@ -26,6 +26,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "@/components/ui/checkbox";
 import AdminChoosePriorities from "@/widgets/AdminChoosePriorities";
+import { SelectFromOptions } from "@/widgets/SelectFromOptions";
+import { Label } from "@/components/ui/label";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
@@ -42,15 +44,16 @@ const eventsEditSchema = z.object({
 	max_event_users: z.coerce.number().nonnegative(),
 	priorities: z.array(z.string()).optional().default([]),
 	all_day: z.boolean(),
-	signup_not_opened_yet: z.boolean(),
 	recurring: z.boolean(),
-	drink: z.boolean(),
 	food: z.boolean(),
-	cash: z.boolean(),
 	closed: z.boolean(),
 	can_signup: z.boolean(),
 	drink_package: z.boolean(),
 	is_nollning_event: z.boolean(),
+	alcohol_event_type: z.enum(['Alcohol', 'Alcohol-Served', 'None']).default('None'),
+	dress_code: z.string().max(100).optional().default(""),
+	price: z.coerce.number().nonnegative().optional().default(0),
+	dot: z.enum(['None', 'Single', 'Double']).default('None'),
 });
 
 type EventsEditFormType = z.infer<typeof eventsEditSchema>;
@@ -84,25 +87,23 @@ export default function EventsEditForm({
 			max_event_users: 0,
 			priorities: [],
 			all_day: false,
-			signup_not_opened_yet: false,
 			recurring: false,
-			drink: false,
 			food: false,
-			cash: false,
 			closed: false,
 			can_signup: false,
 			drink_package: false,
 			is_nollning_event: false,
+			alcohol_event_type: "None",
+			dress_code: "",
+			price: 0,
+			dot: "None",
 		},
 	});
 
 	const checkboxFields = [
 		"all_day",
-		"signup_not_opened_yet",
 		"recurring",
-		"drink",
 		"food",
-		"cash",
 		"closed",
 		"can_signup",
 		"drink_package",
@@ -118,6 +119,9 @@ export default function EventsEditForm({
 				signup_start: new Date(selectedEvent.signup_start),
 				signup_end: new Date(selectedEvent.signup_end),
 				priorities: selectedEvent.priorities.map((i) => i.priority),
+				// Selected event has been created with safe values, the code below should always work
+				alcohol_event_type: selectedEvent.alcohol_event_type as ("Alcohol" | "Alcohol-Served" | "None"),
+				dot: selectedEvent.dot as ("None" | "Single" | "Double"), 
 			});
 		}
 	}, [selectedEvent, form, open]);
@@ -392,6 +396,83 @@ export default function EventsEditForm({
 							)}
 						/>
 
+						{/* Alcohol event type */}
+						<FormField
+							control={form.control}
+							name="alcohol_event_type"
+							render={({ field }) => {
+								const options = [
+									{ value: "Alcohol", label: t("admin:events.alcohol") },
+									{ value: "Alcohol-Served", label: t("admin:events.alcohol_served") },
+									{ value: "None", label: t("admin:events.alcohol_none") },
+								];
+								const selectedOption = options.find(opt => opt.value === field.value) ?? options[2];
+								return (
+									<FormItem>
+										<FormLabel>{t("admin:events.alcohol_event_type")}</FormLabel>
+										<SelectFromOptions 
+											options={options}
+											value={selectedOption.value}
+											onChange={(value) => field.onChange(value)}
+											placeholder={t("admin:events.select_alcohol_event_type")}
+										/>
+									</FormItem>
+								);
+							}}
+						/>
+
+						{/* Dress code */}
+						<FormField
+							control={form.control}
+							name="dress_code"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("admin:events.dress_code")}</FormLabel>
+									<FormControl>
+										<Input {...field} value={field.value as string} />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Price */}
+						<FormField
+							control={form.control}
+							name="price"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("admin:events.price")}</FormLabel>
+									<FormControl>
+										<Input type="number" {...field} value={field.value as number} />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Dot */}
+						<FormField
+							control={form.control}
+							name="dot"
+							render={({ field }) => {
+								const options = [
+									{ value: "None", label: t("admin:events.dot_none") },
+									{ value: "Single", label: t("admin:events.dot_single") },
+									{ value: "Double", label: t("admin:events.dot_double") },
+								];
+								const selectedOption = options.find(opt => opt.value === field.value) ?? options[0];
+								return (
+									<FormItem>
+										<FormLabel>{t("admin:events.select_dot")}</FormLabel>
+										<SelectFromOptions
+											options={options}
+											value={selectedOption.value}
+											onChange={(value) => field.onChange(value)}
+										/>
+									</FormItem>
+								);
+							}}
+						/>
+
 						{/* Checkbox fields */}
 						{checkboxFields.map((fieldName) => (
 							<FormField
@@ -399,15 +480,20 @@ export default function EventsEditForm({
 								control={form.control}
 								name={fieldName}
 								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t(`admin:events.${fieldName}`)}</FormLabel>
-										<FormControl>
-											<Checkbox
-												checked={field.value}
-												onCheckedChange={field.onChange}
-											/>
-										</FormControl>
-									</FormItem>
+									<Label
+										className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent"
+									>
+										<Checkbox
+											checked={field.value}
+											onCheckedChange={field.onChange}
+											className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+										/>
+										<div className="grid gap-1.5 font-normal">
+											<p className="text-sm leading-none font-medium">
+												{t(`admin:events.${fieldName}`)}
+											</p>
+										</div>
+									</Label>
 								)}
 							/>
 						))}

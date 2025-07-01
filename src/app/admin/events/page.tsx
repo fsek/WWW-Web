@@ -114,15 +114,17 @@ export default function Events() {
 		location: string;
 		max_event_users: number;
 		priorities: EventCreate["priorities"];
-		signup_not_opened_yet: boolean;
 		recurring: boolean;
-		drink: boolean;
 		food: boolean;
-		cash: boolean;
 		closed: boolean;
 		can_signup: boolean;
 		drink_package: boolean;
 		is_nollning_event: boolean;
+		alcohol_event_type: EventCreate["alcohol_event_type"];
+		dress_code: string;
+		price: number;
+		dot: EventCreate["dot"];
+		lottery: boolean;
 	};
 
 	// Map fetched bookings to calendar events
@@ -143,15 +145,17 @@ export default function Events() {
 			location: event.location,
 			max_event_users: event.max_event_users,
 			priorities: event.priorities.map(p => p.priority) as EventCreate["priorities"],
-			signup_not_opened_yet: event.signup_not_opened_yet,
 			recurring: event.recurring,
-			drink: event.drink,
 			food: event.food,
-			cash: event.cash,
 			closed: event.closed,
 			can_signup: event.can_signup,
 			drink_package: event.drink_package,
 			is_nollning_event: event.is_nollning_event,
+			alcohol_event_type: event.alcohol_event_type as EventCreate["alcohol_event_type"],
+			dress_code: event.dress_code,
+			price: event.price,
+			dot: event.dot as EventCreate["dot"],
+			lottery: event.lottery,
 		})) ?? [];
 
 	console.log("Events loaded:", events);
@@ -182,17 +186,19 @@ export default function Events() {
 								description_en: event.description_en as string,
 								location: event.location as string,
 								max_event_users: event.max_event_users as number,
-								priorities: event.priorities as EventCreate['priorities'], // This might just work
+								priorities: event.priorities as EventCreate["priorities"], // This might just work
 								all_day: event.all_day as boolean,
-								signup_not_opened_yet: event.signup_not_opened_yet as boolean,
 								recurring: event.recurring as boolean,
-								drink: event.drink as boolean,
 								food: event.food as boolean,
-								cash: event.cash as boolean,
 								closed: event.closed as boolean,
 								can_signup: event.can_signup as boolean,
 								drink_package: event.drink_package as boolean,
 								is_nollning_event: event.is_nollning_event as boolean,
+								alcohol_event_type: event.alcohol_event_type as ("Alcohol" | "Alcohol-Served" | "None"),
+								dress_code: event.dress_code as string,
+								price: event.price as number,
+								dot: event.dot as ("None" | "Single" | "Double"),
+								lottery: event.lottery as boolean,
 							},
 						},
 						{
@@ -230,16 +236,17 @@ export default function Events() {
 								location: event.location as string,
 								max_event_users: event.max_event_users as number,
 								all_day: event.all_day as boolean,
-								signup_not_opened_yet: event.signup_not_opened_yet as boolean,
 								recurring: event.recurring as boolean,
-								drink: event.drink as boolean,
 								food: event.food as boolean,
-								cash: event.cash as boolean,
 								closed: event.closed as boolean,
 								can_signup: event.can_signup as boolean,
 								drink_package: event.drink_package as boolean,
 								is_nollning_event: event.is_nollning_event as boolean,
-								priorities: event.priorities as EventCreate['priorities'], // This might just work
+								priorities: event.priorities as EventCreate["priorities"], // This might just work
+								alcohol_event_type: event.alcohol_event_type as ("Alcohol" | "Alcohol-Served" | "None"),
+								dress_code: event.dress_code as string,
+								price: event.price as number,
+								dot: event.dot as ("None" | "Single" | "Double"),
 							},
 						},
 						{

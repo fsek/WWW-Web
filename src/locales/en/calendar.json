@@ -10,23 +10,10 @@
 	"view": {
 		"time": "Time",
 		"description": "Description",
-		"all_day": "All Day",
 		"council": "Council",
 		"features": "Features",
 		"priorities": "Prioritized Groups",
-		"location": "Location",
-		"no_location": "No Location to Display",
-		"max_event_users": "Max Event Users",
-		"signup_start": "Signup Start",
-		"signup_end": "Signup End",
-		"signup_not_opened_yet": "Signup Not Open Yet",
-		"closed": "Event Closed",
-		"can_signup": "Allows Signup",
-		"drink": "Alcohol Served",
-		"food": "Food Served",
-		"cash": "Payment Might Be Required",
-		"drink_package": "Pre-purchasable Alcohol",
-		"is_nollning_event": "Introduction Event"
+		"no_location": "No Location to Display"
 	},
 	"edit": {
 		"error_title": "Please enter a title.",

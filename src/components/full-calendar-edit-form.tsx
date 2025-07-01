@@ -36,7 +36,8 @@ import { useTranslation } from "react-i18next";
 import { Checkbox } from "./ui/checkbox";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChoosePriorities } from "@/widgets/AdminChoosePriorities";
-
+import { SelectFromOptions } from "@/widgets/SelectFromOptions";
+import { Label } from "./ui/label";
 
 interface EventEditFormProps {
 	oldEvent?: CalendarEvent;
@@ -93,16 +94,17 @@ export function EventEditForm({
 						: z.string().optional().default(""),
 					location: z.string().max(100),
 					max_event_users: z.coerce.number().nonnegative(),
-					signup_not_opened_yet: z.boolean(),
 					recurring: z.boolean(),
-					drink: z.boolean(),
 					food: z.boolean(),
-					cash: z.boolean(),
 					closed: z.boolean(),
 					can_signup: z.boolean(),
 					drink_package: z.boolean(),
 					is_nollning_event: z.boolean(),
 					priorities: z.array(z.string()).optional().default([]),
+					alcohol_event_type: z.enum(['Alcohol', 'Alcohol-Served', 'None']).default('None'),
+					dress_code: z.string().max(100).optional().default(""),
+					price: z.coerce.number().nonnegative().optional().default(0),
+					dot: z.enum(['None', 'Single', 'Double']).default('None'),
 				}
 			: {}),
 	}).refine(
@@ -128,11 +130,8 @@ export function EventEditForm({
 	const checkboxFields = [
 		...enableAllDay ? ["all_day"] : [],
 		...enableTrueEventProperties ? [
-			"signup_not_opened_yet",
 			"recurring",
-			"drink",
 			"food",
-			"cash",
 			"closed",
 			"can_signup",
 			"drink_package",
@@ -163,16 +162,17 @@ export function EventEditForm({
 			council_id: 1,
 			location: "",
 			max_event_users: 0,
-			signup_not_opened_yet: false,
 			recurring: false,
-			drink: false,
 			food: false,
-			cash: false,
 			closed: false,
 			can_signup: false,
 			drink_package: false,
 			is_nollning_event: false,
 			priorities: [],
+			alcohol_event_type: "None",
+			dress_code: "",
+			price: 0,
+			dot: "None",
 		},
 	});
 
@@ -196,16 +196,17 @@ export function EventEditForm({
 							description_en: oldEvent.description_en,
 							location: oldEvent.location,
 							max_event_users: oldEvent.max_event_users,
-							signup_not_opened_yet: oldEvent.signup_not_opened_yet,
 							recurring: oldEvent.recurring,
-							drink: oldEvent.drink,
 							food: oldEvent.food,
-							cash: oldEvent.cash,
 							closed: oldEvent.closed,
 							can_signup: oldEvent.can_signup,
 							drink_package: oldEvent.drink_package,
 							is_nollning_event: oldEvent.is_nollning_event,
 							priorities: oldEvent.priorities,
+							alcohol_event_type: oldEvent.alcohol_event_type,
+							dress_code: oldEvent.dress_code,
+							price: oldEvent.price,
+							dot: oldEvent.dot,
 					  }
 					: {}),
 			};
@@ -237,16 +238,17 @@ export function EventEditForm({
 						description_en: event?.description_en || "",
 						location: event?.location || "",
 						max_event_users: event?.max_event_users || 0,
-						signup_not_opened_yet: event?.signup_not_opened_yet || false,
 						recurring: event?.recurring || false,
-						drink: event?.drink || false,
 						food: event?.food || false,
-						cash: event?.cash || false,
 						closed: event?.closed || false,
 						can_signup: event?.can_signup || false,
 						drink_package: event?.drink_package || false,
 						is_nollning_event: event?.is_nollning_event || false,
 						priorities: event?.priorities || [],
+						alcohol_event_type: event?.alcohol_event_type || "None",
+						dress_code: event?.dress_code || "",
+						price: event?.price || 0,
+						dot: event?.dot || "None",
 				  }
 				: {}),
 		});
@@ -270,16 +272,17 @@ export function EventEditForm({
 						description_en: data.description_en,
 						location: data.location,
 						max_event_users: data.max_event_users,
-						signup_not_opened_yet: data.signup_not_opened_yet,
 						recurring: data.recurring,
-						drink: data.drink,
 						food: data.food,
-						cash: data.cash,
 						closed: data.closed,
 						can_signup: data.can_signup,
 						drink_package: data.drink_package,
 						is_nollning_event: data.is_nollning_event,
 						priorities: data.priorities,
+						alcohol_event_type: data.alcohol_event_type,
+						dress_code: data.dress_code,
+						price: data.price,
+						dot: data.dot,
 				  }
 				: {}),
 		};
@@ -330,7 +333,7 @@ export function EventEditForm({
 								<FormItem>
 									<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("edit.placeholder.title")} {...field} />
+										<Input placeholder={t("edit:placeholder.title")} {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -536,6 +539,91 @@ export function EventEditForm({
 							/>
 						)}
 
+						{/* Alcohol event type */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="alcohol_event_type"
+								render={({ field }) => {
+									const options = [
+										{ value: "Alcohol", label: t("admin:events.alcohol") },
+										{ value: "Alcohol-Served", label: t("admin:events.alcohol_served") },
+										{ value: "None", label: t("admin:events.alcohol_none") },
+									];
+									const selectedOption = options.find(opt => opt.value === field.value) ?? options[2];
+									return (
+										<FormItem>
+											<FormLabel>{t("admin:events.alcohol_event_type")}</FormLabel>
+											<SelectFromOptions 
+												options={options}
+												value={selectedOption.value}
+												onChange={(value) => field.onChange(value)}
+												placeholder={t("admin:events.select_alcohol_event_type")}
+											/>
+										</FormItem>
+									);
+								}}
+							/>
+						)}
+
+						{/* dress_code */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="dress_code"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("admin:events.dress_code")}</FormLabel>
+										<FormControl>
+											<Input {...field} value={field.value as string} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+						)}
+
+						{/* Price */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="price"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("admin:events.price")}</FormLabel>
+										<FormControl>
+											<Input type="number" {...field} value={field.value as number} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+						)}
+
+						{/* Dot */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="dot"
+								render={({ field }) => {
+									const options = [
+										{ value: "None", label: t("admin:events.dot_none") },
+										{ value: "Single", label: t("admin:events.dot_single") },
+										{ value: "Double", label: t("admin:events.dot_double") },
+									];
+									const selectedOption = options.find(opt => opt.value === field.value) ?? options[0];
+									return (
+										<FormItem>
+											<FormLabel>{t("admin:events.select_dot")}</FormLabel>
+											<SelectFromOptions
+												options={options}
+												value={selectedOption.value}
+												onChange={(value) => field.onChange(value)}
+											/>
+										</FormItem>
+									);
+								}}
+							/>
+						)}
+
 						{/* Checkbox fields */}
 						{checkboxFields.map((fieldName) => (
 							<FormField
@@ -543,15 +631,20 @@ export function EventEditForm({
 								control={form.control}
 								name={fieldName}
 								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t(`admin:events.${fieldName}`)}</FormLabel>
-										<FormControl>
-											<Checkbox
-												checked={field.value}
-												onCheckedChange={field.onChange}
-											/>
-										</FormControl>
-									</FormItem>
+									<Label
+										className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent"
+									>
+										<Checkbox
+											checked={field.value}
+											onCheckedChange={field.onChange}
+											className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+										/>
+										<div className="grid gap-1.5 font-normal">
+											<p className="text-sm leading-none font-medium">
+												{t(`admin:events.${fieldName}`)}
+											</p>
+										</div>
+									</Label>
 								)}
 							/>
 						))}

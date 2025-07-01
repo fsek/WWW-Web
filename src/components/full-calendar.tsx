@@ -100,15 +100,16 @@ export default function Calendar({
 				priorities: info.event.extendedProps.priorities,
 				signup_start: new Date(info.event.extendedProps.signup_start),
 				signup_end: new Date(info.event.extendedProps.signup_end),
-				signup_not_opened_yet: info.event.extendedProps.signup_not_opened_yet,
 				recurring: info.event.extendedProps.recurring,
-				drink: info.event.extendedProps.drink,
 				food: info.event.extendedProps.food,
-				cash: info.event.extendedProps.cash,
 				closed: info.event.extendedProps.closed,
 				can_signup: info.event.extendedProps.can_signup,
 				drink_package: info.event.extendedProps.drink_package,
 				is_nollning_event: info.event.extendedProps.is_nollning_event,
+				alcohol_event_type: info.event.extendedProps.alcohol_event_type,
+				dress_code: info.event.extendedProps.dress_code,
+				price: info.event.extendedProps.price,
+				dot: info.event.extendedProps.dot,
 			} : {})
 		};
 
@@ -137,15 +138,16 @@ export default function Calendar({
 				priorities: info.event.extendedProps.priorities,
 				signup_start: new Date(info.event.extendedProps.signup_start),
 				signup_end: new Date(info.event.extendedProps.signup_end),
-				signup_not_opened_yet: info.event.extendedProps.signup_not_opened_yet,
 				recurring: info.event.extendedProps.recurring,
-				drink: info.event.extendedProps.drink,
 				food: info.event.extendedProps.food,
-				cash: info.event.extendedProps.cash,
 				closed: info.event.extendedProps.closed,
 				can_signup: info.event.extendedProps.can_signup,
 				drink_package: info.event.extendedProps.drink_package,
 				is_nollning_event: info.event.extendedProps.is_nollning_event,
+				alcohol_event_type: info.event.extendedProps.alcohol_event_type,
+				dress_code: info.event.extendedProps.dress_code,
+				price: info.event.extendedProps.price,
+				dot: info.event.extendedProps.dot,
 			} : {})
 		};
 
@@ -167,15 +169,16 @@ export default function Calendar({
 				priorities: info.oldEvent.extendedProps.priorities,
 				signup_start: new Date(info.oldEvent.extendedProps.signup_start),
 				signup_end: new Date(info.oldEvent.extendedProps.signup_end),
-				signup_not_opened_yet: info.oldEvent.extendedProps.signup_not_opened_yet,
 				recurring: info.oldEvent.extendedProps.recurring,
-				drink: info.oldEvent.extendedProps.drink,
 				food: info.oldEvent.extendedProps.food,
-				cash: info.oldEvent.extendedProps.cash,
 				closed: info.oldEvent.extendedProps.closed,
 				can_signup: info.oldEvent.extendedProps.can_signup,
 				drink_package: info.oldEvent.extendedProps.drink_package,
 				is_nollning_event: info.oldEvent.extendedProps.is_nollning_event,
+				alcohol_event_type: info.oldEvent.extendedProps.alcohol_event_type,
+				dress_code: info.oldEvent.extendedProps.dress_code,
+				price: info.oldEvent.extendedProps.price,
+				dot: info.oldEvent.extendedProps.dot,
 			} : {})
 		};
 

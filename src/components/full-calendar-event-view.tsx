@@ -104,10 +104,9 @@ export function EventView({
 												event.recurring ||
 												event.is_nollning_event ||
 												event.food ||
-												event.drink ||
 												event.drink_package ||
-												event.cash ||
-												event.closed
+												event.closed ||
+												event.price != 0
 											) ? (
 												<p className="text-muted-foreground text-sm">
 													{t("admin:events.no_features")}
@@ -138,22 +137,16 @@ export function EventView({
 															{t("admin:events.food")}
 														</Badge>
 													)}
-													{event.drink == true && (
-														<Badge variant="outline" className={featureDivClassName}>
-															<Beer className={featureClassName} />
-															{t("admin:events.drink")}
-														</Badge>
-													)}
 													{event.drink_package == true && (
 														<Badge variant="outline" className={featureDivClassName}>
-															<HandCoins className={featureClassName} />
+															<Beer className={featureClassName} />
 															{t("admin:events.drink_package")}
 														</Badge>
 													)}
-													{event.cash == true && (
+													{event.price != 0 && (
 														<Badge variant="outline" className={featureDivClassName}>
 															<CreditCard className={featureClassName} />
-															{t("admin:events.cash")}
+															{t("admin:events.costs_money")}
 														</Badge>
 													)}
 													{event.closed == true && (
@@ -189,16 +182,36 @@ export function EventView({
 											</td>
 										</tr>
 										<tr>
+											<th>{t("admin:events.dress_code")}</th>
+											<td>
+												{!(event.dress_code as string) ? (
+													<span className="text-muted-foreground text-sm">
+														{t("admin:events.no_dress_code")}
+													</span>
+												) : (
+													<>
+														{event.dress_code as string}
+													</>
+												)}
+											</td>
+										</tr>
+										<tr>
 											<th>{t("admin:events.max_event_users")}</th>
 											<td>{event.max_event_users as number}</td>
 										</tr>
 										<tr>
-											<th>{t("admin:events.signup_start")}</th>
-											<td>{(event.signup_start as Date).toLocaleString()}</td>
-										</tr>
-										<tr>
-											<th>{t("admin:events.signup_end")}</th>
-											<td>{(event.signup_end as Date).toLocaleString()}</td>
+											<th>{t("admin:events.price")}</th>
+											<td>
+												{event.price != 0 ? (
+													<>
+														{event.price as number} {"kr"}
+													</>
+												) : (
+													<span className="text-muted-foreground text-sm">
+														{t("admin:events.free")}
+													</span>
+												)}
+											</td>
 										</tr>
 									</>
 								)}
@@ -206,13 +219,8 @@ export function EventView({
 						</table>
 						{(event && enableTrueEventProperties) && (
 							<div className="flex flex-wrap gap-2 m-2 flex-row">
-								{event.signup_not_opened_yet == true && (
-									<Badge variant="secondary">
-										{t("admin:events.signup_not_opened_yet")}
-									</Badge>
-								)}
 								{event.can_signup == true && (
-									<Badge variant="default">
+									<Badge variant="default" className="text-sm">
 										{t("admin:events.can_signup")}
 									</Badge>
 								)}

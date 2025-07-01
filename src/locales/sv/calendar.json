@@ -10,23 +10,10 @@
 	"view": {
 		"time": "Tid",
 		"description": "Beskrivning",
-		"all_day": "Heldag",
 		"council": "Utskott",
 		"features": "Egenskaper",
 		"priorities": "Prioriterade grupper",
-		"location": "Plats",
-		"no_location": "Ingen plats att visa",
-		"max_event_users": "Max antal deltagare",
-		"signup_start": "Anmälningsstart",
-		"signup_end": "Anmälningsslut",
-		"signup_not_opened_yet": "Anmälan ej öppen",
-		"closed": "Event stängd",
-		"can_signup": "Tillåter anmälan",
-		"drink": "Alkohol serveras",
-		"food": "Mat serveras",
-		"cash": "Kan kräva betalning",
-		"drink_package": "Förköp av alkohol",
-		"is_nollning_event": "Nollningsevent"
+		"no_location": "Ingen plats att visa"
 	},
 	"edit": {
 		"error_title": "Vänligen ange en titel.",

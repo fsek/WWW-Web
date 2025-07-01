@@ -4,7 +4,7 @@ import { getSingleEventOptions } from "@/api/@tanstack/react-query.gen";
 import React, { Suspense, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { Calendar, Clock, MapPin, Users, Utensils, TableOfContents, CreditCard, Lock, Star, Repeat, User, Beer, HandCoins, FilePenLine, ArrowLeft } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, Utensils, TableOfContents, CreditCard, Lock, Star, Repeat, User, Beer, FilePenLine, ArrowLeft, Shirt, WineIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -106,7 +106,6 @@ export default function Page() {
 							<div className="flex items-center gap-2">
 								<MapPin className="w-4 h-4 text-muted-foreground" />
 								<span>
-									{t("admin:events.location_title") + data.location}
 									{!(data.location) ? (
 										<span className="text-muted-foreground">
 											{t("admin:events.no_location")}
@@ -117,8 +116,31 @@ export default function Page() {
 										</>
 									)}
 									</span>
-								
 							</div>
+
+							<div className="flex items-center gap-2">
+								<Shirt className="w-4 h-4 text-muted-foreground" />
+								<span>
+									{t("admin:events.dress_code") + ": "}
+									{data.dress_code || t("admin:events.no_dress_code")}
+								</span>
+							</div>
+
+							{data.alcohol_event_type !== "None" && (
+								<div className="flex items-center gap-2">
+									<WineIcon className="w-4 h-4 text-muted-foreground" />
+									<span>
+										{t("admin:events.alcohol_event_type") + ": "}
+										{
+											({
+												Alcohol: t("admin:events.alcohol"),
+												"Alcohol-Served": t("admin:events.alcohol_served"),
+												None: t("admin:events.alcohol_none"),
+											} as Record<string, string>)[data.alcohol_event_type] || t("admin:events.alcohol_none")
+										}
+									</span>
+								</div>
+							)}
 
 							<div className="flex items-center gap-2">
 								<User className="w-4 h-4 text-muted-foreground" />
@@ -149,10 +171,9 @@ export default function Page() {
 								data.recurring ||
 								data.is_nollning_event ||
 								data.food ||
-								data.drink ||
 								data.drink_package ||
-								data.cash ||
-								data.closed
+								data.closed || 
+								(data.price != 0)
 							) ? (
 								<p className="text-muted-foreground text-sm">
 									{t("admin:events.no_features")}
@@ -183,22 +204,16 @@ export default function Page() {
 											{t("admin:events.food")}
 										</Badge>
 									)}
-									{data.drink && (
-										<Badge variant="outline" className={featureDivClassName}>
-											<Beer className={featureClassName} />
-											{t("admin:events.drink")}
-										</Badge>
-									)}
 									{data.drink_package && (
 										<Badge variant="outline" className={featureDivClassName}>
-											<HandCoins className={featureClassName} />
+											<Beer className={featureClassName} />
 											{t("admin:events.drink_package")}
 										</Badge>
 									)}
-									{data.cash && (
+									{(data.price != 0) && (
 										<Badge variant="outline" className={featureDivClassName}>
 											<CreditCard className={featureClassName} />
-											{t("admin:events.cash")}
+											{t("admin:events.costs_money")}
 										</Badge>
 									)}
 									{data.closed && (
@@ -225,10 +240,33 @@ export default function Page() {
 								<p className="font-semibold text-sm text-muted-foreground">
 									{t("admin:events.event_period")}
 								</p>
-								<p className="font-medium">{formatDate(data.starts_at)}</p>
-								<p className="text-sm text-muted-foreground">
-									{t("admin:events.to")} {formatDateShort(data.ends_at)}
+								<p className="font-medium">{formatDateShort(data.starts_at)}</p>
+								<p className="font-semibold text-sm text-muted-foreground">
+									{t("admin:events.to")}
 								</p>
+								<p className="font-medium">
+									{formatDateShort(data.ends_at)}
+								</p>
+							</div>
+							<div>
+								{data.all_day && (
+									<p className="text-sm text-muted-foreground">
+										{t("admin:events.all_day")}
+									</p>
+								)}
+								<div className="flex items-center gap-2">
+									<span>
+										{t("admin:events.dot_type") + ": "}
+										{
+											({
+												None: t("admin:events.dot_none"),
+												Single: t("admin:events.dot_single"),
+												Double: t("admin:events.dot_double"),
+											} as Record<string, string>)[data.dot] || t("admin:events.dot_none")
+										}
+									</span>
+								</div>
+									
 							</div>
 						</CardContent>
 					</Card>
@@ -242,28 +280,49 @@ export default function Page() {
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-3">
-							<div>
-								<p className="font-semibold text-sm text-muted-foreground">
-									{t("admin:events.signup_period")}
-								</p>
-								<p className="font-medium">{formatDateShort(data.signup_start)}</p>
+							{data.can_signup == true && (
+								<div>
+									<p className="font-semibold text-sm text-muted-foreground">
+										{t("admin:events.signup_period")}
+									</p>
+									<p className="font-medium">{formatDateShort(data.signup_start)}</p>
+									<p className="font-semibold text-sm text-muted-foreground">
+										{t("admin:events.to")}
+									</p>
+									<p className="font-medium">
+										{formatDateShort(data.signup_end)}
+									</p>
+								</div>
+							)}
+
+							{(data.can_signup == false || data.signup_start === null || data.signup_end === null) && (
 								<p className="text-sm text-muted-foreground">
-									{t("admin:events.to")} {formatDateShort(data.signup_end)}
+									{t("admin:events.signup_not_available")}
 								</p>
-							</div>
+							)}
 
 							<div className="flex flex-wrap gap-2">
-								{data.signup_not_opened_yet && (
-									<Badge variant="secondary">
-										{t("admin:events.signup_not_opened_yet")}
-									</Badge>
-								)}
 								{data.can_signup && (
 									<Badge variant="default">
 										{t("admin:events.can_signup")}
 									</Badge>
 								)}
+								{data.lottery && (
+									<Badge variant="secondary">
+										{t("admin:events.lottery")}
+									</Badge>
+								)}
 							</div>
+
+							{data.price > 0 && (
+								<div className="flex items-center gap-2">
+									<CreditCard className="w-4 h-4 text-muted-foreground" />
+									<span>
+										{t("admin:events.price") + ": "}
+										{data.price} {"kr"}
+									</span>
+								</div>
+							)}
 
 							{data.priorities.length > 0 && (
 								<div>
