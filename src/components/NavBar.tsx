@@ -140,16 +140,6 @@ export function NavBarMenu() {
 						</NavigationMenuList>
 					);
 				})}
-				<NavigationMenuList>
-					<NavigationMenuItem>
-						<NavigationMenuLink
-							className={navigationMenuTriggerStyle()}
-							href="/docs"
-						>
-							Documentation
-						</NavigationMenuLink>
-					</NavigationMenuItem>
-				</NavigationMenuList>
 			</NavigationMenu>
 		</div>
 	);
