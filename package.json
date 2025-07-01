@@ -71,6 +71,7 @@
 		"react-hotkeys-hook": "^4.6.1",
 		"react-i18next": "^15.4.1",
 		"react-resizable-panels": "^2.1.7",
+		"react-select": "^5.10.1",
 		"recharts": "^2.15.1",
 		"sonner": "^2.0.2",
 		"sort-by": "^0.0.2",

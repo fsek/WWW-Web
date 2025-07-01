@@ -5,10 +5,15 @@
 	"yes": "Ja",
 	"no": "Nej",
 	"error_start_end": "Sluttiden måste vara efter starttiden.",
+	"error_past_event": "Starttiden måste vara i framtiden.",
+	"all_day": "Heldag",
 	"view": {
 		"time": "Tid",
 		"description": "Beskrivning",
-		"all_day": "Heldag"
+		"council": "Utskott",
+		"features": "Egenskaper",
+		"priorities": "Prioriterade grupper",
+		"no_location": "Ingen plats att visa"
 	},
 	"edit": {
 		"error_title": "Vänligen ange en titel.",
@@ -25,9 +30,6 @@
 		"edit": "Redigera ",
 		"title": "Titel",
 		"description": "Beskrivning",
-		"start_time": "Starttid",
-		"end_time": "Sluttid",
-		"all_day": "Heldag",
 		"placeholder": {
 			"title": "Picknick på månen",
 			"description": "Ta med rep för Hilbert Älg!"
@@ -53,6 +55,7 @@
 		"today": "Idag",
 		"this_week": "Denna vecka",
 		"this_month": "Denna månad",
+		"full_calendar": "Stor kalender",
 		"day": "Dag",
 		"week": "Vecka",
 		"month": "Månad"
@@ -72,9 +75,6 @@
 		"add": "Lägg till event",
 		"title": "Titel",
 		"description": "Beskrivning",
-		"start_time": "Starttid",
-		"end_time": "Sluttid",
-		"all_day": "Heldag",
 		"placeholder": {
 			"title": "Picknick på månen",
 			"description": "Ta med rep för Hilbert Älg!"

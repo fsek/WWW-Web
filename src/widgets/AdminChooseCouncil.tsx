@@ -43,7 +43,7 @@ export function AdminChooseCouncil({
 			value={value.toString()}
 			onValueChange={(val) => onChange(Number(val))}
 		>
-			<SelectTrigger className="w-[280px]">
+			<SelectTrigger className="w-full">
 				<SelectValue placeholder="Select a Council" />
 			</SelectTrigger>
 			<SelectContent>

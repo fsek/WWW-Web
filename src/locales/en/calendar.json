@@ -5,10 +5,15 @@
 	"yes": "Yes",
 	"no": "No",
 	"error_start_end": "The end time must be after the start time.",
+	"error_past_event": "The start time must be in the future.",
+	"all_day": "All-Day",
 	"view": {
 		"time": "Time",
 		"description": "Description",
-		"all_day": "All Day"
+		"council": "Council",
+		"features": "Features",
+		"priorities": "Prioritized Groups",
+		"no_location": "No Location to Display"
 	},
 	"edit": {
 		"error_title": "Please enter a title.",
@@ -25,9 +30,6 @@
 		"edit": "Edit ",
 		"title": "Title",
 		"description": "Description",
-		"start_time": "Start Time",
-		"end_time": "End Time",
-		"all_day": "All Day",
 		"placeholder": {
 			"title": "Picnic on the moon",
 			"description": "Bring a lead for Hilbert the moose!"
@@ -53,6 +55,7 @@
 		"today": "Today",
 		"this_week": "This week",
 		"this_month": "This month",
+		"full_calendar": "Full Calendar",
 		"day": "Day",
 		"week": "Week",
 		"month": "Month"
@@ -72,9 +75,6 @@
 		"add": "Add Event",
 		"title": "Title",
 		"description": "Description",
-		"start_time": "Start Time",
-		"end_time": "End Time",
-		"all_day": "All Day",
 		"placeholder": {
 			"title": "Picnic on the moon",
 			"description": "Bring a lead for Hilbert the moose!"
