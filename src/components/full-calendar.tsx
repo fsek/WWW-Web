@@ -30,7 +30,7 @@ import { getDateFromMinutes } from "@/lib/utils";
 import { Card } from "./ui/card";
 import { EventEditForm } from "./full-calendar-edit-form";
 import { EventView } from "./full-calendar-event-view";
-import { EventAddForm } from "./full-calendar-add-form";
+import { useTranslation } from "react-i18next";
 
 type EventItemProps = {
 	info: EventContentArg;
@@ -47,9 +47,12 @@ type DayRenderProps = {
 interface CalendarProps {
 	showDescription: boolean;
 	editDescription?: boolean;
-	handleOpenDetails?: (event?: CalendarEvent) => void;
+	handleOpenDetails?: ((event?: CalendarEvent) => void) | null;
 	disableEdit?: boolean;
 	enableAllDay?: boolean;
+	enableTrueEventProperties?: boolean;
+	mini?: boolean; 
+	zoomWorkHours?: boolean;
 }
 
 export default function Calendar({
@@ -58,7 +61,11 @@ export default function Calendar({
 	handleOpenDetails,
 	disableEdit,
 	enableAllDay = true,
+	enableTrueEventProperties = false,
+	mini = false, 
+	zoomWorkHours = false,
 }: CalendarProps) {
+	const { i18n, t } = useTranslation();
 	const { events, setEventAddOpen, setEventEditOpen, eventViewOpen, setEventViewOpen } =
 		useEvents();
 
@@ -77,12 +84,33 @@ export default function Calendar({
 	const handleEventClick = (info: EventClickArg) => {
 		const event: CalendarEvent = {
 			id: info.event.id,
-			title: info.event.title,
-			description: info.event.extendedProps.description,
+			title_sv: info.event.title,
+			description_sv: info.event.extendedProps.description_sv,
 			backgroundColor: info.event.backgroundColor,
 			start: info.event.start!,
 			end: info.event.end!,
-			allDay: info.event.allDay,
+			all_day: info.event.allDay,
+			...(enableTrueEventProperties ? {
+				council_id: info.event.extendedProps.council_id,
+				council_name: info.event.extendedProps.council_name,
+				title_en: info.event.extendedProps.title_en,
+				description_en: info.event.extendedProps.description_en,
+				location: info.event.extendedProps.location,
+				max_event_users: info.event.extendedProps.max_event_users,
+				priorities: info.event.extendedProps.priorities,
+				signup_start: new Date(info.event.extendedProps.signup_start),
+				signup_end: new Date(info.event.extendedProps.signup_end),
+				recurring: info.event.extendedProps.recurring,
+				food: info.event.extendedProps.food,
+				closed: info.event.extendedProps.closed,
+				can_signup: info.event.extendedProps.can_signup,
+				drink_package: info.event.extendedProps.drink_package,
+				is_nollning_event: info.event.extendedProps.is_nollning_event,
+				alcohol_event_type: info.event.extendedProps.alcohol_event_type,
+				dress_code: info.event.extendedProps.dress_code,
+				price: info.event.extendedProps.price,
+				dot: info.event.extendedProps.dot,
+			} : {})
 		};
 
 		setIsDrag(false);
@@ -94,22 +122,64 @@ export default function Calendar({
 	const handleEventChange = (info: EventChangeArg) => {
 		const event: CalendarEvent = {
 			id: info.event.id,
-			title: info.event.title,
-			description: info.event.extendedProps.description,
+			title_sv: info.event.title,
+			description_sv: info.event.extendedProps.description_sv,
 			backgroundColor: info.event.backgroundColor,
 			start: info.event.start!,
 			end: info.event.end!,
-			allDay: info.event.allDay,
+			all_day: info.event.allDay,
+			...(enableTrueEventProperties ? {
+				council_id: info.event.extendedProps.council_id,
+				council_name: info.event.extendedProps.council_name,
+				title_en: info.event.extendedProps.title_en,
+				description_en: info.event.extendedProps.description_en,
+				location: info.event.extendedProps.location,
+				max_event_users: info.event.extendedProps.max_event_users,
+				priorities: info.event.extendedProps.priorities,
+				signup_start: new Date(info.event.extendedProps.signup_start),
+				signup_end: new Date(info.event.extendedProps.signup_end),
+				recurring: info.event.extendedProps.recurring,
+				food: info.event.extendedProps.food,
+				closed: info.event.extendedProps.closed,
+				can_signup: info.event.extendedProps.can_signup,
+				drink_package: info.event.extendedProps.drink_package,
+				is_nollning_event: info.event.extendedProps.is_nollning_event,
+				alcohol_event_type: info.event.extendedProps.alcohol_event_type,
+				dress_code: info.event.extendedProps.dress_code,
+				price: info.event.extendedProps.price,
+				dot: info.event.extendedProps.dot,
+			} : {})
 		};
 
 		const oldEvent: CalendarEvent = {
 			id: info.oldEvent.id,
-			title: info.oldEvent.title,
-			description: info.oldEvent.extendedProps.description,
+			title_sv: info.oldEvent.title,
+			description_sv: info.oldEvent.extendedProps.description_sv,
 			backgroundColor: info.oldEvent.backgroundColor,
 			start: info.oldEvent.start!,
 			end: info.oldEvent.end!,
-			allDay: info.oldEvent.allDay,
+			all_day: info.oldEvent.allDay,
+			...(enableTrueEventProperties ? {
+				council_id: info.oldEvent.extendedProps.council_id,
+				council_name: info.oldEvent.extendedProps.council_name,
+				title_en: info.oldEvent.extendedProps.title_en,
+				description_en: info.oldEvent.extendedProps.description_en,
+				location: info.oldEvent.extendedProps.location,
+				max_event_users: info.oldEvent.extendedProps.max_event_users,
+				priorities: info.oldEvent.extendedProps.priorities,
+				signup_start: new Date(info.oldEvent.extendedProps.signup_start),
+				signup_end: new Date(info.oldEvent.extendedProps.signup_end),
+				recurring: info.oldEvent.extendedProps.recurring,
+				food: info.oldEvent.extendedProps.food,
+				closed: info.oldEvent.extendedProps.closed,
+				can_signup: info.oldEvent.extendedProps.can_signup,
+				drink_package: info.oldEvent.extendedProps.drink_package,
+				is_nollning_event: info.oldEvent.extendedProps.is_nollning_event,
+				alcohol_event_type: info.oldEvent.extendedProps.alcohol_event_type,
+				dress_code: info.oldEvent.extendedProps.dress_code,
+				price: info.oldEvent.extendedProps.price,
+				dot: info.oldEvent.extendedProps.dot,
+			} : {})
 		};
 
 		setIsDrag(true);
@@ -124,7 +194,7 @@ export default function Calendar({
 
 		return (
 			<div className="overflow-hidden w-full">
-				{info.view.type === "dayGridMonth" ? (
+				{(info.view.type === "dayGridMonth" || info.view.type === "dayGridWeek") ? (
 					<div
 						style={{ backgroundColor: info.backgroundColor }}
 						className={
@@ -165,7 +235,7 @@ export default function Calendar({
 							})}
 						</p>
 					</div>
-				) : info.view.type === "timeGridWeek" ? (
+				) : info.view.type === "timeGridWeek" || info.view.type === "dayGridWeek" ? (
 					<div className="flex flex-col space-y-0.5 rounded-sm items-center w-full text-xs sm:text-sm md:text-md">
 						<p className="flex font-semibold">{weekday}</p>
 						{info.isToday ? (
@@ -190,6 +260,10 @@ export default function Calendar({
 	};
 
 	const DayRender = ({ info }: DayRenderProps) => {
+		if (mini) {
+			return null;
+		}
+		
 		return (
 			<div className="flex">
 				{info.view.type === "dayGridMonth" && info.isToday ? (
@@ -231,7 +305,7 @@ export default function Calendar({
 	const calendarLatestTime = `${latestHour}:${latestMin}`;
 
 	return (
-		<div className="space-y-5">
+		<div className="space-y-5 flex-1 flex flex-col">
 			<CalendarNav
 				calendarRef={calendarRef}
 				start={selectedStart}
@@ -240,12 +314,15 @@ export default function Calendar({
 				editDescription={editDescription ?? false}
 				disableEdit={disableEdit}
 				enableAllDay={enableAllDay}
+				enableTrueEventProperties={enableTrueEventProperties}
+				mini={mini}
 			/>
 
-			<Card className="p-3">
+			<Card className="p-3 flex-1">
 				<FullCalendar
 					ref={calendarRef}
 					timeZone="local"
+					locale={i18n.language}
 					plugins={[
 						dayGridPlugin,
 						timeGridPlugin,
@@ -253,15 +330,21 @@ export default function Calendar({
 						interactionPlugin,
 						listPlugin,
 					]}
-					initialView="timeGridWeek"
+					initialView={mini ? "dayGridWeek" : "timeGridWeek" }
 					headerToolbar={false}
 					slotMinTime={calendarEarliestTime}
 					slotMaxTime={calendarLatestTime}
 					allDaySlot={enableAllDay} // Default is true
 					allDayMaintainDuration={true}
 					forceEventDuration={true}
+					scrollTime={zoomWorkHours ? "08:00" : undefined}
 					firstDay={1}
-					height={"32vh"}
+					height={mini || zoomWorkHours ? "100%" : "32vh"}
+					contentHeight={mini || zoomWorkHours ? "100%": "auto"}
+					dayHeaderFormat={{
+						weekday: "long",
+					}}
+					allDayContent={t("calendar:all_day")}
 					displayEventEnd={true}
 					windowResizeDelay={0}
 					events={events}
@@ -276,7 +359,6 @@ export default function Calendar({
 						hour12: false,
 					}}
 					eventBorderColor={"black"}
-					contentHeight={"auto"}
 					expandRows={true}
 					dayCellContent={(dayInfo) => <DayRender info={dayInfo} />}
 					eventContent={(eventInfo) => <EventItem info={eventInfo} />}
@@ -313,6 +395,7 @@ export default function Calendar({
 					editDescription={editDescription ?? false}
 					showButton={false}
 					enableAllDay={enableAllDay}
+					enableTrueEventProperties={enableTrueEventProperties}
 				/>
 			)}
 
@@ -323,6 +406,7 @@ export default function Calendar({
 				handleOpenDetails={handleOpenDetails}
 				disableEdit={disableEdit ?? false}
 				enableAllDay={enableAllDay}
+				enableTrueEventProperties={enableTrueEventProperties}
 			/>
 		</div>
 	);

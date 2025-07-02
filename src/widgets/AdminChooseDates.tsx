@@ -27,7 +27,7 @@ export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
 
 	return (
 		<div className="flex flex-col gap-3 lg:flex-row lg:gap-10">
-			<div className="w-72 space-y-2">
+			<div className="w-full space-y-2">
 				<DateTimePicker
 					granularity="minute"
 					value={date}

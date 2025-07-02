@@ -1,23 +1,24 @@
 "use client";
-import { type CalendarEvent, initialEvents } from "@/utils/full-calendar-seed";       
+import { type CalendarEvent, type CustomEventData, initialEvents } from "@/utils/full-calendar-seed";       
 import type React from "react";
-import { createContext, type ReactNode, useContext, useState } from "react";
+import { createContext, type ReactNode, useContext, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-interface Event {
-	id: string;
-	title: string;
-	description: string;
-	start: Date;
-	end: Date;
-	allDay: boolean;
-	color?: string;
-}
+// interface Event { // I think this is fine to remove
+// 	id: string;
+// 	title_sv: string;
+// 	description_sv: string;
+// 	start: Date;
+// 	end: Date;
+// 	all_day: boolean;
+// 	backgroundColor?: string;
+// }
 
 interface EventsContextType {
 	events: CalendarEvent[];
-	addEvent: (event: Event) => void;
+	addEvent: (event: CalendarEvent) => void;
 	deleteEvent: (id: string) => void;
-	editEvent: (event: Event) => void;
+	editEvent: (event: CalendarEvent) => void;
 	eventViewOpen: boolean;
 	setEventViewOpen: (value: boolean) => void;
 	eventAddOpen: boolean;
@@ -42,11 +43,11 @@ export const useEvents = () => {
 
 interface EventsProviderProps {
 	children: ReactNode;
-	initialCalendarEvents?: CalendarEvent[];
+	initialCalendarEvents?: CalendarEvent<CustomEventData>[];
 	eventColor?: string;
 	handleDelete?: (id: string) => void;
-	handleEdit?: (event: Event) => void;
-	handleAdd?: (event: Event) => void;
+	handleEdit?: (event: CalendarEvent<CustomEventData>) => void;
+	handleAdd?: (event: CalendarEvent<CustomEventData>) => void;
 }
 
 export const EventsProvider: React.FC<EventsProviderProps> = ({
@@ -57,15 +58,40 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 	handleEdit,
 	handleAdd,
 }) => {
-	const [events, setEvents] = useState<CalendarEvent[]>(
-		(initialCalendarEvents ?? initialEvents).map((event) => ({
-			// uses initialEvents from full-calendar-seed.ts if none specified
-			...event,
-			id: String(event.id),
-			color: eventColor ?? "#76c7ef",
-			allDay: event.allDay ?? false,
-		})),
+  const { i18n } = useTranslation(); 
+	const prevLangRef = useRef(i18n.language); 
+
+	const [events, setEvents] = useState<CalendarEvent<CustomEventData>[]>(
+		(initialCalendarEvents ?? initialEvents).map((event) => {
+			return {
+				...event,
+				title: event.title_sv,
+				id: String(event.id),
+				backgroundColor: eventColor ?? "#76c7ef",
+				allDay: event.all_day ?? false,
+				start: new Date(event.start),
+				end: new Date(event.end),
+			};
+		}),
 	);
+
+	// Update events when language changes
+  useEffect(() => {
+    const currentLang = i18n.language;
+
+		// Only update if language has changed from previous value (dont just update when events change)
+    if (prevLangRef.current !== currentLang) {
+      prevLangRef.current = currentLang; 
+    
+			const transformedEvents = events.map(event => ({
+				...event,
+				title: currentLang === 'sv' ? event.title_sv : event.title_en
+			}));
+			
+			setEvents(transformedEvents);
+		}
+  }, [i18n.language, events]);
+
 	const [eventViewOpen, setEventViewOpen] = useState(false);
 	const [eventAddOpen, setEventAddOpen] = useState(false);
 	const [eventEditOpen, setEventEditOpen] = useState(false);
@@ -73,7 +99,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 	const [availabilityCheckerEventAddOpen, setAvailabilityCheckerEventAddOpen] =
 		useState(false);
 
-	const addEvent = (event: CalendarEvent) => {
+	const addEvent = (event: CalendarEvent<CustomEventData>) => {
 		try {
 			if (handleAdd) {
 				// if handleAdd is defined, call it
@@ -98,7 +124,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 		}
 	};
 
-	const editEvent = (event: Event) => {
+	const editEvent = (event: CalendarEvent<CustomEventData>) => {
 		try {
 			// Backend magic here
 			if (handleEdit) {
@@ -110,11 +136,11 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 					Number(prevEvent.id) === Number(event.id)
 						? {
 								...prevEvent,
-								title: event.title,
-								description: event.description,
+								title_sv: event.title_sv,
+								description_sv: event.description_sv,
 								start: event.start,
 								end: event.end,
-								allDay: event.allDay,
+								all_day: event.all_day,
 							}
 						: prevEvent,
 				),
