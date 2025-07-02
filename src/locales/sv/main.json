@@ -51,7 +51,8 @@
 			"self": "Tjänster",
 			"car": {
 				"self": "Bilbokning",
-				"desc": "Boka bil enkelt och smidigt för dina resor och behov."
+				"desc": "Boka bilen enkelt och smidigt för dina resor och behov.",
+				"href": "/car"
 			},
 			"rooms": {
 				"self": "Lokalbokning",

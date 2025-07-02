@@ -51,7 +51,8 @@
 			"self": "Services",
 			"car": {
 				"self": "Car Rentals",
-				"desc": "Easily book vehicles for your travel and daily needs."
+				"desc": "Easily book the guild vehicle for your travel and daily needs.",
+				"href": "/car"
 			},
 			"rooms": {
 				"self": "Room Bookings",
