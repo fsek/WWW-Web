@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import Select, { OnChangeValue } from 'react-select'
+import Select, { type OnChangeValue } from 'react-select'
 
 type Option = { value: string; label: string };
 import { useQuery } from "@tanstack/react-query";
@@ -12,7 +12,7 @@ export interface AdminChoosePrioritiesProps {
 	className?: string
 }
 
-export function AdminChoosePriorities({ 
+export function AdminChoosePriorities({
 	priorities,
 	value = [],
 	onChange,
@@ -21,8 +21,8 @@ export function AdminChoosePriorities({
 	const { t } = useTranslation("admin");
 
 	const { data, error, isFetching } = useQuery({
-			...getEventPrioritiesOptions(),
-		});
+		...getEventPrioritiesOptions(),
+	});
 
 	const availablePriorities = data ?? [];
 
@@ -40,7 +40,7 @@ export function AdminChoosePriorities({
 
 	// Convert string value to array if needed
 	const selectedValues = Array.isArray(value) ? value : value ? [value] : [];
-	
+
 	// Convert current values to options format
 	const selectedOptions: Option[] = selectedValues.map((val) => ({
 		value: val,

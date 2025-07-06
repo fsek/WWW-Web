@@ -51,7 +51,7 @@ interface CalendarProps {
 	disableEdit?: boolean;
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
-	mini?: boolean; 
+	mini?: boolean;
 	zoomWorkHours?: boolean;
 }
 
@@ -62,7 +62,7 @@ export default function Calendar({
 	disableEdit,
 	enableAllDay = true,
 	enableTrueEventProperties = false,
-	mini = false, 
+	mini = false,
 	zoomWorkHours = false,
 }: CalendarProps) {
 	const { i18n, t } = useTranslation();
@@ -82,13 +82,16 @@ export default function Calendar({
 	const [isDrag, setIsDrag] = useState(false);
 
 	const handleEventClick = (info: EventClickArg) => {
+		if (!info.event.start || !info.event.end) { // These checks should never fail, but just in case
+			throw new Error("Event must have a start and end time.");
+		}
 		const event: CalendarEvent = {
 			id: info.event.id,
 			title_sv: info.event.title,
 			description_sv: info.event.extendedProps.description_sv,
 			backgroundColor: info.event.backgroundColor,
-			start: info.event.start!,
-			end: info.event.end!,
+			start: info.event.start,
+			end: info.event.end,
 			all_day: info.event.allDay,
 			...(enableTrueEventProperties ? {
 				council_id: info.event.extendedProps.council_id,
@@ -120,13 +123,16 @@ export default function Calendar({
 	};
 
 	const handleEventChange = (info: EventChangeArg) => {
+		if (!info.event.start || !info.event.end) {
+			throw new Error("Event must have a start and end time.");
+		}
 		const event: CalendarEvent = {
 			id: info.event.id,
 			title_sv: info.event.title,
 			description_sv: info.event.extendedProps.description_sv,
 			backgroundColor: info.event.backgroundColor,
-			start: info.event.start!,
-			end: info.event.end!,
+			start: info.event.start,
+			end: info.event.end,
 			all_day: info.event.allDay,
 			...(enableTrueEventProperties ? {
 				council_id: info.event.extendedProps.council_id,
@@ -151,13 +157,17 @@ export default function Calendar({
 			} : {})
 		};
 
+		if (!info.oldEvent.start || !info.oldEvent.end) {
+			throw new Error("Old event must have a start and end time.");
+		}
+
 		const oldEvent: CalendarEvent = {
 			id: info.oldEvent.id,
 			title_sv: info.oldEvent.title,
 			description_sv: info.oldEvent.extendedProps.description_sv,
 			backgroundColor: info.oldEvent.backgroundColor,
-			start: info.oldEvent.start!,
-			end: info.oldEvent.end!,
+			start: info.oldEvent.start,
+			end: info.oldEvent.end,
 			all_day: info.oldEvent.allDay,
 			...(enableTrueEventProperties ? {
 				council_id: info.oldEvent.extendedProps.council_id,
@@ -263,7 +273,7 @@ export default function Calendar({
 		if (mini) {
 			return null;
 		}
-		
+
 		return (
 			<div className="flex">
 				{info.view.type === "dayGridMonth" && info.isToday ? (
@@ -330,7 +340,7 @@ export default function Calendar({
 						interactionPlugin,
 						listPlugin,
 					]}
-					initialView={mini ? "dayGridWeek" : "timeGridWeek" }
+					initialView={mini ? "dayGridWeek" : "timeGridWeek"}
 					headerToolbar={false}
 					slotMinTime={calendarEarliestTime}
 					slotMaxTime={calendarLatestTime}
@@ -340,7 +350,7 @@ export default function Calendar({
 					scrollTime={zoomWorkHours ? "08:00" : undefined}
 					firstDay={1}
 					height={mini || zoomWorkHours ? "100%" : "32vh"}
-					contentHeight={mini || zoomWorkHours ? "100%": "auto"}
+					contentHeight={mini || zoomWorkHours ? "100%" : "auto"}
 					dayHeaderFormat={{
 						weekday: "long",
 					}}

@@ -83,29 +83,29 @@ export function EventEditForm({
 			.min(1, { message: "Must provide a title for this event." }),
 		...(enableTrueEventProperties
 			? {
-					council_id: z.number().int().positive(),
-					signup_start: z.date(),
-					signup_end: z.date(),
-					title_en: z.string().min(1),
-					description_en: editDescription 
-						? z.string({ required_error: t("add.error_description") })
-							.min(1, { message: t("add.error_description") })
-							.max(1000)
-						: z.string().optional().default(""),
-					location: z.string().max(100),
-					max_event_users: z.coerce.number().nonnegative(),
-					recurring: z.boolean(),
-					food: z.boolean(),
-					closed: z.boolean(),
-					can_signup: z.boolean(),
-					drink_package: z.boolean(),
-					is_nollning_event: z.boolean(),
-					priorities: z.array(z.string()).optional().default([]),
-					alcohol_event_type: z.enum(['Alcohol', 'Alcohol-Served', 'None']).default('None'),
-					dress_code: z.string().max(100).optional().default(""),
-					price: z.coerce.number().nonnegative().optional().default(0),
-					dot: z.enum(['None', 'Single', 'Double']).default('None'),
-				}
+				council_id: z.number().int().positive(),
+				signup_start: z.date(),
+				signup_end: z.date(),
+				title_en: z.string().min(1),
+				description_en: editDescription
+					? z.string({ required_error: t("add.error_description") })
+						.min(1, { message: t("add.error_description") })
+						.max(1000)
+					: z.string().optional().default(""),
+				location: z.string().max(100),
+				max_event_users: z.coerce.number().nonnegative(),
+				recurring: z.boolean(),
+				food: z.boolean(),
+				closed: z.boolean(),
+				can_signup: z.boolean(),
+				drink_package: z.boolean(),
+				is_nollning_event: z.boolean(),
+				priorities: z.array(z.string()).optional().default([]),
+				alcohol_event_type: z.enum(['Alcohol', 'Alcohol-Served', 'None']).default('None'),
+				dress_code: z.string().max(100).optional().default(""),
+				price: z.coerce.number().nonnegative().optional().default(0),
+				dot: z.enum(['None', 'Single', 'Double']).default('None'),
+			}
 			: {}),
 	}).refine(
 		(data) => {
@@ -186,28 +186,28 @@ export function EventEditForm({
 				start: oldEvent.start,
 				end: oldEvent.end,
 				all_day: oldEvent.all_day,
-				color: oldEvent.backgroundColor!,
+				color: oldEvent.backgroundColor,
 				...(enableTrueEventProperties
 					? {
-							council_id: oldEvent.council_id,
-							signup_start: oldEvent.signup_start,
-							signup_end: oldEvent.signup_end,
-							title_en: oldEvent.title_en,
-							description_en: oldEvent.description_en,
-							location: oldEvent.location,
-							max_event_users: oldEvent.max_event_users,
-							recurring: oldEvent.recurring,
-							food: oldEvent.food,
-							closed: oldEvent.closed,
-							can_signup: oldEvent.can_signup,
-							drink_package: oldEvent.drink_package,
-							is_nollning_event: oldEvent.is_nollning_event,
-							priorities: oldEvent.priorities,
-							alcohol_event_type: oldEvent.alcohol_event_type,
-							dress_code: oldEvent.dress_code,
-							price: oldEvent.price,
-							dot: oldEvent.dot,
-					  }
+						council_id: oldEvent.council_id,
+						signup_start: oldEvent.signup_start,
+						signup_end: oldEvent.signup_end,
+						title_en: oldEvent.title_en,
+						description_en: oldEvent.description_en,
+						location: oldEvent.location,
+						max_event_users: oldEvent.max_event_users,
+						recurring: oldEvent.recurring,
+						food: oldEvent.food,
+						closed: oldEvent.closed,
+						can_signup: oldEvent.can_signup,
+						drink_package: oldEvent.drink_package,
+						is_nollning_event: oldEvent.is_nollning_event,
+						priorities: oldEvent.priorities,
+						alcohol_event_type: oldEvent.alcohol_event_type,
+						dress_code: oldEvent.dress_code,
+						price: oldEvent.price,
+						dot: oldEvent.dot,
+					}
 					: {}),
 			};
 
@@ -231,25 +231,25 @@ export function EventEditForm({
 			color: event?.backgroundColor,
 			...(enableTrueEventProperties
 				? {
-						council_id: event?.council_id || 1,
-						signup_start: event?.signup_start || new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later
-						signup_end: event?.signup_end || new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
-						title_en: event?.title_en || "",
-						description_en: event?.description_en || "",
-						location: event?.location || "",
-						max_event_users: event?.max_event_users || 0,
-						recurring: event?.recurring || false,
-						food: event?.food || false,
-						closed: event?.closed || false,
-						can_signup: event?.can_signup || false,
-						drink_package: event?.drink_package || false,
-						is_nollning_event: event?.is_nollning_event || false,
-						priorities: event?.priorities || [],
-						alcohol_event_type: event?.alcohol_event_type || "None",
-						dress_code: event?.dress_code || "",
-						price: event?.price || 0,
-						dot: event?.dot || "None",
-				  }
+					council_id: event?.council_id || 1,
+					signup_start: event?.signup_start || new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later
+					signup_end: event?.signup_end || new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
+					title_en: event?.title_en || "",
+					description_en: event?.description_en || "",
+					location: event?.location || "",
+					max_event_users: event?.max_event_users || 0,
+					recurring: event?.recurring || false,
+					food: event?.food || false,
+					closed: event?.closed || false,
+					can_signup: event?.can_signup || false,
+					drink_package: event?.drink_package || false,
+					is_nollning_event: event?.is_nollning_event || false,
+					priorities: event?.priorities || [],
+					alcohol_event_type: event?.alcohol_event_type || "None",
+					dress_code: event?.dress_code || "",
+					price: event?.price || 0,
+					dot: event?.dot || "None",
+				}
 				: {}),
 		});
 	}, [form, event, enableTrueEventProperties]);
@@ -265,31 +265,31 @@ export function EventEditForm({
 			color: data.color,
 			...(enableTrueEventProperties
 				? {
-						council_id: data.council_id,
-						signup_start: data.signup_start,
-						signup_end: data.signup_end,
-						title_en: data.title_en,
-						description_en: data.description_en,
-						location: data.location,
-						max_event_users: data.max_event_users,
-						recurring: data.recurring,
-						food: data.food,
-						closed: data.closed,
-						can_signup: data.can_signup,
-						drink_package: data.drink_package,
-						is_nollning_event: data.is_nollning_event,
-						priorities: data.priorities,
-						alcohol_event_type: data.alcohol_event_type,
-						dress_code: data.dress_code,
-						price: data.price,
-						dot: data.dot,
-				  }
+					council_id: data.council_id,
+					signup_start: data.signup_start,
+					signup_end: data.signup_end,
+					title_en: data.title_en,
+					description_en: data.description_en,
+					location: data.location,
+					max_event_users: data.max_event_users,
+					recurring: data.recurring,
+					food: data.food,
+					closed: data.closed,
+					can_signup: data.can_signup,
+					drink_package: data.drink_package,
+					is_nollning_event: data.is_nollning_event,
+					priorities: data.priorities,
+					alcohol_event_type: data.alcohol_event_type,
+					dress_code: data.dress_code,
+					price: data.price,
+					dot: data.dot,
+				}
 				: {}),
 		};
 		editEvent(newEvent);
 		setEventEditOpen(false);
 
-		toast({ 
+		toast({
 			title: t("edit.toast.title"),
 			action: (
 				<ToastAction altText={t("edit.toast.dismiss_alt")}>
@@ -554,7 +554,7 @@ export function EventEditForm({
 									return (
 										<FormItem>
 											<FormLabel>{t("admin:events.alcohol_event_type")}</FormLabel>
-											<SelectFromOptions 
+											<SelectFromOptions
 												options={options}
 												value={selectedOption.value}
 												onChange={(value) => field.onChange(value)}

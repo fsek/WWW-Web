@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import type { EventRead } from "@/api/types.gen";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
@@ -19,7 +20,7 @@ function idAsNumber(value: string | null): number {
 
 export default function Page() {
 	const router = useRouter();
-  const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const searchParams = useSearchParams();
 	const search = searchParams.get("id");
 	const eventID = idAsNumber(search);
@@ -33,7 +34,7 @@ export default function Page() {
 		);
 	}
 
-	let data;
+	let data: EventRead;
 	try {
 		const query = useSuspenseQuery({
 			...getSingleEventOptions({
@@ -63,8 +64,8 @@ export default function Page() {
 		}).format(new Date(date));
 	};
 
-  const featureDivClassName = "flex items-center gap-1 text-sm";
-  const featureClassName = "w-10 h-10";
+	const featureDivClassName = "flex items-center gap-1 text-sm";
+	const featureClassName = "w-10 h-10";
 
 	return (
 		<Suspense fallback={<div>{t("admin:events.no_event_selected")}</div>}>
@@ -98,11 +99,11 @@ export default function Page() {
 								<p className="font-semibold mb-2 text-med">
 									{t("admin:description")}
 								</p>
-                <p className="text-muted-foreground whitespace-pre-wrap">
-                  {i18n.language === "en" ? data.description_en : data.description_sv}
-                </p>
+								<p className="text-muted-foreground whitespace-pre-wrap">
+									{i18n.language === "en" ? data.description_en : data.description_sv}
+								</p>
 							</div>
-							
+
 							<div className="flex items-center gap-2">
 								<MapPin className="w-4 h-4 text-muted-foreground" />
 								<span>
@@ -115,13 +116,13 @@ export default function Page() {
 											{t("admin:events.location_title") + data.location}
 										</>
 									)}
-									</span>
+								</span>
 							</div>
 
 							<div className="flex items-center gap-2">
 								<Shirt className="w-4 h-4 text-muted-foreground" />
 								<span>
-									{t("admin:events.dress_code") + ": "}
+									{`${t("admin:events.dress_code")}: `}
 									{data.dress_code || t("admin:events.no_dress_code")}
 								</span>
 							</div>
@@ -130,7 +131,7 @@ export default function Page() {
 								<div className="flex items-center gap-2">
 									<WineIcon className="w-4 h-4 text-muted-foreground" />
 									<span>
-										{t("admin:events.alcohol_event_type") + ": "}
+										{`${t("admin:events.alcohol_event_type")}: `}
 										{
 											({
 												Alcohol: t("admin:events.alcohol"),
@@ -150,7 +151,7 @@ export default function Page() {
 							<div className="flex items-center gap-2">
 								<Users className="w-4 h-4 text-muted-foreground" />
 								<span>
-									{t("admin:events.max_event_users") + ": "}
+									{`${t("admin:events.max_event_users")}: `}
 									{data.max_event_users}
 								</span>
 							</div>
@@ -161,7 +162,7 @@ export default function Page() {
 					<Card>
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2 text-lg">
-                <TableOfContents className="w-5 h-5" />
+								<TableOfContents className="w-5 h-5" />
 								{t("admin:events.event_features")}
 							</CardTitle>
 						</CardHeader>
@@ -172,8 +173,8 @@ export default function Page() {
 								data.is_nollning_event ||
 								data.food ||
 								data.drink_package ||
-								data.closed || 
-								(data.price != 0)
+								data.closed ||
+								(data.price !== 0)
 							) ? (
 								<p className="text-muted-foreground text-sm">
 									{t("admin:events.no_features")}
@@ -210,7 +211,7 @@ export default function Page() {
 											{t("admin:events.drink_package")}
 										</Badge>
 									)}
-									{(data.price != 0) && (
+									{(data.price !== 0) && (
 										<Badge variant="outline" className={featureDivClassName}>
 											<CreditCard className={featureClassName} />
 											{t("admin:events.costs_money")}
@@ -256,7 +257,7 @@ export default function Page() {
 								)}
 								<div className="flex items-center gap-2">
 									<span>
-										{t("admin:events.dot_type") + ": "}
+										{`${t("admin:events.dot_type")}: `}
 										{
 											({
 												None: t("admin:events.dot_none"),
@@ -266,7 +267,7 @@ export default function Page() {
 										}
 									</span>
 								</div>
-									
+
 							</div>
 						</CardContent>
 					</Card>
@@ -275,12 +276,12 @@ export default function Page() {
 					<Card>
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2 text-lg">
-                <FilePenLine className="w-5 h-5" />
+								<FilePenLine className="w-5 h-5" />
 								{t("admin:events.signup_information")}
 							</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-3">
-							{data.can_signup == true && (
+							{data.can_signup === true && (
 								<div>
 									<p className="font-semibold text-sm text-muted-foreground">
 										{t("admin:events.signup_period")}
@@ -295,7 +296,7 @@ export default function Page() {
 								</div>
 							)}
 
-							{(data.can_signup == false || data.signup_start === null || data.signup_end === null) && (
+							{(data.can_signup === false || data.signup_start === null || data.signup_end === null) && (
 								<p className="text-sm text-muted-foreground">
 									{t("admin:events.signup_not_available")}
 								</p>
@@ -318,7 +319,7 @@ export default function Page() {
 								<div className="flex items-center gap-2">
 									<CreditCard className="w-4 h-4 text-muted-foreground" />
 									<span>
-										{t("admin:events.price") + ": "}
+										{`${t("admin:events.price")}: `}
 										{data.price} {"kr"}
 									</span>
 								</div>
@@ -330,8 +331,8 @@ export default function Page() {
 										{t("admin:events.priorities")}
 									</p>
 									<div className="space-y-1">
-										{data.priorities.map((priority, index) => (
-											<div key={index} className="text-sm">
+										{data.priorities.map((priority) => (
+											<div key={`${priority.priority}-${priority.event_id}`} className="text-sm">
 												{priority.priority}
 											</div>
 										))}
