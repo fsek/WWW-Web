@@ -153,13 +153,16 @@ export default function Car() {
 	// Transform the fetched data into CalendarEvent type
 	const events: CalendarEvent[] =
 		(data as CarRead[])?.map((car) => {
+			const userName = car.user_first_name && car.user_last_name
+				? `${car.user_first_name} ${car.user_last_name}`
+				: `User ${car.user_id}`;
 			return {
 				id: car.booking_id.toString(),
-				title_sv: car.description,
+				title_sv: userName,
 				start: car.start_time,
 				end: car.end_time,
 				all_day: false,
-				description_sv: `user_id av bokare: ${car.user_id.toString()}`,
+				description_sv: car.description,
 			};
 		}) ?? [];
 
@@ -185,6 +188,8 @@ export default function Car() {
 								description: event.title_sv,
 								start_time: event.start,
 								end_time: event.end,
+								personal: event.personal as boolean ?? true,
+								council_id: event.council_id ? event.council_id as number : undefined,
 							},
 						},
 						{
