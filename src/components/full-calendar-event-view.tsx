@@ -13,16 +13,16 @@ import type { CalendarEvent } from "@/utils/full-calendar-seed";
 import { EventDeleteForm } from "./full-calendar-delete-form";
 import { EventEditForm } from "./full-calendar-edit-form";
 import { useEvents } from "@/utils/full-calendar-event-context";
-import { 
-	X, 
-	Calendar, 
-	Repeat, 
-	Star, 
-	Utensils, 
-	Beer, 
-	HandCoins, 
-	CreditCard, 
-	Lock 
+import {
+	X,
+	Calendar,
+	Repeat,
+	Star,
+	Utensils,
+	Beer,
+	HandCoins,
+	CreditCard,
+	Lock
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -49,7 +49,7 @@ export function EventView({
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 	const { t, i18n } = useTranslation("calendar");
-	
+
 	const featureDivClassName = "flex items-center gap-1";
 	const featureClassName = "h-3 w-3";
 
@@ -106,50 +106,50 @@ export function EventView({
 												event.food ||
 												event.drink_package ||
 												event.closed ||
-												event.price != 0
+												event.price !== 0
 											) ? (
 												<p className="text-muted-foreground text-sm">
 													{t("admin:events.no_features")}
 												</p>
 											) : (
 												<div className="flex flex-wrap gap-2">
-													{event.all_day == true && enableAllDay && (
+													{event.all_day === true && enableAllDay && (
 														<Badge variant="secondary" className={featureDivClassName}>
 															<Calendar className={featureClassName} />
 															{t("admin:events.all_day")}
 														</Badge>
 													)}
-													{event.recurring == true && (
+													{event.recurring === true && (
 														<Badge variant="secondary" className={featureDivClassName}>
 															<Repeat className={featureClassName} />
 															{t("admin:events.recurring")}
 														</Badge>
 													)}
-													{event.is_nollning_event == true && (
+													{event.is_nollning_event === true && (
 														<Badge variant="secondary" className={featureDivClassName}>
 															<Star className={featureClassName} />
 															{t("admin:events.is_nollning_event")}
 														</Badge>
 													)}
-													{event.food == true && (
+													{event.food === true && (
 														<Badge variant="outline" className={featureDivClassName}>
 															<Utensils className={featureClassName} />
 															{t("admin:events.food")}
 														</Badge>
 													)}
-													{event.drink_package == true && (
+													{event.drink_package === true && (
 														<Badge variant="outline" className={featureDivClassName}>
 															<Beer className={featureClassName} />
 															{t("admin:events.drink_package")}
 														</Badge>
 													)}
-													{event.price != 0 && (
+													{event.price !== 0 && (
 														<Badge variant="outline" className={featureDivClassName}>
 															<CreditCard className={featureClassName} />
 															{t("admin:events.costs_money")}
 														</Badge>
 													)}
-													{event.closed == true && (
+													{event.closed === true && (
 														<Badge variant="destructive" className={featureDivClassName}>
 															<Lock className={featureClassName} />
 															{t("admin:events.closed")}
@@ -161,10 +161,10 @@ export function EventView({
 									</tr>
 								)}
 								{(event && enableTrueEventProperties) && (
-									<> 
+									<>
 										{/* These are all temporary and should be changed at some point */}
 										<tr>
-											<th>{t("admin:events.council")}</th> 
+											<th>{t("admin:events.council")}</th>
 											<td>{event.council_name as string}</td>
 										</tr>
 										<tr>

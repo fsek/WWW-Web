@@ -71,9 +71,34 @@ export default function Car() {
 					day: "2-digit",
 				}),
 		}),
-		columnHelper.accessor("user_id", {
-			header: t("admin:car.booked_by"),
+		columnHelper.accessor("user_first_name", {
+			header: t("admin:car.booked_by_first"),
 			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor("user_last_name", {
+			header: t("admin:car.booked_by_last"),
+			cell: (info) => info.getValue(),
+		}),
+		columnHelper.display({
+			id: "confirmed",
+			header: t("admin:car.confirmed"),
+			cell: (info) => {
+				const confirmed = (info.row.original).confirmed;
+				return confirmed ? t("admin:yes") : t("admin:no");
+			},
+		}),
+		columnHelper.display({
+			id: "personal",
+			header: t("admin:car.personal"),
+			cell: (info) => {
+				const personal = (info.row.original).personal;
+				return personal ? t("admin:yes") : t("admin:no");
+			},
+		}),
+		columnHelper.display({
+			id: "council_name",
+			header: t("admin:car.council_name"),
+			cell: (info) => info.getValue() ?? t("admin:car.no_council"),
 		}),
 	];
 
@@ -163,6 +188,7 @@ export default function Car() {
 				end: car.end_time,
 				all_day: false,
 				description_sv: car.description,
+				council_name: car.council?.name,
 			};
 		}) ?? [];
 

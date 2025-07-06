@@ -106,7 +106,7 @@ export default function CalendarNav({
 							>
 								{selectedDay
 									? dayOptions.find((day) => day.value === String(selectedDay))
-											?.label
+										?.label
 									: t("nav.select_day")}
 								<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 							</Button>
@@ -160,7 +160,7 @@ export default function CalendarNav({
 						>
 							{selectedMonth
 								? (i18n.language === "en" ? months_en.find((month) => month.value === String(selectedMonth))
-										 											: months_sv.find((month) => month.value === String(selectedMonth)))?.label
+									: months_sv.find((month) => month.value === String(selectedMonth)))?.label
 								: t("nav.select_month")}
 							<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 						</Button>
@@ -254,9 +254,8 @@ export default function CalendarNav({
 								onClick={() =>
 									setView(calendarRef, "timeGridDay", setCurrentView)
 								}
-								className={`space-x-1 ${
-									currentView === "timeGridDay" ? "w-1/2" : "w-1/4"
-								}`}
+								className={`space-x-1 ${currentView === "timeGridDay" ? "w-1/2" : "w-1/4"
+									}`}
 							>
 								<GalleryVertical className="h-5 w-5" />
 								{currentView === "timeGridDay" && (
@@ -268,9 +267,8 @@ export default function CalendarNav({
 								onClick={() =>
 									setView(calendarRef, "timeGridWeek", setCurrentView)
 								}
-								className={`space-x-1 ${
-									currentView === "timeGridWeek" ? "w-1/2" : "w-1/4"
-								}`}
+								className={`space-x-1 ${currentView === "timeGridWeek" ? "w-1/2" : "w-1/4"
+									}`}
 							>
 								<Tally3 className="h-5 w-5" />
 								{currentView === "timeGridWeek" && (
@@ -282,9 +280,8 @@ export default function CalendarNav({
 								onClick={() =>
 									setView(calendarRef, "dayGridMonth", setCurrentView)
 								}
-								className={`space-x-1 ${
-									currentView === "dayGridMonth" ? "w-1/2" : "w-1/4"
-								}`}
+								className={`space-x-1 ${currentView === "dayGridMonth" ? "w-1/2" : "w-1/4"
+									}`}
 							>
 								<Table className="h-5 w-5 rotate-90" />
 								{currentView === "dayGridMonth" && (
@@ -309,10 +306,10 @@ export default function CalendarNav({
 
 				{/* Add event button  */}
 				{!disableEdit && (
-					<EventAddForm 
-						start={start} 
-						end={end} 
-						editDescription={editDescription} 
+					<EventAddForm
+						start={start}
+						end={end}
+						editDescription={editDescription}
 						enableAllDay={enableAllDay}
 						enableTrueEventProperties={enableTrueEventProperties}
 					/>

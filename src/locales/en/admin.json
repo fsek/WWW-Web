@@ -9,6 +9,8 @@
 	"cancel": "Cancel",
 	"remove": "Remove",
 	"choose_priorities": "Choose prioritized groups",
+	"yes": "Yes",
+	"no": "No",
 	"news": {
 		"self": "News",
 		"page_title": "Manage News"
@@ -104,6 +106,12 @@
 		"start_time": "Start Time",
 		"end_time": "End Time",
 		"booked_by": "Booked by user id:",
+		"booked_by_first": "Booked by (first name):",
+		"booked_by_last": "Booked by (last name):",
+		"confirmed": "Confirmed",
+		"personal": "Personal Booking",
+		"council_name": "Council Name",
+		"no_council": "No Council",
 		"error_add": "Failed to add booking.",
 		"error_delete": "Failed to delete booking with id: ",
 		"error_missing_id": "Missing booking id.",
