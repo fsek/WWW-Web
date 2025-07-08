@@ -92,7 +92,6 @@ export default function Events() {
 		},
 		throwOnError: false,
 	});
-	
 
 	if (isFetching) {
 		return <p>{t("admin:loading")}</p>;
@@ -102,10 +101,10 @@ export default function Events() {
 		return <p>{t("admin:error")}</p>;
 	}
 
-	interface CustomEventData_ extends CustomEventData { 
+	interface CustomEventData_ extends CustomEventData {
 		// We define these manually to avoid having start_time and start as different fields
 		council_id: number;
-		council_name: string; 
+		council_name: string;
 		title_en: string;
 		signup_start: Date;
 		signup_end: Date;
@@ -157,8 +156,6 @@ export default function Events() {
 			dot: event.dot as EventCreate["dot"],
 			lottery: event.lottery,
 		})) ?? [];
-
-	console.log("Events loaded:", events);
 
 	return (
 		<div className="px-8 space-x-4">
@@ -281,7 +278,7 @@ export default function Events() {
 								editDescription={true} // Note that setting this to false wont work with events. (not implemented in the list view)
 								handleOpenDetails={(event) => {
 									if (event) {
-										router.push("/calendar/event-details?id=" + event.id)
+										router.push(`/calendar/event-details?id=${event.id}`)
 									}
 								}}
 								disableEdit={false} // Also disables delete, add and dragging

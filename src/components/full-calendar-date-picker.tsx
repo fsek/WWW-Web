@@ -271,7 +271,7 @@ function Calendar({
 			};
 		}
 		return genMonths(locale);
-	}, [props]);
+	}, [props.locale]);
 
 	const YEARS = React.useMemo(() => genYears(yearRange), [yearRange]);
 
@@ -606,7 +606,6 @@ const TimePicker = React.forwardRef<TimePickerRef, TimePickerProps>(
 				secondRef: secondRef.current,
 				periodRef: periodRef.current,
 			}),
-			[minuteRef, hourRef, secondRef],
 		);
 
 		return (

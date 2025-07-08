@@ -41,16 +41,15 @@ export default function CarEditForm({
 }: CarEditFormProps) {
   const { t } = useTranslation();
 
-  const carEditSchema = z
-    .object({
-      booking_id: z.number(),
-      description: z.string().min(1),
-      start_time: z.date(),
-      end_time: z.date(),
-      confirmed: z.boolean().default(false),
-      personal: z.boolean().default(true),
-      council_id: z.number().int().positive(),
-    })
+  const carEditSchema = z.object({
+    booking_id: z.number(),
+    description: z.string().min(1),
+    start_time: z.date(),
+    end_time: z.date(),
+    confirmed: z.boolean().default(false),
+    personal: z.boolean().default(true),
+    council_id: z.number().int().positive(),
+  })
     .refine(
       (data) => {
         // Check if start time equals end time

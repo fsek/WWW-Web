@@ -204,7 +204,7 @@ export function EventView({
 										<tr>
 											<th>{t("admin:events.price")}</th>
 											<td>
-												{event.price != 0 ? (
+												{event.price !== 0 ? (
 													<>
 														{event.price as number} {"kr"}
 													</>
@@ -253,14 +253,15 @@ export function EventView({
 						</table>
 						{(event && enableTrueEventProperties) && (
 							<div className="flex flex-wrap gap-2 m-2 flex-row">
-								{event.can_signup == true && (
+								{event.can_signup === true && (
 									<Badge variant="default" className="text-sm">
 										{t("admin:events.can_signup")}
 									</Badge>
 								)}
-							</div>
-						)}
-					</AlertDialogHeader>
+							</div >
+						)
+						}
+					</AlertDialogHeader >
 					<AlertDialogFooter>
 						{handleOpenDetails != null && (
 							<Button
@@ -285,8 +286,8 @@ export function EventView({
 							/>
 						)}
 					</AlertDialogFooter>
-				</AlertDialogContent>
-			</AlertDialog>
+				</AlertDialogContent >
+			</AlertDialog >
 		</>
 	);
 }

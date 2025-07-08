@@ -30,7 +30,9 @@ export function EventDeleteForm({ id, title_sv }: EventDeleteFormProps) {
 	const { toast } = useToast();
 
 	function onSubmit() {
-		deleteEvent(id!);
+		if (!id) throw new Error("EventDeleteForm requires a non-null id prop.");
+
+		deleteEvent(id);
 		setEventDeleteOpen(false);
 		setEventViewOpen(false);
 		toast({

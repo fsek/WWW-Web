@@ -218,6 +218,9 @@ export default function Car() {
 				initialCalendarEvents={events}
 				eventColor="#f6ad55" // TODO: use tailwind
 				handleAdd={(event) => {
+					if (!event.title_sv) {
+						throw new Error("Missing title");
+					}
 					handleEventAdd.mutate(
 						{
 							body: {
@@ -250,6 +253,10 @@ export default function Car() {
 					if (!event.id) {
 						console.error(t("admin:car.error_missing_id"), event);
 						return;
+					}
+
+					if (!event.title_sv) {
+						throw new Error("Missing title");
 					}
 
 					handleEventEdit.mutate(

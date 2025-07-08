@@ -210,7 +210,7 @@ export function EventEditForm({
 				start: oldEvent.start,
 				end: oldEvent.end,
 				all_day: oldEvent.all_day,
-				color: oldEvent.backgroundColor!,
+				color: oldEvent.backgroundColor,
 				...(enableTrueEventProperties
 					? {
 						council_id: oldEvent.council_id,
@@ -384,7 +384,6 @@ export function EventEditForm({
 										<FormControl>
 											<Input placeholder={t("edit.placeholder.title")} {...field} value={field.value as string} />
 										</FormControl>
-										<FormMessage />
 									</FormItem>
 								)}
 							/>

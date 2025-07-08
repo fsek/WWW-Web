@@ -26,7 +26,7 @@ import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTranslation } from "react-i18next";
 import { AdminChoosePriorities } from "@/widgets/AdminChoosePriorities";
-import { EventCreate } from "@/api/types.gen";
+import type { EventCreate } from "@/api/types.gen";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { Label } from "@/components/ui/label";
 
@@ -239,7 +239,6 @@ export default function EventsForm() {
 									</FormItem>
 								)}
 							/>
-							
 
 							<FormField
 								control={eventsForm.control}
@@ -354,7 +353,7 @@ export default function EventsForm() {
 							<FormField
 								control={eventsForm.control}
 								name="max_event_users"
-								render={({ field }) => (	
+								render={({ field }) => (
 									<FormItem>
 										<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
 										<FormControl>
@@ -382,7 +381,7 @@ export default function EventsForm() {
 									return (
 										<FormItem>
 											<FormLabel>{t("admin:events.alcohol_event_type")}</FormLabel>
-											<SelectFromOptions 
+											<SelectFromOptions
 												options={options}
 												value={selectedOption.value}
 												onChange={(value) => field.onChange(value)}
