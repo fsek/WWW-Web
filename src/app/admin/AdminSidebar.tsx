@@ -27,6 +27,8 @@ import {
 } from "@/components/ui/collapsible";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const groups = {
 	Allmänt: [
@@ -93,6 +95,10 @@ export function AdminSidebar() {
 					</Collapsible>
 				))}
 			</SidebarContent>
+			<div className="absolute bottom-0 left-0 w-full flex flex-row items-center justify-end gap-2 px-4 py-3 border-t border-sidebar-border bg-sidebar z-10">
+				<LanguageSwitcher />
+				<ThemeToggle />
+			</div>
 		</Sidebar>
 	);
 }

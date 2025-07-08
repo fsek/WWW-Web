@@ -16,9 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { PlusIcon } from "lucide-react";
-import { HexColorPicker } from "react-colorful";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -35,6 +33,11 @@ import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { useEvents } from "@/utils/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
 import { useTranslation } from "react-i18next";
+import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
+import { Checkbox } from "./ui/checkbox";
+import AdminChoosePriorities from "@/widgets/AdminChoosePriorities";
+import { SelectFromOptions } from "@/widgets/SelectFromOptions";
+import { Label } from "./ui/label";
 
 interface EventAddFormProps {
 	start: Date;
@@ -42,6 +45,7 @@ interface EventAddFormProps {
 	editDescription: boolean;
 	showButton?: boolean;
 	enableAllDay?: boolean;
+	enableTrueEventProperties?: boolean;
 }
 
 export function EventAddForm({
@@ -50,16 +54,18 @@ export function EventAddForm({
 	editDescription,
 	showButton = true,
 	enableAllDay = true,
+	enableTrueEventProperties = false,
 }: EventAddFormProps) {
 	const { t } = useTranslation("calendar");
 
 	const eventAddFormSchema = z.object({
-		title: z
+		title_sv: z
 			.string({ required_error: t("add.error_title") })
 			.min(1, { message: t("add.error_title") }),
-		description: editDescription 
+		description_sv: editDescription 
 			? z.string({ required_error: t("add.error_description") })
 				.min(1, { message: t("add.error_description") })
+				.max(1000)
 			: z.string().optional().default(""),
 		start: z.date({
 			required_error: t("add.error_start_time"),
@@ -69,10 +75,37 @@ export function EventAddForm({
 			required_error: t("add.error_end_time"),
 			invalid_type_error: t("add.error_not_date"),
 		}),
-		allDay: z.boolean().default(false),
+		all_day: z.boolean().default(false),
 		color: z
 			.string({ required_error: "Please select an event color." })
 			.min(1, { message: "Must provide a title for this event." }),
+		...(enableTrueEventProperties
+			? {
+					council_id: z.number().int().positive(),
+					signup_start: z.date(),
+					signup_end: z.date(),
+					title_en: z.string().min(1),
+					description_en: editDescription 
+						? z.string({ required_error: t("add.error_description") })
+							.min(1, { message: t("add.error_description") })
+							.max(1000)
+						: z.string().optional().default(""),
+					location: z.string().max(100),
+					max_event_users: z.coerce.number().nonnegative(),
+					recurring: z.boolean(),
+					food: z.boolean(),
+					closed: z.boolean(),
+					can_signup: z.boolean(),
+					drink_package: z.boolean(),
+					is_nollning_event: z.boolean(),
+					priorities: z.array(z.string()).optional().default([]),
+					alcohol_event_type: z.enum(['Alcohol', 'Alcohol-Served', 'None']).default('None'),
+					dress_code: z.string().max(100).optional().default(""),
+					price: z.coerce.number().nonnegative().optional().default(0),
+					dot: z.enum(['None', 'Single', 'Double']).default('None'),
+					lottery: z.boolean().default(false),
+				}
+			: {}),
 	}).refine(
 		(data) => {
 			// Check if start time equals end time
@@ -91,7 +124,34 @@ export function EventAddForm({
 			message: t("error_start_end"),
 			path: ["end"] // Shows the error on the end time field
 		}
+	).refine(
+		(data) => {
+			if (enableTrueEventProperties) {
+				// Check if event is in the past
+				if (data.start.getTime() < Date.now()) {
+					return false;
+				}
+			}
+			return true;
+		},
+		{
+			message: t("error_past_event"),
+			path: ["start"]
+		}
 	);
+
+	const checkboxFields = [
+		...enableAllDay ? ["all_day"] : [],
+		...enableTrueEventProperties ? [
+			"recurring",
+			"food",
+			"closed",
+			"can_signup",
+			"drink_package",
+			"is_nollning_event",
+			"lottery"
+		] : [],
+	] as const;
 
 	type EventAddFormValues = z.infer<typeof eventAddFormSchema>;
 	const { events, addEvent } = useEvents();
@@ -101,29 +161,100 @@ export function EventAddForm({
 
 	const form = useForm<z.infer<typeof eventAddFormSchema>>({
 		resolver: zodResolver(eventAddFormSchema),
+		defaultValues: { // Not sure these are used
+			title_sv: "",
+			title_en: "",
+			description_sv: "",
+			description_en: "",
+			start: start as Date,
+			end: end as Date,
+			signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later 
+			signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
+			all_day: false,
+			color: "#76c7ef",
+			council_id: 1,
+			location: "",
+			max_event_users: 0,
+			recurring: false,
+			food: false,
+			closed: false,
+			can_signup: false,
+			drink_package: false,
+			is_nollning_event: false,
+			priorities: [],
+			alcohol_event_type: "None",
+			dress_code: "",
+			price: 0,
+			dot: "None",
+			lottery: false,
+		},
 	});
 
 	useEffect(() => {
 		form.reset({
-      title: "",
-      description: "",
+      title_sv: "",
+      title_en: "",
+      description_sv: "",
+      description_en: "",
       start: start,
       end: end,
-			allDay: false,
-      color: "#76c7ef"
+			all_day: false,
+      color: "#76c7ef",
+			...(enableTrueEventProperties ? {
+				council_id: 1,
+				signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later
+				signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
+				location: "",
+				max_event_users: 0,
+				recurring: false,
+				food: false,
+				closed: false,
+				can_signup: false,
+				drink_package: false,
+				is_nollning_event: false,
+				priorities: [],
+				alcohol_event_type: "None",
+				dress_code: "",
+				price: 0,
+				dot: "None",
+				lottery: false,
+			} : {}),
     });
-	}, [form, start, end]);
+	}, [form, start, end, enableTrueEventProperties]);
 
 	const onSubmit = useCallback(
 		async (data: EventAddFormValues) => {
 			const newEvent = {
 				id: String(events.length + 1),
-				title: data.title,
-				description: editDescription ? data.description : "",
+				title_sv: data.title_sv,
+				description_sv: editDescription ? data.description_sv : "",
 				start: data.start,
 				end: data.end,
-				allDay: data.allDay,
+				all_day: data.all_day,
 				color: data.color,
+				...(enableTrueEventProperties
+				? {
+						council_id: data.council_id,
+						signup_start: data.signup_start,
+						signup_end: data.signup_end,
+						title_en: data.title_en,
+						description_en: data.description_en,
+						location: data.location,
+						max_event_users: data.max_event_users,
+						recurring: data.recurring,
+						food: data.food,
+						closed: data.closed,
+						can_signup: data.can_signup,
+						drink_package: data.drink_package,
+						is_nollning_event: data.is_nollning_event,
+						priorities: data.priorities ?? [],
+						alcohol_event_type: data.alcohol_event_type,
+						dress_code: data.dress_code,
+						price: data.price,
+						dot: data.dot,
+						lottery: data.lottery,
+				  }
+				: {}),
 			};
 			addEvent(newEvent);
 			setEventAddOpen(false);
@@ -136,7 +267,7 @@ export function EventAddForm({
 				),
 			});
 		},
-		[events, addEvent, setEventAddOpen, toast, editDescription, t],
+		[events, addEvent, setEventAddOpen, toast, editDescription, t, enableTrueEventProperties],
 	);
 
 	return (
@@ -144,7 +275,7 @@ export function EventAddForm({
 			{showButton && (
 				<AlertDialogTrigger className="flex" asChild>
 					<Button
-						className="w-24 md:w-28 text-xs md:text-sm"
+						className="w-fit text-xs md:text-sm"
 						variant="default"
 						onClick={() => setEventAddOpen(true)}
 					>
@@ -153,7 +284,7 @@ export function EventAddForm({
 					</Button>
 				</AlertDialogTrigger>
 			)}
-			<AlertDialogContent>
+			<AlertDialogContent className="min-w-fit lg:max-w-7xl">
 				<AlertDialogDescription className="sr-only">
 					A popup dialog to add a new event of some kind.
 				</AlertDialogDescription>
@@ -162,13 +293,13 @@ export function EventAddForm({
 				</AlertDialogHeader>
 
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2.5">
+					<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-x-4 gap-y-3 lg:grid-cols-4">
 						<FormField
 							control={form.control}
-							name="title"
+							name="title_sv"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("add.title")}</FormLabel>
+									<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 									<FormControl>
 										<Input placeholder={t("add.placeholder.title")} {...field} />
 									</FormControl>
@@ -176,34 +307,73 @@ export function EventAddForm({
 								</FormItem>
 							)}
 						/>
-						{editDescription && (
+
+						{/* Title (en) */}
+						{enableTrueEventProperties && (
 							<FormField
 								control={form.control}
-								name="description"
+								name="title_en"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("add.description")}</FormLabel>
+										<FormLabel>{t("admin:events.title_en")}</FormLabel>
 										<FormControl>
-											<Textarea
-												placeholder={t("add.placeholder.description")}
-												className="max-h-36"
-												{...field}
-											/>
+											<Input placeholder={t("add.placeholder.title")} {...field} value={field.value as string} />
 										</FormControl>
-										<FormMessage />
 									</FormItem>
 								)}
 							/>
+						)}
+
+						{editDescription && (
+							<>
+								<FormField
+									control={form.control}
+									name="description_sv"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>{t("admin:events.description_sv")}</FormLabel>
+											<FormControl>
+												<Textarea
+													placeholder={t("add.placeholder.description")}
+													className="max-h-36"
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								{enableTrueEventProperties && (
+									<FormField
+										control={form.control}
+										name="description_en"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>{t("admin:events.description_en")}</FormLabel>
+												<FormControl>
+													<Textarea
+														placeholder={t("add.placeholder.description")}
+														className="max-h-36"
+														{...field}
+														value={field.value as string}
+													/>
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								)}
+							</>
 						)}
 						<FormField
 							control={form.control}
 							name="start"
 							render={({ field }) => (
 								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">{t("add.start_time")}</FormLabel>
+									<FormLabel htmlFor="datetime">{t("admin:events.start_time")}</FormLabel>
 									<FormControl>
 										<AdminChooseDates
-											value={field.value}
+											value={field.value as Date}
 											onChange={field.onChange}
 										/>
 									</FormControl>
@@ -216,10 +386,10 @@ export function EventAddForm({
 							name="end"
 							render={({ field }) => (
 								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">{t("add.end_time")}</FormLabel>
+									<FormLabel htmlFor="datetime">{t("admin:events.end_time")}</FormLabel>
 									<FormControl>
 										<AdminChooseDates
-											value={field.value}
+											value={field.value as Date}
 											onChange={field.onChange}
 										/>
 									</FormControl>
@@ -227,25 +397,223 @@ export function EventAddForm({
 								</FormItem>
 							)}
 						/>
-						{enableAllDay && (
+						{enableTrueEventProperties && (
+							<>
+								<FormField
+									control={form.control}
+									name="signup_start"
+									render={({ field }) => (
+										<FormItem className="flex flex-col">
+											<FormLabel htmlFor="datetime">{t("admin:events.signup_start")}</FormLabel>
+											<FormControl>
+												<AdminChooseDates
+													value={field.value as Date}
+													onChange={field.onChange}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="signup_end"
+									render={({ field }) => (
+										<FormItem className="flex flex-col">
+											<FormLabel htmlFor="datetime">{t("admin:events.signup_end")}</FormLabel>
+											<FormControl>
+												<AdminChooseDates
+													value={field.value as Date}
+													onChange={field.onChange}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</>
+						)}
+
+						{/* Council */}
+						{enableTrueEventProperties && (
 							<FormField
 								control={form.control}
-								name="allDay"
+								name="council_id"
 								render={({ field }) => (
-									<FormItem className="flex flex-row items-center space-x-2">
-										<FormControl>
-											<input
-												type="checkbox"
-												className="cursor-pointer"
-												checked={field.value}
-												onChange={(e) => field.onChange(e.target.checked)}
-											/>
-										</FormControl>
-										<FormLabel>{t("add.all_day")}</FormLabel>
+									<FormItem className="lg:col-span-1 w-full">
+										<FormLabel>{t("admin:events.council")}</FormLabel>
+										<AdminChooseCouncil
+											value={field.value as number}
+											onChange={
+												(value: number) => {
+													field.onChange(value);
+												}
+											}
+										/>
 									</FormItem>
 								)}
 							/>
 						)}
+
+						{/* Priorities */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="priorities"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2 w-full">
+										<FormLabel>{t("admin:events.priorities")}</FormLabel>
+										<AdminChoosePriorities
+											value={field.value as string[] ?? []}
+											onChange={(value) => field.onChange(value)}
+											className="text-sm"
+										/>
+									</FormItem>
+								)}
+							/>
+						)}
+
+						{/* Location */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="location"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("admin:events.location")}</FormLabel>
+										<FormControl>
+											<Input {...field} value={field.value as string} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+						)}
+
+						{/* Max event users */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="max_event_users"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
+										<FormControl>
+											<Input type="number" {...field} value={field.value as number} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+						)}
+
+						{/* Alcohol event type */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="alcohol_event_type"
+								render={({ field }) => {
+									const options = [
+										{ value: "Alcohol", label: t("admin:events.alcohol") },
+										{ value: "Alcohol-Served", label: t("admin:events.alcohol_served") },
+										{ value: "None", label: t("admin:events.alcohol_none") },
+									];
+									const selectedOption = options.find(opt => opt.value === field.value) ?? options[2];
+									return (
+										<FormItem>
+											<FormLabel>{t("admin:events.alcohol_event_type")}</FormLabel>
+											<SelectFromOptions 
+												options={options}
+												value={selectedOption.value}
+												onChange={(value) => field.onChange(value)}
+												placeholder={t("admin:events.select_alcohol_event_type")}
+											/>
+										</FormItem>
+									);
+								}}
+							/>
+						)}
+
+						{/* dress_code */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="dress_code"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("admin:events.dress_code")}</FormLabel>
+										<FormControl>
+											<Input {...field} value={field.value as string} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+						)}
+
+						{/* Price */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="price"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("admin:events.price")}</FormLabel>
+										<FormControl>
+											<Input type="number" {...field} value={field.value as number} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+						)}
+
+						{/* Dot */}
+						{enableTrueEventProperties && (
+							<FormField
+								control={form.control}
+								name="dot"
+								render={({ field }) => {
+									const options = [
+										{ value: "None", label: t("admin:events.dot_none") },
+										{ value: "Single", label: t("admin:events.dot_single") },
+										{ value: "Double", label: t("admin:events.dot_double") },
+									];
+									const selectedOption = options.find(opt => opt.value === field.value) ?? options[0];
+									return (
+										<FormItem>
+											<FormLabel>{t("admin:events.select_dot")}</FormLabel>
+											<SelectFromOptions
+												options={options}
+												value={selectedOption.value}
+												onChange={(value) => field.onChange(value)}
+											/>
+										</FormItem>
+									);
+								}}
+							/>
+						)}
+
+						{/* Checkbox fields */}
+						{checkboxFields.map((fieldName) => (
+							<FormField
+								key={fieldName}
+								control={form.control}
+								name={fieldName}
+								render={({ field }) => (
+									<Label
+										className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent"
+									>
+										<Checkbox
+											checked={field.value}
+											onCheckedChange={field.onChange}
+											className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+										/>
+										<div className="grid gap-1.5 font-normal">
+											<p className="text-sm leading-none font-medium">
+												{t(`admin:events.${fieldName}`)}
+											</p>
+										</div>
+									</Label>
+								)}
+							/>
+						))}
 						{/* Not used
 						<FormField
 							control={form.control}
