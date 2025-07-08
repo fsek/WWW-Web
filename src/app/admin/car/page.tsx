@@ -29,7 +29,7 @@ import {
 	updateBookingMutation,
 } from "@/api/@tanstack/react-query.gen";
 import AdminTable from "@/widgets/AdminTable";
-import type { CalendarEvent } from "@/utils/full-calendar-seed";
+import type { CalendarEvent, CustomEventData } from "@/utils/full-calendar-seed";
 import { useTranslation } from "react-i18next";
 import CarEditForm from "./CarEditForm";
 
@@ -98,7 +98,10 @@ export default function Car() {
 		columnHelper.display({
 			id: "council_name",
 			header: t("admin:car.council_name"),
-			cell: (info) => info.getValue() ?? t("admin:car.no_council"),
+			cell: (info) => {
+				const councilName = info.row.original.council?.name;
+				return councilName ?? t("admin:car.no_council");
+			},
 		}),
 	];
 
@@ -175,8 +178,15 @@ export default function Car() {
 		return <p> {t("admin:error")}</p>;
 	}
 
+	interface CustomEventData_ extends CustomEventData {
+		council_id?: number;
+		personal: boolean;
+		confirmed: boolean;
+		council_name?: string;
+	}
+
 	// Transform the fetched data into CalendarEvent type
-	const events: CalendarEvent[] =
+	const events: CalendarEvent<CustomEventData_>[] =
 		(data as CarRead[])?.map((car) => {
 			const userName = car.user_first_name && car.user_last_name
 				? `${car.user_first_name} ${car.user_last_name}`
@@ -188,7 +198,10 @@ export default function Car() {
 				end: car.end_time,
 				all_day: false,
 				description_sv: car.description,
-				council_name: car.council?.name,
+				council_name: car.council?.name ?? undefined,
+				confirmed: car.confirmed,
+				personal: car.personal,
+				council_id: car.council_id ?? undefined,
 			};
 		}) ?? [];
 
@@ -205,13 +218,10 @@ export default function Car() {
 				initialCalendarEvents={events}
 				eventColor="#f6ad55" // TODO: use tailwind
 				handleAdd={(event) => {
-					if (!event.title_sv) {
-						throw new Error("Missing title");
-					}
 					handleEventAdd.mutate(
 						{
 							body: {
-								description: event.title_sv,
+								description: event.description_sv,
 								start_time: event.start,
 								end_time: event.end,
 								personal: event.personal as boolean ?? true,
@@ -242,17 +252,16 @@ export default function Car() {
 						return;
 					}
 
-					if (!event.title_sv) {
-						throw new Error("Missing title");
-					}
-
 					handleEventEdit.mutate(
 						{
 							path: { booking_id: Number(event.id) },
 							body: {
-								description: event.title_sv,
+								description: event.description_sv,
 								start_time: event.start,
 								end_time: event.end,
+								personal: event.personal as boolean ?? true,
+								council_id: event.council_id ? event.council_id as number : undefined,
+								confirmed: event.confirmed as boolean ?? false,
 							},
 						},
 						{
@@ -289,10 +298,11 @@ export default function Car() {
 							<Separator />
 							<Calendar
 								showDescription={true}
-								editDescription={false}
+								editDescription={true}
 								handleOpenDetails={null}
 								disableEdit={false} // Also disables delete, add and dragging
 								enableAllDay={false}
+								enableCarProperties={true}
 							/>
 						</TabsContent>
 						<TabsContent value="list" className="w-full px-5 space-y-5">

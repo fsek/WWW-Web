@@ -53,6 +53,7 @@ interface CalendarProps {
 	enableTrueEventProperties?: boolean;
 	mini?: boolean;
 	zoomWorkHours?: boolean;
+	enableCarProperties?: boolean;
 }
 
 export default function Calendar({
@@ -64,6 +65,7 @@ export default function Calendar({
 	enableTrueEventProperties = false,
 	mini = false,
 	zoomWorkHours = false,
+	enableCarProperties = false,
 }: CalendarProps) {
 	const { i18n, t } = useTranslation();
 	const { events, setEventAddOpen, setEventEditOpen, eventViewOpen, setEventViewOpen } =
@@ -110,6 +112,12 @@ export default function Calendar({
 				dress_code: info.event.extendedProps.dress_code,
 				price: info.event.extendedProps.price,
 				dot: info.event.extendedProps.dot,
+			} : {}),
+			...(enableCarProperties ? {
+				personal: info.event.extendedProps.personal,
+				council_id: info.event.extendedProps.council_id,
+				confirmed: info.event.extendedProps.confirmed,
+				council_name: info.event.extendedProps.council_name,
 			} : {})
 		};
 
@@ -148,6 +156,12 @@ export default function Calendar({
 				dress_code: info.event.extendedProps.dress_code,
 				price: info.event.extendedProps.price,
 				dot: info.event.extendedProps.dot,
+			} : {}),
+			...(enableCarProperties ? {
+				personal: info.event.extendedProps.personal,
+				council_id: info.event.extendedProps.council_id,
+				confirmed: info.event.extendedProps.confirmed,
+				council_name: info.event.extendedProps.council_name,
 			} : {})
 		};
 
@@ -179,6 +193,12 @@ export default function Calendar({
 				dress_code: info.oldEvent.extendedProps.dress_code,
 				price: info.oldEvent.extendedProps.price,
 				dot: info.oldEvent.extendedProps.dot,
+			} : {}),
+			...(enableCarProperties ? {
+				personal: info.oldEvent.extendedProps.personal,
+				council_id: info.oldEvent.extendedProps.council_id,
+				confirmed: info.oldEvent.extendedProps.confirmed,
+				council_name: info.oldEvent.extendedProps.council_name,
 			} : {})
 		};
 
@@ -316,6 +336,7 @@ export default function Calendar({
 				enableAllDay={enableAllDay}
 				enableTrueEventProperties={enableTrueEventProperties}
 				mini={mini}
+				enableCarProperties={enableCarProperties}
 			/>
 
 			<Card className="p-3 flex-1">
@@ -396,6 +417,7 @@ export default function Calendar({
 					showButton={false}
 					enableAllDay={enableAllDay}
 					enableTrueEventProperties={enableTrueEventProperties}
+					enableCarProperties={enableCarProperties}
 				/>
 			)}
 
@@ -407,6 +429,7 @@ export default function Calendar({
 				disableEdit={disableEdit ?? false}
 				enableAllDay={enableAllDay}
 				enableTrueEventProperties={enableTrueEventProperties}
+				enableCarProperties={enableCarProperties}
 			/>
 		</div>
 	);

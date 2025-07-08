@@ -53,6 +53,7 @@ interface CalendarNavProps {
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
 	mini?: boolean;
+	enableCarProperties?: boolean;
 }
 
 export default function CalendarNav({
@@ -65,6 +66,7 @@ export default function CalendarNav({
 	enableAllDay = true,
 	enableTrueEventProperties = false,
 	mini = false,
+	enableCarProperties = false,
 }: CalendarNavProps) {
 	const { t, i18n } = useTranslation("calendar");
 	const [currentView, setCurrentView] = useState(mini ? "dayGridWeek" : "timeGridWeek");
@@ -312,6 +314,7 @@ export default function CalendarNav({
 						editDescription={editDescription}
 						enableAllDay={enableAllDay}
 						enableTrueEventProperties={enableTrueEventProperties}
+						enableCarProperties={enableCarProperties}
 					/>
 				)}
 			</div>

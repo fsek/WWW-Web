@@ -22,6 +22,9 @@ import {
 
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { useTranslation } from "react-i18next";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 
 export default function CarForm() {
 	const { t } = useTranslation();
@@ -30,25 +33,39 @@ export default function CarForm() {
 		description: z.string().min(1),
 		start_time: z.date(),
 		end_time: z.date(),
+		personal: z.boolean().default(true),
+		council_id: z.number().int().positive(),
 	}).refine(
-    (data) => {
-      // Check if start time equals end time
-      if (new Date(data.start_time).getTime() === new Date(data.end_time).getTime()) {
-        return false;
-      }
+		(data) => {
+			// Check if start time equals end time
+			if (new Date(data.start_time).getTime() === new Date(data.end_time).getTime()) {
+				return false;
+			}
 
-      // Check if start time is after end time
-      if (new Date(data.start_time).getTime() > new Date(data.end_time).getTime()) {
-        return false;
-      }
+			// Check if start time is after end time
+			if (new Date(data.start_time).getTime() > new Date(data.end_time).getTime()) {
+				return false;
+			}
 
-      return true;
-    },
-    {
-      message: t("admin:car.error_start_end"),
-      path: ["end_time"] // Shows the error on the end time field
-    }
-  );
+			return true;
+		},
+		{
+			message: t("admin:car.error_start_end"),
+			path: ["end_time"] // Shows the error on the end time field
+		}
+	).refine(
+		(data) => {
+			// Check if personal is false and council_id is not set
+			if (data.personal === false && !data.council_id) {
+				return false;
+			}
+			return true;
+		},
+		{
+			message: t("calendar:error_missing_council"),
+			path: ["council_id"]
+		}
+	);
 
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
@@ -59,6 +76,8 @@ export default function CarForm() {
 			description: t("admin:car.default_description"),
 			start_time: new Date(Date.now()),
 			end_time: new Date(Date.now() + 1000 * 60 * 60 * 3),
+			personal: true,
+			council_id: 1,
 		},
 	});
 
@@ -83,6 +102,8 @@ export default function CarForm() {
 				description: values.description,
 				start_time: values.start_time,
 				end_time: values.end_time,
+				personal: values.personal,
+				council_id: values.council_id,
 			},
 		});
 	}
@@ -151,6 +172,52 @@ export default function CarForm() {
 										<FormMessage />
 									</FormItem>
 								)}
+							/>
+
+							<FormField
+								control={carForm.control}
+								name="personal"
+								render={({ field }) => (
+									<Label
+										className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent"
+									>
+										<Checkbox
+											checked={field.value}
+											onCheckedChange={field.onChange}
+											className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+										/>
+										<div className="grid gap-1.5 font-normal">
+											<p className="text-sm leading-none font-medium">
+												{t("admin:car.personal")}
+											</p>
+										</div>
+									</Label>
+								)}
+							/>
+
+							{/* Council */}
+							<FormField
+								control={carForm.control}
+								name="council_id"
+								render={({ field }) => {
+									const personalChecked = carForm.watch("personal");
+									return (
+										<FormItem>
+											<FormLabel>{t("admin:events.council")}</FormLabel>
+											{personalChecked ? (
+												<div className="text-muted-foreground text-sm py-2">
+													{t("admin:car.no_council_needed")}
+												</div>
+											) : (
+												<AdminChooseCouncil
+													value={field.value as number}
+													onChange={(value: number) => field.onChange(value)}
+												/>
+											)}
+											<FormMessage />
+										</FormItem>
+									);
+								}}
 							/>
 
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">

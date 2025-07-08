@@ -113,6 +113,7 @@
 		"personal": "Personlig bokning",
 		"council_name": "Utskottsnamn",
 		"no_council": "Inget utskott",
+		"no_council_needed": "Inget utskott krävs för personliga bokningar",
 		"error_add": "Misslyckades att lägga till bokning.",
 		"error_delete": "Misslyckades att ta bort bokning med id: ",
 		"error_missing_id": "Boknings-id saknas.",

@@ -112,6 +112,7 @@
 		"personal": "Personal Booking",
 		"council_name": "Council Name",
 		"no_council": "No Council",
+		"no_council_needed": "No council is used for personal bookings",
 		"error_add": "Failed to add booking.",
 		"error_delete": "Failed to delete booking with id: ",
 		"error_missing_id": "Missing booking id.",

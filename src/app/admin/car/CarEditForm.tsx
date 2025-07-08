@@ -14,8 +14,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
+import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import {
   getAllBookingQueryKey,
   updateBookingMutation,
@@ -38,30 +41,48 @@ export default function CarEditForm({
 }: CarEditFormProps) {
   const { t } = useTranslation();
 
-  const carEditSchema = z.object({
-    booking_id: z.number(),
-    description: z.string().min(1),
-    start_time: z.date(),
-    end_time: z.date(),
-  }).refine(
-    (data) => {
-      // Check if start time equals end time
-      if (data.start_time.getTime() === data.end_time.getTime()) {
-        return false;
-      }
+  const carEditSchema = z
+    .object({
+      booking_id: z.number(),
+      description: z.string().min(1),
+      start_time: z.date(),
+      end_time: z.date(),
+      confirmed: z.boolean().default(false),
+      personal: z.boolean().default(true),
+      council_id: z.number().int().positive(),
+    })
+    .refine(
+      (data) => {
+        // Check if start time equals end time
+        if (data.start_time.getTime() === data.end_time.getTime()) {
+          return false;
+        }
 
-      // Check if start time is after end time
-      if (data.start_time.getTime() > data.end_time.getTime()) {
-        return false;
-      }
+        // Check if start time is after end time
+        if (data.start_time.getTime() > data.end_time.getTime()) {
+          return false;
+        }
 
-      return true;
-    },
-    {
-      message: t("admin:car.error_start_end"),
-      path: ["end_time"] // Shows the error on the end time field
-    }
-  );
+        return true;
+      },
+      {
+        message: t("admin:car.error_start_end"),
+        path: ["end_time"], // Shows the error on the end time field
+      }
+    )
+    .refine(
+      (data) => {
+        // Check if personal is false and council_id is not set
+        if (data.personal === false && !data.council_id) {
+          return false;
+        }
+        return true;
+      },
+      {
+        message: t("calendar:error_missing_council"),
+        path: ["council_id"],
+      }
+    );
 
   type CarEditFormType = z.infer<typeof carEditSchema>;
 
@@ -71,6 +92,9 @@ export default function CarEditForm({
       description: "",
       start_time: new Date(Date.now()),
       end_time: new Date(Date.now() + 60 * 60 * 1000),
+      confirmed: false,
+      personal: true,
+      council_id: 1,
     },
   });
 
@@ -81,6 +105,9 @@ export default function CarEditForm({
         booking_id: selectedBooking.booking_id,
         start_time: new Date(selectedBooking.start_time),
         end_time: new Date(selectedBooking.end_time),
+        confirmed: selectedBooking.confirmed ?? false,
+        personal: selectedBooking.personal ?? true,
+        council_id: selectedBooking.council_id ?? 1,
       });
     }
   }, [selectedBooking, form, open]);
@@ -114,6 +141,9 @@ export default function CarEditForm({
       description: values.description,
       start_time: new Date(values.start_time),
       end_time: new Date(values.end_time),
+      confirmed: values.confirmed,
+      personal: values.personal,
+      council_id: values.council_id,
     };
 
     updateBooking.mutate(
@@ -125,7 +155,7 @@ export default function CarEditForm({
         onSuccess: () => {
           onClose();
         },
-      },
+      }
     );
   }
 
@@ -138,7 +168,7 @@ export default function CarEditForm({
           onSuccess: () => {
             onClose();
           },
-        },
+        }
       );
     } else {
       console.error("Cannot remove booking: ID is missing.");
@@ -211,15 +241,84 @@ export default function CarEditForm({
               )}
             />
 
+            {/* Confirmed Field */}
+            <FormField
+              control={form.control}
+              name="confirmed"
+              render={({ field }) => (
+                <Label
+                  className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent"
+                >
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+                  />
+                  <div className="grid gap-1.5 font-normal">
+                    <p className="text-sm leading-none font-medium">
+                      {t("admin:car.confirmed")}
+                    </p>
+                  </div>
+                </Label>
+              )}
+            />
+
+            {/* Personal Field */}
+            <FormField
+              control={form.control}
+              name="personal"
+              render={({ field }) => (
+                <Label
+                  className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent"
+                >
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+                  />
+                  <div className="grid gap-1.5 font-normal">
+                    <p className="text-sm leading-none font-medium">
+                      {t("admin:car.personal")}
+                    </p>
+                  </div>
+                </Label>
+              )}
+            />
+
+            {/* Council */}
+            <FormField
+              control={form.control}
+              name="council_id"
+              render={({ field }) => {
+                const personalChecked = form.watch("personal");
+                return (
+                  <FormItem>
+                    <FormLabel>{t("admin:events.council")}</FormLabel>
+                    {personalChecked ? (
+                      <div className="text-muted-foreground text-sm py-2">
+                        {t("admin:car.no_council_needed")}
+                      </div>
+                    ) : (
+                      <AdminChooseCouncil
+                        value={field.value as number}
+                        onChange={(value: number) => field.onChange(value)}
+                      />
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+
             {/* Button Section */}
             <div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
               <Button
-                 type="button"
-                 variant="outline"
-                 className="w-32 min-w-fit"
-                 onClick={() => console.log("Preview:", form.getValues())}
-               >
-                 {t("admin:preview")}
+                type="button"
+                variant="outline"
+                className="w-32 min-w-fit"
+                onClick={() => console.log("Preview:", form.getValues())}
+              >
+                {t("admin:preview")}
               </Button>
 
               <Button

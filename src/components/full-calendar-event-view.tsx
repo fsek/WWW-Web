@@ -36,6 +36,7 @@ interface EventViewProps {
 	disableEdit: boolean;
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
+	enableCarProperties?: boolean;
 }
 
 export function EventView({
@@ -46,6 +47,7 @@ export function EventView({
 	disableEdit,
 	enableAllDay = true,
 	enableTrueEventProperties = false,
+	enableCarProperties = false,
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 	const { t, i18n } = useTranslation("calendar");
@@ -215,6 +217,38 @@ export function EventView({
 										</tr>
 									</>
 								)}
+								{(event && enableCarProperties) && (
+									<>
+										<tr>
+											<th>{t("admin:car.personal")}</th>
+											<td>
+												{event.personal ? t("admin:yes") : t("admin:no")}
+											</td>
+										</tr>
+										<tr>
+											<th>{t("admin:car.confirmed")}</th>
+											<td>
+												{event.confirmed ? t("admin:yes") : t("admin:no")}
+											</td>
+										</tr>
+									</>
+								)}
+								{(event && enableCarProperties) && (
+									<tr>
+										<th>{t("admin:events.council")}</th>
+										<td>
+											{(!(event.council_name as string) || event.personal) ? (
+												<span className="text-muted-foreground text-sm">
+													{t("admin:car.no_council")}
+												</span>
+											) : (
+												<>
+													{event.council_name as string}
+												</>
+											)}
+										</td>
+									</tr>
+								)}
 							</tbody>
 						</table>
 						{(event && enableTrueEventProperties) && (
@@ -247,6 +281,7 @@ export function EventView({
 								editDescription={editDescription}
 								enableAllDay={enableAllDay}
 								enableTrueEventProperties={enableTrueEventProperties}
+								enableCarProperties={enableCarProperties}
 							/>
 						)}
 					</AlertDialogFooter>
