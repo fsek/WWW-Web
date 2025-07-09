@@ -1,3 +1,6 @@
+import nextMdx from "@next/mdx";
+import remarkGfm from "remark-gfm";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	output: "export", // Outputs a Single-Page Application (SPA).
@@ -5,6 +8,14 @@ const nextConfig = {
 	images: {
 		unoptimized: true, // Next.js image optimization is unsupported when static export is enabled.
 	},
+	// Configure `pageExtensions` to include MDX files
+	pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
 };
 
-export default nextConfig;
+const withMDX = nextMdx({
+	extension: /\.(md|mdx)$/,
+	options: {
+		remarkPlugins: [remarkGfm],
+	},
+});
+export default withMDX(nextConfig);
