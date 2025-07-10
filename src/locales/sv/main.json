@@ -131,5 +131,11 @@
 		"email": "E-postadress",
 		"password": "Lösenord",
 		"title": "Logga in"
+	},
+	"car-booking": {
+		"title": "Bilbokning",
+		"description-title": "FAQ och regler",
+		"description": "Som medlem kan du boka sektionens bil för personliga och sektionrelaterade resor. Det finns en FAQ tillgänglig <0>här</0> och genom att boka bilen godkänner du våra <1>användarvillkor</1>.",
+		"link": "Om du är administratör kan du hantera bokningar <0>här</0> istället."
 	}
 }

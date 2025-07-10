@@ -29,7 +29,10 @@ import {
 	updateBookingMutation,
 } from "@/api/@tanstack/react-query.gen";
 import AdminTable from "@/widgets/AdminTable";
-import type { CalendarEvent, CustomEventData } from "@/utils/full-calendar-seed";
+import type {
+	CalendarEvent,
+	CustomEventData,
+} from "@/utils/full-calendar-seed";
 import { useTranslation } from "react-i18next";
 import CarEditForm from "./CarEditForm";
 
@@ -83,7 +86,7 @@ export default function Car() {
 			id: "confirmed",
 			header: t("admin:car.confirmed"),
 			cell: (info) => {
-				const confirmed = (info.row.original).confirmed;
+				const confirmed = info.row.original.confirmed;
 				return confirmed ? t("admin:yes") : t("admin:no");
 			},
 		}),
@@ -91,7 +94,7 @@ export default function Car() {
 			id: "personal",
 			header: t("admin:car.personal"),
 			cell: (info) => {
-				const personal = (info.row.original).personal;
+				const personal = info.row.original.personal;
 				return personal ? t("admin:yes") : t("admin:no");
 			},
 		}),
@@ -188,9 +191,10 @@ export default function Car() {
 	// Transform the fetched data into CalendarEvent type
 	const events: CalendarEvent<CustomEventData_>[] =
 		(data as CarRead[])?.map((car) => {
-			const userName = car.user_first_name && car.user_last_name
-				? `${car.user_first_name} ${car.user_last_name}`
-				: `User ${car.user_id}`;
+			const userName =
+				car.user_first_name && car.user_last_name
+					? `${car.user_first_name} ${car.user_last_name}`
+					: `User ${car.user_id}`;
 			return {
 				id: car.booking_id.toString(),
 				title_sv: userName,
@@ -210,25 +214,23 @@ export default function Car() {
 			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
 				{t("admin:car.title")}
 			</h3>
-			<p className="py-3">
-				{t("admin:car.description")}
-			</p>
+			<p className="py-3">{t("admin:car.description")}</p>
 			<Separator />
 			<EventsProvider
 				initialCalendarEvents={events}
 				eventColor="#f6ad55" // TODO: use tailwind
+				carEvents={true}
 				handleAdd={(event) => {
-					if (!event.title_sv) {
-						throw new Error("Missing title");
-					}
 					handleEventAdd.mutate(
 						{
 							body: {
 								description: event.description_sv,
 								start_time: event.start,
 								end_time: event.end,
-								personal: event.personal as boolean ?? true,
-								council_id: event.council_id ? event.council_id as number : undefined,
+								personal: (event.personal as boolean) ?? true,
+								council_id: event.council_id
+									? (event.council_id as number)
+									: undefined,
 							},
 						},
 						{
@@ -266,9 +268,11 @@ export default function Car() {
 								description: event.description_sv,
 								start_time: event.start,
 								end_time: event.end,
-								personal: event.personal as boolean ?? true,
-								council_id: event.council_id ? event.council_id as number : undefined,
-								confirmed: event.confirmed as boolean ?? false,
+								personal: (event.personal as boolean) ?? true,
+								council_id: event.council_id
+									? (event.council_id as number)
+									: undefined,
+								confirmed: (event.confirmed as boolean) ?? false,
 							},
 						},
 						{
@@ -289,7 +293,9 @@ export default function Car() {
 						className="flex flex-col w-full items-center"
 					>
 						<TabsList className="flex justify-center mb-2">
-							<TabsTrigger value="calendar">{t("admin:car.calendar")}</TabsTrigger>
+							<TabsTrigger value="calendar">
+								{t("admin:car.calendar")}
+							</TabsTrigger>
 							<TabsTrigger value="list">{t("admin:car.list")}</TabsTrigger>
 						</TabsList>
 						<TabsContent value="calendar" className="w-full px-5 space-y-5">

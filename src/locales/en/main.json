@@ -124,5 +124,11 @@
 		"email": "Email",
 		"password": "Password",
 		"title": "Log in"
+	},
+	"car-booking": {
+		"title": "Car Booking",
+		"description-title": "FAQ and rules",
+		"description": "As a member, you can book the guild car for your personal and guild-related needs. There's a FAQ section available <0>here</0> and by booking the car, you agree to our <1>terms of use</1>.",
+		"link": "If you are an admin, you can manage bookings <0>here</0> instead."
 	}
 }

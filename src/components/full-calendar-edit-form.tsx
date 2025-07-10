@@ -48,6 +48,7 @@ interface EventEditFormProps {
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean; // This is cursed
 	enableCarProperties?: boolean;
+	disableConfirmField?: boolean;
 }
 
 export function EventEditForm({
@@ -59,106 +60,118 @@ export function EventEditForm({
 	enableAllDay = true,
 	enableTrueEventProperties = false,
 	enableCarProperties = false,
+	disableConfirmField = false,
 }: EventEditFormProps) {
 	const { t } = useTranslation("calendar");
 
-	const eventEditFormSchema = z.object({
-		id: z.string(),
-		title_sv: z
-			.string({ required_error: t("edit.error_title") })
-			.min(1, { message: t("edit.error_title") }),
-		description_sv: z
-			.string({ required_error: t("edit.error_description") })
-			.min(1, { message: t("edit.error_description") })
-			.max(1000),
-		start: z.date({
-			required_error: t("edit.error_start_time"),
-			invalid_type_error: t("edit.error_not_date"),
-		}),
-		end: z.date({
-			required_error: t("edit.error_end_time"),
-			invalid_type_error: t("edit.error_not_date"),
-		}),
-		all_day: z.boolean().default(false),
-		color: z
-			.string({ required_error: "Please select an event color." })
-			.min(1, { message: "Must provide a title for this event." }),
-		...(enableTrueEventProperties
-			? {
-				council_id: z.number().int().positive(),
-				signup_start: z.date(),
-				signup_end: z.date(),
-				title_en: z.string().min(1),
-				description_en: editDescription
-					? z.string({ required_error: t("add.error_description") })
-						.min(1, { message: t("add.error_description") })
-						.max(1000)
-					: z.string().optional().default(""),
-				location: z.string().max(100),
-				max_event_users: z.coerce.number().nonnegative(),
-				recurring: z.boolean(),
-				food: z.boolean(),
-				closed: z.boolean(),
-				can_signup: z.boolean(),
-				drink_package: z.boolean(),
-				is_nollning_event: z.boolean(),
-				priorities: z.array(z.string()).optional().default([]),
-				alcohol_event_type: z.enum(['Alcohol', 'Alcohol-Served', 'None']).default('None'),
-				dress_code: z.string().max(100).optional().default(""),
-				price: z.coerce.number().nonnegative().optional().default(0),
-				dot: z.enum(['None', 'Single', 'Double']).default('None'),
-			}
-			: {}),
-		...(enableCarProperties ? {
-			personal: z.boolean().default(true),
-			confirmed: z.boolean().default(false),
-			council_id: z.number().int().positive(),
-		} : {}),
-	}).refine(
-		(data) => {
-			// Check if start time equals end time
-			if (data.start.getTime() === data.end.getTime()) {
-				return false;
-			}
-
-			// Check if start time is after end time
-			if (data.start.getTime() > data.end.getTime()) {
-				return false;
-			}
-
-			return true;
-		},
-		{
-			message: t("error_start_end"),
-			path: ["end"] // Shows the error on the end time field
-		}
-	).refine(
-		(data) => {
-			if (enableCarProperties) {
-				// Check if personal is false and council_id is not set
-				if (data.personal === false && !data.council_id) {
+	const eventEditFormSchema = z
+		.object({
+			id: z.string(),
+			title_sv: z
+				.string({ required_error: t("edit.error_title") })
+				.min(1, { message: t("edit.error_title") }),
+			description_sv: z
+				.string({ required_error: t("edit.error_description") })
+				.min(1, { message: t("edit.error_description") })
+				.max(1000),
+			start: z.date({
+				required_error: t("edit.error_start_time"),
+				invalid_type_error: t("edit.error_not_date"),
+			}),
+			end: z.date({
+				required_error: t("edit.error_end_time"),
+				invalid_type_error: t("edit.error_not_date"),
+			}),
+			all_day: z.boolean().default(false),
+			color: z
+				.string({ required_error: "Please select an event color." })
+				.min(1, { message: "Must provide a title for this event." }),
+			...(enableTrueEventProperties
+				? {
+						council_id: z.number().int().positive(),
+						signup_start: z.date(),
+						signup_end: z.date(),
+						title_en: z.string().min(1),
+						description_en: editDescription
+							? z
+									.string({ required_error: t("add.error_description") })
+									.min(1, { message: t("add.error_description") })
+									.max(1000)
+							: z.string().optional().default(""),
+						location: z.string().max(100),
+						max_event_users: z.coerce.number().nonnegative(),
+						recurring: z.boolean(),
+						food: z.boolean(),
+						closed: z.boolean(),
+						can_signup: z.boolean(),
+						drink_package: z.boolean(),
+						is_nollning_event: z.boolean(),
+						priorities: z.array(z.string()).optional().default([]),
+						alcohol_event_type: z
+							.enum(["Alcohol", "Alcohol-Served", "None"])
+							.default("None"),
+						dress_code: z.string().max(100).optional().default(""),
+						price: z.coerce.number().nonnegative().optional().default(0),
+						dot: z.enum(["None", "Single", "Double"]).default("None"),
+					}
+				: {}),
+			...(enableCarProperties
+				? {
+						personal: z.boolean().default(true),
+						confirmed: z.boolean().default(false),
+						council_id: z.number().int().positive(),
+					}
+				: {}),
+		})
+		.refine(
+			(data) => {
+				// Check if start time equals end time
+				if (data.start.getTime() === data.end.getTime()) {
 					return false;
 				}
-			}
-			return true;
-		},
-		{
-			message: t("error_missing_council"),
-			path: ["council_id"]
-		}
-	);
+
+				// Check if start time is after end time
+				if (data.start.getTime() > data.end.getTime()) {
+					return false;
+				}
+
+				return true;
+			},
+			{
+				message: t("error_start_end"),
+				path: ["end"], // Shows the error on the end time field
+			},
+		)
+		.refine(
+			(data) => {
+				if (enableCarProperties) {
+					// Check if personal is false and council_id is not set
+					if (data.personal === false && !data.council_id) {
+						return false;
+					}
+				}
+				return true;
+			},
+			{
+				message: t("error_missing_council"),
+				path: ["council_id"],
+			},
+		);
 
 	const checkboxFields = [
-		...enableAllDay ? ["all_day"] : [],
-		...enableTrueEventProperties ? [
-			"recurring",
-			"food",
-			"closed",
-			"can_signup",
-			"drink_package",
-			"is_nollning_event"
-		] : [],
-		...enableCarProperties ? ["personal", "confirmed"] : [],
+		...(enableAllDay ? ["all_day"] : []),
+		...(enableTrueEventProperties
+			? [
+					"recurring",
+					"food",
+					"closed",
+					"can_signup",
+					"drink_package",
+					"is_nollning_event",
+				]
+			: []),
+		...(enableCarProperties ? ["personal"] : []),
+		...(enableCarProperties && !disableConfirmField ? ["confirmed"] : []),
 	] as const;
 
 	type EventEditFormValues = z.infer<typeof eventEditFormSchema>;
@@ -175,9 +188,9 @@ export function EventEditForm({
 			title_en: "",
 			description_sv: "",
 			description_en: "",
-			start: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later 
+			start: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
 			end: new Date(Date.now() + 1000 * 60 * 60 * 5), // 5 hours later
-			signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later 
+			signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later
 			signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
 			all_day: false,
 			color: "#76c7ef",
@@ -201,7 +214,7 @@ export function EventEditForm({
 	});
 
 	const handleEditCancellation = () => {
-		// I think this code resets the event to its original state if it was dragged, and the editing was canceled. 
+		// I think this code resets the event to its original state if it was dragged, and the editing was canceled.
 		if (isDrag && oldEvent) {
 			const resetEvent = {
 				id: oldEvent.id,
@@ -213,33 +226,34 @@ export function EventEditForm({
 				color: oldEvent.backgroundColor,
 				...(enableTrueEventProperties
 					? {
-						council_id: oldEvent.council_id,
-						signup_start: oldEvent.signup_start,
-						signup_end: oldEvent.signup_end,
-						title_en: oldEvent.title_en,
-						description_en: oldEvent.description_en,
-						location: oldEvent.location,
-						max_event_users: oldEvent.max_event_users,
-						recurring: oldEvent.recurring,
-						food: oldEvent.food,
-						closed: oldEvent.closed,
-						can_signup: oldEvent.can_signup,
-						drink_package: oldEvent.drink_package,
-						is_nollning_event: oldEvent.is_nollning_event,
-						priorities: oldEvent.priorities,
-						alcohol_event_type: oldEvent.alcohol_event_type,
-						dress_code: oldEvent.dress_code,
-						price: oldEvent.price,
-						dot: oldEvent.dot,
-					}
+							council_id: oldEvent.council_id,
+							signup_start: oldEvent.signup_start,
+							signup_end: oldEvent.signup_end,
+							title_en: oldEvent.title_en,
+							description_en: oldEvent.description_en,
+							location: oldEvent.location,
+							max_event_users: oldEvent.max_event_users,
+							recurring: oldEvent.recurring,
+							food: oldEvent.food,
+							closed: oldEvent.closed,
+							can_signup: oldEvent.can_signup,
+							drink_package: oldEvent.drink_package,
+							is_nollning_event: oldEvent.is_nollning_event,
+							priorities: oldEvent.priorities,
+							alcohol_event_type: oldEvent.alcohol_event_type,
+							dress_code: oldEvent.dress_code,
+							price: oldEvent.price,
+							dot: oldEvent.dot,
+						}
 					: {}),
 				...(enableCarProperties
 					? {
-						personal: oldEvent.personal,
-						council_id: oldEvent.council_id,
-						confirmed: oldEvent.confirmed,
-						council_name: oldEvent.council_name,
-					}
+							personal: oldEvent.personal,
+							council_id: oldEvent.council_id,
+							confirmed: oldEvent.confirmed,
+							council_name: oldEvent.council_name,
+							user_id: oldEvent.user_id,
+						}
 					: {}),
 			};
 
@@ -263,33 +277,36 @@ export function EventEditForm({
 			color: event?.backgroundColor,
 			...(enableTrueEventProperties
 				? {
-					council_id: event?.council_id || 1,
-					signup_start: event?.signup_start || new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later
-					signup_end: event?.signup_end || new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
-					title_en: event?.title_en || "",
-					description_en: event?.description_en || "",
-					location: event?.location || "",
-					max_event_users: event?.max_event_users || 0,
-					recurring: event?.recurring || false,
-					food: event?.food || false,
-					closed: event?.closed || false,
-					can_signup: event?.can_signup || false,
-					drink_package: event?.drink_package || false,
-					is_nollning_event: event?.is_nollning_event || false,
-					priorities: event?.priorities || [],
-					alcohol_event_type: event?.alcohol_event_type || "None",
-					dress_code: event?.dress_code || "",
-					price: event?.price || 0,
-					dot: event?.dot || "None",
-				}
+						council_id: event?.council_id || 1,
+						signup_start:
+							event?.signup_start || new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later
+						signup_end:
+							event?.signup_end || new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
+						title_en: event?.title_en || "",
+						description_en: event?.description_en || "",
+						location: event?.location || "",
+						max_event_users: event?.max_event_users || 0,
+						recurring: event?.recurring || false,
+						food: event?.food || false,
+						closed: event?.closed || false,
+						can_signup: event?.can_signup || false,
+						drink_package: event?.drink_package || false,
+						is_nollning_event: event?.is_nollning_event || false,
+						priorities: event?.priorities || [],
+						alcohol_event_type: event?.alcohol_event_type || "None",
+						dress_code: event?.dress_code || "",
+						price: event?.price || 0,
+						dot: event?.dot || "None",
+					}
 				: {}),
 			...(enableCarProperties
 				? {
-					personal: event?.personal ?? true,
-					council_id: event?.council_id || 1,
-					confirmed: event?.confirmed ?? false,
-					council_name: event?.council_name || "",
-				}
+						personal: event?.personal ?? true,
+						council_id: event?.council_id || 1,
+						confirmed: event?.confirmed ?? false,
+						council_name: event?.council_name || "",
+						user_id: event?.user_id ?? undefined,
+					}
 				: {}),
 		});
 	}, [form, event, enableTrueEventProperties, enableCarProperties]);
@@ -305,32 +322,32 @@ export function EventEditForm({
 			color: data.color,
 			...(enableTrueEventProperties
 				? {
-					council_id: data.council_id,
-					signup_start: data.signup_start,
-					signup_end: data.signup_end,
-					title_en: data.title_en,
-					description_en: data.description_en,
-					location: data.location,
-					max_event_users: data.max_event_users,
-					recurring: data.recurring,
-					food: data.food,
-					closed: data.closed,
-					can_signup: data.can_signup,
-					drink_package: data.drink_package,
-					is_nollning_event: data.is_nollning_event,
-					priorities: data.priorities,
-					alcohol_event_type: data.alcohol_event_type,
-					dress_code: data.dress_code,
-					price: data.price,
-					dot: data.dot,
-				}
+						council_id: data.council_id,
+						signup_start: data.signup_start,
+						signup_end: data.signup_end,
+						title_en: data.title_en,
+						description_en: data.description_en,
+						location: data.location,
+						max_event_users: data.max_event_users,
+						recurring: data.recurring,
+						food: data.food,
+						closed: data.closed,
+						can_signup: data.can_signup,
+						drink_package: data.drink_package,
+						is_nollning_event: data.is_nollning_event,
+						priorities: data.priorities,
+						alcohol_event_type: data.alcohol_event_type,
+						dress_code: data.dress_code,
+						price: data.price,
+						dot: data.dot,
+					}
 				: {}),
 			...(enableCarProperties
 				? {
-					personal: data.personal,
-					council_id: data.council_id,
-					confirmed: data.confirmed,
-				}
+						personal: data.personal,
+						council_id: data.council_id,
+						confirmed: data.confirmed,
+					}
 				: {}),
 		};
 		editEvent(newEvent);
@@ -367,12 +384,16 @@ export function EventEditForm({
 					A popup dialog to edit an event.
 				</AlertDialogDescription>
 				<AlertDialogHeader>
-					<AlertDialogTitle>{t("edit.edit")} "{event?.title_sv}"</AlertDialogTitle>
+					<AlertDialogTitle>
+						{t("edit.edit")} "{event?.title_sv}"
+					</AlertDialogTitle>
 				</AlertDialogHeader>
 
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-x-4 gap-y-3 lg:grid-cols-4">
-
+					<form
+						onSubmit={form.handleSubmit(onSubmit)}
+						className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
+					>
 						{/* Title (sv) */}
 						{!enableCarProperties && (
 							<FormField
@@ -382,7 +403,11 @@ export function EventEditForm({
 									<FormItem>
 										<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 										<FormControl>
-											<Input placeholder={t("edit.placeholder.title")} {...field} value={field.value as string} />
+											<Input
+												placeholder={t("edit.placeholder.title")}
+												{...field}
+												value={field.value as string}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -398,7 +423,11 @@ export function EventEditForm({
 									<FormItem>
 										<FormLabel>{t("admin:events.title_en")}</FormLabel>
 										<FormControl>
-											<Input placeholder={t("edit:placeholder.title")} {...field} value={field.value as string} />
+											<Input
+												placeholder={t("edit:placeholder.title")}
+												{...field}
+												value={field.value as string}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -431,7 +460,9 @@ export function EventEditForm({
 										name="description_en"
 										render={({ field }) => (
 											<FormItem className="">
-												<FormLabel>{t("admin:events.description_en")}</FormLabel>
+												<FormLabel>
+													{t("admin:events.description_en")}
+												</FormLabel>
 												<FormControl>
 													<Textarea
 														placeholder={t("edit.placeholder.description")}
@@ -452,7 +483,9 @@ export function EventEditForm({
 							name="start"
 							render={({ field }) => (
 								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">{t("admin:events.start_time")}</FormLabel>
+									<FormLabel htmlFor="datetime">
+										{t("admin:events.start_time")}
+									</FormLabel>
 									<FormControl>
 										<AdminChooseDates
 											value={field.value as Date}
@@ -468,7 +501,9 @@ export function EventEditForm({
 							name="end"
 							render={({ field }) => (
 								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">{t("admin:events.end_time")}</FormLabel>
+									<FormLabel htmlFor="datetime">
+										{t("admin:events.end_time")}
+									</FormLabel>
 									<FormControl>
 										<AdminChooseDates
 											value={field.value as Date}
@@ -487,7 +522,9 @@ export function EventEditForm({
 									name="signup_start"
 									render={({ field }) => (
 										<FormItem className="flex flex-col">
-											<FormLabel htmlFor="datetime">{t("admin:events.signup_start")}</FormLabel>
+											<FormLabel htmlFor="datetime">
+												{t("admin:events.signup_start")}
+											</FormLabel>
 											<FormControl>
 												<AdminChooseDates
 													value={field.value as Date}
@@ -503,7 +540,9 @@ export function EventEditForm({
 									name="signup_end"
 									render={({ field }) => (
 										<FormItem className="flex flex-col">
-											<FormLabel htmlFor="datetime">{t("admin:events.signup_end")}</FormLabel>
+											<FormLabel htmlFor="datetime">
+												{t("admin:events.signup_end")}
+											</FormLabel>
 											<FormControl>
 												<AdminChooseDates
 													value={field.value as Date}
@@ -527,7 +566,11 @@ export function EventEditForm({
 										? form.watch("personal")
 										: false;
 									return (
-										<FormItem className={enableTrueEventProperties ? "lg:col-span-2" : ""}>
+										<FormItem
+											className={
+												enableTrueEventProperties ? "lg:col-span-2" : ""
+											}
+										>
 											<FormLabel>{t("admin:events.council")}</FormLabel>
 											{enableCarProperties && personalChecked ? (
 												<div className="text-muted-foreground text-sm py-2">
@@ -555,7 +598,7 @@ export function EventEditForm({
 									<FormItem className="lg:col-span-2 w-full">
 										<FormLabel>{t("admin:events.priorities")}</FormLabel>
 										<AdminChoosePriorities
-											value={field.value as string[] ?? []}
+											value={(field.value as string[]) ?? []}
 											onChange={(value) => field.onChange(value)}
 											className="text-sm"
 										/>
@@ -589,7 +632,11 @@ export function EventEditForm({
 									<FormItem>
 										<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
 										<FormControl>
-											<Input type="number" {...field} value={field.value as number} />
+											<Input
+												type="number"
+												{...field}
+												value={field.value as number}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -604,18 +651,27 @@ export function EventEditForm({
 								render={({ field }) => {
 									const options = [
 										{ value: "Alcohol", label: t("admin:events.alcohol") },
-										{ value: "Alcohol-Served", label: t("admin:events.alcohol_served") },
+										{
+											value: "Alcohol-Served",
+											label: t("admin:events.alcohol_served"),
+										},
 										{ value: "None", label: t("admin:events.alcohol_none") },
 									];
-									const selectedOption = options.find(opt => opt.value === field.value) ?? options[2];
+									const selectedOption =
+										options.find((opt) => opt.value === field.value) ??
+										options[2];
 									return (
 										<FormItem>
-											<FormLabel>{t("admin:events.alcohol_event_type")}</FormLabel>
+											<FormLabel>
+												{t("admin:events.alcohol_event_type")}
+											</FormLabel>
 											<SelectFromOptions
 												options={options}
 												value={selectedOption.value}
 												onChange={(value) => field.onChange(value)}
-												placeholder={t("admin:events.select_alcohol_event_type")}
+												placeholder={t(
+													"admin:events.select_alcohol_event_type",
+												)}
 											/>
 										</FormItem>
 									);
@@ -648,7 +704,11 @@ export function EventEditForm({
 									<FormItem>
 										<FormLabel>{t("admin:events.price")}</FormLabel>
 										<FormControl>
-											<Input type="number" {...field} value={field.value as number} />
+											<Input
+												type="number"
+												{...field}
+												value={field.value as number}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -666,7 +726,9 @@ export function EventEditForm({
 										{ value: "Single", label: t("admin:events.dot_single") },
 										{ value: "Double", label: t("admin:events.dot_double") },
 									];
-									const selectedOption = options.find(opt => opt.value === field.value) ?? options[0];
+									const selectedOption =
+										options.find((opt) => opt.value === field.value) ??
+										options[0];
 									return (
 										<FormItem>
 											<FormLabel>{t("admin:events.select_dot")}</FormLabel>
@@ -688,9 +750,7 @@ export function EventEditForm({
 								control={form.control}
 								name={fieldName}
 								render={({ field }) => (
-									<Label
-										className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent"
-									>
+									<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
 										<Checkbox
 											checked={field.value}
 											onCheckedChange={field.onChange}
