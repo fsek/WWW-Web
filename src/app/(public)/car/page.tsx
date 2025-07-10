@@ -26,6 +26,12 @@ import CustomTitle from "@/components/CustomTitle";
 import Link from "next/link";
 import TwoColumnLayout from "@/components/TwoColumnLayout";
 import { getMeOptions } from "@/api/@tanstack/react-query.gen";
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default function Car() {
 	const router = useRouter();
@@ -249,20 +255,70 @@ export default function Car() {
 						<Trans i18nKey="main:car-booking.description">
 							<Link
 								className="text-blue-500 hover:text-blue-700 underline mr-0"
-								href="/car/faq"
+								href="/admin/car"
 							/>
 							<Link
 								className="text-blue-500 hover:text-blue-700 underline mr-0"
 								href="/car/rules"
 							/>
 						</Trans>
-						<br />
-						<Trans i18nKey="main:car-booking.link">
-							<Link
-								className="text-blue-500 hover:text-blue-700 underline mr-0"
-								href="/admin/car"
-							/>
-						</Trans>
+						<CustomTitle
+							text={t("main:car-booking.faq.title")}
+							className="mt-4"
+							size={2}
+							fullUnderline
+						/>
+						{/* Horrible way to do this */}
+						<Accordion type="single" collapsible>
+							<AccordionItem value="item-1">
+								<AccordionTrigger>
+									{t("main:car-booking.faq.q1")}
+								</AccordionTrigger>
+								<AccordionContent>
+									{t("main:car-booking.faq.a1")}
+								</AccordionContent>
+							</AccordionItem>
+							<AccordionItem value="item-2">
+								<AccordionTrigger>
+									{t("main:car-booking.faq.q2")}
+								</AccordionTrigger>
+								<AccordionContent>
+									{t("main:car-booking.faq.a2")}
+								</AccordionContent>
+							</AccordionItem>
+							<AccordionItem value="item-3">
+								<AccordionTrigger>
+									{t("main:car-booking.faq.q3")}
+								</AccordionTrigger>
+								<AccordionContent>
+									{t("main:car-booking.faq.a3")}
+								</AccordionContent>
+							</AccordionItem>
+							<AccordionItem value="item-4">
+								<AccordionTrigger>
+									{t("main:car-booking.faq.q4")}
+								</AccordionTrigger>
+								<AccordionContent>
+									{t("main:car-booking.faq.a4")}
+								</AccordionContent>
+							</AccordionItem>
+							<AccordionItem value="item-5">
+								<AccordionTrigger>
+									{t("main:car-booking.faq.q5")}
+								</AccordionTrigger>
+								<AccordionContent>
+									{t("main:car-booking.faq.a5")}
+								</AccordionContent>
+							</AccordionItem>
+							<AccordionItem value="item-6">
+								<AccordionTrigger>
+									{t("main:car-booking.faq.q6")}
+								</AccordionTrigger>
+								<AccordionContent>
+									{t("main:car-booking.faq.a6")}
+								</AccordionContent>
+							</AccordionItem>
+						</Accordion>
 					</>
 				}
 			/>

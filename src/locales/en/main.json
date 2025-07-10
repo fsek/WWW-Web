@@ -128,7 +128,21 @@
 	"car-booking": {
 		"title": "Car Booking",
 		"description-title": "FAQ and rules",
-		"description": "As a member, you can book the guild car for your personal and guild-related needs. There's a FAQ section available <0>here</0> and by booking the car, you agree to our <1>terms of use</1>.",
-		"link": "If you are an admin, you can manage bookings <0>here</0> instead."
+		"description": "As a member, you can book the guild car for your personal and guild-related needs. If you are an admin, you can manage bookings <0>here</0> instead. By booking the car, you agree to follow the rules found <1>here</1>.",
+		"faq": {
+			"title": "Frequently Asked Questions",
+			"q1": "Who can book the car?",
+			"a1": "Any member of the guild can book the car.",
+			"q2": "Car renting during the summer?",
+			"a2": "As activities are suspended during the summer, it is not easy to rent the guild's car. Contact the board (at) fsektionen.se to ask if it can be solved.",
+			"q3": "How many people can fit in the car?",
+			"a3": "The car can accommodate up to 7 people, including the driver.",
+			"q4": "What is the cargo capacity of the car?",
+			"a4": "The trunk (with the rear seats folded) is approximately (with the reservation that it is not a perfect rectangle) 190 cm deep, 130 cm wide and 80 cm high.",
+			"q5": "How much does it cost to rent the car?",
+			"a5": "Members of the F-guild pay a starting fee of SEK 150. The starting fee includes 20 kilometers, after that it costs SEK 5 per kilometer started.",
+			"q6": "What do the colours mean?",
+			"a6": "Different colors indicate the status and ownership of each reservation. A light orange color means it is your booking, but not yet confirmed. A dark orange color shows that it is your confirmed booking. If the color is green, it indicates someone else's confirmed booking. A yellow color signifies someone else's unconfirmed booking. An admin (the car foreman) has to confirm bookings made outside regular hours."
+		}
 	}
 }

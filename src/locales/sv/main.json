@@ -135,7 +135,21 @@
 	"car-booking": {
 		"title": "Bilbokning",
 		"description-title": "FAQ och regler",
-		"description": "Som medlem kan du boka sektionens bil för personliga och sektionrelaterade resor. Det finns en FAQ tillgänglig <0>här</0> och genom att boka bilen godkänner du våra <1>användarvillkor</1>.",
-		"link": "Om du är administratör kan du hantera bokningar <0>här</0> istället."
+		"description": "Som medlem kan du boka sektionens bil för personliga och sektionrelaterade behov. Om du är administratör kan du hantera bokningar <0>här</0> istället. Genom att boka bilen godkänner du att följa reglerna som finns <1>här</1>.",
+		"faq": {
+			"title": "Vanliga frågor",
+			"q1": "Vem kan boka bilen?",
+			"a1": "Alla medlemmar i sektionen kan boka bilen.",
+			"q2": "Biluthyrning under sommaren?",
+			"a2": "Eftersom verksamheten är pausad under sommaren är det inte lätt att hyra sektionsbilen. Kontakta styrelsen på board (at) fsektionen.se för att höra om det går att lösa.",
+			"q3": "Hur många får plats i bilen?",
+			"a3": "Bilen har plats för upp till 7 personer, inklusive föraren.",
+			"q4": "Hur stort är lastutrymmet i bilen?",
+			"a4": "Bagageutrymmet (med nedfällda baksäten) är cirka (med reservation för att det inte är en perfekt rektangel) 190 cm djupt, 130 cm brett och 80 cm högt.",
+			"q5": "Vad kostar det att hyra bilen?",
+			"a5": "Medlemmar i F-sektionen betalar en startavgift på 150 kr. Startavgiften inkluderar 20 kilometer, därefter kostar det 5 kr per påbörjad kilometer.",
+			"q6": "Vad betyder färgerna?",
+			"a6": "Olika färger visar status och ägarskap för varje bokning. En ljusorange färg betyder att det är din bokning, men den är ännu inte bekräftad. En mörkorange färg visar att det är din bekräftade bokning. Om färgen är grön betyder det att det är någon annans bekräftade bokning. En gul färg visar någon annans obekräftade bokning. En admin (bilförmannen) måste bekräfta bokningar utanför ordinarie tider."
+		}
 	}
 }
