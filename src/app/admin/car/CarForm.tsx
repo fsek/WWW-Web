@@ -29,43 +29,52 @@ import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 export default function CarForm() {
 	const { t } = useTranslation();
 
-	const carSchema = z.object({
-		description: z.string().min(1),
-		start_time: z.date(),
-		end_time: z.date(),
-		personal: z.boolean().default(true),
-		council_id: z.number().int().positive(),
-	}).refine(
-		(data) => {
-			// Check if start time equals end time
-			if (new Date(data.start_time).getTime() === new Date(data.end_time).getTime()) {
-				return false;
-			}
+	const carSchema = z
+		.object({
+			description: z.string().min(1),
+			start_time: z.date(),
+			end_time: z.date(),
+			personal: z.boolean().default(true),
+			council_id: z.number().int().positive(),
+		})
+		.refine(
+			(data) => {
+				// Check if start time equals end time
+				if (
+					new Date(data.start_time).getTime() ===
+					new Date(data.end_time).getTime()
+				) {
+					return false;
+				}
 
-			// Check if start time is after end time
-			if (new Date(data.start_time).getTime() > new Date(data.end_time).getTime()) {
-				return false;
-			}
+				// Check if start time is after end time
+				if (
+					new Date(data.start_time).getTime() >
+					new Date(data.end_time).getTime()
+				) {
+					return false;
+				}
 
-			return true;
-		},
-		{
-			message: t("admin:car.error_start_end"),
-			path: ["end_time"] // Shows the error on the end time field
-		}
-	).refine(
-		(data) => {
-			// Check if personal is false and council_id is not set
-			if (data.personal === false && !data.council_id) {
-				return false;
-			}
-			return true;
-		},
-		{
-			message: t("calendar:error_missing_council"),
-			path: ["council_id"]
-		}
-	);
+				return true;
+			},
+			{
+				message: t("admin:car.error_start_end"),
+				path: ["end_time"], // Shows the error on the end time field
+			},
+		)
+		.refine(
+			(data) => {
+				// Check if personal is false and council_id is not set
+				if (data.personal === false && !data.council_id) {
+					return false;
+				}
+				return true;
+			},
+			{
+				message: t("calendar:error_missing_council"),
+				path: ["council_id"],
+			},
+		);
 
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
@@ -178,9 +187,7 @@ export default function CarForm() {
 								control={carForm.control}
 								name="personal"
 								render={({ field }) => (
-									<Label
-										className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent"
-									>
+									<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
 										<Checkbox
 											checked={field.value}
 											onCheckedChange={field.onChange}
@@ -221,9 +228,6 @@ export default function CarForm() {
 							/>
 
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-								<Button variant="outline" className="w-32 min-w-fit">
-									{t("admin:preview")}
-								</Button>
 								<Button
 									type="submit"
 									disabled={!submitEnabled}

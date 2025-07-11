@@ -35,18 +35,25 @@ import type {
 } from "@/utils/full-calendar-seed";
 import { useTranslation } from "react-i18next";
 import CarEditForm from "./CarEditForm";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const columnHelper = createColumnHelper<CarRead>();
 
 export default function Car() {
 	const router = useRouter();
+	const searchParams = useSearchParams();
+	const pathname = usePathname();
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 	const [, setOpen] = useState(false);
 	const [, setSubmitEnabled] = useState(true);
 	const [openEditDialog, setOpenEditDialog] = useState(false);
 	const [selectedBooking, setselectedBooking] = useState<CarRead | null>(null);
+
+	// Read tab from query string, default to "calendar"
+	const initialTab = searchParams.get("tab") || "calendar";
+	const [tab, setTab] = useState(initialTab);
 
 	// Column setup
 	const columns = [
@@ -84,30 +91,46 @@ export default function Car() {
 			header: t("admin:car.booked_by_last"),
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.display({
-			id: "confirmed",
+		columnHelper.accessor("confirmed", {
 			header: t("admin:car.confirmed"),
 			cell: (info) => {
-				const confirmed = info.row.original.confirmed;
+				const confirmed = info.getValue();
 				return confirmed ? t("admin:yes") : t("admin:no");
 			},
 		}),
-		columnHelper.display({
-			id: "personal",
+		columnHelper.accessor("personal", {
 			header: t("admin:car.personal"),
 			cell: (info) => {
-				const personal = info.row.original.personal;
+				const personal = info.getValue();
 				return personal ? t("admin:yes") : t("admin:no");
 			},
 		}),
-		columnHelper.display({
-			id: "council_name",
-			header: t("admin:car.council_name"),
-			cell: (info) => {
-				const councilName = info.row.original.council?.name;
-				return councilName ?? t("admin:car.no_council");
+		columnHelper.accessor(
+			(row) => row.council?.name ?? t("admin:car.no_council"),
+			{
+				id: "council_name",
+				header: t("admin:car.council_name"),
+				cell: (info) => info.getValue(),
 			},
-		}),
+		),
+		{
+			id: "details",
+			header: t("admin:car.details"),
+			cell: (row: { row: Row<CarRead> }) => (
+				<Button
+					variant="outline"
+					className="px-2 py-1"
+					onClick={(e) => {
+						e.stopPropagation();
+						router.push(
+							`/car/booking-details?id=${row.row.original.booking_id}`,
+						);
+					}}
+				>
+					{t("admin:car.details_button", { defaultValue: "Details" })}
+				</Button>
+			),
+		},
 	];
 
 	const { data, error, isFetching } = useQuery({
@@ -291,7 +314,15 @@ export default function Car() {
 			>
 				<div className="py-4">
 					<Tabs
-						defaultValue="calendar"
+						value={tab}
+						onValueChange={(value) => {
+							setTab(value);
+							const params = new URLSearchParams(
+								Array.from(searchParams.entries()),
+							);
+							params.set("tab", value);
+							router.replace(`${pathname}?${params.toString()}`);
+						}}
 						className="flex flex-col w-full items-center"
 					>
 						<TabsList className="flex justify-center mb-2">
