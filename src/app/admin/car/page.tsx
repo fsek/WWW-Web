@@ -35,10 +35,12 @@ import type {
 } from "@/utils/full-calendar-seed";
 import { useTranslation } from "react-i18next";
 import CarEditForm from "./CarEditForm";
+import { useRouter } from "next/navigation";
 
 const columnHelper = createColumnHelper<CarRead>();
 
 export default function Car() {
+	const router = useRouter();
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 	const [, setOpen] = useState(false);
@@ -312,7 +314,11 @@ export default function Car() {
 							<Calendar
 								showDescription={true}
 								editDescription={true}
-								handleOpenDetails={null}
+								handleOpenDetails={(event) => {
+									if (event) {
+										router.push(`/car/booking-details?id=${event.id}`);
+									}
+								}}
 								disableEdit={false} // Also disables delete, add and dragging
 								enableAllDay={false}
 								enableCarProperties={true}

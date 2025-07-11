@@ -87,11 +87,6 @@ export default function Car() {
 		},
 	});
 
-	function handleClose() {
-		setOpenEditDialog(false);
-		setselectedBooking(null);
-	}
-
 	if (isFetching || userIsFetching) {
 		return <p> {t("admin:loading")}</p>;
 	}
@@ -228,7 +223,7 @@ export default function Car() {
 										editDescription={true}
 										handleOpenDetails={(event) => {
 											if (event) {
-												router.push(`/calendar/event-details?id=${event.id}`);
+												router.push(`/car/booking-details?id=${event.id}`);
 											}
 										}}
 										disableEdit={false} // Also disables delete, add and dragging
