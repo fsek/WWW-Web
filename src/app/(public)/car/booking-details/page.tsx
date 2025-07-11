@@ -188,7 +188,7 @@ export default function Page() {
 								<div className="flex items-center gap-2">
 									<Phone className="w-4 h-4 text-muted-foreground" />
 									<span>
-										{t("admin:car.telephone_number")}:
+										{t("admin:car.telephone_number")}:{" "}
 										{userDetails.telephone_number}
 									</span>
 								</div>
@@ -222,7 +222,7 @@ export default function Page() {
 						<div className="flex items-center gap-2">
 							<Badge variant={bookingData.personal ? "default" : "secondary"}>
 								{bookingData.personal
-									? t("admin:car.personal_booking")
+									? t("admin:car.personal")
 									: t("admin:car.council_booking")}
 							</Badge>
 						</div>

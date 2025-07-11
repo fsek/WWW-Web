@@ -132,7 +132,7 @@ export default function Car() {
 							);
 						}}
 					>
-						{t("admin:car.details_button")}
+						{t("admin:car.details")}
 					</Button>
 				);
 			},
