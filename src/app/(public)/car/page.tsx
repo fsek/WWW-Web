@@ -117,7 +117,7 @@ export default function Car() {
 				: // Use a different color for the current user's bookings
 					car.confirmed
 					? "#66cc00"
-					: "#e6e600"; // Example: green for confirmed, red for unconfirmed
+					: "#e6e600"; // Green for confirmed, yellow for unconfirmed
 			return {
 				id: car.booking_id.toString(),
 				title_sv: userName,

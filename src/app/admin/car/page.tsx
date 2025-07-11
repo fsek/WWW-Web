@@ -116,20 +116,26 @@ export default function Car() {
 		{
 			id: "details",
 			header: t("admin:car.details"),
-			cell: (row: { row: Row<CarRead> }) => (
-				<Button
-					variant="outline"
-					className="px-2 py-1"
-					onClick={(e) => {
-						e.stopPropagation();
-						router.push(
-							`/car/booking-details?id=${row.row.original.booking_id}`,
-						);
-					}}
-				>
-					{t("admin:car.details_button", { defaultValue: "Details" })}
-				</Button>
-			),
+			cell: (row: { row: Row<CarRead> }) => {
+				const isConfirmed = row.row.original.confirmed;
+				const buttonColor = isConfirmed
+					? "border-green-600 text-green-700"
+					: "border-yellow-500 text-yellow-700 bg-yellow-50";
+				return (
+					<Button
+						variant="outline"
+						className={`px-2 py-1 border ${buttonColor}`}
+						onClick={(e) => {
+							e.stopPropagation();
+							router.push(
+								`/car/booking-details?id=${row.row.original.booking_id}`,
+							);
+						}}
+					>
+						{t("admin:car.details_button")}
+					</Button>
+				);
+			},
 		},
 	];
 
@@ -220,6 +226,7 @@ export default function Car() {
 				car.user_first_name && car.user_last_name
 					? `${car.user_first_name} ${car.user_last_name}`
 					: `User ${car.user_id}`;
+			const backgroundColor = car.confirmed ? "#66cc00" : "#e6e600"; // Green for confirmed, yellow for unconfirmed
 			return {
 				id: car.booking_id.toString(),
 				title_sv: userName,
@@ -231,6 +238,7 @@ export default function Car() {
 				confirmed: car.confirmed,
 				personal: car.personal,
 				council_id: car.council_id ?? undefined,
+				backgroundColor: backgroundColor,
 			};
 		}) ?? [];
 
