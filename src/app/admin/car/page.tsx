@@ -37,6 +37,8 @@ import { useTranslation } from "react-i18next";
 import CarEditForm from "./CarEditForm";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 const columnHelper = createColumnHelper<CarRead>();
 
@@ -268,7 +270,10 @@ export default function Car() {
 						},
 						{
 							onError: (error) => {
-								console.error(t("admin:car.error_add"), error);
+								toast.error(
+									t("admin:car.error_add") +
+										(error?.detail ? `: ${error.detail}` : ""),
+								);
 							},
 						},
 					);
@@ -278,7 +283,10 @@ export default function Car() {
 						{ path: { booking_id: Number(id) } },
 						{
 							onError: (error) => {
-								console.error(`${t("admin:car.error_add")} ${id}`, error);
+								toast.error(
+									t("admin:car.error_delete") +
+										(error?.detail ? `: ${error.detail}` : ""),
+								);
 								// TODO: Show error message to user
 							},
 						},
@@ -286,12 +294,14 @@ export default function Car() {
 				}}
 				handleEdit={(event) => {
 					if (!event.id) {
-						console.error(t("admin:car.error_missing_id"), event);
+						toast.error(t("admin:car.error_missing_id"));
 						return;
 					}
 
 					if (!event.title_sv) {
-						throw new Error("Missing title");
+						const msg = "Missing title";
+						toast.error(msg);
+						throw new Error(msg);
 					}
 
 					handleEventEdit.mutate(
@@ -310,9 +320,9 @@ export default function Car() {
 						},
 						{
 							onError: (error) => {
-								console.error(
-									`${t("admin:car.error_edit")} ${event.id}`,
-									error,
+								toast.error(
+									t("admin:car.error_edit") +
+										(error?.detail ? `: ${error.detail}` : ""),
 								);
 								// TODO: Show error message to user
 							},
@@ -372,18 +382,20 @@ export default function Car() {
 									{t("admin:car.list_description")}
 								</p>
 							</div>
-							<CarForm />
+							<CarForm toast={toast.error} />
 							<Separator />
 							<AdminTable table={table} onRowClick={handleRowClick} />
 							<CarEditForm
 								open={openEditDialog}
 								onClose={() => handleClose()}
 								selectedBooking={selectedBooking as CarRead}
+								toast={toast.error}
 							/>
 						</TabsContent>
 					</Tabs>
 				</div>
 			</EventsProvider>
+			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

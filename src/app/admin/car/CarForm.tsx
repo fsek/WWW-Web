@@ -26,7 +26,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 
-export default function CarForm() {
+export default function CarForm({ toast }: { toast: (msg: string) => void }) {
 	const { t } = useTranslation();
 
 	const carSchema = z
@@ -100,6 +100,12 @@ export default function CarForm() {
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
 			setOpen(false);
+			setSubmitEnabled(true);
+		},
+		onError: (error) => {
+			toast(
+				t("admin:car.error_add") + (error?.detail ? `: ${error.detail}` : ""),
+			);
 			setSubmitEnabled(true);
 		},
 	});

@@ -32,12 +32,14 @@ interface CarEditFormProps {
 	open: boolean;
 	onClose: () => void;
 	selectedBooking: CarRead;
+	toast: (msg: string) => void;
 }
 
 export default function CarEditForm({
 	open,
 	onClose,
 	selectedBooking,
+	toast,
 }: CarEditFormProps) {
 	const { t } = useTranslation();
 
@@ -120,7 +122,10 @@ export default function CarEditForm({
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
 		},
-		onError: () => {
+		onError: (error) => {
+			toast(
+				t("admin:car.error_edit") + (error?.detail ? `: ${error.detail}` : ""),
+			);
 			onClose();
 		},
 	});
@@ -131,7 +136,11 @@ export default function CarEditForm({
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
 		},
-		onError: () => {
+		onError: (error) => {
+			toast(
+				t("admin:car.error_delete") +
+					(error?.detail ? `: ${error.detail}` : ""),
+			);
 			onClose();
 		},
 	});
@@ -171,7 +180,7 @@ export default function CarEditForm({
 				},
 			);
 		} else {
-			console.error("Cannot remove booking: ID is missing.");
+			toast(t("admin:car.error_missing_id"));
 		}
 	}
 

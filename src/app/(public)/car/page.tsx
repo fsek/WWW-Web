@@ -33,6 +33,8 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 export default function Car() {
 	const router = useRouter();
@@ -138,6 +140,7 @@ export default function Car() {
 	return (
 		<div className="px-8 space-x-4 py-10 h-full flex flex-col">
 			{/* Make sure height is properly defined at this level and propagates down */}
+
 			<TwoColumnLayout
 				leftColumnContent={
 					<div className="h-[80vh] flex flex-col">
@@ -160,7 +163,10 @@ export default function Car() {
 									},
 									{
 										onError: (error) => {
-											console.error(t("admin:car.error_add"), error);
+											toast.error(
+												t("admin:car.error_add") +
+													(error?.detail ? `: ${error.detail}` : ""),
+											);
 										},
 									},
 								);
@@ -170,20 +176,24 @@ export default function Car() {
 									{ path: { booking_id: Number(id) } },
 									{
 										onError: (error) => {
-											console.error(`${t("admin:car.error_add")} ${id}`, error);
-											// TODO: Show error message to user
+											toast.error(
+												t("admin:car.error_delete") +
+													(error?.detail ? `: ${error.detail}` : ""),
+											);
 										},
 									},
 								);
 							}}
 							handleEdit={(event) => {
 								if (!event.id) {
-									console.error(t("admin:car.error_missing_id"), event);
+									toast.error(t("admin:car.error_missing_id"));
 									return;
 								}
 
 								if (!event.title_sv) {
-									throw new Error("Missing title");
+									const msg = "Missing title";
+									toast.error(msg);
+									throw new Error(msg);
 								}
 
 								handleEventEdit.mutate(
@@ -202,11 +212,10 @@ export default function Car() {
 									},
 									{
 										onError: (error) => {
-											console.error(
-												`${t("admin:car.error_edit")} ${event.id}`,
-												error,
+											toast.error(
+												t("admin:car.error_edit") +
+													(error?.detail ? `: ${error.detail}` : ""),
 											);
-											// TODO: Show error message to user
 										},
 									},
 								);
@@ -318,6 +327,8 @@ export default function Car() {
 					</>
 				}
 			/>
+
+			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

@@ -41,11 +41,9 @@ function viewingUserGotPerms(
 ): boolean {
 	if (userIsFetching) return false;
 	if (userError !== null || !userData) {
-		console.error("Error fetching user data:", userError);
 		return false;
 	}
 
-	console.debug("User data:", userData);
 	if (userData.posts) {
 		return userData.posts.some((post) =>
 			post.permissions.some(
@@ -120,14 +118,16 @@ export default function Page() {
 	}
 
 	if (bookingError || !bookingData) {
-		<LoadingErrorCard
-			error={bookingError || t("admin:car.booking_not_found")}
-			isLoading={false}
-		/>;
+		return (
+			<LoadingErrorCard
+				error={t("admin:car.booking_not_found")}
+				isLoading={false}
+			/>
+		);
 	}
 
 	if (userHasPerms && userDetailsError) {
-		<LoadingErrorCard error={userDetailsError} isLoading={false} />;
+		return <LoadingErrorCard error={userDetailsError} isLoading={false} />;
 	}
 
 	const formatDateShort = (date: Date) => {
