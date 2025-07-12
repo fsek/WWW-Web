@@ -151,5 +151,20 @@
 			"q6": "Vad betyder färgerna?",
 			"a6": "Olika färger visar status och ägarskap för varje bokning. En ljusorange färg betyder att det är din bokning, men den är ännu inte bekräftad. En mörkorange färg visar att det är din bekräftade bokning. Om färgen är grön betyder det att det är någon annans bekräftade bokning. En gul färg visar någon annans obekräftade bokning. En admin (bilförmannen) måste bekräfta bokningar utanför ordinarie tider."
 		}
+	},
+	"loading": {
+		"basic": "Laddar innehåll...",
+		"flavor_1": "Checkar in på Hilberts hotel...",
+		"flavor_2": "Hittar determinanten...",
+		"flavor_3": "Spelar moose game...",
+		"flavor_4": "Räknar ut sista siffran i π...",
+		"flavor_5": "Jäser mer Hilbeaux...",
+		"flavor_6": "Polerar pixlar...",
+		"flavor_7": "Räknar till oändligheten...",
+		"flavor_8": "Skapar ännu en gandalftenta...",
+		"error_occurred": "Ett fel uppstod:",
+		"no_error_message": "Inget felmeddelande tillgängligt.",
+		"network_error": "Ett nätverksfel uppstod. Kontrollera din anslutning.",
+		"unauthorized": "Du är inte auktoriserad att se detta innehåll. Logga in."
 	}
 }

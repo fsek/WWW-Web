@@ -131,6 +131,9 @@
 		"back": "Back",
 		"council": "Council",
 		"details": "Details",
+		"booking_not_found": "Booking not found.",
+		"no_booking_selected": "No booking selected.",
+		"user_not_found": "Booking user not found.",
 		"list": "List",
 		"list_description": "This list shows all bookings. Click on a booking to edit it."
 	},

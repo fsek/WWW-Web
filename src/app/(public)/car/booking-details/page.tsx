@@ -25,7 +25,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import type { AdminUserRead, CarRead } from "@/api/index";
+import type { AdminUserRead } from "@/api/index";
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
@@ -107,22 +108,26 @@ export default function Page() {
 	// Rendering logic after all hooks
 	if (bookingID === -1) {
 		return (
-			<div className="px-12 py-4">{t("admin:car.no_booking_selected")}</div>
+			<LoadingErrorCard
+				error={t("admin:car.no_booking_selected")}
+				isLoading={false}
+			/>
 		);
 	}
 
 	if (bookingIsLoading) {
-		return <div className="px-12 py-4">{t("admin:car.loading")}</div>;
+		return <LoadingErrorCard />;
 	}
 
 	if (bookingError || !bookingData) {
-		console.error("Error fetching booking:", bookingError);
-		return <div className="px-12 py-4">{t("admin:car.booking_not_found")}</div>;
+		<LoadingErrorCard
+			error={bookingError || t("admin:car.booking_not_found")}
+			isLoading={false}
+		/>;
 	}
 
 	if (userHasPerms && userDetailsError) {
-		console.error("Error fetching user details:", userDetailsError);
-		return <div className="px-12 py-4">{t("admin:car.user_not_found")}</div>;
+		<LoadingErrorCard error={userDetailsError} isLoading={false} />;
 	}
 
 	const formatDateShort = (date: Date) => {

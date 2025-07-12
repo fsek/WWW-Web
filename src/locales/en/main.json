@@ -144,5 +144,20 @@
 			"q6": "What do the colours mean?",
 			"a6": "Different colors indicate the status and ownership of each reservation. A light orange color means it is your booking, but not yet confirmed. A dark orange color shows that it is your confirmed booking. If the color is green, it indicates someone else's confirmed booking. A yellow color signifies someone else's unconfirmed booking. An admin (the car foreman) has to confirm bookings made outside regular hours."
 		}
+	},
+	"loading": {
+		"basic": "Loading content...",
+		"flavor_1": "Checking into Hilbert's hotel...",
+		"flavor_2": "Finding the determinant...",
+		"flavor_3": "Playing moose game...",
+		"flavor_4": "Calculating the last digit of π...",
+		"flavor_5": "Fermenting more Hilbeaux...",
+		"flavor_6": "Polishing pixels...",
+		"flavor_7": "Counting to infinity...",
+		"flavor_8": "Creating yet another Gandalf-exam...",
+		"error_occurred": "Some error occurred:",
+		"no_error_message": "No error message available.",
+		"network_error": "Network error occurred. Please check your connection.",
+		"unauthorized": "You are not authorized to view this information. Please log in."
 	}
 }

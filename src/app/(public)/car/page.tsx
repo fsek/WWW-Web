@@ -32,6 +32,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 export default function Car() {
 	const router = useRouter();
@@ -88,11 +89,11 @@ export default function Car() {
 	});
 
 	if (isFetching || userIsFetching) {
-		return <p> {t("admin:loading")}</p>;
+		return <LoadingErrorCard />;
 	}
 
 	if (error || userError) {
-		return <p> {t("admin:error")}</p>;
+		return <LoadingErrorCard error={error || userError || undefined} />;
 	}
 
 	interface CustomEventData_ extends CustomEventData {
