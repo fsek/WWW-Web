@@ -6,6 +6,7 @@
 	"no": "Nej",
 	"error_start_end": "Sluttiden måste vara efter starttiden.",
 	"error_past_event": "Starttiden måste vara i framtiden.",
+	"error_missing_council": "Vänligen välj ett utskott.",
 	"all_day": "Heldag",
 	"view": {
 		"time": "Tid",
@@ -32,7 +33,7 @@
 		"description": "Beskrivning",
 		"placeholder": {
 			"title": "Picknick på månen",
-			"description": "Ta med rep för Hilbert Älg!"
+			"description": "Ta med filt! Smörgåsarna kommer sväva fritt och samtalet lär nå nya höjder."
 		}
 	},
 	"delete": {
@@ -77,7 +78,7 @@
 		"description": "Beskrivning",
 		"placeholder": {
 			"title": "Picknick på månen",
-			"description": "Ta med rep för Hilbert Älg!"
+			"description": "Ta med filt! Smörgåsarna kommer sväva fritt och samtalet lär nå nya höjder."
 		}
 	}
 }
