@@ -138,7 +138,19 @@
 		"show_all_bookings": "Visa alla bokningar",
 		"hide_past_bookings": "Dölj tidigare bokningar",
 		"list": "Lista",
-		"list_description": "Denna lista visar alla bokningar. Klicka på en bokning för att redigera den."
+		"list_description": "Denna lista visar alla bokningar. Klicka på en bokning för att redigera den.",
+		"blockings": "Blockeringar",
+		"blockings_description": "Hantera blockeringar av bilbokningar."
+	},
+	"block": {
+		"create_blocking": "Skapa blockering",
+		"blocked_user": "Blockerad användare",
+		"reason": "Blockeringsorsak",
+		"blocked_by": "Blockerad av",
+		"blocked_at": "Tidpunkt för blockering",
+		"actions": "Åtgärder",
+		"unblock": "Avblockera",
+		"select_user": "Välj användare"
 	},
 	"posts": {
 		"self": "Poster"

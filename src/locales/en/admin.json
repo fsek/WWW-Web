@@ -137,7 +137,19 @@
 		"show_all_bookings": "Show all bookings",
 		"hide_past_bookings": "Hide past bookings",
 		"list": "List",
-		"list_description": "This list shows all bookings. Click on a booking to edit it."
+		"list_description": "This list shows all bookings. Click on a booking to edit it.",
+		"blockings": "Blocked users",
+		"blockings_description": "This list shows all users blocked from booking cars."
+	},
+	"block": {
+		"create_blocking": "Create Blocking",
+		"blocked_user": "Blocked User",
+		"reason": "Blocking Reason",
+		"blocked_by": "Blocked By",
+		"blocked_at": "Blocked At",
+		"actions": "Actions",
+		"unblock": "Unblock",
+		"select_user": "Select User"
 	},
 	"posts": {
 		"self": "Posts"

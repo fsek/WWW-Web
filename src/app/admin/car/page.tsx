@@ -2,13 +2,14 @@
 
 // Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
-import { useMemo, useState } from "react";
-import type { CarRead } from "@/api/index";
+import { use, useMemo, useState } from "react";
+import type { CarRead, SimpleUserRead } from "@/api/index";
 import CarForm from "./CarForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createBookingMutation,
 	getAllBookingOptions,
+	getUserOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -39,6 +40,13 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
+import BlockForm from "./BlockForm";
+import type { CarBlockRead } from "@/api/index";
+import {
+	unblockUserFromCarBookingMutation,
+	getAllCarBookingBlocksOptions,
+	getAllCarBookingBlocksQueryKey,
+} from "@/api/@tanstack/react-query.gen";
 
 const columnHelper = createColumnHelper<CarRead>();
 
@@ -219,6 +227,113 @@ export default function Car() {
 		},
 	});
 
+	// Blocked users state and query
+	const {
+		data: blockData,
+		error: blockError,
+		isFetching: isBlockFetching,
+	} = useQuery({
+		...getAllCarBookingBlocksOptions(),
+	});
+
+	const handleUnblockUser = useMutation({
+		...unblockUserFromCarBookingMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: getAllCarBookingBlocksQueryKey(),
+			});
+		},
+	});
+
+	function getUserFullName(user_id: number): string {
+		const {
+			data: userDetails,
+			error: userDetailsError,
+			isFetching: userDetailsIsFetching,
+		} = useQuery({
+			...getUserOptions({
+				path: { user_id: user_id ?? -1 },
+			}),
+			enabled: !!user_id,
+			staleTime: 30 * 60 * 1000,
+		});
+		if (userDetailsError || userDetailsIsFetching || !userDetails) {
+			return "Unknown User";
+		}
+		return `${userDetails.first_name} ${userDetails.last_name}`;
+	}
+
+	const blockColumns = useMemo(
+		() => [
+			{
+				accessorKey: "user_id",
+				header: t("admin:block.blocked_user"),
+				cell: (info) => {
+					const userId = info.getValue();
+					const userName = getUserFullName(userId);
+					return userName;
+				},
+			},
+			{
+				accessorKey: "reason",
+				header: t("admin:block.reason"),
+				cell: (info) => info.getValue(),
+			},
+			{
+				accessorKey: "blocked_by",
+				header: t("admin:block.blocked_by"),
+				cell: (info) => {
+					const userId = info.getValue();
+					const userName = getUserFullName(userId);
+					return userName;
+				},
+			},
+			{
+				accessorKey: "created_at",
+				header: t("admin:block.blocked_at"),
+				cell: (info) =>
+					info.getValue()
+						? new Date(info.getValue()).toLocaleString("sv-SE")
+						: "",
+			},
+			{
+				id: "actions",
+				header: t("admin:block.actions"),
+				cell: ({ row }: { row: Row<CarBlockRead> }) => (
+					<Button
+						variant="destructive"
+						size="sm"
+						onClick={(e) => {
+							e.stopPropagation();
+							handleUnblockUser.mutate(
+								{ path: { user_id: row.original.user_id } },
+								{
+									onError: (error) => {
+										toast.error(
+											t("admin:block.error_unblock") +
+												(error?.detail ? `: ${error.detail}` : ""),
+										);
+									},
+								},
+							);
+						}}
+					>
+						{t("admin:block.unblock")}
+					</Button>
+				),
+			},
+		],
+		[t, handleUnblockUser],
+	);
+
+	const blockTable = useReactTable({
+		columns: blockColumns,
+		data: (blockData as CarBlockRead[]) ?? [],
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+	});
+
 	if (isFetching) {
 		return <p> {t("admin:loading")}</p>;
 	}
@@ -361,6 +476,9 @@ export default function Car() {
 								{t("admin:car.calendar")}
 							</TabsTrigger>
 							<TabsTrigger value="list">{t("admin:car.list")}</TabsTrigger>
+							<TabsTrigger value="blockings">
+								{t("admin:car.blockings")}
+							</TabsTrigger>
 						</TabsList>
 						<TabsContent value="calendar" className="w-full px-5 space-y-5">
 							<div className="space-y-0">
@@ -415,6 +533,25 @@ export default function Car() {
 								selectedBooking={selectedBooking as CarRead}
 								toast={toast.error}
 							/>
+						</TabsContent>
+						<TabsContent value="blockings" className="w-full px-5 space-y-5">
+							<div className="space-y-0">
+								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+									{t("admin:car.blockings")}
+								</h2>
+								<p className="text-xs md:text-sm font-medium">
+									{t("admin:car.blockings_description")}
+								</p>
+							</div>
+							<BlockForm toast={toast.error} />
+							<Separator />
+							{isBlockFetching ? (
+								<p>{t("admin:loading")}</p>
+							) : blockError ? (
+								<p>{t("admin:error")}</p>
+							) : (
+								<AdminTable table={blockTable} />
+							)}
 						</TabsContent>
 					</Tabs>
 				</div>
