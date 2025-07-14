@@ -141,8 +141,10 @@
 			"a4": "The trunk (with the rear seats folded) is approximately (with the reservation that it is not a perfect rectangle) 190 cm deep, 130 cm wide and 80 cm high.",
 			"q5": "How much does it cost to rent the car?",
 			"a5": "Members of the F-guild pay a starting fee of SEK 150. The starting fee includes 20 kilometers, after that it costs SEK 5 per kilometer started.",
-			"q6": "What do the colours mean?",
-			"a6": "Different colors indicate the status and ownership of each reservation. A light orange color means it is your booking, but not yet confirmed. A dark orange color shows that it is your confirmed booking. If the color is green, it indicates someone else's confirmed booking. A yellow color signifies someone else's unconfirmed booking. An admin (the car foreman) has to confirm bookings made outside regular hours."
+			"q6": "What do the colors mean?",
+			"a6": "Different colors show status and ownership for each booking. An admin (the car foreman) must confirm bookings outside regular hours. The colors have the following meaning:\n- Light orange color means it's your booking, but it's not confirmed.\n- Dark orange color means it's your booking and it's confirmed.\n- Green color marks someone else's confirmed booking.\n- Yellow color shows someone else's unconfirmed booking.\n- Light blue color is used for bookings that have been added locally but haven't been retrieved from the server yet. If you see blue, something may have gone wrong, reload the page manually.",
+			"q7": "I have more questions!",
+			"a7": "You can contact the car foreman through, among other ways, the <0>contact page</0>. Please ask the car foreman or a webmaster to add the question with an answer here."
 		}
 	},
 	"loading": {

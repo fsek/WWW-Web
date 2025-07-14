@@ -319,8 +319,21 @@ export default function Car() {
 								<AccordionTrigger>
 									{t("main:car-booking.faq.q6")}
 								</AccordionTrigger>
-								<AccordionContent>
+								<AccordionContent className="whitespace-pre-line">
 									{t("main:car-booking.faq.a6")}
+								</AccordionContent>
+							</AccordionItem>
+							<AccordionItem value="item-7">
+								<AccordionTrigger className="font-bold">
+									{t("main:car-booking.faq.q7")}
+								</AccordionTrigger>
+								<AccordionContent>
+									<Trans i18nKey="main:car-booking.faq.a7">
+										<Link
+											className="text-blue-500 hover:text-blue-700 underline mr-0"
+											href="/contact"
+										/>
+									</Trans>
 								</AccordionContent>
 							</AccordionItem>
 						</Accordion>

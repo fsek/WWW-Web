@@ -149,7 +149,9 @@
 			"q5": "Vad kostar det att hyra bilen?",
 			"a5": "Medlemmar i F-sektionen betalar en startavgift på 150 kr. Startavgiften inkluderar 20 kilometer, därefter kostar det 5 kr per påbörjad kilometer.",
 			"q6": "Vad betyder färgerna?",
-			"a6": "Olika färger visar status och ägarskap för varje bokning. En ljusorange färg betyder att det är din bokning, men den är ännu inte bekräftad. En mörkorange färg visar att det är din bekräftade bokning. Om färgen är grön betyder det att det är någon annans bekräftade bokning. En gul färg visar någon annans obekräftade bokning. En admin (bilförmannen) måste bekräfta bokningar utanför ordinarie tider."
+			"a6": "Olika färger visar status och ägarskap för varje bokning. En admin (bilförmannen) måste bekräfta bokningar utanför ordinarie tider. Färgerna har följande mening: \n- Ljusorange färg innebär att det är din bokning, men den är inte bekräftad.\n- Mörkorange färg innebär att det är din bokning och den är bekräftad. \n- Grön färg markerar någon annans bekräftade bokning.\n- Gul färg visar någon annans obekräftade bokning.\n- Ljusblå färg används för bokningar som lagts till lokalt men inte hämtats från servern än. Ser du blått kan något ha gått fel, ladda om sidan manuellt.",
+			"q7": "Jag har fler frågor!",
+			"a7": "Du kan kontakta bilförmannen bland annat genom <0>kontaktsidan</0>. Be gärna bilförmannen eller någon spindelman att lägga till frågan med svar här."
 		}
 	},
 	"loading": {
