@@ -135,6 +135,8 @@
 		"booking_not_found": "Bokningen hittades inte.",
 		"no_booking_selected": "Ingen bokning vald.",
 		"user_not_found": "Bokningsanvändare hittades inte.",
+		"show_all_bookings": "Visa alla bokningar",
+		"hide_past_bookings": "Dölj tidigare bokningar",
 		"list": "Lista",
 		"list_description": "Denna lista visar alla bokningar. Klicka på en bokning för att redigera den."
 	},

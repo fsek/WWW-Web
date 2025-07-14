@@ -2,7 +2,7 @@
 
 // Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { CarRead } from "@/api/index";
 import CarForm from "./CarForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -52,6 +52,7 @@ export default function Car() {
 	const [, setSubmitEnabled] = useState(true);
 	const [openEditDialog, setOpenEditDialog] = useState(false);
 	const [selectedBooking, setselectedBooking] = useState<CarRead | null>(null);
+	const [showOnlyCurrent, setShowOnlyCurrent] = useState(false);
 
 	// Read tab from query string, default to "calendar"
 	const initialTab = searchParams.get("tab") || "calendar";
@@ -145,6 +146,18 @@ export default function Car() {
 		...getAllBookingOptions(),
 	});
 
+	const tableData = useMemo(() => {
+		if (!data) {
+			return [];
+		}
+		if (showOnlyCurrent) {
+			return (data as CarRead[]).filter(
+				(booking) => new Date(booking.end_time) >= new Date(),
+			);
+		}
+		return data as CarRead[];
+	}, [data, showOnlyCurrent]);
+
 	const handleEventAdd = useMutation({
 		...createBookingMutation(),
 		throwOnError: false,
@@ -189,7 +202,7 @@ export default function Car() {
 
 	const table = useReactTable({
 		columns,
-		data: (data as CarRead[]) ?? [],
+		data: tableData,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
@@ -382,7 +395,18 @@ export default function Car() {
 									{t("admin:car.list_description")}
 								</p>
 							</div>
-							<CarForm toast={toast.error} />
+							<div className="flex">
+								<CarForm toast={toast.error} />
+								<Button
+									variant={showOnlyCurrent ? "default" : "outline"}
+									className="my-auto"
+									onClick={() => setShowOnlyCurrent((v) => !v)}
+								>
+									{showOnlyCurrent
+										? t("admin:car.show_all_bookings")
+										: t("admin:car.hide_past_bookings")}
+								</Button>
+							</div>
 							<Separator />
 							<AdminTable table={table} onRowClick={handleRowClick} />
 							<CarEditForm
