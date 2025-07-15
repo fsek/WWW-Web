@@ -5,6 +5,7 @@ import {
 	adminGetAllUsersOptions,
 	adminGetAllUsersQueryKey,
 	updateUserStatusMutation,
+	updateMultipleUsersStatusMutation,
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -76,6 +77,14 @@ export default function MembersPage() {
 
 	const handleMemberUser = useMutation({
 		...updateUserStatusMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: adminGetAllUsersQueryKey() });
+		},
+	});
+
+	const handleBulkMemberUsers = useMutation({
+		...updateMultipleUsersStatusMutation(),
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: adminGetAllUsersQueryKey() });
@@ -191,35 +200,38 @@ export default function MembersPage() {
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [bulkLoading, setBulkLoading] = useState(false);
 
-	// Bulk member handler
-	// This calls the API once for each user to update their membership status
-	// TODO: Optimize this to batch requests (change the backend)
-	const handleBulkMember = async () => {
-		setBulkLoading(true);
-		const toMember = filteredUsers.filter((u) => !u.is_member);
-		const results = await Promise.allSettled(
-			toMember.map((u) =>
-				handleMemberUser.mutateAsync({
-					body: { is_member: true },
-					path: { user_id: u.id },
-				}),
-			),
-		);
-
-		const failed = results.filter((r) => r.status === "rejected");
-
-		if (failed.length > 0) {
-			toast.error(
-				`${t("admin:member.bulk_member_error")} ${failed.length}/${toMember.length}.`,
-			);
-			console.error("Bulk member errors:", failed);
-		} else {
-			toast.success(t("admin:member.bulk_member_success"));
-		}
-
-		setDialogOpen(false);
-		setBulkLoading(false);
-	};
+  const handleBulkMember = () => {
+    setBulkLoading(true);
+    const toMember = filteredUsers.filter((u) => !u.is_member);
+    if (toMember.length === 0) {
+      setDialogOpen(false);
+      setBulkLoading(false);
+      return;
+    }
+  
+    handleBulkMemberUsers
+      .mutateAsync({
+        body: toMember.map((u) => ({
+          user_id: u.id,
+          is_member: true,
+        })),
+      })
+      .then(() => {
+        toast.success(t("admin:member.bulk_member_success"));
+      })
+      .catch((error) => {
+        toast.error(
+          `${t("admin:member.bulk_member_error")}. ${
+            error?.detail ? error.detail : ""
+          }`
+        );
+        console.error("Bulk member errors:", error);
+      })
+      .finally(() => {
+        setDialogOpen(false);
+        setBulkLoading(false);
+      });
+  };
 
 	// only bail out on the very first load
 	if (isLoading) {
