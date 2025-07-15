@@ -2,14 +2,14 @@
 
 // Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
-import { use, useMemo, useState } from "react";
-import type { CarRead, SimpleUserRead } from "@/api/index";
+import { useMemo, useState } from "react";
+import type { AdminUserRead, CarRead } from "@/api/index";
 import CarForm from "./CarForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+	adminGetAllUsersOptions,
 	createBookingMutation,
 	getAllBookingOptions,
-	getUserOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -154,6 +154,14 @@ export default function Car() {
 		...getAllBookingOptions(),
 	});
 
+	const {
+		data: userDetails,
+		error: userDetailsError,
+		isFetching: userDetailsIsFetching,
+	} = useQuery({
+		...adminGetAllUsersOptions(),
+	});
+
 	const tableData = useMemo(() => {
 		if (!data) {
 			return [];
@@ -247,21 +255,16 @@ export default function Car() {
 	});
 
 	function getUserFullName(user_id: number): string {
-		const {
-			data: userDetails,
-			error: userDetailsError,
-			isFetching: userDetailsIsFetching,
-		} = useQuery({
-			...getUserOptions({
-				path: { user_id: user_id ?? -1 },
-			}),
-			enabled: !!user_id,
-			staleTime: 30 * 60 * 1000,
-		});
 		if (userDetailsError || userDetailsIsFetching || !userDetails) {
 			return "Unknown User";
 		}
-		return `${userDetails.first_name} ${userDetails.last_name}`;
+		const user = (userDetails as AdminUserRead[]).find(
+			(user: AdminUserRead) => user.id === user_id,
+		);
+		if (!user) {
+			return "Unknown User";
+		}
+		return `${user.first_name} ${user.last_name}`;
 	}
 
 	const blockColumns = useMemo(
