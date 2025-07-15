@@ -83,7 +83,7 @@ export default function CarForm({ toast }: { toast: (msg: string) => void }) {
 		resolver: zodResolver(carSchema),
 		defaultValues: {
 			description: t("admin:car.default_description"),
-			start_time: new Date(Date.now()),
+			start_time: new Date(Date.now() + 1000 * 60),
 			end_time: new Date(Date.now() + 1000 * 60 * 60 * 3),
 			personal: true,
 			council_id: 1,
