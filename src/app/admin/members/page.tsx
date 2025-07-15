@@ -1,0 +1,312 @@
+"use client";
+
+import type { AdminUserRead, UpdateUserMember } from "@/api";
+import {
+	adminGetAllUsersOptions,
+	adminGetAllUsersQueryKey,
+	updateUserStatusMutation,
+} from "@/api/@tanstack/react-query.gen";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import AdminTable from "@/widgets/AdminTable";
+import { AdminChooseDates } from "@/widgets/AdminChooseDates";
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogFooter,
+	DialogTitle,
+	DialogDescription,
+	DialogClose,
+} from "@/components/ui/dialog";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+	createColumnHelper,
+	getCoreRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	type Row,
+	type SortingState,
+	useReactTable,
+} from "@tanstack/react-table";
+import { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
+
+const columnHelper = createColumnHelper<AdminUserRead>();
+
+export default function MembersPage() {
+	const { t } = useTranslation();
+	const queryClient = useQueryClient();
+	const {
+		data: userDetails,
+		error,
+		isFetching,
+		isLoading,
+	} = useQuery({
+		...adminGetAllUsersOptions(),
+	});
+
+	// add search state
+	const [search, setSearch] = useState<string>("");
+
+	// date range filter state
+	const [dateFrom, setDateFrom] = useState<Date | undefined>(undefined);
+	const [dateTo, setDateTo] = useState<Date | undefined>(undefined);
+
+	// compute filtered users
+	const filteredUsers = useMemo(() => {
+		if (!userDetails) return [];
+		const lower = search.toLowerCase();
+		return userDetails.filter((u) => {
+			const matchesSearch =
+				u.first_name.toLowerCase().includes(lower) ||
+				u.last_name.toLowerCase().includes(lower) ||
+				u.email.toLowerCase().includes(lower) ||
+				String(u.stil_id).toLowerCase().includes(lower);
+
+			const created = new Date(u.account_created);
+			const afterFrom = !dateFrom || created >= dateFrom;
+			const beforeTo = !dateTo || created <= dateTo;
+			return matchesSearch && afterFrom && beforeTo;
+		});
+	}, [userDetails, search, dateFrom, dateTo]);
+
+	const handleMemberUser = useMutation({
+		...updateUserStatusMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: adminGetAllUsersQueryKey() });
+		},
+	});
+
+	const columns = [
+		columnHelper.accessor("id", {
+			header: t("admin:id"),
+			cell: (info) => info.getValue(),
+			size: 50,
+		}),
+		columnHelper.accessor("first_name", {
+			header: t("admin:first_name"),
+			cell: (info) => info.getValue(),
+			size: 150,
+		}),
+		columnHelper.accessor("last_name", {
+			header: t("admin:last_name"),
+			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor("email", {
+			header: t("admin:email"),
+			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor("is_verified", {
+			header: t("admin:is_verified"),
+			cell: (info) => (info.getValue() ? t("admin:yes") : t("admin:no")),
+			size: 75,
+		}),
+		columnHelper.accessor("account_created", {
+			header: t("admin:account_created"),
+			cell: (info) =>
+				new Date(info.getValue()).toLocaleString("sv-SE", {
+					hour: "2-digit",
+					minute: "2-digit",
+					year: "numeric",
+					month: "2-digit",
+					day: "2-digit",
+				}),
+		}),
+		columnHelper.accessor("stil_id", {
+			header: t("admin:stil_id"),
+			cell: (info) => info.getValue(),
+			size: 100,
+		}),
+		columnHelper.accessor("program", {
+			header: t("admin:program"),
+			cell: (info) => info.getValue(),
+			size: 75,
+		}),
+		columnHelper.accessor("start_year", {
+			header: t("admin:start_year"),
+			cell: (info) => info.getValue(),
+			size: 75,
+		}),
+		columnHelper.accessor("is_member", {
+			header: t("admin:is_member"),
+			cell: (info) => (info.getValue() ? t("admin:yes") : t("admin:no")),
+			size: 75,
+		}),
+		{
+			id: "actions",
+			header: t("admin:member.actions"),
+			cell: ({ row }: { row: Row<AdminUserRead> }) => (
+				<Button
+					variant={row.original.is_member ? "destructive" : "default"}
+					size="sm"
+					onClick={(e) => {
+						e.stopPropagation();
+						const updateUser: UpdateUserMember = {
+							is_member: !row.original.is_member,
+						};
+						handleMemberUser.mutate(
+							{
+								body: updateUser,
+								path: { user_id: row.original.id },
+							},
+							{
+								onError: (error) => {
+									toast.error(
+										t("admin:block.error_unblock") +
+											(error?.detail ? `: ${error.detail}` : ""),
+									);
+								},
+							},
+						);
+						console.log("user clicked", row.original.id);
+					}}
+				>
+					{row.original.is_member
+						? t("admin:member.remove_member")
+						: t("admin:member.make_member")}
+				</Button>
+			),
+		},
+	];
+
+	const [sorting, setSorting] = useState<SortingState>([]);
+
+	const table = useReactTable({
+		columns: columns,
+		data: filteredUsers, // use filtered list
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		onSortingChange: setSorting,
+		state: {
+			sorting,
+		},
+	});
+
+	const [dialogOpen, setDialogOpen] = useState(false);
+	const [bulkLoading, setBulkLoading] = useState(false);
+
+	// Bulk member handler
+	// This calls the API once for each user to update their membership status
+	// TODO: Optimize this to batch requests (change the backend)
+	const handleBulkMember = async () => {
+		setBulkLoading(true);
+		const toMember = filteredUsers.filter((u) => !u.is_member);
+		const results = await Promise.allSettled(
+			toMember.map((u) =>
+				handleMemberUser.mutateAsync({
+					body: { is_member: true },
+					path: { user_id: u.id },
+				}),
+			),
+		);
+
+		const failed = results.filter((r) => r.status === "rejected");
+
+		if (failed.length > 0) {
+			toast.error(
+				`${t("admin:member.bulk_member_error")} ${failed.length}/${toMember.length}.`,
+			);
+			console.error("Bulk member errors:", failed);
+		} else {
+			toast.success(t("admin:member.bulk_member_success"));
+		}
+
+		setDialogOpen(false);
+		setBulkLoading(false);
+	};
+
+	// only bail out on the very first load
+	if (isLoading) {
+		return <p>{t("admin:loading")}</p>;
+	}
+
+	if (error) {
+		return <p>{t("admin:error")}</p>;
+	}
+	return (
+		<div className="px-8 space-x-4">
+			<div className="space-y-0">
+				<h3 className="text-3xl py-3 underline underline-offset-4 decoration-sidebar">
+					{t("admin:member.list")}
+				</h3>
+				<p className="text-xs md:text-sm font-medium">
+					{t("admin:member.list_description")}
+				</p>
+				<div className="mt-4 mb-2 flex flex-row gap-2 items-center">
+					<div className="w-xs">
+						<Input
+							placeholder={
+								t("admin:member.search_placeholder") ||
+								"Search by name, email, or STIL ID"
+							}
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							autoFocus
+						/>
+					</div>
+					{/* Date range selector */}
+					<div className="flex gap-2 items-center">
+						<AdminChooseDates value={dateFrom} onChange={setDateFrom} />
+						<span className="text-xs">
+							{t("admin:member.date_range_to") || "to"}
+						</span>
+						<AdminChooseDates value={dateTo} onChange={setDateTo} />
+					</div>
+				</div>
+				<Separator className="mb-8" />
+				{/* Bulk member button */}
+				<Button
+					className="my-2"
+					variant="default"
+					disabled={
+						filteredUsers.filter((u) => !u.is_member).length === 0 ||
+						bulkLoading
+					}
+					onClick={() => setDialogOpen(true)}
+				>
+					{bulkLoading
+						? `${t("admin:member.processing")}...`
+						: t("admin:member.bulk_member")}
+				</Button>
+			</div>
+			<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>
+							{t("admin:member.bulk_member_confirm_title")}
+						</DialogTitle>
+						<DialogDescription>
+							{`${t("admin:member.bulk_member_confirm_desc")}: ${filteredUsers.filter((u) => !u.is_member).length}.`}
+						</DialogDescription>
+					</DialogHeader>
+					<DialogFooter>
+						<DialogClose asChild>
+							<Button variant="outline" disabled={bulkLoading}>
+								{t("cancel")}
+							</Button>
+						</DialogClose>
+						<Button
+							variant="default"
+							onClick={handleBulkMember}
+							disabled={bulkLoading}
+						>
+							{bulkLoading
+								? t("admin:member.bulk_member_loading")
+								: t("admin:member.bulk_member_confirm")}
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+			<Separator />
+			{/* <AdminTable table={table} onRowClick={handleRowClick} /> */}
+			<AdminTable table={table} onRowClick={() => {}} />
+			<Toaster position="top-center" richColors />
+		</div>
+	);
+}
