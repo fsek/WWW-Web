@@ -149,8 +149,7 @@ const ListItem = React.forwardRef<
 	React.ElementRef<"a">,
 	React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
-	const isExternal =
-		typeof props.href === "string" && props.href.startsWith("https://");
+	const isDisabled = !props.href || props.href === "#";
 	return (
 		<li>
 			<NavigationMenuLink asChild>
@@ -159,18 +158,21 @@ const ListItem = React.forwardRef<
 					href={props.href ?? "#"}
 					className={cn(
 						"block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+						isDisabled && "opacity-50 cursor-not-allowed pointer-events-none",
 						className,
 					)}
 					{...props}
 				>
 					<div className="text-sm font-medium leading-none flex items-center gap-1">
 						{title}
-						{isExternal && (
-							<ExternalLink
-								className="inline w-6 h-6"
-								aria-label="External link"
-							/>
-						)}
+						{!isDisabled &&
+							typeof props.href === "string" &&
+							props.href.startsWith("https://") && (
+								<ExternalLink
+									className="inline w-6 h-6"
+									aria-label="External link"
+								/>
+							)}
 					</div>
 					<p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
 						{children}

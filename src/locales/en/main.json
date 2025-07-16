@@ -3,7 +3,7 @@
 	"title": "Main Page",
 	"calendar": "Calendar",
 	"navbar": {
-		"sections": {
+		"sektionen": {
 			"self": "Sections",
 			"about": {
 				"self": "About Us",
@@ -32,9 +32,9 @@
 			},
 			"posts": {
 				"self": "Posts",
-				"desc": "Catch up on updates and interesting discussions."
+				"desc": "Get involved as a volunteer within the guild!"
 			},
-			"volunteers": {
+			"nollningsvol": {
 				"self": "Orientation Volunteers",
 				"desc": "Meet the welcoming team ready to help new members."
 			},
@@ -46,6 +46,11 @@
 				"self": "Projects",
 				"desc": "Discover innovative initiatives and collaborative efforts.",
 				"href": "/projects"
+			},
+			"freja": {
+				"self": "FREJA",
+				"desc": "FREJA is an independent organization for women or non-binary students.",
+				"href": "https://www.frejalth.se/"
 			}
 		},
 		"services": {
@@ -101,19 +106,20 @@
 				"self": "Contact Page",
 				"desc": "Find all the information you need to get in touch with us."
 			},
-			"president": {
+			"ordf": {
 				"self": "President",
-				"desc": "Meet our leader and learn about our strategic vision."
+				"desc": "For questions about the organisation."
 			},
-			"webmaster": {
+			"web": {
 				"self": "Webmaster",
-				"desc": "Connect with the creative mind behind our website."
+				"desc": "For questions about the website or app."
 			},
 			"anonymousForm": {
 				"self": "Anonymous Contact",
-				"desc": "Share your feedback or concerns confidentially."
+				"desc": "Share your feedback or concerns confidentially.",
+				"href": "https://docs.google.com/forms/d/e/1FAIpQLSdZdPl14DkdlZCKS3jzO59-FvVi2ug9nYer1jhYgERanbwHoQ/viewform"
 			},
-			"complaints": {
+			"klaga": {
 				"self": "Complaint",
 				"desc": "Send an anonymous complaint, opinion or report to TLTH.",
 				"href": "https://www.tlth.se/klaga"

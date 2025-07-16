@@ -25,14 +25,14 @@
 		},
 		"engage": {
 			"self": "Engagera dig",
-			"hilbertcafe": {
+			"cafe": {
 				"self": "Hilbert Café",
 				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär.",
 				"href": "/cafe"
 			},
 			"posts": {
-				"self": "Inlägg",
-				"desc": "Följ våra senaste inlägg och engagerande diskussioner."
+				"self": "Poster",
+				"desc": "Engagera dig som funktionär inom sektionen!"
 			},
 			"nollningsvol": {
 				"self": "Nollningsvolontärer",
@@ -46,6 +46,11 @@
 				"self": "Projekt",
 				"desc": "Upptäck spännande initiativ och samarbeten inom sektionen.",
 				"href": "/projects"
+			},
+			"freja": {
+				"self": "FREJA",
+				"desc": "FREJA är en fristående organisation för dig som är kvinna eller icke-binär.",
+				"href": "https://www.frejalth.se/"
 			}
 		},
 		"services": {
@@ -77,11 +82,11 @@
 		},
 		"companies": {
 			"self": "Företag",
-			"fsek": {
+			"aboutCompany": {
 				"self": "Om F-sektionen",
 				"desc": "Läs om vår mission, våra värderingar och vårt engagemang."
 			},
-			"wehave": {
+			"offerings": {
 				"self": "Våra erbjudanden",
 				"desc": "Upptäck de tjänster och produkter vi stolt erbjuder."
 			},
@@ -97,21 +102,22 @@
 		},
 		"contact": {
 			"self": "Kontakt",
-			"contactsite": {
+			"contactPage": {
 				"self": "Kontaktsida",
 				"desc": "Här hittar du all information du behöver för att nå oss."
 			},
 			"ordf": {
 				"self": "Ordförande",
-				"desc": "Möt vår ledare och läs om vår strategiska vision."
+				"desc": "För frågor om organisationen."
 			},
 			"web": {
 				"self": "Webbansvarig",
-				"desc": "Lär känna personen bakom vår webbplats och digitala närvaro."
+				"desc": "För frågor om vår webbplats eller app."
 			},
-			"anonform": {
+			"anonymousForm": {
 				"self": "Anonymt kontaktformulär",
-				"desc": "Skicka feedback eller frågor konfidentiellt via vårt formulär."
+				"desc": "För hemlig feedback eller bekymmer.",
+				"href": "https://docs.google.com/forms/d/e/1FAIpQLSdZdPl14DkdlZCKS3jzO59-FvVi2ug9nYer1jhYgERanbwHoQ/viewform"
 			},
 			"klaga": {
 				"self": "Klagomål",
