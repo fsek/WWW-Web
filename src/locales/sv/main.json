@@ -85,15 +85,17 @@
 			"self": "Företag",
 			"aboutCompany": {
 				"self": "Om F-sektionen",
-				"desc": "Läs om vår mission, våra värderingar och vårt engagemang."
+				"desc": "Upptäck vilka vi är och de program vi representerar.",
+				"href": "/foretag/om"
 			},
 			"offerings": {
 				"self": "Våra erbjudanden",
-				"desc": "Upptäck de tjänster och produkter vi stolt erbjuder."
+				"desc": "Utforska förslag på samarbeten för att nå ut till våra medlemmar.",
+				"href": "/foretag/vi-erbjuder"
 			},
 			"farad": {
 				"self": "Farad",
-				"desc": "Lär dig mer om Farads innovativa lösningar och marknadsposition.",
+				"desc": "Läs mer om F-sektionens arbetsmarknadsmässa.",
 				"href": "https://farad.nu"
 			},
 			"contact": {

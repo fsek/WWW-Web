@@ -84,16 +84,16 @@
 		"companies": {
 			"self": "Companies",
 			"aboutCompany": {
-				"self": "About Our Company",
-				"desc": "Discover our mission, values, and commitment to excellence."
+				"self": "About Us",
+				"desc": "Discover who we are and what programs we represent."
 			},
 			"offerings": {
 				"self": "Our Offerings",
-				"desc": "Explore the diverse range of products and services we provide."
+				"desc": "Explore proposals for ways to cooperate to reach our members."
 			},
 			"farad": {
 				"self": "Farad",
-				"desc": "Learn about Farad’s innovative solutions and industry leadership.",
+				"desc": "Read about the job fair for the F-Guild.",
 				"href": "https://farad.nu"
 			},
 			"contact": {
