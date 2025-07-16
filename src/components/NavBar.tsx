@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import FLogga from "@/assets/f-logga";
 import Link from "next/link";
-import { LogInIcon } from "lucide-react";
+import { LogInIcon, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -149,6 +149,8 @@ const ListItem = React.forwardRef<
 	React.ElementRef<"a">,
 	React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
+	const isExternal =
+		typeof props.href === "string" && props.href.startsWith("https://");
 	return (
 		<li>
 			<NavigationMenuLink asChild>
@@ -161,7 +163,15 @@ const ListItem = React.forwardRef<
 					)}
 					{...props}
 				>
-					<div className="text-sm font-medium leading-none">{title}</div>
+					<div className="text-sm font-medium leading-none flex items-center gap-1">
+						{title}
+						{isExternal && (
+							<ExternalLink
+								className="inline w-6 h-6"
+								aria-label="External link"
+							/>
+						)}
+					</div>
 					<p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
 						{children}
 					</p>

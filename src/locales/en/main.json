@@ -18,10 +18,6 @@
 				"self": "Committees",
 				"desc": "Explore the dedicated teams that drive our initiatives."
 			},
-			"blog": {
-				"self": "Blog",
-				"desc": "Read inspiring stories and insights from our members."
-			},
 			"privacy": {
 				"self": "Privacy Policy",
 				"desc": "Learn how we protect your data and ensure your confidentiality."
@@ -68,7 +64,8 @@
 			},
 			"equipment": {
 				"self": "Equipment Hire",
-				"desc": "Rent state-of-the-art equipment to get the job done efficiently."
+				"desc": "Rent state-of-the-art equipment to get the job done efficiently.",
+				"href": "https://forms.gle/YQTxawJfexSXVbqH6"
 			},
 			"specialrooms": {
 				"self": "Quiet/Prayer Rooms",
@@ -88,7 +85,8 @@
 			},
 			"farad": {
 				"self": "Farad",
-				"desc": "Learn about Farad’s innovative solutions and industry leadership."
+				"desc": "Learn about Farad’s innovative solutions and industry leadership.",
+				"href": "https://farad.nu"
 			},
 			"contact": {
 				"self": "Business Contact",
@@ -114,8 +112,9 @@
 				"desc": "Share your feedback or concerns confidentially."
 			},
 			"complaints": {
-				"self": "Complaints",
-				"desc": "Let us know how we can improve our services and support."
+				"self": "Complaint",
+				"desc": "Send an anonymous complaint, opinion or report to TLTH.",
+				"href": "https://www.tlth.se/klaga"
 			}
 		},
 		"booking": "Bookings",
