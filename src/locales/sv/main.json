@@ -27,7 +27,8 @@
 			"self": "Engagera dig",
 			"hilbertcafe": {
 				"self": "Hilbert Café",
-				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär."
+				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär.",
+				"href": "/cafe"
 			},
 			"posts": {
 				"self": "Inlägg",
@@ -55,7 +56,8 @@
 			},
 			"rooms": {
 				"self": "Lokalbokning",
-				"desc": "Boka mötes- eller evenemangsutrymmen med ett klick."
+				"desc": "Boka mötes- eller evenemangsutrymmen med ett klick.",
+				"href": "/book-rooms"
 			},
 			"tools": {
 				"self": "Verktygsutlåning",

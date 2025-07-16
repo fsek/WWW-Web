@@ -26,8 +26,9 @@
 		"engage": {
 			"self": "Get Involved",
 			"cafe": {
-				"self": "Community Cafe",
-				"desc": "Join us for a friendly chat and connect with others."
+				"self": "Hilbert Cafe",
+				"desc": "Join us for a friendly chat and connect with others.",
+				"href": "/cafe"
 			},
 			"posts": {
 				"self": "Posts",
@@ -55,7 +56,8 @@
 			},
 			"rooms": {
 				"self": "Room Bookings",
-				"desc": "Reserve meeting or event spaces with just a few clicks."
+				"desc": "Reserve meeting or event spaces with just a few clicks.",
+				"href": "/book-rooms"
 			},
 			"tools": {
 				"self": "Tool Library",
