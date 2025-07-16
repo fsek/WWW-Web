@@ -70,7 +70,8 @@
 			},
 			"specialrooms": {
 				"self": "Quiet/Prayer Rooms",
-				"desc": "Find a peaceful space for reflection or private prayer."
+				"desc": "Find a peaceful space for reflection or private prayer.",
+				"href": "/stillarum"
 			}
 		},
 		"companies": {

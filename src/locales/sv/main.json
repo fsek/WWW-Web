@@ -70,7 +70,8 @@
 			},
 			"specialrooms": {
 				"self": "Stillarum/Bönerum",
-				"desc": "Hitta en lugn plats för reflektion eller bön."
+				"desc": "Hitta en lugn plats för reflektion eller bön.",
+				"href": "/stillarum"
 			}
 		},
 		"companies": {

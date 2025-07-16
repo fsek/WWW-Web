@@ -8,7 +8,7 @@ interface CustomTitleProps {
 	size?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 	children?: React.ReactNode;
 	fullUnderline?: boolean;
-	shortUnderline?: boolean; 
+	shortUnderline?: boolean;
 	noUnderline?: boolean;
 }
 
@@ -28,7 +28,8 @@ const CustomTitle: FC<CustomTitleProps> = ({
 	const underlineRef = useRef<HTMLDivElement>(null);
 
 	const getSizeClass = () => {
-		const sizeMap = { // I don't know why this is needed, but text-5xl and up didn't work for me
+		const sizeMap = {
+			// I don't know why this is needed, but text-5xl and up didn't work for me
 			1: "text-xl",
 			2: "text-2xl",
 			3: "text-3xl",
@@ -37,9 +38,24 @@ const CustomTitle: FC<CustomTitleProps> = ({
 			6: "text-6xl",
 			7: "text-7xl",
 			8: "text-8xl",
-			9: "text-9xl"
+			9: "text-9xl",
 		};
 		return sizeMap[size] || "text-3xl";
+	};
+
+	const getUnderlineThickness = () => {
+		const sizeMap = {
+			1: "h-0.5",
+			2: "h-0.5",
+			3: "h-0.75",
+			4: "h-1",
+			5: "h-1",
+			6: "h-1",
+			7: "h-1.5",
+			8: "h-1.5",
+			9: "h-2",
+		};
+		return sizeMap[size] || "h-1";
 	};
 
 	useEffect(() => {
@@ -85,7 +101,7 @@ const CustomTitle: FC<CustomTitleProps> = ({
 			{!noUnderline && (
 				<div
 					ref={underlineRef}
-					className="h-0.5 bg-orange-500 mt-1"
+					className={`${getUnderlineThickness()} bg-orange-500`}
 					style={{
 						width: animationState === "full-width" ? "100%" : "auto",
 					}}
