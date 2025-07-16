@@ -47,7 +47,8 @@
 			},
 			"projects": {
 				"self": "Projects",
-				"desc": "Discover innovative initiatives and collaborative efforts."
+				"desc": "Discover innovative initiatives and collaborative efforts.",
+				"href": "/projects"
 			}
 		},
 		"services": {

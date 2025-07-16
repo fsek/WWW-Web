@@ -47,7 +47,8 @@
 			},
 			"projects": {
 				"self": "Projekt",
-				"desc": "Upptäck spännande initiativ och samarbeten inom sektionen."
+				"desc": "Upptäck spännande initiativ och samarbeten inom sektionen.",
+				"href": "/projects"
 			}
 		},
 		"services": {
