@@ -16,7 +16,8 @@
 			},
 			"councils": {
 				"self": "Utskott",
-				"desc": "Utforska våra utskotts dedikerade arbete och engagemang."
+				"desc": "Utforska våra utskotts dedikerade arbete och engagemang.",
+				"href": "/councils"
 			},
 			"secrecy": {
 				"self": "Sekretessvillkor",

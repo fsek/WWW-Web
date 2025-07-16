@@ -16,7 +16,8 @@
 			},
 			"councils": {
 				"self": "Committees",
-				"desc": "Explore the dedicated teams that drive our initiatives."
+				"desc": "Explore the dedicated teams that drive our initiatives.",
+				"href": "/councils"
 			},
 			"privacy": {
 				"self": "Privacy Policy",
