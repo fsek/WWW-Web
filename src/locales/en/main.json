@@ -62,7 +62,8 @@
 			},
 			"tools": {
 				"self": "Tool Library",
-				"desc": "Borrow high-quality tools to help bring your projects to life."
+				"desc": "Borrow high-quality tools to help bring your projects to life.",
+				"href": "/tools"
 			},
 			"equipment": {
 				"self": "Equipment Hire",

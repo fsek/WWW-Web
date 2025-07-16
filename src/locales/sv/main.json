@@ -62,7 +62,8 @@
 			},
 			"tools": {
 				"self": "Verktygsutlåning",
-				"desc": "Låna högkvalitativa verktyg för dina projekt."
+				"desc": "Låna högkvalitativa verktyg för dina projekt.",
+				"href": "/tools"
 			},
 			"equipment": {
 				"self": "Utrustningsuthyrning",

@@ -94,11 +94,11 @@ const CustomTitle: FC<CustomTitleProps> = ({
 		<div className="w-full">
 			<div
 				ref={textRef}
-				className={`inline-block font-bold text-left text-orange-500 ${getSizeClass()} ${className}`}
+				className={`inline-block font-bold text-left text-orange-500 ${getSizeClass()} ${className} ${shortUnderline ? "underline" : ""}`}
 			>
 				{text ?? children ?? "Default title"}
 			</div>
-			{!noUnderline && (
+			{!noUnderline && !shortUnderline && (
 				<div
 					ref={underlineRef}
 					className={`${getUnderlineThickness()} bg-orange-500`}
