@@ -31,13 +31,15 @@
 				"desc": "Join us for a friendly chat and connect with others.",
 				"href": "/cafe"
 			},
-			"posts": {
-				"self": "Posts",
-				"desc": "Get involved as a volunteer within the guild!"
+			"positions": {
+				"self": "Positions",
+				"desc": "Get involved as a volunteer within the guild!",
+				"href": "/positions"
 			},
 			"nollningsvol": {
 				"self": "Orientation Volunteers",
-				"desc": "Meet the welcoming team ready to help new members."
+				"desc": "Help us welcome new students and give them a great start to their studies!",
+				"href": "/nollningsvolontar"
 			},
 			"elections": {
 				"self": "Elections",
@@ -85,11 +87,13 @@
 			"self": "Companies",
 			"aboutCompany": {
 				"self": "About Us",
-				"desc": "Discover who we are and what programs we represent."
+				"desc": "Discover who we are and what programs we represent.",
+				"href": "/foretag/om"
 			},
 			"offerings": {
 				"self": "Our Offerings",
-				"desc": "Explore proposals for ways to cooperate to reach our members."
+				"desc": "Explore proposals for ways to cooperate to reach our members.",
+				"href": "/foretag/vi-erbjuder"
 			},
 			"farad": {
 				"self": "Farad",

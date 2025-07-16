@@ -31,13 +31,15 @@
 				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär.",
 				"href": "/cafe"
 			},
-			"posts": {
+			"positions": {
 				"self": "Poster",
-				"desc": "Engagera dig som funktionär inom sektionen!"
+				"desc": "Engagera dig som funktionär inom sektionen!",
+				"href": "/positions"
 			},
 			"nollningsvol": {
 				"self": "Nollningsvolontärer",
-				"desc": "Möt teamet som välkomnar nya medlemmar med öppna armar."
+				"desc": "Hjälp oss att välkomna nya studenter och ge dem en bra start på studierna!",
+				"href": "/nollningsvolontar"
 			},
 			"elections": {
 				"self": "Val",
