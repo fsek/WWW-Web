@@ -55,6 +55,7 @@
 		"cmdk": "^1.1.1",
 		"date-fns": "^4.1.0",
 		"date-fns-tz": "^3.2.0",
+		"embla-carousel-autoplay": "^8.6.0",
 		"embla-carousel-react": "^8.5.2",
 		"fullcalendar": "^6.1.15",
 		"i18next": "^24.2.2",
