@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function WhateverPage() {
+export default function ForetagPage() {
 	redirect("/foretag/om");
 }
