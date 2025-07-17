@@ -7,6 +7,8 @@ import {
 	LinkedInLogoIcon,
 } from "@radix-ui/react-icons";
 import { useTranslation } from "react-i18next";
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 type NavItem = {
 	self: string;
@@ -78,16 +80,27 @@ export function Footer() {
 										{section.self}
 									</h3>
 									<ul className="space-y-2">
-										{items.map(([itemKey, item]) => (
-											<li key={itemKey}>
-												<a
-													href={item.href || "#"}
-													className="hover:text-foreground"
-												>
-													{item.self}
-												</a>
-											</li>
-										))}
+										{items.map(([itemKey, item]) => {
+											const isExternal =
+												typeof item.href === "string" &&
+												item.href.startsWith("https://");
+											return (
+												<li key={itemKey}>
+													<Link
+														href={item.href || "#"}
+														className="hover:text-foreground"
+													>
+														{item.self}
+													</Link>
+													{isExternal && (
+														<ExternalLink
+															className="inline w-3.5 h-3.5 ml-1"
+															aria-label="External link"
+														/>
+													)}
+												</li>
+											);
+										})}
 									</ul>
 								</div>
 							);

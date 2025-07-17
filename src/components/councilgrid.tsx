@@ -20,19 +20,19 @@ import {
 } from "lucide-react";
 
 const councils = [
-	{ key: "bokforlaget", url: "/utskott/bokforlaget", icon: BookOpen },
-	{ key: "cafem", url: "/utskott/cafem", icon: Coffee },
-	{ key: "externa-rep", url: "/utskott/externa-rep", icon: Users },
-	{ key: "foset", url: "/utskott/foset", icon: Shield },
-	{ key: "kulturm", url: "/utskott/kulturm", icon: LayoutGrid },
-	{ key: "fnu", url: "/utskott/fnu", icon: ClipboardList },
-	{ key: "prylm", url: "/utskott/prylm", icon: Archive },
-	{ key: "samvetet", url: "/utskott/samvetet", icon: SlidersHorizontal },
-	{ key: "sanningsm", url: "/utskott/sanningsm", icon: Server },
-	{ key: "secretservice", url: "/utskott/secretservice", icon: Shield },
-	{ key: "studieradet", url: "/utskott/studieradet", icon: Users2 },
-	{ key: "styrelsen", url: "/utskott/styrelsen", icon: Users },
-	{ key: "ovriga", url: "/utskott/ovriga", icon: MoreHorizontal },
+	{ key: "bokforlaget", url: "/councils/bokforlaget", icon: BookOpen },
+	{ key: "cafem", url: "/councils/cafem", icon: Coffee },
+	{ key: "externa-rep", url: "/councils/externa-rep", icon: Users },
+	{ key: "foset", url: "/councils/foset", icon: Shield },
+	{ key: "kulturm", url: "/councils/kulturm", icon: LayoutGrid },
+	{ key: "fnu", url: "/councils/fnu", icon: ClipboardList },
+	{ key: "prylm", url: "/councils/prylm", icon: Archive },
+	{ key: "samvetet", url: "/councils/samvetet", icon: SlidersHorizontal },
+	{ key: "sanningsm", url: "/councils/sanningsm", icon: Server },
+	{ key: "secretservice", url: "/councils/secretservice", icon: Shield },
+	{ key: "studieradet", url: "/councils/studieradet", icon: Users2 },
+	{ key: "styrelsen", url: "/councils/styrelsen", icon: Users },
+	{ key: "ovriga", url: "/councils/ovriga", icon: MoreHorizontal },
 ];
 
 export default function CouncilGrid() {

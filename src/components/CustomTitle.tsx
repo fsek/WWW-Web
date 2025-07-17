@@ -5,9 +5,11 @@ import { type FC, useEffect, useState, useRef } from "react";
 interface CustomTitleProps {
 	text?: string;
 	className?: string;
-	size?: 1 | 2 | 3 | 4 | 5 | 6;
+	size?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 	children?: React.ReactNode;
 	fullUnderline?: boolean;
+	shortUnderline?: boolean;
+	noUnderline?: boolean;
 }
 
 const CustomTitle: FC<CustomTitleProps> = ({
@@ -16,6 +18,8 @@ const CustomTitle: FC<CustomTitleProps> = ({
 	size = 3,
 	children,
 	fullUnderline,
+	shortUnderline = false,
+	noUnderline = false,
 }) => {
 	const [animationState, setAnimationState] = useState<
 		"initial" | "text-width" | "full-width"
@@ -24,11 +28,38 @@ const CustomTitle: FC<CustomTitleProps> = ({
 	const underlineRef = useRef<HTMLDivElement>(null);
 
 	const getSizeClass = () => {
-		return size === 1 ? "text-xl" : `text-${size}xl`;
+		const sizeMap = {
+			// I don't know why this is needed, but text-5xl and up didn't work for me
+			1: "text-xl",
+			2: "text-2xl",
+			3: "text-3xl",
+			4: "text-4xl",
+			5: "text-5xl",
+			6: "text-6xl",
+			7: "text-7xl",
+			8: "text-8xl",
+			9: "text-9xl",
+		};
+		return sizeMap[size] || "text-3xl";
+	};
+
+	const getUnderlineThickness = () => {
+		const sizeMap = {
+			1: "h-0.5",
+			2: "h-0.5",
+			3: "h-0.75",
+			4: "h-1",
+			5: "h-1",
+			6: "h-1",
+			7: "h-1.5",
+			8: "h-1.5",
+			9: "h-2",
+		};
+		return sizeMap[size] || "h-1";
 	};
 
 	useEffect(() => {
-		if (fullUnderline) return;
+		if (fullUnderline || noUnderline) return;
 
 		if (!textRef.current) return;
 
@@ -38,6 +69,8 @@ const CustomTitle: FC<CustomTitleProps> = ({
 			underlineRef.current.style.width = `${width}px`;
 			underlineRef.current.style.transition = "none";
 		}
+
+		if (shortUnderline) return;
 
 		// Small delay to ensure the text width is applied before animation
 		requestAnimationFrame(() => {
@@ -55,23 +88,25 @@ const CustomTitle: FC<CustomTitleProps> = ({
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [fullUnderline]);
+	}, [fullUnderline, shortUnderline, noUnderline]);
 
 	return (
 		<div className="w-full">
 			<div
 				ref={textRef}
-				className={`inline-block font-bold text-left text-orange-500 ${getSizeClass()} ${className}`}
+				className={`inline-block font-bold text-left text-orange-500 ${getSizeClass()} ${className} ${shortUnderline ? "underline" : ""}`}
 			>
 				{text ?? children ?? "Default title"}
 			</div>
-			<div
-				ref={underlineRef}
-				className="h-0.5 bg-orange-500 mt-1"
-				style={{
-					width: animationState === "full-width" ? "100%" : "auto",
-				}}
-			/>
+			{!noUnderline && !shortUnderline && (
+				<div
+					ref={underlineRef}
+					className={`${getUnderlineThickness()} bg-orange-500`}
+					style={{
+						width: animationState === "full-width" ? "100%" : "auto",
+					}}
+				/>
+			)}
 		</div>
 	);
 };
