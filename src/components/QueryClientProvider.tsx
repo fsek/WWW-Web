@@ -6,18 +6,34 @@ import {
 } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
 import { client } from "@/api";
-import { getAuthorizationHeader } from "@/lib/auth";
+import { useAuthState } from "@/lib/auth";
 
-client.setConfig({ baseUrl: "http://localhost:8000" });
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000";
+
+client.setConfig({ baseUrl: API_BASE_URL });
 
 const queryClient = new QueryClient();
 
-client.interceptors.request.use((request, _options) => {
+client.interceptors.request.use(async (request, _options) => {
 	if (typeof window !== "undefined") {
-		const authorization = getAuthorizationHeader();
-
-		if (authorization) {
-			request.headers.set("Authorization", authorization);
+		const auth = useAuthState.getState();
+		const authorizationHeader = auth.authorizationHeader();
+		if (request.url.startsWith(`${API_BASE_URL}/auth`)) {
+			_options.credentials = "include"; // Ensure cookies are sent with auth requests.
+			// Doesn't seem to do anything :(
+		}
+		if (authorizationHeader) {
+			request.headers.set("Authorization", authorizationHeader);
+		} else if (!request.url.startsWith(`${API_BASE_URL}/auth`)) {
+			const refreshTokenRequest = await fetch(`${API_BASE_URL}/auth/refresh`, {
+				method: "POST",
+				credentials: "include",
+			});
+			if (refreshTokenRequest.ok) {
+				const data = await refreshTokenRequest.json();
+				auth.setAccessToken(data);
+				request.headers.set("Authorization", auth.authorizationHeader() || "");
+			}
 		}
 	}
 	return request;

@@ -1,6 +1,6 @@
 "use client";
 
-import { authJwtLoginMutation } from "@/api/@tanstack/react-query.gen";
+import { authCookieLoginMutation } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -10,7 +10,7 @@ import {
 	FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { handleBearerResponse } from "@/lib/auth";
+import { useAuthState } from "@/lib/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,6 +29,7 @@ export default function LoginForm() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const [submitEnabled, setSubmitEnabled] = useState(true);
+	const auth = useAuthState();
 	const form = useForm<z.infer<typeof emailPasswordSchema>>({
 		resolver: zodResolver(emailPasswordSchema),
 		defaultValues: {
@@ -38,7 +39,7 @@ export default function LoginForm() {
 	});
 
 	const login = useMutation({
-		...authJwtLoginMutation(),
+		...authCookieLoginMutation({ credentials: "include" }),
 		throwOnError: false,
 		onSettled: () => {
 			setSubmitEnabled(true);
@@ -60,7 +61,7 @@ export default function LoginForm() {
 			}
 		},
 		onSuccess: (data) => {
-			handleBearerResponse(data);
+			auth.setAccessToken(data);
 			const next = searchParams.get("next") || "/";
 			router.push(next);
 		},
@@ -79,7 +80,7 @@ export default function LoginForm() {
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
-			<h1 className="text-3xl font-bold text-center">{t("login.title")}</h1>
+				<h1 className="text-3xl font-bold text-center">{t("login.title")}</h1>
 				<FormField
 					control={form.control}
 					name="email"
