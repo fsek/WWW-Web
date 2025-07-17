@@ -3,7 +3,7 @@
 // Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
 import { useMemo, useState } from "react";
-import type { AdminUserRead, CarRead } from "@/api/index";
+import type { AdminUserRead, CarBookingRead } from "@/api/index";
 import CarForm from "./CarForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -47,8 +47,9 @@ import {
 	getAllCarBookingBlocksOptions,
 	getAllCarBookingBlocksQueryKey,
 } from "@/api/@tanstack/react-query.gen";
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
-const columnHelper = createColumnHelper<CarRead>();
+const columnHelper = createColumnHelper<CarBookingRead>();
 
 export default function Car() {
 	const router = useRouter();
@@ -59,7 +60,9 @@ export default function Car() {
 	const [, setOpen] = useState(false);
 	const [, setSubmitEnabled] = useState(true);
 	const [openEditDialog, setOpenEditDialog] = useState(false);
-	const [selectedBooking, setselectedBooking] = useState<CarRead | null>(null);
+	const [selectedBooking, setselectedBooking] = useState<CarBookingRead | null>(
+		null,
+	);
 	const [showOnlyCurrent, setShowOnlyCurrent] = useState(false);
 
 	// Read tab from query string, default to "calendar"
@@ -127,7 +130,7 @@ export default function Car() {
 		{
 			id: "details",
 			header: t("admin:car.details"),
-			cell: (row: { row: Row<CarRead> }) => {
+			cell: (row: { row: Row<CarBookingRead> }) => {
 				const isConfirmed = row.row.original.confirmed;
 				const buttonColor = isConfirmed
 					? "border-green-600 text-green-700"
@@ -150,7 +153,7 @@ export default function Car() {
 		},
 	];
 
-	const { data, error, isFetching } = useQuery({
+	const { data, error, isFetching, isLoading } = useQuery({
 		...getAllBookingOptions(),
 	});
 
@@ -158,6 +161,7 @@ export default function Car() {
 		data: userDetails,
 		error: userDetailsError,
 		isFetching: userDetailsIsFetching,
+		isLoading: userDetailsIsLoading,
 	} = useQuery({
 		...adminGetAllUsersOptions(),
 	});
@@ -167,11 +171,11 @@ export default function Car() {
 			return [];
 		}
 		if (showOnlyCurrent) {
-			return (data as CarRead[]).filter(
+			return (data as CarBookingRead[]).filter(
 				(booking) => new Date(booking.end_time) >= new Date(),
 			);
 		}
-		return data as CarRead[];
+		return data as CarBookingRead[];
 	}, [data, showOnlyCurrent]);
 
 	const handleEventAdd = useMutation({
@@ -181,6 +185,7 @@ export default function Car() {
 			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.success(t("admin:car.success_add"));
 		},
 	});
 
@@ -191,6 +196,7 @@ export default function Car() {
 			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.success(t("admin:car.success_delete"));
 		},
 	});
 
@@ -201,10 +207,11 @@ export default function Car() {
 			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.success(t("admin:car.success_edit"));
 		},
 	});
 
-	function handleRowClick(row: Row<CarRead>) {
+	function handleRowClick(row: Row<CarBookingRead>) {
 		setselectedBooking(row.original);
 		setOpenEditDialog(true);
 	}
@@ -240,6 +247,7 @@ export default function Car() {
 		data: blockData,
 		error: blockError,
 		isFetching: isBlockFetching,
+		isLoading: isBlockLoading,
 	} = useQuery({
 		...getAllCarBookingBlocksOptions(),
 	});
@@ -318,6 +326,12 @@ export default function Car() {
 												(error?.detail ? `: ${error.detail}` : ""),
 										);
 									},
+									onSuccess: () => {
+										toast.success(t("admin:block.success_unblock"));
+										queryClient.invalidateQueries({
+											queryKey: getAllCarBookingBlocksQueryKey(),
+										});
+									},
 								},
 							);
 						}}
@@ -337,12 +351,12 @@ export default function Car() {
 		getPaginationRowModel: getPaginationRowModel(),
 	});
 
-	if (isFetching) {
-		return <p> {t("admin:loading")}</p>;
-	}
-
-	if (error) {
-		return <p> {t("admin:error")}</p>;
+	if (error || userDetailsError || blockError) {
+		return (
+			<LoadingErrorCard
+				error={error || userDetailsError || blockError || undefined}
+			/>
+		);
 	}
 
 	interface CustomEventData_ extends CustomEventData {
@@ -354,7 +368,7 @@ export default function Car() {
 
 	// Transform the fetched data into CalendarEvent type
 	const events: CalendarEvent<CustomEventData_>[] =
-		(data as CarRead[])?.map((car) => {
+		(data as CarBookingRead[])?.map((car) => {
 			const userName =
 				car.user_first_name && car.user_last_name
 					? `${car.user_first_name} ${car.user_last_name}`
@@ -382,183 +396,184 @@ export default function Car() {
 			</h3>
 			<p className="py-3">{t("admin:car.description")}</p>
 			<Separator />
-			<EventsProvider
-				initialCalendarEvents={events}
-				eventColor="#f6ad55" // TODO: use tailwind
-				carEvents={true}
-				handleAdd={(event) => {
-					handleEventAdd.mutate(
-						{
-							body: {
-								description: event.description_sv,
-								start_time: event.start,
-								end_time: event.end,
-								personal: (event.personal as boolean) ?? true,
-								council_id: event.council_id
-									? (event.council_id as number)
-									: undefined,
+			{isFetching || userDetailsIsLoading || isBlockLoading ? (
+				<LoadingErrorCard />
+			) : error || userDetailsError || blockError ? (
+				<LoadingErrorCard
+					error={error || userDetailsError || blockError || undefined}
+				/>
+			) : (
+				<EventsProvider
+					initialCalendarEvents={events}
+					eventColor="#f6ad55" // TODO: use tailwind
+					carEvents={true}
+					handleAdd={(event) => {
+						handleEventAdd.mutate(
+							{
+								body: {
+									description: event.description_sv,
+									start_time: event.start,
+									end_time: event.end,
+									personal: (event.personal as boolean) ?? true,
+									council_id: event.council_id
+										? (event.council_id as number)
+										: undefined,
+								},
 							},
-						},
-						{
-							onError: (error) => {
-								toast.error(
-									t("admin:car.error_add") +
-										(error?.detail ? `: ${error.detail}` : ""),
-								);
+							{
+								onError: (error) => {
+									toast.error(
+										t("admin:car.error_add") +
+											(error?.detail ? `: ${error.detail}` : ""),
+									);
+								},
 							},
-						},
-					);
-				}}
-				handleDelete={(id) => {
-					handleEventDelete.mutate(
-						{ path: { booking_id: Number(id) } },
-						{
-							onError: (error) => {
-								toast.error(
-									t("admin:car.error_delete") +
-										(error?.detail ? `: ${error.detail}` : ""),
-								);
-								// TODO: Show error message to user
+						);
+					}}
+					handleDelete={(id) => {
+						handleEventDelete.mutate(
+							{ path: { booking_id: Number(id) } },
+							{
+								onError: (error) => {
+									toast.error(
+										t("admin:car.error_delete") +
+											(error?.detail ? `: ${error.detail}` : ""),
+									);
+									// TODO: Show error message to user
+								},
 							},
-						},
-					);
-				}}
-				handleEdit={(event) => {
-					if (!event.id) {
-						toast.error(t("admin:car.error_missing_id"));
-						return;
-					}
+						);
+					}}
+					handleEdit={(event) => {
+						if (!event.id) {
+							toast.error(t("admin:car.error_missing_id"));
+							return;
+						}
 
-					if (!event.title_sv) {
-						const msg = "Missing title";
-						toast.error(msg);
-						throw new Error(msg);
-					}
+						if (!event.title_sv) {
+							const msg = "Missing title";
+							toast.error(msg);
+							throw new Error(msg);
+						}
 
-					handleEventEdit.mutate(
-						{
-							path: { booking_id: Number(event.id) },
-							body: {
-								description: event.description_sv,
-								start_time: event.start,
-								end_time: event.end,
-								personal: (event.personal as boolean) ?? true,
-								council_id: event.council_id
-									? (event.council_id as number)
-									: undefined,
-								confirmed: (event.confirmed as boolean) ?? false,
+						handleEventEdit.mutate(
+							{
+								path: { booking_id: Number(event.id) },
+								body: {
+									description: event.description_sv,
+									start_time: event.start,
+									end_time: event.end,
+									personal: (event.personal as boolean) ?? true,
+									council_id: event.council_id
+										? (event.council_id as number)
+										: undefined,
+									confirmed: (event.confirmed as boolean) ?? false,
+								},
 							},
-						},
-						{
-							onError: (error) => {
-								toast.error(
-									t("admin:car.error_edit") +
-										(error?.detail ? `: ${error.detail}` : ""),
+							{
+								onError: (error) => {
+									toast.error(
+										t("admin:car.error_edit") +
+											(error?.detail ? `: ${error.detail}` : ""),
+									);
+									// TODO: Show error message to user
+								},
+							},
+						);
+					}}
+				>
+					<div className="py-4">
+						<Tabs
+							value={tab}
+							onValueChange={(value) => {
+								setTab(value);
+								const params = new URLSearchParams(
+									Array.from(searchParams.entries()),
 								);
-								// TODO: Show error message to user
-							},
-						},
-					);
-				}}
-			>
-				<div className="py-4">
-					<Tabs
-						value={tab}
-						onValueChange={(value) => {
-							setTab(value);
-							const params = new URLSearchParams(
-								Array.from(searchParams.entries()),
-							);
-							params.set("tab", value);
-							router.replace(`${pathname}?${params.toString()}`);
-						}}
-						className="flex flex-col w-full items-center"
-					>
-						<TabsList className="flex justify-center mb-2">
-							<TabsTrigger value="calendar">
-								{t("admin:car.calendar")}
-							</TabsTrigger>
-							<TabsTrigger value="list">{t("admin:car.list")}</TabsTrigger>
-							<TabsTrigger value="blockings">
-								{t("admin:car.blockings")}
-							</TabsTrigger>
-						</TabsList>
-						<TabsContent value="calendar" className="w-full px-5 space-y-5">
-							<div className="space-y-0">
-								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+								params.set("tab", value);
+								router.replace(`${pathname}?${params.toString()}`);
+							}}
+							className="flex flex-col w-full items-center"
+						>
+							<TabsList className="flex justify-center mb-2">
+								<TabsTrigger value="calendar">
 									{t("admin:car.calendar")}
-								</h2>
-								<p className="text-xs md:text-sm font-medium">
-									{t("admin:car.calendar_description")}
-								</p>
-							</div>
-
-							<Separator />
-							<Calendar
-								showDescription={true}
-								editDescription={true}
-								handleOpenDetails={(event) => {
-									if (event) {
-										router.push(`/car/booking-details?id=${event.id}`);
-									}
-								}}
-								disableEdit={false} // Also disables delete, add and dragging
-								enableAllDay={false}
-								enableCarProperties={true}
-							/>
-						</TabsContent>
-						<TabsContent value="list" className="w-full px-5 space-y-5">
-							<div className="space-y-0">
-								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
-									{t("admin:car.list")}
-								</h2>
-								<p className="text-xs md:text-sm font-medium">
-									{t("admin:car.list_description")}
-								</p>
-							</div>
-							<div className="flex">
-								<CarForm toast={toast.error} />
-								<Button
-									variant={showOnlyCurrent ? "default" : "outline"}
-									className="my-auto"
-									onClick={() => setShowOnlyCurrent((v) => !v)}
-								>
-									{showOnlyCurrent
-										? t("admin:car.show_all_bookings")
-										: t("admin:car.hide_past_bookings")}
-								</Button>
-							</div>
-							<Separator />
-							<AdminTable table={table} onRowClick={handleRowClick} />
-							<CarEditForm
-								open={openEditDialog}
-								onClose={() => handleClose()}
-								selectedBooking={selectedBooking as CarRead}
-								toast={toast.error}
-							/>
-						</TabsContent>
-						<TabsContent value="blockings" className="w-full px-5 space-y-5">
-							<div className="space-y-0">
-								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+								</TabsTrigger>
+								<TabsTrigger value="list">{t("admin:car.list")}</TabsTrigger>
+								<TabsTrigger value="blockings">
 									{t("admin:car.blockings")}
-								</h2>
-								<p className="text-xs md:text-sm font-medium">
-									{t("admin:car.blockings_description")}
-								</p>
-							</div>
-							<BlockForm toast={toast.error} />
-							<Separator />
-							{isBlockFetching ? (
-								<p>{t("admin:loading")}</p>
-							) : blockError ? (
-								<p>{t("admin:error")}</p>
-							) : (
+								</TabsTrigger>
+							</TabsList>
+							<TabsContent value="calendar" className="w-full px-5 space-y-5">
+								<div className="space-y-0">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+										{t("admin:car.calendar")}
+									</h2>
+									<p className="text-xs md:text-sm font-medium">
+										{t("admin:car.calendar_description")}
+									</p>
+								</div>
+
+								<Separator />
+								<Calendar
+									showDescription={true}
+									editDescription={true}
+									handleOpenDetails={(event) => {
+										if (event) {
+											router.push(`/car/booking-details?id=${event.id}`);
+										}
+									}}
+									disableEdit={false} // Also disables delete, add and dragging
+									enableAllDay={false}
+									enableCarProperties={true}
+								/>
+							</TabsContent>
+							<TabsContent value="list" className="w-full px-5 space-y-5">
+								<div className="space-y-0">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+										{t("admin:car.list")}
+									</h2>
+									<p className="text-xs md:text-sm font-medium">
+										{t("admin:car.list_description")}
+									</p>
+								</div>
+								<div className="flex">
+									<CarForm />
+									<Button
+										variant={showOnlyCurrent ? "default" : "outline"}
+										className="my-auto"
+										onClick={() => setShowOnlyCurrent((v) => !v)}
+									>
+										{showOnlyCurrent
+											? t("admin:car.show_all_bookings")
+											: t("admin:car.hide_past_bookings")}
+									</Button>
+								</div>
+								<Separator />
+								<AdminTable table={table} onRowClick={handleRowClick} />
+								<CarEditForm
+									open={openEditDialog}
+									onClose={() => handleClose()}
+									selectedBooking={selectedBooking as CarBookingRead}
+								/>
+							</TabsContent>
+							<TabsContent value="blockings" className="w-full px-5 space-y-5">
+								<div className="space-y-0">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+										{t("admin:car.blockings")}
+									</h2>
+									<p className="text-xs md:text-sm font-medium">
+										{t("admin:car.blockings_description")}
+									</p>
+								</div>
+								<BlockForm />
+								<Separator />
 								<AdminTable table={blockTable} />
-							)}
-						</TabsContent>
-					</Tabs>
-				</div>
-			</EventsProvider>
+							</TabsContent>
+						</Tabs>
+					</div>
+				</EventsProvider>
+			)}
 			<Toaster position="top-center" richColors />
 		</div>
 	);

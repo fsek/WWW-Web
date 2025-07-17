@@ -22,8 +22,9 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
+import { toast } from "sonner";
 
-export default function form({ toast }: { toast: (msg: string) => void }) {
+export default function form() {
 	const { t } = useTranslation();
 
 	const carBlockSchema = z.object({
@@ -56,6 +57,7 @@ export default function form({ toast }: { toast: (msg: string) => void }) {
 		...blockUserFromCarBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
+			toast.success(t("admin:block.success_add"));
 			queryClient.invalidateQueries({
 				queryKey: getAllCarBookingBlocksQueryKey(),
 			});
@@ -63,7 +65,7 @@ export default function form({ toast }: { toast: (msg: string) => void }) {
 			setSubmitEnabled(true);
 		},
 		onError: (error) => {
-			toast(
+			toast.error(
 				t("admin:block.error_add") + (error?.detail ? `: ${error.detail}` : ""),
 			);
 			setSubmitEnabled(true);

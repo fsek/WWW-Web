@@ -140,7 +140,11 @@
 		"list": "Lista",
 		"list_description": "Denna lista visar alla bokningar. Klicka på en bokning för att redigera den.",
 		"blockings": "Blockeringar",
-		"blockings_description": "Hantera blockeringar av bilbokningar."
+		"blockings_description": "Hantera blockeringar av bilbokningar.",
+		"success": "Åtgärden slutfördes framgångsrikt.",
+		"success_add": "Bokningen skapades!",
+		"success_delete": "Bokningen togs bort!",
+		"success_edit": "Bokningen sparades!"
 	},
 	"block": {
 		"create_blocking": "Skapa blockering",
@@ -150,7 +154,11 @@
 		"blocked_at": "Tidpunkt för blockering",
 		"actions": "Åtgärder",
 		"unblock": "Avblockera",
-		"select_user": "Välj användare"
+		"select_user": "Välj användare",
+		"success_add": "Blockering skapad!",
+		"success_unblock": "Användare avblockerad!",
+		"error_add": "Misslyckades att lägga till blockering",
+		"error_unblock": "Misslyckades att avblockera användare"
 	},
 	"posts": {
 		"self": "Poster"

@@ -139,7 +139,11 @@
 		"list": "List",
 		"list_description": "This list shows all bookings. Click on a booking to edit it.",
 		"blockings": "Blocked users",
-		"blockings_description": "This list shows all users blocked from booking cars."
+		"blockings_description": "This list shows all users blocked from booking cars.",
+		"success": "Action completed successfully.",
+		"success_add": "Booking created!",
+		"success_delete": "Booking removed!",
+		"success_edit": "Booking saved!"
 	},
 	"block": {
 		"create_blocking": "Create Blocking",
@@ -149,7 +153,11 @@
 		"blocked_at": "Blocked At",
 		"actions": "Actions",
 		"unblock": "Unblock",
-		"select_user": "Select User"
+		"select_user": "Select User",
+		"success_add": "Blocking created!",
+		"success_unblock": "User unblocked!",
+		"error_add": "Failed to add blocking",
+		"error_unblock": "Failed to unblock user"
 	},
 	"posts": {
 		"self": "Posts"

@@ -24,22 +24,21 @@ import {
 	updateBookingMutation,
 	removeBookingMutation,
 } from "@/api/@tanstack/react-query.gen";
-import type { CarRead, CarUpdate } from "../../../api";
+import type { CarBookingRead, CarBookingUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 interface CarEditFormProps {
 	open: boolean;
 	onClose: () => void;
-	selectedBooking: CarRead;
-	toast: (msg: string) => void;
+	selectedBooking: CarBookingRead;
 }
 
 export default function CarEditForm({
 	open,
 	onClose,
 	selectedBooking,
-	toast,
 }: CarEditFormProps) {
 	const { t } = useTranslation();
 
@@ -120,10 +119,11 @@ export default function CarEditForm({
 		...updateBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
+			toast.success(t("admin:car.success_edit"));
 			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
 		},
 		onError: (error) => {
-			toast(
+			toast.error(
 				t("admin:car.error_edit") + (error?.detail ? `: ${error.detail}` : ""),
 			);
 			onClose();
@@ -134,10 +134,11 @@ export default function CarEditForm({
 		...removeBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
+			toast.success(t("admin:car.success_delete"));
 			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
 		},
 		onError: (error) => {
-			toast(
+			toast.error(
 				t("admin:car.error_delete") +
 					(error?.detail ? `: ${error.detail}` : ""),
 			);
@@ -146,7 +147,7 @@ export default function CarEditForm({
 	});
 
 	function handleFormSubmit(values: CarEditFormType) {
-		const updatedBooking: CarUpdate = {
+		const updatedBooking: CarBookingUpdate = {
 			description: values.description,
 			start_time: new Date(values.start_time),
 			end_time: new Date(values.end_time),
@@ -180,7 +181,7 @@ export default function CarEditForm({
 				},
 			);
 		} else {
-			toast(t("admin:car.error_missing_id"));
+			toast.error(t("admin:car.error_missing_id"));
 		}
 	}
 

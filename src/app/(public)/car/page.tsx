@@ -3,7 +3,7 @@
 // Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
 import { useState } from "react";
-import type { CarRead } from "@/api/index";
+import type { CarBookingRead } from "@/api/index";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createBookingMutation,
@@ -47,6 +47,7 @@ export default function Car() {
 		data: bookingData,
 		error,
 		isFetching,
+		isLoading,
 	} = useQuery({
 		...getAllBookingOptions(),
 	});
@@ -55,6 +56,7 @@ export default function Car() {
 		data: userData,
 		error: userError,
 		isFetching: userIsFetching,
+		isLoading: userIsLoading,
 	} = useQuery({
 		...getMeOptions(),
 		staleTime: 30 * 60 * 1000, // Don't refetch for 30 minutes
@@ -90,7 +92,8 @@ export default function Car() {
 		},
 	});
 
-	if (isFetching || userIsFetching) {
+	// only show full‐page loading on initial mount
+	if (isLoading || userIsLoading) {
 		return <LoadingErrorCard />;
 	}
 
@@ -108,7 +111,7 @@ export default function Car() {
 
 	// Transform the fetched data into CalendarEvent type
 	const events: CalendarEvent<CustomEventData_>[] =
-		(bookingData as CarRead[])?.map((car) => {
+		(bookingData as CarBookingRead[])?.map((car) => {
 			const userName =
 				car.user_first_name && car.user_last_name
 					? `${car.user_first_name} ${car.user_last_name}`
@@ -144,109 +147,122 @@ export default function Car() {
 			<TwoColumnLayout
 				leftColumnContent={
 					<div className="h-[80vh] flex flex-col">
-						<EventsProvider
-							initialCalendarEvents={events}
-							eventColor="#f6ad55" // TODO: use tailwind
-							carEvents={true}
-							handleAdd={(event) => {
-								handleEventAdd.mutate(
-									{
-										body: {
-											description: event.description_sv,
-											start_time: event.start,
-											end_time: event.end,
-											personal: (event.personal as boolean) ?? true,
-											council_id: event.council_id
-												? (event.council_id as number)
-												: undefined,
-										},
-									},
-									{
-										onError: (error) => {
-											toast.error(
-												t("admin:car.error_add") +
-													(error?.detail ? `: ${error.detail}` : ""),
-											);
-										},
-									},
-								);
-							}}
-							handleDelete={(id) => {
-								handleEventDelete.mutate(
-									{ path: { booking_id: Number(id) } },
-									{
-										onError: (error) => {
-											toast.error(
-												t("admin:car.error_delete") +
-													(error?.detail ? `: ${error.detail}` : ""),
-											);
-										},
-									},
-								);
-							}}
-							handleEdit={(event) => {
-								if (!event.id) {
-									toast.error(t("admin:car.error_missing_id"));
-									return;
-								}
+						<div className="flex flex-col h-full">
+							<CustomTitle
+								text={t("main:car-booking.title")}
+								className="mt-4"
+								size={4}
+							/>
+							{!isFetching && !userIsFetching ? (
+								<EventsProvider
+									initialCalendarEvents={events}
+									eventColor="#f6ad55" // TODO: use tailwind
+									carEvents={true}
+									handleAdd={(event) => {
+										handleEventAdd.mutate(
+											{
+												body: {
+													description: event.description_sv,
+													start_time: event.start,
+													end_time: event.end,
+													personal: (event.personal as boolean) ?? true,
+													council_id: event.council_id
+														? (event.council_id as number)
+														: undefined,
+												},
+											},
+											{
+												onError: (error) => {
+													toast.error(
+														t("admin:car.error_add") +
+															(error?.detail ? `: ${error.detail}` : ""),
+													);
+												},
+												onSuccess: () => {
+													toast.success(t("admin:car.success_add"));
+												},
+											},
+										);
+									}}
+									handleDelete={(id) => {
+										handleEventDelete.mutate(
+											{ path: { booking_id: Number(id) } },
+											{
+												onError: (error) => {
+													toast.error(
+														t("admin:car.error_delete") +
+															(error?.detail ? `: ${error.detail}` : ""),
+													);
+												},
+												onSuccess: () => {
+													toast.success(t("admin:car.success_delete"));
+												},
+											},
+										);
+									}}
+									handleEdit={(event) => {
+										if (!event.id) {
+											toast.error(t("admin:car.error_missing_id"));
+											return;
+										}
 
-								if (!event.title_sv) {
-									const msg = "Missing title";
-									toast.error(msg);
-									throw new Error(msg);
-								}
+										if (!event.title_sv) {
+											const msg = "Missing title";
+											toast.error(msg);
+											throw new Error(msg);
+										}
 
-								handleEventEdit.mutate(
-									{
-										path: { booking_id: Number(event.id) },
-										body: {
-											description: event.description_sv,
-											start_time: event.start,
-											end_time: event.end,
-											personal: (event.personal as boolean) ?? true,
-											council_id: event.council_id
-												? (event.council_id as number)
-												: undefined,
-											confirmed: (event.confirmed as boolean) ?? false,
-										},
-									},
-									{
-										onError: (error) => {
-											toast.error(
-												t("admin:car.error_edit") +
-													(error?.detail ? `: ${error.detail}` : ""),
-											);
-										},
-									},
-								);
-							}}
-						>
-							<div className="flex flex-col h-full">
-								<CustomTitle
-									text={t("main:car-booking.title")}
-									className="mt-4"
-									size={4}
-								/>
-								<div className="flex-1 flex flex-col h-full">
-									<Calendar
-										showDescription={true}
-										editDescription={true}
-										handleOpenDetails={(event) => {
-											if (event) {
-												router.push(`/car/booking-details?id=${event.id}`);
-											}
-										}}
-										disableEdit={false} // Also disables delete, add and dragging
-										enableAllDay={false}
-										enableCarProperties={true}
-										disableConfirmField={true}
-										disableEditOfOthers={true} // Disable editing of other users' bookings
-										zoomWorkHours={true}
-										mini={false}
-									/>
-								</div>
-							</div>
-						</EventsProvider>
+										handleEventEdit.mutate(
+											{
+												path: { booking_id: Number(event.id) },
+												body: {
+													description: event.description_sv,
+													start_time: event.start,
+													end_time: event.end,
+													personal: (event.personal as boolean) ?? true,
+													council_id: event.council_id
+														? (event.council_id as number)
+														: undefined,
+													confirmed: (event.confirmed as boolean) ?? false,
+												},
+											},
+											{
+												onError: (error) => {
+													toast.error(
+														t("admin:car.error_edit") +
+															(error?.detail ? `: ${error.detail}` : ""),
+													);
+												},
+												onSuccess: () => {
+													toast.success(t("admin:car.success_edit"));
+												},
+											},
+										);
+									}}
+								>
+									<div className="flex-1 flex flex-col h-full">
+										<Calendar
+											showDescription={true}
+											editDescription={true}
+											handleOpenDetails={(event) => {
+												if (event) {
+													router.push(`/car/booking-details?id=${event.id}`);
+												}
+											}}
+											disableEdit={false} // Also disables delete, add and dragging
+											enableAllDay={false}
+											enableCarProperties={true}
+											disableConfirmField={true}
+											disableEditOfOthers={true} // Disable editing of other users' bookings
+											zoomWorkHours={true}
+											mini={false}
+										/>
+									</div>
+								</EventsProvider>
+							) : (
+								<LoadingErrorCard />
+							)}
+						</div>
 					</div>
 				}
 				rightColumnContent={
@@ -264,7 +280,7 @@ export default function Car() {
 							/>
 							<Link
 								className="text-blue-500 hover:text-blue-700 underline mr-0"
-								href="/car/rules"
+								href="https://old.fsektionen.se/dokument/276"
 							/>
 						</Trans>
 						<CustomTitle

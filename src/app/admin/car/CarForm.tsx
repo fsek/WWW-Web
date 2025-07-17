@@ -25,8 +25,9 @@ import { useTranslation } from "react-i18next";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
+import { toast } from "sonner";
 
-export default function CarForm({ toast }: { toast: (msg: string) => void }) {
+export default function CarForm() {
 	const { t } = useTranslation();
 
 	const carSchema = z
@@ -98,12 +99,13 @@ export default function CarForm({ toast }: { toast: (msg: string) => void }) {
 		...createBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
+			toast.success(t("admin:car.success_add"));
 			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 		},
 		onError: (error) => {
-			toast(
+			toast.error(
 				t("admin:car.error_add") + (error?.detail ? `: ${error.detail}` : ""),
 			);
 			setSubmitEnabled(true);
