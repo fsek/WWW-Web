@@ -18,22 +18,25 @@ export const useAuthState = create<AuthState>((set, get) => ({
 	authorizationHeader() {
 		const accessToken = get().accessToken;
 		if (accessToken) {
-			const exp = new Date().setUTCSeconds(
-				JSON.parse(
-					Buffer.from(
-						accessToken.access_token.split(".")[1],
-						"base64",
-					).toString(),
-				).exp,
+			// We convert exp to milliseconds manually to be more explicit
+			// Date.now() is in milliseconds, exp is in seconds
+			const payload = JSON.parse(
+				Buffer.from(
+					accessToken.access_token.split(".")[1],
+					"base64",
+				).toString(),
 			);
-			if (exp < Date.now()) {
-				return null; // Token has expired
+			const expiryMilliseconds = payload.exp * 1000;
+
+			if (expiryMilliseconds < Date.now()) {
+				// The token has expired. Return null.
+				return null;
 			}
 			return `${accessToken.token_type} ${accessToken.access_token}`;
 		}
 		return null; // No token available
 	},
 	isAuthenticated() {
-		return !!get().accessToken;
+		return !!get().authorizationHeader();
 	},
 }));
