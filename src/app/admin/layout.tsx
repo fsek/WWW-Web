@@ -11,7 +11,7 @@ export default async function AdminLayout({
 		<LoginWall>
 			<SidebarProvider>
 				<AdminSidebar />
-				<main>
+				<main className="w-full h-full flex flex-col">
 					<SidebarTrigger />
 					{children}
 				</main>

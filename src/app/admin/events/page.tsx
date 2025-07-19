@@ -93,7 +93,6 @@ export default function Events() {
 		throwOnError: false,
 	});
 
-
 	if (isFetching) {
 		return <p>{t("admin:loading")}</p>;
 	}

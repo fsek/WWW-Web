@@ -1,25 +1,39 @@
 "use client";
 
 import type { BearerResponse } from "@/api";
-import { useEffect, useState } from "react";
+import { create } from "zustand";
 
-export function handleBearerResponse(data: BearerResponse) {
-	localStorage.setItem(
-		"authorization",
-		`${data.token_type} ${data.access_token}`,
-	);
-}
+type AuthState = {
+	accessToken: BearerResponse | null;
+	setAccessToken: (data: BearerResponse) => void;
+	authorizationHeader: () => string | null;
+	isAuthenticated: () => boolean;
+};
 
-export function getAuthorizationHeader() {
-	return localStorage.getItem("authorization");
-}
-
-export function useAuthState() {
-	const [isAuthenticated, setIsAuthenticated] = useState<boolean>();
-
-	useEffect(() => {
-		setIsAuthenticated(!!getAuthorizationHeader());
-	}, []);
-
-	return isAuthenticated;
-}
+export const useAuthState = create<AuthState>((set, get) => ({
+	accessToken: null,
+	setAccessToken: (data: BearerResponse) => {
+		set({ accessToken: data });
+	},
+	authorizationHeader() {
+		const accessToken = get().accessToken;
+		if (accessToken) {
+			const exp = new Date().setUTCSeconds(
+				JSON.parse(
+					Buffer.from(
+						accessToken.access_token.split(".")[1],
+						"base64",
+					).toString(),
+				).exp,
+			);
+			if (exp < Date.now()) {
+				return null; // Token has expired
+			}
+			return `${accessToken.token_type} ${accessToken.access_token}`;
+		}
+		return null; // No token available
+	},
+	isAuthenticated() {
+		return !!get().accessToken;
+	},
+}));
