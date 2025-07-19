@@ -52,12 +52,12 @@ export const Companies = () => {
 	return (
 		<section
 			id="foretag"
-			className="container py-24 sm:py-32 grid grid-cols-1 lg:grid-cols-2 gap-10"
+			className="container py-24 sm:py-32 grid grid-cols-1 lg:grid-cols-2 gap-10 px-10 md:px-0"
 		>
 			<div className="place-items-center">
 				<div>
 					<h2 className="text-3xl md:text-4xl font-bold">
-						<span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
+						<span className="bg-gradient-to-b from-primary-light to-primary text-transparent bg-clip-text">
 							{t("companies.title_1")}
 						</span>
 						{t("companies.title_2")}

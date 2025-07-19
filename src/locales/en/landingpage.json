@@ -43,8 +43,9 @@
 	},
 	"about": {
 		"title": "About the F-Guild",
-		"description": "F-Guild is a student association at Lund University Faculty of Engineering that represents students in engineering physics, engineering mathematics, and engineering nanoscience. Since our founding in 1961, we have worked to improve the student experience by fostering camaraderie among our members and advocating for their common interests. We are based in the Math Building in Lund and organize events to make the study period more enjoyable, represent our programs to the university and industry, and much more!"
+		"description": "F-Guild is a student association at Lund University Faculty of Engineering that represents students in engineering physics, engineering mathematics, and engineering nanoscience. Since our founding in the 1960s, we have worked to improve the student experience by fostering camaraderie among our members and advocating for their common interests. We are based in the Math Building in Lund and organize events to make the study period more enjoyable, represent our programs to the university and industry, and much more!"
 	},
+	"sponsors": "Main Sponsor",
 	"whatwedo": {
 		"title_1": "A guild with ",
 		"title_2": "everything ",
@@ -56,15 +57,15 @@
 		},
 		"study": {
 			"title": "Studies",
-			"description": "We offer support and resources for your studies through our study evenings, where you can get help from knowledgeable students or just have a quiet place to study with others."
+			"description": "We offer support and resources for our members' studies through our study evenings, where you can get help from knowledgeable students or just have a quiet place to study with others."
 		},
 		"representation": {
 			"title": "Representation",
-			"description": "We work hard to represent your interests and needs in education, ensuring that everyone studying our programs can have their voice heard."
+			"description": "We work hard to represent the interests and needs of our members in education, ensuring that everyone studying our programs can have their voice heard."
 		},
 		"career": {
 			"title": "Career",
-			"description": "We help you connect with companies and industry and get an idea of career opportunities through lunch lectures, workshops, and our career fair FARAD."
+			"description": "We help students of our programs connect with companies and industry and get an idea of career opportunities through lunch lectures, workshops, and our career fair FARAD."
 		}
 	},
 	"councils": {

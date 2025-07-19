@@ -7,7 +7,7 @@ import mh from "@/assets/landing/mh.jpg";
 export const About = () => {
 	const { t } = useTranslation("landingpage");
 	return (
-		<section id="about" className="container py-24 sm:py-32">
+		<section id="about" className="container py-24 sm:py-32 px-10 md:px-0">
 			<Link href="/about" className="group block" tabIndex={-1}>
 				<div className="bg-muted/50 border rounded-lg py-12 transition-shadow group-hover:shadow-lg">
 					<div className="px-6 flex flex-col-reverse md:flex-row gap-8 md:gap-12">

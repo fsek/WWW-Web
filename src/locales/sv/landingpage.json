@@ -43,8 +43,9 @@
 	},
 	"about": {
 		"title": "Om F-sektionen",
-		"description": "F-sektionen inom TLTH är en ideell förening för studenter som läser något av civilingenjörsprogrammen Teknisk Fysik, Teknisk Matematik eller Teknisk Nanovetenskap. Sedan vi grundades 1961 har vi arbetat för att främja kamratskap bland våra medlemmar och tillvarata deras gemensamma intressen. Vi håller till i Mattehuset i Lund och anordnar event för att göra studietiden roligare, representerar programmen gentemot universitetet och näringslivet och mycket mer!"
+		"description": "F-sektionen inom TLTH är en ideell förening för studenter som läser något av civilingenjörsprogrammen Teknisk Fysik, Teknisk Matematik eller Teknisk Nanovetenskap. Sedan vi grundades på 1960-talet har vi arbetat för att främja kamratskap bland våra medlemmar och tillvarata deras gemensamma intressen. Vi håller till i Mattehuset i Lund och anordnar event för att göra studietiden roligare, representerar programmen gentemot universitetet och näringslivet och mycket mer!"
 	},
+	"sponsors": "Huvudsamarbetspartner",
 	"whatwedo": {
 		"title_1": "En sektion med ",
 		"title_2": "allt ",
@@ -56,24 +57,24 @@
 		},
 		"study": {
 			"title": "Studier",
-			"description": "Vi erbjuder stöd och resurser för dina studier genom våra pluggkvällar, där du kan få stöd från kunskapsrika studenter eller bara ha en lugn plats att studera med andra på."
+			"description": "Vi erbjuder stöd och resurser för studier genom våra pluggkvällar, där man kan få stöd från kunskapsrika studenter eller bara ha en lugn plats att studera med andra på."
 		},
 		"representation": {
 			"title": "Representation",
-			"description": "Vi arbetar hårt för att representera dina intressen och behov inom utbildningen, och ser till att alla som studerar våra program kan få sin röst hörd."
+			"description": "Vi arbetar hårt för att representera våra medlemmars intressen och behov inom utbildningen, och ser till att alla som studerar våra program kan få sin röst hörd."
 		},
 		"career": {
 			"title": "Karriär",
-			"description": "Vi hjälper dig att skapa kontakt med företag och industrin samt få en bild av arbetsmöjligheterna genom lunchföreläsningar, workshops och vår arbetsmarknadsmässa FARAD."
+			"description": "Vi hjälper studenter inom våra program att skapa kontakt med företag och industrin samt få en bild av arbetsmöjligheterna genom lunchföreläsningar, workshops och vår arbetsmarknadsmässa FARAD."
 		}
 	},
 	"councils": {
-		"title": "Utskotten som gör F-sektionen till vad den är",
+		"title": "Utskotten som gör F-sektionen till det den är",
 		"subtitle": "F-sektionen består av flera utskott, var och en med sitt eget fokus och sina egna aktiviteter. Klicka på ett utskott för att lära dig mer om det på vår huvudsida."
 	},
 	"nollning": {
-		"title": "Nollning",
-		"description": "Nollningen är en introduktionsperiod för nya studenter där de får möjlighet att lära känna sektionen, träffa andra studenter och delta i olika aktiviteter. Det är en fantastisk tid att börja din resa på F-sektionen.",
+		"title": "Nollningen - Introduktion för nyantagna",
+		"description": "Nollningen är en introduktionsperiod för nya studenter där de får möjlighet att lära känna andra studenter och delta i många roliga event och aktiviteter. Det är ett fantastisk sätt att börja sin studietid på.",
 		"button": "Läs mer om nollningen"
 	},
 	"companies": {
@@ -105,7 +106,7 @@
 		"contact": "Kontakt",
 		"contact_page": "Kontaktsida",
 		"contact_ordf": "Kontakta Ordförande",
-		"contact_webmaster": "Kontakta Webmaster",
+		"contact_webmaster": "Kontakta Webbansvarig",
 		"old": "Gamla sidan",
 		"old_link": "Besök gamla sidan",
 		"copyright": "F-sektionen. Alla rättigheter förvarade i superposition i ogenomtränglig låda."

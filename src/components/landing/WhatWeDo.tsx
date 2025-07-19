@@ -40,10 +40,13 @@ const features: FeatureProps[] = [
 export const WhatWeDo = () => {
 	const { t } = useTranslation("landingpage");
 	return (
-		<section id="activities" className="container text-center py-24 sm:py-32">
+		<section
+			id="activities"
+			className="container text-center py-24 sm:py-32 px-10 md:px-0"
+		>
 			<h2 className="text-5xl md:text-6xl font-bold ">
 				{t("whatwedo.title_1")}
-				<span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
+				<span className="bg-gradient-to-b from-primary-light to-primary text-transparent bg-clip-text">
 					{t("whatwedo.title_2")}
 				</span>
 				{t("whatwedo.title_3")}

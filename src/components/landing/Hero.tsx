@@ -26,12 +26,10 @@ export const Hero = () => {
 				}}
 			/>
 
-			<div className="container relative z-20 text-center lg:text-start space-y-6">
+			<div className="container relative z-20 text-start space-y-6 px-10 md:px-0">
 				<div className="backdrop-blur-xs bg-white/10 border border-white/20 rounded-2xl p-8 md:p-12 shadow-xl space-y-8 w-full lg:w-6/10">
-					<div className="text-5xl md:text-6xl font-bold flex flex-wrap items-start gap-2 flex-col justify-start">
-						<div className="inline to-primary/70 from-primary bg-gradient-to-t text-transparent bg-clip-text">
-							{t("hero.title_static")}
-						</div>
+					<div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold flex flex-wrap items-start gap-2 flex-col justify-start">
+						<div className="inline text-primary">{t("hero.title_static")}</div>
 						<TypewriterClient
 							options={{
 								autoStart: true,
@@ -42,14 +40,15 @@ export const Hero = () => {
 									t("hero.title_dynamic_2"),
 									t("hero.title_dynamic_3"),
 								],
-								wrapperClassName: "text-primary justify-start",
+								wrapperClassName:
+									"text-primary justify-start whitespace-nowrap",
 								cursorClassName: "text-primary animate-blink",
 								cursor: "|",
 							}}
 						/>
 					</div>
 
-					<p className="text-xl text-white md:w-10/12 mx-auto lg:mx-0">
+					<p className="md:text-xl text-white md:w-10/12 mx-auto lg:mx-0">
 						{t("hero.description")}
 					</p>
 

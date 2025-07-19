@@ -29,7 +29,7 @@
 	"foset": {
 		"self": "Föset",
 		"about": "Fyll i",
-		"info": "Föset har hand om nollningen och välkomnandet av nya studenter till F-sektionen."
+		"info": "Föset har hand om nollningen, som är vad vi kallar välkomnandet av nya studenter till F-sektionen."
 	},
 	"kulturm": {
 		"self": "Kulturministeriet",
@@ -44,7 +44,7 @@
 	"prylm": {
 		"self": "Prylmästeriet",
 		"about": "Fyll i",
-		"info": "Prylmästeriet ansvarar för sektionens utrustning och lokaler."
+		"info": "Prylmästeriet ansvarar för sektionens utrustning, bil och merch."
 	},
 	"samvetet": {
 		"self": "Samvetet",
@@ -54,12 +54,12 @@
 	"sanningsm": {
 		"self": "Sanningministeriet",
 		"about": "Fyll i",
-		"info": "Sanningsministeriet bygger hemsidor :) och ansvarar för sektionens kommunikation."
+		"info": "Sanningsministeriet bygger hemsidor :) och ansvarar för sektionens kommunikation genom vår tidning, fotografi och design."
 	},
 	"sekretservice": {
 		"self": "Sekret Service",
 		"about": "Fyll i",
-		"info": "Sekret Service håller sektionen säker från hot och hanterar administrativt arbete."
+		"info": "Sekret Service säkerhetsställer sektionens säkerhet och styrs av sekreteraren."
 	},
 	"studieradet": {
 		"self": "Studierådet",
@@ -74,6 +74,6 @@
 	"ovriga": {
 		"self": "Övriga",
 		"about": "Fyll i",
-		"info": "F-sektionen har många andra poster och utskott som inte passar in i de ovanstående kategorierna."
+		"info": "F-sektionen har många andra poster och grupper som inte passar in i de ovanstående kategorierna."
 	}
 }

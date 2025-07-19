@@ -2,6 +2,16 @@
 	"fsek": "F-Guild",
 	"title": "Main Page",
 	"calendar": "Calendar",
+	"welcome": "Welcome to the new F-Guild website!",
+	"welcomeText": "We are currently in a transition period to our new website. During the summer we will continuously improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the backend, the new and old systems are separated: if you have old car bookings, room bookings, settings, accounts, etc. they will not be available through the new web and you will have to make new ones. Some things e.g. the image gallery, are transferred but may not have the GUI available yet. NOTE! We plan to get rid of the old website in the near future (preferably before the introduction period), so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
+	"oldWebsiteButton": "Take me back to the old site...",
+	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the webmasters via email.",
+	"adminButton": "Admin Page",
+	"newsTitle": "News",
+	"newsText": "Here there will be news when we have fixed the GUI. Until then, you can use the old website or Mattermost.",
+	"cafeTitle": "Hilbert Cafe",
+	"cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement.",
+	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
 	"navbar": {
 		"sektionen": {
 			"self": "Sections",
@@ -81,6 +91,10 @@
 				"self": "Quiet/Prayer Rooms",
 				"desc": "Find a peaceful space for reflection or private prayer.",
 				"href": "/stillarum"
+			},
+			"gallery": {
+				"self": "Gallery",
+				"desc": "Explore our photo gallery showcasing events and activities."
 			}
 		},
 		"companies": {

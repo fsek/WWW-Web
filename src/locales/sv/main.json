@@ -2,6 +2,16 @@
 	"fsek": "F-sektionen",
 	"title": "Huvudsida",
 	"calendar": "Kalender",
+	"welcome": "Välkommen till nya hemsidan för F-sektionen!",
+	"welcomeText": "Just nu är vi i en övergångsperiod till vår nya hemsida. Under sommaren kommer vi att kontinuerligt förbättra design och funktionalitet, och lägga till saker som just nu saknas gentemot den gamla hemsidan. Den går förresten fortfarande att använda på old.fsektionen.se. Eftersom vi dessutom har bytt ut servern och backenden är det nya och gamla systemet separerade: om du har gamla bilbokningar, lokalbokningar, inställningar, konton etc. så kommer de inte vara tillgängliga genom den nya webben och du kommer att behöva göra nya. Vissa saker t.ex. bildgalleriet, är överdraget men kanske inte har GUI tillgängligt ännu. OBS! Vi planerar att göra oss av med den gamla hemsidan inom en snar framtid (helst innan nollningen), så försök att i största mån använda den nya. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
+	"oldWebsiteButton": "Det var bättre förr...",
+	"welcomeAdmin": "Om du tycker att du borde ha någon form av admin-åtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, vänligen kontakta spindel via e-post.",
+	"adminButton": "Admin sidan",
+	"newsTitle": "Nyheter",
+	"newsText": "Här kommer det att finnas nyheter när vi har fixat GUI:n. Tills dess kan du använda den gamla hemsidan eller mattermost.",
+	"cafeTitle": "Hilbert Café",
+	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang.",
+	"coolThing": "En cool grej som distraherar dig från att se att sidan inte är klar än",
 	"navbar": {
 		"sektionen": {
 			"self": "Sektionen",
@@ -81,6 +91,10 @@
 				"self": "Stillarum/Bönerum",
 				"desc": "Hitta en lugn plats för reflektion eller bön.",
 				"href": "/stillarum"
+			},
+			"gallery": {
+				"self": "Galleri",
+				"desc": "Utforska vårt bildgalleri som visar evenemang och aktiviteter."
 			}
 		},
 		"companies": {

@@ -14,7 +14,7 @@ export const Contact = () => {
 			style={{ backgroundImage: `url(${mh.src})` }}
 		>
 			{/* Overlay for better text readability */}
-			<div className="absolute inset-0 bg-black/30 rounded-xl" />
+			<div className="absolute inset-0 bg-black/50" />
 			<div className="container lg:grid lg:grid-cols-2 place-items-center items-center relative z-10 p-6 lg:px-16 space-y-8 lg:space-y-0">
 				<div className="lg:col-start-1">
 					<h2 className="text-3xl md:text-4xl font-bold text-white">

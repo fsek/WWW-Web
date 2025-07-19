@@ -44,7 +44,7 @@
 	"prylm": {
 		"self": "Equipment Committee",
 		"about": "Fill in",
-		"info": "The Equipment Committee is responsible for the guild's equipment and premises."
+		"info": "The Equipment Committee is responsible for the guild's equipment, car and merch."
 	},
 	"samvetet": {
 		"self": "Samvetet",
@@ -54,12 +54,12 @@
 	"sanningsm": {
 		"self": "Ministry of Truth",
 		"about": "Fill in",
-		"info": "The Ministry of Truth builds websites :) and is responsible for the guild's communication."
+		"info": "The Ministry of Truth builds websites :) and is responsible for the guild's communication via our newspaper, photography and design."
 	},
 	"sekretservice": {
 		"self": "Secret Service",
 		"about": "Fill in",
-		"info": "Secret Service keeps the guild safe from threats and handles administrative work."
+		"info": "Secret Service keeps the guild safe from threats and is ruled by the secretary."
 	},
 	"studieradet": {
 		"self": "Student Council",
@@ -74,6 +74,6 @@
 	"ovriga": {
 		"self": "Other",
 		"about": "Fill in",
-		"info": "The F-guild has many other positions and committees that do not fit into the above categories."
+		"info": "The F-guild has many other positions and groups that do not fit into the councils above."
 	}
 }

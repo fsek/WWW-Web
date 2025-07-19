@@ -12,6 +12,7 @@ import { Navbar } from "@/components/landing/Navbar";
 
 import { WhatWeDo } from "@/components/landing/WhatWeDo";
 import { Nollning } from "@/components/landing/Nollning";
+import Sponsors from "@/components/landing/Sponsors";
 
 export default function Home() {
 	return (
@@ -22,6 +23,7 @@ export default function Home() {
 				<div className="flex flex-col items-center">
 					<Hero />
 					<About />
+					<Sponsors />
 					<WhatWeDo />
 					<Utskott />
 					<Nollning />

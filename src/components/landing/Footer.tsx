@@ -5,15 +5,23 @@ import { useTranslation } from "node_modules/react-i18next";
 export const Footer = () => {
 	const { t } = useTranslation("landingpage");
 	return (
-		<footer id="footer">
+		<footer id="footer" className="px-10 md:px-0">
 			<hr className="w-11/12 mx-auto" />
 
 			<section className="container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
-				<div className="col-span-full xl:col-span-2 ">
-					<Link href="/" className="font-bold text-xl flex">
+				<div className="col-span-full xl:col-span-2 flex font-bold text-xl">
+					<Link href="/" className=" ">
 						<FLogga className="w-8 h-8 mr-2" />
-						<span className="text-primary text-2xl">{t("footer.title")}</span>
 					</Link>
+					<div className="text-primary text-2xl">
+						{t("footer.title")} <br />
+						<div className="text-sm text-gray-500 font-normal mt-3 select-all">
+							F-sektionen <br />
+							Mattehuset <br />
+							Sölvegatan 18A <br />
+							223 62 Lund, Sweden
+						</div>
+					</div>
 				</div>
 
 				<div className="flex flex-col gap-2">

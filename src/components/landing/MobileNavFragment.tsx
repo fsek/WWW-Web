@@ -7,59 +7,64 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, UserIcon } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
-const title = "WWW Web";
+type NavItem = {
+	label: string;
+	href: string;
+	className?: string;
+};
 
 export const MobileNavFragment = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const { t } = useTranslation("landingpage");
 	const navbarData = t("navbar.items", { returnObjects: true }) as Record<
 		string,
-		{ label: string; href: string }
+		NavItem
 	>;
 
 	return (
 		<Sheet open={isOpen} onOpenChange={setIsOpen}>
 			<SheetTrigger className="px-2">
 				<Menu
-					className="flex md:hidden h-5 w-5"
+					className="flex md:hidden h-10 w-10"
 					onClick={() => setIsOpen(true)}
 				>
 					{/* <span className="sr-only">Menu Icon</span> */}
 				</Menu>
 			</SheetTrigger>
 
-			<SheetContent side={"right"}>
-				<SheetHeader>
-					<SheetTitle className="font-bold text-xl">{title}</SheetTitle>
+			<SheetContent side={"right"} className="w-80">
+				<SheetHeader className="pb-6">
+					<SheetTitle className="font-bold text-2xl text-left">
+						{t("f-guild")}
+					</SheetTitle>
 				</SheetHeader>
-				<nav className="flex flex-col justify-center items-center gap-2 mt-4">
+				<nav className="flex flex-col gap-3">
 					{Object.entries(navbarData).map(([key, item]) => (
 						<Link
 							key={key}
 							href={item.href}
 							onClick={() => setIsOpen(false)}
-							className={buttonVariants({ variant: "ghost" })}
+							className={`text-lg justify-start ${buttonVariants({ variant: "ghost" })}`}
 						>
-							{item.label}
+							<span className={`${item.className || ""}`}>{item.label}</span>
 						</Link>
 					))}
-					<Link
-						href="https://github.com/leoMirandaa/shadcn-landing-page.git"
-						target="_blank"
-						className={`w-[110px] border ${buttonVariants({
-							variant: "secondary",
-						})}`}
-					>
-						<GitHubLogoIcon className="mr-2 w-5 h-5" />
-						Github
-					</Link>
+					<div className="pt-4">
+						<Link
+							href="/login?next=/home"
+							onClick={() => setIsOpen(false)}
+							className={`w-full justify-start text-lg ${buttonVariants({ variant: "default" })}`}
+						>
+							<UserIcon className="w-5 h-5 mr-2" />
+							{t("navbar.login")}
+						</Link>
+					</div>
 				</nav>
 			</SheetContent>
 		</Sheet>

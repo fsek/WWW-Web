@@ -40,19 +40,13 @@ export const Navbar = () => {
 						</Link>
 					</NavigationMenuItem>
 
-					{/* mobile */}
-					<div className="flex md:hidden">
-						<DarkModeToggle />
-						<MobileNavFragment />
-					</div>
-
 					{/* desktop */}
 					<nav className="hidden md:flex gap-2">
 						{Object.entries(navbarData).map(([itemKey, item]) => (
 							<Link
 								href={item.href}
 								key={itemKey}
-								className={`text-xl ${buttonVariants({
+								className={`text-lg lg:text-xl ${buttonVariants({
 									variant: "ghost",
 								})}`}
 							>
@@ -61,16 +55,23 @@ export const Navbar = () => {
 						))}
 					</nav>
 
-					<div className="hidden md:flex gap-2">
+					<div className="flex gap-0 md:gap-2">
 						<LanguageSwitcher />
 						<DarkModeToggle />
-						<Link
-							href="/login"
-							className={`border ${buttonVariants({ variant: "default" })}`}
-						>
-							<UserIcon className="w-5 h-5" />
-							{t("navbar.login")}
-						</Link>
+						{/* Desktop */}
+						<div className="hidden md:flex">
+							<Link
+								href="/login?next=/home"
+								className={`border ${buttonVariants({ variant: "default" })}`}
+							>
+								<UserIcon className="w-5 h-5" />
+								{t("navbar.login")}
+							</Link>
+						</div>
+						{/* Mobile */}
+						<div className="md:hidden flex">
+							<MobileNavFragment />
+						</div>
 					</div>
 				</NavigationMenuList>
 			</NavigationMenu>

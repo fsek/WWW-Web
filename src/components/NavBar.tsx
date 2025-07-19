@@ -32,35 +32,42 @@ type NavSection = {
 
 export function NavBar() {
 	return (
-		<div className="flex justify-between">
-			<Link href="/">
-				<FLogga className="mt-2 ml-2" />
-			</Link>
-			<NavBarMenu />
-			<LoginAndLang />
-		</div>
+		<header className="sticky top-0 z-50 w-full border-b border-border bg-white/50 dark:bg-background/40 dark:border-b-slate-700 backdrop-blur-md">
+			<div className="container flex items-center justify-between h-20 px-4 mx-auto">
+				<div className="flex items-center gap-4">
+					<Link href="/home" className="flex items-center">
+						<FLogga className="size-14 mr-3" />
+					</Link>
+					<div className="hidden md:flex">
+						<NavBarMenu />
+					</div>
+				</div>
+				<div className="flex items-center gap-2">
+					<LanguageSwitcher />
+					<ThemeToggle />
+					<Button className="ml-2" onClick={useLoginHandler()}>
+						<LogInIcon className="mr-1" />
+						<span className="hidden sm:inline">
+							{useTranslation().t("login.login")}
+						</span>
+					</Button>
+				</div>
+			</div>
+			{/* Mobile menu below */}
+			<div className="flex md:hidden px-4 pb-2">
+				<NavBarMenu />
+			</div>
+		</header>
 	);
 }
 
-function LoginAndLang() {
-	const { t } = useTranslation();
+// Helper hook for login button handler
+function useLoginHandler() {
 	const pathname = usePathname();
 	const router = useRouter();
-
-	function handleLoginClick() {
+	return React.useCallback(() => {
 		router.push(`/login?next=${pathname}`);
-	}
-
-	return (
-		<>
-			<ThemeToggle />
-			<LanguageSwitcher />
-			<Button className="mt-6 mr-2" onClick={handleLoginClick}>
-				<LogInIcon />
-				<span> {t("login.login")}</span>
-			</Button>
-		</>
-	);
+	}, [router, pathname]);
 }
 
 export function NavBarMenu() {
@@ -108,19 +115,25 @@ export function NavBarMenu() {
 	}
 
 	return (
-		<div>
+		<div className="flex items-center bg-transparent rounded-md px-2 py-1">
 			<NavigationMenu
 				onValueChange={onNavChange}
-				className="w-full max-w-full py-2 mt-4"
+				className="
+                  w-full max-w-full flex items-center
+                  custom-navmenu
+                "
 			>
 				{sections.map(([sectionKey, section]) => {
 					const items = Object.entries(section).filter(
 						([key]) => key !== "self",
 					) as [string, NavItem][];
 					return (
-						<NavigationMenuList key={sectionKey}>
-							<NavigationMenuItem>
-								<NavigationMenuTrigger className="submenu-trigger">
+						<NavigationMenuList
+							key={sectionKey}
+							className="flex items-center bg-transparent"
+						>
+							<NavigationMenuItem className="bg-transparent hover:bg-transparent">
+								<NavigationMenuTrigger className="submenu-trigger !bg-transparent !hover:bg-transparent border-2 border-transparent hover:border-foreground/30">
 									{section.self}
 								</NavigationMenuTrigger>
 								<NavigationMenuContent>
@@ -130,6 +143,7 @@ export function NavBarMenu() {
 												key={itemKey}
 												title={item.self}
 												href={item.href || "#"}
+												className="bg-transparent hover:bg-transparent border-2 border-transparent hover:border-foreground/30"
 											>
 												{item.desc}
 											</ListItem>
@@ -157,7 +171,7 @@ const ListItem = React.forwardRef<
 					ref={ref}
 					href={props.href ?? "#"}
 					className={cn(
-						"block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+						"block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
 						isDisabled && "opacity-50 cursor-not-allowed pointer-events-none",
 						className,
 					)}
