@@ -10,57 +10,70 @@
 	"bokforlaget": {
 		"self": "Bokförlaget",
 		"about": "Fyll i",
-		"contact": "Kassör: Anton Sundström"
+		"contact": "Kassör: Anton Sundström",
+		"info": "Bokförlaget hanterar F-sektionens bokföring och ekonomi."
 	},
 	"cafem": {
 		"self": "Cafemästeriet",
 		"about": "fyll i, såhär gör man en länk <0> hej </0>",
+		"info": "Cafemästeriet ansvarar för sektionens caféverksamhet i Mattehuset.",
 		"contact": "Cafemästare: Sixten Georgesson",
 		"contact2": "Vice-Cafemästare: fyll i",
 		"post_besk": "Här ska det stå massa info om posterna"
 	},
 	"externa-rep": {
 		"self": "Externa representanter",
-		"about": "Fyll i"
+		"about": "Fyll i",
+		"info": "De externa representanterna representerar F-sektionen i olika sammanhang för universitetet."
 	},
 	"foset": {
 		"self": "Föset",
-		"about": "Fyll i"
+		"about": "Fyll i",
+		"info": "Föset har hand om nollningen och välkomnandet av nya studenter till F-sektionen."
 	},
 	"kulturm": {
 		"self": "Kulturministeriet",
-		"about": "Fyll i"
+		"about": "Fyll i",
+		"info": "Kulturministeriet är F-sektionens aktivitetsutskott och ansvarar för att det arrangeras roliga evenemang."
 	},
 	"fnu": {
 		"self": "Näringslivsutskottet",
-		"about": "Fyll i"
+		"about": "Fyll i",
+		"info": "Näringslivsutskottet arbetar med att skapa kontakter mellan studenter och företag."
 	},
 	"prylm": {
 		"self": "Prylmästeriet",
-		"about": "Fyll i"
+		"about": "Fyll i",
+		"info": "Prylmästeriet ansvarar för sektionens utrustning och lokaler."
 	},
 	"samvetet": {
 		"self": "Samvetet",
-		"about": "Fyll i"
+		"about": "Fyll i",
+		"info": "Samvetet verkar för att sektionen ska vara en trygg och inkluderande plats för alla medlemmar."
 	},
 	"sanningsm": {
 		"self": "Sanningministeriet",
-		"about": "Fyll i"
+		"about": "Fyll i",
+		"info": "Sanningsministeriet bygger hemsidor :) och ansvarar för sektionens kommunikation."
 	},
-	"secretservice": {
-		"self": "Secret Service",
-		"about": "Fyll i"
+	"sekretservice": {
+		"self": "Sekret Service",
+		"about": "Fyll i",
+		"info": "Sekret Service håller sektionen säker från hot och hanterar administrativt arbete."
 	},
 	"studieradet": {
 		"self": "Studierådet",
-		"about": "Fyll i"
+		"about": "Fyll i",
+		"info": "Studierådet för studenternas talan så att deras åsikter och behov beaktas."
 	},
 	"styrelsen": {
 		"self": "Styrelsen",
-		"about": "Fyll i"
+		"about": "Fyll i",
+		"info": "Det är styrelsen som leder F-sektionen och ansvarar för dess verksamhet."
 	},
 	"ovriga": {
 		"self": "Övriga",
-		"about": "Fyll i"
+		"about": "Fyll i",
+		"info": "F-sektionen har många andra poster och utskott som inte passar in i de ovanstående kategorierna."
 	}
 }

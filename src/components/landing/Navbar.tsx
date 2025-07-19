@@ -4,25 +4,40 @@ import {
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "@/components/ui/button";
 import DarkModeToggle from "@/components/ThemeToggle";
-import { LogsIcon } from "lucide-react";
+import { UserIcon } from "lucide-react";
 import { MobileNavFragment } from "@/components/landing/MobileNavFragment";
-import { navbarLinksList, type NavProps } from "@/config/nav";
 import Link from "next/link";
-const title = "WWW Web";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
+import FLogga from "@/assets/f-logga";
+
+type NavItem = {
+	label: string;
+	href: string;
+	className?: string;
+};
 
 export const Navbar = () => {
+	const { t } = useTranslation("landingpage");
+
+	const navbarData = t("navbar.items", { returnObjects: true }) as Record<
+		string,
+		NavItem
+	>;
+
 	return (
-		<header className="sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
+		<header className="sticky border-b-[1px] top-0 z-40 w-full bg-white/50 dark:border-b-slate-700 dark:bg-background/40 backdrop-blur-md">
 			<NavigationMenu className="mx-auto">
-				<NavigationMenuList className="container h-14 px-4 w-screen flex justify-between ">
+				<NavigationMenuList className="container h-20 px-4 w-screen flex justify-between ">
 					<NavigationMenuItem className="font-bold flex">
-						<a href="/" className="ml-2 font-bold text-xl flex">
-							<LogsIcon />
-							<span className="hidden md:block">{title}</span>
-						</a>
+						<Link
+							href="/"
+							className="ml-2 font-bold text-3xl flex flex-row items-center"
+						>
+							<FLogga className="size-14 mr-5" />
+						</Link>
 					</NavigationMenuItem>
 
 					{/* mobile */}
@@ -33,30 +48,29 @@ export const Navbar = () => {
 
 					{/* desktop */}
 					<nav className="hidden md:flex gap-2">
-						{navbarLinksList.map((route: NavProps, i) => (
+						{Object.entries(navbarData).map(([itemKey, item]) => (
 							<Link
-								href={route.href}
-								key={i}
-								className={`text-[17px] ${buttonVariants({
+								href={item.href}
+								key={itemKey}
+								className={`text-xl ${buttonVariants({
 									variant: "ghost",
 								})}`}
 							>
-								{route.label}
+								<span className={`${item.className || ""}`}>{item.label}</span>
 							</Link>
 						))}
 					</nav>
 
 					<div className="hidden md:flex gap-2">
-						<Link
-							href="https://github.com/leoMirandaa/shadcn-landing-page.git"
-							target="_blank"
-							className={`border ${buttonVariants({ variant: "secondary" })}`}
-						>
-							<GitHubLogoIcon className="mr-2 w-5 h-5" />
-							Github
-						</Link>
-
+						<LanguageSwitcher />
 						<DarkModeToggle />
+						<Link
+							href="/login"
+							className={`border ${buttonVariants({ variant: "default" })}`}
+						>
+							<UserIcon className="w-5 h-5" />
+							{t("navbar.login")}
+						</Link>
 					</div>
 				</NavigationMenuList>
 			</NavigationMenu>

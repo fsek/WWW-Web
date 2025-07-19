@@ -1,99 +1,101 @@
 import Link from "next/link";
-import { LogsIcon } from "lucide-react";
+import FLogga from "@/assets/f-logga";
+import { useTranslation } from "node_modules/react-i18next";
 
 export const Footer = () => {
+	const { t } = useTranslation("landingpage");
 	return (
 		<footer id="footer">
 			<hr className="w-11/12 mx-auto" />
 
 			<section className="container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
-				<div className="col-span-full xl:col-span-2">
+				<div className="col-span-full xl:col-span-2 ">
 					<Link href="/" className="font-bold text-xl flex">
-						<LogsIcon />
-						ShadcnUI/React
+						<FLogga className="w-8 h-8 mr-2" />
+						<span className="text-primary text-2xl">{t("footer.title")}</span>
 					</Link>
 				</div>
 
 				<div className="flex flex-col gap-2">
-					<h3 className="font-bold text-lg">Follow US</h3>
+					<h3 className="font-bold text-lg">{t("footer.follow_us")}</h3>
 					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
+						<Link
+							href="https://github.com/fsek/"
+							className="opacity-60 hover:opacity-100"
+						>
 							Github
 						</Link>
 					</div>
 
 					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							Twitter
+						<Link
+							href="https://www.instagram.com/fsektionen/"
+							className="opacity-60 hover:opacity-100"
+						>
+							Instagram
 						</Link>
 					</div>
 
 					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							Dribbble
-						</Link>
-					</div>
-				</div>
-
-				<div className="flex flex-col gap-2">
-					<h3 className="font-bold text-lg">Platforms</h3>
-					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							Web
-						</Link>
-					</div>
-
-					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							Mobile
-						</Link>
-					</div>
-
-					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							Desktop
+						<Link
+							href="https://www.linkedin.com/groups/3694965/"
+							className="opacity-60 hover:opacity-100"
+						>
+							Linkedin
 						</Link>
 					</div>
 				</div>
 
 				<div className="flex flex-col gap-2">
-					<h3 className="font-bold text-lg">About</h3>
+					<h3 className="font-bold text-lg">{t("footer.other")}</h3>
 					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							Features
+						<Link href="/nollning" className="opacity-60 hover:opacity-100">
+							{t("footer.new-student")}
 						</Link>
 					</div>
 
 					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							Pricing
+						<Link href="/foretag" className="opacity-60 hover:opacity-100">
+							{t("footer.companies")}
 						</Link>
 					</div>
 
 					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							FAQ
+						<Link href="/about" className="opacity-60 hover:opacity-100">
+							{t("footer.about")}
 						</Link>
 					</div>
 				</div>
 
 				<div className="flex flex-col gap-2">
-					<h3 className="font-bold text-lg">Community</h3>
+					<h3 className="font-bold text-lg">{t("footer.contact")}</h3>
 					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							Youtube
+						<Link href="/contact" className="opacity-60 hover:opacity-100">
+							{t("footer.contact_page")}
 						</Link>
 					</div>
 
 					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							Discord
+						<Link href="/contact" className="opacity-60 hover:opacity-100">
+							{t("footer.contact_ordf")}
 						</Link>
 					</div>
 
 					<div>
-						<Link href="#" className="opacity-60 hover:opacity-100">
-							Twitch
+						<Link href="/contact" className="opacity-60 hover:opacity-100">
+							{t("footer.contact_webmaster")}
+						</Link>
+					</div>
+				</div>
+
+				<div className="flex flex-col gap-2">
+					<h3 className="font-bold text-lg">{t("footer.old")}</h3>
+					<div>
+						<Link
+							href="https://old.fsektionen.se"
+							className="opacity-60 hover:opacity-100"
+						>
+							{t("footer.old_link")}
 						</Link>
 					</div>
 				</div>
@@ -101,14 +103,7 @@ export const Footer = () => {
 
 			<section className="container pb-14 text-center">
 				<h3>
-					&copy; 2024 Landing page made by{" "}
-					<Link
-						target="_blank"
-						href="https://github.com/fredygerman"
-						className="text-primary transition-all border-primary hover:border-b-2"
-					>
-						Fredy German
-					</Link>
+					&copy; {new Date().getFullYear()} {t("footer.copyright")}
 				</h3>
 			</section>
 		</footer>

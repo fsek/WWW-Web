@@ -1,32 +1,35 @@
 "use client";
 
 import { About } from "@/components/landing/About";
-import { Cta } from "@/components/landing/Cta";
-import { FAQ } from "@/components/landing/FAQ";
-import { Features } from "@/components/landing/Features";
+import { Contact } from "@/components/landing/Contact";
 
 import { Hero } from "@/components/landing/Hero";
-import { HowItWorks } from "@/components/landing/HowItWorks";
+import { Utskott } from "@/components/landing/Utskott";
 
-import { Services } from "@/components/landing/Services";
+import { Companies } from "@/components/landing/Companies";
 import { Footer } from "@/components/landing/Footer";
 import { Navbar } from "@/components/landing/Navbar";
 
+import { WhatWeDo } from "@/components/landing/WhatWeDo";
+import { Nollning } from "@/components/landing/Nollning";
+
 export default function Home() {
 	return (
-		<div className="relative flex min-h-screen flex-col items-center">
+		<div className="relative flex min-h-screen flex-col">
 			<Navbar />
 
 			<div className="flex-1">
-				<Hero />
-				<About />
-				<HowItWorks />
-				<Features />
-				<Services />
-				<Cta />
-				<FAQ />
+				<div className="flex flex-col items-center">
+					<Hero />
+					<About />
+					<WhatWeDo />
+					<Utskott />
+					<Nollning />
+					<Companies />
+					<Contact />
+					<Footer />
+				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 }
