@@ -1,0 +1,103 @@
+# Testsida
+
+Grattis! Du har nått testfilen där många tester pågår!
+
+## Vad testas här?
+
+Denna sida fungerar som en lekplats för olika MDX-funktioner och GitHub Flavored Markdown-syntax.
+
+### Kodblock
+
+```javascript
+function testFunction() {
+  console.log("Testing, testing... 1, 2, 3!");
+  return "All systems operational";
+}
+````
+
+```python
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+# Testar rekursiva funktioner
+print(f"Fibonaccisekvens: {[fibonacci(i) for i in range(10)]}")
+```
+
+### Tabeller
+
+| Funktion        | Status | Kommentarer                 |
+| --------------- | ------ | --------------------------- |
+| Syntaxmarkering | ✅      | Fungerar perfekt            |
+| Tabeller        | ✅      | Rena och responsiva         |
+| Uppgiftslistor  | ✅      | Icke-interaktiva kryssrutor |
+| Emoji-stöd      | ✅      | 🎉 Redo för fest            |
+
+### Uppgiftslistor
+
+* [x] Sätt upp grundläggande MDX-struktur
+* [x] Lägg till kodsyntaxmarkering
+* [x] Testa tabellformatering
+* [ ] Implementera avancerade komponenter
+* [ ] Lägg till interaktiva element
+* [ ] Prestandaoptimering
+* [ ] Parsning av HTML med regex
+
+### Citatblock
+
+> Nu ska jag formulera den här frågan, sen ska jag dra ett skämt, sen ska jag visa Maxwells ekvationer.
+>
+> — Thomas Persson
+
+### Matematiska uttryck
+
+Matte inline $E = m\cdot c^2$ funkar jättebra!
+
+Matte i block:
+
+$$\int_{0}^{\infty} e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}$$
+
+Justerade ekvationer (align):
+$$
+\begin{align*}
+a^2 + b^2 &= c^2 \\
+e^{i\pi} + 1 &= 0 = 100 - 110 - 10
+\end{align*}
+$$
+
+### Inbäddad kod och betoning
+
+Testar `inbäddad kod` med **fet text** och *kursiv text*. Du kan också använda ~~överstruken~~ text.
+
+### Länkar och bilder
+
+[Besök GitHub-repot](https://github.com/fsek/WWW-web) för mer information.
+
+![Alt text](https://http.cat/100 "En katt")
+
+### Horisontella linjer
+
+---
+
+### Listor
+
+1. Första punkten
+2. Andra punkten
+
+   * Nästlad punkt
+   * Ytterligare en nästlad punkt
+3. Tredje punkten
+
+### Emoji-stöd
+
+- 🧪 Vetenskapligt experiment pågår
+- 🔬 Mikroskopisk uppmärksamhet på detaljer
+- ⚡ Blixtsnabb rendering
+- 🎯 Mål: perfekt funktionalitet
+
+---
+
+## Testresultat
+
+Om du kan se detta innehåll korrekt formaterat med syntaxmarkering, fungerande kryssrutor, då fungerar MDX-implementeringen som den ska!

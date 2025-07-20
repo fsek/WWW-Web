@@ -2,6 +2,8 @@
 
 @import "tw-animate-css";
 
+@plugin "@tailwindcss/typography";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -81,11 +83,10 @@
 		border-color: var(--color-gray-200, currentColor);
 	}
 	button:not([disabled]),
-  [role="button"]:not([disabled]) {
-    cursor: pointer;
-  }
+	[role="button"]:not([disabled]) {
+		cursor: pointer;
+	}
 }
-
 
 @layer utilities {
 	:root {

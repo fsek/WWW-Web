@@ -9,6 +9,7 @@ import {
 	Briefcase,
 	FolderLock,
 	User,
+	Gauge,
 } from "lucide-react";
 
 import {
@@ -60,6 +61,11 @@ const groups = {
 			title: "admin:member.self",
 			url: "/admin/members",
 			icon: User,
+    },
+    {
+			title: "admin:nollning.self",
+			url: "/admin/nollning",
+			icon: Gauge,
 		},
 	],
 };

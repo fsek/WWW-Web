@@ -152,5 +152,8 @@
 	"stil_id": "StiL ID",
 	"program": "Program",
 	"start_year": "Start Year",
-	"is_member": "Member"
+	"is_member": "Member",
+	"nollning": {
+		"self": "Nollning"
+	}
 }

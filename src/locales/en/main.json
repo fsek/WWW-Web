@@ -7,7 +7,8 @@
 			"self": "Sections",
 			"about": {
 				"self": "About Us",
-				"desc": "Welcome to our community—discover our story and values."
+				"desc": "Welcome to our community—discover our story and values.",
+				"href": "/about"
 			},
 			"news": {
 				"self": "News",

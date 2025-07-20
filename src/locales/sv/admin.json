@@ -153,5 +153,8 @@
 	"stil_id": "StiL-ID",
 	"program": "Program",
 	"start_year": "Startår",
-	"is_member": "Medlem"
+	"is_member": "Medlem",
+	"nollning": {
+		"self": "Nollning"
+	}
 }
