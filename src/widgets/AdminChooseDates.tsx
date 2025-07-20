@@ -4,7 +4,7 @@ import React from "react";
 import { DateTimePicker } from "@/components/ui/datetime-picker";
 
 interface AdminChooseDatesProps {
-	value: Date;
+	value: Date | undefined;
 	onChange: (value: Date) => void;
 }
 
@@ -32,6 +32,10 @@ export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
 					granularity="minute"
 					value={date}
 					onChange={handleDateChange}
+					weekStartsOn={1} // Monday
+					locale={"sv-SE"}
+					showWeekNumber={false}
+					showOutsideDays={true}
 				/>
 			</div>
 		</div>
