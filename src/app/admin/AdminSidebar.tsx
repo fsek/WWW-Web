@@ -4,9 +4,12 @@ import {
 	Calendar,
 	ChevronDown,
 	Newspaper,
-	FileText, Car,
+	FileText,
+	Car,
 	Briefcase,
 	FolderLock,
+	User,
+	Gauge,
 } from "lucide-react";
 
 import {
@@ -53,6 +56,16 @@ const groups = {
 			title: "admin:permissions.self",
 			url: "/admin/permissions",
 			icon: FolderLock,
+		},
+		{
+			title: "admin:member.self",
+			url: "/admin/members",
+			icon: User,
+		},
+		{
+			title: "admin:nollning.self",
+			url: "/admin/nollning",
+			icon: Gauge,
 		},
 	],
 };

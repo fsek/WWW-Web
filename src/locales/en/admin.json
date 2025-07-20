@@ -120,5 +120,40 @@
 	},
 	"permissions": {
 		"self": "Permissions"
+	},
+	"member": {
+		"self": "Members",
+		"list": "Members",
+		"list_description": "This list shows all users. You can search, filter by date, and manage membership status.",
+		"search_placeholder": "Search by name, email, or STIL ID",
+		"date_range_to": "to",
+		"actions": "Actions",
+		"make_member": "Make Member",
+		"remove_member": "Remove Member",
+		"bulk_member": "Make all filtered users members",
+		"bulk_member_confirm_title": "Confirm Bulk Membership",
+		"bulk_member_confirm_desc": "Are you sure you want to make the following number of users members",
+		"bulk_member_confirm": "Confirm",
+		"bulk_member_loading": "Processing...",
+		"bulk_member_success": "All users were made members successfully.",
+		"bulk_member_error": "Failed to make some users members:",
+		"processing": "Processing",
+		"block": "Block",
+		"error_unblock": "Failed to update membership status"
+	},
+	"id": "ID",
+	"first_name": "First Name",
+	"last_name": "Last Name",
+	"email": "Email",
+	"is_verified": "Verified",
+	"yes": "Yes",
+	"no": "No",
+	"account_created": "Account Created",
+	"stil_id": "StiL ID",
+	"program": "Program",
+	"start_year": "Start Year",
+	"is_member": "Member",
+	"nollning": {
+		"self": "Nollning"
 	}
 }
