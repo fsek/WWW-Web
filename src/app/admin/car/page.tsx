@@ -97,14 +97,14 @@ export default function Car() {
 					day: "2-digit",
 				}),
 		}),
-		columnHelper.accessor("user_first_name", {
-			header: t("admin:car.booked_by_first"),
-			cell: (info) => info.getValue(),
-		}),
-		columnHelper.accessor("user_last_name", {
-			header: t("admin:car.booked_by_last"),
-			cell: (info) => info.getValue(),
-		}),
+		columnHelper.accessor(
+			(row) => `${row.user_first_name} ${row.user_last_name}`,
+			{
+				id: "user_full_name",
+				header: t("admin:car.booked_by_name"),
+				cell: (info) => info.getValue(),
+			},
+		),
 		columnHelper.accessor("confirmed", {
 			header: t("admin:car.confirmed"),
 			cell: (info) => {
@@ -112,18 +112,15 @@ export default function Car() {
 				return confirmed ? t("admin:yes") : t("admin:no");
 			},
 		}),
-		columnHelper.accessor("personal", {
-			header: t("admin:car.personal"),
-			cell: (info) => {
-				const personal = info.getValue();
-				return personal ? t("admin:yes") : t("admin:no");
-			},
-		}),
+		// Combined column for personal/council
 		columnHelper.accessor(
-			(row) => row.council?.name ?? t("admin:car.no_council"),
+			(row) =>
+				row.personal
+					? t("admin:car.personal")
+					: (row.council?.name ?? t("admin:car.no_council")),
 			{
-				id: "council_name",
-				header: t("admin:car.council_name"),
+				id: "personal_or_council",
+				header: t("admin:car.personal_or_council"),
 				cell: (info) => info.getValue(),
 			},
 		),
