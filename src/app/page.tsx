@@ -2,18 +2,16 @@
 
 import { About } from "@/components/landing/About";
 import { Contact } from "@/components/landing/Contact";
-
 import { Hero } from "@/components/landing/Hero";
 import { Utskott } from "@/components/landing/Utskott";
-
 import { Companies } from "@/components/landing/Companies";
 import { Footer } from "@/components/landing/Footer";
 import { Navbar } from "@/components/landing/Navbar";
-
 import { WhatWeDo } from "@/components/landing/WhatWeDo";
 import { Nollning } from "@/components/landing/Nollning";
 import Sponsors from "@/components/landing/Sponsors";
 
+// using https://github.com/fredygerman/next-js-shadcn-landing-page
 export default function Home() {
 	return (
 		<div className="relative flex min-h-screen flex-col">

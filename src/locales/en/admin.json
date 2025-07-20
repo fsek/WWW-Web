@@ -76,7 +76,8 @@
 		"price": "Price",
 		"select_alcohol_event_type": "Select alcohol policy",
 		"free": "Free",
-		"signup_not_available": "Signup not available"
+		"signup_not_available": "Signup not available",
+		"signup_count": "Number of signups"
 	},
 	"documents": {
 		"self": "Documents",
