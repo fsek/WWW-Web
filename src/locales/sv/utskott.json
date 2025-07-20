@@ -13,7 +13,7 @@
 		"contact": "Kassör: Anton Sundström",
 		"info": "Bokförlaget hanterar F-sektionens bokföring och ekonomi."
 	},
-	"cafem": {
+	"cafemasteriet": {
 		"self": "Cafemästeriet",
 		"about": "fyll i, såhär gör man en länk <0> hej </0>",
 		"info": "Cafemästeriet ansvarar för sektionens caféverksamhet i Mattehuset.",
@@ -21,7 +21,7 @@
 		"contact2": "Vice-Cafemästare: fyll i",
 		"post_besk": "Här ska det stå massa info om posterna"
 	},
-	"externa-rep": {
+	"externa-representanter": {
 		"self": "Externa representanter",
 		"about": "Fyll i",
 		"info": "De externa representanterna representerar F-sektionen i olika sammanhang för universitetet."
@@ -31,7 +31,7 @@
 		"about": "Fyll i",
 		"info": "Föset har hand om nollningen, som är vad vi kallar välkomnandet av nya studenter till F-sektionen."
 	},
-	"kulturm": {
+	"kulturministeriet": {
 		"self": "Kulturministeriet",
 		"about": "Fyll i",
 		"info": "Kulturministeriet är F-sektionens aktivitetsutskott och ansvarar för att det arrangeras roliga evenemang."
@@ -41,7 +41,7 @@
 		"about": "Fyll i",
 		"info": "Näringslivsutskottet arbetar med att skapa kontakter mellan studenter och företag."
 	},
-	"prylm": {
+	"prylmasteriet": {
 		"self": "Prylmästeriet",
 		"about": "Fyll i",
 		"info": "Prylmästeriet ansvarar för sektionens utrustning, bil och merch."
@@ -51,12 +51,12 @@
 		"about": "Fyll i",
 		"info": "Samvetet verkar för att sektionen ska vara en trygg och inkluderande plats för alla medlemmar."
 	},
-	"sanningsm": {
+	"sanningsministeriet": {
 		"self": "Sanningministeriet",
 		"about": "Fyll i",
 		"info": "Sanningsministeriet bygger hemsidor :) och ansvarar för sektionens kommunikation genom vår tidning, fotografi och design."
 	},
-	"sekretservice": {
+	"sekret-service": {
 		"self": "Sekret Service",
 		"about": "Fyll i",
 		"info": "Sekret Service säkerhetsställer sektionens säkerhet och styrs av sekreteraren."
