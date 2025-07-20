@@ -3,8 +3,12 @@ import "./globals.css";
 import { client } from "@/api";
 import initTranslations, { type Locale, type Namespace } from "./i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
+import ClientProvider from "@/components/ClientProvider";
+import { ThemeProvider } from "next-themes";
+import LanguageDetector from "i18next-browser-languagedetector";
 
-const locale = "sv" satisfies Locale;
+// Default locale as fallback
+const defaultLocale = "sv" satisfies Locale;
 const i18nNamespaces = [
 	"main",
 	"namnden",
@@ -21,16 +25,21 @@ export default async function RootLayout({
 }) {
 	client.setConfig({ baseUrl: "http://host.docker.internal:8000" });
 
-	const { resources } = await initTranslations(locale, i18nNamespaces);
+	const languageDetector = new LanguageDetector();
+	const useLocale = (languageDetector.detect() as Locale) || defaultLocale;
+
+	// Initialize translations with default locale
+	const { resources } = await initTranslations(useLocale, i18nNamespaces);
 
 	return (
 		<TranslationsProvider
 			namespaces={i18nNamespaces}
-			locale={locale}
+			locale={useLocale}
 			resources={resources}
 		>
 			<QueryClientProvider>
-				<html lang="en">
+				{/* SuppressHydrationWarning is only one layer deep, and required by <ThemeProvider> */}
+				<html lang={useLocale} suppressHydrationWarning>
 					<head>
 						<title>Nya F-sektionen</title>
 						<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,9 +50,13 @@ export default async function RootLayout({
 						/>
 					</head>
 					<body>
-						<div id="root" className="flex flex-col min-h-screen">
-							<div className="flex-grow">{children}</div>
-						</div>
+						<ThemeProvider attribute="class">
+							<ClientProvider>
+								<div id="root" className="flex flex-col min-h-screen">
+									<div className="flex-grow">{children}</div>
+								</div>
+							</ClientProvider>
+						</ThemeProvider>
 					</body>
 				</html>
 			</QueryClientProvider>
