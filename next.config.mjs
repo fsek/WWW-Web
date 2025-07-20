@@ -5,7 +5,7 @@ import rehypeMathjaxChtml from "rehype-mathjax/chtml";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	output: "export", // Outputs a Single-Page Application (SPA).
+	output: "standalone", // Apparently this is good for running in Docker.
 	distDir: "./dist", // Changes the build output directory to `./dist/`.
 	images: {
 		unoptimized: true, // Next.js image optimization is unsupported when static export is enabled.

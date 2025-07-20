@@ -2,6 +2,7 @@ import { createInstance, type i18n, type Resource } from "i18next";
 import { initReactI18next } from "react-i18next/initReactI18next";
 import i18nConfig from "@/i18nConfig";
 import resourcesToBackend from "i18next-resources-to-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
 
 export type Locale = "en" | "sv";
 export type Namespace =
@@ -25,6 +26,8 @@ export default async function initTranslations(
 
 	i18nInstance.use(initReactI18next);
 
+	i18nInstance.use(LanguageDetector);
+
 	if (!resources) {
 		i18nInstance.use(
 			resourcesToBackend(
@@ -33,6 +36,14 @@ export default async function initTranslations(
 			),
 		);
 	}
+
+	const detectionOptions = {
+		order: ["querystring", "cookie", "localStorage", "navigator", "htmlTag"],
+		caches: ["cookie", "localStorage"],
+		load: "languageOnly",
+		// Don't detect from path, subdomain, or querystring (no internationalized routing)
+		excludeCacheFor: ["cimode"],
+	};
 
 	await i18nInstance.init({
 		lng: locale,
@@ -43,6 +54,7 @@ export default async function initTranslations(
 		fallbackNS: namespaces[0],
 		ns: namespaces,
 		preload: resources ? [] : i18nConfig.locales,
+		detection: detectionOptions,
 	});
 
 	return {
