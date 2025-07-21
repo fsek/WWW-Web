@@ -12,6 +12,9 @@
 	"cafeTitle": "Hilbert Cafe",
 	"cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement.",
 	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
+	"next": "Next",
+	"previous": "Previous",
+	"page": "Page",
 	"navbar": {
 		"sektionen": {
 			"self": "Sections",
@@ -153,5 +156,11 @@
 		"email": "Email",
 		"password": "Password",
 		"title": "Log in"
+	},
+	"news": {
+		"self": "News",
+		"by": "Written by: ",
+		"pinned": "Pinned",
+		"see_all": "See all news"
 	}
 }

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import MainPageCalendar from "@/components/main-page-calendar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import MainPageNews from "@/components/MainPageNews";
 
 export default function MainLanding() {
 	const { t } = useTranslation();
@@ -44,6 +45,7 @@ export default function MainLanding() {
 						className="text-center text-2xl font-bold mt-4 mb-2"
 					/>
 					<div className="text-left text-lg mb-8">{t("main:newsText")}</div>
+					<MainPageNews mini={true} />
 
 					<CustomTitle
 						text={t("main:calendar")}
