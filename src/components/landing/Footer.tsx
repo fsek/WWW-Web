@@ -106,6 +106,15 @@ export const Footer = () => {
 							{t("footer.old_link")}
 						</Link>
 					</div>
+
+					<div>
+						<Link
+							href="https://old.fsektionen.se/styrdokument"
+							className="opacity-60 hover:opacity-100"
+						>
+							{t("footer.old_styrdokument")}
+						</Link>
+					</div>
 				</div>
 			</section>
 

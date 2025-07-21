@@ -8,7 +8,7 @@
 	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the webmasters via email.",
 	"adminButton": "Admin Page",
 	"newsTitle": "News",
-	"newsText": "Here there will be news when we have fixed the GUI. Until then, you can use the old website or Mattermost.",
+	"newsText": "If you want to use images or more advanced formatting, use mattermost until we have added proper support.",
 	"cafeTitle": "Hilbert Cafe",
 	"cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement.",
 	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
