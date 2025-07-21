@@ -338,7 +338,7 @@ export default function Car() {
 				),
 			},
 		],
-		[t, handleUnblockUser],
+		[t, handleUnblockUser, queryClient.invalidateQueries],
 	);
 
 	const blockTable = useReactTable({

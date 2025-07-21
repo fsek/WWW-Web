@@ -11,9 +11,12 @@ import {
 import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
 import { EventsProvider } from "@/utils/full-calendar-event-context";
-import type { CalendarEvent, CustomEventData } from "@/utils/full-calendar-seed";
+import type {
+	CalendarEvent,
+	CustomEventData,
+} from "@/utils/full-calendar-seed";
 import { useTranslation } from "react-i18next";
-import type { EventCreate, EventRead} from "@/api";
+import type { EventCreate, EventRead } from "@/api";
 import { useRouter } from "next/navigation";
 
 interface MainPageCalendarProps {
@@ -41,7 +44,7 @@ export default function MainPageCalendar({
 		return <p>{t("admin:error")}</p>;
 	}
 
-	interface CustomEventData_ extends CustomEventData { 
+	interface CustomEventData_ extends CustomEventData {
 		// We define these manually to avoid having start_time and start as different fields
 		council_id: number;
 		title_en: string;
@@ -61,7 +64,7 @@ export default function MainPageCalendar({
 		can_signup: boolean;
 		drink_package: boolean;
 		is_nollning_event: boolean;
-	};
+	}
 
 	// Map fetched bookings to calendar events
 	const events: CalendarEvent<CustomEventData_>[] =
@@ -79,7 +82,9 @@ export default function MainPageCalendar({
 			description_en: event.description_en,
 			location: event.location,
 			max_event_users: event.max_event_users,
-			priorities: event.priorities.map(p => p.priority) as EventCreate["priorities"],
+			priorities: event.priorities.map(
+				(p) => p.priority,
+			) as EventCreate["priorities"],
 			signup_not_opened_yet: event.signup_not_opened_yet,
 			recurring: event.recurring,
 			drink: event.drink,
@@ -92,7 +97,9 @@ export default function MainPageCalendar({
 		})) ?? [];
 
 	return (
-		<div className={`px-8 ${mini || zoomWorkHours ? "h-full flex flex-col" : ""}`}>
+		<div
+			className={`px-8 ${mini || zoomWorkHours ? "h-full flex flex-col" : ""}`}
+		>
 			<Separator />
 
 			<EventsProvider
@@ -101,8 +108,7 @@ export default function MainPageCalendar({
 				handleAdd={(event) => {
 					console.error("Non-editable calendar, add not supported.", event);
 					return;
-				}
-				}
+				}}
 				handleDelete={(id) => {
 					console.error("Non-editable calendar, delete not supported.", id);
 					return;
@@ -112,13 +118,15 @@ export default function MainPageCalendar({
 					return;
 				}}
 			>
-				<div className={`py-4 ${mini || zoomWorkHours ? "flex-1 flex flex-col h-full" : ""}`}>
+				<div
+					className={`py-4 ${mini || zoomWorkHours ? "flex-1 flex flex-col h-full" : ""}`}
+				>
 					<Calendar
 						showDescription={true}
 						editDescription={false}
 						handleOpenDetails={(event) => {
 							if (event) {
-								router.push("/calendar/event-details?id=" + event.id)
+								router.push(`/calendar/event-details?id=${event.id}`);
 							}
 						}}
 						disableEdit={true}
