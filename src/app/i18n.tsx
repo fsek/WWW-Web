@@ -17,20 +17,19 @@ export type Namespace =
 // (or only the main one, try that first)
 
 export default async function initTranslations(
-	locale: Locale,
 	namespaces: Namespace[],
 	i18nInstance?: i18n,
 	resources?: Resource,
 ) {
-	i18nInstance = i18nInstance || createInstance();
+	const instance = i18nInstance || createInstance();
 
-	if (!i18nInstance.isInitialized) {
-		i18nInstance.use(initReactI18next);
+	if (!instance.isInitialized) {
+		instance.use(initReactI18next);
 
-		i18nInstance.use(LanguageDetector);
+		instance.use(LanguageDetector);
 
 		if (!resources) {
-			i18nInstance.use(
+			instance.use(
 				resourcesToBackend(
 					(locale: Locale, namespace: Namespace) =>
 						import(`@/locales/${locale}/${namespace}.json`),
@@ -46,7 +45,7 @@ export default async function initTranslations(
 			excludeCacheFor: ["cimode"],
 		};
 
-		await i18nInstance.init({
+		await instance.init({
 			lng: undefined,
 			resources,
 			fallbackLng: i18nConfig.defaultLocale,
@@ -63,9 +62,9 @@ export default async function initTranslations(
 	}
 
 	return {
-		i18n: i18nInstance,
-		resources: i18nInstance.services.resourceStore.data,
-		t: i18nInstance.t,
+		i18n: instance,
+		resources: instance.services.resourceStore.data,
+		t: instance.t,
 	};
 }
 

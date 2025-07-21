@@ -25,21 +25,14 @@ export default async function RootLayout({
 }) {
 	client.setConfig({ baseUrl: "http://host.docker.internal:8000" });
 
-	const languageDetector = new LanguageDetector();
-	const useLocale = (languageDetector.detect() as Locale) || defaultLocale;
-
 	// Initialize translations with default locale
-	const { resources } = await initTranslations(useLocale, i18nNamespaces);
+	const { i18n, resources } = await initTranslations(i18nNamespaces);
 
 	return (
-		<TranslationsProvider
-			namespaces={i18nNamespaces}
-			locale={useLocale}
-			resources={resources}
-		>
+		<TranslationsProvider namespaces={i18nNamespaces} resources={resources}>
 			<QueryClientProvider>
 				{/* SuppressHydrationWarning is only one layer deep, and required by <ThemeProvider> */}
-				<html lang={useLocale} suppressHydrationWarning>
+				<html lang={i18n.language} suppressHydrationWarning>
 					<head>
 						<title>Nya F-sektionen</title>
 						<link rel="preconnect" href="https://fonts.googleapis.com" />
