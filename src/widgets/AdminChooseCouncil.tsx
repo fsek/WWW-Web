@@ -8,7 +8,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 // const counilcs = [
 // 	{ id: 0, name: "Piratutskottet" },
@@ -24,13 +24,7 @@ export function AdminChooseCouncil({
 	value,
 	onChange,
 }: AdminChooseCouncilProps) {
-	const queryClient = useQueryClient();
-
-	const {
-		data: councils,
-		error,
-		isPending,
-	} = useQuery({
+	const { data: councils, error } = useQuery({
 		...getAllCouncilsOptions(),
 	});
 

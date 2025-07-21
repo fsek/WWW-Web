@@ -1,7 +1,7 @@
 "use client";
 
 import { getSingleEventOptions } from "@/api/@tanstack/react-query.gen";
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import {
