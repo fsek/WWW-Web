@@ -167,6 +167,38 @@
 	"permissions": {
 		"self": "Permissions"
 	},
+	"member": {
+		"self": "Medlemmar",
+		"list": "Medlemmar",
+		"list_description": "Denna lista visar alla användare. Du kan söka, filtrera på datum och hantera medlemskap.",
+		"search_placeholder": "Sök på namn, e-post eller STIL-ID",
+		"date_range_to": "till",
+		"actions": "Åtgärder",
+		"make_member": "Gör till medlem",
+		"remove_member": "Ta bort medlemskap",
+		"bulk_member": "Gör alla filtrerade användare till medlemmar",
+		"bulk_member_confirm_title": "Bekräfta massmedlemskap",
+		"bulk_member_confirm_desc": "Är du säker på att du vill göra följande antal användare till medlemmar",
+		"bulk_member_confirm": "Bekräfta",
+		"bulk_member_loading": "Bearbetar...",
+		"bulk_member_success": "Alla användare blev medlemmar.",
+		"bulk_member_error": "Misslyckades att göra vissa användare till medlemmar:",
+		"processing": "Bearbetar",
+		"block": "Blockera",
+		"error_unblock": "Misslyckades att uppdatera medlemsstatus"
+	},
+	"id": "ID",
+	"first_name": "Förnamn",
+	"last_name": "Efternamn",
+	"email": "E-post",
+	"is_verified": "Verifierad",
+	"yes": "Ja",
+	"no": "Nej",
+	"account_created": "Konto Skapat",
+	"stil_id": "StiL-ID",
+	"program": "Program",
+	"start_year": "Startår",
+	"is_member": "Medlem",
 	"nollning": {
 		"self": "Nollning"
 	}

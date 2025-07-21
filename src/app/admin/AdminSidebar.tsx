@@ -8,6 +8,7 @@ import {
 	Car,
 	Briefcase,
 	FolderLock,
+	User,
 	Gauge,
 } from "lucide-react";
 
@@ -55,6 +56,11 @@ const groups = {
 			title: "admin:permissions.self",
 			url: "/admin/permissions",
 			icon: FolderLock,
+		},
+		{
+			title: "admin:member.self",
+			url: "/admin/members",
+			icon: User,
 		},
 		{
 			title: "admin:nollning.self",
