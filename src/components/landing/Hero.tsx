@@ -9,12 +9,15 @@ export const Hero = () => {
 	const { t } = useTranslation("landingpage");
 	return (
 		<section className="relative items-center place-items-center py-20 md:py-50 gap-10 w-full flex flex-col">
-			{/* Fullwidth background image */}
+			{/* Fullwidth background image (Is LCP) */}
 			<Image
-				src={bannerImg.src}
+				src={bannerImg}
 				alt="Cool cat"
 				width={1920}
 				height={600}
+				loading="eager"
+				priority={true}
+				fetchPriority="high"
 				className="absolute inset-0 w-full h-full object-cover z-0"
 			/>
 			{/* Dark overlay for text legibility */}
