@@ -79,7 +79,8 @@
 		"select_alcohol_event_type": "Välj alkoholpolicy",
 		"free": "Gratis",
 		"signup_not_available": "Anmälan inte tillgänglig",
-		"personal": "Personlig bokning"
+		"personal": "Personlig bokning",
+		"confirmed": "Bekräftad"
 	},
 	"documents": {
 		"self": "Dokument",

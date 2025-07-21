@@ -79,7 +79,8 @@
 		"select_alcohol_event_type": "Select alcohol policy",
 		"free": "Free",
 		"signup_not_available": "Signup not available",
-		"personal": "Personal booking"
+		"personal": "Personal booking",
+		"confirmed": "Confirmed"
 	},
 	"documents": {
 		"self": "Documents",
