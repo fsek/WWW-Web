@@ -138,7 +138,7 @@ export default function CarForm() {
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogContent className="min-w-fit lg:max-w-7xl">
+				<DialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0">
 					<DialogHeader>
 						<DialogTitle>{t("admin:car.create_booking")}</DialogTitle>
 					</DialogHeader>
