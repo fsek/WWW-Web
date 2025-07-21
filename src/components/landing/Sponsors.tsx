@@ -9,7 +9,7 @@ const Sponsors = () => {
 	const { t } = useTranslation("landingpage");
 	return (
 		<section
-			className="py-16 my-15 sm:my-20 relative bg-cover bg-center bg-no-repeat w-full"
+			className="py-16 relative bg-cover bg-center bg-no-repeat w-full"
 			style={{ backgroundImage: `url(${mh.src})` }}
 		>
 			{/* Overlay for better readability */}

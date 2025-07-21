@@ -34,7 +34,7 @@ export const Nollning = () => {
 	];
 
 	return (
-		<section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10 px-10 md:px-0">
+		<section className="container grid lg:grid-cols-2 place-items-center py-10 md:py-15 gap-10 px-10 md:px-0">
 			{/* Image carousel on the left */}
 			<div className="relative w-full">
 				<Carousel

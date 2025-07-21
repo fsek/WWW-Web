@@ -5,7 +5,7 @@ export const Utskott = () => {
 	return (
 		<section
 			id="councils"
-			className="container text-center py-24 sm:py-32 px-10 md:px-0"
+			className="container text-center py-10 sm:py-15 px-10 md:px-0"
 		>
 			<h2 className="text-3xl md:text-4xl font-bold ">{t("councils.title")}</h2>
 			<p className="md:w-3/4 mx-auto mt-4 mb-8 text-xl text-muted-foreground">

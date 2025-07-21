@@ -8,7 +8,7 @@ import Image from "next/image";
 export const Hero = () => {
 	const { t } = useTranslation("landingpage");
 	return (
-		<section className="relative items-center place-items-center py-20 md:py-50 gap-10 w-full flex flex-col">
+		<section className="relative items-center place-items-center py-20 md:py-60 md:h-screen gap-10 w-full flex flex-col">
 			{/* Fullwidth background image */}
 			<Image
 				src={bannerImg.src}
@@ -64,6 +64,11 @@ export const Hero = () => {
 						</Button>
 					</div>
 				</div>
+			</div>
+			{/* Scroll down arrow effect */}
+			<div className="absolute bottom-30 left-1/2 -translate-x-1/2 z-30 hidden md:flex md:flex-col items-center">
+				<span className="text-white text-3xl animate-bounce">&#8595;</span>
+				<span className="sr-only">{t("hero.scroll-down")}</span>
 			</div>
 		</section>
 	);
