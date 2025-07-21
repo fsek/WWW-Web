@@ -13,7 +13,7 @@
 		"contact": "Treasurer: Anton Sundström",
 		"info": "The Book Publisher handles the bookkeeping and finances of the F-guild."
 	},
-	"cafem": {
+	"cafemasteriet": {
 		"self": "Café Committee",
 		"about": "Fill in, here's how you make a link <0> hello </0>",
 		"info": "The Café Committee is responsible for the guild's café operations in the Mathematics building.",
@@ -21,7 +21,7 @@
 		"contact2": "Vice Café Master: fill in",
 		"post_besk": "Here should be lots of info about the positions"
 	},
-	"externa-rep": {
+	"externa-representanter": {
 		"self": "External Representatives",
 		"about": "Fill in",
 		"info": "The external representatives represent the F-guild in various contexts for the university."
@@ -31,7 +31,7 @@
 		"about": "Fill in",
 		"info": "Föset is responsible for the welcoming and orientation of new students to the F-guild."
 	},
-	"kulturm": {
+	"kulturministeriet": {
 		"self": "Ministry of Culture",
 		"about": "Fill in",
 		"info": "The Ministry of Culture is the guild's activities committee and is responsible for organizing fun events."
@@ -41,7 +41,7 @@
 		"about": "Fill in",
 		"info": "The Business Committee works to create connections between students and companies."
 	},
-	"prylm": {
+	"prylmasteriet": {
 		"self": "Equipment Committee",
 		"about": "Fill in",
 		"info": "The Equipment Committee is responsible for the guild's equipment, car and merch."
@@ -51,12 +51,12 @@
 		"about": "Fill in",
 		"info": "Samvetet works to ensure the guild is a safe and inclusive place for all members."
 	},
-	"sanningsm": {
+	"sanningsministeriet": {
 		"self": "Ministry of Truth",
 		"about": "Fill in",
 		"info": "The Ministry of Truth builds websites :) and is responsible for the guild's communication via our newspaper, photography and design."
 	},
-	"sekretservice": {
+	"sekret-service": {
 		"self": "Secret Service",
 		"about": "Fill in",
 		"info": "Secret Service keeps the guild safe from threats and is ruled by the secretary."

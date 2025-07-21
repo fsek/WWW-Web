@@ -18,6 +18,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const emailPasswordSchema = z.object({
 	email: z.string(),
@@ -110,9 +112,15 @@ export default function LoginForm() {
 						{form.formState.errors.root.message}
 					</div>
 				)}
-				<Button type="submit" disabled={!submitEnabled}>
-					{t("login.login")}
-				</Button>
+				<div className="flex justify-between items-center">
+					<Button type="submit" disabled={!submitEnabled}>
+						{t("login.login")}
+					</Button>
+					<div className="flex">
+						<LanguageSwitcher />
+						<ThemeToggle />
+					</div>
+				</div>
 			</form>
 		</Form>
 	);

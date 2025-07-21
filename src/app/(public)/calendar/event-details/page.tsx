@@ -87,7 +87,6 @@ export default function Page() {
 					<p className="text-3xl font-bold">
 						{i18n.language === "en" ? data.title_en : data.title_sv}
 					</p>
-					{/* Implement properly later: */}
 					<Button
 						variant="ghost"
 						className="flex items-center gap-2"
@@ -314,6 +313,15 @@ export default function Page() {
 								</div>
 							)}
 
+							<div className="flex items-center gap-2 mt-2">
+								<Users className="w-4 h-4 text-muted-foreground" />
+								<span>
+									{`${t("admin:events.signup_count")}: ${
+										data.signup_count
+									} / ${data.max_event_users}`}
+								</span>
+							</div>
+
 							{(data.can_signup === false ||
 								data.signup_start === null ||
 								data.signup_end === null) && (
@@ -354,7 +362,8 @@ export default function Page() {
 												key={`${priority.priority}-${priority.event_id}`}
 												className="text-sm"
 											>
-												{priority.priority}
+												{priority.priority.charAt(0).toUpperCase() +
+													priority.priority.slice(1)}
 											</div>
 										))}
 									</div>

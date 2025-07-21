@@ -12,12 +12,24 @@ import {
 } from "@/components/ui/navigation-menu";
 import FLogga from "@/assets/f-logga";
 import Link from "next/link";
-import { LogInIcon, ExternalLink } from "lucide-react";
+import { LogInIcon, ExternalLink, UserIcon, ShieldIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
 import { usePathname, useRouter } from "next/navigation";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+	getMeOptions,
+	authCookieLogoutMutation,
+} from "@/api/@tanstack/react-query.gen";
+import {
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
 type NavItem = {
 	self: string;
@@ -30,6 +42,30 @@ type NavSection = {
 } & Record<string, NavItem>;
 
 export function NavBar() {
+	const { t } = useTranslation();
+	const router = useRouter();
+	const { data: user } = useQuery({
+		...getMeOptions(),
+		refetchOnWindowFocus: false,
+	});
+	const loginHandler = useLoginHandler();
+	const logoutMutation = useMutation({
+		...authCookieLogoutMutation({ credentials: "include" }),
+		onSuccess: () => {
+			router.push("/");
+		},
+		onError: (error) => {
+			console.error("Logout failed:", error);
+		},
+	});
+
+	const handleLogout = React.useCallback(() => {
+		logoutMutation.mutate({});
+	}, [logoutMutation]);
+
+	const showAdmin =
+		user?.is_member && Array.isArray(user.posts) && user.posts.length > 0;
+
 	return (
 		<header className="sticky top-0 z-50 w-full border-b border-border bg-white/50 dark:bg-background/40 dark:border-b-slate-700 backdrop-blur-md">
 			<div className="container flex items-center justify-between h-20 px-4 mx-auto">
@@ -44,12 +80,69 @@ export function NavBar() {
 				<div className="flex items-center gap-2">
 					<LanguageSwitcher />
 					<ThemeToggle />
-					<Button className="ml-2" onClick={useLoginHandler()}>
-						<LogInIcon className="mr-1" />
-						<span className="hidden sm:inline">
-							{useTranslation().t("login.login")}
-						</span>
-					</Button>
+					{user ? (
+						<>
+							{showAdmin && (
+								<Button
+									variant="outline"
+									className="ml-2 flex items-center gap-2"
+									asChild
+								>
+									<Link href="/admin">
+										<ShieldIcon className="w-5 h-5" />
+										<span>{t("navbar.admin", "Admin")}</span>
+									</Link>
+								</Button>
+							)}
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Button
+										variant="outline"
+										className="ml-2 flex items-center gap-2"
+									>
+										<UserIcon className="w-5 h-5" />
+										<span>
+											{`${user.first_name} ${user.last_name}`.trim() ||
+												user.email ||
+												"User"}
+										</span>
+									</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent
+									align="end"
+									className="py-2 px-2 min-w-[180px]"
+								>
+									<DropdownMenuItem
+										asChild
+										disabled
+										className="opacity-60 pointer-events-none"
+									>
+										<Link href="/user">
+											{t("navbar.userpage", "User Page")}
+										</Link>
+									</DropdownMenuItem>
+									<DropdownMenuItem
+										asChild
+										disabled
+										className="opacity-60 pointer-events-none"
+									>
+										<Link href="/settings">
+											{t("navbar.settings", "Settings")}
+										</Link>
+									</DropdownMenuItem>
+									<DropdownMenuSeparator />
+									<DropdownMenuItem onClick={handleLogout}>
+										{t("navbar.logout", "Logout")}
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</>
+					) : (
+						<Button className="ml-2" onClick={loginHandler}>
+							<LogInIcon className="mr-1" />
+							<span className="hidden sm:inline">{t("login.login")}</span>
+						</Button>
+					)}
 				</div>
 			</div>
 			{/* Mobile menu below */}

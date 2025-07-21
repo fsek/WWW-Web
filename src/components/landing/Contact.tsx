@@ -9,7 +9,7 @@ export const Contact = () => {
 	return (
 		<section
 			id="contact"
-			className="py-16 my-24 sm:my-32 relative bg-cover bg-center bg-no-repeat w-full"
+			className="py-16 my-10 sm:my-15 relative bg-cover bg-center bg-no-repeat w-full"
 			style={{ backgroundImage: `url(${mh.src})` }}
 		>
 			{/* Overlay for better text readability */}

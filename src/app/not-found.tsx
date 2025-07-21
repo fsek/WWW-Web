@@ -1,4 +1,6 @@
-import Link from "next/link";
+"use client";
+
+import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
 	return (
@@ -7,7 +9,7 @@ export default function NotFound() {
 				<h1 className="mb-4 text-7xl font-extrabold tracking-tight lg:text-9xl text-primary">
 					404
 				</h1>
-				<p className="mb-4 text-3xl font-bold md:text-4xl">Ånej!</p>
+				<p className="mb-4 text-3xl font-bold md:text-4xl">Ånej</p>
 				<p className="mb-4 text-lg font-light text-muted-foreground">
 					Sidan hittades inte. Om du tror att något är fel,{" "}
 					<a
@@ -21,12 +23,13 @@ export default function NotFound() {
 				<p className="mb-4 text-lg font-light text-muted-foreground">
 					<i>"Ett sätt är ju att inte göra det alls och ge upp."</i> - TP{" "}
 				</p>
-				<Link
-					href="/"
-					className="inline-flex text-white bg-primary hover:bg-primary/80 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-primary-900"
+				<Button
+					type="button"
+					onClick={() => window.history.back()}
+					className="mt-2 inline-flex text-white bg-primary hover:bg-primary/80 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-primary-900"
 				>
 					Tillbaka till hemsidan
-				</Link>
+				</Button>
 			</section>
 		</div>
 	);
