@@ -48,7 +48,8 @@ function LoginAndLang() {
 	const router = useRouter();
 
 	function handleLoginClick() {
-		router.push(`/login?next=${pathname}`);
+		const search = window.location.search; // Include params like ?id=...
+		router.push(`/login?next=${pathname}${search}`);
 	}
 
 	return (

@@ -26,7 +26,7 @@ export const useAuthState = create<AuthState>((set, get) => ({
 					"base64",
 				).toString(),
 			);
-			const expiryMilliseconds = payload.exp * 1000 - (2 * 1000); // Two second margin
+			const expiryMilliseconds = payload.exp * 1000 - 2 * 1000; // Two second margin
 
 			if (expiryMilliseconds < Date.now()) {
 				// The token has expired. Return null.

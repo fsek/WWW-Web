@@ -20,12 +20,15 @@ import {
 	Star,
 	Utensils,
 	Beer,
+	HandCoins,
 	CreditCard,
-	Lock
+	Lock,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
+import { getMeOptions } from "@/api/@tanstack/react-query.gen";
 
 interface EventViewProps {
 	event?: CalendarEvent;
@@ -35,6 +38,9 @@ interface EventViewProps {
 	disableEdit: boolean;
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
+	enableCarProperties?: boolean;
+	disableConfirmField?: boolean;
+	disableEditOfOthers?: boolean; // Optional prop to disable editing of others' events
 }
 
 export function EventView({
@@ -45,12 +51,34 @@ export function EventView({
 	disableEdit,
 	enableAllDay = true,
 	enableTrueEventProperties = false,
+	enableCarProperties = false,
+	disableConfirmField = false,
+	disableEditOfOthers = false,
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 	const { t, i18n } = useTranslation("calendar");
 
 	const featureDivClassName = "flex items-center gap-1";
 	const featureClassName = "h-3 w-3";
+
+	// Calculate if the event should be editable
+
+	const { data, error, isFetching } = useQuery({
+		...getMeOptions(),
+		staleTime: 30 * 60 * 1000, // Don't refetch for 30 minutes
+	});
+
+	let isEditable = !disableEdit;
+
+	// If disableEditOfOthers is true, check if the user_id of the event matches the current user's id
+	if (
+		enableCarProperties &&
+		disableEditOfOthers &&
+		event?.user_id &&
+		event.user_id !== data?.id
+	) {
+		isEditable = false;
+	}
 
 	return (
 		<>
@@ -84,17 +112,19 @@ export function EventView({
 										<td>
 											{(() => {
 												const raw =
-													i18n.language === "en"
+													i18n.language === "en" && !enableCarProperties
 														? event?.description_en
 														: event?.description_sv;
 												const desc = typeof raw === "string" ? raw : "";
 												// truncate if too long
-												return desc.length > 30 ? `${desc.slice(0, 30)}…` : desc;
+												return desc.length > 30
+													? `${desc.slice(0, 30)}…`
+													: desc;
 											})()}
 										</td>
 									</tr>
 								)}
-								{(event && enableTrueEventProperties) && (
+								{event && enableTrueEventProperties && (
 									<tr>
 										<th>{t("admin:events.features")}</th>
 										<td>
@@ -113,43 +143,64 @@ export function EventView({
 											) : (
 												<div className="flex flex-wrap gap-2">
 													{event.all_day === true && enableAllDay && (
-														<Badge variant="secondary" className={featureDivClassName}>
+														<Badge
+															variant="secondary"
+															className={featureDivClassName}
+														>
 															<Calendar className={featureClassName} />
 															{t("admin:events.all_day")}
 														</Badge>
 													)}
 													{event.recurring === true && (
-														<Badge variant="secondary" className={featureDivClassName}>
+														<Badge
+															variant="secondary"
+															className={featureDivClassName}
+														>
 															<Repeat className={featureClassName} />
 															{t("admin:events.recurring")}
 														</Badge>
 													)}
 													{event.is_nollning_event === true && (
-														<Badge variant="secondary" className={featureDivClassName}>
+														<Badge
+															variant="secondary"
+															className={featureDivClassName}
+														>
 															<Star className={featureClassName} />
 															{t("admin:events.is_nollning_event")}
 														</Badge>
 													)}
 													{event.food === true && (
-														<Badge variant="outline" className={featureDivClassName}>
+														<Badge
+															variant="outline"
+															className={featureDivClassName}
+														>
 															<Utensils className={featureClassName} />
 															{t("admin:events.food")}
 														</Badge>
 													)}
 													{event.drink_package === true && (
-														<Badge variant="outline" className={featureDivClassName}>
+														<Badge
+															variant="outline"
+															className={featureDivClassName}
+														>
 															<Beer className={featureClassName} />
 															{t("admin:events.drink_package")}
 														</Badge>
 													)}
 													{event.price !== 0 && (
-														<Badge variant="outline" className={featureDivClassName}>
+														<Badge
+															variant="outline"
+															className={featureDivClassName}
+														>
 															<CreditCard className={featureClassName} />
 															{t("admin:events.costs_money")}
 														</Badge>
 													)}
 													{event.closed === true && (
-														<Badge variant="destructive" className={featureDivClassName}>
+														<Badge
+															variant="destructive"
+															className={featureDivClassName}
+														>
 															<Lock className={featureClassName} />
 															{t("admin:events.closed")}
 														</Badge>
@@ -159,7 +210,7 @@ export function EventView({
 										</td>
 									</tr>
 								)}
-								{(event && enableTrueEventProperties) && (
+								{event && enableTrueEventProperties && (
 									<>
 										{/* These are all temporary and should be changed at some point */}
 										<tr>
@@ -174,9 +225,7 @@ export function EventView({
 														{t("admin:events.no_location")}
 													</span>
 												) : (
-													<>
-														{event.location as string}
-													</>
+													<>{event.location as string}</>
 												)}
 											</td>
 										</tr>
@@ -188,9 +237,7 @@ export function EventView({
 														{t("admin:events.no_dress_code")}
 													</span>
 												) : (
-													<>
-														{event.dress_code as string}
-													</>
+													<>{event.dress_code as string}</>
 												)}
 											</td>
 										</tr>
@@ -214,9 +261,37 @@ export function EventView({
 										</tr>
 									</>
 								)}
+								{event && enableCarProperties && (
+									<>
+										<tr>
+											<th>{t("admin:car.personal")}</th>
+											<td>{event.personal ? t("admin:yes") : t("admin:no")}</td>
+										</tr>
+										<tr>
+											<th>{t("admin:car.confirmed")}</th>
+											<td>
+												{event.confirmed ? t("admin:yes") : t("admin:no")}
+											</td>
+										</tr>
+									</>
+								)}
+								{event && enableCarProperties && (
+									<tr>
+										<th>{t("admin:events.council")}</th>
+										<td>
+											{!(event.council_name as string) || event.personal ? (
+												<span className="text-muted-foreground text-sm">
+													{t("admin:car.no_council")}
+												</span>
+											) : (
+												<>{event.council_name as string}</>
+											)}
+										</td>
+									</tr>
+								)}
 							</tbody>
 						</table>
-						{(event && enableTrueEventProperties) && (
+						{event && enableTrueEventProperties && (
 							<div className="flex flex-wrap gap-2 m-2 flex-row">
 								{event.can_signup === true && (
 									<Badge variant="default" className="text-sm">
@@ -235,10 +310,10 @@ export function EventView({
 								{t("details")}
 							</Button>
 						)}
-						{!disableEdit && (
+						{isEditable && (
 							<EventDeleteForm id={event?.id} title_sv={event?.title_sv} />
 						)}
-						{!disableEdit && (
+						{isEditable && (
 							<EventEditForm
 								oldEvent={event}
 								event={event}
@@ -246,6 +321,8 @@ export function EventView({
 								editDescription={editDescription}
 								enableAllDay={enableAllDay}
 								enableTrueEventProperties={enableTrueEventProperties}
+								enableCarProperties={enableCarProperties}
+								disableConfirmField={disableConfirmField}
 							/>
 						)}
 					</AlertDialogFooter>

@@ -267,7 +267,6 @@ export default function Page() {
 										}
 									</span>
 								</div>
-
 							</div>
 						</CardContent>
 					</Card>

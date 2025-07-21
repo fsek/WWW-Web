@@ -753,6 +753,11 @@ const DateTimePicker = React.forwardRef<
 		const [displayDate, setDisplayDate] = React.useState<Date | undefined>(
 			value ?? undefined,
 		);
+
+		React.useEffect(() => {
+			setDisplayDate(value);
+			if (value) setMonth(value);
+		}, [value]);
 		/**
 		 * carry over the current time when a user clicks a new day
 		 * instead of resetting to 00:00

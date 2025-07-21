@@ -1,7 +1,18 @@
 "use client";
-import { type CalendarEvent, type CustomEventData, initialEvents } from "@/utils/full-calendar-seed";       
+import {
+	type CalendarEvent,
+	type CustomEventData,
+	initialEvents,
+} from "@/utils/full-calendar-seed";
 import type React from "react";
-import { createContext, type ReactNode, useContext, useEffect, useRef, useState } from "react";
+import {
+	createContext,
+	type ReactNode,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 
 // interface Event { // I think this is fine to remove
@@ -48,6 +59,7 @@ interface EventsProviderProps {
 	handleDelete?: (id: string) => void;
 	handleEdit?: (event: CalendarEvent<CustomEventData>) => void;
 	handleAdd?: (event: CalendarEvent<CustomEventData>) => void;
+	carEvents?: boolean;
 }
 
 export const EventsProvider: React.FC<EventsProviderProps> = ({
@@ -57,9 +69,10 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 	handleDelete,
 	handleEdit,
 	handleAdd,
+	carEvents = false,
 }) => {
-  const { i18n } = useTranslation(); 
-	const prevLangRef = useRef(i18n.language); 
+	const { i18n } = useTranslation();
+	const prevLangRef = useRef(i18n.language);
 
 	const [events, setEvents] = useState<CalendarEvent<CustomEventData>[]>(
 		(initialCalendarEvents ?? initialEvents).map((event) => {
@@ -67,7 +80,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 				...event,
 				title: event.title_sv,
 				id: String(event.id),
-				backgroundColor: eventColor ?? "#76c7ef",
+				backgroundColor: event.backgroundColor ?? eventColor ?? "#76c7ef",
 				allDay: event.all_day ?? false,
 				start: new Date(event.start),
 				end: new Date(event.end),
@@ -76,21 +89,22 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 	);
 
 	// Update events when language changes
-  useEffect(() => {
-    const currentLang = i18n.language;
+	useEffect(() => {
+		const currentLang = i18n.language;
 
 		// Only update if language has changed from previous value (dont just update when events change)
-    if (prevLangRef.current !== currentLang) {
-      prevLangRef.current = currentLang; 
-    
-			const transformedEvents = events.map(event => ({
+		if (prevLangRef.current !== currentLang) {
+			prevLangRef.current = currentLang;
+
+			const transformedEvents = events.map((event) => ({
 				...event,
-				title: currentLang === 'sv' ? event.title_sv : event.title_en
+				title:
+					currentLang === "sv" || carEvents ? event.title_sv : event.title_en,
 			}));
-			
+
 			setEvents(transformedEvents);
 		}
-  }, [i18n.language, events]);
+	}, [i18n.language, events, carEvents]);
 
 	const [eventViewOpen, setEventViewOpen] = useState(false);
 	const [eventAddOpen, setEventAddOpen] = useState(false);
