@@ -23,7 +23,6 @@ import {
 import type { PostRead, PostUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import PostPermissions from "./post-permissions/page";
 
 const postEditSchema = z.object({
 	id: z.number(),

@@ -1,28 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-	getAllCouncilsOptions,
-	getAllPostsOptions,
-	getPostOptions,
-} from "@/api/@tanstack/react-query.gen";
+import { getPostOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 
 import AdminTable from "@/widgets/AdminTable";
 import useCreateTable from "@/widgets/useCreateTable";
-import { type _PostPermissionRead, PermissionRead, type PostRead } from "@/api";
+import type { _PostPermissionRead, PostRead } from "@/api";
 import PostPermissionForm from "./PostPermissionForm";
 
-function CouncilName({ councilId }: { councilId: number }) {
-	const { data } = useQuery({
-		...getAllCouncilsOptions(),
-	});
+// function CouncilName({ councilId }: { councilId: number }) {
+// 	const { data } = useQuery({
+// 		...getAllCouncilsOptions(),
+// 	});
 
-	const council = data?.find((c) => c.id === councilId);
+// 	const council = data?.find((c) => c.id === councilId);
 
-	return council?.name;
-}
+// 	return council?.name;
+// }
 
 // Column setup
 const columnHelper = createColumnHelper<_PostPermissionRead>();
@@ -73,7 +68,7 @@ export default function PostPermissions() {
 	}
 
 	// 4) And finally render the UI that uses all those hooks
-	function handleRowClick(row: Row<_PostPermissionRead>) {
+	function handleRowClick(_row: Row<_PostPermissionRead>) {
 		// …
 	}
 

@@ -7,9 +7,6 @@ import {
 	Coffee,
 	Users,
 	Shield,
-	FileText,
-	Calendar,
-	Car,
 	Archive,
 	Users2,
 	Server,
@@ -18,7 +15,6 @@ import {
 	SlidersHorizontal,
 	MoreHorizontal,
 } from "lucide-react";
-import { Card, CardContent, CardHeader } from "./ui/card";
 
 const councils = [
 	{ key: "bokforlaget", url: "/councils/bokforlaget", icon: BookOpen },

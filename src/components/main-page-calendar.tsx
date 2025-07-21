@@ -1,21 +1,14 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-	createEventMutation,
-	getAllEventsOptions,
-	getAllEventsQueryKey,
-	eventRemoveMutation,
-	eventUpdateMutation,
-} from "@/api/@tanstack/react-query.gen";
-import { Separator } from "@/components/ui/separator";
+import { useQuery } from "@tanstack/react-query";
+import { getAllEventsOptions } from "@/api/@tanstack/react-query.gen";
 import Calendar from "@/components/full-calendar";
 import { EventsProvider } from "@/utils/full-calendar-event-context";
 import type {
 	CalendarEvent,
 	CustomEventData,
 } from "@/utils/full-calendar-seed";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import type { EventCreate, EventRead } from "@/api";
 import { useRouter } from "next/navigation";
 import { LoadingErrorCard } from "./LoadingErrorCard";
@@ -30,7 +23,7 @@ export default function MainPageCalendar({
 	zoomWorkHours = false,
 }: MainPageCalendarProps) {
 	const router = useRouter();
-	const { t } = useTranslation();
+	//	const { t } = useTranslation();
 
 	// Fetch booking data
 	const { data, error, isFetching } = useQuery({
@@ -125,7 +118,7 @@ export default function MainPageCalendar({
 						editDescription={false}
 						handleOpenDetails={(event) => {
 							if (event) {
-								router.push("/calendar/event-details?id=" + event.id);
+								router.push(`/calendar/event-details?id=${event.id}`);
 							}
 						}}
 						disableEdit={true}

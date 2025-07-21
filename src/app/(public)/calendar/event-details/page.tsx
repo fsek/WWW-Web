@@ -1,10 +1,27 @@
 "use client";
 
 import { getSingleEventOptions } from "@/api/@tanstack/react-query.gen";
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { Calendar, Clock, MapPin, Users, Utensils, TableOfContents, CreditCard, Lock, Star, Repeat, User, Beer, FilePenLine, ArrowLeft, Shirt, WineIcon } from "lucide-react";
+import {
+	Calendar,
+	Clock,
+	MapPin,
+	Users,
+	Utensils,
+	TableOfContents,
+	CreditCard,
+	Lock,
+	Star,
+	Repeat,
+	User,
+	Beer,
+	FilePenLine,
+	ArrowLeft,
+	Shirt,
+	WineIcon,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,9 +45,7 @@ export default function Page() {
 	// If no valid eventID, show fallback
 	if (eventID === -1) {
 		return (
-			<div className="px-12 py-4">
-				{t("admin:events.no_event_selected")}
-			</div>
+			<div className="px-12 py-4">{t("admin:events.no_event_selected")}</div>
 		);
 	}
 
@@ -44,23 +59,21 @@ export default function Page() {
 		data = query.data;
 	} catch (e) {
 		return (
-			<div className="px-12 py-4">
-				{t("admin:events.event_not_found")}
-			</div>
+			<div className="px-12 py-4">{t("admin:events.event_not_found")}</div>
 		);
 	}
 
 	const formatDate = (date: Date) => {
 		return new Intl.DateTimeFormat(i18n.language === "en" ? "en-US" : "sv-SE", {
 			dateStyle: "full",
-			timeStyle: "short"
+			timeStyle: "short",
 		}).format(new Date(date));
 	};
 
 	const formatDateShort = (date: Date) => {
 		return new Intl.DateTimeFormat(i18n.language === "en" ? "en-US" : "sv-SE", {
 			dateStyle: "medium",
-			timeStyle: "short"
+			timeStyle: "short",
 		}).format(new Date(date));
 	};
 
@@ -100,21 +113,21 @@ export default function Page() {
 									{t("admin:description")}
 								</p>
 								<p className="text-muted-foreground whitespace-pre-wrap">
-									{i18n.language === "en" ? data.description_en : data.description_sv}
+									{i18n.language === "en"
+										? data.description_en
+										: data.description_sv}
 								</p>
 							</div>
 
 							<div className="flex items-center gap-2">
 								<MapPin className="w-4 h-4 text-muted-foreground" />
 								<span>
-									{!(data.location) ? (
+									{!data.location ? (
 										<span className="text-muted-foreground">
 											{t("admin:events.no_location")}
 										</span>
 									) : (
-										<>
-											{t("admin:events.location_title") + data.location}
-										</>
+										<>{t("admin:events.location_title") + data.location}</>
 									)}
 								</span>
 							</div>
@@ -132,20 +145,23 @@ export default function Page() {
 									<WineIcon className="w-4 h-4 text-muted-foreground" />
 									<span>
 										{`${t("admin:events.alcohol_event_type")}: `}
-										{
-											({
+										{(
+											{
 												Alcohol: t("admin:events.alcohol"),
 												"Alcohol-Served": t("admin:events.alcohol_served"),
 												None: t("admin:events.alcohol_none"),
-											} as Record<string, string>)[data.alcohol_event_type] || t("admin:events.alcohol_none")
-										}
+											} as Record<string, string>
+										)[data.alcohol_event_type] ||
+											t("admin:events.alcohol_none")}
 									</span>
 								</div>
 							)}
 
 							<div className="flex items-center gap-2">
 								<User className="w-4 h-4 text-muted-foreground" />
-								<span>{t("admin:events.council_title") + data.council.name}</span>
+								<span>
+									{t("admin:events.council_title") + data.council.name}
+								</span>
 							</div>
 
 							<div className="flex items-center gap-2">
@@ -174,7 +190,7 @@ export default function Page() {
 								data.food ||
 								data.drink_package ||
 								data.closed ||
-								(data.price !== 0)
+								data.price !== 0
 							) ? (
 								<p className="text-muted-foreground text-sm">
 									{t("admin:events.no_features")}
@@ -211,14 +227,17 @@ export default function Page() {
 											{t("admin:events.drink_package")}
 										</Badge>
 									)}
-									{(data.price !== 0) && (
+									{data.price !== 0 && (
 										<Badge variant="outline" className={featureDivClassName}>
 											<CreditCard className={featureClassName} />
 											{t("admin:events.costs_money")}
 										</Badge>
 									)}
 									{data.closed && (
-										<Badge variant="destructive" className={featureDivClassName}>
+										<Badge
+											variant="destructive"
+											className={featureDivClassName}
+										>
 											<Lock className={featureClassName} />
 											{t("admin:events.closed")}
 										</Badge>
@@ -245,9 +264,7 @@ export default function Page() {
 								<p className="font-semibold text-sm text-muted-foreground">
 									{t("admin:events.to")}
 								</p>
-								<p className="font-medium">
-									{formatDateShort(data.ends_at)}
-								</p>
+								<p className="font-medium">{formatDateShort(data.ends_at)}</p>
 							</div>
 							<div>
 								{data.all_day && (
@@ -258,16 +275,15 @@ export default function Page() {
 								<div className="flex items-center gap-2">
 									<span>
 										{`${t("admin:events.dot_type")}: `}
-										{
-											({
+										{(
+											{
 												None: t("admin:events.dot_none"),
 												Single: t("admin:events.dot_single"),
 												Double: t("admin:events.dot_double"),
-											} as Record<string, string>)[data.dot] || t("admin:events.dot_none")
-										}
+											} as Record<string, string>
+										)[data.dot] || t("admin:events.dot_none")}
 									</span>
 								</div>
-
 							</div>
 						</CardContent>
 					</Card>
@@ -286,7 +302,9 @@ export default function Page() {
 									<p className="font-semibold text-sm text-muted-foreground">
 										{t("admin:events.signup_period")}
 									</p>
-									<p className="font-medium">{formatDateShort(data.signup_start)}</p>
+									<p className="font-medium">
+										{formatDateShort(data.signup_start)}
+									</p>
 									<p className="font-semibold text-sm text-muted-foreground">
 										{t("admin:events.to")}
 									</p>
@@ -296,7 +314,9 @@ export default function Page() {
 								</div>
 							)}
 
-							{(data.can_signup === false || data.signup_start === null || data.signup_end === null) && (
+							{(data.can_signup === false ||
+								data.signup_start === null ||
+								data.signup_end === null) && (
 								<p className="text-sm text-muted-foreground">
 									{t("admin:events.signup_not_available")}
 								</p>
@@ -309,9 +329,7 @@ export default function Page() {
 									</Badge>
 								)}
 								{data.lottery && (
-									<Badge variant="secondary">
-										{t("admin:events.lottery")}
-									</Badge>
+									<Badge variant="secondary">{t("admin:events.lottery")}</Badge>
 								)}
 							</div>
 
@@ -332,7 +350,10 @@ export default function Page() {
 									</p>
 									<div className="space-y-1">
 										{data.priorities.map((priority) => (
-											<div key={`${priority.priority}-${priority.event_id}`} className="text-sm">
+											<div
+												key={`${priority.priority}-${priority.event_id}`}
+												className="text-sm"
+											>
 												{priority.priority}
 											</div>
 										))}

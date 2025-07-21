@@ -5,7 +5,6 @@ import initTranslations, { type Locale, type Namespace } from "./i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
 import ClientProvider from "@/components/ClientProvider";
 import { ThemeProvider } from "next-themes";
-import LanguageDetector from "i18next-browser-languagedetector";
 
 // Default locale as fallback
 const defaultLocale = "sv" satisfies Locale;
@@ -26,7 +25,10 @@ export default async function RootLayout({
 	client.setConfig({ baseUrl: "http://host.docker.internal:8000" });
 
 	// Initialize translations with default locale
-	const { i18n, resources } = await initTranslations(i18nNamespaces);
+	const { i18n, resources } = await initTranslations(
+		i18nNamespaces,
+		defaultLocale,
+	);
 
 	return (
 		<TranslationsProvider namespaces={i18nNamespaces} resources={resources}>

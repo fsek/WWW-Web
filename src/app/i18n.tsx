@@ -18,6 +18,7 @@ export type Namespace =
 
 export default async function initTranslations(
 	namespaces: Namespace[],
+	defaultLocale: Locale = "sv",
 	i18nInstance?: i18n,
 	resources?: Resource,
 ) {
@@ -48,7 +49,7 @@ export default async function initTranslations(
 		await instance.init({
 			lng: undefined,
 			resources,
-			fallbackLng: i18nConfig.defaultLocale,
+			fallbackLng: defaultLocale,
 			supportedLngs: i18nConfig.locales,
 			defaultNS: namespaces[0],
 			fallbackNS: namespaces[0],

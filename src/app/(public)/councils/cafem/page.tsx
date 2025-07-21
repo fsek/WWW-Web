@@ -3,7 +3,6 @@
 import CustomTitle from "@/components/CustomTitle";
 import TwoColumnLayout from "@/components/TwoColumnLayout";
 import mh from "@/assets/mh.jpg";
-import Image from "next/image";
 import TitleBanner from "@/components/TitleBanner";
 import { Trans, useTranslation } from "react-i18next";
 

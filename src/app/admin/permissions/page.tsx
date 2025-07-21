@@ -39,10 +39,10 @@ export default function Permissions() {
 		setOpenEditDialog(true);
 	}
 
-	function handleClose() {
-		setOpenEditDialog(false);
-		setSelectedEvent(null);
-	}
+	// function handleClose() {
+	// 	setOpenEditDialog(false);
+	// 	setSelectedEvent(null);
+	// }
 
 	if (isPending) {
 		return <p>Hämtar...</p>;

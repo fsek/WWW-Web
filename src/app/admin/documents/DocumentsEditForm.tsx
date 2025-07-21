@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
@@ -50,7 +49,9 @@ export default function DocumentsEditForm({
 			)
 			.refine(
 				(file) =>
-					["application/pdf", "image/jpeg", "image/png", "text/plain"].includes(file.type),
+					["application/pdf", "image/jpeg", "image/png", "text/plain"].includes(
+						file.type,
+					),
 				t("admin:documents.file_type_error"),
 			),
 		public: z.boolean(),
@@ -159,38 +160,38 @@ export default function DocumentsEditForm({
 						onSubmit={documentsEditForm.handleSubmit(handleFormSubmit)}
 						className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
 					>
-							<FormField
-								control={documentsEditForm.control}
-								name="title"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("admin:documents.title")}</FormLabel>
-										<FormControl>
-											<Input
-												placeholder={t("admin:documents.title")}
-												{...field}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
+						<FormField
+							control={documentsEditForm.control}
+							name="title"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("admin:documents.title")}</FormLabel>
+									<FormControl>
+										<Input
+											placeholder={t("admin:documents.title")}
+											{...field}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
 
-							<FormField
-								control={documentsEditForm.control}
-								name="file"
-								render={({ field }) => (
-									<FormItem className="lg:col-span-2">
-										<FormLabel>{t("admin:documents.file")}</FormLabel>
-										<FormControl>
-											<Input
-												id="document"
-												type="file"
-												onChange={(e) => field.onChange(e.target.files?.[0])}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
+						<FormField
+							control={documentsEditForm.control}
+							name="file"
+							render={({ field }) => (
+								<FormItem className="lg:col-span-2">
+									<FormLabel>{t("admin:documents.file")}</FormLabel>
+									<FormControl>
+										<Input
+											id="document"
+											type="file"
+											onChange={(e) => field.onChange(e.target.files?.[0])}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
 
 						{/* Public */}
 
