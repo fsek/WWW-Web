@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -453,7 +453,18 @@ export function EventAddForm({
 									<FormControl>
 										<AdminChooseDates
 											value={field.value as Date}
-											onChange={field.onChange}
+											onChange={(value) => {
+												field.onChange(value);
+												if (form.watch<"end">("end") < value) {
+													const newEnd = new Date(
+														value.getTime() + 1000 * 60 * 60 * 1,
+													);
+													form.setValue<"end">("end", newEnd, {
+														shouldValidate: true,
+														shouldDirty: true,
+													});
+												}
+											}}
 										/>
 									</FormControl>
 									<FormMessage />
