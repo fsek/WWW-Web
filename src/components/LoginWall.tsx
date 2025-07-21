@@ -20,7 +20,10 @@ export default function LoginWall({ children }: PropsWithChildren) {
 	const refresh = useMutation({
 		...authCookieRefreshMutation({ credentials: "include" }),
 		onError: () => {
-			router.push(`/login?next=${encodeURIComponent(pathname)}`);
+			// If refresh fails, redirect to login, but not if we're already there.
+			if (!pathname.startsWith("/login")) {
+				router.push(`/login?next=${encodeURIComponent(pathname)}`);
+			}
 		},
 		onSuccess: (data) => auth.setAccessToken(data),
 	});

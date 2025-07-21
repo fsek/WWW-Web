@@ -16,11 +16,8 @@
 			},
 			"councils": {
 				"self": "Utskott",
-				"desc": "Utforska våra utskotts dedikerade arbete och engagemang."
-			},
-			"blogg": {
-				"self": "Blogg",
-				"desc": "Läs inspirerande berättelser och insikter från våra medlemmar."
+				"desc": "Utforska våra utskotts dedikerade arbete och engagemang.",
+				"href": "/councils"
 			},
 			"secrecy": {
 				"self": "Sekretessvillkor",
@@ -29,17 +26,20 @@
 		},
 		"engage": {
 			"self": "Engagera dig",
-			"hilbertcafe": {
+			"cafe": {
 				"self": "Hilbert Café",
-				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär."
+				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär.",
+				"href": "/cafe"
 			},
-			"posts": {
-				"self": "Inlägg",
-				"desc": "Följ våra senaste inlägg och engagerande diskussioner."
+			"positions": {
+				"self": "Poster",
+				"desc": "Engagera dig som funktionär inom sektionen!",
+				"href": "/positions"
 			},
 			"nollningsvol": {
 				"self": "Nollningsvolontärer",
-				"desc": "Möt teamet som välkomnar nya medlemmar med öppna armar."
+				"desc": "Hjälp oss att välkomna nya studenter och ge dem en bra start på studierna!",
+				"href": "/nollningsvolontar"
 			},
 			"elections": {
 				"self": "Val",
@@ -47,7 +47,13 @@
 			},
 			"projects": {
 				"self": "Projekt",
-				"desc": "Upptäck spännande initiativ och samarbeten inom sektionen."
+				"desc": "Upptäck spännande initiativ och samarbeten inom sektionen.",
+				"href": "/projects"
+			},
+			"freja": {
+				"self": "FREJA",
+				"desc": "FREJA är en fristående organisation för dig som är kvinna eller icke-binär.",
+				"href": "https://www.frejalth.se/"
 			}
 		},
 		"services": {
@@ -59,34 +65,41 @@
 			},
 			"rooms": {
 				"self": "Lokalbokning",
-				"desc": "Boka mötes- eller evenemangsutrymmen med ett klick."
+				"desc": "Boka mötes- eller evenemangsutrymmen med ett klick.",
+				"href": "/book-rooms"
 			},
 			"tools": {
 				"self": "Verktygsutlåning",
-				"desc": "Låna högkvalitativa verktyg för dina projekt."
+				"desc": "Låna högkvalitativa verktyg för dina projekt.",
+				"href": "/tools"
 			},
 			"equipment": {
 				"self": "Utrustningsuthyrning",
-				"desc": "Hyra modern utrustning för att effektivisera ditt arbete."
+				"desc": "Hyra modern utrustning för att effektivisera ditt arbete.",
+				"href": "https://forms.gle/YQTxawJfexSXVbqH6"
 			},
 			"specialrooms": {
 				"self": "Stillarum/Bönerum",
-				"desc": "Hitta en lugn plats för reflektion eller bön."
+				"desc": "Hitta en lugn plats för reflektion eller bön.",
+				"href": "/stillarum"
 			}
 		},
 		"companies": {
 			"self": "Företag",
-			"fsek": {
+			"aboutCompany": {
 				"self": "Om F-sektionen",
-				"desc": "Läs om vår mission, våra värderingar och vårt engagemang."
+				"desc": "Upptäck vilka vi är och de program vi representerar.",
+				"href": "/foretag/om"
 			},
-			"wehave": {
+			"offerings": {
 				"self": "Våra erbjudanden",
-				"desc": "Upptäck de tjänster och produkter vi stolt erbjuder."
+				"desc": "Utforska förslag på samarbeten för att nå ut till våra medlemmar.",
+				"href": "/foretag/vi-erbjuder"
 			},
 			"farad": {
 				"self": "Farad",
-				"desc": "Lär dig mer om Farads innovativa lösningar och marknadsposition."
+				"desc": "Läs mer om F-sektionens arbetsmarknadsmässa.",
+				"href": "https://farad.nu"
 			},
 			"contact": {
 				"self": "Företagskontakt",
@@ -95,25 +108,27 @@
 		},
 		"contact": {
 			"self": "Kontakt",
-			"contactsite": {
+			"contactPage": {
 				"self": "Kontaktsida",
 				"desc": "Här hittar du all information du behöver för att nå oss."
 			},
 			"ordf": {
 				"self": "Ordförande",
-				"desc": "Möt vår ledare och läs om vår strategiska vision."
+				"desc": "För frågor om organisationen."
 			},
 			"web": {
 				"self": "Webbansvarig",
-				"desc": "Lär känna personen bakom vår webbplats och digitala närvaro."
+				"desc": "För frågor om vår webbplats eller app."
 			},
-			"anonform": {
+			"anonymousForm": {
 				"self": "Anonymt kontaktformulär",
-				"desc": "Skicka feedback eller frågor konfidentiellt via vårt formulär."
+				"desc": "För hemlig feedback eller bekymmer.",
+				"href": "https://docs.google.com/forms/d/e/1FAIpQLSdZdPl14DkdlZCKS3jzO59-FvVi2ug9nYer1jhYgERanbwHoQ/viewform"
 			},
 			"klaga": {
 				"self": "Klagomål",
-				"desc": "Berätta för oss hur vi kan förbättra våra tjänster och support."
+				"desc": "Skicka ett anonymt klagomål, en åsikt eller ändringsförslag till TLTH.",
+				"href": "https://www.tlth.se/klaga"
 			}
 		},
 		"booking": "Bokningar",

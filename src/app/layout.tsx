@@ -31,7 +31,7 @@ export default async function RootLayout({
 			<QueryClientProvider>
 				<html lang="en">
 					<head>
-						<title>F-sektionen WWW-Web</title>
+						<title>Nya F-sektionen</title>
 						<link rel="preconnect" href="https://fonts.googleapis.com" />
 						<link rel="preconnect" href="https://fonts.gstatic.com" />
 						<link

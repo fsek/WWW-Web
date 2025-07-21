@@ -3,7 +3,7 @@
 	"title": "Main Page",
 	"calendar": "Calendar",
 	"navbar": {
-		"sections": {
+		"sektionen": {
 			"self": "Sections",
 			"about": {
 				"self": "About Us",
@@ -16,11 +16,8 @@
 			},
 			"councils": {
 				"self": "Committees",
-				"desc": "Explore the dedicated teams that drive our initiatives."
-			},
-			"blog": {
-				"self": "Blog",
-				"desc": "Read inspiring stories and insights from our members."
+				"desc": "Explore the dedicated teams that drive our initiatives.",
+				"href": "/councils"
 			},
 			"privacy": {
 				"self": "Privacy Policy",
@@ -30,16 +27,19 @@
 		"engage": {
 			"self": "Get Involved",
 			"cafe": {
-				"self": "Community Cafe",
-				"desc": "Join us for a friendly chat and connect with others."
+				"self": "Hilbert Cafe",
+				"desc": "Join us for a friendly chat and connect with others.",
+				"href": "/cafe"
 			},
-			"posts": {
-				"self": "Posts",
-				"desc": "Catch up on updates and interesting discussions."
+			"positions": {
+				"self": "Positions",
+				"desc": "Get involved as a volunteer within the guild!",
+				"href": "/positions"
 			},
-			"volunteers": {
+			"nollningsvol": {
 				"self": "Orientation Volunteers",
-				"desc": "Meet the welcoming team ready to help new members."
+				"desc": "Help us welcome new students and give them a great start to their studies!",
+				"href": "/nollningsvolontar"
 			},
 			"elections": {
 				"self": "Elections",
@@ -47,7 +47,13 @@
 			},
 			"projects": {
 				"self": "Projects",
-				"desc": "Discover innovative initiatives and collaborative efforts."
+				"desc": "Discover innovative initiatives and collaborative efforts.",
+				"href": "/projects"
+			},
+			"freja": {
+				"self": "FREJA",
+				"desc": "FREJA is an independent organization for women or non-binary students.",
+				"href": "https://www.frejalth.se/"
 			}
 		},
 		"services": {
@@ -59,34 +65,41 @@
 			},
 			"rooms": {
 				"self": "Room Bookings",
-				"desc": "Reserve meeting or event spaces with just a few clicks."
+				"desc": "Reserve meeting or event spaces with just a few clicks.",
+				"href": "/book-rooms"
 			},
 			"tools": {
 				"self": "Tool Library",
-				"desc": "Borrow high-quality tools to help bring your projects to life."
+				"desc": "Borrow high-quality tools to help bring your projects to life.",
+				"href": "/tools"
 			},
 			"equipment": {
 				"self": "Equipment Hire",
-				"desc": "Rent state-of-the-art equipment to get the job done efficiently."
+				"desc": "Rent state-of-the-art equipment to get the job done efficiently.",
+				"href": "https://forms.gle/YQTxawJfexSXVbqH6"
 			},
 			"specialrooms": {
 				"self": "Quiet/Prayer Rooms",
-				"desc": "Find a peaceful space for reflection or private prayer."
+				"desc": "Find a peaceful space for reflection or private prayer.",
+				"href": "/stillarum"
 			}
 		},
 		"companies": {
 			"self": "Companies",
 			"aboutCompany": {
-				"self": "About Our Company",
-				"desc": "Discover our mission, values, and commitment to excellence."
+				"self": "About Us",
+				"desc": "Discover who we are and what programs we represent.",
+				"href": "/foretag/om"
 			},
 			"offerings": {
 				"self": "Our Offerings",
-				"desc": "Explore the diverse range of products and services we provide."
+				"desc": "Explore proposals for ways to cooperate to reach our members.",
+				"href": "/foretag/vi-erbjuder"
 			},
 			"farad": {
 				"self": "Farad",
-				"desc": "Learn about Farad’s innovative solutions and industry leadership."
+				"desc": "Read about the job fair for the F-Guild.",
+				"href": "https://farad.nu"
 			},
 			"contact": {
 				"self": "Business Contact",
@@ -99,21 +112,23 @@
 				"self": "Contact Page",
 				"desc": "Find all the information you need to get in touch with us."
 			},
-			"president": {
+			"ordf": {
 				"self": "President",
-				"desc": "Meet our leader and learn about our strategic vision."
+				"desc": "For questions about the organisation."
 			},
-			"webmaster": {
+			"web": {
 				"self": "Webmaster",
-				"desc": "Connect with the creative mind behind our website."
+				"desc": "For questions about the website or app."
 			},
 			"anonymousForm": {
 				"self": "Anonymous Contact",
-				"desc": "Share your feedback or concerns confidentially."
+				"desc": "Share your feedback or concerns confidentially.",
+				"href": "https://docs.google.com/forms/d/e/1FAIpQLSdZdPl14DkdlZCKS3jzO59-FvVi2ug9nYer1jhYgERanbwHoQ/viewform"
 			},
-			"complaints": {
-				"self": "Complaints",
-				"desc": "Let us know how we can improve our services and support."
+			"klaga": {
+				"self": "Complaint",
+				"desc": "Send an anonymous complaint, opinion or report to TLTH.",
+				"href": "https://www.tlth.se/klaga"
 			}
 		},
 		"booking": "Bookings",
