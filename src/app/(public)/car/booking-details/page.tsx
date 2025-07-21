@@ -5,6 +5,7 @@ import {
 	getBookingOptions,
 	adminGetUserOptions,
 } from "@/api/@tanstack/react-query.gen";
+import { parsePhoneNumberWithError } from "libphonenumber-js";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
@@ -194,7 +195,9 @@ export default function Page() {
 									<Phone className="w-4 h-4 text-muted-foreground" />
 									<span>
 										{t("admin:car.telephone_number")}:{" "}
-										{userDetails.telephone_number}
+										{parsePhoneNumberWithError(
+											userDetails.telephone_number,
+										).formatNational() ?? userDetails.telephone_number}
 									</span>
 								</div>
 								<div className="flex items-center gap-2">

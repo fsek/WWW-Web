@@ -57,6 +57,7 @@
 				"i18next-http-backend": "^3.0.1",
 				"i18next-resources-to-backend": "^1.2.1",
 				"input-otp": "^1.4.2",
+				"libphonenumber-js": "^1.12.10",
 				"localforage": "^1.10.0",
 				"lucide-react": "^0.485.0",
 				"match-sorter": "^6.4.0",
@@ -3935,6 +3936,13 @@
 				"bin": { "katex": "cli.js" }
 			},
 			"sha512-XCHRdUw4lf3SKBaJe4EvgqIuWwkPSo9XoeO8GjQW94Bp7TWv9hNhzZjZ+OH9yf1UmLygb7DIT5GSFQiyt16zYg=="
+		],
+
+		"libphonenumber-js": [
+			"libphonenumber-js@1.12.10",
+			"",
+			{},
+			"sha512-E91vHJD61jekHHR/RF/E83T/CMoaLXT7cwYA75T4gim4FZjnM6hbJjVIGg7chqlSqRsSvQ3izGmOjHy1SQzcGQ=="
 		],
 
 		"lie": [
