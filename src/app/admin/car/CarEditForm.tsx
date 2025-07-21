@@ -228,7 +228,19 @@ export default function CarEditForm({
 									<FormLabel>{t("admin:car.start_time")}</FormLabel>
 									<AdminChooseDates
 										value={new Date(field.value)}
-										onChange={field.onChange}
+										onChange={(newStart: Date) => {
+											field.onChange(newStart);
+											const end = form.getValues("end_time");
+											if (end && new Date(end).getTime() < newStart.getTime()) {
+												const newEnd = new Date(
+													newStart.getTime() + 60 * 60 * 1000,
+												);
+												form.setValue("end_time", newEnd, {
+													shouldDirty: true,
+													shouldValidate: true,
+												});
+											}
+										}}
 									/>
 									<FormMessage />
 								</FormItem>

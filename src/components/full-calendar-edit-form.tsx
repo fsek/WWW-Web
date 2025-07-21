@@ -489,7 +489,19 @@ export function EventEditForm({
 									<FormControl>
 										<AdminChooseDates
 											value={field.value as Date}
-											onChange={field.onChange}
+											onChange={(newStart: Date) => {
+												field.onChange(newStart);
+												const end = form.getValues("end") as Date;
+												if (end && end.getTime() < newStart.getTime()) {
+													const newEnd = new Date(
+														newStart.getTime() + 60 * 60 * 1000,
+													);
+													form.setValue<"end">("end", newEnd, {
+														shouldDirty: true,
+														shouldValidate: true,
+													});
+												}
+											}}
 										/>
 									</FormControl>
 									<FormMessage />
@@ -528,7 +540,28 @@ export function EventEditForm({
 											<FormControl>
 												<AdminChooseDates
 													value={field.value as Date}
-													onChange={field.onChange}
+													onChange={(newSignupStart: Date) => {
+														field.onChange(newSignupStart);
+														const signupEnd = form.getValues(
+															"signup_end",
+														) as Date;
+														if (
+															signupEnd &&
+															signupEnd.getTime() < newSignupStart.getTime()
+														) {
+															const newSignupEnd = new Date(
+																newSignupStart.getTime() + 60 * 60 * 1000,
+															);
+															form.setValue<"signup_end">(
+																"signup_end",
+																newSignupEnd,
+																{
+																	shouldDirty: true,
+																	shouldValidate: true,
+																},
+															);
+														}
+													}}
 												/>
 											</FormControl>
 											<FormMessage />

@@ -502,7 +502,28 @@ export function EventAddForm({
 											<FormControl>
 												<AdminChooseDates
 													value={field.value as Date}
-													onChange={field.onChange}
+													onChange={(newSignupStart: Date) => {
+														field.onChange(newSignupStart);
+														const signupEnd = form.getValues(
+															"signup_end",
+														) as Date;
+														if (
+															signupEnd &&
+															signupEnd.getTime() < newSignupStart.getTime()
+														) {
+															const newSignupEnd = new Date(
+																newSignupStart.getTime() + 60 * 60 * 1000,
+															);
+															form.setValue<"signup_end">(
+																"signup_end",
+																newSignupEnd,
+																{
+																	shouldDirty: true,
+																	shouldValidate: true,
+																},
+															);
+														}
+													}}
 												/>
 											</FormControl>
 											<FormMessage />
