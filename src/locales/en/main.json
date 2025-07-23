@@ -148,19 +148,79 @@
 			}
 		},
 		"booking": "Bookings",
-		"documents": "Documents"
+		"documents": "Documents",
+		"account-settings": "Account Settings",
+		"logout": "Log out"
+	},
+	"footer": {
+		"contact": "Contact",
+		"emergencycontact": "Emergency Contact",
+		"companies": "For Companies",
+		"webansvar": "Webmaster",
+		"ansvar": "Publisher"
 	},
 	"login": {
 		"login": "Log in",
 		"invalid-email-or-password": "Invalid email address or password",
 		"email": "Email",
 		"password": "Password",
-		"title": "Log in"
+		"title": "Log in",
+		"registerPrompt": "Don't have an account? Register here.",
+		"forgotPassword": "Forgot password?",
+		"forgotEmailLabel": "Enter your email to reset password",
+		"forgotSubmit": "Send reset link",
+		"forgotLoading": "Sending...",
+		"forgotSuccess": "If your email exists, a reset link has been sent.",
+		"backToLogin": "Back to login",
+		"invalidEmailFormat": "Invalid email format"
 	},
 	"news": {
 		"self": "News",
 		"by": "Written by: ",
 		"pinned": "Pinned",
 		"see_all": "See all news"
+	},
+	"verifyMail": {
+		"loading": "Verifying your email...",
+		"success": "Email verification succeeded!",
+		"error": "Email verification failed. The link may have expired or been invalid, or you may have already verified your email.",
+		"goHome": "Go to the homepage",
+		"noToken": "No verification link provided. Please check the link you clicked on."
+	},
+	"reset-password": {
+		"title": "Reset Password",
+		"password": "New Password",
+		"retype-password": "Retype password",
+		"passwords-do-not-match": "Passwords do not match",
+		"reset-password": "Reset Password",
+		"resetting": "Resetting your password...",
+		"reset-success": "Your password has been reset successfully!",
+		"goHome": "Go to Home",
+		"reset-error": "Password reset failed.",
+		"invalid-reset-token": "Invalid or missing reset token."
+	},
+	"register": {
+		"title": "Register for an Account",
+		"email": "Email",
+		"password": "Password",
+		"confirmPassword": "Confirm Password",
+		"firstName": "First Name",
+		"lastName": "Last Name",
+		"telephone": "Telephone Number with country code (+46)",
+		"startYear": "Start Year (optional)",
+		"submit": "Register",
+		"loginPrompt": "Already have an account? Login here.",
+		"loading": "Registering...",
+		"error": "Registration failed. Please check your details and try again.",
+		"verifyError": "Registered user, but failed to send verification email. Please try again later.",
+		"success": "Registration successful! Please check your email to verify your account.",
+		"goLogin": "Go to Login",
+		"passwordMismatch": "Passwords do not match. Please try again.",
+		"startYearInvalid": "Start year must be between 1960 and the current year.",
+		"emailInvalid": "Invalid email address",
+		"passwordShort": "Password must be at least 8 characters",
+		"firstNameRequired": "First name required",
+		"lastNameRequired": "Last name required",
+		"telephoneNumberRequired": "Telephone number required"
 	}
 }

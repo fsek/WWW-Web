@@ -15,6 +15,7 @@ const i18nNamespaces = [
 	"calendar",
 	"utskott",
 	"landingpage",
+	"user-settings",
 ] satisfies Namespace[];
 
 export default async function RootLayout({

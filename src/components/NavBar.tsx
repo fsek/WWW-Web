@@ -112,24 +112,16 @@ export function NavBar() {
 									align="end"
 									className="py-2 px-2 min-w-[180px]"
 								>
-									<DropdownMenuItem
-										asChild
-										disabled
-										className="opacity-60 pointer-events-none"
-									>
-										<Link href="/user">
-											{t("navbar.userpage", "User Page")}
+									<DropdownMenuItem asChild>
+										<Link href="/account-settings">
+											{t("navbar.account-settings")}
 										</Link>
 									</DropdownMenuItem>
-									<DropdownMenuItem
-										asChild
-										disabled
-										className="opacity-60 pointer-events-none"
-									>
-										<Link href="/settings">
-											{t("navbar.settings", "Settings")}
-										</Link>
-									</DropdownMenuItem>
+									{user.is_verified === false && (
+										<DropdownMenuItem asChild>
+											<Link href="/verify">{t("navbar.verify")}</Link>
+										</DropdownMenuItem>
+									)}
 									<DropdownMenuSeparator />
 									<DropdownMenuItem onClick={handleLogout}>
 										{t("navbar.logout", "Logout")}

@@ -148,7 +148,9 @@
 			}
 		},
 		"booking": "Bokningar",
-		"documents": "Dokument"
+		"documents": "Dokument",
+		"account-settings": "Kontoinställningar",
+		"logout": "Logga ut"
 	},
 	"footer": {
 		"contact": "Kontakt",
@@ -162,12 +164,63 @@
 		"invalid-email-or-password": "Fel e-postadress eller lösenord",
 		"email": "E-postadress",
 		"password": "Lösenord",
-		"title": "Logga in"
+		"title": "Logga in",
+		"registerPrompt": "Har du inget konto? Registrera dig här.",
+		"forgotPassword": "Glömt lösenord?",
+		"forgotEmailLabel": "Ange din e-post för att återställa lösenord",
+		"forgotSubmit": "Skicka återställningslänk",
+		"forgotLoading": "Skickar...",
+		"forgotSuccess": "Om din e-post finns, har en återställningslänk skickats.",
+		"backToLogin": "Tillbaka till inloggning",
+		"invalidEmailFormat": "Ogiltigt e-postformat"
 	},
 	"news": {
 		"self": "Nyheter",
 		"by": "Skriven av: ",
 		"pinned": "Fastnålad",
 		"see_all": "Se alla nyheter"
+	},
+	"verifyMail": {
+		"loading": "Verifierar din e-post...",
+		"success": "E-postverifiering lyckades!",
+		"error": "E-postverifiering misslyckades. Länken kan ha gått ut eller varit ogiltig, eller så har du redan verifierat din e-post.",
+		"goHome": "Gå till startsidan",
+		"noToken": "Ingen verifieringslänk angiven. Vänligen kontrollera länken du klickade på."
+	},
+	"reset-password": {
+		"title": "Återställ lösenord",
+		"password": "Nytt lösenord",
+		"retype-password": "Upprepa lösenord",
+		"passwords-do-not-match": "Lösenorden matchar inte",
+		"reset-password": "Återställ lösenord",
+		"resetting": "Återställer ditt lösenord...",
+		"reset-success": "Ditt lösenord har återställts!",
+		"goHome": "Gå till startsidan",
+		"reset-error": "Återställning av lösenord misslyckades.",
+		"invalid-reset-token": "Ogiltig eller saknad återställningslänk."
+	},
+	"register": {
+		"title": "Registrera ett konto",
+		"email": "E-postadress",
+		"password": "Lösenord",
+		"confirmPassword": "Bekräfta lösenord",
+		"firstName": "Förnamn",
+		"lastName": "Efternamn",
+		"telephone": "Telefonnummer med landskod (+46)",
+		"startYear": "Startår (valfritt)",
+		"submit": "Registrera",
+		"loginPrompt": "Har du redan ett konto? Logga in här.",
+		"loading": "Registrerar...",
+		"error": "Registreringen misslyckades. Kontrollera dina uppgifter och försök igen.",
+		"verifyError": "Användaren registrerades, men det gick inte att skicka verifieringsmail. Försök igen senare.",
+		"success": "Registreringen lyckades! Kontrollera din e-post för att verifiera ditt konto.",
+		"goLogin": "Gå till inloggning",
+		"passwordMismatch": "Lösenorden matchar inte. Försök igen.",
+		"startYearInvalid": "Startåret måste vara mellan 1960 och nuvarande år.",
+		"emailInvalid": "Ogiltig e-postadress",
+		"passwordShort": "Lösenordet måste vara minst 8 tecken",
+		"firstNameRequired": "Förnamn krävs",
+		"lastNameRequired": "Efternamn krävs",
+		"telephoneNumberRequired": "Telefonnummer krävs"
 	}
 }

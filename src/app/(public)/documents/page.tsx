@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function ForetagPage() {
+export default function DocumentPage() {
 	redirect("https://old.fsektionen.se/dokument");
 }

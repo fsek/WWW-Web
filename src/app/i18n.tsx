@@ -11,7 +11,8 @@ export type Namespace =
 	| "namnden"
 	| "calendar"
 	| "utskott"
-	| "landingpage";
+	| "landingpage"
+	| "user-settings";
 
 // If you add more you probably also have to add them to the layout.tsx file corresponding to the page you are on
 // (or only the main one, try that first)
