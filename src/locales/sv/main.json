@@ -150,7 +150,8 @@
 		"booking": "Bokningar",
 		"documents": "Dokument",
 		"account-settings": "Kontoinställningar",
-		"logout": "Logga ut"
+		"logout": "Logga ut",
+		"logoutError": "Utloggning misslyckades. Försök igen senare."
 	},
 	"footer": {
 		"contact": "Kontakt",

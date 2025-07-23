@@ -48,11 +48,9 @@ export default function VerifyPage() {
 	const mutation = useMutation({
 		...verifyVerifyMutation(),
 		onSuccess: () => {
-			console.log("Verification successful");
 			setStatus("verify-success");
 		},
 		onError: () => {
-			console.error("Verification failed");
 			setStatus("verify-error");
 		},
 	});

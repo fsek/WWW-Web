@@ -62,7 +62,6 @@ export default function LoginForm() {
 						type: "value",
 						message: `An error occurred: ${error.detail}`,
 					});
-					console.error(error);
 			}
 		},
 		onSuccess: (data) => {

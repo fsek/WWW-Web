@@ -150,7 +150,8 @@
 		"booking": "Bookings",
 		"documents": "Documents",
 		"account-settings": "Account Settings",
-		"logout": "Log out"
+		"logout": "Log out",
+		"logoutError": "Logout failed. Please try again later."
 	},
 	"footer": {
 		"contact": "Contact",

@@ -30,6 +30,8 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 type NavItem = {
 	self: string;
@@ -55,7 +57,7 @@ export function NavBar() {
 			router.push("/");
 		},
 		onError: (error) => {
-			console.error("Logout failed:", error);
+			toast.error(t("navbar.logoutError", "Logout failed"));
 		},
 	});
 
@@ -141,6 +143,7 @@ export function NavBar() {
 			<div className="flex md:hidden px-4 pb-2">
 				<NavBarMenu />
 			</div>
+			<Toaster position="top-center" richColors />
 		</header>
 	);
 }
