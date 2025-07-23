@@ -27,6 +27,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
 import { useRouter } from "next/navigation";
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
@@ -104,11 +105,11 @@ export default function Events() {
 	});
 
 	if (isFetching) {
-		return <p>{t("admin:loading")}</p>;
+		return <LoadingErrorCard />;
 	}
 
 	if (error) {
-		return <p>{t("admin:error")}</p>;
+		return <LoadingErrorCard error={error} />;
 	}
 
 	interface CustomEventData_ extends CustomEventData {

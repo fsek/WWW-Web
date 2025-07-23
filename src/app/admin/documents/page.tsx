@@ -11,6 +11,7 @@ import AdminTable from "@/widgets/AdminTable";
 import type { EventRead } from "../../../api";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 export default function Documents() {
 	// TODO: Fix this page lmao
@@ -56,11 +57,11 @@ export default function Documents() {
 	}
 
 	if (isPending) {
-		return <p>{t("admin:loading")}</p>;
+		return <LoadingErrorCard />;
 	}
 
 	if (error) {
-		return <p>{t("admin:error")}</p>;
+		return <LoadingErrorCard error={error} />;
 	}
 
 	return (
