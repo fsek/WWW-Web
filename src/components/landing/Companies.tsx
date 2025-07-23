@@ -100,7 +100,7 @@ export const Companies = () => {
 						src={faradImg.src}
 						width={600}
 						height={400}
-						alt="Cool cat"
+						alt="People at FARAD event"
 						className="w-full h-full object-cover rounded-lg shadow-lg group-hover:blur-xs transition-all"
 					/>
 					<div className="absolute inset-0 flex flex-col items-center justify-center">

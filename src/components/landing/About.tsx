@@ -15,7 +15,7 @@ export const About = () => {
 							src={mh.src}
 							height={400}
 							width={300}
-							alt=""
+							alt="Matematikhuset, LTH"
 							className="w-[300px] object-contain rounded-lg"
 						/>
 						<div className="bg-green-0 flex flex-col justify-between">

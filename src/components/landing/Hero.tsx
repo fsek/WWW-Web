@@ -12,7 +12,7 @@ export const Hero = () => {
 			{/* Fullwidth background image (Is LCP) */}
 			<Image
 				src={bannerImg}
-				alt="Cool cat"
+				alt="Banner image"
 				width={1920}
 				height={600}
 				loading="eager"
