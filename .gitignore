@@ -41,3 +41,6 @@ dist
 src/api/schemas.gen.ts
 src/api/services.gen.ts
 src/api/types.gen.ts
+
+# Ignore Copilot instructions, but not github actions
+.github/copilot-instructions.md
