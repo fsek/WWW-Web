@@ -46,6 +46,7 @@ interface EventAddFormProps {
 	showButton?: boolean;
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
+	enableCarProperties?: boolean;
 }
 
 export function EventAddForm({
@@ -55,14 +56,12 @@ export function EventAddForm({
 	showButton = true,
 	enableAllDay = true,
 	enableTrueEventProperties = false,
+	enableCarProperties = false,
 }: EventAddFormProps) {
 	const { t } = useTranslation("calendar");
 
 	const eventAddFormSchema = z
 		.object({
-			title_sv: z
-				.string({ required_error: t("add.error_title") })
-				.min(1, { message: t("add.error_title") }),
 			description_sv: editDescription
 				? z
 						.string({ required_error: t("add.error_description") })
@@ -81,6 +80,13 @@ export function EventAddForm({
 			color: z
 				.string({ required_error: "Please select an event color." })
 				.min(1, { message: "Must provide a title for this event." }),
+			...(!enableCarProperties
+				? {
+						title_sv: z
+							.string({ required_error: t("add.error_title") })
+							.min(1, { message: t("add.error_title") }),
+					}
+				: {}),
 			...(enableTrueEventProperties
 				? {
 						council_id: z.number().int().positive(),
@@ -109,6 +115,12 @@ export function EventAddForm({
 						price: z.coerce.number().nonnegative().optional().default(0),
 						dot: z.enum(["None", "Single", "Double"]).default("None"),
 						lottery: z.boolean().default(false),
+					}
+				: {}),
+			...(enableCarProperties
+				? {
+						personal: z.boolean().default(true),
+						council_id: z.number().int().positive(),
 					}
 				: {}),
 		})
@@ -145,6 +157,21 @@ export function EventAddForm({
 				message: t("error_past_event"),
 				path: ["start"],
 			},
+		)
+		.refine(
+			(data) => {
+				if (enableCarProperties) {
+					// Check if personal is false and council_id is not set
+					if (data.personal === false && !data.council_id) {
+						return false;
+					}
+				}
+				return true;
+			},
+			{
+				message: t("error_missing_council"),
+				path: ["council_id"],
+			},
 		);
 
 	const checkboxFields = [
@@ -160,6 +187,7 @@ export function EventAddForm({
 					"lottery",
 				]
 			: []),
+		...(enableCarProperties ? ["personal"] : []),
 	] as const;
 
 	type EventAddFormValues = z.infer<typeof eventAddFormSchema>;
@@ -197,6 +225,7 @@ export function EventAddForm({
 			price: 0,
 			dot: "None",
 			lottery: false,
+			personal: true,
 		},
 	});
 
@@ -231,14 +260,20 @@ export function EventAddForm({
 						lottery: false,
 					}
 				: {}),
+			...(enableCarProperties
+				? {
+						personal: true,
+						council_id: 1,
+					}
+				: {}),
 		});
-	}, [form, start, end, enableTrueEventProperties]);
+	}, [form, start, end, enableTrueEventProperties, enableCarProperties]);
 
 	const onSubmit = useCallback(
 		async (data: EventAddFormValues) => {
 			const newEvent = {
 				id: String(events.length + 1),
-				title_sv: data.title_sv,
+				title_sv: data.title_sv ? (data.title_sv as string) : "",
 				description_sv: editDescription ? data.description_sv : "",
 				start: data.start,
 				end: data.end,
@@ -267,6 +302,12 @@ export function EventAddForm({
 							lottery: data.lottery,
 						}
 					: {}),
+				...(enableCarProperties
+					? {
+							personal: data.personal,
+							council_id: data.council_id,
+						}
+					: {}),
 			};
 			addEvent(newEvent);
 			setEventAddOpen(false);
@@ -287,6 +328,7 @@ export function EventAddForm({
 			editDescription,
 			t,
 			enableTrueEventProperties,
+			enableCarProperties,
 		],
 	);
 
@@ -304,7 +346,7 @@ export function EventAddForm({
 					</Button>
 				</AlertDialogTrigger>
 			)}
-			<AlertDialogContent className="min-w-fit lg:max-w-7xl">
+			<AlertDialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0">
 				<AlertDialogDescription className="sr-only">
 					A popup dialog to add a new event of some kind.
 				</AlertDialogDescription>
@@ -317,22 +359,25 @@ export function EventAddForm({
 						onSubmit={form.handleSubmit(onSubmit)}
 						className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
 					>
-						<FormField
-							control={form.control}
-							name="title_sv"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("admin:events.title_sv")}</FormLabel>
-									<FormControl>
-										<Input
-											placeholder={t("add.placeholder.title")}
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+						{/* Title (sv) */}
+						{!enableCarProperties && (
+							<FormField
+								control={form.control}
+								name="title_sv"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("admin:events.title_sv")}</FormLabel>
+										<FormControl>
+											<Input
+												placeholder={t("add.placeholder.title")}
+												{...field}
+												value={field.value as string}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+						)}
 
 						{/* Title (en) */}
 						{enableTrueEventProperties && (
@@ -408,7 +453,18 @@ export function EventAddForm({
 									<FormControl>
 										<AdminChooseDates
 											value={field.value as Date}
-											onChange={field.onChange}
+											onChange={(value) => {
+												field.onChange(value);
+												if (form.watch<"end">("end") < value) {
+													const newEnd = new Date(
+														value.getTime() + 1000 * 60 * 60 * 1,
+													);
+													form.setValue<"end">("end", newEnd, {
+														shouldValidate: true,
+														shouldDirty: true,
+													});
+												}
+											}}
 										/>
 									</FormControl>
 									<FormMessage />
@@ -446,7 +502,28 @@ export function EventAddForm({
 											<FormControl>
 												<AdminChooseDates
 													value={field.value as Date}
-													onChange={field.onChange}
+													onChange={(newSignupStart: Date) => {
+														field.onChange(newSignupStart);
+														const signupEnd = form.getValues(
+															"signup_end",
+														) as Date;
+														if (
+															signupEnd &&
+															signupEnd.getTime() < newSignupStart.getTime()
+														) {
+															const newSignupEnd = new Date(
+																newSignupStart.getTime() + 60 * 60 * 1000,
+															);
+															form.setValue<"signup_end">(
+																"signup_end",
+																newSignupEnd,
+																{
+																	shouldDirty: true,
+																	shouldValidate: true,
+																},
+															);
+														}
+													}}
 												/>
 											</FormControl>
 											<FormMessage />
@@ -475,21 +552,35 @@ export function EventAddForm({
 						)}
 
 						{/* Council */}
-						{enableTrueEventProperties && (
+						{(enableTrueEventProperties || enableCarProperties) && (
 							<FormField
 								control={form.control}
 								name="council_id"
-								render={({ field }) => (
-									<FormItem className="lg:col-span-1 w-full">
-										<FormLabel>{t("admin:events.council")}</FormLabel>
-										<AdminChooseCouncil
-											value={field.value as number}
-											onChange={(value: number) => {
-												field.onChange(value);
-											}}
-										/>
-									</FormItem>
-								)}
+								render={({ field }) => {
+									const personalChecked = enableCarProperties
+										? form.watch("personal")
+										: false;
+									return (
+										<FormItem
+											className={
+												enableTrueEventProperties ? "lg:col-span-2" : ""
+											}
+										>
+											<FormLabel>{t("admin:events.council")}</FormLabel>
+											{enableCarProperties && personalChecked ? (
+												<div className="text-muted-foreground text-sm py-2">
+													{t("admin:car.no_council_needed")}
+												</div>
+											) : (
+												<AdminChooseCouncil
+													value={field.value as number}
+													onChange={(value: number) => field.onChange(value)}
+												/>
+											)}
+											<FormMessage />
+										</FormItem>
+									);
+								}}
 							/>
 						)}
 

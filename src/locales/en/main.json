@@ -73,7 +73,8 @@
 			"self": "Services",
 			"car": {
 				"self": "Car Rentals",
-				"desc": "Easily book vehicles for your travel and daily needs."
+				"desc": "Easily book the guild vehicle for your travel and daily needs.",
+				"href": "/car"
 			},
 			"rooms": {
 				"self": "Room Bookings",
@@ -223,5 +224,42 @@
 		"firstNameRequired": "First name required",
 		"lastNameRequired": "Last name required",
 		"telephoneNumberRequired": "Telephone number required"
+	},
+	"car-booking": {
+		"title": "Car Booking",
+		"description-title": "FAQ and rules",
+		"description": "As a member, you can book the guild car for your personal and guild-related needs. If you are an admin, you can manage bookings <0>here</0> instead. By booking the car, you agree to follow the rules found <1>here</1>.",
+		"faq": {
+			"title": "Frequently Asked Questions",
+			"q1": "Who can book the car?",
+			"a1": "Any member of the guild can book the car.",
+			"q2": "Car renting during the summer?",
+			"a2": "As activities are suspended during the summer, it is not easy to rent the guild's car. Contact the board (at) fsektionen.se to ask if it can be solved.",
+			"q3": "How many people can fit in the car?",
+			"a3": "The car can accommodate up to 7 people, including the driver.",
+			"q4": "What is the cargo capacity of the car?",
+			"a4": "The trunk (with the rear seats folded) is approximately (with the reservation that it is not a perfect rectangle) 190 cm deep, 130 cm wide and 80 cm high.",
+			"q5": "How much does it cost to rent the car?",
+			"a5": "Members of the F-guild pay a starting fee of SEK 150. The starting fee includes 20 kilometers, after that it costs SEK 5 per kilometer started.",
+			"q6": "What do the colors mean?",
+			"a6": "Different colors show status and ownership for each booking. An admin (the car foreman) must confirm bookings outside regular hours. The colors have the following meaning:\n- Light orange color means it's your booking, but it's not confirmed.\n- Dark orange color means it's your booking and it's confirmed.\n- Green color marks someone else's confirmed booking.\n- Yellow color shows someone else's unconfirmed booking.\n- Light blue color is used for bookings that have been added locally but haven't been retrieved from the server yet. If you see blue, something may have gone wrong, reload the page manually.",
+			"q7": "I have more questions!",
+			"a7": "You can contact the car foreman through, among other ways, the <0>contact page</0>. Please ask the car foreman or a webmaster to add the question with an answer here."
+		}
+	},
+	"loading": {
+		"basic": "Loading content...",
+		"flavor_1": "Checking into Hilbert's hotel...",
+		"flavor_2": "Finding the determinant...",
+		"flavor_3": "Playing moose game...",
+		"flavor_4": "Calculating the last digit of π...",
+		"flavor_5": "Fermenting more Hilbeaux...",
+		"flavor_6": "Polishing pixels...",
+		"flavor_7": "Counting to infinity...",
+		"flavor_8": "Creating yet another Gandalf-exam...",
+		"error_occurred": "Some error occurred:",
+		"no_error_message": "No error message available.",
+		"network_error": "Network error occurred. Please check your connection.",
+		"unauthorized": "You are not authorized to view this information. Please log in."
 	}
 }

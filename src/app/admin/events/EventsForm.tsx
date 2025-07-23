@@ -30,44 +30,48 @@ import type { EventCreate } from "@/api/types.gen";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { Label } from "@/components/ui/label";
 
-const eventsSchema = z.object({
-	title_sv: z.string().min(2),
-	title_en: z.string().min(2),
-	council_id: z.number().int().positive(),
-	starts_at: z.date(),
-	ends_at: z.date(),
-	signup_start: z.date(),
-	signup_end: z.date(),
-	description_sv: z.string().max(1000).min(1),
-	description_en: z.string().max(1000).min(1),
-	location: z.string().max(100),
-	max_event_users: z.coerce.number().nonnegative(),
-	priorities: z.array(z.string()).optional().default([]),
-	all_day: z.boolean(),
-	recurring: z.boolean(),
-	food: z.boolean(),
-	closed: z.boolean(),
-	can_signup: z.boolean(),
-	drink_package: z.boolean(),
-	is_nollning_event: z.boolean(),
-	alcohol_event_type: z.enum(['Alcohol', 'Alcohol-Served', 'None']).default('None'),
-	dress_code: z.string().max(100).optional().default(""),
-	price: z.coerce.number().nonnegative().optional().default(0),
-	dot: z.enum(['None', 'Single', 'Double']).default('None'),
-	lottery: z.boolean().default(false),
-}).refine(
-	(data) => {
-		// Check if event is in the past
-		if (data.starts_at.getTime() < Date.now()) {
-			return false;
-		}
-		return true;
-	},
-	{
-		message: "Event start time cannot be in the past",
-		path: ["starts_at"],
-	}
-);
+const eventsSchema = z
+	.object({
+		title_sv: z.string().min(2),
+		title_en: z.string().min(2),
+		council_id: z.number().int().positive(),
+		starts_at: z.date(),
+		ends_at: z.date(),
+		signup_start: z.date(),
+		signup_end: z.date(),
+		description_sv: z.string().max(1000).min(1),
+		description_en: z.string().max(1000).min(1),
+		location: z.string().max(100),
+		max_event_users: z.coerce.number().nonnegative(),
+		priorities: z.array(z.string()).optional().default([]),
+		all_day: z.boolean(),
+		recurring: z.boolean(),
+		food: z.boolean(),
+		closed: z.boolean(),
+		can_signup: z.boolean(),
+		drink_package: z.boolean(),
+		is_nollning_event: z.boolean(),
+		alcohol_event_type: z
+			.enum(["Alcohol", "Alcohol-Served", "None"])
+			.default("None"),
+		dress_code: z.string().max(100).optional().default(""),
+		price: z.coerce.number().nonnegative().optional().default(0),
+		dot: z.enum(["None", "Single", "Double"]).default("None"),
+		lottery: z.boolean().default(false),
+	})
+	.refine(
+		(data) => {
+			// Check if event is in the past
+			if (data.starts_at.getTime() < Date.now()) {
+				return false;
+			}
+			return true;
+		},
+		{
+			message: "Event start time cannot be in the past",
+			path: ["starts_at"],
+		},
+	);
 
 export default function EventsForm() {
 	const { t } = useTranslation();
@@ -80,10 +84,10 @@ export default function EventsForm() {
 			title_sv: "",
 			title_en: "",
 			council_id: 0,
-			starts_at: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later 
+			starts_at: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
 			ends_at: new Date(Date.now() + 1000 * 60 * 60 * 5), // 5 hours later
-			signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later 
-			signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later 
+			signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later
+			signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
 			description_sv: "",
 			description_en: "",
 			location: "",
@@ -112,7 +116,7 @@ export default function EventsForm() {
 		"can_signup",
 		"drink_package",
 		"is_nollning_event",
-		"lottery"
+		"lottery",
 	] as const;
 
 	const queryClient = useQueryClient();
@@ -192,7 +196,10 @@ export default function EventsForm() {
 									<FormItem>
 										<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 										<FormControl>
-											<Input placeholder={t("admin:events.title_sv")} {...field} />
+											<Input
+												placeholder={t("admin:events.title_sv")}
+												{...field}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -204,7 +211,10 @@ export default function EventsForm() {
 									<FormItem>
 										<FormLabel>{t("admin:events.title_en")}</FormLabel>
 										<FormControl>
-											<Input placeholder={t("admin:events.title_en")} {...field} />
+											<Input
+												placeholder={t("admin:events.title_en")}
+												{...field}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -232,14 +242,13 @@ export default function EventsForm() {
 									<FormItem className="lg:col-span-2 w-full">
 										<FormLabel>{t("admin:events.priorities")}</FormLabel>
 										<AdminChoosePriorities
-											value={field.value as string[] ?? []}
+											value={(field.value as string[]) ?? []}
 											onChange={(value) => field.onChange(value)}
 											className="text-sm"
 										/>
 									</FormItem>
 								)}
 							/>
-
 
 							<FormField
 								control={eventsForm.control}
@@ -249,7 +258,22 @@ export default function EventsForm() {
 										<FormLabel>{t("admin:events.start_time")}</FormLabel>
 										<AdminChooseDates
 											value={field.value}
-											onChange={field.onChange}
+											onChange={(newStart: Date) => {
+												field.onChange(newStart);
+												const end = eventsForm.getValues("ends_at");
+												if (
+													end &&
+													new Date(end).getTime() < newStart.getTime()
+												) {
+													const newEnd = new Date(
+														newStart.getTime() + 60 * 60 * 1000,
+													);
+													eventsForm.setValue("ends_at", newEnd, {
+														shouldDirty: true,
+														shouldValidate: true,
+													});
+												}
+											}}
 										/>
 										<FormMessage />
 									</FormItem>
@@ -278,7 +302,23 @@ export default function EventsForm() {
 										<FormLabel>{t("admin:events.signup_start")}</FormLabel>
 										<AdminChooseDates
 											value={field.value}
-											onChange={field.onChange}
+											onChange={(newSignupStart: Date) => {
+												field.onChange(newSignupStart);
+												const signupEnd = eventsForm.getValues("signup_end");
+												if (
+													signupEnd &&
+													new Date(signupEnd).getTime() <
+														newSignupStart.getTime()
+												) {
+													const newSignupEnd = new Date(
+														newSignupStart.getTime() + 60 * 60 * 1000,
+													);
+													eventsForm.setValue("signup_end", newSignupEnd, {
+														shouldDirty: true,
+														shouldValidate: true,
+													});
+												}
+											}}
 										/>
 									</FormItem>
 								)}
@@ -344,7 +384,10 @@ export default function EventsForm() {
 									<FormItem>
 										<FormLabel>{t("admin:events.location")}</FormLabel>
 										<FormControl>
-											<Input placeholder={t("admin:events.location")} {...field} />
+											<Input
+												placeholder={t("admin:events.location")}
+												{...field}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -375,18 +418,27 @@ export default function EventsForm() {
 								render={({ field }) => {
 									const options = [
 										{ value: "Alcohol", label: t("admin:events.alcohol") },
-										{ value: "Alcohol-Served", label: t("admin:events.alcohol_served") },
+										{
+											value: "Alcohol-Served",
+											label: t("admin:events.alcohol_served"),
+										},
 										{ value: "None", label: t("admin:events.alcohol_none") },
 									];
-									const selectedOption = options.find(opt => opt.value === field.value) ?? options[2];
+									const selectedOption =
+										options.find((opt) => opt.value === field.value) ??
+										options[2];
 									return (
 										<FormItem>
-											<FormLabel>{t("admin:events.alcohol_event_type")}</FormLabel>
+											<FormLabel>
+												{t("admin:events.alcohol_event_type")}
+											</FormLabel>
 											<SelectFromOptions
 												options={options}
 												value={selectedOption.value}
 												onChange={(value) => field.onChange(value)}
-												placeholder={t("admin:events.select_alcohol_event_type")}
+												placeholder={t(
+													"admin:events.select_alcohol_event_type",
+												)}
 											/>
 										</FormItem>
 									);
@@ -415,7 +467,11 @@ export default function EventsForm() {
 									<FormItem>
 										<FormLabel>{t("admin:events.price")}</FormLabel>
 										<FormControl>
-											<Input type="number" {...field} value={field.value as number} />
+											<Input
+												type="number"
+												{...field}
+												value={field.value as number}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -431,7 +487,9 @@ export default function EventsForm() {
 										{ value: "Single", label: t("admin:events.dot_single") },
 										{ value: "Double", label: t("admin:events.dot_double") },
 									];
-									const selectedOption = options.find(opt => opt.value === field.value) ?? options[0];
+									const selectedOption =
+										options.find((opt) => opt.value === field.value) ??
+										options[0];
 									return (
 										<FormItem>
 											<FormLabel>{t("admin:events.select_dot")}</FormLabel>
@@ -452,9 +510,7 @@ export default function EventsForm() {
 									control={eventsForm.control}
 									name={fieldName}
 									render={({ field }) => (
-										<Label
-											className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent"
-										>
+										<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
 											<Checkbox
 												checked={field.value}
 												onCheckedChange={field.onChange}

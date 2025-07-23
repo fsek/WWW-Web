@@ -50,10 +50,12 @@ const eventsEditSchema = z.object({
 	can_signup: z.boolean(),
 	drink_package: z.boolean(),
 	is_nollning_event: z.boolean(),
-	alcohol_event_type: z.enum(['Alcohol', 'Alcohol-Served', 'None']).default('None'),
+	alcohol_event_type: z
+		.enum(["Alcohol", "Alcohol-Served", "None"])
+		.default("None"),
 	dress_code: z.string().max(100).optional().default(""),
 	price: z.coerce.number().nonnegative().optional().default(0),
-	dot: z.enum(['None', 'Single', 'Double']).default('None'),
+	dot: z.enum(["None", "Single", "Double"]).default("None"),
 });
 
 type EventsEditFormType = z.infer<typeof eventsEditSchema>;
@@ -73,14 +75,15 @@ export default function EventsEditForm({
 
 	const form = useForm<EventsEditFormType>({
 		resolver: zodResolver(eventsEditSchema),
-		defaultValues: { // Values for when no event is selected
+		defaultValues: {
+			// Values for when no event is selected
 			title_sv: "",
 			title_en: "",
 			council_id: 0,
-			starts_at: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later 
+			starts_at: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
 			ends_at: new Date(Date.now() + 1000 * 60 * 60 * 5), // 5 hours later
-			signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later 
-			signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later 
+			signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later
+			signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
 			description_sv: "",
 			description_en: "",
 			location: "",
@@ -107,7 +110,7 @@ export default function EventsEditForm({
 		"closed",
 		"can_signup",
 		"drink_package",
-		"is_nollning_event"
+		"is_nollning_event",
 	] as const;
 
 	useEffect(() => {
@@ -120,8 +123,11 @@ export default function EventsEditForm({
 				signup_end: new Date(selectedEvent.signup_end),
 				priorities: selectedEvent.priorities.map((i) => i.priority),
 				// Selected event has been created with safe values, the code below should always work
-				alcohol_event_type: selectedEvent.alcohol_event_type as ("Alcohol" | "Alcohol-Served" | "None"),
-				dot: selectedEvent.dot as ("None" | "Single" | "Double"), 
+				alcohol_event_type: selectedEvent.alcohol_event_type as
+					| "Alcohol"
+					| "Alcohol-Served"
+					| "None",
+				dot: selectedEvent.dot as "None" | "Single" | "Double",
 			});
 		}
 	}, [selectedEvent, form, open]);
@@ -209,7 +215,10 @@ export default function EventsEditForm({
 								<FormItem>
 									<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("admin:events.title_sv")} {...field} />
+										<Input
+											placeholder={t("admin:events.title_sv")}
+											{...field}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -223,7 +232,10 @@ export default function EventsEditForm({
 								<FormItem>
 									<FormLabel>{t("admin:events.title_en")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("admin:events.title_en")} {...field} />
+										<Input
+											placeholder={t("admin:events.title_en")}
+											{...field}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -238,12 +250,10 @@ export default function EventsEditForm({
 									<FormLabel>{t("admin:events.council")}</FormLabel>
 									<AdminChooseCouncil
 										value={field.value}
-										onChange={
-											(value: number) => {
-												console.log("Council ID:", value);
-												field.onChange(value);
-											}
-										}
+										onChange={(value: number) => {
+											console.log("Council ID:", value);
+											field.onChange(value);
+										}}
 									/>
 								</FormItem>
 							)}
@@ -257,7 +267,7 @@ export default function EventsEditForm({
 								<FormItem className="lg:col-span-2 w-full">
 									<FormLabel>{t("admin:events.priorities")}</FormLabel>
 									<AdminChoosePriorities
-										value={field.value as string[] ?? []}
+										value={(field.value as string[]) ?? []}
 										onChange={(value) => field.onChange(value)}
 										className="text-sm"
 									/>
@@ -274,7 +284,19 @@ export default function EventsEditForm({
 									<FormLabel>{t("admin:events.start_time")}</FormLabel>
 									<AdminChooseDates
 										value={field.value}
-										onChange={field.onChange}
+										onChange={(newStart: Date) => {
+											field.onChange(newStart);
+											const end = form.getValues("ends_at");
+											if (end && new Date(end).getTime() < newStart.getTime()) {
+												const newEnd = new Date(
+													newStart.getTime() + 60 * 60 * 1000,
+												);
+												form.setValue("ends_at", newEnd, {
+													shouldDirty: true,
+													shouldValidate: true,
+												});
+											}
+										}}
 									/>
 								</FormItem>
 							)}
@@ -304,7 +326,22 @@ export default function EventsEditForm({
 									<FormLabel>{t("admin:events.signup_start")}</FormLabel>
 									<AdminChooseDates
 										value={field.value}
-										onChange={field.onChange}
+										onChange={(newSignupStart: Date) => {
+											field.onChange(newSignupStart);
+											const signupEnd = form.getValues("signup_end");
+											if (
+												signupEnd &&
+												new Date(signupEnd).getTime() < newSignupStart.getTime()
+											) {
+												const newSignupEnd = new Date(
+													newSignupStart.getTime() + 60 * 60 * 1000,
+												);
+												form.setValue("signup_end", newSignupEnd, {
+													shouldDirty: true,
+													shouldValidate: true,
+												});
+											}
+										}}
 									/>
 								</FormItem>
 							)}
@@ -371,7 +408,10 @@ export default function EventsEditForm({
 								<FormItem>
 									<FormLabel>{t("admin:events.location")}</FormLabel>
 									<FormControl>
-										<Input placeholder={t("admin:events.location")} {...field} />
+										<Input
+											placeholder={t("admin:events.location")}
+											{...field}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -381,7 +421,7 @@ export default function EventsEditForm({
 						<FormField
 							control={form.control}
 							name="max_event_users"
-							render={({ field }) => (	
+							render={({ field }) => (
 								<FormItem>
 									<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
 									<FormControl>
@@ -389,7 +429,7 @@ export default function EventsEditForm({
 											type="number"
 											placeholder={t("admin:events.max_event_users")}
 											{...field}
-          						// value={Number(field.value)}
+											// value={Number(field.value)}
 										/>
 									</FormControl>
 								</FormItem>
@@ -403,14 +443,21 @@ export default function EventsEditForm({
 							render={({ field }) => {
 								const options = [
 									{ value: "Alcohol", label: t("admin:events.alcohol") },
-									{ value: "Alcohol-Served", label: t("admin:events.alcohol_served") },
+									{
+										value: "Alcohol-Served",
+										label: t("admin:events.alcohol_served"),
+									},
 									{ value: "None", label: t("admin:events.alcohol_none") },
 								];
-								const selectedOption = options.find(opt => opt.value === field.value) ?? options[2];
+								const selectedOption =
+									options.find((opt) => opt.value === field.value) ??
+									options[2];
 								return (
 									<FormItem>
-										<FormLabel>{t("admin:events.alcohol_event_type")}</FormLabel>
-										<SelectFromOptions 
+										<FormLabel>
+											{t("admin:events.alcohol_event_type")}
+										</FormLabel>
+										<SelectFromOptions
 											options={options}
 											value={selectedOption.value}
 											onChange={(value) => field.onChange(value)}
@@ -443,7 +490,11 @@ export default function EventsEditForm({
 								<FormItem>
 									<FormLabel>{t("admin:events.price")}</FormLabel>
 									<FormControl>
-										<Input type="number" {...field} value={field.value as number} />
+										<Input
+											type="number"
+											{...field}
+											value={field.value as number}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -459,7 +510,9 @@ export default function EventsEditForm({
 									{ value: "Single", label: t("admin:events.dot_single") },
 									{ value: "Double", label: t("admin:events.dot_double") },
 								];
-								const selectedOption = options.find(opt => opt.value === field.value) ?? options[0];
+								const selectedOption =
+									options.find((opt) => opt.value === field.value) ??
+									options[0];
 								return (
 									<FormItem>
 										<FormLabel>{t("admin:events.select_dot")}</FormLabel>
@@ -480,9 +533,7 @@ export default function EventsEditForm({
 								control={form.control}
 								name={fieldName}
 								render={({ field }) => (
-									<Label
-										className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent"
-									>
+									<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
 										<Checkbox
 											checked={field.value}
 											onCheckedChange={field.onChange}

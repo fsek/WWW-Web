@@ -73,7 +73,8 @@
 			"self": "Tjänster",
 			"car": {
 				"self": "Bilbokning",
-				"desc": "Boka bil enkelt och smidigt för dina resor och behov."
+				"desc": "Boka bilen enkelt och smidigt för dina resor och behov.",
+				"href": "/car"
 			},
 			"rooms": {
 				"self": "Lokalbokning",
@@ -223,5 +224,42 @@
 		"firstNameRequired": "Förnamn krävs",
 		"lastNameRequired": "Efternamn krävs",
 		"telephoneNumberRequired": "Telefonnummer krävs"
+	},
+	"car-booking": {
+		"title": "Bilbokning",
+		"description-title": "FAQ och regler",
+		"description": "Som medlem kan du boka sektionens bil för personliga och sektionrelaterade behov. Om du är administratör kan du hantera bokningar <0>här</0> istället. Genom att boka bilen godkänner du att följa reglerna som finns <1>här</1>.",
+		"faq": {
+			"title": "Vanliga frågor",
+			"q1": "Vem kan boka bilen?",
+			"a1": "Alla medlemmar i sektionen kan boka bilen.",
+			"q2": "Biluthyrning under sommaren?",
+			"a2": "Eftersom verksamheten är pausad under sommaren är det inte lätt att hyra sektionsbilen. Kontakta styrelsen på board (at) fsektionen.se för att höra om det går att lösa.",
+			"q3": "Hur många får plats i bilen?",
+			"a3": "Bilen har plats för upp till 7 personer, inklusive föraren.",
+			"q4": "Hur stort är lastutrymmet i bilen?",
+			"a4": "Bagageutrymmet (med nedfällda baksäten) är cirka (med reservation för att det inte är en perfekt rektangel) 190 cm djupt, 130 cm brett och 80 cm högt.",
+			"q5": "Vad kostar det att hyra bilen?",
+			"a5": "Medlemmar i F-sektionen betalar en startavgift på 150 kr. Startavgiften inkluderar 20 kilometer, därefter kostar det 5 kr per påbörjad kilometer.",
+			"q6": "Vad betyder färgerna?",
+			"a6": "Olika färger visar status och ägarskap för varje bokning. En admin (bilförmannen) måste bekräfta bokningar utanför ordinarie tider. Färgerna har följande mening: \n- Ljusorange färg innebär att det är din bokning, men den är inte bekräftad.\n- Mörkorange färg innebär att det är din bokning och den är bekräftad. \n- Grön färg markerar någon annans bekräftade bokning.\n- Gul färg visar någon annans obekräftade bokning.\n- Ljusblå färg används för bokningar som lagts till lokalt men inte hämtats från servern än. Ser du blått kan något ha gått fel, ladda om sidan manuellt.",
+			"q7": "Jag har fler frågor!",
+			"a7": "Du kan kontakta bilförmannen bland annat genom <0>kontaktsidan</0>. Be gärna bilförmannen eller någon spindelman att lägga till frågan med svar här."
+		}
+	},
+	"loading": {
+		"basic": "Laddar innehåll...",
+		"flavor_1": "Checkar in på Hilberts hotel...",
+		"flavor_2": "Hittar determinanten...",
+		"flavor_3": "Spelar moose game...",
+		"flavor_4": "Räknar ut sista siffran i π...",
+		"flavor_5": "Jäser mer Hilbeaux...",
+		"flavor_6": "Polerar pixlar...",
+		"flavor_7": "Räknar till oändligheten...",
+		"flavor_8": "Skapar ännu en gandalftenta...",
+		"error_occurred": "Ett fel uppstod:",
+		"no_error_message": "Inget felmeddelande tillgängligt.",
+		"network_error": "Ett nätverksfel uppstod. Kontrollera din anslutning.",
+		"unauthorized": "Du är inte auktoriserad att se detta innehåll. Logga in."
 	}
 }

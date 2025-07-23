@@ -91,7 +91,7 @@ const CustomTitle: FC<CustomTitleProps> = ({
 	}, [fullUnderline, shortUnderline, noUnderline]);
 
 	return (
-		<div className="w-full">
+		<div className="w-full py-5">
 			<div
 				ref={textRef}
 				className={`inline-block font-bold text-left text-orange-500 ${getSizeClass()} ${className} ${shortUnderline ? "underline" : ""}`}

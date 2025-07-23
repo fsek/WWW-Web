@@ -4,15 +4,11 @@ import React from "react";
 import { DateTimePicker } from "@/components/ui/datetime-picker";
 
 interface AdminChooseDatesProps {
-	value: Date;
+	value: Date | undefined;
 	onChange: (value: Date) => void;
 }
 
 export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
-	const [date, setDate] = React.useState<Date | undefined>(
-		value ? new Date(value) : undefined,
-	);
-
 	const handleDateChange = (newDate: Date | undefined) => {
 		if (newDate) {
 			const adjustedDate = new Date(newDate.getTime());
@@ -22,7 +18,6 @@ export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
 			// placeholder for invalid date
 			onChange(new Date());
 		}
-		setDate(newDate);
 	};
 
 	return (
@@ -30,8 +25,12 @@ export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
 			<div className="w-full space-y-2">
 				<DateTimePicker
 					granularity="minute"
-					value={date}
+					value={value}
 					onChange={handleDateChange}
+					weekStartsOn={1} // Monday
+					locale={"sv-SE"}
+					showWeekNumber={false}
+					showOutsideDays={true}
 				/>
 			</div>
 		</div>

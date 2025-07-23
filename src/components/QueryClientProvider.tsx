@@ -13,18 +13,16 @@ const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000";
 client.setConfig({ baseUrl: API_BASE_URL });
 
 const queryClient = new QueryClient();
-
+// The interceptor attaches the current valid token to outgoing requests
+// and refreshes the token if necessary, therefore saving the outgoing message from 401 Unauthorized.
 client.interceptors.request.use(async (request, _options) => {
 	if (typeof window !== "undefined") {
 		const auth = useAuthState.getState();
 		const authorizationHeader = auth.authorizationHeader();
-		if (request.url.startsWith(`${API_BASE_URL}/auth`)) {
-			_options.credentials = "include"; // Ensure cookies are sent with auth requests.
-			// Doesn't seem to do anything :(
-		}
 		if (authorizationHeader) {
 			request.headers.set("Authorization", authorizationHeader);
 		} else if (!request.url.startsWith(`${API_BASE_URL}/auth`)) {
+			// If no valid token is present, attempt to refresh the token
 			const refreshTokenRequest = await fetch(`${API_BASE_URL}/auth/refresh`, {
 				method: "POST",
 				credentials: "include",

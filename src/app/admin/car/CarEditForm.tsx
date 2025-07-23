@@ -6,238 +6,346 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
+import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import {
-  getAllBookingQueryKey,
-  updateBookingMutation,
-  removeBookingMutation,
+	getAllBookingQueryKey,
+	updateBookingMutation,
+	removeBookingMutation,
 } from "@/api/@tanstack/react-query.gen";
-import type { CarRead, CarUpdate } from "../../../api";
+import type { CarBookingRead, CarBookingUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 interface CarEditFormProps {
-  open: boolean;
-  onClose: () => void;
-  selectedBooking: CarRead;
+	open: boolean;
+	onClose: () => void;
+	selectedBooking: CarBookingRead;
 }
 
 export default function CarEditForm({
-  open,
-  onClose,
-  selectedBooking,
+	open,
+	onClose,
+	selectedBooking,
 }: CarEditFormProps) {
-  const { t } = useTranslation();
+	const { t } = useTranslation();
 
-  const carEditSchema = z.object({
-    booking_id: z.number(),
-    description: z.string().min(1),
-    start_time: z.date(),
-    end_time: z.date(),
-  }).refine(
-    (data) => {
-      // Check if start time equals end time
-      if (data.start_time.getTime() === data.end_time.getTime()) {
-        return false;
-      }
+	const carEditSchema = z
+		.object({
+			booking_id: z.number(),
+			description: z.string().min(1),
+			start_time: z.date(),
+			end_time: z.date(),
+			confirmed: z.boolean().default(false),
+			personal: z.boolean().default(true),
+			council_id: z.number().int().positive(),
+		})
+		.refine(
+			(data) => {
+				// Check if start time equals end time
+				if (data.start_time.getTime() === data.end_time.getTime()) {
+					return false;
+				}
 
-      // Check if start time is after end time
-      if (data.start_time.getTime() > data.end_time.getTime()) {
-        return false;
-      }
+				// Check if start time is after end time
+				if (data.start_time.getTime() > data.end_time.getTime()) {
+					return false;
+				}
 
-      return true;
-    },
-    {
-      message: t("admin:car.error_start_end"),
-      path: ["end_time"] // Shows the error on the end time field
-    }
-  );
+				return true;
+			},
+			{
+				message: t("admin:car.error_start_end"),
+				path: ["end_time"], // Shows the error on the end time field
+			},
+		)
+		.refine(
+			(data) => {
+				// Check if personal is false and council_id is not set
+				if (data.personal === false && !data.council_id) {
+					return false;
+				}
+				return true;
+			},
+			{
+				message: t("calendar:error_missing_council"),
+				path: ["council_id"],
+			},
+		);
 
-  type CarEditFormType = z.infer<typeof carEditSchema>;
+	type CarEditFormType = z.infer<typeof carEditSchema>;
 
-  const form = useForm<CarEditFormType>({
-    resolver: zodResolver(carEditSchema),
-    defaultValues: {
-      description: "",
-      start_time: new Date(Date.now()),
-      end_time: new Date(Date.now() + 60 * 60 * 1000),
-    },
-  });
+	const form = useForm<CarEditFormType>({
+		resolver: zodResolver(carEditSchema),
+		defaultValues: {
+			description: "",
+			start_time: new Date(Date.now()),
+			end_time: new Date(Date.now() + 60 * 60 * 1000),
+			confirmed: false,
+			personal: true,
+			council_id: 1,
+		},
+	});
 
-  useEffect(() => {
-    if (open && selectedBooking) {
-      form.reset({
-        ...selectedBooking,
-        booking_id: selectedBooking.booking_id,
-        start_time: new Date(selectedBooking.start_time),
-        end_time: new Date(selectedBooking.end_time),
-      });
-    }
-  }, [selectedBooking, form, open]);
+	useEffect(() => {
+		if (open && selectedBooking) {
+			form.reset({
+				...selectedBooking,
+				booking_id: selectedBooking.booking_id,
+				start_time: new Date(selectedBooking.start_time),
+				end_time: new Date(selectedBooking.end_time),
+				confirmed: selectedBooking.confirmed ?? false,
+				personal: selectedBooking.personal ?? true,
+				council_id: selectedBooking.council_id ?? 1,
+			});
+		}
+	}, [selectedBooking, form, open]);
 
-  const queryClient = useQueryClient();
+	const queryClient = useQueryClient();
 
-  const updateBooking = useMutation({
-    ...updateBookingMutation(),
-    throwOnError: false,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
-    },
-    onError: () => {
-      onClose();
-    },
-  });
+	const updateBooking = useMutation({
+		...updateBookingMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			toast.success(t("admin:car.success_edit"));
+			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+		},
+		onError: (error) => {
+			toast.error(
+				t("admin:car.error_edit") + (error?.detail ? `: ${error.detail}` : ""),
+			);
+			onClose();
+		},
+	});
 
-  const removeBooking = useMutation({
-    ...removeBookingMutation(),
-    throwOnError: false,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
-    },
-    onError: () => {
-      onClose();
-    },
-  });
+	const removeBooking = useMutation({
+		...removeBookingMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			toast.success(t("admin:car.success_delete"));
+			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+		},
+		onError: (error) => {
+			toast.error(
+				t("admin:car.error_delete") +
+					(error?.detail ? `: ${error.detail}` : ""),
+			);
+			onClose();
+		},
+	});
 
-  function handleFormSubmit(values: CarEditFormType) {
-    const updatedBooking: CarUpdate = {
-      description: values.description,
-      start_time: new Date(values.start_time),
-      end_time: new Date(values.end_time),
-    };
+	function handleFormSubmit(values: CarEditFormType) {
+		const updatedBooking: CarBookingUpdate = {
+			description: values.description,
+			start_time: new Date(values.start_time),
+			end_time: new Date(values.end_time),
+			confirmed: values.confirmed,
+			personal: values.personal,
+			council_id: values.council_id,
+		};
 
-    updateBooking.mutate(
-      {
-        path: { booking_id: values.booking_id },
-        body: updatedBooking,
-      },
-      {
-        onSuccess: () => {
-          onClose();
-        },
-      },
-    );
-  }
+		updateBooking.mutate(
+			{
+				path: { booking_id: values.booking_id },
+				body: updatedBooking,
+			},
+			{
+				onSuccess: () => {
+					onClose();
+				},
+			},
+		);
+	}
 
-  function handleRemoveSubmit() {
-    const bookingId = form.getValues("booking_id");
-    if (bookingId) {
-      removeBooking.mutate(
-        { path: { booking_id: bookingId } },
-        {
-          onSuccess: () => {
-            onClose();
-          },
-        },
-      );
-    } else {
-      console.error("Cannot remove booking: ID is missing.");
-    }
-  }
+	function handleRemoveSubmit() {
+		const bookingId = form.getValues("booking_id");
+		if (bookingId) {
+			removeBooking.mutate(
+				{ path: { booking_id: bookingId } },
+				{
+					onSuccess: () => {
+						onClose();
+					},
+				},
+			);
+		} else {
+			toast.error(t("admin:car.error_missing_id"));
+		}
+	}
 
-  return (
-    <Dialog
-      open={open}
-      onOpenChange={(isOpen) => {
-        if (!isOpen) {
-          onClose();
-        }
-      }}
-    >
-      <DialogContent className="min-w-fit lg:max-w-7xl">
-        <DialogHeader>
-          <DialogTitle>{t("admin:car.edit_booking")}</DialogTitle>
-        </DialogHeader>
-        <hr />
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleFormSubmit)}
-            className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
-          >
-            {/* Description Field */}
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("admin:description")}</FormLabel>
-                  <FormControl>
-                    <Input placeholder={t("admin:description")} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+	return (
+		<Dialog
+			open={open}
+			onOpenChange={(isOpen) => {
+				if (!isOpen) {
+					onClose();
+				}
+			}}
+		>
+			<DialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0">
+				<DialogHeader>
+					<DialogTitle>{t("admin:car.edit_booking")}</DialogTitle>
+				</DialogHeader>
+				<hr />
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit(handleFormSubmit)}
+						className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
+					>
+						{/* Description Field */}
+						<FormField
+							control={form.control}
+							name="description"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("admin:description")}</FormLabel>
+									<FormControl>
+										<Input placeholder={t("admin:description")} {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 
-            {/* Start Time Field */}
-            <FormField
-              control={form.control}
-              name="start_time"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("admin:car.start_time")}</FormLabel>
-                  <AdminChooseDates
-                    value={new Date(field.value)}
-                    onChange={field.onChange}
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+						{/* Start Time Field */}
+						<FormField
+							control={form.control}
+							name="start_time"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("admin:car.start_time")}</FormLabel>
+									<AdminChooseDates
+										value={new Date(field.value)}
+										onChange={(newStart: Date) => {
+											field.onChange(newStart);
+											const end = form.getValues("end_time");
+											if (end && new Date(end).getTime() < newStart.getTime()) {
+												const newEnd = new Date(
+													newStart.getTime() + 60 * 60 * 1000,
+												);
+												form.setValue("end_time", newEnd, {
+													shouldDirty: true,
+													shouldValidate: true,
+												});
+											}
+										}}
+									/>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 
-            {/* End Time Field */}
-            <FormField
-              control={form.control}
-              name="end_time"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("admin:car.end_time")}</FormLabel>
-                  <AdminChooseDates
-                    value={new Date(field.value)}
-                    onChange={field.onChange}
-                  />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+						{/* End Time Field */}
+						<FormField
+							control={form.control}
+							name="end_time"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("admin:car.end_time")}</FormLabel>
+									<AdminChooseDates
+										value={new Date(field.value)}
+										onChange={field.onChange}
+									/>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 
-            {/* Button Section */}
-            <div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-              <Button
-                 type="button"
-                 variant="outline"
-                 className="w-32 min-w-fit"
-                 onClick={() => console.log("Preview:", form.getValues())}
-               >
-                 {t("admin:preview")}
-              </Button>
+						{/* Confirmed Field */}
+						<FormField
+							control={form.control}
+							name="confirmed"
+							render={({ field }) => (
+								<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
+									<Checkbox
+										checked={field.value}
+										onCheckedChange={field.onChange}
+										className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+									/>
+									<div className="grid gap-1.5 font-normal">
+										<p className="text-sm leading-none font-medium">
+											{t("admin:car.confirmed")}
+										</p>
+									</div>
+								</Label>
+							)}
+						/>
 
-              <Button
-                variant="destructive"
-                type="button"
-                className="w-32 min-w-fit"
-                onClick={handleRemoveSubmit}
-              >
-                {t("admin:remove")}
-              </Button>
+						{/* Personal Field */}
+						<FormField
+							control={form.control}
+							name="personal"
+							render={({ field }) => (
+								<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
+									<Checkbox
+										checked={field.value}
+										onCheckedChange={field.onChange}
+										className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+									/>
+									<div className="grid gap-1.5 font-normal">
+										<p className="text-sm leading-none font-medium">
+											{t("admin:car.personal")}
+										</p>
+									</div>
+								</Label>
+							)}
+						/>
 
-              <Button type="submit" className="w-32 min-w-fit">
-                {t("admin:save")}
-              </Button>
-            </div>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
-  );
+						{/* Council */}
+						<FormField
+							control={form.control}
+							name="council_id"
+							render={({ field }) => {
+								const personalChecked = form.watch("personal");
+								return (
+									<FormItem>
+										<FormLabel>{t("admin:events.council")}</FormLabel>
+										{personalChecked ? (
+											<div className="text-muted-foreground text-sm py-2">
+												{t("admin:car.no_council_needed")}
+											</div>
+										) : (
+											<AdminChooseCouncil
+												value={field.value as number}
+												onChange={(value: number) => field.onChange(value)}
+											/>
+										)}
+										<FormMessage />
+									</FormItem>
+								);
+							}}
+						/>
+
+						{/* Button Section */}
+						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
+							<Button
+								variant="destructive"
+								type="button"
+								className="w-32 min-w-fit"
+								onClick={handleRemoveSubmit}
+							>
+								{t("admin:remove")}
+							</Button>
+
+							<Button type="submit" className="w-32 min-w-fit">
+								{t("admin:save")}
+							</Button>
+						</div>
+					</form>
+				</Form>
+			</DialogContent>
+		</Dialog>
+	);
 }
