@@ -8,68 +8,74 @@ import { createColumnHelper, type Row } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import type { PermissionRead } from "../../../api";
 import useCreateTable from "@/widgets/useCreateTable";
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import PermissionForm from "./PermissionForm";
+import PermissionEditForm from "./PermissionEditForm";
+import { Toaster } from "@/components/ui/sonner";
+import { useTranslation } from "react-i18next";
 
 // Column setup
 const columnHelper = createColumnHelper<PermissionRead>();
-const columns = [
-	columnHelper.accessor("target", {
-		header: "Target",
-		cell: (info) => info.getValue(),
-	}),
-	columnHelper.accessor("action", {
-		header: "Action",
-		cell: (info) => info.getValue(),
-	}),
-];
 
 export default function Permissions() {
+	const { t } = useTranslation("admin");
+
+	const columns = [
+		columnHelper.accessor("target", {
+			header: t("permissions.target"),
+			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor("action", {
+			header: t("permissions.action"),
+			cell: (info) => info.getValue(),
+		}),
+	];
 	const { data, error, isPending } = useQuery({
 		...getAllPermissionsOptions(),
 	});
 
 	const [openEditDialog, setOpenEditDialog] = useState(false);
-	const [selectedEvent, setSelectedEvent] = useState<PermissionRead | null>(
-		null,
-	);
+	const [selectedPermission, setSelectedPermission] =
+		useState<PermissionRead | null>(null);
 
 	const table = useCreateTable({ data: data ?? [], columns });
 
 	function handleRowClick(row: Row<PermissionRead>) {
-		setSelectedEvent(row.original);
+		setSelectedPermission(row.original);
 		setOpenEditDialog(true);
 	}
 
-	// function handleClose() {
-	// 	setOpenEditDialog(false);
-	// 	setSelectedEvent(null);
-	// }
+	function handleClose() {
+		setOpenEditDialog(false);
+		setSelectedPermission(null);
+	}
 
 	if (isPending) {
-		return <p>Hämtar...</p>;
+		return <LoadingErrorCard />;
 	}
 
 	if (error) {
-		return <p>Något gick fel :/</p>;
+		return <LoadingErrorCard error={error} />;
 	}
 
 	return (
 		<div className="px-8 space-x-4">
 			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-				Administrera permissions
+				{t("permissions.title", "Permissions")}
 			</h3>
-			<p className="py-3">
-				Här kan du skapa permissions & redigera existerande permissions på
-				hemsidan.
-			</p>
-			{/* <PostForm /> */}
+			<p className="py-3">{t("permissions.description")}</p>
+			<PermissionForm />
 
 			<AdminTable table={table} onRowClick={handleRowClick} />
 
-			{/* <PostEditForm
-				open={openEditDialog}
-				onClose={() => handleClose()}
-				selectedPost={selectedEvent as PermissionRead}
-			/> */}
+			{selectedPermission && (
+				<PermissionEditForm
+					open={openEditDialog}
+					onClose={handleClose}
+					selectedPermission={selectedPermission}
+				/>
+			)}
+			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

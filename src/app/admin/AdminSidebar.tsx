@@ -51,6 +51,11 @@ const groups = {
 			url: "/admin/car",
 			icon: Car,
 		},
+		{
+			title: "admin:councils.self",
+			url: "/admin/councils",
+			icon: Briefcase,
+		},
 		{ title: "admin:posts.self", url: "/admin/posts", icon: Briefcase },
 		{
 			title: "admin:permissions.self",

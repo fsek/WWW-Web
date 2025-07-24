@@ -110,6 +110,36 @@ export default function PostPermissionForm({
 		return <div>Hämtar...</div>;
 	}
 
+	// Group permissions by target
+	const groupedPermissions = permissionsList.reduce(
+		(acc, permission) => {
+			if (!acc[permission.target]) {
+				acc[permission.target] = [];
+			}
+			acc[permission.target].push(permission);
+			return acc;
+		},
+		{} as Record<string, PermissionRead[]>,
+	);
+
+	// Sort targets alphabetically and permissions within each target alphabetically
+	const sortedGroupedPermissions = Object.entries(groupedPermissions)
+		.sort(([a], [b]) => a.localeCompare(b))
+		.map(
+			([target, permissions]) =>
+				[
+					target,
+					permissions.sort((a, b) => a.action.localeCompare(b.action)),
+				] as [string, PermissionRead[]],
+		);
+
+	// Small helper function to determine grid columns based on number of permissions
+	function getGridColsClass(length: number): string {
+		if (length === 1) return "grid-cols-1";
+		if (length === 2) return "grid-cols-2";
+		return "grid-cols-3";
+	}
+
 	return (
 		<div className="p-3">
 			<Button
@@ -129,38 +159,42 @@ export default function PostPermissionForm({
 					<Form {...form}>
 						<form
 							onSubmit={form.handleSubmit(onSubmit)}
-							className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
+							className="grid gap-4 grid-cols-3"
 						>
 							<input type="hidden" {...form.register("post_id")} />
 
-							{permissionsList.map((permission) => (
-								<FormField
-									key={permission.id}
-									control={form.control}
-									name="permissions"
-									render={() => (
-										<FormItem>
-											<FormLabel htmlFor={`perm-${permission.id}`}>
-												{permission.target} {permission.action}
-											</FormLabel>
-											<FormControl>
+							{sortedGroupedPermissions.map(([target, permissions]) => (
+								<div key={target} className="space-y-3">
+									<h3 className="text-lg font-semibold text-foreground border-b pb-2">
+										{target}
+									</h3>
+									<div
+										className={`grid gap-3 ${getGridColsClass(permissions.length)}`}
+									>
+										{permissions.map((permission) => (
+											<label
+												key={permission.id}
+												htmlFor={`perm-${permission.id}`}
+												className="flex items-center space-x-3 rounded-md border p-3 hover:bg-accent/50 transition-colors cursor-pointer"
+											>
 												<Checkbox
 													id={`perm-${permission.id}`}
 													checked={selectedIds.includes(permission.id)}
 													onCheckedChange={() =>
 														togglePermission(permission.id)
 													}
+													className="h-5 w-5"
 												/>
-											</FormControl>
-										</FormItem>
-									)}
-								/>
+												<span className="text-sm font-medium">
+													{permission.action}
+												</span>
+											</label>
+										))}
+									</div>
+								</div>
 							))}
 
-							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-								<Button variant="outline" className="w-32 min-w-fit">
-									Förhandsgranska
-								</Button>
+							<div className="flex space-x-2 pt-4 border-t">
 								<Button
 									type="submit"
 									disabled={!submitEnabled}
