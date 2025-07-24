@@ -6,15 +6,15 @@ import { useState } from "react";
 import type { CarBookingRead } from "@/api/index";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-	createBookingMutation,
-	getAllBookingOptions,
+	createCarBookingMutation,
+	getAllCarBookingsOptions,
 } from "@/api/@tanstack/react-query.gen";
 import Calendar from "@/components/full-calendar";
 import { EventsProvider } from "@/utils/full-calendar-event-context";
 import {
-	removeBookingMutation,
-	getAllBookingQueryKey,
-	updateBookingMutation,
+	removeCarBookingMutation,
+	getAllCarBookingsQueryKey,
+	updateCarBookingMutation,
 } from "@/api/@tanstack/react-query.gen";
 import type {
 	CalendarEvent,
@@ -49,7 +49,7 @@ export default function Car() {
 		isFetching,
 		isLoading,
 	} = useQuery({
-		...getAllBookingOptions(),
+		...getAllCarBookingsOptions(),
 	});
 
 	const {
@@ -63,30 +63,30 @@ export default function Car() {
 	});
 
 	const handleEventAdd = useMutation({
-		...createBookingMutation(),
+		...createCarBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllCarBookingsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 		},
 	});
 
 	const handleEventDelete = useMutation({
-		...removeBookingMutation(),
+		...removeCarBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllCarBookingsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 		},
 	});
 
 	const handleEventEdit = useMutation({
-		...updateBookingMutation(),
+		...updateCarBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllCarBookingsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 		},

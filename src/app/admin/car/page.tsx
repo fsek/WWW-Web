@@ -8,8 +8,8 @@ import CarForm from "./CarForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	adminGetAllUsersOptions,
-	createBookingMutation,
-	getAllBookingOptions,
+	createCarBookingMutation,
+	getAllCarBookingsOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -25,9 +25,9 @@ import {
 	type Row,
 } from "@tanstack/react-table";
 import {
-	removeBookingMutation,
-	getAllBookingQueryKey,
-	updateBookingMutation,
+	removeCarBookingMutation,
+	getAllCarBookingsQueryKey,
+	updateCarBookingMutation,
 } from "@/api/@tanstack/react-query.gen";
 import AdminTable from "@/widgets/AdminTable";
 import type {
@@ -151,7 +151,7 @@ export default function Car() {
 	];
 
 	const { data, error, isFetching, isLoading } = useQuery({
-		...getAllBookingOptions(),
+		...getAllCarBookingsOptions(),
 	});
 
 	const {
@@ -176,10 +176,10 @@ export default function Car() {
 	}, [data, showOnlyCurrent]);
 
 	const handleEventAdd = useMutation({
-		...createBookingMutation(),
+		...createCarBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllCarBookingsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 			toast.success(t("admin:car.success_add"));
@@ -187,10 +187,10 @@ export default function Car() {
 	});
 
 	const handleEventDelete = useMutation({
-		...removeBookingMutation(),
+		...removeCarBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllCarBookingsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 			toast.success(t("admin:car.success_delete"));
@@ -198,10 +198,10 @@ export default function Car() {
 	});
 
 	const handleEventEdit = useMutation({
-		...updateBookingMutation(),
+		...updateCarBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllCarBookingsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 			toast.success(t("admin:car.success_edit"));

@@ -20,9 +20,9 @@ import { Label } from "@/components/ui/label";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import {
-	getAllBookingQueryKey,
-	updateBookingMutation,
-	removeBookingMutation,
+	getAllCarBookingsQueryKey,
+	updateCarBookingMutation,
+	removeCarBookingMutation,
 } from "@/api/@tanstack/react-query.gen";
 import type { CarBookingRead, CarBookingUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -116,11 +116,11 @@ export default function CarEditForm({
 	const queryClient = useQueryClient();
 
 	const updateBooking = useMutation({
-		...updateBookingMutation(),
+		...updateCarBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
 			toast.success(t("admin:car.success_edit"));
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllCarBookingsQueryKey() });
 		},
 		onError: (error) => {
 			toast.error(
@@ -131,11 +131,11 @@ export default function CarEditForm({
 	});
 
 	const removeBooking = useMutation({
-		...removeBookingMutation(),
+		...removeCarBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
 			toast.success(t("admin:car.success_delete"));
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllCarBookingsQueryKey() });
 		},
 		onError: (error) => {
 			toast.error(
