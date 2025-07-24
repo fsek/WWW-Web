@@ -23,6 +23,7 @@ import {
 import type { PostRead, PostUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 const postEditSchema = z.object({
 	id: z.number(),
@@ -43,6 +44,7 @@ export default function PostEditForm({
 	onClose,
 	selectedPost,
 }: PostEditFormProps) {
+	const { t } = useTranslation("admin");
 	const form = useForm<PostEditFormType>({
 		resolver: zodResolver(postEditSchema),
 		defaultValues: {
@@ -129,10 +131,9 @@ export default function PostEditForm({
 				}
 			}}
 		>
-			{" "}
 			<DialogContent className="min-w-fit lg:max-w-7xl">
 				<DialogHeader>
-					<DialogTitle>Redigera post</DialogTitle>
+					<DialogTitle>{t("posts.edit", "Redigera post")}</DialogTitle>
 				</DialogHeader>
 				<hr />
 				<Form {...form}>
@@ -146,9 +147,12 @@ export default function PostEditForm({
 							name="name"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Name</FormLabel>
+									<FormLabel>{t("posts.name", "Name")}</FormLabel>
 									<FormControl>
-										<Input placeholder="Namn" {...field} />
+										<Input
+											placeholder={t("posts.name_placeholder", "Namn")}
+											{...field}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -160,7 +164,7 @@ export default function PostEditForm({
 							name="council_id"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
-									<FormLabel>Council</FormLabel>
+									<FormLabel>{t("posts.council", "Council")}</FormLabel>
 									<AdminChooseCouncil
 										value={field.value}
 										onChange={field.onChange}
@@ -171,20 +175,12 @@ export default function PostEditForm({
 
 						<div className="space-x-2 lg:col-span-4 lg:grid-cols-subgrid">
 							<Button
-								variant="outline"
-								className="w-32 min-w-fit"
-								onClick={() => console.log("Preview clicked")}
-							>
-								Förhandsgranska
-							</Button>
-
-							<Button
 								variant="destructive"
 								type="button"
 								className="w-32 min-w-fit"
 								onClick={handleRemoveSubmit}
 							>
-								Remove post
+								{t("posts.remove", "Remove post")}
 							</Button>
 
 							<Button
@@ -193,11 +189,11 @@ export default function PostEditForm({
 								className="w-32 min-w-fit"
 								onClick={viewPermissions}
 							>
-								Updatera permissions
+								{t("posts.update_permissions", "Updatera permissions")}
 							</Button>
 
 							<Button type="submit" className="w-32 min-w-fit">
-								Spara
+								{t("save", "Spara")}
 							</Button>
 						</div>
 					</form>

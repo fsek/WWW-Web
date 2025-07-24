@@ -9,11 +9,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
-
-// const counilcs = [
-// 	{ id: 0, name: "Piratutskottet" },
-// 	{ id: 1, name: "Pippi Långstrumputskottet" },
-// ];
+import { useTranslation } from "react-i18next";
 
 interface AdminChooseCouncilProps {
 	value: number;
@@ -24,13 +20,16 @@ export function AdminChooseCouncil({
 	value,
 	onChange,
 }: AdminChooseCouncilProps) {
+	const { t, i18n } = useTranslation("admin");
 	const { data: councils, error } = useQuery({
 		...getAllCouncilsOptions(),
 	});
 
 	if (error) {
-		return <p>Hämtar...</p>;
+		return <p>{t("loading")}</p>;
 	}
+
+	const lang = i18n.language.startsWith("sv") ? "sv" : "en";
 
 	return (
 		<Select
@@ -38,14 +37,16 @@ export function AdminChooseCouncil({
 			onValueChange={(val) => onChange(Number(val))}
 		>
 			<SelectTrigger className="w-full">
-				<SelectValue placeholder="Select a Council" />
+				<SelectValue placeholder={t("select_council")} />
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
-					<SelectLabel>Available Councils</SelectLabel>
+					<SelectLabel>{t("available_councils")}</SelectLabel>
 					{councils?.map((item) => (
 						<SelectItem key={item.id} value={item.id.toString()}>
-							{item.name || "Unnamed Council"}
+							{lang === "sv"
+								? item.name_sv || t("unnamed_council")
+								: item.name_en || t("unnamed_council")}
 						</SelectItem>
 					))}
 				</SelectGroup>

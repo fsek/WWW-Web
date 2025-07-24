@@ -13,31 +13,39 @@ import type { PostRead } from "../../../api";
 import useCreateTable from "@/widgets/useCreateTable";
 import PostForm from "./PostForm";
 import PostEditForm from "./PostEditForm";
-
-function CouncilName({ councilId }: { councilId: number }) {
-	const { data } = useQuery({
-		...getAllCouncilsOptions(),
-	});
-
-	const council = data?.find((c) => c.id === councilId);
-
-	return council?.name;
-}
-
-// Column setup
-const columnHelper = createColumnHelper<PostRead>();
-const columns = [
-	columnHelper.accessor("name", {
-		header: "Post",
-		cell: (info) => info.getValue(),
-	}),
-	columnHelper.accessor("council_id", {
-		header: "Council name",
-		cell: (info) => <CouncilName councilId={info.getValue()} />,
-	}),
-];
+import { useTranslation } from "react-i18next";
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 export default function Posts() {
+	const { t, i18n } = useTranslation("admin");
+
+	function CouncilName({ councilId }: { councilId: number }) {
+		const { data } = useQuery({
+			...getAllCouncilsOptions(),
+		});
+
+		const council = data?.find((c) => c.id === councilId);
+
+		if (!council?.name_en && !council?.name_sv) {
+			return t("posts.council_not_found");
+		}
+
+		return i18n.language === "en" ? council?.name_en : council?.name_sv;
+	}
+
+	// Column setup
+	const columnHelper = createColumnHelper<PostRead>();
+	const columns = [
+		columnHelper.accessor("name", {
+			header: t("posts.name", "Post"),
+			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor("council_id", {
+			header: t("posts.council", "Council name"),
+			cell: (info) => <CouncilName councilId={info.getValue()} />,
+		}),
+	];
+
 	const { data, error, isPending } = useQuery({
 		...getAllPostsOptions(),
 	});
@@ -58,21 +66,19 @@ export default function Posts() {
 	}
 
 	if (isPending) {
-		return <p>Hämtar...</p>;
+		return <LoadingErrorCard />;
 	}
 
 	if (error) {
-		return <p>Något gick fel :/</p>;
+		return <LoadingErrorCard error={error} />;
 	}
 
 	return (
 		<div className="px-8 space-x-4">
 			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-				Administrera poster
+				{t("posts.title")}
 			</h3>
-			<p className="py-3">
-				Här kan du skapa poster & redigera existerande poster på hemsidan.
-			</p>
+			<p className="py-3">{t("posts.description")}</p>
 			<PostForm />
 
 			<AdminTable table={table} onRowClick={handleRowClick} />

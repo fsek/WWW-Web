@@ -20,6 +20,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
+import { useTranslation } from "react-i18next";
 
 const postSchema = z.object({
 	name: z.string().min(2),
@@ -29,6 +30,7 @@ const postSchema = z.object({
 export default function PostForm() {
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
+	const { t } = useTranslation("admin");
 
 	const postForm = useForm<z.infer<typeof postSchema>>({
 		resolver: zodResolver(postSchema),
@@ -72,13 +74,13 @@ export default function PostForm() {
 					setSubmitEnabled(true);
 				}}
 			>
-				Skapa post
+				{t("posts.submit", "Skapa post")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="min-w-fit lg:max-w-7xl">
 					<DialogHeader>
-						<DialogTitle>Skapa post</DialogTitle>
+						<DialogTitle>{t("posts.title", "Skapa post")}</DialogTitle>
 					</DialogHeader>
 					<hr />
 					<Form {...postForm}>
@@ -91,9 +93,12 @@ export default function PostForm() {
 								name="name"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Namn </FormLabel>
+										<FormLabel>{t("posts.name", "Namn")}</FormLabel>
 										<FormControl>
-											<Input placeholder="Titel" {...field} />
+											<Input
+												placeholder={t("posts.name_placeholder", "Titel")}
+												{...field}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -103,7 +108,7 @@ export default function PostForm() {
 								name="council_id"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
-										<FormLabel>Council name</FormLabel>
+										<FormLabel>{t("posts.council", "Council name")}</FormLabel>
 										<AdminChooseCouncil
 											value={field.value}
 											onChange={field.onChange}
@@ -113,15 +118,12 @@ export default function PostForm() {
 							/>
 
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-								<Button variant="outline" className="w-32 min-w-fit">
-									Förhandsgranska
-								</Button>
 								<Button
 									type="submit"
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									Publicera
+									{t("posts.publish", "Publicera")}
 								</Button>
 							</div>
 						</form>

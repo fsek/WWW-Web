@@ -159,7 +159,10 @@ export default function Page() {
 							<div className="flex items-center gap-2">
 								<User className="w-4 h-4 text-muted-foreground" />
 								<span>
-									{t("admin:events.council_title") + data.council.name}
+									{t("admin:events.council_title") +
+										(i18n.language === "en"
+											? data.council.name_en
+											: data.council.name_sv)}
 								</span>
 							</div>
 

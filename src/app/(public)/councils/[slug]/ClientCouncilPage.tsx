@@ -35,7 +35,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 			.replace(/ /g, "-")
 			.replace(/é/g, "e");
 
-	const council = data.find((c) => normalize(c.name) === normalize(slug));
+	const council = data.find((c) => normalize(c.name_sv) === normalize(slug));
 
 	if (!council) {
 		return <LoadingErrorCard error="Council not found" />;
@@ -44,7 +44,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 	return (
 		<div className="flex flex-col min-h-screen">
 			<TitleBanner
-				title={council.name}
+				title={i18n.language === "en" ? council.name_en : council.name_sv}
 				imageUrl={mh.src}
 				className="relative h-[30vh] bg-cover bg-center"
 			/>
@@ -53,7 +53,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 					leftColumnContent={
 						<>
 							<CustomTitle
-								text={`Om ${council.name}`}
+								text={t("utskott:about_title")}
 								className="mt-4"
 								size={3}
 							/>
@@ -119,10 +119,10 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 										{post.email}
 									</Link>
 								</p>
-								<p className="mt-4 font-semibold">
+								{/* <p className="mt-4 font-semibold">
 									{t("utskott:vemhar")}:{" "}
 									<span className="italic text-orange-600">Namn Namnsson</span>
-								</p>
+								</p> */}
 							</div>
 						))
 					) : (

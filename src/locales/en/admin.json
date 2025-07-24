@@ -163,7 +163,18 @@
 		"error_unblock": "Failed to unblock user"
 	},
 	"posts": {
-		"self": "Posts"
+		"self": "Posts",
+		"council_not_found": "Council not found.",
+		"title": "Manage Posts",
+		"description": "Here you can create and manage posts.",
+		"submit": "Create Post",
+		"edit": "Edit Post",
+		"name": "Name",
+		"name_placeholder": "Title",
+		"council": "Council",
+		"publish": "Publish",
+		"remove": "Remove Post",
+		"update_permissions": "Update permissions"
 	},
 	"permissions": {
 		"self": "Permissions"
@@ -193,8 +204,6 @@
 	"last_name": "Last Name",
 	"email": "Email",
 	"is_verified": "Verified",
-	"yes": "Yes",
-	"no": "No",
 	"account_created": "Account Created",
 	"stil_id": "StiL ID",
 	"program": "Program",
@@ -202,5 +211,8 @@
 	"is_member": "Member",
 	"nollning": {
 		"self": "Nollning"
-	}
+	},
+	"select_council": "Select a Council",
+	"available_councils": "Available Councils",
+	"unnamed_council": "Unnamed Council"
 }

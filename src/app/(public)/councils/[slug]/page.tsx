@@ -3,7 +3,7 @@ import ClientCouncilPage from "./ClientCouncilPage";
 // Define councils statically for production
 // These need to be lowercase, not using åäö
 interface Council {
-	name: string;
+	name_sv: string;
 }
 
 let councils: Council[] = [];
@@ -15,28 +15,28 @@ if (
 	process.env.BUILD_ENV === "prod"
 ) {
 	councils = [
-		{ name: "cafemasteriet" },
-		{ name: "styrelsen" },
-		{ name: "fnu" },
-		{ name: "bokforlaget" },
-		{ name: "foset" },
-		{ name: "prylmasteriet" },
-		{ name: "sanningsministeriet" },
-		{ name: "samvetet" },
-		{ name: "sekret-service" },
-		{ name: "studieradet" },
-		{ name: "kulturministeriet" },
-		{ name: "ovriga" },
-		{ name: "externa-representanter" },
+		{ name_sv: "cafemasteriet" },
+		{ name_sv: "styrelsen" },
+		{ name_sv: "fnu" },
+		{ name_sv: "bokforlaget" },
+		{ name_sv: "foset" },
+		{ name_sv: "prylmasteriet" },
+		{ name_sv: "sanningsministeriet" },
+		{ name_sv: "samvetet" },
+		{ name_sv: "sekret-service" },
+		{ name_sv: "studieradet" },
+		{ name_sv: "kulturministeriet" },
+		{ name_sv: "ovriga" },
+		{ name_sv: "externa-representanter" },
 	];
 } else {
-	councils = [{ name: "kodmasteriet" }, { name: "sanningsministeriet" }];
+	councils = [{ name_sv: "kodmasteriet" }, { name_sv: "sanningsministeriet" }];
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export function generateStaticParams() {
 	return councils.map((council) => ({
-		slug: council.name,
+		slug: council.name_sv,
 	}));
 }
 

@@ -164,7 +164,18 @@
 		"error_unblock": "Misslyckades att avblockera användare"
 	},
 	"posts": {
-		"self": "Poster"
+		"self": "Poster",
+		"council_not_found": "Utskottet hittades inte.",
+		"title": "Hantera poster",
+		"description": "Här kan du skapa och hantera poster.",
+		"submit": "Skapa post",
+		"edit": "Redigera post",
+		"name": "Namn",
+		"name_placeholder": "Titel",
+		"council": "Utskott",
+		"publish": "Publicera",
+		"remove": "Ta bort post",
+		"update_permissions": "Updatera permissions"
 	},
 	"permissions": {
 		"self": "Permissions"
@@ -194,8 +205,6 @@
 	"last_name": "Efternamn",
 	"email": "E-post",
 	"is_verified": "Verifierad",
-	"yes": "Ja",
-	"no": "Nej",
 	"account_created": "Konto Skapat",
 	"stil_id": "StiL-ID",
 	"program": "Program",
@@ -203,5 +212,8 @@
 	"is_member": "Medlem",
 	"nollning": {
 		"self": "Nollning"
-	}
+	},
+	"select_council": "Välj utskott",
+	"available_councils": "Tillgängliga utskott",
+	"unnamed_council": "Namnlöst utskott"
 }

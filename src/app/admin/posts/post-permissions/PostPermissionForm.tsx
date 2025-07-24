@@ -62,11 +62,9 @@ export default function PostPermissionForm({
 		...changePostPermissionsMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllPostsQueryKey() });
-			console.log("tog sig hit");
 			queryClient.invalidateQueries({
 				queryKey: getPostQueryKey({ path: { post_id: post_values?.id ?? -1 } }),
 			});
-			console.log("men inte hit");
 
 			setSubmitEnabled(true);
 			setOpen(false);

@@ -360,7 +360,8 @@ export default function Car() {
 		council_id?: number;
 		personal: boolean;
 		confirmed: boolean;
-		council_name?: string;
+		council_name_sv?: string;
+		council_name_en?: string;
 	}
 
 	// Transform the fetched data into CalendarEvent type
@@ -378,7 +379,8 @@ export default function Car() {
 				end: car.end_time,
 				all_day: false,
 				description_sv: car.description,
-				council_name: car.council?.name ?? undefined,
+				council_name_sv: car.council?.name_sv ?? undefined,
+				council_name_en: car.council?.name_en ?? undefined,
 				confirmed: car.confirmed,
 				personal: car.personal,
 				council_id: car.council_id ?? undefined,
