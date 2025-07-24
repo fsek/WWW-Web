@@ -205,7 +205,25 @@
 		"council": "Utskott",
 		"publish": "Publicera",
 		"remove": "Ta bort post",
-		"update_permissions": "Updatera permissions"
+		"confirm_remove": "Bekräfta borttagning",
+		"confirm_remove_text": "Är du säker på att du vill ta bort denna post?",
+		"update_permissions": "Updatera permissions",
+		"create_success": "Posten har skapats!",
+		"create_error": "Kunde inte skapa post.",
+		"edit_success": "Posten har uppdaterats!",
+		"edit_error": "Kunde inte uppdatera post.",
+		"delete_success": "Posten har tagits bort!",
+		"delete_error": "Kunde inte ta bort post.",
+		"permissions": {
+			"no_post_selected": "Ingen post vald. Gå tillbaka och välj en post att administrera.",
+			"loading": "Läser in post...",
+			"load_error": "Det gick inte att hämta posten.",
+			"title": "Administrera specifika rättigheter för poster",
+			"description": "Här kan du uppdatera posters rättigheter & ta bort existerande rättigheter på hemsidan.",
+			"edit": "Ändra behörigheter",
+			"update_success": "Behörigheter uppdaterade!",
+			"update_error": "Kunde inte uppdatera behörigheter."
+		}
 	},
 	"permissions": {
 		"self": "Behörigheter",

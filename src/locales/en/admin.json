@@ -204,7 +204,25 @@
 		"council": "Council",
 		"publish": "Publish",
 		"remove": "Remove Post",
-		"update_permissions": "Update permissions"
+		"confirm_remove": "Confirm removal",
+		"confirm_remove_text": "Are you sure you want to remove this post?",
+		"update_permissions": "Update permissions",
+		"create_success": "Post created!",
+		"create_error": "Could not create post.",
+		"edit_success": "Post updated!",
+		"edit_error": "Could not update post.",
+		"delete_success": "Post removed!",
+		"delete_error": "Could not remove post.",
+		"permissions": {
+			"no_post_selected": "No post selected. Go back and select a post to administer.",
+			"loading": "Loading post...",
+			"load_error": "Could not fetch post.",
+			"title": "Manage specific permissions for posts",
+			"description": "Here you can update post permissions & remove existing permissions on the website.",
+			"edit": "Edit permissions",
+			"update_success": "Permissions updated!",
+			"update_error": "Could not update permissions."
+		}
 	},
 	"permissions": {
 		"self": "Permissions",

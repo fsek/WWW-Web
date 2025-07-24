@@ -21,9 +21,15 @@ import {
 
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { useTranslation } from "react-i18next";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 const postSchema = z.object({
-	name: z.string().min(2),
+	name_sv: z.string().min(2),
+	name_en: z.string().min(2),
+	description_sv: z.string().min(2),
+	description_en: z.string().min(2),
+	email: z.string().email(),
 	council_id: z.number().int(),
 });
 
@@ -35,8 +41,12 @@ export default function PostForm() {
 	const postForm = useForm<z.infer<typeof postSchema>>({
 		resolver: zodResolver(postSchema),
 		defaultValues: {
-			name: "",
+			name_sv: "",
+			name_en: "",
+			description_sv: "",
+			description_en: "",
 			council_id: 0,
+			email: "",
 		},
 	});
 
@@ -48,10 +58,15 @@ export default function PostForm() {
 			queryClient.invalidateQueries({ queryKey: getAllPostsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.success(t("posts.create_success", "Post skapad!"));
 		},
-		onError: () => {
+		onError: (error) => {
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.error(
+				t("posts.create_error", "Kunde inte skapa post.") +
+					(error?.detail ? ` (${error.detail})` : ""),
+			);
 		},
 	});
 
@@ -59,7 +74,11 @@ export default function PostForm() {
 		setSubmitEnabled(false);
 		createPosts.mutate({
 			body: {
-				name: values.name,
+				name_sv: values.name_sv,
+				name_en: values.name_en,
+				description_sv: values.description_sv,
+				description_en: values.description_en,
+				email: values.email,
 				council_id: values.council_id,
 			},
 		});
@@ -88,21 +107,107 @@ export default function PostForm() {
 							onSubmit={postForm.handleSubmit(onSubmit)}
 							className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
 						>
+							{/* Name (sv) */}
 							<FormField
 								control={postForm.control}
-								name="name"
+								name="name_sv"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("posts.name", "Namn")}</FormLabel>
+										<FormLabel>{t("posts.name", "Name")}</FormLabel>
 										<FormControl>
 											<Input
-												placeholder={t("posts.name_placeholder", "Titel")}
+												placeholder={t("posts.name_placeholder", "Namn")}
 												{...field}
 											/>
 										</FormControl>
 									</FormItem>
 								)}
 							/>
+
+							{/* Name (en) */}
+							<FormField
+								control={postForm.control}
+								name="name_en"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>
+											{t("posts.name_en", "Name (English)")}
+										</FormLabel>
+										<FormControl>
+											<Input
+												placeholder={t(
+													"posts.name_en_placeholder",
+													"Name (English)",
+												)}
+												{...field}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Description (sv) */}
+							<FormField
+								control={postForm.control}
+								name="description_sv"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2">
+										<FormLabel>
+											{t("posts.description_sv", "Description (Swedish)")}
+										</FormLabel>
+										<FormControl>
+											<Textarea
+												placeholder={t(
+													"posts.description_placeholder_sv",
+													"Beskrivning (Svenska)",
+												)}
+												{...field}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Description (en) */}
+							<FormField
+								control={postForm.control}
+								name="description_en"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2">
+										<FormLabel>
+											{t("posts.description_en", "Description (English)")}
+										</FormLabel>
+										<FormControl>
+											<Textarea
+												placeholder={t(
+													"posts.description_placeholder_en",
+													"Description (English)",
+												)}
+												{...field}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Email */}
+							<FormField
+								control={postForm.control}
+								name="email"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("posts.email", "Email")}</FormLabel>
+										<FormControl>
+											<Input
+												type="email"
+												placeholder={t("posts.email_placeholder", "Email")}
+												{...field}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
 							<FormField
 								control={postForm.control}
 								name="council_id"

@@ -21,6 +21,8 @@ import {
 	getPostQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import type { PostRead, PermissionRead } from "@/api";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 interface PostPermissionFormProps {
 	post_values?: PostRead | null;
@@ -41,6 +43,7 @@ type FormValues = z.infer<typeof postPermissionSchema>;
 export default function PostPermissionForm({
 	post_values = null,
 }: PostPermissionFormProps) {
+	const { t } = useTranslation("admin");
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 	const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -68,10 +71,19 @@ export default function PostPermissionForm({
 
 			setSubmitEnabled(true);
 			setOpen(false);
+			toast.success(
+				t("posts.permissions.update_success", "Behörigheter uppdaterade!"),
+			);
 		},
-		onError: () => {
+		onError: (error) => {
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.error(
+				t(
+					"posts.permissions.update_error",
+					"Kunde inte uppdatera behörigheter.",
+				) + (error?.detail ? ` (${error.detail})` : ""),
+			);
 		},
 	});
 
@@ -107,7 +119,7 @@ export default function PostPermissionForm({
 	}
 
 	if (!post_values) {
-		return <div>Hämtar...</div>;
+		return <div>{t("posts.permissions.loading", "Hämtar...")}</div>;
 	}
 
 	// Group permissions by target
@@ -148,13 +160,15 @@ export default function PostPermissionForm({
 					setSubmitEnabled(true);
 				}}
 			>
-				Ändra behörigheter
+				{t("posts.permissions.edit", "Ändra behörigheter")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="min-w-fit lg:max-w-7xl">
 					<DialogHeader>
-						<DialogTitle>Ändra behörigheter</DialogTitle>
+						<DialogTitle>
+							{t("posts.permissions.edit", "Ändra behörigheter")}
+						</DialogTitle>
 					</DialogHeader>
 					<Form {...form}>
 						<form
@@ -200,7 +214,7 @@ export default function PostPermissionForm({
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									Spara
+									{t("save", "Spara")}
 								</Button>
 							</div>
 						</form>

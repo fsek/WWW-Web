@@ -15,6 +15,7 @@ import PostForm from "./PostForm";
 import PostEditForm from "./PostEditForm";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function Posts() {
 	const { t, i18n } = useTranslation("admin");
@@ -36,13 +37,17 @@ export default function Posts() {
 	// Column setup
 	const columnHelper = createColumnHelper<PostRead>();
 	const columns = [
-		columnHelper.accessor("name", {
+		columnHelper.accessor(i18n.language === "en" ? "name_en" : "name_sv", {
 			header: t("posts.name", "Post"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("council_id", {
 			header: t("posts.council", "Council name"),
 			cell: (info) => <CouncilName councilId={info.getValue()} />,
+		}),
+		columnHelper.accessor("email", {
+			header: t("posts.email", "Email"),
+			cell: (info) => info.getValue(),
 		}),
 	];
 
@@ -88,6 +93,7 @@ export default function Posts() {
 				onClose={() => handleClose()}
 				selectedPost={selectedEvent as PostRead}
 			/>
+			<Toaster position="top-center" richColors />
 		</div>
 	);
 }
