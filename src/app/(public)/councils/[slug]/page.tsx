@@ -7,7 +7,13 @@ interface Council {
 }
 
 let councils: Council[] = [];
-if (process.env.ENV === "production") {
+if (
+	// I'm just guessing here
+	process.env.ENV === "production" ||
+	process.env.BUILD_ENV === "stage" ||
+	process.env.BUILD_ENV === "production" ||
+	process.env.BUILD_ENV === "prod"
+) {
 	councils = [
 		{ name: "cafemasteriet" },
 		{ name: "styrelsen" },

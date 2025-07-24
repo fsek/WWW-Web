@@ -7,9 +7,10 @@ import { Trans, useTranslation } from "react-i18next";
 import { getAllCouncilsOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import Link from "next/link";
 
 export default function ClientCouncilPage({ slug }: { slug: string }) {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	// Fetch booking data
 	const { data, error, isLoading } = useQuery({
 		...getAllCouncilsOptions(),
@@ -99,14 +100,28 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 								key={post.id}
 								className="border rounded-lg p-6 bg-gray-50 dark:bg-gray-900"
 							>
-								<CustomTitle size={2} text={post.name} />
+								<CustomTitle
+									size={2}
+									text={i18n.language === "en" ? post.name_en : post.name_sv}
+								/>
 								<p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
 									{/* Placeholder for post description */}
-									{t(`utskott:${slug}.post_besk`)}
+									{i18n.language === "en"
+										? post.description_en
+										: post.description_sv}
+								</p>
+								<p className="mt-4 font-semibold">
+									{t("utskott:post_contact")}:{" "}
+									<Link
+										href={`mailto:${post.email}`}
+										className="text-blue-500 hover:underline"
+									>
+										{post.email}
+									</Link>
 								</p>
 								<p className="mt-4 font-semibold">
 									{t("utskott:vemhar")}:{" "}
-									<span className="italic text-orange-600">Namn Efternamn</span>
+									<span className="italic text-orange-600">Namn Namnsson</span>
 								</p>
 							</div>
 						))
