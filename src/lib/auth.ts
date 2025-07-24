@@ -5,7 +5,7 @@ import { create } from "zustand";
 
 type Action = PermissionRead["action"];
 type Target = PermissionRead["target"];
-type RequiredPermission = [Action, Target];
+export type RequiredPermission = [Action, Target];
 class PermissionMap extends Map<Target, Set<Action>> {
 	hasRequiredPermissions(required: RequiredPermission[]): boolean {
 		for (const [action, target] of required) {
