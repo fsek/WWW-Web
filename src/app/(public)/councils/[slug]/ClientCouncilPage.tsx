@@ -4,28 +4,24 @@ import TwoColumnLayout from "@/components/TwoColumnLayout";
 import mh from "@/assets/mh.jpg";
 import TitleBanner from "@/components/TitleBanner";
 import { Trans, useTranslation } from "react-i18next";
-import { getAllCouncilsOptions } from "@/api/@tanstack/react-query.gen";
-import { useQuery } from "@tanstack/react-query";
+import {
+	getAllCouncilsOptions,
+	getAllUsersWithPostOptions,
+} from "@/api/@tanstack/react-query.gen";
+import { useQuery, useQueries } from "@tanstack/react-query";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import Link from "next/link";
 
 export default function ClientCouncilPage({ slug }: { slug: string }) {
 	const { t, i18n } = useTranslation();
-	// Fetch booking data
+
+	// fetch all councils
 	const { data, error, isLoading } = useQuery({
 		...getAllCouncilsOptions(),
 		refetchOnWindowFocus: false,
 	});
 
-	if (isLoading) {
-		return <LoadingErrorCard />;
-	}
-
-	if (error || !data) {
-		return <LoadingErrorCard error={error || undefined} />;
-	}
-
-	// Find the council with the matching slug, normalizing å, ä, ö to a, a, o
+	// normalize helper and derive council & posts early
 	const normalize = (str: string) =>
 		str
 			.toLowerCase()
@@ -34,12 +30,23 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 			.replace(/ö/g, "o")
 			.replace(/ /g, "-")
 			.replace(/é/g, "e");
+	const council = (data || []).find(
+		(c) => normalize(c.name_sv) === normalize(slug),
+	);
+	const posts = council?.posts || [];
 
-	const council = data.find((c) => normalize(c.name_sv) === normalize(slug));
+	// always call useQueries (empty array if no posts)
+	const postsUsersQueries = useQueries({
+		queries: posts.map((post) => ({
+			...getAllUsersWithPostOptions({ path: { post_id: post.id } }),
+			refetchOnWindowFocus: false,
+		})),
+	});
 
-	if (!council) {
-		return <LoadingErrorCard error="Council not found" />;
-	}
+	// early returns
+	if (isLoading) return <LoadingErrorCard />;
+	if (error || !data) return <LoadingErrorCard error={error || undefined} />;
+	if (!council) return <LoadingErrorCard error="Council not found" />;
 
 	return (
 		<div className="flex flex-col min-h-screen">
@@ -84,7 +91,9 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 							/>
 							{/* Placeholder for contact info */}
 							<p className="mt-4">{t(`utskott:${slug}.contact`)}</p>
-							<p className="mt-4">{t(`utskott:${slug}.contact2`)}</p>
+							{t(`utskott:${slug}.contact2`, { defaultValue: "" }) && (
+								<p className="mt-4">{t(`utskott:${slug}.contact2`)}</p>
+							)}
 						</>
 					}
 					className=""
@@ -94,37 +103,57 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 
 				{/* Map out all the posts */}
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-					{council.posts && council.posts.length > 0 ? (
-						council.posts.map((post) => (
-							<div
-								key={post.id}
-								className="border rounded-lg p-6 bg-gray-50 dark:bg-gray-900"
-							>
-								<CustomTitle
-									size={2}
-									text={i18n.language === "en" ? post.name_en : post.name_sv}
-								/>
-								<p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-									{/* Placeholder for post description */}
-									{i18n.language === "en"
-										? post.description_en
-										: post.description_sv}
-								</p>
-								<p className="mt-4 font-semibold">
-									{t("utskott:post_contact")}:{" "}
-									<Link
-										href={`mailto:${post.email}`}
-										className="text-blue-500 hover:underline"
-									>
-										{post.email}
-									</Link>
-								</p>
-								{/* <p className="mt-4 font-semibold">
-									{t("utskott:vemhar")}:{" "}
-									<span className="italic text-orange-600">Namn Namnsson</span>
-								</p> */}
-							</div>
-						))
+					{posts.length > 0 ? (
+						posts.map((post, idx) => {
+							const { isLoading: usersLoading, data: users = [] } =
+								postsUsersQueries[idx];
+							return (
+								<div
+									key={post.id}
+									className="border rounded-lg p-6 bg-gray-50 dark:bg-gray-900"
+								>
+									<CustomTitle
+										size={2}
+										text={i18n.language === "en" ? post.name_en : post.name_sv}
+									/>
+									<p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+										{i18n.language === "en"
+											? post.description_en
+											: post.description_sv}
+									</p>
+									<p className="mt-4 font-semibold">
+										{t("utskott:post_contact")}:{" "}
+										<Link
+											href={`mailto:${post.email}`}
+											className="text-blue-500 hover:underline"
+										>
+											{post.email}
+										</Link>
+									</p>
+									<p className="mt-4 font-semibold">
+										{t("utskott:vemhar")}:{" "}
+										{usersLoading ? (
+											<span className="italic text-gray-400">
+												{t("loading")}
+											</span>
+										) : users.length > 0 ? (
+											users.map((u) => (
+												<span
+													key={u.id}
+													className="italic text-orange-600 mr-2"
+												>
+													{u.first_name} {u.last_name}
+												</span>
+											))
+										) : (
+											<span className="italic text-orange-600">
+												{t("utskott:no_user")}
+											</span>
+										)}
+									</p>
+								</div>
+							);
+						})
 					) : (
 						<p>{t("utskott:no_posts")}</p>
 					)}

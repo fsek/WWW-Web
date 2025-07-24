@@ -7,6 +7,7 @@
 	"beskrivning": "Description",
 	"vemhar": "Who holds the position?",
 	"about_title": "About the council",
+	"post_contact": "Contact for the position",
 	"bokforlaget": {
 		"self": "Book Publisher",
 		"about": "Fill in",
@@ -17,63 +18,77 @@
 		"self": "Café Committee",
 		"about": "Fill in, here's how you make a link <0> hello </0>",
 		"info": "The Café Committee is responsible for the guild's café operations in the Mathematics building.",
-		"contact": "Café Master: Sixten Georgesson",
-		"contact2": "Vice Café Master: fill in",
+		"contact": "Managing Director",
+		"contact2": "Operating Director",
 		"post_besk": "Here should be lots of info about the positions"
 	},
 	"externa-representanter": {
 		"self": "External Representatives",
 		"about": "Fill in",
-		"info": "The external representatives represent the F-guild in various contexts for the university."
+		"info": "The external representatives represent the F-guild in various contexts for the university.",
+		"contact": "No primary contact post"
 	},
 	"foset": {
 		"self": "Föset",
 		"about": "Fill in",
-		"info": "Föset is responsible for the welcoming and orientation of new students to the F-guild."
+		"info": "Föset is responsible for the welcoming and orientation of new students to the F-guild.",
+		"contact": "Överfös"
 	},
 	"kulturministeriet": {
 		"self": "Ministry of Culture",
 		"about": "Fill in",
-		"info": "The Ministry of Culture is the guild's activities committee and is responsible for organizing fun events."
+		"info": "The Ministry of Culture is the guild's activities committee and is responsible for organizing fun events.",
+		"contact": "Minister for Culture"
 	},
 	"fnu": {
 		"self": "Business Committee",
 		"about": "Fill in",
-		"info": "The Business Committee works to create connections between students and companies."
+		"info": "The Business Committee works to create connections between students and companies.",
+		"contact": "Head of Corporate Relations"
 	},
 	"prylmasteriet": {
 		"self": "Equipment Committee",
 		"about": "Fill in",
-		"info": "The Equipment Committee is responsible for the guild's equipment, car and merch."
+		"info": "The Equipment Committee is responsible for the guild's equipment, car and merch.",
+		"contact": "Head of Facilities"
 	},
 	"samvetet": {
-		"self": "Samvetet",
+		"self": "The Conscience",
 		"about": "Fill in",
-		"info": "Samvetet works to ensure the guild is a safe and inclusive place for all members."
+		"info": "The Conscience works to ensure the guild is a safe and inclusive place for all members.",
+		"contact": "Master of Conscience",
+		"contact2": "President of the committee for student equality"
 	},
 	"sanningsministeriet": {
 		"self": "Ministry of Truth",
 		"about": "Fill in",
-		"info": "The Ministry of Truth builds websites :) and is responsible for the guild's communication via our newspaper, photography and design."
+		"info": "The Ministry of Truth builds websites :) and is responsible for the guild's communication via our newspaper, photography and design.",
+		"contact": "Minister of Truth"
 	},
 	"sekret-service": {
 		"self": "Secret Service",
 		"about": "Fill in",
-		"info": "Secret Service keeps the guild safe from threats and is ruled by the secretary."
+		"info": "Secret Service keeps the guild safe from threats and is ruled by the secretary.",
+		"contact": "Secretary"
 	},
 	"studieradet": {
 		"self": "Student Council",
 		"about": "Fill in",
-		"info": "The Student Council voices the students' opinions and needs."
+		"info": "The Student Council voices the students' opinions and needs.",
+		"contact": "Minister for Education",
+		"contact2": "President of the Educational Council for your program"
 	},
 	"styrelsen": {
 		"self": "Board",
 		"about": "Fill in",
-		"info": "The Board leads the F-guild and is responsible for its operations."
+		"info": "The Board leads the F-guild and is responsible for its operations.",
+		"contact": "President",
+		"contact2": "Vice President"
 	},
 	"ovriga": {
 		"self": "Other",
 		"about": "Fill in",
-		"info": "The F-guild has many other positions and groups that do not fit into the councils above."
+		"info": "The F-guild has many other positions and groups that do not fit into the councils above.",
+		"contact": "No primary contact post"
 	}
 }
