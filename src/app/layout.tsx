@@ -16,6 +16,7 @@ const i18nNamespaces = [
 	"utskott",
 	"landingpage",
 	"user-settings",
+	"notfound",
 ] satisfies Namespace[];
 
 export default async function RootLayout({

@@ -1,7 +1,14 @@
 {
-	"ohno": "Oh no!",
-	"notfound": "The page was not found. If you think something is wrong,",
-	"contact": "contact your local webmaster",
-	"quote": "\"One way is to not do it at all and give up.\"",
-	"back": "Back to homepage"
+	"notFound": {
+		"title": "Oh no!",
+		"description": "The page was not found. If you think something is wrong,",
+		"contact": "contact your local webmaster",
+		"back": "Go back",
+		"quote_1": "One way is to not do it at all and give up.",
+		"quote_author_1": "TP",
+		"quote_2": "LGTM.",
+		"quote_author_2": "Webmasters",
+		"quote_3": "Mistakes are proof that you are trying.",
+		"quote_author_3": "Someone Wise"
+	}
 }
