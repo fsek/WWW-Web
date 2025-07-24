@@ -20,32 +20,11 @@ import {
 	SelectItem,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { permissionActions, permissionTargets } from "@/constants";
 
 const permissionSchema = z.object({
-	// defining these manually is not ideal TODO: fix somehow
-	action: z.enum(["view", "manage", "super"]),
-	target: z.enum([
-		"Event",
-		"Document",
-		"User",
-		"Post",
-		"Permission",
-		"News",
-		"Song",
-		"Ads",
-		"Gallery",
-		"Car",
-		"Cafe",
-		"Election",
-		"Groups",
-		"Adventure Missions",
-		"Nollning",
-		"UserDoorAccess",
-		"Tags",
-		"Council",
-		"Room Bookings",
-		"Rooms",
-	]),
+	action: z.enum([...permissionActions] as [string, ...string[]]),
+	target: z.enum([...permissionTargets] as [string, ...string[]]),
 });
 
 export default function PermissionForm() {
