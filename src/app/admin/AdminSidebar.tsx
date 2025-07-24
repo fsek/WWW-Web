@@ -89,7 +89,7 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:member.self",
 				url: "/admin/members",
-				permissions: [["manage", "User"]],
+				permissions: [["view", "User"]],
 				icon: User,
 			},
 			{
