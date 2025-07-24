@@ -66,6 +66,7 @@ export function EventView({
 	const { data, error, isFetching } = useQuery({
 		...getMeOptions(),
 		staleTime: 30 * 60 * 1000, // Don't refetch for 30 minutes
+		refetchOnWindowFocus: false,
 	});
 
 	let isEditable = !disableEdit;

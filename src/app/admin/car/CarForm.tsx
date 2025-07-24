@@ -16,8 +16,8 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-	createBookingMutation,
-	getAllBookingQueryKey,
+	createCarBookingMutation,
+	getAllCarBookingsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
@@ -96,11 +96,11 @@ export default function CarForm() {
 	const queryClient = useQueryClient();
 
 	const createBookings = useMutation({
-		...createBookingMutation(),
+		...createCarBookingMutation(),
 		throwOnError: false,
 		onSuccess: () => {
 			toast.success(t("admin:car.success_add"));
-			queryClient.invalidateQueries({ queryKey: getAllBookingQueryKey() });
+			queryClient.invalidateQueries({ queryKey: getAllCarBookingsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 		},
