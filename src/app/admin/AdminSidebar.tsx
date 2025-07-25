@@ -72,6 +72,11 @@ const groups = {
 			url: "/admin/nollning",
 			icon: Gauge,
 		},
+		{
+			title: "admin:user-posts.self",
+			url: "/admin/user-posts",
+			icon: User,
+		},
 	],
 };
 

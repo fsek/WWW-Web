@@ -11,6 +11,8 @@
 	"choose_priorities": "Choose prioritized groups",
 	"yes": "Yes",
 	"no": "No",
+	"select_posts": "Select Council Posts",
+	"no_posts": "No posts assigned",
 	"news": {
 		"self": "News",
 		"page_title": "Manage News"
@@ -224,6 +226,25 @@
 			"update_error": "Could not update permissions."
 		}
 	},
+	"user-posts": {
+		"self": "User Posts",
+		"list": "Manage User Posts",
+		"list_description": "Here you can assign and manage council posts for users.",
+		"search_placeholder": "Search by name, email, or STIL ID",
+		"filter_by_position": "Filter by position",
+		"table_header": "Current Posts",
+		"actions": "Actions",
+		"manage": "Manage Posts",
+		"user_info": "User Information",
+		"manage_positions": "Manage User Positions",
+		"edit": "Manage User Posts",
+		"save": "Save Changes",
+		"remove_all": "Remove All Posts",
+		"update_success": "User posts updated successfully!",
+		"update_error": "Failed to update user posts.",
+		"confirm_remove": "Confirm Removal",
+		"confirm_remove_all_text": "Are you sure you want to remove all council posts for this user?"
+	},
 	"permissions": {
 		"self": "Permissions",
 		"title": "Manage permissions",
@@ -271,6 +292,8 @@
 	"program": "Program",
 	"start_year": "Start Year",
 	"is_member": "Member",
+	"telephone_number": "Phone Number",
+	"not_provided": "Not provided",
 	"nollning": {
 		"self": "Nollning"
 	},
