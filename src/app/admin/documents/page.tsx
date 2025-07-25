@@ -13,7 +13,9 @@
 // import { useTranslation } from "react-i18next";
 // import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
-// export default function Documents() {
+export default function Documents() {
+	return <></>;
+}
 // 	// TODO: Fix this page lmao
 // 	const { t } = useTranslation();
 // 	const { data, error, isPending } = useQuery({
