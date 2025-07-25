@@ -58,6 +58,10 @@ export function NavBar() {
 	const logoutMutation = useMutation({
 		...authCookieLogoutMutation({ credentials: "include" }),
 		onSuccess: () => {
+			// Set a cookie to indicate the user is not authenticated, just for the middleware to check if it should redirect
+			// obviously this is not secure enough for real authentication
+			document.cookie =
+				"auth_status=unauthenticated; path=/; SameSite=Strict; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 			router.push("/");
 		},
 		onError: (error: DefaultError) => {
