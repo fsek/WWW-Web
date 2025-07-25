@@ -54,9 +54,7 @@ export default function News() {
 					<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
 						{t("admin:news.page_title")}
 					</h3>
-					<p className="py-3">
-						Här kan du skapa nyheter & redigera existerande nyheter på hemsidan.
-					</p>
+					<p className="py-3">{t("admin:news.page_description")}</p>
 					<NewsForm />
 					<AdminTable table={table} />
 				</div>

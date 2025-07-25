@@ -13,7 +13,8 @@
 	"no": "No",
 	"news": {
 		"self": "News",
-		"page_title": "Manage News"
+		"page_title": "Manage News",
+		"page_description": "Here you can create news and edit existing news on the website."
 	},
 	"events": {
 		"self": "Events",
@@ -192,8 +193,6 @@
 	"last_name": "Last Name",
 	"email": "Email",
 	"is_verified": "Verified",
-	"yes": "Yes",
-	"no": "No",
 	"account_created": "Account Created",
 	"stil_id": "StiL ID",
 	"program": "Program",

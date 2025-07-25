@@ -177,5 +177,14 @@
 		"no_error_message": "No error message available.",
 		"network_error": "Network error occurred. Please check your connection.",
 		"unauthorized": "You are not authorized to view this information. Please log in."
+	},
+	"permission-wall": {
+		"stop": "Stop",
+		"subtitle": "Slow down there!",
+		"message": "You do not have permission to view this page. If you believe this is an error, ",
+		"contact": "please contact your local webmaster.",
+		"quote": "You are not a subset of the set of all users with access to this page.",
+		"quote_author": "The wise Debianne server",
+		"button": "Back to homepage"
 	}
 }

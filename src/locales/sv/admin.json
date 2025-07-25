@@ -13,7 +13,8 @@
 	"no": "Nej",
 	"news": {
 		"self": "Nyheter",
-		"page_title": "Administrera nyheter"
+		"page_title": "Administrera nyheter",
+		"page_description": "Här kan du skapa nyheter och redigera existerande nyheter på hemsidan."
 	},
 	"events": {
 		"self": "Evenemang",
@@ -193,8 +194,6 @@
 	"last_name": "Efternamn",
 	"email": "E-post",
 	"is_verified": "Verifierad",
-	"yes": "Ja",
-	"no": "Nej",
 	"account_created": "Konto Skapat",
 	"stil_id": "StiL-ID",
 	"program": "Program",
