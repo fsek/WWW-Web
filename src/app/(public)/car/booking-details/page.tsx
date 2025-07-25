@@ -2,7 +2,7 @@
 
 import {
 	getMeOptions,
-	getBookingOptions,
+	getCarBookingOptions,
 	adminGetUserOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
@@ -82,7 +82,7 @@ export default function Page() {
 		error: bookingError,
 		isLoading: bookingIsLoading,
 	} = useQuery({
-		...getBookingOptions({
+		...getCarBookingOptions({
 			path: { booking_id: bookingID },
 		}),
 		enabled: bookingID > 0,
@@ -212,7 +212,10 @@ export default function Page() {
 							<div className="flex items-center gap-2">
 								<MapPin className="w-4 h-4 text-muted-foreground" />
 								<span>
-									{t("admin:car.council")}: {bookingData.council.name}
+									{t("admin:car.council")}:{" "}
+									{i18n.language === "en"
+										? bookingData.council.name_en
+										: bookingData.council.name_sv}
 								</span>
 							</div>
 						)}

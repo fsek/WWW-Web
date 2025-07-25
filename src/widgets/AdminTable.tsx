@@ -89,7 +89,10 @@ export default function AdminTable<T>({
 							<tr
 								key={row.id}
 								onClick={() => onRowClick?.(row)}
-								className={cn("border-t hover:bg-gray-50", rowClassName?.(row))}
+								className={cn(
+									"border-t hover:bg-gray-50 dark:hover:bg-gray-800",
+									rowClassName?.(row),
+								)}
 							>
 								{row.getVisibleCells().map((cell) => (
 									<td
@@ -115,9 +118,9 @@ export default function AdminTable<T>({
 										{header.isPlaceholder
 											? null
 											: flexRender(
-												header.column.columnDef.footer,
-												header.getContext(),
-											)}
+													header.column.columnDef.footer,
+													header.getContext(),
+												)}
 									</th>
 								))}
 							</tr>

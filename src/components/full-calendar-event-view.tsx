@@ -66,6 +66,7 @@ export function EventView({
 	const { data, error, isFetching } = useQuery({
 		...getMeOptions(),
 		staleTime: 30 * 60 * 1000, // Don't refetch for 30 minutes
+		refetchOnWindowFocus: false,
 	});
 
 	let isEditable = !disableEdit;
@@ -215,7 +216,11 @@ export function EventView({
 										{/* These are all temporary and should be changed at some point */}
 										<tr>
 											<th>{t("admin:events.council")}</th>
-											<td>{event.council_name as string}</td>
+											<td>
+												{i18n.language === "en"
+													? ((event.council_name_en ?? "") as string)
+													: ((event.council_name_sv ?? "") as string)}
+											</td>
 										</tr>
 										<tr>
 											<th>{t("admin:events.location")}</th>
@@ -279,12 +284,18 @@ export function EventView({
 									<tr>
 										<th>{t("admin:events.council")}</th>
 										<td>
-											{!(event.council_name as string) || event.personal ? (
+											{!(i18n.language === "en"
+												? event.council_name_en
+												: event.council_name_sv) || event.personal ? (
 												<span className="text-muted-foreground text-sm">
 													{t("admin:car.no_council")}
 												</span>
 											) : (
-												<>{event.council_name as string}</>
+												<>
+													{i18n.language === "en"
+														? event.council_name_en
+														: event.council_name_sv}
+												</>
 											)}
 										</td>
 									</tr>

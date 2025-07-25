@@ -7,9 +7,6 @@ import {
 	Coffee,
 	Users,
 	Shield,
-	FileText,
-	Calendar,
-	Car,
 	Archive,
 	Users2,
 	Server,
@@ -21,39 +18,77 @@ import {
 
 const councils = [
 	{ key: "bokforlaget", url: "/councils/bokforlaget", icon: BookOpen },
-	{ key: "cafem", url: "/councils/cafem", icon: Coffee },
-	{ key: "externa-rep", url: "/councils/externa-rep", icon: Users },
+	{ key: "cafemasteriet", url: "/councils/cafemasteriet", icon: Coffee },
+	{
+		key: "externa-representanter",
+		url: "/councils/externa-representanter",
+		icon: Users,
+	},
 	{ key: "foset", url: "/councils/foset", icon: Shield },
-	{ key: "kulturm", url: "/councils/kulturm", icon: LayoutGrid },
+	{
+		key: "kulturministeriet",
+		url: "/councils/kulturministeriet",
+		icon: LayoutGrid,
+	},
 	{ key: "fnu", url: "/councils/fnu", icon: ClipboardList },
-	{ key: "prylm", url: "/councils/prylm", icon: Archive },
+	{ key: "prylmasteriet", url: "/councils/prylmasteriet", icon: Archive },
 	{ key: "samvetet", url: "/councils/samvetet", icon: SlidersHorizontal },
-	{ key: "sanningsm", url: "/councils/sanningsm", icon: Server },
-	{ key: "secretservice", url: "/councils/secretservice", icon: Shield },
+	{
+		key: "sanningsministeriet",
+		url: "/councils/sanningsministeriet",
+		icon: Server,
+	},
+	{ key: "sekret-service", url: "/councils/sekret-service", icon: Shield },
 	{ key: "studieradet", url: "/councils/studieradet", icon: Users2 },
 	{ key: "styrelsen", url: "/councils/styrelsen", icon: Users },
 	{ key: "ovriga", url: "/councils/ovriga", icon: MoreHorizontal },
 ];
 
-export default function CouncilGrid() {
+export default function CouncilGrid({
+	showInfo = false,
+	noLinks = false,
+}: { noLinks?: boolean; showInfo?: boolean }) {
 	const { t } = useTranslation();
 
 	return (
 		<div className="p-14 bg-background">
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-				{councils.map(({ key, url, icon: Icon }) => (
-					<Link
-						key={key}
-						href={url}
-						className="flex flex-col items-center p-6 bg-card rounded-2xl shadow-md hover:shadow-lg transition-shadow"
-					>
-						{/* lucide icons use stroke-current to pick up text color */}
-						<Icon className="h-12 w-12 mb-4 stroke-current text-primary" />
-						<span className="text-lg font-medium text-foreground">
-							{t(`utskott:${key}.self`)}
-						</span>
-					</Link>
-				))}
+				{councils.map(
+					({ key, url, icon: Icon }) => (
+						// noLinks ? (
+						// 	<Card
+						// 		key={key}
+						// 		className="items-center p-6 rounded-2xl cursor-default bg-muted/50 gap-2 hover:shadow-md transition-shadow place-items-center justify-center"
+						// 	>
+						// 		<CardHeader className="flex flex-col items-center whitespace-nowrap">
+						// 			<Icon className="h-12 w-12 mb-4 stroke-current text-primary justify-center" />
+						// 			<span className="text-lg font-medium text-foreground">
+						// 				{t(`utskott:${key}.self`)}
+						// 			</span>
+						// 		</CardHeader>
+						// 		<CardContent>
+						// 			<span className="text-sm text-muted-foreground">
+						// 				{showInfo ? t(`utskott:${key}.info`) : ""}
+						// 			</span>
+						// 		</CardContent>
+						// 	</Card>
+						// ) : (
+						<Link
+							key={key}
+							href={url}
+							className={`flex flex-col items-center p-6 bg-card rounded-2xl shadow-md hover:shadow-lg transition-shadow hover:bg-card-hover ${noLinks ? "pointer-events-none cursor-none" : "cursor-pointer"}`}
+						>
+							<Icon className="h-12 w-12 mb-4 stroke-current text-primary" />
+							<span className="text-lg font-medium text-foreground">
+								{t(`utskott:${key}.self`)}
+							</span>
+							<span className="text-sm text-muted-foreground">
+								{showInfo ? t(`utskott:${key}.info`) : ""}
+							</span>
+						</Link>
+					),
+					// ),
+				)}
 			</div>
 		</div>
 	);

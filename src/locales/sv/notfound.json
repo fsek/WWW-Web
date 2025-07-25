@@ -1,0 +1,14 @@
+{
+	"notFound": {
+		"title": "Ånej!",
+		"description": "Sidan hittades inte. Om du tror att något är fel,",
+		"contact": "kontakta din lokala spindelman",
+		"back": "Tillbaka",
+		"quote_1": "Ett sätt är ju att inte göra det alls och ge upp.",
+		"quote_author_1": "TP",
+		"quote_2": "LGTM.",
+		"quote_author_2": "Spindel",
+		"quote_3": "Misstag är bevis på att du försöker.",
+		"quote_author_3": "Någon Vis"
+	}
+}

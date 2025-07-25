@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
@@ -20,14 +20,29 @@ import {
 	getAllPostsQueryKey,
 	updatePostMutation,
 } from "@/api/@tanstack/react-query.gen";
-import type { PostRead, PostUpdate } from "../../../api";
+import type { PostRead, PostUpdate } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import PostPermissions from "./post-permissions/page";
+import { useTranslation } from "react-i18next";
+import { Textarea } from "@/components/ui/textarea";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 const postEditSchema = z.object({
 	id: z.number(),
-	name: z.string().min(2),
+	name_sv: z.string().min(2),
+	name_en: z.string().min(2),
+	description_sv: z.string().optional(),
+	description_en: z.string().optional(),
+	email: z.string().email(),
 	council_id: z.number().int(),
 });
 
@@ -44,10 +59,15 @@ export default function PostEditForm({
 	onClose,
 	selectedPost,
 }: PostEditFormProps) {
+	const { t } = useTranslation("admin");
 	const form = useForm<PostEditFormType>({
 		resolver: zodResolver(postEditSchema),
 		defaultValues: {
-			name: "",
+			name_sv: "",
+			name_en: "",
+			description_sv: "",
+			description_en: "",
+			email: "",
 		},
 	});
 
@@ -68,9 +88,14 @@ export default function PostEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllPostsQueryKey() });
+			toast.success(t("posts.edit_success", "Post uppdaterad!"));
 		},
-		onError: () => {
+		onError: (error) => {
 			onClose();
+			toast.error(
+				t("posts.edit_error", "Kunde inte uppdatera post.") +
+					(error?.detail ? ` (${error.detail})` : ""),
+			);
 		},
 	});
 
@@ -79,15 +104,26 @@ export default function PostEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllPostsQueryKey() });
+			toast.success(t("posts.delete_success", "Post borttagen!"));
 		},
-		onError: () => {
+		onError: (error) => {
 			onClose();
+			toast.error(
+				t("posts.delete_error", "Kunde inte ta bort post.") +
+					(error?.detail ? ` (${error.detail})` : ""),
+			);
 		},
 	});
 
+	const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
 	function handleFormSubmit(values: PostEditFormType) {
 		const updatedEvent: PostUpdate = {
-			name: values.name,
+			name_sv: values.name_sv,
+			name_en: values.name_en,
+			description_sv: values.description_sv,
+			description_en: values.description_en,
+			email: values.email,
 			council_id: values.council_id,
 		};
 
@@ -121,6 +157,19 @@ export default function PostEditForm({
 		router.push("/admin/posts/post-permissions");
 	}
 
+	function handleDeleteClick() {
+		setShowDeleteDialog(true);
+	}
+
+	function handleDeleteConfirm() {
+		setShowDeleteDialog(false);
+		handleRemoveSubmit();
+	}
+
+	function handleDeleteCancel() {
+		setShowDeleteDialog(false);
+	}
+
 	return (
 		<Dialog
 			open={open}
@@ -130,10 +179,9 @@ export default function PostEditForm({
 				}
 			}}
 		>
-			{" "}
 			<DialogContent className="min-w-fit lg:max-w-7xl">
 				<DialogHeader>
-					<DialogTitle>Redigera post</DialogTitle>
+					<DialogTitle>{t("posts.edit", "Redigera post")}</DialogTitle>
 				</DialogHeader>
 				<hr />
 				<Form {...form}>
@@ -141,15 +189,99 @@ export default function PostEditForm({
 						onSubmit={form.handleSubmit(handleFormSubmit)}
 						className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
 					>
-						{/* Title (sv) */}
+						{/* Name (sv) */}
 						<FormField
 							control={form.control}
-							name="name"
+							name="name_sv"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Name</FormLabel>
+									<FormLabel>{t("posts.name", "Name")}</FormLabel>
 									<FormControl>
-										<Input placeholder="Namn" {...field} />
+										<Input
+											placeholder={t("posts.name_placeholder", "Namn")}
+											{...field}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Name (en) */}
+						<FormField
+							control={form.control}
+							name="name_en"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("posts.name_en", "Name (English)")}</FormLabel>
+									<FormControl>
+										<Input
+											placeholder={t(
+												"posts.name_en_placeholder",
+												"Name (English)",
+											)}
+											{...field}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Description (sv) */}
+						<FormField
+							control={form.control}
+							name="description_sv"
+							render={({ field }) => (
+								<FormItem className="lg:col-span-2">
+									<FormLabel>
+										{t("posts.description_sv", "Description (Swedish)")}
+									</FormLabel>
+									<FormControl>
+										<Textarea
+											placeholder={t(
+												"posts.description_placeholder_sv",
+												"Beskrivning (Svenska)",
+											)}
+											{...field}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Description (en) */}
+						<FormField
+							control={form.control}
+							name="description_en"
+							render={({ field }) => (
+								<FormItem className="lg:col-span-2">
+									<FormLabel>
+										{t("posts.description_en", "Description (English)")}
+									</FormLabel>
+									<FormControl>
+										<Textarea
+											placeholder={t(
+												"posts.description_placeholder_en",
+												"Description (English)",
+											)}
+											{...field}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Email */}
+						<FormField
+							control={form.control}
+							name="email"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("posts.email", "Email")}</FormLabel>
+									<FormControl>
+										<Input
+											placeholder={t("posts.email_placeholder", "Email")}
+											{...field}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -161,7 +293,7 @@ export default function PostEditForm({
 							name="council_id"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
-									<FormLabel>Council</FormLabel>
+									<FormLabel>{t("posts.council", "Council")}</FormLabel>
 									<AdminChooseCouncil
 										value={field.value}
 										onChange={field.onChange}
@@ -172,20 +304,12 @@ export default function PostEditForm({
 
 						<div className="space-x-2 lg:col-span-4 lg:grid-cols-subgrid">
 							<Button
-								variant="outline"
-								className="w-32 min-w-fit"
-								onClick={() => console.log("Preview clicked")}
-							>
-								Förhandsgranska
-							</Button>
-
-							<Button
 								variant="destructive"
 								type="button"
 								className="w-32 min-w-fit"
-								onClick={handleRemoveSubmit}
+								onClick={handleDeleteClick}
 							>
-								Remove post
+								{t("posts.remove", "Remove post")}
 							</Button>
 
 							<Button
@@ -194,16 +318,40 @@ export default function PostEditForm({
 								className="w-32 min-w-fit"
 								onClick={viewPermissions}
 							>
-								Updatera permissions
+								{t("posts.update_permissions", "Updatera permissions")}
 							</Button>
 
 							<Button type="submit" className="w-32 min-w-fit">
-								Spara
+								{t("save", "Spara")}
 							</Button>
 						</div>
 					</form>
 				</Form>
 			</DialogContent>
+			<AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+				<AlertDialogContent>
+					<AlertDialogHeader>
+						<AlertDialogTitle>
+							{t("posts.confirm_remove", "Bekräfta borttagning")}
+						</AlertDialogTitle>
+					</AlertDialogHeader>
+					<p>
+						{t(
+							"posts.confirm_remove_text",
+							"Är du säker på att du vill ta bort denna post?",
+						)}
+					</p>
+					<AlertDialogFooter>
+						<AlertDialogCancel>{t("cancel", "Avbryt")}</AlertDialogCancel>
+						<AlertDialogAction
+							onClick={handleDeleteConfirm}
+							className="bg-destructive text-white"
+						>
+							{t("posts.remove", "Ta bort post")}
+						</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
 		</Dialog>
 	);
 }

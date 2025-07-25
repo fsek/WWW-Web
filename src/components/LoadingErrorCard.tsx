@@ -3,6 +3,8 @@ import { Card } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
 import { CircleX } from "lucide-react";
 import { useEffect, useState, type FC } from "react";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 function getRandomMessage() {
 	return `main:loading.flavor_${Math.floor(Math.random() * 8) + 1}`;
@@ -42,20 +44,29 @@ function getErrorMessage(
 interface LoadingErrorCardProps {
 	error?: Error | string;
 	isLoading?: boolean;
+	loadingMessage?: string;
+	errorHomeButton?: boolean;
 }
 
 export const LoadingErrorCard: FC<LoadingErrorCardProps> = ({
 	error,
 	isLoading = true,
+	loadingMessage,
+	errorHomeButton = false,
 }) => {
 	const { t } = useTranslation();
 	const [message, setMessage] = useState<string>(t("main:loading.basic"));
+	const router = useRouter();
 
 	useEffect(() => {
 		if (!error && isLoading) {
-			setMessage(t(getRandomMessage()));
+			if (loadingMessage) {
+				setMessage(loadingMessage);
+			} else {
+				setMessage(t(getRandomMessage()));
+			}
 		}
-	}, [t, error, isLoading]);
+	}, [t, error, isLoading, loadingMessage]);
 
 	const isError = !!error;
 	const errorMessage = isError ? getErrorMessage(error, t) : "";
@@ -70,6 +81,15 @@ export const LoadingErrorCard: FC<LoadingErrorCardProps> = ({
 							{t("main:loading.error_occurred")}
 						</div>
 						<div className="text-base text-center">{errorMessage}</div>
+						{errorHomeButton && (
+							<Button
+								variant="outline"
+								className="mt-2"
+								onClick={() => router.push("/home")}
+							>
+								{t("main:loading.go_home")}
+							</Button>
+						)}
 					</>
 				) : (
 					<>
