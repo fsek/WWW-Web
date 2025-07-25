@@ -197,14 +197,6 @@ export default function DocumentsEditForm({
 
 						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
 							<Button
-								variant="outline"
-								className="w-32 min-w-fit"
-								onClick={() => console.log("Preview clicked")}
-							>
-								{t("admin:preview")}
-							</Button>
-
-							<Button
 								variant="destructive"
 								type="button"
 								className="w-32 min-w-fit"

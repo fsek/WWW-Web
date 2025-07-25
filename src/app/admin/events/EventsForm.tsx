@@ -527,9 +527,6 @@ export default function EventsForm() {
 							))}
 
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-								<Button variant="outline" className="w-32 min-w-fit">
-									{t("admin:preview")}
-								</Button>
 								<Button
 									type="submit"
 									disabled={!submitEnabled}
