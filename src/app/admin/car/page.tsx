@@ -55,7 +55,7 @@ export default function Car() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const queryClient = useQueryClient();
 	const [, setOpen] = useState(false);
 	const [, setSubmitEnabled] = useState(true);
@@ -98,7 +98,7 @@ export default function Car() {
 				}),
 		}),
 		columnHelper.accessor(
-			(row) => `${row.user_first_name} ${row.user_last_name}`,
+			(row) => `${row.user.first_name} ${row.user.last_name}`,
 			{
 				id: "user_full_name",
 				header: t("admin:car.booked_by_name"),
@@ -117,7 +117,9 @@ export default function Car() {
 			(row) =>
 				row.personal
 					? t("admin:car.personal")
-					: (row.council?.name ?? t("admin:car.no_council")),
+					: ((i18n.language === "en"
+							? row.council?.name_en
+							: row.council?.name_sv) ?? t("admin:car.no_council")),
 			{
 				id: "personal_or_council",
 				header: t("admin:car.personal_or_council"),
@@ -368,9 +370,9 @@ export default function Car() {
 	const events: CalendarEvent<CustomEventData_>[] =
 		(data as CarBookingRead[])?.map((car) => {
 			const userName =
-				car.user_first_name && car.user_last_name
-					? `${car.user_first_name} ${car.user_last_name}`
-					: `User ${car.user_id}`;
+				car.user.first_name && car.user.last_name
+					? `${car.user.first_name} ${car.user.last_name}`
+					: `User ${car.user.id}`;
 			const backgroundColor = car.confirmed ? "#66cc00" : "#e6e600"; // Green for confirmed, yellow for unconfirmed
 			return {
 				id: car.booking_id.toString(),

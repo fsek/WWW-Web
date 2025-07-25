@@ -98,9 +98,9 @@ export default function Page() {
 		isFetching: userDetailsIsFetching,
 	} = useQuery({
 		...adminGetUserOptions({
-			path: { user_id: bookingData?.user_id ?? -1 },
+			path: { user_id: bookingData?.user.id ?? -1 },
 		}),
-		enabled: userHasPerms && !!bookingData?.user_id,
+		enabled: userHasPerms && !!bookingData?.user.id,
 		staleTime: 30 * 60 * 1000,
 	});
 
@@ -142,9 +142,9 @@ export default function Page() {
 		<div className="px-12 py-4 space-y-6">
 			<div className="justify-between w-full flex flex-row">
 				<p className="text-3xl font-bold">
-					{bookingData.user_first_name && bookingData.user_last_name
-						? `${bookingData.user_first_name} ${bookingData.user_last_name}`
-						: `User ${bookingData.user_id}`}
+					{bookingData.user.first_name && bookingData.user.last_name
+						? `${bookingData.user.first_name} ${bookingData.user.last_name}`
+						: `User ${bookingData.user.id}`}
 				</p>
 				<Button
 					variant="ghost"
@@ -178,9 +178,9 @@ export default function Page() {
 							<User className="w-4 h-4 text-muted-foreground" />
 							<span>
 								{t("admin:car.user")}:{" "}
-								{bookingData.user_first_name && bookingData.user_last_name
-									? `${bookingData.user_first_name} ${bookingData.user_last_name}`
-									: `User ${bookingData.user_id}`}
+								{bookingData.user.first_name && bookingData.user.last_name
+									? `${bookingData.user.first_name} ${bookingData.user.last_name}`
+									: `User ${bookingData.user.id}`}
 							</span>
 						</div>
 						{userHasPerms && userDetails && (

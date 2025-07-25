@@ -114,10 +114,10 @@ export default function Car() {
 	const events: CalendarEvent<CustomEventData_>[] =
 		(bookingData as CarBookingRead[])?.map((car) => {
 			const userName =
-				car.user_first_name && car.user_last_name
-					? `${car.user_first_name} ${car.user_last_name}`
-					: `User ${car.user_id}`;
-			const backgroundColor = (userData ? userData.id === car.user_id : false)
+				car.user.first_name && car.user.last_name
+					? `${car.user.first_name} ${car.user.last_name}`
+					: `User ${car.user.id}`;
+			const backgroundColor = (userData ? userData.id === car.user.id : false)
 				? car.confirmed
 					? "#e68a00" // TODO: Use tailwind for this somehow
 					: "#ffd699"
@@ -137,7 +137,7 @@ export default function Car() {
 				confirmed: car.confirmed,
 				personal: car.personal,
 				council_id: car.council_id ?? undefined,
-				user_id: car.user_id,
+				user_id: car.user.id,
 				backgroundColor: backgroundColor,
 			};
 		}) ?? [];
