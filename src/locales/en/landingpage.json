@@ -1,0 +1,115 @@
+{
+	"f-guild": "F-Guild",
+	"navbar": {
+		"login": "Login",
+		"items": {
+			"about": {
+				"label": "About",
+				"href": "#about"
+			},
+			"councils": {
+				"label": "Councils",
+				"href": "#councils"
+			},
+			"nollning": {
+				"label": "New Student",
+				"href": "/nollning",
+				"className": "bg-gradient-to-r from-[#fe5f75] to-[#fc9840] bg-[length:100%_3px] bg-no-repeat bg-bottom"
+			},
+			"foretag": {
+				"label": "For Companies",
+				"href": "#foretag"
+			},
+			"contact": {
+				"label": "Contact",
+				"href": "/contact"
+			},
+			"old": {
+				"label": "Old Page",
+				"href": "https://old.fsektionen.se",
+				"className": "text-foreground/40 hover:text-foreground/60 transition-colors"
+			}
+		}
+	},
+	"hero": {
+		"title_static": "The guild for students of ",
+		"title_dynamic_1": "Engineering Physics",
+		"title_dynamic_2": "Engineering Mathematics",
+		"title_dynamic_3": "Engineering Nanoscience",
+		"description": "We help welcome students to Lund University and provide a community and rich student life for our members.",
+		"new-student": "I am a new student",
+		"companies": "I represent a company",
+		"login": "Login for members"
+	},
+	"about": {
+		"title": "About the F-Guild",
+		"description": "F-Guild is a student association at Lund University Faculty of Engineering that represents students in engineering physics, engineering mathematics, and engineering nanoscience. Since our founding in the 1960s, we have worked to improve the student experience by fostering camaraderie among our members and advocating for their common interests. We are based in the Math Building in Lund and organize events to make the study period more enjoyable, represent our programs to the university and industry, and much more!"
+	},
+	"sponsors": "Main Sponsor",
+	"whatwedo": {
+		"title_1": "A guild with ",
+		"title_2": "everything ",
+		"title_3": "for your studies",
+		"subtitle": "The F-Guild works with everything related to your studies, from quiet study evenings in the Math Building to beer trips across the strait. We are all here to make your student life as good as possible.",
+		"event": {
+			"title": "Events and Parties",
+			"description": "Throughout the year, especially during the introduction weeks, we organize parties and events to create a sense of community among students."
+		},
+		"study": {
+			"title": "Studies",
+			"description": "We offer support and resources for our members' studies through our study evenings, where you can get help from knowledgeable students or just have a quiet place to study with others."
+		},
+		"representation": {
+			"title": "Representation",
+			"description": "We work hard to represent the interests and needs of our members in education, ensuring that everyone studying our programs can have their voice heard."
+		},
+		"career": {
+			"title": "Career",
+			"description": "We help students of our programs connect with companies and industry and get an idea of career opportunities through lunch lectures, workshops, and our career fair FARAD."
+		}
+	},
+	"councils": {
+		"title": "The councils which make up the F-Guild",
+		"subtitle": "F-Guild consists of several councils, each with its own focus and activities. Click on a council to learn more about it on our main page."
+	},
+	"nollning": {
+		"title": "Introduction for new students",
+		"description": "The introduction is a unique opportunity for new students to get to know each other, the guild, and the university. We organize various activities and events to help you start your studies in the best way possible.",
+		"button": "Learn more about the introduction"
+	},
+	"companies": {
+		"title_1": "Reach out ",
+		"title_2": "to the next generation ",
+		"description": "The F-Guild is a bridge between students and companies. We offer various opportunities for companies to connect with students, and are always open to collaborate!",
+		"lunch": "Lunch Lectures",
+		"lunch_description": "Lunch lectures attract students from all grades and offer a perfect opportunity for you to give them an insight into your business operations.",
+		"marketing": "Social Media Marketing",
+		"marketing_description": "We offer digital marketing through both email and posts on the F-guild's social media pages.",
+		"events": "Evening Events",
+		"events_description": "The flexibility of our evening events makes it possible to give students a general understanding of your company while simultaneously creating a personal connection to them.",
+		"more": "More Opportunities",
+		"more_description": "We are always open to new ideas and collaborations. If you have a unique idea or concept, we would love to hear about it!",
+		"cta_title": "Discover Our Offers"
+	},
+	"contact": {
+		"title": "Contact Us",
+		"description": "Do you have questions or want to know more about the F-Guild? Don't hesitate to contact us! We are here to help you and answer your questions.",
+		"button": "Contact Us"
+	},
+	"footer": {
+		"title": "F-Guild",
+		"follow_us": "Follow us",
+		"other": "Other",
+		"new-student": "New Student",
+		"companies": "For Companies",
+		"about": "About",
+		"contact": "Contact",
+		"contact_page": "Contact Page",
+		"contact_ordf": "Contact President",
+		"contact_webmaster": "Contact Webmaster",
+		"old": "Old Page",
+		"old_link": "Visit Old Page",
+		"old_styrdokument": "Governance Documents on Old Page",
+		"copyright": "F-Guild. All rights reserved in superposition in an impenetrable box."
+	}
+}

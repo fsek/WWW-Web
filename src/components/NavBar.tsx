@@ -9,16 +9,29 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 	NavigationMenuTrigger,
-	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import FLogga from "@/assets/f-logga";
 import Link from "next/link";
-import { LogInIcon, ExternalLink } from "lucide-react";
+import { LogInIcon, ExternalLink, UserIcon, ShieldIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
 import { usePathname, useRouter } from "next/navigation";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+	getMeOptions,
+	authCookieLogoutMutation,
+} from "@/api/@tanstack/react-query.gen";
+import {
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 type NavItem = {
 	self: string;
@@ -31,37 +44,117 @@ type NavSection = {
 } & Record<string, NavItem>;
 
 export function NavBar() {
+	const { t } = useTranslation();
+	const router = useRouter();
+	const { data: user } = useQuery({
+		...getMeOptions(),
+		refetchOnWindowFocus: false,
+	});
+	const loginHandler = useLoginHandler();
+	const logoutMutation = useMutation({
+		...authCookieLogoutMutation({ credentials: "include" }),
+		onSuccess: () => {
+			router.push("/");
+		},
+		onError: (error) => {
+			toast.error(t("navbar.logoutError", "Logout failed"));
+		},
+	});
+
+	const handleLogout = React.useCallback(() => {
+		logoutMutation.mutate({});
+	}, [logoutMutation]);
+
+	const showAdmin =
+		user?.is_member && Array.isArray(user.posts) && user.posts.length > 0;
+
 	return (
-		<div className="flex justify-between">
-			<Link href="/">
-				<FLogga className="mt-2 ml-2" />
-			</Link>
-			<NavBarMenu />
-			<LoginAndLang />
-		</div>
+		<header className="sticky top-0 z-50 w-full border-b border-border bg-white/50 dark:bg-background/40 dark:border-b-slate-700 backdrop-blur-md">
+			<div className="container flex items-center justify-between h-20 px-4 mx-auto">
+				<div className="flex items-center gap-4">
+					<Link href="/home" className="flex items-center">
+						<FLogga className="size-14 mr-3" />
+					</Link>
+					<div className="hidden md:flex">
+						<NavBarMenu />
+					</div>
+				</div>
+				<div className="flex items-center gap-2">
+					<LanguageSwitcher />
+					<ThemeToggle />
+					{user ? (
+						<>
+							{showAdmin && (
+								<Button
+									variant="outline"
+									className="ml-2 flex items-center gap-2"
+									asChild
+								>
+									<Link href="/admin">
+										<ShieldIcon className="w-5 h-5" />
+										<span>{t("navbar.admin", "Admin")}</span>
+									</Link>
+								</Button>
+							)}
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Button
+										variant="outline"
+										className="ml-2 flex items-center gap-2"
+									>
+										<UserIcon className="w-5 h-5" />
+										<span>
+											{`${user.first_name} ${user.last_name}`.trim() ||
+												user.email ||
+												"User"}
+										</span>
+									</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent
+									align="end"
+									className="py-2 px-2 min-w-[180px]"
+								>
+									<DropdownMenuItem asChild>
+										<Link href="/account-settings">
+											{t("navbar.account-settings")}
+										</Link>
+									</DropdownMenuItem>
+									{user.is_verified === false && (
+										<DropdownMenuItem asChild>
+											<Link href="/verify">{t("navbar.verify")}</Link>
+										</DropdownMenuItem>
+									)}
+									<DropdownMenuSeparator />
+									<DropdownMenuItem onClick={handleLogout}>
+										{t("navbar.logout", "Logout")}
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</>
+					) : (
+						<Button className="ml-2" onClick={loginHandler}>
+							<LogInIcon className="mr-1" />
+							<span className="hidden sm:inline">{t("login.login")}</span>
+						</Button>
+					)}
+				</div>
+			</div>
+			{/* Mobile menu below */}
+			<div className="flex md:hidden px-4 pb-2">
+				<NavBarMenu />
+			</div>
+			<Toaster position="top-center" richColors />
+		</header>
 	);
 }
 
-function LoginAndLang() {
-	const { t } = useTranslation();
+// Helper hook for login button handler
+function useLoginHandler() {
 	const pathname = usePathname();
 	const router = useRouter();
-
-	function handleLoginClick() {
-		const search = window.location.search; // Include params like ?id=...
-		router.push(`/login?next=${pathname}${search}`);
-	}
-
-	return (
-		<>
-			<ThemeToggle />
-			<LanguageSwitcher />
-			<Button className="mt-6 mr-2" onClick={handleLoginClick}>
-				<LogInIcon />
-				<span> {t("login.login")}</span>
-			</Button>
-		</>
-	);
+	return React.useCallback(() => {
+		router.push(`/login?next=${pathname}`);
+	}, [router, pathname]);
 }
 
 export function NavBarMenu() {
@@ -109,19 +202,25 @@ export function NavBarMenu() {
 	}
 
 	return (
-		<div>
+		<div className="flex items-center bg-transparent rounded-md px-2 py-1">
 			<NavigationMenu
 				onValueChange={onNavChange}
-				className="w-full max-w-full py-2 mt-4"
+				className="
+                  w-full max-w-full flex items-center
+                  custom-navmenu
+                "
 			>
 				{sections.map(([sectionKey, section]) => {
 					const items = Object.entries(section).filter(
 						([key]) => key !== "self",
 					) as [string, NavItem][];
 					return (
-						<NavigationMenuList key={sectionKey}>
-							<NavigationMenuItem>
-								<NavigationMenuTrigger className="submenu-trigger">
+						<NavigationMenuList
+							key={sectionKey}
+							className="flex items-center bg-transparent"
+						>
+							<NavigationMenuItem className="bg-transparent hover:bg-transparent">
+								<NavigationMenuTrigger className="submenu-trigger !bg-transparent !hover:bg-transparent border-2 border-transparent hover:border-foreground/30">
 									{section.self}
 								</NavigationMenuTrigger>
 								<NavigationMenuContent>
@@ -131,6 +230,7 @@ export function NavBarMenu() {
 												key={itemKey}
 												title={item.self}
 												href={item.href || "#"}
+												className="bg-transparent hover:bg-transparent border-2 border-transparent hover:border-foreground/30"
 											>
 												{item.desc}
 											</ListItem>
@@ -158,7 +258,7 @@ const ListItem = React.forwardRef<
 					ref={ref}
 					href={props.href ?? "#"}
 					className={cn(
-						"block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+						"block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
 						isDisabled && "opacity-50 cursor-not-allowed pointer-events-none",
 						className,
 					)}

@@ -21,6 +21,8 @@ import {
 	getPostQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import type { PostRead, PermissionRead } from "@/api";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 interface PostPermissionFormProps {
 	post_values?: PostRead | null;
@@ -41,6 +43,7 @@ type FormValues = z.infer<typeof postPermissionSchema>;
 export default function PostPermissionForm({
 	post_values = null,
 }: PostPermissionFormProps) {
+	const { t } = useTranslation("admin");
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 	const [selectedIds, setSelectedIds] = useState<number[]>([]);
@@ -62,18 +65,25 @@ export default function PostPermissionForm({
 		...changePostPermissionsMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllPostsQueryKey() });
-			console.log("tog sig hit");
 			queryClient.invalidateQueries({
 				queryKey: getPostQueryKey({ path: { post_id: post_values?.id ?? -1 } }),
 			});
-			console.log("men inte hit");
 
 			setSubmitEnabled(true);
 			setOpen(false);
+			toast.success(
+				t("posts.permissions.update_success", "Behörigheter uppdaterade!"),
+			);
 		},
-		onError: () => {
+		onError: (error) => {
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.error(
+				t(
+					"posts.permissions.update_error",
+					"Kunde inte uppdatera behörigheter.",
+				) + (error?.detail ? ` (${error.detail})` : ""),
+			);
 		},
 	});
 
@@ -109,7 +119,37 @@ export default function PostPermissionForm({
 	}
 
 	if (!post_values) {
-		return <div>Hämtar...</div>;
+		return <div>{t("posts.permissions.loading", "Hämtar...")}</div>;
+	}
+
+	// Group permissions by target
+	const groupedPermissions = permissionsList.reduce(
+		(acc, permission) => {
+			if (!acc[permission.target]) {
+				acc[permission.target] = [];
+			}
+			acc[permission.target].push(permission);
+			return acc;
+		},
+		{} as Record<string, PermissionRead[]>,
+	);
+
+	// Sort targets alphabetically and permissions within each target alphabetically
+	const sortedGroupedPermissions = Object.entries(groupedPermissions)
+		.sort(([a], [b]) => a.localeCompare(b))
+		.map(
+			([target, permissions]) =>
+				[
+					target,
+					permissions.sort((a, b) => a.action.localeCompare(b.action)),
+				] as [string, PermissionRead[]],
+		);
+
+	// Small helper function to determine grid columns based on number of permissions
+	function getGridColsClass(length: number): string {
+		if (length === 1) return "grid-cols-1";
+		if (length === 2) return "grid-cols-2";
+		return "grid-cols-3";
 	}
 
 	return (
@@ -120,55 +160,61 @@ export default function PostPermissionForm({
 					setSubmitEnabled(true);
 				}}
 			>
-				Ändra behörigheter
+				{t("posts.permissions.edit", "Ändra behörigheter")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="min-w-fit lg:max-w-7xl">
 					<DialogHeader>
-						<DialogTitle>Ändra behörigheter</DialogTitle>
+						<DialogTitle>
+							{t("posts.permissions.edit", "Ändra behörigheter")}
+						</DialogTitle>
 					</DialogHeader>
 					<Form {...form}>
 						<form
 							onSubmit={form.handleSubmit(onSubmit)}
-							className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
+							className="grid gap-4 grid-cols-3"
 						>
 							<input type="hidden" {...form.register("post_id")} />
 
-							{permissionsList.map((permission) => (
-								<FormField
-									key={permission.id}
-									control={form.control}
-									name="permissions"
-									render={() => (
-										<FormItem>
-											<FormLabel htmlFor={`perm-${permission.id}`}>
-												{permission.target} {permission.action}
-											</FormLabel>
-											<FormControl>
+							{sortedGroupedPermissions.map(([target, permissions]) => (
+								<div key={target} className="space-y-3">
+									<h3 className="text-lg font-semibold text-foreground border-b pb-2">
+										{target}
+									</h3>
+									<div
+										className={`grid gap-3 ${getGridColsClass(permissions.length)}`}
+									>
+										{permissions.map((permission) => (
+											<label
+												key={permission.id}
+												htmlFor={`perm-${permission.id}`}
+												className="flex items-center space-x-3 rounded-md border p-3 hover:bg-accent/50 transition-colors cursor-pointer"
+											>
 												<Checkbox
 													id={`perm-${permission.id}`}
 													checked={selectedIds.includes(permission.id)}
 													onCheckedChange={() =>
 														togglePermission(permission.id)
 													}
+													className="h-5 w-5"
 												/>
-											</FormControl>
-										</FormItem>
-									)}
-								/>
+												<span className="text-sm font-medium">
+													{permission.action}
+												</span>
+											</label>
+										))}
+									</div>
+								</div>
 							))}
 
-							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-								<Button variant="outline" className="w-32 min-w-fit">
-									Förhandsgranska
-								</Button>
+							<div className="flex space-x-2 pt-4 border-t">
 								<Button
 									type="submit"
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									Spara
+									{t("save", "Spara")}
 								</Button>
 							</div>
 						</form>

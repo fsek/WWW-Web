@@ -2,6 +2,19 @@
 	"fsek": "F-sektionen",
 	"title": "Huvudsida",
 	"calendar": "Kalender",
+	"welcome": "Välkommen till nya hemsidan för F-sektionen!",
+	"welcomeText": "Just nu är vi i en övergångsperiod till vår nya hemsida. Under sommaren kommer vi att kontinuerligt förbättra design och funktionalitet, och lägga till saker som just nu saknas gentemot den gamla hemsidan. Den går förresten fortfarande att använda på old.fsektionen.se. Eftersom vi dessutom har bytt ut servern och backenden är det nya och gamla systemet separerade: om du har gamla bilbokningar, lokalbokningar, inställningar, konton etc. så kommer de inte vara tillgängliga genom den nya webben och du kommer att behöva göra nya. Vissa saker t.ex. bildgalleriet, är överdraget men kanske inte har GUI tillgängligt ännu. OBS! Vi planerar att göra oss av med den gamla hemsidan inom en snar framtid (helst innan nollningen), så försök att i största mån använda den nya. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
+	"oldWebsiteButton": "Det var bättre förr...",
+	"welcomeAdmin": "Om du tycker att du borde ha någon form av admin-åtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, vänligen kontakta spindel via e-post.",
+	"adminButton": "Admin sidan",
+	"newsTitle": "Nyheter",
+	"newsText": "Om du vill använda bilder eller mer avancerad formatering, använd Mattermost tills vi har lagt till ordentligt stöd.",
+	"cafeTitle": "Hilbert Café",
+	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang.",
+	"coolThing": "En cool grej som distraherar dig från att se att sidan inte är klar än",
+	"next": "Nästa",
+	"previous": "Föregående",
+	"page": "Sida",
 	"navbar": {
 		"sektionen": {
 			"self": "Sektionen",
@@ -82,6 +95,10 @@
 				"self": "Stillarum/Bönerum",
 				"desc": "Hitta en lugn plats för reflektion eller bön.",
 				"href": "/stillarum"
+			},
+			"gallery": {
+				"self": "Galleri",
+				"desc": "Utforska vårt bildgalleri som visar evenemang och aktiviteter."
 			}
 		},
 		"companies": {
@@ -132,7 +149,10 @@
 			}
 		},
 		"booking": "Bokningar",
-		"documents": "Dokument"
+		"documents": "Dokument",
+		"account-settings": "Kontoinställningar",
+		"logout": "Logga ut",
+		"logoutError": "Utloggning misslyckades. Försök igen senare."
 	},
 	"footer": {
 		"contact": "Kontakt",
@@ -146,7 +166,64 @@
 		"invalid-email-or-password": "Fel e-postadress eller lösenord",
 		"email": "E-postadress",
 		"password": "Lösenord",
-		"title": "Logga in"
+		"title": "Logga in",
+		"registerPrompt": "Har du inget konto? Registrera dig här.",
+		"forgotPassword": "Glömt lösenord?",
+		"forgotEmailLabel": "Ange din e-post för att återställa lösenord",
+		"forgotSubmit": "Skicka återställningslänk",
+		"forgotLoading": "Skickar...",
+		"forgotSuccess": "Om din e-post finns, har en återställningslänk skickats.",
+		"backToLogin": "Tillbaka till inloggning",
+		"invalidEmailFormat": "Ogiltigt e-postformat"
+	},
+	"news": {
+		"self": "Nyheter",
+		"by": "Skriven av: ",
+		"pinned": "Fastnålad",
+		"see_all": "Se alla nyheter"
+	},
+	"verifyMail": {
+		"loading": "Verifierar din e-post...",
+		"success": "E-postverifiering lyckades!",
+		"error": "E-postverifiering misslyckades. Länken kan ha gått ut eller varit ogiltig, eller så har du redan verifierat din e-post.",
+		"goHome": "Gå till startsidan",
+		"noToken": "Ingen verifieringslänk angiven. Vänligen kontrollera länken du klickade på."
+	},
+	"reset-password": {
+		"title": "Återställ lösenord",
+		"password": "Nytt lösenord",
+		"retype-password": "Upprepa lösenord",
+		"passwords-do-not-match": "Lösenorden matchar inte",
+		"reset-password": "Återställ lösenord",
+		"resetting": "Återställer ditt lösenord...",
+		"reset-success": "Ditt lösenord har återställts!",
+		"goHome": "Gå till startsidan",
+		"reset-error": "Återställning av lösenord misslyckades.",
+		"invalid-reset-token": "Ogiltig eller saknad återställningslänk."
+	},
+	"register": {
+		"title": "Registrera ett konto",
+		"email": "E-postadress",
+		"password": "Lösenord",
+		"confirmPassword": "Bekräfta lösenord",
+		"firstName": "Förnamn",
+		"lastName": "Efternamn",
+		"telephone": "Telefonnummer med landskod (+46)",
+		"startYear": "Startår (valfritt)",
+		"submit": "Registrera",
+		"loginPrompt": "Har du redan ett konto? Logga in här.",
+		"loading": "Registrerar...",
+		"error": "Registreringen misslyckades. Kontrollera dina uppgifter och försök igen.",
+		"verifyError": "Användaren registrerades, men det gick inte att skicka verifieringsmail. Försök igen senare.",
+		"success": "Registreringen lyckades! Kontrollera din e-post för att verifiera ditt konto.",
+		"goLogin": "Gå till inloggning",
+		"passwordMismatch": "Lösenorden matchar inte. Försök igen.",
+		"startYearInvalid": "Startåret måste vara mellan 1960 och nuvarande år.",
+		"emailInvalid": "Ogiltig e-postadress",
+		"passwordShort": "Lösenordet måste vara minst 8 tecken",
+		"firstNameRequired": "Förnamn krävs",
+		"lastNameRequired": "Efternamn krävs",
+		"telephoneNumberRequired": "Telefonnummer krävs"
 	},
 	"car-booking": {
 		"title": "Bilbokning",

@@ -36,6 +36,7 @@ export default function News() {
 	const { t } = useTranslation();
 
 	const { data, error } = useSuspenseQuery({
+
 		...getAllNewsOptions(),
 	});
 

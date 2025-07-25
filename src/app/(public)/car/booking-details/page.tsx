@@ -212,7 +212,10 @@ export default function Page() {
 							<div className="flex items-center gap-2">
 								<MapPin className="w-4 h-4 text-muted-foreground" />
 								<span>
-									{t("admin:car.council")}: {bookingData.council.name}
+									{t("admin:car.council")}:{" "}
+									{i18n.language === "en"
+										? bookingData.council.name_en
+										: bookingData.council.name_sv}
 								</span>
 							</div>
 						)}

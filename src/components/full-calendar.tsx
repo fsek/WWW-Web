@@ -110,7 +110,8 @@ export default function Calendar({
 			...(enableTrueEventProperties
 				? {
 						council_id: info.event.extendedProps.council_id,
-						council_name: info.event.extendedProps.council_name,
+						council_name_sv: info.event.extendedProps.council_name_sv,
+						council_name_en: info.event.extendedProps.council_name_en,
 						title_en: info.event.extendedProps.title_en,
 						description_en: info.event.extendedProps.description_en,
 						location: info.event.extendedProps.location,
@@ -135,7 +136,8 @@ export default function Calendar({
 						personal: info.event.extendedProps.personal,
 						council_id: info.event.extendedProps.council_id,
 						confirmed: info.event.extendedProps.confirmed,
-						council_name: info.event.extendedProps.council_name,
+						council_name_sv: info.event.extendedProps.council_name_sv,
+						council_name_en: info.event.extendedProps.council_name_en,
 						user_id: info.event.extendedProps.user_id,
 					}
 				: {}),
@@ -162,7 +164,8 @@ export default function Calendar({
 			...(enableTrueEventProperties
 				? {
 						council_id: info.event.extendedProps.council_id,
-						council_name: info.event.extendedProps.council_name,
+						council_name_sv: info.event.extendedProps.council_name_sv,
+						council_name_en: info.event.extendedProps.council_name_en,
 						title_en: info.event.extendedProps.title_en,
 						description_en: info.event.extendedProps.description_en,
 						location: info.event.extendedProps.location,
@@ -187,7 +190,8 @@ export default function Calendar({
 						personal: info.event.extendedProps.personal,
 						council_id: info.event.extendedProps.council_id,
 						confirmed: info.event.extendedProps.confirmed,
-						council_name: info.event.extendedProps.council_name,
+						council_name_sv: info.event.extendedProps.council_name_sv,
+						council_name_en: info.event.extendedProps.council_name_en,
 						user_id: info.event.extendedProps.user_id,
 					}
 				: {}),
@@ -208,7 +212,8 @@ export default function Calendar({
 			...(enableTrueEventProperties
 				? {
 						council_id: info.oldEvent.extendedProps.council_id,
-						council_name: info.oldEvent.extendedProps.council_name,
+						council_name_sv: info.oldEvent.extendedProps.council_name_sv,
+						council_name_en: info.oldEvent.extendedProps.council_name_en,
 						title_en: info.oldEvent.extendedProps.title_en,
 						description_en: info.oldEvent.extendedProps.description_en,
 						location: info.oldEvent.extendedProps.location,
@@ -233,7 +238,8 @@ export default function Calendar({
 						personal: info.oldEvent.extendedProps.personal,
 						council_id: info.oldEvent.extendedProps.council_id,
 						confirmed: info.oldEvent.extendedProps.confirmed,
-						council_name: info.oldEvent.extendedProps.council_name,
+						council_name_sv: info.oldEvent.extendedProps.council_name_sv,
+						council_name_en: info.oldEvent.extendedProps.council_name_en,
 						user_id: info.oldEvent.extendedProps.user_id,
 					}
 				: {}),

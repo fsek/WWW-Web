@@ -9,6 +9,10 @@ interface FLoggaProps {
 
 export default function FLogga({ className }: FLoggaProps) {
 	return (
-		<Image src={fLoggaSrc} className={cn("size-25", className)} alt="F-sektionen" />
+		<Image
+			src={fLoggaSrc}
+			className={cn("size-25", className)}
+			alt="F-sektionen logo"
+		/>
 	);
 }

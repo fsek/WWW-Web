@@ -1,0 +1,22 @@
+export const permissionActions = ["view", "manage", "super"];
+export const permissionTargets = [
+	"Event",
+	"Document",
+	"User",
+	"Post",
+	"Permission",
+	"News",
+	"Song",
+	"Ads",
+	"Gallery",
+	"Car",
+	"Cafe",
+	"Election",
+	"Groups",
+	"Adventure Missions",
+	"Nollning",
+	"UserDoorAccess",
+	"Tags",
+	"Council",
+	"Room Bookings",
+];

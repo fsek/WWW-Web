@@ -2,6 +2,19 @@
 	"fsek": "F-Guild",
 	"title": "Main Page",
 	"calendar": "Calendar",
+	"welcome": "Welcome to the new F-Guild website!",
+	"welcomeText": "We are currently in a transition period to our new website. During the summer we will continuously improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the backend, the new and old systems are separated: if you have old car bookings, room bookings, settings, accounts, etc. they will not be available through the new web and you will have to make new ones. Some things e.g. the image gallery, are transferred but may not have the GUI available yet. NOTE! We plan to get rid of the old website in the near future (preferably before the introduction period), so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
+	"oldWebsiteButton": "Take me back to the old site...",
+	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the webmasters via email.",
+	"adminButton": "Admin Page",
+	"newsTitle": "News",
+	"newsText": "If you want to use images or more advanced formatting, use mattermost until we have added proper support.",
+	"cafeTitle": "Hilbert Cafe",
+	"cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement.",
+	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
+	"next": "Next",
+	"previous": "Previous",
+	"page": "Page",
 	"navbar": {
 		"sektionen": {
 			"self": "Sections",
@@ -82,6 +95,10 @@
 				"self": "Quiet/Prayer Rooms",
 				"desc": "Find a peaceful space for reflection or private prayer.",
 				"href": "/stillarum"
+			},
+			"gallery": {
+				"self": "Gallery",
+				"desc": "Explore our photo gallery showcasing events and activities."
 			}
 		},
 		"companies": {
@@ -132,14 +149,81 @@
 			}
 		},
 		"booking": "Bookings",
-		"documents": "Documents"
+		"documents": "Documents",
+		"account-settings": "Account Settings",
+		"logout": "Log out",
+		"logoutError": "Logout failed. Please try again later."
+	},
+	"footer": {
+		"contact": "Contact",
+		"emergencycontact": "Emergency Contact",
+		"companies": "For Companies",
+		"webansvar": "Webmaster",
+		"ansvar": "Publisher"
 	},
 	"login": {
 		"login": "Log in",
 		"invalid-email-or-password": "Invalid email address or password",
 		"email": "Email",
 		"password": "Password",
-		"title": "Log in"
+		"title": "Log in",
+		"registerPrompt": "Don't have an account? Register here.",
+		"forgotPassword": "Forgot password?",
+		"forgotEmailLabel": "Enter your email to reset password",
+		"forgotSubmit": "Send reset link",
+		"forgotLoading": "Sending...",
+		"forgotSuccess": "If your email exists, a reset link has been sent.",
+		"backToLogin": "Back to login",
+		"invalidEmailFormat": "Invalid email format"
+	},
+	"news": {
+		"self": "News",
+		"by": "Written by: ",
+		"pinned": "Pinned",
+		"see_all": "See all news"
+	},
+	"verifyMail": {
+		"loading": "Verifying your email...",
+		"success": "Email verification succeeded!",
+		"error": "Email verification failed. The link may have expired or been invalid, or you may have already verified your email.",
+		"goHome": "Go to the homepage",
+		"noToken": "No verification link provided. Please check the link you clicked on."
+	},
+	"reset-password": {
+		"title": "Reset Password",
+		"password": "New Password",
+		"retype-password": "Retype password",
+		"passwords-do-not-match": "Passwords do not match",
+		"reset-password": "Reset Password",
+		"resetting": "Resetting your password...",
+		"reset-success": "Your password has been reset successfully!",
+		"goHome": "Go to Home",
+		"reset-error": "Password reset failed.",
+		"invalid-reset-token": "Invalid or missing reset token."
+	},
+	"register": {
+		"title": "Register for an Account",
+		"email": "Email",
+		"password": "Password",
+		"confirmPassword": "Confirm Password",
+		"firstName": "First Name",
+		"lastName": "Last Name",
+		"telephone": "Telephone Number with country code (+46)",
+		"startYear": "Start Year (optional)",
+		"submit": "Register",
+		"loginPrompt": "Already have an account? Login here.",
+		"loading": "Registering...",
+		"error": "Registration failed. Please check your details and try again.",
+		"verifyError": "Registered user, but failed to send verification email. Please try again later.",
+		"success": "Registration successful! Please check your email to verify your account.",
+		"goLogin": "Go to Login",
+		"passwordMismatch": "Passwords do not match. Please try again.",
+		"startYearInvalid": "Start year must be between 1960 and the current year.",
+		"emailInvalid": "Invalid email address",
+		"passwordShort": "Password must be at least 8 characters",
+		"firstNameRequired": "First name required",
+		"lastNameRequired": "Last name required",
+		"telephoneNumberRequired": "Telephone number required"
 	},
 	"car-booking": {
 		"title": "Car Booking",
