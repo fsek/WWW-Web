@@ -16,7 +16,26 @@
 	"unclear_program": "Oklart",
 	"news": {
 		"self": "Nyheter",
-		"page_title": "Administrera nyheter"
+		"page_title": "Administrera nyheter",
+		"create_news": "Skapa nyhet",
+		"edit_news": "Redigera nyhet",
+		"title_sv": "Titel (svenska)",
+		"title_en": "Titel (engelska)",
+		"text_sv": "Text (svenska)",
+		"text_en": "Text (engelska)",
+		"picture": "Bild",
+		"pinned_from": "Fastnålad från",
+		"pinned_to": "Fastnålad till",
+		"publish": "Publicera",
+		"success_add": "Nyhet skapad!",
+		"success_edit": "Nyhet uppdaterad!",
+		"success_delete": "Nyhet borttagen!",
+		"error_add": "Misslyckades att skapa nyhet.",
+		"error_edit": "Misslyckades att uppdatera nyhet.",
+		"error_delete": "Misslyckades att ta bort nyhet.",
+		"no_news": "Inga nyheter tillgängliga.",
+		"confirm_remove": "Bekräfta borttagning",
+		"confirm_remove_text": "Är du säker på att du vill ta bort denna nyhet?"
 	},
 	"events": {
 		"self": "Evenemang",

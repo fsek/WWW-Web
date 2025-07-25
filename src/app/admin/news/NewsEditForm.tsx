@@ -1,0 +1,316 @@
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+	updateNewsMutation,
+	getAllNewsQueryKey,
+	deleteNewsMutation,
+} from "@/api/@tanstack/react-query.gen";
+import { useTranslation } from "react-i18next";
+import { AdminChooseDates } from "@/widgets/AdminChooseDates";
+import { toast } from "sonner";
+import type { NewsRead } from "@/api";
+import {
+	AlertDialog,
+	AlertDialogTrigger,
+	AlertDialogContent,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogFooter,
+	AlertDialogCancel,
+	AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+
+const newsSchema = z.object({
+	title_sv: z.string().min(2),
+	title_en: z.string().min(2),
+	text_sv: z.string().min(2),
+	text_en: z.string().min(2),
+	picture: z.any().optional(),
+	pinned_from: z.date().optional().nullable(),
+	pinned_to: z.date().optional().nullable(),
+});
+
+interface NewsEditFormProps {
+	open: boolean;
+	onClose: () => void;
+	selectedNews: NewsRead;
+}
+
+export default function NewsEditForm({
+	open,
+	onClose,
+	selectedNews,
+}: NewsEditFormProps) {
+	const [submitEnabled, setSubmitEnabled] = useState(true);
+	const [confirmOpen, setConfirmOpen] = useState(false);
+	const newsEditForm = useForm<z.infer<typeof newsSchema>>({
+		resolver: zodResolver(newsSchema),
+	});
+	const { t } = useTranslation("admin");
+
+	const queryClient = useQueryClient();
+
+	// Initialize form with existing news data
+	useEffect(() => {
+		if (selectedNews) {
+			newsEditForm.reset({
+				title_sv: selectedNews.title_sv || "",
+				title_en: selectedNews.title_en || "",
+				text_sv: selectedNews.content_sv || "",
+				text_en: selectedNews.content_en || "",
+				pinned_from: selectedNews.pinned_from
+					? new Date(selectedNews.pinned_from)
+					: null,
+				pinned_to: selectedNews.pinned_to
+					? new Date(selectedNews.pinned_to)
+					: null,
+			});
+		}
+	}, [selectedNews, newsEditForm]);
+
+	const updateNews = useMutation({
+		...updateNewsMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllNewsQueryKey() });
+			onClose();
+			setSubmitEnabled(true);
+			toast.success(t("news.success_edit"));
+		},
+		onError: () => {
+			toast.error(t("news.error_edit"));
+			setSubmitEnabled(true);
+		},
+	});
+
+	const deleteNews = useMutation({
+		...deleteNewsMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllNewsQueryKey() });
+			onClose();
+			toast.success(t("news.success_delete"));
+		},
+		onError: () => {
+			toast.error(t("news.error_delete"));
+		},
+	});
+
+	function onSubmit(values: z.infer<typeof newsSchema>) {
+		setSubmitEnabled(false);
+		updateNews.mutate({
+			path: { news_id: selectedNews.id },
+			body: {
+				title_sv: values.title_sv,
+				title_en: values.title_en,
+				content_sv: values.text_sv,
+				content_en: values.text_en,
+				pinned_from: values.pinned_from,
+				pinned_to: values.pinned_to,
+			},
+		});
+	}
+
+	function handleRemoveNews() {
+		deleteNews.mutate({
+			path: { news_id: selectedNews.id },
+		});
+	}
+
+	return (
+		<Dialog
+			open={open}
+			onOpenChange={(isOpen) => {
+				if (!isOpen) {
+					onClose();
+				}
+			}}
+		>
+			<DialogContent className="min-w-fit lg:max-w-7xl">
+				<DialogHeader>
+					<DialogTitle>{t("news.edit_news")}</DialogTitle>
+				</DialogHeader>
+				<hr />
+				<Form {...newsEditForm}>
+					<form
+						onSubmit={newsEditForm.handleSubmit(onSubmit)}
+						className="grid gap-x-4 gap-y-3 lg:grid-cols-2"
+					>
+						<FormField
+							control={newsEditForm.control}
+							name="title_sv"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("news.title_sv")}</FormLabel>
+									<FormControl>
+										<Input
+											placeholder={t("news.title_sv")}
+											{...field}
+											value={field.value ?? ""}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={newsEditForm.control}
+							name="title_en"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("news.title_en")}</FormLabel>
+									<FormControl>
+										<Input
+											placeholder={t("news.title_en")}
+											{...field}
+											value={field.value ?? ""}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							control={newsEditForm.control}
+							name="text_sv"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("news.text_sv")}</FormLabel>
+									<FormControl>
+										<Textarea
+											placeholder={t("news.text_sv")}
+											className="h-48"
+											{...field}
+											value={field.value ?? ""}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={newsEditForm.control}
+							name="text_en"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("news.text_en")}</FormLabel>
+									<FormControl>
+										<Textarea
+											placeholder={t("news.text_en")}
+											className="h-48"
+											{...field}
+											value={field.value ?? ""}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={newsEditForm.control}
+							name="picture"
+							render={({ field }) => (
+								<FormItem className="lg:col-span-2">
+									<FormLabel>{t("news.picture")}</FormLabel>
+									<FormControl>
+										<Input id="picture" type="file" disabled {...field} />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+						{/* Pinned From */}
+						<FormField
+							control={newsEditForm.control}
+							name="pinned_from"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("news.pinned_from")}</FormLabel>
+									<AdminChooseDates
+										value={field.value ?? undefined}
+										onChange={field.onChange}
+									/>
+								</FormItem>
+							)}
+						/>
+						{/* Pinned To */}
+						<FormField
+							control={newsEditForm.control}
+							name="pinned_to"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("news.pinned_to")}</FormLabel>
+									<AdminChooseDates
+										value={field.value ?? undefined}
+										onChange={field.onChange}
+									/>
+								</FormItem>
+							)}
+						/>
+						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid flex flex-row items-center">
+							<Button
+								type="submit"
+								disabled={!submitEnabled}
+								className="w-32 min-w-fit"
+							>
+								{t("save")}
+							</Button>
+							<AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+								<AlertDialogTrigger asChild>
+									<Button
+										variant="destructive"
+										type="button"
+										size="lg"
+										className="ml-4 px-8 py-3 text-base"
+										onClick={() => setConfirmOpen(true)}
+									>
+										{t("news.remove", "Ta bort")}
+									</Button>
+								</AlertDialogTrigger>
+								<AlertDialogContent>
+									<AlertDialogHeader>
+										<AlertDialogTitle>
+											{t("news.confirm_remove", "Bekräfta borttagning")}
+										</AlertDialogTitle>
+									</AlertDialogHeader>
+									<p>
+										{t(
+											"news.confirm_remove_text",
+											"Är du säker på att du vill ta bort denna nyhet?",
+										)}
+									</p>
+									<AlertDialogFooter>
+										<AlertDialogCancel>
+											{t("cancel", "Avbryt")}
+										</AlertDialogCancel>
+										<AlertDialogAction
+											onClick={handleRemoveNews}
+											className="bg-destructive text-white hover:bg-destructive/90"
+										>
+											{t("news.remove", "Ta bort")}
+										</AlertDialogAction>
+									</AlertDialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>
+						</div>
+					</form>
+				</Form>
+			</DialogContent>
+		</Dialog>
+	);
+}

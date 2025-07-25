@@ -16,7 +16,26 @@
 	"unclear_program": "Unclear",
 	"news": {
 		"self": "News",
-		"page_title": "Manage News"
+		"page_title": "Manage News",
+		"create_news": "Create News",
+		"edit_news": "Edit News",
+		"title_sv": "Title (Swedish)",
+		"title_en": "Title (English)",
+		"text_sv": "Text (Swedish)",
+		"text_en": "Text (English)",
+		"picture": "Picture",
+		"pinned_from": "Pinned from",
+		"pinned_to": "Pinned to",
+		"publish": "Publish",
+		"success_add": "News created!",
+		"success_edit": "News updated!",
+		"success_delete": "News deleted!",
+		"error_add": "Failed to create news.",
+		"error_edit": "Failed to update news.",
+		"error_delete": "Failed to delete news.",
+		"no_news": "No news available.",
+		"confirm_remove": "Confirm removal",
+		"confirm_remove_text": "Are you sure you want to remove this news item?"
 	},
 	"events": {
 		"self": "Events",
