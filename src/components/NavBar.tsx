@@ -18,7 +18,11 @@ import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
 import { usePathname, useRouter } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+	type DefaultError,
+	useMutation,
+	useQuery,
+} from "@tanstack/react-query";
 import {
 	getMeOptions,
 	authCookieLogoutMutation,
@@ -56,8 +60,8 @@ export function NavBar() {
 		onSuccess: () => {
 			router.push("/");
 		},
-		onError: (error) => {
-			toast.error(t("navbar.logoutError", "Logout failed"));
+		onError: (error: DefaultError) => {
+			toast.error(error.message || t("navbar.logoutError", "Logout failed"));
 		},
 	});
 
