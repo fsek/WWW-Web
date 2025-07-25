@@ -286,6 +286,7 @@
 	"id": "ID",
 	"first_name": "Förnamn",
 	"last_name": "Efternamn",
+	"name": "Namn",
 	"email": "E-post",
 	"is_verified": "Verifierad",
 	"account_created": "Konto Skapat",
