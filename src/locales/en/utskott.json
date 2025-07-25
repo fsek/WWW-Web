@@ -2,57 +2,93 @@
 	"title": "About the councils",
 	"about": "This page is under construction.",
 	"sub_title": "Councils",
-
+	"contact_title": "Contact",
+	"poster": "Position",
+	"beskrivning": "Description",
+	"vemhar": "Who holds the position?",
+	"about_title": "About the council",
+	"post_contact": "Contact for the position",
 	"bokforlaget": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+		"self": "Book Publisher",
+		"about": "Fill in",
+		"contact": "Treasurer: Anton Sundström",
+		"info": "The Book Publisher handles the bookkeeping and finances of the F-guild."
 	},
-	"cafem": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+	"cafemasteriet": {
+		"self": "Café Committee",
+		"about": "Fill in, here's how you make a link <0> hello </0>",
+		"info": "The Café Committee is responsible for the guild's café operations in the Mathematics building.",
+		"contact": "Managing Director",
+		"contact2": "Operating Director",
+		"post_besk": "Here should be lots of info about the positions"
 	},
-	"externa-rep": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+	"externa-representanter": {
+		"self": "External Representatives",
+		"about": "Fill in",
+		"info": "The external representatives represent the F-guild in various contexts for the university.",
+		"contact": "No primary contact post"
 	},
 	"foset": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+		"self": "Föset",
+		"about": "Fill in",
+		"info": "Föset is responsible for the welcoming and orientation of new students to the F-guild.",
+		"contact": "Överfös"
 	},
-	"kulturm": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+	"kulturministeriet": {
+		"self": "Ministry of Culture",
+		"about": "Fill in",
+		"info": "The Ministry of Culture is the guild's activities committee and is responsible for organizing fun events.",
+		"contact": "Minister for Culture"
 	},
 	"fnu": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+		"self": "Business Committee",
+		"about": "Fill in",
+		"info": "The Business Committee works to create connections between students and companies.",
+		"contact": "Head of Corporate Relations"
 	},
-	"prylm": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+	"prylmasteriet": {
+		"self": "Equipment Committee",
+		"about": "Fill in",
+		"info": "The Equipment Committee is responsible for the guild's equipment, car and merch.",
+		"contact": "Head of Facilities"
 	},
 	"samvetet": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+		"self": "The Conscience",
+		"about": "Fill in",
+		"info": "The Conscience works to ensure the guild is a safe and inclusive place for all members.",
+		"contact": "Master of Conscience",
+		"contact2": "President of the committee for student equality"
 	},
-	"sanningsm": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+	"sanningsministeriet": {
+		"self": "Ministry of Truth",
+		"about": "Fill in",
+		"info": "The Ministry of Truth builds websites :) and is responsible for the guild's communication via our newspaper, photography and design.",
+		"contact": "Minister of Truth"
 	},
-	"secretservice": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+	"sekret-service": {
+		"self": "Secret Service",
+		"about": "Fill in",
+		"info": "Secret Service keeps the guild safe from threats and is ruled by the secretary.",
+		"contact": "Secretary"
 	},
 	"studieradet": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+		"self": "Student Council",
+		"about": "Fill in",
+		"info": "The Student Council voices the students' opinions and needs.",
+		"contact": "Minister for Education",
+		"contact2": "President of the Educational Council for your program"
 	},
 	"styrelsen": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+		"self": "Board",
+		"about": "Fill in",
+		"info": "The Board leads the F-guild and is responsible for its operations.",
+		"contact": "President",
+		"contact2": "Vice President"
 	},
 	"ovriga": {
-		"self": "Fyll i",
-		"about": "Fyll i"
+		"self": "Other",
+		"about": "Fill in",
+		"info": "The F-guild has many other positions and groups that do not fit into the councils above.",
+		"contact": "No primary contact post"
 	}
 }

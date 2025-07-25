@@ -3,7 +3,13 @@
 import { useState } from "react";
 import EventsForm from "./EventsForm";
 import EventsEditForm from "./EventsEditForm";
-import { createEventMutation, eventRemoveMutation, eventUpdateMutation, getAllEventsOptions, getAllEventsQueryKey } from "@/api/@tanstack/react-query.gen";
+import {
+	createEventMutation,
+	eventRemoveMutation,
+	eventUpdateMutation,
+	getAllEventsOptions,
+	getAllEventsQueryKey,
+} from "@/api/@tanstack/react-query.gen";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 
@@ -12,16 +18,21 @@ import formatTime from "@/help_functions/timeFormater";
 import type { EventCreate, EventRead } from "@/api";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
-import type { CalendarEvent, CustomEventData } from "@/utils/full-calendar-seed";
+import type {
+	CalendarEvent,
+	CustomEventData,
+} from "@/utils/full-calendar-seed";
 import { EventsProvider } from "@/utils/full-calendar-event-context";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
 import { useRouter } from "next/navigation";
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
-const columns = [ // This might not be the best way to do this, see the car booking page for alternative
+const columns = [
+	// This might not be the best way to do this, see the car booking page for alternative
 	columnHelper.accessor("title_sv", {
 		header: "Svensk titel",
 		cell: (info) => info.getValue(),
@@ -94,17 +105,18 @@ export default function Events() {
 	});
 
 	if (isFetching) {
-		return <p>{t("admin:loading")}</p>;
+		return <LoadingErrorCard />;
 	}
 
 	if (error) {
-		return <p>{t("admin:error")}</p>;
+		return <LoadingErrorCard error={error} />;
 	}
 
 	interface CustomEventData_ extends CustomEventData {
 		// We define these manually to avoid having start_time and start as different fields
 		council_id: number;
-		council_name: string;
+		council_name_sv: string;
+		council_name_en: string;
 		title_en: string;
 		signup_start: Date;
 		signup_end: Date;
@@ -124,14 +136,16 @@ export default function Events() {
 		price: number;
 		dot: EventCreate["dot"];
 		lottery: boolean;
-	};
+		signup_count: number;
+	}
 
 	// Map fetched bookings to calendar events
 	const events: CalendarEvent<CustomEventData_>[] =
 		(data as EventRead[])?.map((event) => ({
 			id: event.id.toString(),
 			council_id: event.council_id, // Might need to change this later
-			council_name: event.council?.name || "None",
+			council_name_sv: event.council?.name_sv || "None",
+			council_name_en: event.council?.name_en || "None",
 			title_sv: event.title_sv,
 			title_en: event.title_en,
 			start: event.starts_at,
@@ -143,18 +157,22 @@ export default function Events() {
 			description_en: event.description_en,
 			location: event.location,
 			max_event_users: event.max_event_users,
-			priorities: event.priorities.map(p => p.priority) as EventCreate["priorities"],
+			priorities: event.priorities.map(
+				(p) => p.priority,
+			) as EventCreate["priorities"],
 			recurring: event.recurring,
 			food: event.food,
 			closed: event.closed,
 			can_signup: event.can_signup,
 			drink_package: event.drink_package,
 			is_nollning_event: event.is_nollning_event,
-			alcohol_event_type: event.alcohol_event_type as EventCreate["alcohol_event_type"],
+			alcohol_event_type:
+				event.alcohol_event_type as EventCreate["alcohol_event_type"],
 			dress_code: event.dress_code,
 			price: event.price,
 			dot: event.dot as EventCreate["dot"],
 			lottery: event.lottery,
+			signup_count: event.signup_count,
 		})) ?? [];
 
 	return (
@@ -171,7 +189,8 @@ export default function Events() {
 				handleAdd={(event) =>
 					addBooking.mutate(
 						{
-							body: { // Having to define this sux, having to type "as string" also does. Basically TODO: fix pls
+							body: {
+								// Having to define this sux, having to type "as string" also does. Basically TODO: fix pls
 								council_id: event.council_id as number,
 								starts_at: event.start,
 								ends_at: event.end,
@@ -191,10 +210,13 @@ export default function Events() {
 								can_signup: event.can_signup as boolean,
 								drink_package: event.drink_package as boolean,
 								is_nollning_event: event.is_nollning_event as boolean,
-								alcohol_event_type: event.alcohol_event_type as ("Alcohol" | "Alcohol-Served" | "None"),
+								alcohol_event_type: event.alcohol_event_type as
+									| "Alcohol"
+									| "Alcohol-Served"
+									| "None",
 								dress_code: event.dress_code as string,
 								price: event.price as number,
-								dot: event.dot as ("None" | "Single" | "Double"),
+								dot: event.dot as "None" | "Single" | "Double",
 								lottery: event.lottery as boolean,
 							},
 						},
@@ -240,15 +262,21 @@ export default function Events() {
 								drink_package: event.drink_package as boolean,
 								is_nollning_event: event.is_nollning_event as boolean,
 								priorities: event.priorities as EventCreate["priorities"], // This might just work
-								alcohol_event_type: event.alcohol_event_type as ("Alcohol" | "Alcohol-Served" | "None"),
+								alcohol_event_type: event.alcohol_event_type as
+									| "Alcohol"
+									| "Alcohol-Served"
+									| "None",
 								dress_code: event.dress_code as string,
 								price: event.price as number,
-								dot: event.dot as ("None" | "Single" | "Double"),
+								dot: event.dot as "None" | "Single" | "Double",
 							},
 						},
 						{
 							onError: (err) =>
-								console.error(`${t("admin:events.error_edit")} ${event.id}`, err),
+								console.error(
+									`${t("admin:events.error_edit")} ${event.id}`,
+									err,
+								),
 						},
 					);
 				}}
@@ -259,7 +287,9 @@ export default function Events() {
 						className="flex flex-col w-full items-center"
 					>
 						<TabsList className="flex justify-center mb-2">
-							<TabsTrigger value="calendar">{t("admin:events.calendar")}</TabsTrigger>
+							<TabsTrigger value="calendar">
+								{t("admin:events.calendar")}
+							</TabsTrigger>
 							<TabsTrigger value="list">{t("admin:events.list")}</TabsTrigger>
 						</TabsList>
 						<TabsContent value="calendar" className="w-full px-5 space-y-5">
@@ -278,7 +308,7 @@ export default function Events() {
 								editDescription={true} // Note that setting this to false wont work with events. (not implemented in the list view)
 								handleOpenDetails={(event) => {
 									if (event) {
-										router.push(`/calendar/event-details?id=${event.id}`)
+										router.push(`/calendar/event-details?id=${event.id}`);
 									}
 								}}
 								disableEdit={false} // Also disables delete, add and dragging

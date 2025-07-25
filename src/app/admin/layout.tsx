@@ -1,6 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AdminSidebar } from "./AdminSidebar";
 import LoginWall from "@/components/LoginWall";
+import { NavBar } from "@/components/NavBar";
 
 export default async function AdminLayout({
 	children,
@@ -9,6 +10,7 @@ export default async function AdminLayout({
 }) {
 	return (
 		<LoginWall>
+			<NavBar />
 			<SidebarProvider>
 				<AdminSidebar />
 				<main className="w-full h-full flex flex-col">

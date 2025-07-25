@@ -1,22 +1,20 @@
-import { useTranslation } from 'react-i18next';
-import Select, { type OnChangeValue } from 'react-select'
-
-type Option = { value: string; label: string };
+import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { getEventPrioritiesOptions } from "@/api/@tanstack/react-query.gen";
+import StyledMultiSelect, { type Option } from "@/components/StyledMultiSelect";
 
 export interface AdminChoosePrioritiesProps {
-	priorities?: string[]
-	value?: string | string[]
-	onChange?: (value: string | string[]) => void
-	className?: string
+	priorities?: string[];
+	value?: string | string[];
+	onChange?: (value: string | string[]) => void;
+	className?: string;
 }
 
 export function AdminChoosePriorities({
 	priorities,
 	value = [],
 	onChange,
-	className = ""
+	className = "",
 }: AdminChoosePrioritiesProps) {
 	const { t } = useTranslation("admin");
 
@@ -27,7 +25,9 @@ export function AdminChoosePriorities({
 	const availablePriorities = data ?? [];
 
 	if (isFetching) {
-		return <p>{t("loading")}</p>;
+		return (
+			<StyledMultiSelect isDisabled={true} options={[]} className={className} />
+		);
 	}
 
 	if (error) {
@@ -47,23 +47,34 @@ export function AdminChoosePriorities({
 		label: val,
 	}));
 
-	const handleChange = (selected: OnChangeValue<Option, true>) => {
+	const handleChange = (selected: readonly Option[] | Option | null) => {
 		if (!onChange) return;
 
-		const newValues = selected ? selected.map(option => option.value) : [];
-		onChange(newValues);
+		if (Array.isArray(selected)) {
+			const newValues = selected.map((option) =>
+				typeof option.value === "string" ? option.value : String(option.value),
+			);
+			onChange(newValues);
+		} else {
+			// isMulti is true, so selected will be an array or null.
+			// If it's null (e.g., cleared), we pass an empty array.
+			onChange([]);
+		}
 	};
 
 	return (
-		<Select
-			isMulti
-			options={priorities.map((priority) => ({ value: priority, label: priority }))}
+		<StyledMultiSelect
+			isMulti={true}
+			options={priorities.map((priority) => ({
+				value: priority,
+				label: priority,
+			}))}
 			placeholder={t("choose_priorities")}
 			className={className}
 			value={selectedOptions}
 			onChange={handleChange}
 		/>
-	)
+	);
 }
 
-export default AdminChoosePriorities
+export default AdminChoosePriorities;

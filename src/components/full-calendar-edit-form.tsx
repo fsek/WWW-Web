@@ -251,7 +251,8 @@ export function EventEditForm({
 							personal: oldEvent.personal,
 							council_id: oldEvent.council_id,
 							confirmed: oldEvent.confirmed,
-							council_name: oldEvent.council_name,
+							council_name_sv: oldEvent.council_name_sv,
+							council_name_en: oldEvent.council_name_en,
 							user_id: oldEvent.user_id,
 						}
 					: {}),
@@ -304,7 +305,8 @@ export function EventEditForm({
 						personal: event?.personal ?? true,
 						council_id: event?.council_id || 1,
 						confirmed: event?.confirmed ?? false,
-						council_name: event?.council_name || "",
+						council_name_sv: event?.council_name_sv || "",
+						council_name_en: event?.council_name_en || "",
 						user_id: event?.user_id ?? undefined,
 					}
 				: {}),

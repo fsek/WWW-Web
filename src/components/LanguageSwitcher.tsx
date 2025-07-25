@@ -1,30 +1,13 @@
-import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Image from "next/image";
 
-// This component is very temporary. The process of loading the saved language is not properly implemented.
-
 const LanguageSwitcher = () => {
 	const { i18n } = useTranslation();
-	const [language, setLanguage] = useState<string | null>(null);
+	const language = i18n.resolvedLanguage || "sv"; // Default to Swedish if not set
 
-	useEffect(() => {
-		// Retrieve language from localStorage or use i18n's resolvedLanguage or default to 'sv'
-		const storedLanguage = localStorage.getItem("i18nextLng");
-		const initialLanguage = storedLanguage || i18n.resolvedLanguage || "sv";
-		console.log("Initial language:", initialLanguage);
-		setLanguage(initialLanguage);
-	}, [i18n.resolvedLanguage]);
-
-	// This does not work properly because we use static export
 	const handleLanguageChange = (lng: string) => {
 		if (language !== lng) {
-			i18n.changeLanguage(lng).then(() => {
-				// Update localStorage and cookie
-				localStorage.setItem("i18nextLng", lng);
-				// document.cookie = `i18next=${lng}; path=/`;
-				setLanguage(lng);
-			});
+			i18n.changeLanguage(lng);
 		}
 	};
 
@@ -47,6 +30,7 @@ const LanguageSwitcher = () => {
 				onClick={() => handleLanguageChange(otherLanguage)}
 				className="p-1 transition-opacity opacity-80 hover:opacity-100"
 				type="button"
+				aria-label={`Switch to ${languages[otherLanguage].alt}`}
 			>
 				<Image
 					src={languages[otherLanguage].flag}

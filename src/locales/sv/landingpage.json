@@ -1,0 +1,115 @@
+{
+	"f-guild": "F-sektionen",
+	"navbar": {
+		"login": "Logga in",
+		"items": {
+			"about": {
+				"label": "Om",
+				"href": "#about"
+			},
+			"councils": {
+				"label": "Utskott",
+				"href": "#councils"
+			},
+			"nollning": {
+				"label": "Ny student",
+				"href": "/nollning",
+				"className": "bg-gradient-to-r from-[#fe5f75] to-[#fc9840] bg-[length:100%_3px] bg-no-repeat bg-bottom"
+			},
+			"foretag": {
+				"label": "För företag",
+				"href": "#foretag"
+			},
+			"contact": {
+				"label": "Kontakt",
+				"href": "/contact"
+			},
+			"old": {
+				"label": "Gamla sidan",
+				"href": "https://old.fsektionen.se",
+				"className": "text-foreground/40 hover:text-foreground/60 transition-colors"
+			}
+		}
+	},
+	"hero": {
+		"title_static": "Sektionen för de som läser ",
+		"title_dynamic_1": "Teknisk Fysik",
+		"title_dynamic_2": "Teknisk Matematik",
+		"title_dynamic_3": "Teknisk Nanovetenskap",
+		"description": "Vi hjälper till att välkomna studenter till Lunds universitet och erbjuder en gemenskap och ett rikt studentliv för våra medlemmar.",
+		"new-student": "Jag är ny student",
+		"companies": "Jag representerar ett företag",
+		"login": "Medlemsinloggning"
+	},
+	"about": {
+		"title": "Om F-sektionen",
+		"description": "F-sektionen inom TLTH är en ideell förening för studenter som läser något av civilingenjörsprogrammen Teknisk Fysik, Teknisk Matematik eller Teknisk Nanovetenskap. Sedan vi grundades på 1960-talet har vi arbetat för att främja kamratskap bland våra medlemmar och tillvarata deras gemensamma intressen. Vi håller till i Mattehuset i Lund och anordnar event för att göra studietiden roligare, representerar programmen gentemot universitetet och näringslivet och mycket mer!"
+	},
+	"sponsors": "Huvudsamarbetspartner",
+	"whatwedo": {
+		"title_1": "En sektion med ",
+		"title_2": "allt ",
+		"title_3": "för dina studier",
+		"subtitle": "F-sektionen arbetar med allt som rör dina studier, från lugna pluggkvällar i Mattehuset till Ölresor över sundet. Vi är alla här för att göra studietiden så bra som möjligt.",
+		"event": {
+			"title": "Event och Fest",
+			"description": "Under hela året, med särskilt fokus på nollningen, anordnar vi fester och evenemang för att skapa en gemenskap bland studenterna."
+		},
+		"study": {
+			"title": "Studier",
+			"description": "Vi erbjuder stöd och resurser för studier genom våra pluggkvällar, där man kan få stöd från kunskapsrika studenter eller bara ha en lugn plats att studera med andra på."
+		},
+		"representation": {
+			"title": "Representation",
+			"description": "Vi arbetar hårt för att representera våra medlemmars intressen och behov inom utbildningen, och ser till att alla som studerar våra program kan få sin röst hörd."
+		},
+		"career": {
+			"title": "Karriär",
+			"description": "Vi hjälper studenter inom våra program att skapa kontakt med företag och industrin samt få en bild av arbetsmöjligheterna genom lunchföreläsningar, workshops och vår arbetsmarknadsmässa FARAD."
+		}
+	},
+	"councils": {
+		"title": "Utskotten som gör F-sektionen till det den är",
+		"subtitle": "F-sektionen består av flera utskott, var och en med sitt eget fokus och sina egna aktiviteter. Klicka på ett utskott för att lära dig mer om det på vår huvudsida."
+	},
+	"nollning": {
+		"title": "Nollningen - Introduktion för nyantagna",
+		"description": "Nollningen är en introduktionsperiod för nya studenter där de får möjlighet att lära känna andra studenter och delta i många roliga event och aktiviteter. Det är ett fantastisk sätt att börja sin studietid på.",
+		"button": "Läs mer om nollningen"
+	},
+	"companies": {
+		"title_1": "Nå ut ",
+		"title_2": "till nästa generation",
+		"description": "F-sektionen fungerar som en länk mellan studenter och näringsliv. Vi skapar mötesplatser där företag kan knyta kontakter med studenter, och vi välkomnar alltid nya samarbeten!",
+		"lunch": "Lunchföreläsningar",
+		"lunch_description": "Lunchföreläsningar lockar studenter från alla årskurser och erbjuder en perfekt möjlighet för er att ge dem en inblick i er verksamhet.",
+		"marketing": "Sociala medier-marknadsföring",
+		"marketing_description": "Vi erbjuder digital marknadsföring genom både e-post och inlägg på F-sektionens sociala mediekanaler.",
+		"events": "Kvällsevenemang",
+		"events_description": "Flexibiliteten i våra kvällsevenemang gör det möjligt att ge studenter en allmän förståelse för ert företag samtidigt som ni skapar en personlig kontakt med dem.",
+		"more": "Fler möjligheter",
+		"more_description": "Vi är alltid öppna för nya idéer och samarbeten. Om ni har en unik idé eller koncept skulle vi gärna vilja höra den!",
+		"cta_title": "Upptäck våra erbjudanden"
+	},
+	"contact": {
+		"title": "Kontakta oss",
+		"description": "Har du frågor eller vill veta mer om F-sektionen? Tveka inte att kontakta oss! Vi är här för att hjälpa dig och svara på dina frågor.",
+		"button": "Kontakta oss"
+	},
+	"footer": {
+		"title": "F-sektionen",
+		"follow_us": "Följ oss",
+		"other": "Övrigt",
+		"new-student": "Ny student",
+		"companies": "För företag",
+		"about": "Om",
+		"contact": "Kontakt",
+		"contact_page": "Kontaktsida",
+		"contact_ordf": "Kontakta Ordförande",
+		"contact_webmaster": "Kontakta Webbansvarig",
+		"old": "Gamla sidan",
+		"old_link": "Besök gamla sidan",
+		"old_styrdokument": "Styrdokument på gamla sidan",
+		"copyright": "F-sektionen. Alla rättigheter förvarade i superposition i ogenomtränglig låda."
+	}
+}

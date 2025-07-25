@@ -8,11 +8,10 @@ import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 
 import AdminTable from "@/widgets/AdminTable";
-import formatTime from "@/help_functions/timeFormater";
 import type { EventRead } from "../../../api";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
-
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 export default function Documents() {
 	// TODO: Fix this page lmao
@@ -40,13 +39,12 @@ export default function Documents() {
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("edited_by", {
-			header: t("admin:documents.edited_by"),	
+			header: t("admin:documents.edited_by"),
 			cell: (info) => info.getValue(),
 		}),
 	];
 
 	const table = useCreateTable({ data: data ?? [], columns });
-
 
 	function handleRowClick(row: Row<EventRead>) {
 		setSelectedEvent(row.original);
@@ -59,11 +57,11 @@ export default function Documents() {
 	}
 
 	if (isPending) {
-		return <p>{t("admin:loading")}</p>;
+		return <LoadingErrorCard />;
 	}
 
 	if (error) {
-		return <p>{t("admin:error")}</p>;
+		return <LoadingErrorCard error={error} />;
 	}
 
 	return (
@@ -71,9 +69,7 @@ export default function Documents() {
 			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
 				{t("admin:documents.page_title")}
 			</h3>
-			<p className="py-3">
-				{t("admin:documents.description")}
-			</p>
+			<p className="py-3">{t("admin:documents.description")}</p>
 			<DocumentsForm />
 
 			<AdminTable table={table} onRowClick={handleRowClick} />
