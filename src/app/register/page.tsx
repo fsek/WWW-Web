@@ -331,6 +331,8 @@ export default function RegistrationPage() {
 														)}
 														className="bg-background"
 														{...field}
+														value={field.value || "+46"}
+														onChange={(e) => field.onChange(e.target.value)}
 													/>
 												</FormControl>
 												<FormMessage />

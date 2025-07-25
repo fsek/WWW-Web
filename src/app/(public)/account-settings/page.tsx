@@ -310,11 +310,22 @@ export default function AccountSettingsPage() {
 														</FormControl>
 													) : (
 														<p className="text-sm font-medium mt-1">
-															{(parsePhoneNumberWithError(
-																user.telephone_number,
-															).formatNational() ??
-																user.telephone_number) ||
-																t("not-provided")}
+															{(() => {
+																try {
+																	const phone = parsePhoneNumberWithError(
+																		user.telephone_number,
+																	);
+																	// Only format as national if Swedish number (+46)
+																	if (phone.countryCallingCode === "46") {
+																		return phone.formatNational();
+																	}
+																	return phone.formatInternational();
+																} catch {
+																	return (
+																		user.telephone_number || t("not-provided")
+																	);
+																}
+															})()}
 														</p>
 													)}
 													<FormMessage />
