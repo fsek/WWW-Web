@@ -14,6 +14,10 @@
 	"select_posts": "Välj poster",
 	"no_posts": "Inga poster tilldelade",
 	"unclear_program": "Oklart",
+	"categories": {
+		"general": "Allmänt",
+		"councils": "Poster och utskott"
+	},
 	"news": {
 		"self": "Nyheter",
 		"page_title": "Administrera nyheter",
