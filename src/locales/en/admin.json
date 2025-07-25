@@ -13,6 +13,7 @@
 	"no": "No",
 	"select_posts": "Select Council Posts",
 	"no_posts": "No posts assigned",
+	"unclear_program": "Unclear",
 	"news": {
 		"self": "News",
 		"page_title": "Manage News"

@@ -13,6 +13,7 @@
 	"no": "Nej",
 	"select_posts": "Välj poster",
 	"no_posts": "Inga poster tilldelade",
+	"unclear_program": "Oklart",
 	"news": {
 		"self": "Nyheter",
 		"page_title": "Administrera nyheter"
