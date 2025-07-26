@@ -28,6 +28,14 @@ jobs:
         run: |
           mkdir -p src/api
           curl -fSL "$OPENAPI_JSON_URL" -o src/api/openapi.json
+        
+      - name: Install Bun
+        uses: oven‑sh/setup‑bun@v1
+        with:
+          bun-version: 'latest'
+
+      - name: Install dependencies (host)
+        run: bun install --frozen-lockfile
 
       - name: Generate API client
         run: bun run deploy-generate-api
