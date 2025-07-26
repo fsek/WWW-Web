@@ -1,6 +1,11 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
+function handleLanguageHeader(response: NextResponse, request: NextRequest) {
+	const language = request.cookies.get("i18next")?.value || "en";
+	response.headers.set("x-initial-language", language);
+}
+
+function handleAuthRedirects(request: NextRequest): NextResponse | null {
 	const authStatus = request.cookies.get("auth_status");
 
 	// Redirect authenticated users from / to /home
@@ -19,9 +24,27 @@ export function middleware(request: NextRequest) {
 		return NextResponse.redirect(new URL("/", request.url));
 	}
 
-	return NextResponse.next();
+	return null;
+}
+
+export function middleware(request: NextRequest) {
+	// Check for auth redirects first
+	const authRedirect = handleAuthRedirects(request);
+
+	if (authRedirect) {
+		handleLanguageHeader(authRedirect, request);
+		return authRedirect;
+	}
+
+	// Default: continue with language header
+	const response = NextResponse.next();
+	handleLanguageHeader(response, request);
+	return response;
 }
 
 export const config = {
-	matcher: ["/", "/home"],
+	// Avoid running middleware on API routes, static files, and images
+	matcher: [
+		"/((?!api|_next/static|_next/image|favicon.ico|locales|flags|images).*)",
+	],
 };
