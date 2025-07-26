@@ -6,7 +6,7 @@ FROM base AS deps
 WORKDIR /app
 
 ENV ENVIRONMENT ${ENVIRONMENT}
-ENV API_BASE_URL ${API_BASE_URL}
+ENV NEXT_PUBLIC_API_BASE_URL ${API_BASE_URL}
 
 # Install dependencies
 COPY package.json ./
