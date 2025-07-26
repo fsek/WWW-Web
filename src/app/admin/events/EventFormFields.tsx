@@ -371,7 +371,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							control={eventsForm.control}
 							name={fieldName}
 							render={({ field }) => (
-								<Label className="hover:bg-accent/50 flex items-starts_at gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
+								<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
 									<Checkbox
 										checked={field.value as boolean}
 										onCheckedChange={field.onChange}
