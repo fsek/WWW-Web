@@ -58,7 +58,7 @@ export default function DocumentPage({ params }: DocumentPageProps) {
 			} else if (response instanceof Blob) {
 				blob = new Blob([response], { type: "application/pdf" });
 			} else {
-				blob = new Blob([response], { type: "application/pdf" });
+				blob = new Blob([response as BlobPart], { type: "application/pdf" });
 			}
 
 			// Create object URL for inline display
