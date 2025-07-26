@@ -30,9 +30,9 @@ jobs:
           curl -fSL "$OPENAPI_JSON_URL" -o src/api/openapi.json
         
       - name: Install Bun
-        uses: oven‑sh/setup‑bun@v2
+        uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 'latest'
+          bun-version: latest
 
       - name: Install dependencies (host)
         run: bun install --frozen-lockfile
