@@ -13,8 +13,9 @@ ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 # ─────────── deps ───────────
 FROM base AS deps
 WORKDIR /app
-COPY package.json bun.lockb ./
-RUN bun install --frozen-lockfile
+COPY package.json ./
+# this will generate bun.lockb + node_modules together
+RUN bun install
 
 # ─────────── builder ───────────
 FROM base AS builder
