@@ -12,7 +12,6 @@ import CouncilForm from "./CouncilForm";
 import CouncilEditForm from "./CouncilEditForm";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import { Toaster } from "@/components/ui/sonner";
 
 export default function Councils() {
 	const { t, i18n } = useTranslation("admin");
@@ -77,7 +76,6 @@ export default function Councils() {
 				onClose={() => handleClose()}
 				selectedCouncil={selectedCouncil as CouncilRead}
 			/>
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

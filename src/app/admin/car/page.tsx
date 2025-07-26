@@ -39,7 +39,6 @@ import CarEditForm from "./CarEditForm";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Toaster } from "@/components/ui/sonner";
 import BlockForm from "./BlockForm";
 import type { CarBlockRead } from "@/api/index";
 import {
@@ -572,7 +571,6 @@ export default function Car() {
 					</div>
 				</EventsProvider>
 			)}
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

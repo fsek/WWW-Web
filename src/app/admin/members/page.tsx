@@ -34,7 +34,6 @@ import {
 import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { Toaster } from "@/components/ui/sonner";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 const columnHelper = createColumnHelper<AdminUserRead>();
@@ -316,7 +315,6 @@ export default function MembersPage() {
 			<Separator />
 			{/* <AdminTable table={table} onRowClick={handleRowClick} /> */}
 			<AdminTable table={table} onRowClick={() => {}} />
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

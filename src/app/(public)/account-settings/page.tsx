@@ -27,7 +27,6 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import { program } from "@/api";
 import { toast } from "sonner";
-import { Toaster } from "@/components/ui/sonner";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -610,13 +609,11 @@ export default function AccountSettingsPage() {
 							</Card>
 						</div>
 					</Form>
-					<Toaster position="top-center" richColors />
 				</TabsContent>
 				<TabsContent value="security">
 					<ChangeEmailPassForm />
 				</TabsContent>
 			</Tabs>
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

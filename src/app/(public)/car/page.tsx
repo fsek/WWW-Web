@@ -33,7 +33,6 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 
 export default function Car() {
@@ -358,8 +357,6 @@ export default function Car() {
 					</>
 				}
 			/>
-
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

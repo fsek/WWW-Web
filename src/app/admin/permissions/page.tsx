@@ -11,7 +11,6 @@ import useCreateTable from "@/widgets/useCreateTable";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import PermissionForm from "./PermissionForm";
 import PermissionEditForm from "./PermissionEditForm";
-import { Toaster } from "@/components/ui/sonner";
 import { useTranslation } from "react-i18next";
 
 // Column setup
@@ -75,7 +74,6 @@ export default function Permissions() {
 					selectedPermission={selectedPermission}
 				/>
 			)}
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

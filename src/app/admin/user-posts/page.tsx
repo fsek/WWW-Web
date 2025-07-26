@@ -19,7 +19,6 @@ import {
 } from "@tanstack/react-table";
 import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Toaster } from "@/components/ui/sonner";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import UserPostsEditForm from "./UserPostsEditForm";
 import { UserPen } from "lucide-react";
@@ -216,7 +215,6 @@ export default function UserPostsPage() {
 					selectedUser={selectedUser}
 				/>
 			)}
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

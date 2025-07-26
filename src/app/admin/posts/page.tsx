@@ -15,7 +15,6 @@ import PostForm from "./PostForm";
 import PostEditForm from "./PostEditForm";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import { Toaster } from "@/components/ui/sonner";
 
 export default function Posts() {
 	const { t, i18n } = useTranslation("admin");
@@ -93,7 +92,6 @@ export default function Posts() {
 				onClose={() => handleClose()}
 				selectedPost={selectedEvent as PostRead}
 			/>
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }
