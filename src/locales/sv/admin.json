@@ -39,7 +39,8 @@
 		"error_delete": "Misslyckades att ta bort nyhet.",
 		"no_news": "Inga nyheter tillgängliga.",
 		"confirm_remove": "Bekräfta borttagning",
-		"confirm_remove_text": "Är du säker på att du vill ta bort denna nyhet?"
+		"confirm_remove_text": "Är du säker på att du vill ta bort denna nyhet?",
+		"page_description": "Här kan du skapa nyheter och redigera existerande nyheter på hemsidan."
 	},
 	"events": {
 		"self": "Evenemang",
@@ -325,6 +326,7 @@
 	"id": "ID",
 	"first_name": "Förnamn",
 	"last_name": "Efternamn",
+	"name": "Namn",
 	"email": "E-post",
 	"is_verified": "Verifierad",
 	"account_created": "Konto Skapat",

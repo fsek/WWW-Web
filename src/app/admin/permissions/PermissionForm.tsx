@@ -20,11 +20,11 @@ import {
 	SelectItem,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { permissionActions, permissionTargets } from "@/constants";
+import { action, target, type PermissionCreate } from "@/api";
 
 const permissionSchema = z.object({
-	action: z.enum([...permissionActions] as [string, ...string[]]),
-	target: z.enum([...permissionTargets] as [string, ...string[]]),
+	action: z.enum(Object.values(action) as [PermissionCreate["action"]]),
+	target: z.enum(Object.values(target) as [PermissionCreate["target"]]),
 });
 
 export default function PermissionForm() {

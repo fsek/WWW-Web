@@ -50,6 +50,7 @@ import {
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 const columnHelper = createColumnHelper<CarBookingRead>();
+const blockColumnHelper = createColumnHelper<CarBlockRead>();
 
 export default function Car() {
 	const router = useRouter();
@@ -276,38 +277,34 @@ export default function Car() {
 
 	const blockColumns = useMemo(
 		() => [
-			{
-				accessorKey: "user_id",
+			blockColumnHelper.accessor("user_id", {
 				header: t("admin:block.blocked_user"),
 				cell: (info) => {
 					const userId = info.getValue();
 					const userName = getUserFullName(userId);
 					return userName;
 				},
-			},
-			{
-				accessorKey: "reason",
+			}),
+			blockColumnHelper.accessor("reason", {
 				header: t("admin:block.reason"),
 				cell: (info) => info.getValue(),
-			},
-			{
-				accessorKey: "blocked_by",
+			}),
+			blockColumnHelper.accessor("blocked_by", {
 				header: t("admin:block.blocked_by"),
 				cell: (info) => {
 					const userId = info.getValue();
 					const userName = getUserFullName(userId);
 					return userName;
 				},
-			},
-			{
-				accessorKey: "created_at",
+			}),
+			blockColumnHelper.accessor("created_at", {
 				header: t("admin:block.blocked_at"),
 				cell: (info) =>
 					info.getValue()
 						? new Date(info.getValue()).toLocaleString("sv-SE")
 						: "",
-			},
-			{
+			}),
+			blockColumnHelper.display({
 				id: "actions",
 				header: t("admin:block.actions"),
 				cell: ({ row }: { row: Row<CarBlockRead> }) => (
@@ -338,7 +335,7 @@ export default function Car() {
 						{t("admin:block.unblock")}
 					</Button>
 				),
-			},
+			}),
 		],
 		[t, handleUnblockUser, queryClient.invalidateQueries],
 	);

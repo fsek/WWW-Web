@@ -265,10 +265,10 @@ export default function NewsEditForm({
 								open={confirmOpen}
 								onOpenChange={setConfirmOpen}
 								onConfirm={handleRemoveNews}
-								triggerText={t("news.remove")}
+								triggerText={t("remove")}
 								title={t("news.confirm_remove")}
 								description={t("news.confirm_remove_text")}
-								confirmText={t("news.remove")}
+								confirmText={t("remove")}
 								cancelText={t("cancel")}
 							/>
 						</div>
