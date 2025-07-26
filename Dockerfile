@@ -20,12 +20,16 @@ RUN cp -r public .next/standalone/ \
  && cp -r .next/static .next/standalone/.next/ \
  && cp -r node_modules .next/standalone/node_modules/
 
-RUN adduser --system --uid 1001 nextjs
+FROM node:20-alpine AS runner
+
+RUN addgroup -S nextjs && adduser -S -G nextjs nextjs
+
+WORKDIR /app
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
 USER nextjs
 
 EXPOSE 3000
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-
-CMD ["bun", ".next/standalone/server.js"]
+CMD ["node", "./next/standalone/server.js"]
