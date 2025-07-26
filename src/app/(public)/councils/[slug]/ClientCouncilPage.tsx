@@ -68,7 +68,8 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 								{/* {council.description || ( */}
 								{/* <Trans i18nKey={`utskott:${slug}.about`}>
 									Temporarily using a short info text */}
-								<Trans i18nKey={`utskott:${slug}.info`}>
+								{t(`utskott:${slug}.about`, "No text found :/")}
+								{/* <Trans i18nKey={`utskott:${slug}.info`}>
 									<a
 										href="/admin"
 										className="underline text-primary hover:text-orange-400"
@@ -77,7 +78,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 									>
 										Ingen text kunde hittas :/
 									</a>
-								</Trans>
+								</Trans> */}
 								{/* )} */}
 							</p>
 						</>
