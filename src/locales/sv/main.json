@@ -261,5 +261,9 @@
 		"no_error_message": "Inget felmeddelande tillgängligt.",
 		"network_error": "Ett nätverksfel uppstod. Kontrollera din anslutning.",
 		"unauthorized": "Du är inte auktoriserad att se detta innehåll. Logga in."
+	},
+	"cookieConsent": {
+		"message": "Vi använder cookies för att förbättra din upplevelse på vår webbplats (autentisering, språk och mer). Genom att fortsätta använda webbplatsen godkänner du vår användning av cookies.",
+		"accept": "Okej"
 	}
 }
