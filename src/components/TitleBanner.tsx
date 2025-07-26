@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface TitleBannerProps {
 	title: string;
 	imageUrl: string;
@@ -25,10 +27,17 @@ const TitleBanner: React.FC<TitleBannerProps> = ({
         ${className} // Merge additional classes
       `}
 		>
+			<Image
+				src={imageUrl}
+				fill
+				objectFit="cover"
+				loading="lazy"
+				aria-hidden="true"
+				alt=""
+				className="absolute inset-0 bg-cover bg-center blur-md -z-10 scale-[1.1]"
+			/>
 			{/* Background Image Layer */}
 			<div
-				className="absolute inset-0 bg-cover bg-center blur-md -z-10 scale-[1.1]"
-				style={{ backgroundImage: `url(${imageUrl})` }}
 				aria-hidden="true" // Hide decorative background from screen readers
 			/>
 
