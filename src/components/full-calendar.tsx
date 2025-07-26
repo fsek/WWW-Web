@@ -380,89 +380,88 @@ export default function Calendar({
 	const calendarLatestTime = `${latestHour}:${latestMin}`;
 
 	return (
-    <div className="space-y-5 flex-1 flex flex-col">
-      <CalendarNav
-        calendarRef={calendarRef}
-        start={selectedStart}
-        end={selectedEnd}
-        viewedDate={viewedDate}
-        editDescription={editDescription ?? false}
-        disableEdit={disableEdit}
-        enableAllDay={enableAllDay}
-        enableTrueEventProperties={enableTrueEventProperties}
-        mini={mini}
-        enableCarProperties={enableCarProperties}
+		<div className="space-y-5 flex-1 flex flex-col">
+			<CalendarNav
+				calendarRef={calendarRef}
+				start={selectedStart}
+				end={selectedEnd}
+				viewedDate={viewedDate}
+				editDescription={editDescription ?? false}
+				disableEdit={disableEdit}
+				enableAllDay={enableAllDay}
+				enableTrueEventProperties={enableTrueEventProperties}
+				mini={mini}
+				enableCarProperties={enableCarProperties}
 				isMobile={isMobile}
-      />
+			/>
 
-      <Card className={`${isMobile ? "p-1" : "p-3"} flex-1`}>
-        <FullCalendar
-          ref={calendarRef}
-          timeZone="local"
-          locale={i18n.language}
-          plugins={[
-            dayGridPlugin,
-            timeGridPlugin,
-            multiMonthPlugin,
-            interactionPlugin,
-            listPlugin,
-          ]}
-          initialView={getInitialView()}
-					view={getInitialView()}
-          views={{
-            timeGridFourDay: {
-              type: 'timeGrid',
-              duration: { days: 4 },
-              buttonText: '4 Days'
-            },
-            dayGridDay: {
-              type: 'dayGrid',
-              duration: { days: 3 },
-              buttonText: 'Day'
-            }
-          }}
-          headerToolbar={false}
-          slotMinTime={calendarEarliestTime}
-          slotMaxTime={calendarLatestTime}
-          allDaySlot={enableAllDay}
-          allDayMaintainDuration={true}
-          forceEventDuration={true}
-          scrollTime={zoomWorkHours ? "08:00" : undefined}
-          firstDay={1}
-          height={mini || zoomWorkHours ? "100%" : isMobile ? "40vh" : "32vh"}
-          contentHeight={mini || zoomWorkHours ? "100%" : "auto"}
-          dayHeaderFormat={{
-            weekday: isMobile ? "short" : "long",
-          }}
-          allDayContent={t("calendar:all_day")}
-          displayEventEnd={true}
-          windowResizeDelay={0}
-          events={events}
-          slotLabelFormat={{
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: false,
-          }}
-          eventTimeFormat={{
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: false,
-          }}
-          eventBorderColor={"black"}
-          expandRows={true}
-          dayCellContent={(dayInfo) => <DayRender info={dayInfo} />}
-          eventContent={(eventInfo) => <EventItem info={eventInfo} />}
-          dayHeaderContent={(headerInfo) => <DayHeader info={headerInfo} />}
-          eventClick={(eventInfo) => handleEventClick(eventInfo)}
-          eventChange={(eventInfo) => handleEventChange(eventInfo)}
-          select={handleDateSelect}
-          datesSet={(dates) => setViewedDate(dates.start)}
-          dateClick={isEditable ? () => setEventAddOpen(true) : undefined}
-          nowIndicator
-          editable={isEditable && !disableEditOfOthers}
-          selectable
-        />
-      </Card>
+			<Card className={`${isMobile ? "p-1" : "p-3"} flex-1`}>
+				<FullCalendar
+					ref={calendarRef}
+					timeZone="local"
+					locale={i18n.language}
+					plugins={[
+						dayGridPlugin,
+						timeGridPlugin,
+						multiMonthPlugin,
+						interactionPlugin,
+						listPlugin,
+					]}
+					initialView={getInitialView()}
+					views={{
+						timeGridFourDay: {
+							type: "timeGrid",
+							duration: { days: 4 },
+							buttonText: "4 Days",
+						},
+						dayGridDay: {
+							type: "dayGrid",
+							duration: { days: 3 },
+							buttonText: "Day",
+						},
+					}}
+					headerToolbar={false}
+					slotMinTime={calendarEarliestTime}
+					slotMaxTime={calendarLatestTime}
+					allDaySlot={enableAllDay}
+					allDayMaintainDuration={true}
+					forceEventDuration={true}
+					scrollTime={zoomWorkHours ? "08:00" : undefined}
+					firstDay={1}
+					height={mini || zoomWorkHours ? "100%" : isMobile ? "40vh" : "32vh"}
+					contentHeight={mini || zoomWorkHours ? "100%" : "auto"}
+					dayHeaderFormat={{
+						weekday: isMobile ? "short" : "long",
+					}}
+					allDayContent={t("calendar:all_day")}
+					displayEventEnd={true}
+					windowResizeDelay={0}
+					events={events}
+					slotLabelFormat={{
+						hour: "numeric",
+						minute: "2-digit",
+						hour12: false,
+					}}
+					eventTimeFormat={{
+						hour: "numeric",
+						minute: "2-digit",
+						hour12: false,
+					}}
+					eventBorderColor={"black"}
+					expandRows={true}
+					dayCellContent={(dayInfo) => <DayRender info={dayInfo} />}
+					eventContent={(eventInfo) => <EventItem info={eventInfo} />}
+					dayHeaderContent={(headerInfo) => <DayHeader info={headerInfo} />}
+					eventClick={(eventInfo) => handleEventClick(eventInfo)}
+					eventChange={(eventInfo) => handleEventChange(eventInfo)}
+					select={handleDateSelect}
+					datesSet={(dates) => setViewedDate(dates.start)}
+					dateClick={isEditable ? () => setEventAddOpen(true) : undefined}
+					nowIndicator
+					editable={isEditable && !disableEditOfOthers}
+					selectable
+				/>
+			</Card>
 
 			{/* Render the EventAddForm and EventEditForm so it can appear when eventAddOpen is toggled (when clicking empty slots or dragging events) */}
 			{/* {!disableEdit && (
