@@ -14,6 +14,7 @@ import {
 	LayoutGrid,
 	SlidersHorizontal,
 	MoreHorizontal,
+	Beer,
 } from "lucide-react";
 
 const councils = [
@@ -39,6 +40,7 @@ const councils = [
 		icon: Server,
 	},
 	{ key: "sekret-service", url: "/councils/sekret-service", icon: Shield },
+	{ key: "sexmasteriet", url: "/councils/sexmasteriet", icon: Beer },
 	{ key: "studieradet", url: "/councils/studieradet", icon: Users2 },
 	{ key: "styrelsen", url: "/councils/styrelsen", icon: Users },
 	{ key: "ovriga", url: "/councils/ovriga", icon: MoreHorizontal },

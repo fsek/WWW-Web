@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 interface TitleBannerProps {
 	title: string;
 	imageUrl: string;
@@ -38,6 +37,7 @@ const TitleBanner: React.FC<TitleBannerProps> = ({
 			/>
 			{/* Background Image Layer */}
 			<div
+
 				aria-hidden="true" // Hide decorative background from screen readers
 			/>
 
