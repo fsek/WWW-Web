@@ -11,8 +11,14 @@ ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 # ─────────── Dependencies Stage ───────────
 FROM base AS deps
 WORKDIR /app
-COPY package.json bun.lockb ./
-RUN bun install --frozen-lockfile
+# Only package.json is guaranteed to exist
+COPY package.json ./
+
+# Run install; this will generate a lockfile in the image
+RUN bun install
+
+# Now copy the rest of your source
+COPY . .
 
 # ─────────── Builder Stage ───────────
 FROM base AS builder
