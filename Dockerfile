@@ -1,57 +1,59 @@
-# ─────────── global base ───────────
 FROM oven/bun AS base
 
-# allow build‑time injection
+# Allow build-time injection of environment variables
 ARG BUILD_ENV
 ARG NEXT_PUBLIC_API_BASE_URL
 
-# pick up BUILD_ENV as NODE_ENV in builder & runner
+# Set environment for builder & runner
 ENV NODE_ENV=${BUILD_ENV}
-# make your NEXT_PUBLIC_* visible to Next.js at build time
 ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 
-# ─────────── deps ───────────
+# ─────────── Dependencies Stage ───────────
 FROM base AS deps
 WORKDIR /app
-COPY package.json bun.lockb ./
-RUN bun install --frozen-lockfile
+# Only package.json is guaranteed to exist
+COPY package.json ./
 
-# ─────────── builder ───────────
-FROM base AS builder
-WORKDIR /app
+# Run install; this will generate a lockfile in the image
+RUN bun install
 
-# pull in deps
-COPY --from=deps /app/node_modules ./node_modules
-# bring in everything else
+# Now copy the rest of your source
 COPY . .
 
-# disable telemetry
+# ─────────── Builder Stage ───────────
+FROM base AS builder
+WORKDIR /app
+# Bring in installed dependencies
+COPY --from=deps /app/node_modules ./node_modules
+# Copy source
+COPY . .
+# Disable Next.js telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
-
-# build into `./dist`
+# Build the project (outputs to dist/ and generates css/, chunks/, media/ at root)
 RUN bun run build
 
-# ─────────── runner ───────────
+# ─────────── Runner Stage ───────────
 FROM base AS runner
 WORKDIR /app
-
-# ensure prod mode
+# Create a non-root user
+RUN adduser --system --uid 1001 nextjs
+# Ensure production mode
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# non‑root
-RUN adduser --system --uid 1001 nextjs
+# Copy the standalone server bundle
+COPY --from=builder --chown=nextjs:bun /app/dist/server/ ./
 
-# copy public
-COPY --from=builder /app/public ./public
+# Copy your public assets
+COPY --from=builder --chown=nextjs:bun /app/public ./public
 
-# copy dist output
-COPY --from=builder --chown=nextjs:bun /app/dist/standalone ./
-COPY --from=builder --chown=nextjs:bun /app/dist/static ./
+# Copy built static files into .next/static for proper serving
+RUN mkdir -p .next/static
+COPY --from=builder --chown=nextjs:bun /app/dist/static/css    ./.next/static/css
+COPY --from=builder --chown=nextjs:bun /app/dist/static/chunks ./.next/static/chunks
+COPY --from=builder --chown=nextjs:bun /app/dist/static/media  ./.next/static/media
 
-# give prerender cache perms (now under /app/.next)
-RUN mkdir -p /app/.next && chown nextjs:bun /app/.next
-
+# Run as non-root user
 USER nextjs
 
 EXPOSE 3000

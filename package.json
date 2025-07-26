@@ -7,7 +7,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"generate-api": "openapi-ts"
+		"deploy-generate-api": "openapi-ts --input https://stage.backend.fsektionen.se/openapi.json"
 	},
 	"dependencies": {
 		"@fullcalendar/react": "^6.1.15",
