@@ -15,7 +15,7 @@ This repo uses VSCode's Dev Containers extension to standardize the development 
 1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and run it.
 
     - Windows users: Make sure you select Use WSL 2 instead of Hyper-V if the option is presented.
-
+ 
 2. Open a new VSCode window and install Dev Containers extension from the Extensions menu.
  
 3. Open the Command Palette (`Ctrl + Shift + P` / `Cmd + Shift + P`) and select `Dev Containers: Clone Repository in Container Volume...`. Select `GitHub`, then enter `fsek/WWW-Web.git`.
