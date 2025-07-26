@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,8 @@ import type { EventRead, EventUpdate } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import EventFormFields from "./EventFormFields";
+import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { Save } from "lucide-react";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
@@ -59,6 +61,8 @@ export default function EventsEditForm({
 	selectedEvent,
 }: EventsEditFormProps) {
 	const { t } = useTranslation();
+
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
 	const form = useForm<EventsEditFormValues>({
 		resolver: zodResolver(eventsEditSchema),
@@ -196,18 +200,18 @@ export default function EventsEditForm({
 						/>
 
 						<div className="space-x-2 mt-6 flex justify-end">
-							<Button variant="outline" className="w-32 min-w-fit">
-								{t("admin:preview")}
-							</Button>
-							<Button
-								variant="destructive"
-								type="button"
-								className="w-32 min-w-fit"
-								onClick={handleRemoveSubmit}
-							>
-								{t("admin:remove")}
-							</Button>
+							<ConfirmDeleteDialog
+								open={deleteDialogOpen}
+								onOpenChange={setDeleteDialogOpen}
+								onConfirm={handleRemoveSubmit}
+								triggerText={t("admin:remove")}
+								title={t("admin:events.confirm_remove")}
+								description={t("admin:events.confirm_remove_text")}
+								confirmText={t("admin:remove")}
+								cancelText={t("admin:cancel")}
+							/>
 							<Button type="submit" className="w-32 min-w-fit">
+								<Save />
 								{t("admin:save")}
 							</Button>
 						</div>

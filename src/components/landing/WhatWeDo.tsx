@@ -5,7 +5,7 @@ import {
 	BriefcaseBusiness,
 	GraduationCap,
 } from "lucide-react";
-import { useTranslation } from "node_modules/react-i18next";
+import { useTranslation } from "react-i18next";
 import { cloneElement } from "react";
 
 interface FeatureProps {

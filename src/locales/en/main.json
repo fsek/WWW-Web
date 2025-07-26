@@ -262,6 +262,10 @@
 		"network_error": "Network error occurred. Please check your connection.",
 		"unauthorized": "You are not authorized to view this information. Please log in."
 	},
+	"cookieConsent": {
+		"message": "We use cookies to enhance your experience on our website (authentication, language and more). By continuing to use the site, you agree to our use of cookies.",
+		"accept": "Okay"
+	},
 	"permission-wall": {
 		"stop": "Stop",
 		"subtitle": "Slow down there!",

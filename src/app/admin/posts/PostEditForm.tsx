@@ -25,16 +25,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { Textarea } from "@/components/ui/textarea";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 import { toast } from "sonner";
+import { Save } from "lucide-react";
 
 const postEditSchema = z.object({
 	id: z.number(),
@@ -302,14 +295,19 @@ export default function PostEditForm({
 						/>
 
 						<div className="space-x-2 lg:col-span-4 lg:grid-cols-subgrid">
-							<Button
-								variant="destructive"
-								type="button"
-								className="w-32 min-w-fit"
-								onClick={handleDeleteClick}
-							>
-								{t("posts.remove", "Remove post")}
-							</Button>
+							<ConfirmDeleteDialog
+								open={showDeleteDialog}
+								onOpenChange={setShowDeleteDialog}
+								onConfirm={handleRemoveSubmit}
+								triggerText={t("posts.remove", "Remove post")}
+								title={t("posts.confirm_remove", "Confirm removal")}
+								description={t(
+									"posts.confirm_remove_text",
+									"Are you sure you want to remove this post?",
+								)}
+								confirmText={t("posts.remove", "Remove post")}
+								cancelText={t("cancel", "Cancel")}
+							/>
 
 							<Button
 								variant="outline"
@@ -321,36 +319,13 @@ export default function PostEditForm({
 							</Button>
 
 							<Button type="submit" className="w-32 min-w-fit">
+								<Save />
 								{t("save", "Spara")}
 							</Button>
 						</div>
 					</form>
 				</Form>
 			</DialogContent>
-			<AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-				<AlertDialogContent>
-					<AlertDialogHeader>
-						<AlertDialogTitle>
-							{t("posts.confirm_remove", "Bekräfta borttagning")}
-						</AlertDialogTitle>
-					</AlertDialogHeader>
-					<p>
-						{t(
-							"posts.confirm_remove_text",
-							"Är du säker på att du vill ta bort denna post?",
-						)}
-					</p>
-					<AlertDialogFooter>
-						<AlertDialogCancel>{t("cancel", "Avbryt")}</AlertDialogCancel>
-						<AlertDialogAction
-							onClick={handleDeleteConfirm}
-							className="bg-destructive text-white"
-						>
-							{t("posts.remove", "Ta bort post")}
-						</AlertDialogAction>
-					</AlertDialogFooter>
-				</AlertDialogContent>
-			</AlertDialog>
 		</Dialog>
 	);
 }

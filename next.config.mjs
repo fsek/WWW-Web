@@ -6,9 +6,12 @@ import rehypeMathjaxChtml from "rehype-mathjax/chtml";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	output: "standalone",
-	distDir: "./dist", // Changes the build output directory to `./dist/`.
 	// Configure `pageExtensions` to include MDX files
 	pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
+	typescript: {
+		// only allow ignoring type errors in stage builds
+		ignoreBuildErrors: process.env.BUILD_ENV === "stage",
+	},
 };
 
 const withMDX = nextMdx({

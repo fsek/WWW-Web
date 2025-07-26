@@ -1,5 +1,4 @@
 "use client";
-
 import { useQuery } from "@tanstack/react-query";
 import { getAllEventsOptions } from "@/api/@tanstack/react-query.gen";
 import Calendar from "@/components/full-calendar";
@@ -15,11 +14,13 @@ import { LoadingErrorCard } from "./LoadingErrorCard";
 interface MainPageCalendarProps {
 	mini?: boolean;
 	zoomWorkHours?: boolean;
+	isMobile?: boolean;
 }
 
 export default function MainPageCalendar({
 	mini = false,
 	zoomWorkHours = false,
+	isMobile = false,
 }: MainPageCalendarProps) {
 	const router = useRouter();
 
@@ -99,9 +100,12 @@ export default function MainPageCalendar({
 			lottery: event.lottery,
 		})) ?? [];
 
+	// Adjust padding for mobile view
+	const containerPadding = isMobile ? "px-2" : "px-8";
+
 	return (
 		<div
-			className={`px-8 ${mini || zoomWorkHours ? "h-full flex flex-col" : ""}`}
+			className={`${containerPadding} ${mini || zoomWorkHours ? "h-full flex flex-col" : ""}`}
 		>
 			<EventsProvider
 				initialCalendarEvents={events}
@@ -135,6 +139,7 @@ export default function MainPageCalendar({
 						enableTrueEventProperties={true}
 						mini={mini}
 						zoomWorkHours={zoomWorkHours}
+						isMobile={isMobile}
 					/>
 				</div>
 			</EventsProvider>

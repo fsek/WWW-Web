@@ -36,6 +36,7 @@ import { Checkbox } from "./ui/checkbox";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { Label } from "./ui/label";
 import EventFormFields from "@/app/admin/events/EventFormFields";
+import { Save } from "lucide-react";
 
 interface EventEditFormProps {
 	oldEvent?: CalendarEvent;
@@ -548,7 +549,10 @@ export function EventEditForm({
 							<AlertDialogCancel onClick={() => handleEditCancellation()}>
 								{t("cancel")}
 							</AlertDialogCancel>
-							<AlertDialogAction type="submit">{t("save")}</AlertDialogAction>
+							<AlertDialogAction type="submit">
+								<Save />
+								{t("save")}
+							</AlertDialogAction>
 						</AlertDialogFooter>
 					</form>
 				</Form>

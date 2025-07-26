@@ -50,16 +50,17 @@ const FOOD_PREFERENCES = [
 	"Gluten",
 ];
 
-const PROGRAMS = [
-	{ value: "F", label: "F" },
-	{ value: "Pi", label: "Pi" },
-	{ value: "N", label: "N" },
-];
-
 export default function AccountSettingsPage() {
 	const { t } = useTranslation("user-settings");
 	const [isEditing, setIsEditing] = useState(false);
 	const [isSaving, setIsSaving] = useState(false);
+
+	const PROGRAMS = [
+		{ value: "F", label: "F" },
+		{ value: "Pi", label: "Pi" },
+		{ value: "N", label: "N" },
+		{ value: "Oklart", label: t("admin:unclear_program") },
+	];
 
 	const accountSchema = z.object({
 		first_name: z.string().min(1, t("first-name-required")),
@@ -307,11 +308,22 @@ export default function AccountSettingsPage() {
 														</FormControl>
 													) : (
 														<p className="text-sm font-medium mt-1">
-															{(parsePhoneNumberWithError(
-																user.telephone_number,
-															).formatNational() ??
-																user.telephone_number) ||
-																t("not-provided")}
+															{(() => {
+																try {
+																	const phone = parsePhoneNumberWithError(
+																		user.telephone_number,
+																	);
+																	// Only format as national if Swedish number (+46)
+																	if (phone.countryCallingCode === "46") {
+																		return phone.formatNational();
+																	}
+																	return phone.formatInternational();
+																} catch {
+																	return (
+																		user.telephone_number || t("not-provided")
+																	);
+																}
+															})()}
 														</p>
 													)}
 													<FormMessage />

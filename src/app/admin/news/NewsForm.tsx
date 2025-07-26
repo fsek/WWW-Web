@@ -24,6 +24,9 @@ import {
 	getAllNewsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { AdminChooseDates } from "@/widgets/AdminChooseDates";
+import { toast } from "sonner";
 
 const newsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -31,6 +34,8 @@ const newsSchema = z.object({
 	text_sv: z.string().min(2),
 	text_en: z.string().min(2),
 	picture: z.any().optional(),
+	pinned_from: z.date().optional().nullable(),
+	pinned_to: z.date().optional().nullable(),
 });
 
 export default function NewsForm() {
@@ -38,14 +43,26 @@ export default function NewsForm() {
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 	const newsForm = useForm<z.infer<typeof newsSchema>>({
 		resolver: zodResolver(newsSchema),
+		defaultValues: {
+			pinned_from: new Date(),
+			pinned_to: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+		},
 	});
+	const { t } = useTranslation("admin");
 
 	const createNews = useMutation({
 		...createNewsMutation(),
 		throwOnError: false,
 		onSuccess: () => {
+			toast.success(t("news.success_add"));
 			queryClient.invalidateQueries({ queryKey: getAllNewsQueryKey() });
 			setOpen(false);
+			setSubmitEnabled(true);
+		},
+		onError: (error) => {
+			toast.error(
+				t("news.error_add", { error: error?.detail ?? "Unknown error" }),
+			);
 			setSubmitEnabled(true);
 		},
 	});
@@ -53,8 +70,6 @@ export default function NewsForm() {
 	const queryClient = useQueryClient();
 
 	function onSubmit(values: z.infer<typeof newsSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
 		setSubmitEnabled(false);
 		createNews.mutate({
 			body: {
@@ -62,8 +77,8 @@ export default function NewsForm() {
 				title_en: values.title_en,
 				content_sv: values.text_sv,
 				content_en: values.text_en,
-				pinned_from: undefined,
-				pinned_to: undefined,
+				pinned_from: values.pinned_from,
+				pinned_to: values.pinned_to,
 			},
 		});
 	}
@@ -78,13 +93,13 @@ export default function NewsForm() {
 				}}
 			>
 				<Plus />
-				Skapa nyhet
+				{t("news.create_news")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="min-w-fit lg:max-w-7xl">
 					<DialogHeader>
-						<DialogTitle>Skapa nyhet</DialogTitle>
+						<DialogTitle>{t("news.create_news")}</DialogTitle>
 					</DialogHeader>
 					<hr />
 					<Form {...newsForm}>
@@ -97,9 +112,13 @@ export default function NewsForm() {
 								name="title_sv"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Titel (sv)</FormLabel>
+										<FormLabel>{t("news.title_sv")}</FormLabel>
 										<FormControl>
-											<Input placeholder="Titel" {...field} />
+											<Input
+												placeholder={t("news.title_sv")}
+												{...field}
+												value={field.value ?? ""}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -109,9 +128,13 @@ export default function NewsForm() {
 								name="title_en"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Titel (en)</FormLabel>
+										<FormLabel>{t("news.title_en")}</FormLabel>
 										<FormControl>
-											<Input placeholder="Title" {...field} />
+											<Input
+												placeholder={t("news.title_en")}
+												{...field}
+												value={field.value ?? ""}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -122,12 +145,13 @@ export default function NewsForm() {
 								name="text_sv"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Text (sv)</FormLabel>
+										<FormLabel>{t("news.text_sv")}</FormLabel>
 										<FormControl>
 											<Textarea
-												placeholder="Text"
+												placeholder={t("news.text_sv")}
 												className="h-48"
 												{...field}
+												value={field.value ?? ""}
 											/>
 										</FormControl>
 									</FormItem>
@@ -138,12 +162,13 @@ export default function NewsForm() {
 								name="text_en"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Text (en)</FormLabel>
+										<FormLabel>{t("news.text_en")}</FormLabel>
 										<FormControl>
 											<Textarea
-												placeholder="Text"
+												placeholder={t("news.text_en")}
 												className="h-48"
 												{...field}
+												value={field.value ?? ""}
 											/>
 										</FormControl>
 									</FormItem>
@@ -154,23 +179,50 @@ export default function NewsForm() {
 								name="picture"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
-										<FormLabel>Bild</FormLabel>
+										<FormLabel>{t("news.picture")}</FormLabel>
 										<FormControl>
-											<Input id="picture" type="file" {...field} />
+											<Input id="picture" type="file" disabled {...field} />
 										</FormControl>
 									</FormItem>
 								)}
 							/>
+							{/* Pinned From */}
+							<FormField
+								control={newsForm.control}
+								name="pinned_from"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>
+											{t("news.pinned_from", "Pinned from")}
+										</FormLabel>
+										<AdminChooseDates
+											value={field.value ?? undefined}
+											onChange={field.onChange}
+										/>
+									</FormItem>
+								)}
+							/>
+							{/* Pinned To */}
+							<FormField
+								control={newsForm.control}
+								name="pinned_to"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("news.pinned_to", "Pinned to")}</FormLabel>
+										<AdminChooseDates
+											value={field.value ?? undefined}
+											onChange={field.onChange}
+										/>
+									</FormItem>
+								)}
+							/>
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-								<Button variant="outline" className="w-32 min-w-fit">
-									Förhandsgranska
-								</Button>
 								<Button
 									type="submit"
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									Publicera
+									{t("news.publish")}
 								</Button>
 							</div>
 						</form>

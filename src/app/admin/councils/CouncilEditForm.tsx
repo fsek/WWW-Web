@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { Save } from "lucide-react";
 
 const councilEditSchema = z.object({
 	id: z.number(),
@@ -120,6 +122,8 @@ export default function CouncilEditForm({
 			},
 		);
 	}
+
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
 	function handleRemoveSubmit() {
 		removeCouncil.mutate(
@@ -234,15 +238,18 @@ export default function CouncilEditForm({
 							)}
 						/>
 						<div className="space-x-2 lg:col-span-4 lg:grid-cols-subgrid">
-							<Button
-								variant="destructive"
-								type="button"
-								className="w-32 min-w-fit"
-								onClick={handleRemoveSubmit}
-							>
-								{t("councils.remove_council", "Ta bort utskott")}
-							</Button>
+							<ConfirmDeleteDialog
+								open={deleteDialogOpen}
+								onOpenChange={setDeleteDialogOpen}
+								onConfirm={handleRemoveSubmit}
+								triggerText={t("councils.remove_council")}
+								title={t("councils.confirm_remove")}
+								description={t("councils.confirm_remove_text")}
+								confirmText={t("councils.remove_council")}
+								cancelText={t("admin:cancel")}
+							/>
 							<Button type="submit" className="w-32 min-w-fit">
+								<Save />
 								{t("save", "Spara")}
 							</Button>
 						</div>

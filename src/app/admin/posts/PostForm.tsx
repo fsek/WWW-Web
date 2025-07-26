@@ -23,6 +23,7 @@ import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { useTranslation } from "react-i18next";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { Plus } from "lucide-react";
 
 const postSchema = z.object({
 	name_sv: z.string().min(2),
@@ -93,6 +94,7 @@ export default function PostForm() {
 					setSubmitEnabled(true);
 				}}
 			>
+				<Plus />
 				{t("posts.submit", "Skapa post")}
 			</Button>
 
