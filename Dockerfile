@@ -1,20 +1,19 @@
 FROM oven/bun AS base
 
-# Install dependencies only when needed
 FROM base AS deps
 
 WORKDIR /app
 
-ENV ENVIRONMENT ${ENVIRONMENT}
-ENV NEXT_PUBLIC_API_BASE_URL ${API_BASE_URL}
-
-# Install dependencies
 COPY package.json ./
 
 RUN bun install 
 
 # Rebuild the source code only when needed
 FROM base AS builder
+
+ARG API_BASE_URL
+ENV NEXT_PUBLIC_API_BASE_URL ${API_BASE_URL}
+
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
