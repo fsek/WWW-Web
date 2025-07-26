@@ -80,7 +80,7 @@ const CustomTitle: FC<CustomTitleProps> = ({
 		// Then enable the transition and animate to full width
 		const timeoutId = setTimeout(() => {
 			if (underlineRef.current) {
-				underlineRef.current.style.transition = "width 700ms ease-in-out";
+				underlineRef.current.style.transition = "width 400ms ease-in-out";
 				setAnimationState("full-width");
 			}
 		}, 1000);
@@ -94,14 +94,14 @@ const CustomTitle: FC<CustomTitleProps> = ({
 		<div className="w-full py-5">
 			<div
 				ref={textRef}
-				className={`inline-block font-bold text-left text-orange-500 ${getSizeClass()} ${className} ${shortUnderline ? "underline" : ""}`}
+				className={`inline-block font-bold text-left  to-primary-light from-primary bg-gradient-to-t text-transparent bg-clip-text bg-bottom ${getSizeClass()} ${className} ${shortUnderline ? "underline" : ""}`}
 			>
 				{text ?? children ?? "Default title"}
 			</div>
 			{!noUnderline && !shortUnderline && (
 				<div
 					ref={underlineRef}
-					className={`${getUnderlineThickness()} bg-orange-500`}
+					className={`${getUnderlineThickness()}  to-primary-light from-primary bg-gradient-to-t text-transparent bg-bottom`}
 					style={{
 						width: animationState === "full-width" ? "100%" : "auto",
 					}}

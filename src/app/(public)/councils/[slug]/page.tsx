@@ -24,6 +24,7 @@ if (
 		{ name_sv: "sanningsministeriet" },
 		{ name_sv: "samvetet" },
 		{ name_sv: "sekret-service" },
+		{ name_sv: "sexmasteriet" },
 		{ name_sv: "studieradet" },
 		{ name_sv: "kulturministeriet" },
 		{ name_sv: "ovriga" },

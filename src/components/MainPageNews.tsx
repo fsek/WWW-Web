@@ -73,8 +73,8 @@ export default function MainPageNews({ mini = false }: MainPageNewsProps) {
 	);
 
 	return (
-		<div className="px-8 py-4">
-			<div className="flex flex-col gap-4">
+		<div className="px-2 py-2 lg:px-4 lg:py-4">
+			<div className="grid  gap-4 grid-cols-1 lg:grid-cols-2 w-full">
 				{paginatedNews.map((news) => (
 					<Card key={news.id} className="flex flex-col">
 						<CardHeader>

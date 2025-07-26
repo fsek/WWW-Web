@@ -29,16 +29,30 @@ export default function MainLanding() {
 					/>
 					<div className="text-left text-lg mb-8">{t("main:welcomeText")}</div>
 					<div className="text-left text-lg mb-8">{t("main:welcomeAdmin")}</div>
-					<Button className="mx-auto mb-4 text-xl p-5" variant="outline">
-						<Link href="https://old.fsektionen.se" className="text-inherit">
-							{t("main:oldWebsiteButton")}
-						</Link>
-					</Button>
-					<Button className="mx-auto mb-4 text-xl p-5 ml-5" variant="outline">
-						<Link href="/admin" className="text-inherit">
-							{t("main:adminButton")}
-						</Link>
-					</Button>
+					<div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-3 justify-center">
+						<Button
+							className="w-full md:w-auto text-xl py-3 px-6 rounded-lg flex items-center justify-center gap-2"
+							variant="outline"
+						>
+							<Link
+								href="https://old.fsektionen.se"
+								className=" w-full md:w-auto flex justify-center to-primary-light from-primary bg-gradient-to-t text-transparent bg-clip-text"
+							>
+								{t("main:oldWebsiteButton")}
+							</Link>
+						</Button>
+						<Button
+							className="w-full md:w-auto text-xl py-3 px-6 rounded-lg flex items-center justify-center gap-2"
+							variant="outline"
+						>
+							<Link
+								href="/admin"
+								className=" w-full md:w-auto flex justify-center to-primary-light from-primary bg-gradient-to-t text-transparent bg-clip-text"
+							>
+								{t("main:adminButton")}
+							</Link>
+						</Button>
+					</div>
 
 					<CustomTitle
 						text={t("main:newsTitle")}
@@ -51,7 +65,7 @@ export default function MainLanding() {
 						text={t("main:calendar")}
 						className="text-center text-2xl font-bold mt-4 mb-2"
 					/>
-					<div className="my-10 mx-[10%] overflow-hidden h-[35vh]">
+					<div className="my-10  overflow-hidden h-[35vh]">
 						<MainPageCalendar mini={true} />
 					</div>
 

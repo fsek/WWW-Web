@@ -71,6 +71,12 @@
 		"info": "Secret Service keeps the guild safe from threats and is ruled by the secretary.",
 		"contact": "Secretary"
 	},
+	"sexmasteriet": {
+		"self": "The Festivities Committee",
+		"about": "Fill in",
+		"info": "The Festivities Committee organizes parties and events for the guild.",
+		"contact": "Head of Festivities"
+	},
 	"studieradet": {
 		"self": "Student Council",
 		"about": "Fill in",
