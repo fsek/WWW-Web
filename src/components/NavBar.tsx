@@ -56,7 +56,7 @@ export function NavBar() {
 		onSuccess: () => {
 			router.push("/");
 		},
-		onError: (error) => {
+		onError: () => {
 			toast.error(t("navbar.logoutError", "Logout failed"));
 		},
 	});

@@ -28,16 +28,14 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-// import { DateTimePicker } from "./full-calendar-date-picker";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { useEvents } from "@/utils/full-calendar-event-context";
 import { ToastAction } from "./ui/toast";
 import { useTranslation } from "react-i18next";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { Checkbox } from "./ui/checkbox";
-import AdminChoosePriorities from "@/widgets/AdminChoosePriorities";
-import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { Label } from "./ui/label";
+import EventFormFields from "@/app/admin/events/EventFormFields";
 
 interface EventAddFormProps {
 	start: Date;
@@ -355,173 +353,123 @@ export function EventAddForm({
 				</AlertDialogHeader>
 
 				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit(onSubmit)}
-						className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
-					>
-						{/* Title (sv) */}
-						{!enableCarProperties && (
-							<FormField
-								control={form.control}
-								name="title_sv"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("admin:events.title_sv")}</FormLabel>
-										<FormControl>
-											<Input
-												placeholder={t("add.placeholder.title")}
-												{...field}
-												value={field.value as string}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
+					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+						{/* Only use EventFormFields if we have event properties */}
+						{enableTrueEventProperties ? (
+							<EventFormFields
+								eventsForm={form as any}
+								checkboxFields={
+									checkboxFields
+								}
 							/>
-						)}
-
-						{/* Title (en) */}
-						{enableTrueEventProperties && (
-							<FormField
-								control={form.control}
-								name="title_en"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("admin:events.title_en")}</FormLabel>
-										<FormControl>
-											<Input
-												placeholder={t("add.placeholder.title")}
-												{...field}
-												value={field.value as string}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-						)}
-
-						{editDescription && (
-							<>
-								<FormField
-									control={form.control}
-									name="description_sv"
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>{t("admin:events.description_sv")}</FormLabel>
-											<FormControl>
-												<Textarea
-													placeholder={t("add.placeholder.description")}
-													className="max-h-36"
-													{...field}
-												/>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-								{enableTrueEventProperties && (
+						) : (
+							<div className="grid gap-x-4 gap-y-3 lg:grid-cols-4">
+								{/* Title (sv) */}
+								{!enableCarProperties && (
 									<FormField
 										control={form.control}
-										name="description_en"
+										name="title_sv"
 										render={({ field }) => (
 											<FormItem>
-												<FormLabel>
-													{t("admin:events.description_en")}
-												</FormLabel>
+												<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 												<FormControl>
-													<Textarea
-														placeholder={t("add.placeholder.description")}
-														className="max-h-36"
+													<Input
+														placeholder={t("add.placeholder.title")}
 														{...field}
 														value={field.value as string}
 													/>
 												</FormControl>
-												<FormMessage />
 											</FormItem>
 										)}
 									/>
 								)}
-							</>
-						)}
-						<FormField
-							control={form.control}
-							name="start"
-							render={({ field }) => (
-								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">
-										{t("admin:events.start_time")}
-									</FormLabel>
-									<FormControl>
-										<AdminChooseDates
-											value={field.value as Date}
-											onChange={(value) => {
-												field.onChange(value);
-												if (form.watch<"end">("end") < value) {
-													const newEnd = new Date(
-														value.getTime() + 1000 * 60 * 60 * 1,
-													);
-													form.setValue<"end">("end", newEnd, {
-														shouldValidate: true,
-														shouldDirty: true,
-													});
-												}
-											}}
+
+								{/* Title (en) */}
+								{enableTrueEventProperties && (
+									<FormField
+										control={form.control}
+										name="title_en"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>{t("admin:events.title_en")}</FormLabel>
+												<FormControl>
+													<Input
+														placeholder={t("add.placeholder.title")}
+														{...field}
+														value={field.value as string}
+													/>
+												</FormControl>
+											</FormItem>
+										)}
+									/>
+								)}
+
+								{editDescription && (
+									<>
+										<FormField
+											control={form.control}
+											name="description_sv"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>
+														{t("admin:events.description_sv")}
+													</FormLabel>
+													<FormControl>
+														<Textarea
+															placeholder={t("add.placeholder.description")}
+															className="max-h-36"
+															{...field}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
 										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="end"
-							render={({ field }) => (
-								<FormItem className="flex flex-col">
-									<FormLabel htmlFor="datetime">
-										{t("admin:events.end_time")}
-									</FormLabel>
-									<FormControl>
-										<AdminChooseDates
-											value={field.value as Date}
-											onChange={field.onChange}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						{enableTrueEventProperties && (
-							<>
+										{enableTrueEventProperties && (
+											<FormField
+												control={form.control}
+												name="description_en"
+												render={({ field }) => (
+													<FormItem>
+														<FormLabel>
+															{t("admin:events.description_en")}
+														</FormLabel>
+														<FormControl>
+															<Textarea
+																placeholder={t("add.placeholder.description")}
+																className="max-h-36"
+																{...field}
+																value={field.value as string}
+															/>
+														</FormControl>
+														<FormMessage />
+													</FormItem>
+												)}
+											/>
+										)}
+									</>
+								)}
 								<FormField
 									control={form.control}
-									name="signup_start"
+									name="start"
 									render={({ field }) => (
 										<FormItem className="flex flex-col">
 											<FormLabel htmlFor="datetime">
-												{t("admin:events.signup_start")}
+												{t("admin:events.start_time")}
 											</FormLabel>
 											<FormControl>
 												<AdminChooseDates
 													value={field.value as Date}
-													onChange={(newSignupStart: Date) => {
-														field.onChange(newSignupStart);
-														const signupEnd = form.getValues(
-															"signup_end",
-														) as Date;
-														if (
-															signupEnd &&
-															signupEnd.getTime() < newSignupStart.getTime()
-														) {
-															const newSignupEnd = new Date(
-																newSignupStart.getTime() + 60 * 60 * 1000,
+													onChange={(value) => {
+														field.onChange(value);
+														if (form.watch<"end">("end") < value) {
+															const newEnd = new Date(
+																value.getTime() + 1000 * 60 * 60 * 1,
 															);
-															form.setValue<"signup_end">(
-																"signup_end",
-																newSignupEnd,
-																{
-																	shouldDirty: true,
-																	shouldValidate: true,
-																},
-															);
+															form.setValue<"end">("end", newEnd, {
+																shouldValidate: true,
+																shouldDirty: true,
+															});
 														}
 													}}
 												/>
@@ -532,11 +480,11 @@ export function EventAddForm({
 								/>
 								<FormField
 									control={form.control}
-									name="signup_end"
+									name="end"
 									render={({ field }) => (
 										<FormItem className="flex flex-col">
 											<FormLabel htmlFor="datetime">
-												{t("admin:events.signup_end")}
+												{t("admin:events.end_time")}
 											</FormLabel>
 											<FormControl>
 												<AdminChooseDates
@@ -548,250 +496,128 @@ export function EventAddForm({
 										</FormItem>
 									)}
 								/>
-							</>
-						)}
-
-						{/* Council */}
-						{(enableTrueEventProperties || enableCarProperties) && (
-							<FormField
-								control={form.control}
-								name="council_id"
-								render={({ field }) => {
-									const personalChecked = enableCarProperties
-										? form.watch("personal")
-										: false;
-									return (
-										<FormItem
-											className={
-												enableTrueEventProperties ? "lg:col-span-2" : ""
-											}
-										>
-											<FormLabel>{t("admin:events.council")}</FormLabel>
-											{enableCarProperties && personalChecked ? (
-												<div className="text-muted-foreground text-sm py-2">
-													{t("admin:car.no_council_needed")}
-												</div>
-											) : (
-												<AdminChooseCouncil
-													value={field.value as number}
-													onChange={(value: number) => field.onChange(value)}
-												/>
+								{enableTrueEventProperties && (
+									<>
+										<FormField
+											control={form.control}
+											name="signup_start"
+											render={({ field }) => (
+												<FormItem className="flex flex-col">
+													<FormLabel htmlFor="datetime">
+														{t("admin:events.signup_start")}
+													</FormLabel>
+													<FormControl>
+														<AdminChooseDates
+															value={field.value as Date}
+															onChange={(newSignupStart: Date) => {
+																field.onChange(newSignupStart);
+																const signupEnd = form.getValues(
+																	"signup_end",
+																) as Date;
+																if (
+																	signupEnd &&
+																	signupEnd.getTime() < newSignupStart.getTime()
+																) {
+																	const newSignupEnd = new Date(
+																		newSignupStart.getTime() + 60 * 60 * 1000,
+																	);
+																	form.setValue<"signup_end">(
+																		"signup_end",
+																		newSignupEnd,
+																		{
+																			shouldDirty: true,
+																			shouldValidate: true,
+																		},
+																	);
+																}
+															}}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
 											)}
-											<FormMessage />
-										</FormItem>
-									);
-								}}
-							/>
-						)}
-
-						{/* Priorities */}
-						{enableTrueEventProperties && (
-							<FormField
-								control={form.control}
-								name="priorities"
-								render={({ field }) => (
-									<FormItem className="lg:col-span-2 w-full">
-										<FormLabel>{t("admin:events.priorities")}</FormLabel>
-										<AdminChoosePriorities
-											value={(field.value as string[]) ?? []}
-											onChange={(value) => field.onChange(value)}
-											className="text-sm"
 										/>
-									</FormItem>
-								)}
-							/>
-						)}
-
-						{/* Location */}
-						{enableTrueEventProperties && (
-							<FormField
-								control={form.control}
-								name="location"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("admin:events.location")}</FormLabel>
-										<FormControl>
-											<Input {...field} value={field.value as string} />
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-						)}
-
-						{/* Max event users */}
-						{enableTrueEventProperties && (
-							<FormField
-								control={form.control}
-								name="max_event_users"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												{...field}
-												value={field.value as number}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-						)}
-
-						{/* Alcohol event type */}
-						{enableTrueEventProperties && (
-							<FormField
-								control={form.control}
-								name="alcohol_event_type"
-								render={({ field }) => {
-									const options = [
-										{ value: "Alcohol", label: t("admin:events.alcohol") },
-										{
-											value: "Alcohol-Served",
-											label: t("admin:events.alcohol_served"),
-										},
-										{ value: "None", label: t("admin:events.alcohol_none") },
-									];
-									const selectedOption =
-										options.find((opt) => opt.value === field.value) ??
-										options[2];
-									return (
-										<FormItem>
-											<FormLabel>
-												{t("admin:events.alcohol_event_type")}
-											</FormLabel>
-											<SelectFromOptions
-												options={options}
-												value={selectedOption.value}
-												onChange={(value) => field.onChange(value)}
-												placeholder={t(
-													"admin:events.select_alcohol_event_type",
-												)}
-											/>
-										</FormItem>
-									);
-								}}
-							/>
-						)}
-
-						{/* dress_code */}
-						{enableTrueEventProperties && (
-							<FormField
-								control={form.control}
-								name="dress_code"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("admin:events.dress_code")}</FormLabel>
-										<FormControl>
-											<Input {...field} value={field.value as string} />
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-						)}
-
-						{/* Price */}
-						{enableTrueEventProperties && (
-							<FormField
-								control={form.control}
-								name="price"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("admin:events.price")}</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												{...field}
-												value={field.value as number}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-						)}
-
-						{/* Dot */}
-						{enableTrueEventProperties && (
-							<FormField
-								control={form.control}
-								name="dot"
-								render={({ field }) => {
-									const options = [
-										{ value: "None", label: t("admin:events.dot_none") },
-										{ value: "Single", label: t("admin:events.dot_single") },
-										{ value: "Double", label: t("admin:events.dot_double") },
-									];
-									const selectedOption =
-										options.find((opt) => opt.value === field.value) ??
-										options[0];
-									return (
-										<FormItem>
-											<FormLabel>{t("admin:events.select_dot")}</FormLabel>
-											<SelectFromOptions
-												options={options}
-												value={selectedOption.value}
-												onChange={(value) => field.onChange(value)}
-											/>
-										</FormItem>
-									);
-								}}
-							/>
-						)}
-
-						{/* Checkbox fields */}
-						{checkboxFields.map((fieldName) => (
-							<FormField
-								key={fieldName}
-								control={form.control}
-								name={fieldName}
-								render={({ field }) => (
-									<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
-										<Checkbox
-											checked={field.value}
-											onCheckedChange={field.onChange}
-											className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+										<FormField
+											control={form.control}
+											name="signup_end"
+											render={({ field }) => (
+												<FormItem className="flex flex-col">
+													<FormLabel htmlFor="datetime">
+														{t("admin:events.signup_end")}
+													</FormLabel>
+													<FormControl>
+														<AdminChooseDates
+															value={field.value as Date}
+															onChange={field.onChange}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
 										/>
-										<div className="grid gap-1.5 font-normal">
-											<p className="text-sm leading-none font-medium">
-												{t(`admin:events.${fieldName}`)}
-											</p>
-										</div>
-									</Label>
+									</>
 								)}
-							/>
-						))}
-						{/* Not used
-						<FormField
-							control={form.control}
-							name="color"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Color</FormLabel>
-									<FormControl>
-										<Popover>
-											<PopoverTrigger asChild className="cursor-pointer">
-												<div className="flex flex-row w-full items-center space-x-2 pl-2">
-													<div
-														className={`w-5 h-5 rounded-full cursor-pointer`}
-														style={{ backgroundColor: field.value }}
-													></div>
-													<Input {...field} />
-												</div>
-											</PopoverTrigger>
-											<PopoverContent className="flex mx-auto items-center justify-center">
-												<HexColorPicker
-													className="flex"
-													color={field.value}
-													onChange={field.onChange}
+
+								{/* Council */}
+								{(enableTrueEventProperties || enableCarProperties) && (
+									<FormField
+										control={form.control}
+										name="council_id"
+										render={({ field }) => {
+											const personalChecked = enableCarProperties
+												? form.watch("personal")
+												: false;
+											return (
+												<FormItem
+													className={
+														enableTrueEventProperties ? "lg:col-span-2" : ""
+													}
+												>
+													<FormLabel>{t("admin:events.council")}</FormLabel>
+													{enableCarProperties && personalChecked ? (
+														<div className="text-muted-foreground text-sm py-2">
+															{t("admin:car.no_council_needed")}
+														</div>
+													) : (
+														<AdminChooseCouncil
+															value={field.value as number}
+															onChange={(value: number) =>
+																field.onChange(value)
+															}
+														/>
+													)}
+													<FormMessage />
+												</FormItem>
+											);
+										}}
+									/>
+								)}
+
+								{/* Checkbox fields */}
+								{checkboxFields.map((fieldName) => (
+									<FormField
+										key={fieldName}
+										control={form.control}
+										name={fieldName as any}
+										render={({ field }) => (
+											<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
+												<Checkbox
+													checked={field.value}
+													onCheckedChange={field.onChange}
+													className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
 												/>
-											</PopoverContent>
-										</Popover>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						*/}
+												<div className="grid gap-1.5 font-normal">
+													<p className="text-sm leading-none font-medium">
+														{t(`admin:events.${fieldName}`)}
+													</p>
+												</div>
+											</Label>
+										)}
+									/>
+								))}
+							</div>
+						)}
+
 						<AlertDialogFooter className="pt-2">
 							<AlertDialogCancel onClick={() => setEventAddOpen(false)}>
 								{t("cancel")}

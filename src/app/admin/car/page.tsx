@@ -153,7 +153,7 @@ export default function Car() {
 		},
 	];
 
-	const { data, error, isFetching, isLoading } = useQuery({
+	const { data, error, isFetching } = useQuery({
 		...getAllCarBookingsOptions(),
 	});
 
@@ -246,7 +246,6 @@ export default function Car() {
 	const {
 		data: blockData,
 		error: blockError,
-		isFetching: isBlockFetching,
 		isLoading: isBlockLoading,
 	} = useQuery({
 		...getAllCarBookingBlocksOptions(),

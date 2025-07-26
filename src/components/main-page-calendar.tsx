@@ -8,7 +8,6 @@ import type {
 	CalendarEvent,
 	CustomEventData,
 } from "@/utils/full-calendar-seed";
-import { useTranslation } from "react-i18next";
 import type { EventCreate, EventRead } from "@/api";
 import { useRouter } from "next/navigation";
 import { LoadingErrorCard } from "./LoadingErrorCard";

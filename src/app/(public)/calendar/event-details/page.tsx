@@ -63,12 +63,12 @@ export default function Page() {
 		);
 	}
 
-	const formatDate = (date: Date) => {
-		return new Intl.DateTimeFormat(i18n.language === "en" ? "en-US" : "sv-SE", {
-			dateStyle: "full",
-			timeStyle: "short",
-		}).format(new Date(date));
-	};
+	// const formatDate = (date: Date) => {
+	// 	return new Intl.DateTimeFormat(i18n.language === "en" ? "en-US" : "sv-SE", {
+	// 		dateStyle: "full",
+	// 		timeStyle: "short",
+	// 	}).format(new Date(date));
+	// };
 
 	const formatDateShort = (date: Date) => {
 		return new Intl.DateTimeFormat(i18n.language === "en" ? "en-US" : "sv-SE", {
