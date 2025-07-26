@@ -13,18 +13,23 @@ import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
+import type { DocumentRead } from "@/api";
+import { getAllDocumentsOptions } from "@/api/@tanstack/react-query.gen";
+
 export default function Documents() {
 	// TODO: Fix this page lmao
 	const { t } = useTranslation();
 	const { data, error, isPending } = useQuery({
-		...getAllEventsOptions(),
+		...getAllDocumentsOptions(),
 	});
 
 	const [openEditDialog, setOpenEditDialog] = useState(false);
-	const [selectedEvent, setSelectedEvent] = useState<EventRead | null>(null);
+	const [selectedDocument, setSelectedDocument] = useState<DocumentRead | null>(
+		null,
+	);
 
 	// Column setup
-	const columnHelper = createColumnHelper<DocumentsRead>();
+	const columnHelper = createColumnHelper<DocumentRead>();
 	const columns = [
 		columnHelper.accessor("title", {
 			header: t("admin:documents.title"),
@@ -34,26 +39,29 @@ export default function Documents() {
 			header: t("admin:documents.created_at"),
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.accessor("public", {
-			header: t("admin:documents.public"),
+		columnHelper.accessor("is_private", {
+			header: t("admin:documents.is_private"),
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.accessor("edited_by", {
-			header: t("admin:documents.edited_by"),
-			cell: (info) => info.getValue(),
+		columnHelper.accessor("author", {
+			header: t("admin:documents.author"),
+			cell: (info) => {
+				const author = info.getValue();
+				return `${author.first_name} ${author.last_name}`;
+			},
 		}),
 	];
 
 	const table = useCreateTable({ data: data ?? [], columns });
 
-	function handleRowClick(row: Row<EventRead>) {
-		setSelectedEvent(row.original);
+	function handleRowClick(row: Row<DocumentRead>) {
+		setSelectedDocument(row.original);
 		setOpenEditDialog(true);
 	}
 
 	function handleClose() {
 		setOpenEditDialog(false);
-		setSelectedEvent(null);
+		setSelectedDocument(null);
 	}
 
 	if (isPending) {
@@ -77,7 +85,7 @@ export default function Documents() {
 			<DocumentsEditForm
 				open={openEditDialog}
 				onClose={() => handleClose()}
-				// selectedDocument={selectedDocument as EventRead}
+				selectedDocument={selectedDocument as DocumentRead}
 			/>
 		</div>
 	);

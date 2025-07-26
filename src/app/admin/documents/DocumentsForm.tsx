@@ -8,18 +8,19 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import {
-// 	createDocumentMutation,
-// 	getAllDocumentsQueryKey,
-// } from "@/api/@tanstack/react-query.gen";
+import {
+	uploadDocumentMutation,
+	getAllDocumentsQueryKey,
+} from "@/api/@tanstack/react-query.gen";
 
-import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { useTranslation } from "react-i18next";
 
 export default function DocumentsForm() {
@@ -28,8 +29,7 @@ export default function DocumentsForm() {
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 
 	const documentsSchema = z.object({
-		title: z.string(),
-		// description: "",
+		title: z.string().min(1, t("admin:documents.title_required")),
 		file: z
 			.instanceof(File)
 			.refine(
@@ -43,50 +43,46 @@ export default function DocumentsForm() {
 					),
 				t("admin:documents.file_type_error"),
 			),
-		public: z.boolean(),
+		is_private: z.boolean(),
+		category: z.string(),
 	});
 
 	const documentsForm = useForm<z.infer<typeof documentsSchema>>({
 		resolver: zodResolver(documentsSchema),
 		defaultValues: {
 			title: "",
-			// description: "",
-			file: new File(
-				["This is an example file. You may treat getting this as an error."],
-				"sample.txt",
-			),
-			public: false,
+			file: undefined,
+			is_private: false,
+			category: "",
 		},
 	});
 
 	const queryClient = useQueryClient();
 
-	// const createDocuments = useMutation({
-	// 	...createDocumentMutation(),
-	// 	onSuccess: () => {
-	// 		queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
-	// 		setOpen(false);
-	// 		setSubmitEnabled(true);
-	// 	},
-	// 	onError: () => {
-	// 		setOpen(false);
-	// 		setSubmitEnabled(true);
-	// 	},
-	// });
+	const uploadDocument = useMutation({
+		...uploadDocumentMutation(),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllDocumentsQueryKey() });
+			setOpen(false);
+			setSubmitEnabled(true);
+			documentsForm.reset();
+		},
+		onError: () => {
+			setSubmitEnabled(true);
+		},
+	});
 
 	function onSubmit(values: z.infer<typeof documentsSchema>) {
 		setSubmitEnabled(false);
-		// createDocuments.mutate({
-		// 	body: {
-		// 		title: values.title,
-		//     // description: values.description,
-		//     file: values.file,
-		//     public: values.public,
-		//     uploader_id: values.uploader_id,
-		//     upload_date: values.upload_date,
-		//     edit_date: values.edit_date,
-		// 	},
-		// });
+
+		uploadDocument.mutate({
+			body: {
+				title: values.title,
+				file: values.file,
+				is_private: values.is_private,
+				category: values.category,
+			},
+		});
 	}
 
 	return (
@@ -116,7 +112,7 @@ export default function DocumentsForm() {
 								control={documentsForm.control}
 								name="title"
 								render={({ field }) => (
-									<FormItem>
+									<FormItem className="lg:col-span-2">
 										<FormLabel>{t("admin:documents.title")}</FormLabel>
 										<FormControl>
 											<Input
@@ -124,6 +120,7 @@ export default function DocumentsForm() {
 												{...field}
 											/>
 										</FormControl>
+										<FormMessage />
 									</FormItem>
 								)}
 							/>
@@ -131,44 +128,76 @@ export default function DocumentsForm() {
 							<FormField
 								control={documentsForm.control}
 								name="file"
-								render={({ field }) => (
+								render={({ field: { onChange, value, ...field } }) => (
 									<FormItem className="lg:col-span-2">
 										<FormLabel>{t("admin:documents.file")}</FormLabel>
 										<FormControl>
 											<Input
-												id="document"
+												{...field}
 												type="file"
-												onChange={(e) => field.onChange(e.target.files?.[0])}
+												accept=".pdf,.jpg,.jpeg,.png,.txt"
+												onChange={(e) => {
+													const file = e.target.files?.[0];
+													onChange(file);
+												}}
 											/>
 										</FormControl>
+										<FormMessage />
 									</FormItem>
 								)}
 							/>
+
 							<FormField
 								control={documentsForm.control}
-								name="public"
+								name="is_private"
 								render={({ field }) => (
-									<FormItem className="lg:col-span-2">
-										<FormLabel>{t("admin:documents.public")}</FormLabel>
+									<FormItem className="flex flex-row items-start space-x-3 space-y-0 lg:col-span-2">
 										<FormControl>
-											<Input
-												id="public"
-												type="checkbox"
+											<Checkbox
 												checked={field.value}
-												onChange={field.onChange}
-												ref={field.ref}
+												onCheckedChange={field.onChange}
 											/>
 										</FormControl>
+										<div className="space-y-1 leading-none">
+											<FormLabel>{t("admin:documents.private")}</FormLabel>
+										</div>
+										<FormMessage />
 									</FormItem>
 								)}
 							/>
-							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
+
+							<FormField
+								control={documentsForm.control}
+								name="category"
+								render={({ field }) => (
+									<FormItem className="lg:col-span-2">
+										<FormLabel>{t("admin:documents.category")}</FormLabel>
+										<FormControl>
+											<Input
+												placeholder={t("admin:documents.category")}
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<div className="space-x-2 lg:col-span-4">
 								<Button
 									type="submit"
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
 									{t("admin:submit")}
+								</Button>
+								<Button
+									type="button"
+									variant="outline"
+									onClick={() => setOpen(false)}
+									className="w-32 min-w-fit"
+								>
+									{t("admin:cancel")}
 								</Button>
 							</div>
 						</form>
