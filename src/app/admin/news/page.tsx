@@ -2,12 +2,15 @@
 
 import type { NewsRead } from "../../../api";
 import NewsForm from "./NewsForm";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { getAllNewsOptions } from "@/api/@tanstack/react-query.gen";
 import { createColumnHelper } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
+import PermissionWall from "@/components/PermissionWall";
+import { Suspense } from "react";
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 export interface NewsItem {
 	title: string;
@@ -32,7 +35,8 @@ const columns = [
 export default function News() {
 	const { t } = useTranslation();
 
-	const { data, isPending } = useQuery({
+	const { data, error } = useSuspenseQuery({
+
 		...getAllNewsOptions(),
 	});
 
@@ -40,20 +44,22 @@ export default function News() {
 
 	const table = useCreateTable({ data: data ?? [], columns });
 
-	if (isPending) {
-		return <p> Hämtar</p>;
+	if (error) {
+		return <LoadingErrorCard error={error} />;
 	}
 
 	return (
-		<div className="px-8 space-x-4">
-			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
-				{t("admin:news.page_title")}
-			</h3>
-			<p className="py-3">
-				Här kan du skapa nyheter & redigera existerande nyheter på hemsidan.
-			</p>
-			<NewsForm />
-			<AdminTable table={table} />
-		</div>
+		<PermissionWall requiredPermissions={[["manage", "News"]]}>
+			<Suspense fallback={<LoadingErrorCard isLoading={true} />}>
+				<div className="px-8 space-x-4">
+					<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
+						{t("admin:news.page_title")}
+					</h3>
+					<p className="py-3">{t("admin:news.page_description")}</p>
+					<NewsForm />
+					<AdminTable table={table} />
+				</div>
+			</Suspense>
+		</PermissionWall>
 	);
 }

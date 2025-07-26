@@ -261,5 +261,14 @@
 		"no_error_message": "Inget felmeddelande tillgängligt.",
 		"network_error": "Ett nätverksfel uppstod. Kontrollera din anslutning.",
 		"unauthorized": "Du är inte auktoriserad att se detta innehåll. Logga in."
+	},
+	"permission-wall": {
+		"stop": "Stopp",
+		"subtitle": "Sakta i backarna!",
+		"message": "Du har inte behörighet att se denna sida. Om du tror att något är fel, ",
+		"contact": "kontakta din lokala spindelman.",
+		"quote": "Här har vi begått lite småillegala saker längs vägen.",
+		"quote_author": "Micke P",
+		"button": "Tillbaka till hemsidan"
 	}
 }
