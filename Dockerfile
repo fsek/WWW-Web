@@ -1,61 +1,57 @@
-# ─────────── global base ───────────
 FROM oven/bun AS base
 
-# allow build‑time injection
-ARG BUILD_ENV
-ARG NEXT_PUBLIC_API_BASE_URL
-
-# pick up BUILD_ENV as NODE_ENV in builder & runner
-ENV NODE_ENV=${BUILD_ENV}
-# make your NEXT_PUBLIC_* visible to Next.js at build time
-ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
-
-# ─────────── deps ───────────
+# Install dependencies only when needed
 FROM base AS deps
-WORKDIR /app
-COPY package.json bun.lockb ./
-RUN bun install --frozen-lockfile
 
-# ─────────── builder ───────────
+WORKDIR /app
+
+# Install dependencies
+COPY package.json ./
+
+RUN bun install 
+
+# Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-
-# pull in deps
 COPY --from=deps /app/node_modules ./node_modules
-# bring in everything else
 COPY . .
 
-# disable telemetry
-ENV NEXT_TELEMETRY_DISABLED=1
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Disable telemetry during the build
+ENV NEXT_TELEMETRY_DISABLED 1
 
-# build into `./dist`
 RUN bun run build
 
-# ─────────── runner ───────────
+# Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
 
-# ensure prod mode
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV production
 
-# non‑root
+# Disable telemetry
+ENV NEXT_TELEMETRY_DISABLED 1
+
 RUN adduser --system --uid 1001 nextjs
 
-# copy public
 COPY --from=builder /app/public ./public
 
-# copy dist output
-COPY --from=builder --chown=nextjs:bun /app/dist/standalone ./
-COPY --from=builder --chown=nextjs:bun /app/dist/static ./
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:bun .next
 
-# give prerender cache perms (now under /app/.next)
-RUN mkdir -p /app/.next && chown nextjs:bun /app/.next
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:bun /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:bun /app/.next/static ./.next/static
 
 USER nextjs
 
 EXPOSE 3000
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
+
+ENV PORT 3000
+
+# Set hostname to localhost
+ENV HOSTNAME "0.0.0.0"
 
 CMD ["bun", "server.js"]
