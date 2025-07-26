@@ -38,20 +38,17 @@ WORKDIR /app
 # Create a non-root user
 RUN adduser --system --uid 1001 nextjs
 # Ensure production mode
-ENV NODE_ENV=production
+ENV NODE_ENV=stage
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Copy the standalone server bundle
-COPY --from=builder --chown=nextjs:bun /app/dist/standalone/ ./
 
 # Copy your public assets
-COPY --from=builder --chown=nextjs:bun /app/public ./public
+COPY --from=builder --chown=nextjs:bun /app/public ./.next/standalone/
 
-# Copy built static files into .next/static for proper serving
-RUN mkdir -p .next/static
-COPY --from=builder --chown=nextjs:bun /app/dist/static/css    ./.next/static/css
-COPY --from=builder --chown=nextjs:bun /app/dist/static/chunks ./.next/static/chunks
-COPY --from=builder --chown=nextjs:bun /app/dist/static/media  ./.next/static/media
+COPY --from=builder --chown=nextjs:bun /app/.next/static ./.next/standalone/.next/static
+
+# Copy the standalone server bundle
+COPY --from=builder --chown=nextjs:bun /app/.next/standalone/ ./
 
 # Run as non-root user
 USER nextjs
