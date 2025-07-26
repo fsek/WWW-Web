@@ -71,7 +71,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 								<Trans i18nKey={`utskott:${slug}.info`}>
 									<a
 										href="/admin"
-										className="underline text-orange-500 hover:text-orange-400"
+										className="underline text-primary hover:text-orange-400"
 										target="_blank"
 										rel="noreferrer"
 									>
@@ -125,7 +125,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 										{t("utskott:post_contact")}:{" "}
 										<Link
 											href={`mailto:${post.email}`}
-											className="text-blue-500 hover:underline"
+											className="italic text-primary hover:underline"
 										>
 											{post.email}
 										</Link>
@@ -140,7 +140,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 											users.map((u) => (
 												<span
 													key={u.id}
-													className="italic text-orange-600 mr-2"
+													className="italic text-primary hover:underline mr-2"
 												>
 													{u.first_name} {u.last_name}
 												</span>

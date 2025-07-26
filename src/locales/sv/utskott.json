@@ -70,6 +70,12 @@
 		"info": "Sekret Service säkerhetsställer sektionens säkerhet och styrs av sekreteraren.",
 		"contact": "Sekreterare"
 	},
+	"sexmasteriet": {
+		"self": "Sexmästeriet",
+		"about": "Fyll i",
+		"info": "Sexmästeriet ansvarar för att arrangera sexmästeriets aktiviteter och evenemang.",
+		"contact": "Sexmästare"
+	},
 	"studieradet": {
 		"self": "Studierådet",
 		"about": "Fyll i",
