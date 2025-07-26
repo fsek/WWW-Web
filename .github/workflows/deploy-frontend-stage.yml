@@ -5,9 +5,8 @@ on:
     branches: [ stage ]
 
 env:
-  BUILD_ENV: stage
   OPENAPI_JSON_URL: ${{ secrets.OPENAPI_JSON_URL }}
-  NEXT_PUBLIC_API_BASE_URL: https://stage.backend.fsektionen.se
+  API_BASE_URL: https://stage.backend.fsektionen.se
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
@@ -62,10 +61,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            BUILD_ENV=${{ env.BUILD_ENV }}
-            OPENAPI_JSON_URL=${{ env.OPENAPI_JSON_URL }}
-            NEXT_PUBLIC_API_BASE_URL=${{ env.NEXT_PUBLIC_API_BASE_URL }}
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2

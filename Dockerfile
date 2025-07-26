@@ -5,6 +5,9 @@ FROM base AS deps
 
 WORKDIR /app
 
+ENV ENVIRONMENT ${ENVIRONMENT}
+ENV API_BASE_URL ${API_BASE_URL}
+
 # Install dependencies
 COPY package.json ./
 
@@ -26,8 +29,6 @@ RUN bun run build
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
-
-ENV NODE_ENV production
 
 # Disable telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
