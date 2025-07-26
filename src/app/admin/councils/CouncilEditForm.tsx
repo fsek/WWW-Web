@@ -24,6 +24,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { Save } from "lucide-react";
 
 const councilEditSchema = z.object({
 	id: z.number(),
@@ -248,6 +249,7 @@ export default function CouncilEditForm({
 								cancelText={t("admin:cancel")}
 							/>
 							<Button type="submit" className="w-32 min-w-fit">
+								<Save />
 								{t("save", "Spara")}
 							</Button>
 						</div>

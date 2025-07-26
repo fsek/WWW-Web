@@ -9,6 +9,7 @@ import {
 	AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 interface ConfirmDeleteDialogProps {
@@ -45,6 +46,7 @@ export function ConfirmDeleteDialog({
 					className="w-32 min-w-fit"
 					onClick={() => onOpenChange(true)}
 				>
+					<Trash2 />
 					{triggerText ?? t("admin:remove")}
 				</Button>
 			</AlertDialogTrigger>
@@ -69,6 +71,7 @@ export function ConfirmDeleteDialog({
 							onOpenChange(false);
 						}}
 					>
+						<Trash2 />
 						{confirmText ?? t("admin:remove")}
 					</Button>
 				</AlertDialogFooter>

@@ -23,6 +23,7 @@ import {
 import type { PostRead, PermissionRead } from "@/api";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { Save } from "lucide-react";
 
 interface PostPermissionFormProps {
 	post_values?: PostRead | null;
@@ -214,6 +215,7 @@ export default function PostPermissionForm({
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
+									<Save />
 									{t("save", "Spara")}
 								</Button>
 							</div>

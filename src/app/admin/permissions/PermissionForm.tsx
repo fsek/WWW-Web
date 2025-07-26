@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { action, target, type PermissionCreate } from "@/api";
+import { Plus } from "lucide-react";
 
 const permissionSchema = z.object({
 	action: z.enum(Object.values(action) as [PermissionCreate["action"]]),
@@ -78,6 +79,7 @@ export default function PermissionForm() {
 					setSubmitEnabled(true);
 				}}
 			>
+				<Plus />
 				{t("permissions.submit", "Skapa permission")}
 			</Button>
 

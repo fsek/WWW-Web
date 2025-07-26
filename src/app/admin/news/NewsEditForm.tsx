@@ -29,6 +29,7 @@ import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { toast } from "sonner";
 import type { NewsRead } from "@/api";
 import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { Save } from "lucide-react";
 
 const newsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -259,6 +260,7 @@ export default function NewsEditForm({
 								disabled={!submitEnabled}
 								className="w-32 min-w-fit"
 							>
+								<Save />
 								{t("save")}
 							</Button>
 							<ConfirmDeleteDialog

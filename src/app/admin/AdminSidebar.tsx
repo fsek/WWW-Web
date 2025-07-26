@@ -11,6 +11,8 @@ import {
 	User,
 	Gauge,
 	type LucideProps,
+	Users,
+	UserPen,
 } from "lucide-react";
 
 import {
@@ -102,13 +104,13 @@ const groups: AdminGroup[] = [
 				title: "admin:councils.self",
 				url: "/admin/councils",
 				permissions: [[action.MANAGE, target.COUNCIL]],
-				icon: Briefcase,
+				icon: Users,
 			},
 			{
 				title: "admin:user-posts.self",
 				url: "/admin/user-posts",
 				permissions: [[action.MANAGE, target.POST]],
-				icon: Briefcase,
+				icon: UserPen,
 			},
 			{
 				title: "admin:posts.self",
