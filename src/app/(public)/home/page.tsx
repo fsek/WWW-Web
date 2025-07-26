@@ -51,8 +51,13 @@ export default function MainLanding() {
 						text={t("main:calendar")}
 						className="text-center text-2xl font-bold mt-4 mb-2"
 					/>
-					<div className="my-10 mx-[10%] overflow-hidden h-[35vh]">
+					{/* Desktop version */}
+					<div className="max-md:hidden my-10 mx-[10%] overflow-hidden h-[35vh]">
 						<MainPageCalendar mini={true} />
+					</div>
+					{/* Mobile version */}
+					<div className="md:hidden my-10 overflow-hidden h-[35vh]">
+						<MainPageCalendar mini={true} isMobile={true} />
 					</div>
 
 					<CustomTitle
@@ -65,7 +70,9 @@ export default function MainLanding() {
 						text={t("main:coolThing")}
 						className="text-center text-2xl font-bold mt-4 mb-2"
 					/>
-					<WaveAnimation />
+					<div className="overflow-clip mb-10">
+						<WaveAnimation />
+					</div>
 				</div>
 			</div>
 		</>
