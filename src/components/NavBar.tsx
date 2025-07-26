@@ -97,7 +97,7 @@ export function NavBar() {
 					<Link href="/home" className="flex items-center">
 						<FLogga className="size-14 mr-3" />
 					</Link>
-					<div className="hidden md:flex">
+					<div className="hidden lg:flex">
 						<NavBarMenu />
 					</div>
 				</div>
@@ -106,7 +106,7 @@ export function NavBar() {
 					<ThemeToggle />
 
 					{/* Desktop user menu */}
-					<div className="hidden md:flex">
+					<div className="hidden lg:flex">
 						{user ? (
 							<>
 								{showAdmin && (
@@ -165,7 +165,7 @@ export function NavBar() {
 					</div>
 
 					{/* Mobile hamburger menu */}
-					<div className="md:hidden">
+					<div className="lg:hidden">
 						<Sheet>
 							<SheetTrigger asChild>
 								<Button variant="ghost" size="icon">
