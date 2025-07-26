@@ -36,6 +36,7 @@ export default function News() {
 	const { t } = useTranslation();
 
 	const { data, error } = useSuspenseQuery({
+
 		...getAllNewsOptions(),
 	});
 
@@ -48,6 +49,7 @@ export default function News() {
 	}
 
 	return (
+
 		<PermissionWall requiredPermissions={[[action.MANAGE, target.NEWS]]}>
 			<Suspense fallback={<LoadingErrorCard isLoading={true} />}>
 				<div className="px-8 space-x-4">
