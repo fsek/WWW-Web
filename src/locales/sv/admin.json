@@ -15,7 +15,8 @@
 	"no_posts": "Inga poster tilldelade",
 	"news": {
 		"self": "Nyheter",
-		"page_title": "Administrera nyheter"
+		"page_title": "Administrera nyheter",
+		"page_description": "Här kan du skapa nyheter och redigera existerande nyheter på hemsidan."
 	},
 	"events": {
 		"self": "Evenemang",

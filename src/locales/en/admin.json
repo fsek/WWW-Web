@@ -15,7 +15,8 @@
 	"no_posts": "No posts assigned",
 	"news": {
 		"self": "News",
-		"page_title": "Manage News"
+		"page_title": "Manage News",
+		"page_description": "Here you can create news and edit existing news on the website."
 	},
 	"events": {
 		"self": "Events",
