@@ -42,7 +42,7 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Copy the standalone server bundle
-COPY --from=builder --chown=nextjs:bun /app/dist/server/ ./
+COPY --from=builder --chown=nextjs:bun /app/dist/standalone/ ./
 
 # Copy your public assets
 COPY --from=builder --chown=nextjs:bun /app/public ./public
