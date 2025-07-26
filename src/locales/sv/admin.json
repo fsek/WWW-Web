@@ -107,7 +107,9 @@
 		"signup_not_available": "Anmälan inte tillgänglig",
 		"signup_count": "Antal anmälda deltagare",
 		"personal": "Personlig bokning",
-		"confirmed": "Bekräftad"
+		"confirmed": "Bekräftad",
+		"confirm_remove": "Bekräfta borttagning av event",
+		"confirm_remove_text": "Är du säker på att du vill ta bort detta event?"
 	},
 	"documents": {
 		"self": "Dokument",
@@ -124,7 +126,15 @@
 		"remove_document": "Ta bort dokument",
 		"edit_document": "Redigera dokument",
 		"created_at": "Skapad",
-		"edited_by": "Senast redigerad av"
+		"edited_by": "Senast redigerad av",
+		"confirm_remove": "Bekräfta borttagning av dokument",
+		"confirm_remove_text": "Är du säker på att du vill ta bort detta dokument?",
+		"success_add": "Dokumentet skapades!",
+		"success_edit": "Dokumentet uppdaterades!",
+		"success_delete": "Dokumentet togs bort!",
+		"error_add": "Misslyckades att skapa dokument.",
+		"error_edit": "Misslyckades att uppdatera dokument.",
+		"error_delete": "Misslyckades att ta bort dokument."
 	},
 	"car": {
 		"self": "Bilbokningar",
@@ -173,7 +183,10 @@
 		"success": "Åtgärden slutfördes framgångsrikt.",
 		"success_add": "Bokningen skapades!",
 		"success_delete": "Bokningen togs bort!",
-		"success_edit": "Bokningen sparades!"
+		"success_edit": "Bokningen sparades!",
+		"delete_confirm_title": "Bekräfta borttagning",
+		"delete_confirm_text": "Är du säker på att du vill ta bort denna bilbokning?",
+		"delete_confirm_description": "En popup-dialog som bekräftar borttagning av bilbokning."
 	},
 	"block": {
 		"create_blocking": "Skapa blockering",
@@ -217,7 +230,9 @@
 		"edit_success": "Utskottet har uppdaterats",
 		"edit_error": "Kunde inte uppdatera utskott",
 		"remove_success": "Utskottet har tagits bort",
-		"remove_error": "Kunde inte ta bort utskott"
+		"remove_error": "Kunde inte ta bort utskott",
+		"confirm_remove": "Bekräfta borttagning av utskott",
+		"confirm_remove_text": "Är du säker på att du vill ta bort detta utskott?"
 	},
 	"posts": {
 		"self": "Poster",
@@ -324,5 +339,8 @@
 	},
 	"select_council": "Välj utskott",
 	"available_councils": "Tillgängliga utskott",
-	"unnamed_council": "Namnlöst utskott"
+	"unnamed_council": "Namnlöst utskott",
+	"remove_confirm_title": "Bekräfta borttagning",
+	"remove_confirm_text": "Är du säker på att du vill ta bort detta objekt?",
+	"remove_confirm_description": "En popup-dialog som bekräftar borttagning av ett objekt."
 }

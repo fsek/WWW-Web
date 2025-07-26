@@ -107,7 +107,9 @@
 		"signup_not_available": "Signup not available",
 		"signup_count": "Number of signups",
 		"personal": "Personal booking",
-		"confirmed": "Confirmed"
+		"confirmed": "Confirmed",
+		"confirm_remove": "Confirm removal of this event",
+		"confirm_remove_text": "Are you sure you want to remove this event?"
 	},
 	"documents": {
 		"self": "Documents",
@@ -123,7 +125,15 @@
 		"remove_document": "Remove Document",
 		"edit_document": "Edit Document",
 		"created_at": "Created at",
-		"edited_by": "Last edited by"
+		"edited_by": "Last edited by",
+		"confirm_remove": "Confirm removal of document",
+		"confirm_remove_text": "Are you sure you want to remove this document?",
+		"success_add": "Document created!",
+		"success_edit": "Document updated!",
+		"success_delete": "Document deleted!",
+		"error_add": "Failed to create document.",
+		"error_edit": "Failed to update document.",
+		"error_delete": "Failed to delete document."
 	},
 	"car": {
 		"self": "Car bookings",
@@ -172,7 +182,10 @@
 		"success": "Action completed successfully.",
 		"success_add": "Booking created!",
 		"success_delete": "Booking removed!",
-		"success_edit": "Booking saved!"
+		"success_edit": "Booking saved!",
+		"delete_confirm_title": "Confirm removal",
+		"delete_confirm_text": "Are you sure you want to remove this car booking?",
+		"delete_confirm_description": "A popup dialog confirming the deletion of a car booking."
 	},
 	"block": {
 		"create_blocking": "Create Blocking",
@@ -216,7 +229,9 @@
 		"edit_success": "Council has been updated",
 		"edit_error": "Could not update council",
 		"remove_success": "Council has been removed",
-		"remove_error": "Could not remove council"
+		"remove_error": "Could not remove council",
+		"confirm_remove": "Confirm removal of council",
+		"confirm_remove_text": "Are you sure you want to remove this council?"
 	},
 	"posts": {
 		"self": "Posts",
@@ -323,5 +338,8 @@
 	},
 	"select_council": "Select a Council",
 	"available_councils": "Available Councils",
-	"unnamed_council": "Unnamed Council"
+	"unnamed_council": "Unnamed Council",
+	"remove_confirm_title": "Confirm removal",
+	"remove_confirm_text": "Are you sure you want to remove this item?",
+	"remove_confirm_description": "A popup dialog confirming the deletion of an item."
 }

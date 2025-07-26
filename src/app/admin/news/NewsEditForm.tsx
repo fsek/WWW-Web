@@ -28,16 +28,7 @@ import { useTranslation } from "react-i18next";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { toast } from "sonner";
 import type { NewsRead } from "@/api";
-import {
-	AlertDialog,
-	AlertDialogTrigger,
-	AlertDialogContent,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogFooter,
-	AlertDialogCancel,
-	AlertDialogAction,
-} from "@/components/ui/alert-dialog";
+import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 
 const newsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -270,43 +261,16 @@ export default function NewsEditForm({
 							>
 								{t("save")}
 							</Button>
-							<AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-								<AlertDialogTrigger asChild>
-									<Button
-										variant="destructive"
-										type="button"
-										size="lg"
-										className="ml-4 px-8 py-3 text-base"
-										onClick={() => setConfirmOpen(true)}
-									>
-										{t("news.remove", "Ta bort")}
-									</Button>
-								</AlertDialogTrigger>
-								<AlertDialogContent>
-									<AlertDialogHeader>
-										<AlertDialogTitle>
-											{t("news.confirm_remove", "Bekräfta borttagning")}
-										</AlertDialogTitle>
-									</AlertDialogHeader>
-									<p>
-										{t(
-											"news.confirm_remove_text",
-											"Är du säker på att du vill ta bort denna nyhet?",
-										)}
-									</p>
-									<AlertDialogFooter>
-										<AlertDialogCancel>
-											{t("cancel", "Avbryt")}
-										</AlertDialogCancel>
-										<AlertDialogAction
-											onClick={handleRemoveNews}
-											className="bg-destructive text-white hover:bg-destructive/90"
-										>
-											{t("news.remove", "Ta bort")}
-										</AlertDialogAction>
-									</AlertDialogFooter>
-								</AlertDialogContent>
-							</AlertDialog>
+							<ConfirmDeleteDialog
+								open={confirmOpen}
+								onOpenChange={setConfirmOpen}
+								onConfirm={handleRemoveNews}
+								triggerText={t("news.remove")}
+								title={t("news.confirm_remove")}
+								description={t("news.confirm_remove_text")}
+								confirmText={t("news.remove")}
+								cancelText={t("cancel")}
+							/>
 						</div>
 					</form>
 				</Form>
