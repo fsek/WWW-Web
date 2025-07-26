@@ -64,7 +64,7 @@ function Calendar({
 					<ChevronRightIcon className={cn("size-4", className)} />
 				),
 				PreviousMonthButton: ({ className, ...props }) => (
-					<ChevronLeftIcon className={cn("size-4", className)} {...props} />
+					<ChevronLeftIcon className={cn("size-4", className)} />
 				),
 			}}
 			{...props}
