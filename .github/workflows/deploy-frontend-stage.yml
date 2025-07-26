@@ -1,0 +1,67 @@
+name: Deploy Frontend‑stage
+
+on:
+  push:
+    branches: [ stage ]
+
+env:
+  BUILD_ENV: stage
+  OPENAPI_JSON_URL: ${{ secrets.OPENAPI_JSON_URL }}
+  NEXT_PUBLIC_API_BASE_URL: https://stage.backend.fsektionen.se
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download OpenAPI spec
+        run: |
+          mkdir -p src/api
+          curl -fSL "$OPENAPI_JSON_URL" -o src/api/openapi.json
+
+      - name: Generate API client
+        run: bun run deploy-generate-api
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        id: build-image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            BUILD_ENV=${{ env.BUILD_ENV }}
+            OPENAPI_JSON_URL=${{ env.OPENAPI_JSON_URL }}
+            NEXT_PUBLIC_API_BASE_URL=${{ env.NEXT_PUBLIC_API_BASE_URL }}
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.build-image.outputs.digest }}
+          push-to-registry: true
