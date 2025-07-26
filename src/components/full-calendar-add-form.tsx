@@ -598,7 +598,7 @@ export function EventAddForm({
 									<FormField
 										key={fieldName}
 										control={form.control}
-										name={fieldName as any}
+										name={fieldName as string}
 										render={({ field }) => (
 											<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
 												<Checkbox

@@ -122,7 +122,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							<FormItem>
 								<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 								<FormControl>
-									<Input placeholder={t("admin:events.title_sv")} {...field} value={field.value as string ?? ""} />
+									<Input placeholder={t("admin:events.title_sv")} {...field} value={(field.value as string) ?? ""} />
 								</FormControl>
 							</FormItem>
 						)}
@@ -182,7 +182,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 										placeholder={t("admin:events.description_sv")}
 										className="max-h-36"
 										{...field}
-										value={field.value as string}
+										value={field.value as string ?? ""}
 									/>
 								</FormControl>
 							</FormItem>
@@ -200,7 +200,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 										placeholder={t("admin:events.description_en")}
 										className="max-h-36"
 										{...field}
-										value={field.value as string}
+										value={field.value as string ?? ""}
 									/>
 								</FormControl>
 							</FormItem>
@@ -353,7 +353,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 										type="number"
 										placeholder={t("admin:events.max_event_users")}
 										{...field}
-										value={field.value as number ?? ""}
+										value={field.value as number ?? 0}
 									/>
 								</FormControl>
 							</FormItem>
@@ -430,7 +430,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							<FormItem>
 								<FormLabel>{t("admin:events.dress_code")}</FormLabel>
 								<FormControl>
-									<Input {...field} value={field.value as string} />
+									<Input {...field} value={field.value as string ?? ""} />
 								</FormControl>
 							</FormItem>
 						)}
@@ -446,7 +446,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									<Input
 										type="number"
 										{...field}
-										value={field.value as number}
+										value={field.value as number ?? 0}
 									/>
 								</FormControl>
 							</FormItem>
