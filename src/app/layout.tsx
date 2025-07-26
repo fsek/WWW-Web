@@ -5,6 +5,7 @@ import initTranslations, { type Locale, type Namespace } from "./i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
 import ClientProvider from "@/components/ClientProvider";
 import { ThemeProvider } from "next-themes";
+import CookieConsent from "@/components/CookieConsent";
 
 // Default locale as fallback
 const defaultLocale = "sv" satisfies Locale;
@@ -51,6 +52,7 @@ export default async function RootLayout({
 							<ClientProvider>
 								<div id="root" className="flex flex-col min-h-screen">
 									<div className="flex-grow">{children}</div>
+									<CookieConsent />
 								</div>
 							</ClientProvider>
 						</ThemeProvider>

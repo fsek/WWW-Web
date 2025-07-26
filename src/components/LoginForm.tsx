@@ -68,6 +68,11 @@ export default function LoginForm() {
 			auth.setAccessToken(data);
 			const next = searchParams.get("next") || "/home";
 			router.push(next);
+			// Set a cookie to indicate the user is not authenticated, just for the middleware to check if it should redirect
+			// obviously this is not secure enough for real authentication
+			const expires = new Date();
+			expires.setFullYear(expires.getFullYear() + 1);
+			document.cookie = `auth_status=authenticated; path=/; SameSite=Strict; expires=${expires.toUTCString()}`;
 		},
 	});
 

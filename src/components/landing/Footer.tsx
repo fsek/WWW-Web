@@ -1,6 +1,6 @@
 import Link from "next/link";
 import FLogga from "@/assets/f-logga";
-import { useTranslation } from "node_modules/react-i18next";
+import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
 	const { t } = useTranslation("landingpage");

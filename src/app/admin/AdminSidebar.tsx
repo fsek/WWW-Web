@@ -49,7 +49,7 @@ type AdminGroup = { title: string; entries: AdminSidebarEntry[] };
 
 const groups: AdminGroup[] = [
 	{
-		title: "Allmänt",
+		title: "admin:categories.general",
 		entries: [
 			{
 				title: "admin:news.self",
@@ -76,12 +76,6 @@ const groups: AdminGroup[] = [
 				icon: Car,
 			},
 			{
-				title: "admin:posts.self",
-				url: "/admin/posts",
-				permissions: [[action.MANAGE, target.POST]],
-				icon: Briefcase,
-			},
-			{
 				title: "admin:permissions.self",
 				url: "/admin/permissions",
 				permissions: [[action.MANAGE, target.PERMISSION]],
@@ -101,6 +95,29 @@ const groups: AdminGroup[] = [
 			},
 		],
 	},
+	{
+		title: "admin:categories.councils",
+		entries: [
+			{
+				title: "admin:councils.self",
+				url: "/admin/councils",
+				permissions: [[action.MANAGE, target.COUNCIL]],
+				icon: Briefcase,
+			},
+			{
+				title: "admin:user-posts.self",
+				url: "/admin/user-posts",
+				permissions: [[action.MANAGE, target.POST]],
+				icon: Briefcase,
+			},
+			{
+				title: "admin:posts.self",
+				url: "/admin/posts",
+				permissions: [[action.MANAGE, target.POST]],
+				icon: Briefcase,
+			},
+		],
+	},
 ];
 
 export function AdminSidebar() {
@@ -116,7 +133,7 @@ export function AdminSidebar() {
 						<SidebarGroup>
 							<SidebarGroupLabel asChild>
 								<CollapsibleTrigger>
-									{title}
+									{t(title)}
 									<ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
 								</CollapsibleTrigger>
 							</SidebarGroupLabel>

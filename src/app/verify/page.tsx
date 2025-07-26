@@ -62,7 +62,7 @@ export default function VerifyPage() {
 				body: { token: token ?? "" },
 			});
 		}
-	}, [token, mutation.mutate]);
+	}, [token, mutation]);
 
 	return (
 		<div className="relative min-h-screen w-full flex p-4 sm:p-8 items-center justify-center">

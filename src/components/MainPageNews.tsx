@@ -82,9 +82,7 @@ export default function MainPageNews({ mini = false }: MainPageNewsProps) {
 								{i18n.language === "sv" ? news.title_sv : news.title_en}
 							</CardTitle>
 							<CardDescription>
-								{t("main:news.by", {
-									name: `${news.author.first_name} ${news.author.last_name}`,
-								})}{" "}
+								{`${t("main:news.by")} ${news.author.first_name} ${news.author.last_name}`}{" "}
 								- {new Date(news.created_at).toLocaleDateString()}
 								{news.pinned_from &&
 									news.pinned_to &&

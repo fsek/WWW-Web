@@ -23,6 +23,8 @@ import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 // import type { DocumentRead, DocumentUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 
 interface DocumentsEditFormProps {
 	open: boolean;
@@ -140,6 +142,8 @@ export default function DocumentsEditForm({
 		console.log("Remove document", documentsEditForm.getValues("id"));
 	}
 
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
 	return (
 		<Dialog
 			open={open}
@@ -149,7 +153,6 @@ export default function DocumentsEditForm({
 				}
 			}}
 		>
-			{" "}
 			<DialogContent className="min-w-fit lg:max-w-7xl">
 				<DialogHeader>
 					<DialogTitle>{t("admin:documents.edit_document")}</DialogTitle>
@@ -196,23 +199,16 @@ export default function DocumentsEditForm({
 						{/* Public */}
 
 						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-							<Button
-								variant="outline"
-								className="w-32 min-w-fit"
-								onClick={() => console.log("Preview clicked")}
-							>
-								{t("admin:preview")}
-							</Button>
-
-							<Button
-								variant="destructive"
-								type="button"
-								className="w-32 min-w-fit"
-								onClick={handleRemoveSubmit}
-							>
-								{t("admin:documents.remove_document")}
-							</Button>
-
+							<ConfirmDeleteDialog
+								open={deleteDialogOpen}
+								onOpenChange={setDeleteDialogOpen}
+								onConfirm={handleRemoveSubmit}
+								triggerText={t("admin:documents.remove_document")}
+								title={t("admin:documents.confirm_remove")}
+								description={t("admin:documents.confirm_remove_text")}
+								confirmText={t("admin:documents.remove_document")}
+								cancelText={t("admin:cancel")}
+							/>
 							<Button type="submit" className="w-32 min-w-fit">
 								{t("admin:submit")}
 							</Button>

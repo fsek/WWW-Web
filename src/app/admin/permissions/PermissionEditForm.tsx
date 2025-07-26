@@ -9,16 +9,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import type { PermissionRead } from "../../../api";
 import { useTranslation } from "react-i18next";
-import {
-	AlertDialog,
-	AlertDialogTrigger,
-	AlertDialogContent,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogFooter,
-	AlertDialogCancel,
-	AlertDialogAction,
-} from "@/components/ui/alert-dialog";
+import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 import { toast } from "sonner";
 
 interface PermissionEditFormProps {
@@ -98,40 +89,19 @@ export default function PermissionEditForm({
 						</span>
 						<span>{selectedPermission.action}</span>
 					</div>
-					<AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-						<AlertDialogTrigger asChild>
-							<Button
-								variant="destructive"
-								type="button"
-								className="w-32 min-w-fit"
-								onClick={() => setConfirmOpen(true)}
-							>
-								{t("permissions.remove", "Ta bort permission")}
-							</Button>
-						</AlertDialogTrigger>
-						<AlertDialogContent>
-							<AlertDialogHeader>
-								<AlertDialogTitle>
-									{t("permissions.confirm_remove", "Bekräfta borttagning")}
-								</AlertDialogTitle>
-							</AlertDialogHeader>
-							<p>
-								{t(
-									"permissions.confirm_remove_text",
-									"Är du säker på att du vill ta bort denna permission?",
-								)}
-							</p>
-							<AlertDialogFooter>
-								<AlertDialogCancel>{t("cancel", "Avbryt")}</AlertDialogCancel>
-								<AlertDialogAction
-									onClick={handleRemove}
-									className="bg-destructive text-white"
-								>
-									{t("permissions.remove", "Ta bort permission")}
-								</AlertDialogAction>
-							</AlertDialogFooter>
-						</AlertDialogContent>
-					</AlertDialog>
+					<ConfirmDeleteDialog
+						open={confirmOpen}
+						onOpenChange={setConfirmOpen}
+						onConfirm={handleRemove}
+						triggerText={t("permissions.remove", "Remove permission")}
+						title={t("permissions.confirm_remove", "Confirm removal")}
+						description={t(
+							"permissions.confirm_remove_text",
+							"Are you sure you want to remove this permission?",
+						)}
+						confirmText={t("permissions.remove", "Remove permission")}
+						cancelText={t("cancel", "Cancel")}
+					/>
 				</div>
 			</DialogContent>
 		</Dialog>

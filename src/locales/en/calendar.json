@@ -59,7 +59,8 @@
 		"full_calendar": "Full Calendar",
 		"day": "Day",
 		"week": "Week",
-		"month": "Month"
+		"month": "Month",
+		"days": "days"
 	},
 	"add": {
 		"error_title": "Please enter a title.",
