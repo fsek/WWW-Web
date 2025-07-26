@@ -147,7 +147,11 @@
 		"read": "Open",
 		"title_required": "Title is required",
 		"upload_success": "Document uploaded successfully!",
-		"upload_error": "Failed to upload document."
+		"upload_error": "Failed to upload document.",
+		"document_updated": "Document updated successfully!",
+		"document_update_error": "Failed to update document.",
+		"document_removed": "Document removed successfully!",
+		"document_remove_error": "Failed to remove document."
 	},
 	"car": {
 		"self": "Car bookings",

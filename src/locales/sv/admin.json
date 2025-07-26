@@ -148,7 +148,11 @@
 		"read": "Öppna",
 		"title_required": "Titel krävs",
 		"upload_success": "Dokumentet har laddats upp!",
-		"upload_error": "Misslyckades att ladda upp dokument."
+		"upload_error": "Misslyckades att ladda upp dokument.",
+		"document_updated": "Dokumentet har uppdaterats!",
+		"document_update_error": "Misslyckades att uppdatera dokumentet.",
+		"document_removed": "Dokumentet har tagits bort!",
+		"document_remove_error": "Misslyckades att ta bort dokumentet."
 	},
 	"car": {
 		"self": "Bilbokningar",

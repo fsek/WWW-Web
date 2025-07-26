@@ -7,14 +7,12 @@ import AdminTable from "@/widgets/AdminTable";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-
 import type { DocumentRead } from "@/api";
 import { getAllDocumentsOptions } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
-import { is } from "date-fns/locale";
 
 export default function Documents() {
 	// TODO: Fix this page lmao
@@ -68,7 +66,7 @@ export default function Documents() {
 									);
 								}}
 							>
-								{t("main:documents.details")}
+								{t("main:documents.view")}
 							</Button>
 						);
 					},
