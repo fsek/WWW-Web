@@ -49,9 +49,9 @@ COPY --from=builder --chown=nextjs:bun /app/public ./public
 
 # Copy built static files into .next/static for proper serving
 RUN mkdir -p .next/static
-COPY --from=builder --chown=nextjs:bun /app/css    ./.next/static/css
-COPY --from=builder --chown=nextjs:bun /app/chunks ./.next/static/chunks
-COPY --from=builder --chown=nextjs:bun /app/media  ./.next/static/media
+COPY --from=builder --chown=nextjs:bun /app/dist/static/css    ./.next/static/css
+COPY --from=builder --chown=nextjs:bun /app/dist/static/chunks ./.next/static/chunks
+COPY --from=builder --chown=nextjs:bun /app/dist/static/media  ./.next/static/media
 
 # Run as non-root user
 USER nextjs
