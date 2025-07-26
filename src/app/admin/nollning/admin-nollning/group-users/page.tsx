@@ -137,7 +137,7 @@ const page = () => {
 		>
 			<div className="px-12 py-4  space-y-4 ">
 				<div className="justify-between w-full flex flex-row">
-					<h3 className="text-xl underline underline-offset-4 decoration-sidebar">
+					<h3 className="text-3xl py-3 underline underline-offset-4">
 						Medlemmar i "{group.data.name}"
 					</h3>
 					<Button
@@ -186,7 +186,7 @@ const page = () => {
 					</div>
 					<div className="border border-gray-200 rounded-lg bg-gray-100">
 						<div className="space-x-4 space-y-4 flex-2 p-4">
-							<h3 className="text-xl underline underline-offset-4 decoration-sidebar">
+							<h3 className="text-3xl py-3 underline underline-offset-4">
 								Lägg till medlemmar
 							</h3>
 

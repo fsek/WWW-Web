@@ -14,6 +14,10 @@
 	"select_posts": "Select Council Posts",
 	"no_posts": "No posts assigned",
 	"unclear_program": "Unclear",
+	"welcome": {
+		"title": "Welcome to the Admin Page",
+		"message": "Here you can manage a wide range of things (but not everything yet, we apologize). Use the menu on the left to navigate between the different sections. You should only have access to the sections you have permissions for; if this is not the case, please contact a webmaster."
+	},
 	"categories": {
 		"general": "General",
 		"councils": "Councils and Posts"
