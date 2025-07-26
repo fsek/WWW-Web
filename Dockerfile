@@ -41,13 +41,6 @@ RUN adduser --system --uid 1001 nextjs
 ENV NODE_ENV=stage
 ENV NEXT_TELEMETRY_DISABLED=1
 
-
-# Copy your public assets
-COPY --from=builder --chown=nextjs:bun /app/public ./.next/standalone/
-
-COPY --from=builder --chown=nextjs:bun /app/.next/static ./.next/standalone/.next/static
-
-# Copy the standalone server bundle
 COPY --from=builder --chown=nextjs:bun /app/.next/standalone/ ./
 
 # Run as non-root user
