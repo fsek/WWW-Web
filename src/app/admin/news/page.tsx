@@ -1,6 +1,6 @@
 "use client";
 
-import type { NewsRead } from "../../../api";
+import { action, target, type NewsRead } from "../../../api";
 import NewsForm from "./NewsForm";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getAllNewsOptions } from "@/api/@tanstack/react-query.gen";
@@ -36,7 +36,6 @@ export default function News() {
 	const { t } = useTranslation();
 
 	const { data, error } = useSuspenseQuery({
-
 		...getAllNewsOptions(),
 	});
 
@@ -49,7 +48,7 @@ export default function News() {
 	}
 
 	return (
-		<PermissionWall requiredPermissions={[["manage", "News"]]}>
+		<PermissionWall requiredPermissions={[[action.MANAGE, target.NEWS]]}>
 			<Suspense fallback={<LoadingErrorCard isLoading={true} />}>
 				<div className="px-8 space-x-4">
 					<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
