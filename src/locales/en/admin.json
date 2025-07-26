@@ -286,6 +286,7 @@
 	"id": "ID",
 	"first_name": "First Name",
 	"last_name": "Last Name",
+	"name": "Name",
 	"email": "Email",
 	"is_verified": "Verified",
 	"account_created": "Account Created",

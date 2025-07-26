@@ -7,9 +7,6 @@ import rehypeMathjaxChtml from "rehype-mathjax/chtml";
 const nextConfig = {
 	output: "standalone",
 	distDir: "./dist", // Changes the build output directory to `./dist/`.
-	images: {
-		unoptimized: true, // Next.js image optimization is unsupported when static export is enabled.
-	},
 	// Configure `pageExtensions` to include MDX files
 	pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
 };

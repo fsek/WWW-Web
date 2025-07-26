@@ -93,19 +93,16 @@ export default function MembersPage() {
 	});
 
 	const columns = [
-		columnHelper.accessor("id", {
-			header: t("admin:id"),
-			cell: (info) => info.getValue(),
-			size: 50,
-		}),
-		columnHelper.accessor("first_name", {
-			header: t("admin:first_name"),
+		// Do we actually need an id field?
+		// columnHelper.accessor("id", {
+		// 	header: t("admin:id"),
+		// 	cell: (info) => info.getValue(),
+		// 	size: 50,
+		// }),
+		columnHelper.accessor((row) => `${row.first_name} ${row.last_name}`, {
+			header: t("admin:name"),
 			cell: (info) => info.getValue(),
 			size: 150,
-		}),
-		columnHelper.accessor("last_name", {
-			header: t("admin:last_name"),
-			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("email", {
 			header: t("admin:email"),

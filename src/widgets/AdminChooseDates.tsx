@@ -2,6 +2,7 @@
 
 import React from "react";
 import { DateTimePicker } from "@/components/ui/datetime-picker";
+import { sv } from "date-fns/locale";
 
 interface AdminChooseDatesProps {
 	value: Date | undefined;
@@ -12,7 +13,7 @@ export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
 	const handleDateChange = (newDate: Date | undefined) => {
 		if (newDate) {
 			const adjustedDate = new Date(newDate.getTime());
-			console.log("Adjusted Date (UTC+1):", adjustedDate.toISOString());
+			// console.log("Adjusted Date (UTC+1):", adjustedDate.toISOString());
 			onChange(adjustedDate);
 		} else {
 			// placeholder for invalid date
@@ -28,7 +29,7 @@ export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
 					value={value}
 					onChange={handleDateChange}
 					weekStartsOn={1} // Monday
-					locale={"sv-SE"}
+					locale={sv}
 					showWeekNumber={false}
 					showOutsideDays={true}
 				/>

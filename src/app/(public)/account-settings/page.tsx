@@ -25,7 +25,7 @@ import {
 	getMeOptions,
 	updateSelfMutation,
 } from "@/api/@tanstack/react-query.gen";
-import type { UserUpdate } from "@/api";
+import { program } from "@/api";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
@@ -69,7 +69,7 @@ export default function AccountSettingsPage() {
 			.min(1960, t("invalid-year"))
 			.max(new Date().getFullYear(), t("invalid-year")),
 		telephone_number: z.string().min(1, t("phone-required")),
-		program: z.string().optional(),
+		program: z.enum(Object.values(program) as [program]).optional(),
 		notifications: z.boolean().optional(),
 		stil_id: z.string().optional(),
 		standard_food_preferences: z.array(z.string()).optional(),
@@ -84,7 +84,7 @@ export default function AccountSettingsPage() {
 			last_name: "",
 			start_year: undefined,
 			telephone_number: "",
-			program: "",
+			program: undefined,
 			notifications: false,
 			stil_id: "",
 			standard_food_preferences: [],
@@ -148,7 +148,7 @@ export default function AccountSettingsPage() {
 				last_name: user.last_name ?? "",
 				start_year: user.start_year ?? undefined,
 				telephone_number: user.telephone_number ?? "",
-				program: user.program ?? "",
+				program: (user.program as program) ?? undefined,
 				notifications: user.want_notifications ?? false,
 				stil_id: user.stil_id ?? "",
 				standard_food_preferences: user.standard_food_preferences || [],
@@ -170,7 +170,7 @@ export default function AccountSettingsPage() {
 					).formatInternational() ??
 					user.telephone_number ??
 					"",
-				program: user.program ?? "",
+				program: (user.program as program) ?? "",
 				notifications: user.want_notifications ?? false,
 				stil_id: user.stil_id ?? "",
 				standard_food_preferences: user.standard_food_preferences || [],
