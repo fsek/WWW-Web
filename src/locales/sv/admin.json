@@ -135,7 +135,13 @@
 		"success_delete": "Dokumentet togs bort!",
 		"error_add": "Misslyckades att skapa dokument.",
 		"error_edit": "Misslyckades att uppdatera dokument.",
-		"error_delete": "Misslyckades att ta bort dokument."
+		"error_delete": "Misslyckades att ta bort dokument.",
+		"is_private": "Privat",
+		"author": "Skapad av",
+		"category": "Kategori",
+		"private": "Privat",
+		"private_explanation": "Endast synlig för medlemmar",
+		"read": "Öppna"
 	},
 	"car": {
 		"self": "Bilbokningar",

@@ -37,7 +37,6 @@ const TitleBanner: React.FC<TitleBannerProps> = ({
 			/>
 			{/* Background Image Layer */}
 			<div
-
 				aria-hidden="true" // Hide decorative background from screen readers
 			/>
 

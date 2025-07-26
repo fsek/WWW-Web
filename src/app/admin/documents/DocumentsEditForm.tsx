@@ -10,39 +10,40 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
-import { AdminChooseDates } from "@/widgets/AdminChooseDates";
-// import {
-// 	getAllEventsQueryKey,
-// 	eventUpdateMutation,
-// 	eventRemoveMutation,
-// } from "@/api/@tanstack/react-query.gen";
-// import type { DocumentRead, DocumentUpdate } from "../../../api";
+import {
+	getAllDocumentsQueryKey,
+	updateDocumentMutation,
+	deleteDocumentMutation,
+	getDocumentFileByIdOptions,
+} from "@/api/@tanstack/react-query.gen";
+import type { DocumentRead, DocumentUpdate } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { useRouter } from "next/navigation";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface DocumentsEditFormProps {
 	open: boolean;
 	onClose: () => void;
-	// selectedDocument: DocumentRead;
+	selectedDocument: DocumentRead;
 }
 
 export default function DocumentsEditForm({
 	open,
 	onClose,
-	// selectedDocument,
+	selectedDocument,
 }: DocumentsEditFormProps) {
 	const { t } = useTranslation();
+	const router = useRouter();
 
 	const documentsEditSchema = z.object({
 		id: z.number(),
 		title: z.string(),
-		// description: "",
 		file: z
 			.instanceof(File)
 			.refine(
@@ -50,13 +51,11 @@ export default function DocumentsEditForm({
 				t("admin:documents.file_size_error"),
 			)
 			.refine(
-				(file) =>
-					["application/pdf", "image/jpeg", "image/png", "text/plain"].includes(
-						file.type,
-					),
+				(file) => ["application/pdf"].includes(file.type),
 				t("admin:documents.file_type_error"),
 			),
-		public: z.boolean(),
+		is_private: z.boolean(),
+		category: z.string(),
 	});
 
 	type DocumentsEditFormType = z.infer<typeof documentsEditSchema>;
@@ -65,81 +64,80 @@ export default function DocumentsEditForm({
 		resolver: zodResolver(documentsEditSchema),
 		defaultValues: {
 			title: "",
-			// description: "",
 			file: new File(
 				["This is an example file. You may treat getting this as an error."],
 				"sample.txt",
 			),
-			public: false,
+			is_private: false,
 		},
 	});
 
-	// useEffect(() => {
-	// 	if (open && selectedDocument) {
-	// 		form.reset({
-	// 			...selectedDocument,
-	// 			starts_at: new Date(selectedDocument.starts_at).toISOString(),
-	// 			ends_at: new Date(selectedDocument.ends_at).toISOString(),
-	// 			signup_start: new Date(selectedDocument.signup_start).toISOString(),
-	// 			signup_end: new Date(selectedDocument.signup_end).toISOString(),
-	// 		});
-	// 	}
-	// }, [selectedDocument, form, open]);
+	useEffect(() => {
+		if (open && selectedDocument) {
+			documentsEditForm.reset({
+				...selectedDocument,
+			});
+		}
+	}, [selectedDocument, documentsEditForm, open]);
 
 	const queryClient = useQueryClient();
 
-	// const updateDocument = useMutation({
-	// 	...documentUpdateMutation(),
-	// 	throwOnError: false,
-	// 	onSuccess: () => {
-	// 		queryClient.invalidateQueries({ queryKey: getAllDocumentsQueryKey() });
-	// 	},
-	// 	onError: () => {
-	// 		onClose();
-	// 	},
-	// });
+	const updateDocument = useMutation({
+		...updateDocumentMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllDocumentsQueryKey() });
+		},
+		onError: () => {
+			onClose();
+		},
+	});
 
-	// const removeDocument = useMutation({
-	// 	...documentRemoveMutation(),
-	// 	throwOnError: false,
-	// 	onSuccess: () => {
-	// 		queryClient.invalidateQueries({ queryKey: getAllDocumentsQueryKey() });
-	// 	},
-	// 	onError: () => {
-	// 		onClose();
-	// 	},
-	// });
+	const removeDocument = useMutation({
+		...deleteDocumentMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllDocumentsQueryKey() });
+		},
+		onError: () => {
+			onClose();
+		},
+	});
 
 	function handleFormSubmit(values: DocumentsEditFormType) {
-		// const updatedDocument: DocumentUpdate = {
-		// 	title: values.title,
-		// 	file: values.file,
-		// };
+		const updatedDocument: DocumentUpdate = {
+			title: values.title,
+			category: values.category,
+			is_private: values.is_private,
+		};
 
-		// updateDocument.mutate(
-		// 	{
-		// 		path: { event_id: values.id },
-		// 		body: updatedDocument,
-		// 	},
-		// 	{
-		// 		onSuccess: () => {
-		// 			onClose();
-		// 		},
-		// 	},
-		// );
+		updateDocument.mutate(
+			{
+				path: { document_id: values.id },
+				body: updatedDocument,
+			},
+			{
+				onSuccess: () => {
+					onClose();
+				},
+			},
+		);
 		console.log("Form submitted", values);
 	}
 
 	function handleRemoveSubmit() {
-		// removeDocument.mutate(
-		// 	{ path: { event_id: form.getValues("id") } },
-		// 	{
-		// 		onSuccess: () => {
-		// 			onClose();
-		// 		},
-		// 	},
-		// );
-		console.log("Remove document", documentsEditForm.getValues("id"));
+		removeDocument.mutate(
+			{ path: { document_id: documentsEditForm.getValues("id") } },
+			{
+				onSuccess: () => {
+					onClose();
+				},
+			},
+		);
+	}
+
+	async function handleReadDocument(selectedDocument: DocumentRead) {
+		router.push(`/documents/${selectedDocument.id}`);
 	}
 
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -167,7 +165,7 @@ export default function DocumentsEditForm({
 							control={documentsEditForm.control}
 							name="title"
 							render={({ field }) => (
-								<FormItem>
+								<FormItem className="lg:col-span-2">
 									<FormLabel>{t("admin:documents.title")}</FormLabel>
 									<FormControl>
 										<Input
@@ -196,7 +194,42 @@ export default function DocumentsEditForm({
 							)}
 						/>
 
-						{/* Public */}
+						<FormField
+							control={documentsEditForm.control}
+							name="category"
+							render={({ field }) => (
+								<FormItem className="lg:col-span-2">
+									<FormLabel>{t("admin:documents.category")}</FormLabel>
+									<FormControl>
+										<Input
+											placeholder={t("admin:documents.category")}
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							control={documentsEditForm.control}
+							name="is_private"
+							render={({ field }) => (
+								<FormItem className="flex flex-row space-x-3 space-y-0 lg:col-span-2 items-center-safe pl-3">
+									<FormControl>
+										<Checkbox
+											checked={field.value}
+											onCheckedChange={field.onChange}
+										/>
+									</FormControl>
+									<div className="space-y-1 leading-none">
+										<FormLabel>
+											{t("admin:documents.private_explanation")}
+										</FormLabel>
+									</div>
+								</FormItem>
+							)}
+						/>
 
 						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
 							<ConfirmDeleteDialog
@@ -211,6 +244,14 @@ export default function DocumentsEditForm({
 							/>
 							<Button type="submit" className="w-32 min-w-fit">
 								{t("admin:submit")}
+							</Button>
+							<Button
+								type="button"
+								variant="secondary"
+								className="w-32 min-w-fit"
+								onClick={() => handleReadDocument(selectedDocument)}
+							>
+								{t("admin:documents.read")}
 							</Button>
 						</div>
 					</form>
