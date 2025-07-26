@@ -21,6 +21,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import { Plus } from "lucide-react";
 
 const councilSchema = z.object({
 	name_sv: z.string().min(2),
@@ -86,6 +87,7 @@ export default function CouncilForm() {
 					setSubmitEnabled(true);
 				}}
 			>
+				<Plus />
 				{t("councils.create_council", "Skapa utskott")}
 			</Button>
 

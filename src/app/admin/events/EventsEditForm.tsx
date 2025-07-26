@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import AdminChoosePriorities from "@/widgets/AdminChoosePriorities";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { Label } from "@/components/ui/label";
+import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { Save } from "lucide-react";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
@@ -72,6 +74,8 @@ export default function EventsEditForm({
 	selectedEvent,
 }: EventsEditFormProps) {
 	const { t } = useTranslation();
+
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
 	const form = useForm<EventsEditFormType>({
 		resolver: zodResolver(eventsEditSchema),
@@ -196,7 +200,6 @@ export default function EventsEditForm({
 				}
 			}}
 		>
-			{" "}
 			<DialogContent className="min-w-fit lg:max-w-7xl">
 				<DialogHeader>
 					<DialogTitle>{t("admin:events.edit_booking")}</DialogTitle>
@@ -550,24 +553,18 @@ export default function EventsEditForm({
 						))}
 
 						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-							<Button
-								variant="outline"
-								className="w-32 min-w-fit"
-								onClick={() => console.log("Preview clicked")}
-							>
-								{t("admin:preview")}
-							</Button>
-
-							<Button
-								variant="destructive"
-								type="button"
-								className="w-32 min-w-fit"
-								onClick={handleRemoveSubmit}
-							>
-								{t("admin:remove")}
-							</Button>
-
+							<ConfirmDeleteDialog
+								open={deleteDialogOpen}
+								onOpenChange={setDeleteDialogOpen}
+								onConfirm={handleRemoveSubmit}
+								triggerText={t("admin:remove")}
+								title={t("admin:events.confirm_remove")}
+								description={t("admin:events.confirm_remove_text")}
+								confirmText={t("admin:remove")}
+								cancelText={t("admin:cancel")}
+							/>
 							<Button type="submit" className="w-32 min-w-fit">
+								<Save />
 								{t("admin:save")}
 							</Button>
 						</div>

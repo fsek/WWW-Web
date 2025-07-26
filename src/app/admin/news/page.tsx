@@ -4,10 +4,12 @@ import { action, target, type NewsRead } from "../../../api";
 import NewsForm from "./NewsForm";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getAllNewsOptions } from "@/api/@tanstack/react-query.gen";
-import { createColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper, type Row } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
+import NewsEditForm from "./NewsEditForm";
+import { useState } from "react";
 import PermissionWall from "@/components/PermissionWall";
 import { Suspense } from "react";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
@@ -26,30 +28,49 @@ const columns = [
 		header: "Svensk titel",
 		cell: (info) => info.getValue(),
 	}),
-	columnHelper.accessor("content_sv", {
-		header: "Svensk beskrivning",
+	columnHelper.accessor("title_en", {
+		header: "Engelsk titel",
 		cell: (info) => info.getValue(),
+	}),
+	columnHelper.accessor("pinned_from", {
+		header: "Pinnad Från",
+		cell: (info) => {
+			const date = info.getValue();
+			return date ? new Date(date).toLocaleDateString("sv-SE") : "Oklart";
+		},
+	}),
+	columnHelper.accessor("pinned_to", {
+		header: "Pinnad Till",
+		cell: (info) => {
+			const date = info.getValue();
+			return date ? new Date(date).toLocaleDateString("sv-SE") : "Oklart";
+		},
 	}),
 ];
 
 export default function News() {
 	const { t } = useTranslation();
 
-	const { data, error } = useSuspenseQuery({
+	// edit form state
+	const [editFormOpen, setEditFormOpen] = useState(false);
+	const [selectedNews, setSelectedNews] = useState<NewsRead | null>(null);
 
+	const { data, error } = useSuspenseQuery({
 		...getAllNewsOptions(),
 	});
 
-	console.log(data);
-
 	const table = useCreateTable({ data: data ?? [], columns });
+
+	const handleRowClick = (row: Row<NewsRead>) => {
+		setSelectedNews(row.original);
+		setEditFormOpen(true);
+	};
 
 	if (error) {
 		return <LoadingErrorCard error={error} />;
 	}
 
 	return (
-
 		<PermissionWall requiredPermissions={[[action.MANAGE, target.NEWS]]}>
 			<Suspense fallback={<LoadingErrorCard isLoading={true} />}>
 				<div className="px-8 space-x-4">
@@ -58,7 +79,17 @@ export default function News() {
 					</h3>
 					<p className="py-3">{t("admin:news.page_description")}</p>
 					<NewsForm />
-					<AdminTable table={table} />
+					<AdminTable table={table} onRowClick={handleRowClick} />
+					{selectedNews && (
+						<NewsEditForm
+							open={editFormOpen}
+							onClose={() => {
+								setEditFormOpen(false);
+								setSelectedNews(null);
+							}}
+							selectedNews={selectedNews}
+						/>
+					)}
 				</div>
 			</Suspense>
 		</PermissionWall>

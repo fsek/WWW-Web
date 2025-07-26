@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,8 @@ import type { CarBookingRead, CarBookingUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { Save } from "lucide-react";
 
 interface CarEditFormProps {
 	open: boolean;
@@ -168,6 +170,8 @@ export default function CarEditForm({
 			},
 		);
 	}
+
+	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
 	function handleRemoveSubmit() {
 		const bookingId = form.getValues("booking_id");
@@ -330,16 +334,18 @@ export default function CarEditForm({
 
 						{/* Button Section */}
 						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
-							<Button
-								variant="destructive"
-								type="button"
-								className="w-32 min-w-fit"
-								onClick={handleRemoveSubmit}
-							>
-								{t("admin:remove")}
-							</Button>
-
+							<ConfirmDeleteDialog
+								open={deleteDialogOpen}
+								onOpenChange={setDeleteDialogOpen}
+								onConfirm={handleRemoveSubmit}
+								triggerText={t("admin:remove")}
+								title={t("admin:car.delete_confirm_title")}
+								description={t("admin:car.delete_confirm_text")}
+								confirmText={t("admin:remove")}
+								cancelText={t("admin:cancel")}
+							/>
 							<Button type="submit" className="w-32 min-w-fit">
+								<Save />
 								{t("admin:save")}
 							</Button>
 						</div>

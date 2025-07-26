@@ -9,20 +9,12 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import type { AdminUserRead } from "@/api";
 import { useTranslation } from "react-i18next";
-import {
-	AlertDialog,
-	AlertDialogTrigger,
-	AlertDialogContent,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogFooter,
-	AlertDialogCancel,
-	AlertDialogAction,
-} from "@/components/ui/alert-dialog";
+import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 import { toast } from "sonner";
 import { AdminChooseMultPosts } from "@/widgets/AdminChooseMultPosts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
+import { Save } from "lucide-react";
 
 interface UserPostsEditFormProps {
 	open: boolean;
@@ -213,45 +205,20 @@ export default function UserPostsEditForm({
 							disabled={updateUserPosts.isPending}
 							className="bg-primary hover:bg-primary/90"
 						>
+							<Save />
 							{t("user-posts.save", "Save Changes")}
 						</Button>
 
-						<AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-							<AlertDialogTrigger asChild>
-								<Button
-									variant="destructive"
-									type="button"
-									disabled={
-										updateUserPosts.isPending || selectedPosts.length === 0
-									}
-									onClick={() => setConfirmOpen(true)}
-								>
-									{t("user-posts.remove_all", "Remove All Posts")}
-								</Button>
-							</AlertDialogTrigger>
-							<AlertDialogContent>
-								<AlertDialogHeader>
-									<AlertDialogTitle>
-										{t("user-posts.confirm_remove", "Confirm Removal")}
-									</AlertDialogTitle>
-								</AlertDialogHeader>
-								<p>
-									{t(
-										"user-posts.confirm_remove_all_text",
-										"Are you sure you want to remove all council posts for this user?",
-									)}
-								</p>
-								<AlertDialogFooter>
-									<AlertDialogCancel>{t("cancel", "Cancel")}</AlertDialogCancel>
-									<AlertDialogAction
-										onClick={handleRemoveAllPosts}
-										className="bg-destructive text-white hover:bg-destructive/90"
-									>
-										{t("user-posts.remove_all", "Remove All Posts")}
-									</AlertDialogAction>
-								</AlertDialogFooter>
-							</AlertDialogContent>
-						</AlertDialog>
+						<ConfirmDeleteDialog
+							open={confirmOpen}
+							onOpenChange={setConfirmOpen}
+							onConfirm={handleRemoveAllPosts}
+							triggerText={t("user-posts.remove_all")}
+							title={t("user-posts.confirm_remove")}
+							description={t("user-posts.confirm_remove_all_text")}
+							confirmText={t("user-posts.remove_all")}
+							cancelText={t("cancel", "Cancel")}
+						/>
 					</div>
 				</div>
 			</DialogContent>

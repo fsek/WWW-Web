@@ -152,13 +152,20 @@ export default function RegistrationPage() {
 
 	const handleSubmit = (values: z.infer<typeof registrationSchema>) => {
 		setStatus("loading");
+
+		// Add +46 if no country code is present
+		let phoneNumber = values.telephone_number;
+		if (phoneNumber && !phoneNumber.startsWith("+")) {
+			phoneNumber = `+46${phoneNumber}`;
+		}
+
 		registerMutation.mutate({
 			body: {
 				email: values.email,
 				password: values.password,
 				first_name: values.first_name,
 				last_name: values.last_name,
-				telephone_number: values.telephone_number,
+				telephone_number: phoneNumber,
 				start_year: values.start_year ? Number(values.start_year) : undefined,
 			},
 		});

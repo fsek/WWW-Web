@@ -59,7 +59,8 @@
 		"full_calendar": "Stor kalender",
 		"day": "Dag",
 		"week": "Vecka",
-		"month": "Månad"
+		"month": "Månad",
+		"days": "dagar"
 	},
 	"add": {
 		"error_title": "Vänligen ange en titel.",
