@@ -145,7 +145,10 @@
 		"category": "Kategori",
 		"private": "Privat",
 		"private_explanation": "Endast synlig för medlemmar",
-		"read": "Öppna"
+		"read": "Öppna",
+		"title_required": "Titel krävs",
+		"upload_success": "Dokumentet har laddats upp!",
+		"upload_error": "Misslyckades att ladda upp dokument."
 	},
 	"car": {
 		"self": "Bilbokningar",

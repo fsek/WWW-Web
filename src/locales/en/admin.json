@@ -144,7 +144,10 @@
 		"category": "Category",
 		"private": "Private",
 		"private_explanation": "Only visible to members",
-		"read": "Open"
+		"read": "Open",
+		"title_required": "Title is required",
+		"upload_success": "Document uploaded successfully!",
+		"upload_error": "Failed to upload document."
 	},
 	"car": {
 		"self": "Car bookings",

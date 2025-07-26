@@ -3,12 +3,9 @@
 import { useState } from "react";
 import DocumentsForm from "./DocumentsForm";
 import DocumentsEditForm from "./DocumentsEditForm";
-import { getAllEventsOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
-
 import AdminTable from "@/widgets/AdminTable";
-import type { EventRead } from "../../../api";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
