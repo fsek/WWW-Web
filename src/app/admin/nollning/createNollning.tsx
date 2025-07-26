@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog, DialogTitle, DialogTrigger } from "@radix-ui/react-dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Plus } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -70,6 +71,7 @@ const CreateNollning = () => {
 							nollningForm.reset();
 						}}
 					>
+						<Plus />
 						Skapa Nollning
 					</Button>
 				</DialogTrigger>
@@ -110,8 +112,8 @@ const CreateNollning = () => {
 										</FormItem>
 									)}
 								/>
-								<Button 
-									type="submit" 
+								<Button
+									type="submit"
 									className="w-32 min-w-fit"
 									disabled={createNollning.isPending}
 								>

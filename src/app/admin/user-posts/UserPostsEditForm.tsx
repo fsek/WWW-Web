@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { AdminChooseMultPosts } from "@/widgets/AdminChooseMultPosts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
+import { Save } from "lucide-react";
 
 interface UserPostsEditFormProps {
 	open: boolean;
@@ -204,6 +205,7 @@ export default function UserPostsEditForm({
 							disabled={updateUserPosts.isPending}
 							className="bg-primary hover:bg-primary/90"
 						>
+							<Save />
 							{t("user-posts.save", "Save Changes")}
 						</Button>
 

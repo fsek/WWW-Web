@@ -22,6 +22,7 @@ import { useTranslation } from "react-i18next";
 import { Toaster } from "@/components/ui/sonner";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import UserPostsEditForm from "./UserPostsEditForm";
+import { UserPen } from "lucide-react";
 
 const columnHelper = createColumnHelper<AdminUserRead>();
 
@@ -139,6 +140,7 @@ export default function UserPostsPage() {
 						setEditFormOpen(true);
 					}}
 				>
+					<UserPen />
 					{t("admin:user-posts.manage")}
 				</Button>
 			),

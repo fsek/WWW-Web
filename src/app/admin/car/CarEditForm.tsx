@@ -29,6 +29,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { Save } from "lucide-react";
 
 interface CarEditFormProps {
 	open: boolean;
@@ -344,6 +345,7 @@ export default function CarEditForm({
 								cancelText={t("admin:cancel")}
 							/>
 							<Button type="submit" className="w-32 min-w-fit">
+								<Save />
 								{t("admin:save")}
 							</Button>
 						</div>

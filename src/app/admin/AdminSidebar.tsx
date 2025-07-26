@@ -11,6 +11,8 @@ import {
 	User,
 	Gauge,
 	type LucideProps,
+	Users,
+	UserPen,
 } from "lucide-react";
 
 import {
@@ -35,6 +37,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
 import { useAuthState, type RequiredPermission } from "@/lib/auth";
+import { action, target } from "@/api";
 
 type AdminSidebarEntry = {
 	title: string;
@@ -53,43 +56,43 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:news.self",
 				url: "/admin/news",
-				permissions: [["manage", "News"]],
+				permissions: [[action.MANAGE, target.NEWS]],
 				icon: Newspaper,
 			},
 			{
 				title: "admin:events.self",
 				url: "/admin/events",
-				permissions: [["manage", "Event"]],
+				permissions: [[action.MANAGE, target.EVENT]],
 				icon: Calendar,
 			},
 			{
 				title: "admin:documents.self",
 				url: "/admin/documents",
-				permissions: [["manage", "Document"]],
+				permissions: [[action.MANAGE, target.DOCUMENT]],
 				icon: FileText,
 			},
 			{
 				title: "admin:car.self",
 				url: "/admin/car",
-				permissions: [["manage", "Car"]],
+				permissions: [[action.MANAGE, target.CAR]],
 				icon: Car,
 			},
 			{
 				title: "admin:permissions.self",
 				url: "/admin/permissions",
-				permissions: [["manage", "Permission"]],
+				permissions: [[action.MANAGE, target.PERMISSION]],
 				icon: FolderLock,
 			},
 			{
 				title: "admin:member.self",
 				url: "/admin/members",
-				permissions: [["view", "User"]],
+				permissions: [[action.VIEW, target.USER]],
 				icon: User,
 			},
 			{
 				title: "admin:nollning.self",
 				url: "/admin/nollning",
-				permissions: [["manage", "Nollning"]],
+				permissions: [[action.MANAGE, target.NOLLNING]],
 				icon: Gauge,
 			},
 		],
@@ -100,19 +103,19 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:councils.self",
 				url: "/admin/councils",
-				permissions: [["manage", "Council"]],
-				icon: Briefcase,
+				permissions: [[action.MANAGE, target.COUNCIL]],
+				icon: Users,
 			},
 			{
 				title: "admin:user-posts.self",
 				url: "/admin/user-posts",
-				permissions: [["manage", "Post"]],
-				icon: Briefcase,
+				permissions: [[action.MANAGE, target.POST]],
+				icon: UserPen,
 			},
 			{
 				title: "admin:posts.self",
 				url: "/admin/posts",
-				permissions: [["manage", "Post"]],
+				permissions: [[action.MANAGE, target.POST]],
 				icon: Briefcase,
 			},
 		],

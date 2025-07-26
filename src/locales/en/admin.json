@@ -39,7 +39,8 @@
 		"error_delete": "Failed to delete news.",
 		"no_news": "No news available.",
 		"confirm_remove": "Confirm removal",
-		"confirm_remove_text": "Are you sure you want to remove this news item?"
+		"confirm_remove_text": "Are you sure you want to remove this news item?",
+		"page_description": "Here you can create news and edit existing news on the website."
 	},
 	"events": {
 		"self": "Events",
@@ -330,6 +331,7 @@
 	"id": "ID",
 	"first_name": "First Name",
 	"last_name": "Last Name",
+	"name": "Name",
 	"email": "Email",
 	"is_verified": "Verified",
 	"account_created": "Account Created",

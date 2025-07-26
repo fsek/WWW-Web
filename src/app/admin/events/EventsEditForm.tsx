@@ -29,6 +29,7 @@ import AdminChoosePriorities from "@/widgets/AdminChoosePriorities";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { Label } from "@/components/ui/label";
 import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { Save } from "lucide-react";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
@@ -563,6 +564,7 @@ export default function EventsEditForm({
 								cancelText={t("admin:cancel")}
 							/>
 							<Button type="submit" className="w-32 min-w-fit">
+								<Save />
 								{t("admin:save")}
 							</Button>
 						</div>

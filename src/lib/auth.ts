@@ -1,12 +1,11 @@
 "use client";
 
 import type { BearerResponse, PermissionRead } from "@/api";
+import type { action, target } from "@/api";
 import { create } from "zustand";
 
-type Action = PermissionRead["action"];
-type Target = PermissionRead["target"];
-export type RequiredPermission = [Action, Target];
-class PermissionMap extends Map<Target, Set<Action>> {
+export type RequiredPermission = [action, target];
+class PermissionMap extends Map<target, Set<action>> {
 	hasRequiredPermissions(required: RequiredPermission[]): boolean {
 		for (const [action, target] of required) {
 			const actions = this.get(target);
@@ -31,28 +30,33 @@ export const useAuthState = create<AuthState>((set, get) => {
 
 	function buildPermissionMap(token: BearerResponse | null): PermissionMap {
 		const map = new PermissionMap();
-		if (token) {
-			try {
-				const payload = JSON.parse(
-					Buffer.from(token.access_token.split(".")[1], "base64").toString(),
-				) as { permissions: string[] };
+		if (!token) return map;
+		try {
+			const payload = JSON.parse(
+				Buffer.from(token.access_token.split(".")[1], "base64").toString(),
+			) as { permissions: string[] };
 
-				for (const entry of payload.permissions) {
-					const parts = entry.split(":");
-					if (parts.length !== 2) continue;
+			for (const entry of payload.permissions) {
+				const parts = entry.split(":");
+				if (parts.length !== 2) continue;
 
-					const [action, target] = parts as [Action, Target];
+				const [actionStr, targetStr] = parts;
 
-					if (!map.has(target)) {
-						map.set(target, new Set<Action>());
-					}
-					// biome-ignore lint/style/noNonNullAssertion: We just created it if it didnt exist.
-					map.get(target)!.add(action);
+				const actionEnum = actionStr as action;
+				const targetEnum = targetStr as target;
+
+				if (!actionEnum || !targetEnum) continue;
+
+				if (!map.has(targetEnum)) {
+					map.set(targetEnum, new Set<action>());
 				}
-			} catch {
-				return map;
+				// biome-ignore lint/style/noNonNullAssertion: Just checked that it exists
+				map.get(targetEnum)!.add(actionEnum);
 			}
+		} catch {
+			// If decoding or parsing fails, just return an empty map
 		}
+
 		return map;
 	}
 

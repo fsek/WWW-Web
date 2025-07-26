@@ -27,6 +27,7 @@ import { useTranslation } from "react-i18next";
 import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 import { toast } from "sonner";
+import { Save } from "lucide-react";
 
 const postEditSchema = z.object({
 	id: z.number(),
@@ -319,6 +320,7 @@ export default function PostEditForm({
 							</Button>
 
 							<Button type="submit" className="w-32 min-w-fit">
+								<Save />
 								{t("save", "Spara")}
 							</Button>
 						</div>
