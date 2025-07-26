@@ -16,9 +16,9 @@ COPY . .
 
 RUN bun run build
 
-CMD["cp" "-r" "public" ".next/standalone/" "&&" \
-    "cp" "-r" ".next/static" ".next/standalone/.next/" "&&" \
-    "cp" "-r" "node_modules" ".next/standalone/node_modules/"] 
+RUN cp -r public .next/standalone/ \
+ && cp -r .next/static .next/standalone/.next/ \
+ && cp -r node_modules .next/standalone/node_modules/
 
 RUN adduser --system --uid 1001 nextjs
 
