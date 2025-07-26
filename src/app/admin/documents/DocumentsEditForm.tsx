@@ -10,6 +10,7 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -24,6 +25,7 @@ import { useTranslation } from "react-i18next";
 import { use, useEffect, useState } from "react";
 import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 import { useRouter } from "next/navigation";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface DocumentsEditFormProps {
 	open: boolean;
@@ -163,7 +165,7 @@ export default function DocumentsEditForm({
 							control={documentsEditForm.control}
 							name="title"
 							render={({ field }) => (
-								<FormItem>
+								<FormItem className="lg:col-span-2">
 									<FormLabel>{t("admin:documents.title")}</FormLabel>
 									<FormControl>
 										<Input
@@ -194,17 +196,37 @@ export default function DocumentsEditForm({
 
 						<FormField
 							control={documentsEditForm.control}
-							name="is_private"
+							name="category"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
-									<FormLabel>{t("admin:documents.is_private")}</FormLabel>
+									<FormLabel>{t("admin:documents.category")}</FormLabel>
 									<FormControl>
 										<Input
-											type="checkbox"
-											checked={field.value}
-											onChange={(e) => field.onChange(e.target.checked)}
+											placeholder={t("admin:documents.category")}
+											{...field}
 										/>
 									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							control={documentsEditForm.control}
+							name="is_private"
+							render={({ field }) => (
+								<FormItem className="flex flex-row space-x-3 space-y-0 lg:col-span-2 items-center-safe pl-3">
+									<FormControl>
+										<Checkbox
+											checked={field.value}
+											onCheckedChange={field.onChange}
+										/>
+									</FormControl>
+									<div className="space-y-1 leading-none">
+										<FormLabel>
+											{t("admin:documents.private_explanation")}
+										</FormLabel>
+									</div>
 								</FormItem>
 							)}
 						/>

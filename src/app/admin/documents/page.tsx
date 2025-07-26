@@ -37,11 +37,18 @@ export default function Documents() {
 		}),
 		columnHelper.accessor("created_at", {
 			header: t("admin:documents.created_at"),
-			cell: (info) => info.getValue(),
+			cell: (info) =>
+				new Date(info.getValue()).toLocaleString("sv-SE", {
+					hour: "2-digit",
+					minute: "2-digit",
+					year: "numeric",
+					month: "2-digit",
+					day: "2-digit",
+				}),
 		}),
 		columnHelper.accessor("is_private", {
-			header: t("admin:documents.is_private"),
-			cell: (info) => info.getValue(),
+			header: t("admin:documents.private_explanation"),
+			cell: (info) => (info.getValue() ? t("admin:yes") : t("admin:no")),
 		}),
 		columnHelper.accessor("author", {
 			header: t("admin:documents.author"),

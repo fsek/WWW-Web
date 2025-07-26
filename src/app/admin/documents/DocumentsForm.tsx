@@ -149,25 +149,6 @@ export default function DocumentsForm() {
 
 							<FormField
 								control={documentsForm.control}
-								name="is_private"
-								render={({ field }) => (
-									<FormItem className="flex flex-row items-start space-x-3 space-y-0 lg:col-span-2">
-										<FormControl>
-											<Checkbox
-												checked={field.value}
-												onCheckedChange={field.onChange}
-											/>
-										</FormControl>
-										<div className="space-y-1 leading-none">
-											<FormLabel>{t("admin:documents.private")}</FormLabel>
-										</div>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								control={documentsForm.control}
 								name="category"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
@@ -178,6 +159,27 @@ export default function DocumentsForm() {
 												{...field}
 											/>
 										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={documentsForm.control}
+								name="is_private"
+								render={({ field }) => (
+									<FormItem className="flex flex-row items-center-safe space-x-3 space-y-0 lg:col-span-2 pl-3">
+										<FormControl>
+											<Checkbox
+												checked={field.value}
+												onCheckedChange={field.onChange}
+											/>
+										</FormControl>
+										<div className="space-y-1 leading-none">
+											<FormLabel>
+												{t("admin:documents.private_explanation")}
+											</FormLabel>
+										</div>
 										<FormMessage />
 									</FormItem>
 								)}

@@ -133,7 +133,13 @@
 		"success_delete": "Document deleted!",
 		"error_add": "Failed to create document.",
 		"error_edit": "Failed to update document.",
-		"error_delete": "Failed to delete document."
+		"error_delete": "Failed to delete document.",
+		"is_private": "Private",
+		"author": "Created by",
+		"category": "Category",
+		"private": "Private",
+		"private_explanation": "Only visible to members",
+		"read": "Open"
 	},
 	"car": {
 		"self": "Car bookings",
