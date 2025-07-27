@@ -3,7 +3,6 @@ import "./globals.css";
 import { client } from "@/api";
 import initTranslations, { type Locale, type Namespace } from "./i18n";
 import TranslationsProvider from "@/components/TranslationsProvider";
-import ClientProvider from "@/components/ClientProvider";
 import { ThemeProvider } from "next-themes";
 import CookieConsent from "@/components/CookieConsent";
 import { headers } from "next/headers";
@@ -32,10 +31,17 @@ export default async function RootLayout({
 	const initialLanguage =
 		(headersList.get("x-initial-language") as Locale) || "en";
 
-	const { i18n, resources } = await initTranslations(initialLanguage, i18nNamespaces);
+	const { i18n, resources } = await initTranslations(
+		initialLanguage,
+		i18nNamespaces,
+	);
 
 	return (
-		<TranslationsProvider namespaces={i18nNamespaces} locale={i18n.language as Locale} resources={resources}>
+		<TranslationsProvider
+			namespaces={i18nNamespaces}
+			locale={i18n.language as Locale}
+			resources={resources}
+		>
 			<QueryClientProvider>
 				{/* SuppressHydrationWarning is only one layer deep, and required by <ThemeProvider> */}
 				<html lang={i18n.language} suppressHydrationWarning>
