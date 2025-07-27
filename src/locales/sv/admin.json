@@ -356,6 +356,7 @@
 	"nollning": {
 		"self": "Nollning"
 	},
+	"show": "Visa",
 	"select_council": "Välj utskott",
 	"available_councils": "Tillgängliga utskott",
 	"unnamed_council": "Namnlöst utskott",

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { flexRender, type Row, type Table } from "@tanstack/react-table";
 import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 //https://tanstack.com/table/v8/docs/guide/pagination - Pagination tutorial
 
@@ -18,6 +19,7 @@ export default function AdminTable<T>({
 }) {
 	const { pageIndex } = table.getState().pagination;
 	const pageCount = table.getPageCount();
+	const { t } = useTranslation("admin");
 
 	return (
 		<div className="flex flex-col w-full cursor-pointer">
@@ -159,7 +161,7 @@ export default function AdminTable<T>({
 				>
 					{pageSizeOptions.map((size) => (
 						<option key={size} value={size}>
-							Show {size}
+							{t("show")} {size}
 						</option>
 					))}
 				</select>
