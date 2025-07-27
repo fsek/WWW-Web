@@ -32,10 +32,6 @@
 				"desc": "Utforska våra utskotts dedikerade arbete och engagemang.",
 				"href": "/councils"
 			},
-			"secrecy": {
-				"self": "Sekretessvillkor",
-				"desc": "Läs hur vi skyddar din information och upprätthåller integriteten."
-			},
 			"documents": {
 				"self": "Dokument",
 				"desc": "Här kan du hitta alla de fina dokument som producerats.",
@@ -157,7 +153,8 @@
 		"documents": "Dokument",
 		"account-settings": "Kontoinställningar",
 		"logout": "Logga ut",
-		"logoutError": "Utloggning misslyckades. Försök igen senare."
+		"logoutError": "Utloggning misslyckades. Försök igen senare.",
+		"verify": "Verifiera e-post"
 	},
 	"footer": {
 		"contact": "Kontakt",
