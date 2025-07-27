@@ -1,18 +1,19 @@
-name: Deploy Frontend‑stage
+name: Deploy Frontend
 
 on:
   push:
-    branches: [ stage ]
+    branches:
+      - stage
+      - prod
 
 env:
-  OPENAPI_JSON_URL: ${{ secrets.OPENAPI_JSON_URL }}
-  API_BASE_URL: https://stage.backend.fsektionen.se
-  REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  REGISTRY: ghcr.io
 
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
@@ -23,11 +24,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ─── Branch‑specific secrets and URLs ─────────────────────────
+      - name: Set OPENAPI_JSON_URL for stage
+        if: github.ref == 'refs/heads/stage'
+        run: echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_STAGE }}" >> $GITHUB_ENV
+
+      - name: Set OPENAPI_JSON_URL for prod
+        if: github.ref == 'refs/heads/prod'
+        run: echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_PROD }}" >> $GITHUB_ENV
+
+      - name: Set API_BASE_URL for stage
+        if: github.ref == 'refs/heads/stage'
+        run: echo "API_BASE_URL=https://stage.backend.fsektionen.se" >> $GITHUB_ENV
+
+      - name: Set API_BASE_URL for prod
+        if: github.ref == 'refs/heads/prod'
+        run: echo "API_BASE_URL=https://backend.fsektionen.se" >> $GITHUB_ENV
+      # ──────────────────────────────────────────────────────────────
+
       - name: Download OpenAPI spec
         run: |
           mkdir -p src/api
           curl -fSL "$OPENAPI_JSON_URL" -o src/api/openapi.json
-        
+
       - name: Install Bun
         uses: oven-sh/setup-bun@v2
         with:
@@ -51,6 +70,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
 
       - name: Build and push Docker image
         id: build-image
