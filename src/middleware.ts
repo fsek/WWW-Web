@@ -17,12 +17,13 @@ function handleAuthRedirects(request: NextRequest): NextResponse | null {
 	}
 
 	// Redirect unauthenticated users from /home to /
-	if (
-		authStatus?.value !== "authenticated" &&
-		request.nextUrl.pathname === "/home"
-	) {
-		return NextResponse.redirect(new URL("/", request.url));
-	}
+	// Temporarily dont to get people up to speed
+	// if (
+	// 	authStatus?.value !== "authenticated" &&
+	// 	request.nextUrl.pathname === "/home"
+	// ) {
+	// 	return NextResponse.redirect(new URL("/", request.url));
+	// }
 
 	return null;
 }

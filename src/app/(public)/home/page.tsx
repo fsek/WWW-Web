@@ -10,9 +10,20 @@ import MainPageCalendar from "@/components/main-page-calendar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import MainPageNews from "@/components/MainPageNews";
+import Sponsors from "@/components/landing/Sponsors";
+import {
+	Accordion,
+	AccordionItem,
+	AccordionTrigger,
+	AccordionContent,
+} from "@/components/ui/accordion";
 
 export default function MainLanding() {
 	const { t } = useTranslation();
+
+	type FaqItem = { question: string; answer: string };
+	type FaqTranslation = { self?: string } & Record<string, FaqItem>;
+	const faq = t("faq", { returnObjects: true }) as FaqTranslation;
 
 	return (
 		<>
@@ -21,7 +32,7 @@ export default function MainLanding() {
 				imageUrl={mh.src}
 				className="relative h-[30vh] bg-cover bg-center mt-4"
 			/>
-			<div className="container mx-auto flex flex-col px-4 pt-25 gap-4">
+			<div className="container mx-auto flex flex-col px-4 pt-25 gap-4 mb-10">
 				<div className="md:mx-[10%]">
 					<CustomTitle
 						text={t("main:welcome")}
@@ -53,7 +64,34 @@ export default function MainLanding() {
 							</Link>
 						</Button>
 					</div>
+					{/* FAQ Accordion */}
+					<CustomTitle
+						text={faq.self || t("main:faq")}
+						className="text-center text-2xl font-bold mt-4 mb-2"
+					/>
+					<Accordion type="single" collapsible className="mb-8">
+						{Object.entries(faq)
+							.filter(([key]) => key.startsWith("q"))
+							.map(([key, value]) => (
+								<AccordionItem key={key} value={key}>
+									<AccordionTrigger>
+										{(value as { question: string }).question}
+									</AccordionTrigger>
+									<AccordionContent>
+										{(value as { answer: string }).answer}
+									</AccordionContent>
+								</AccordionItem>
+							))}
+					</Accordion>
+				</div>
+			</div>
 
+			<div className="w-screen">
+				<Sponsors />
+			</div>
+
+			<div className="container mx-auto flex flex-col px-4 pt-25 gap-4">
+				<div className="md:mx-[10%]">
 					<CustomTitle
 						text={t("main:newsTitle")}
 						className="text-center text-2xl font-bold mt-4 mb-2"

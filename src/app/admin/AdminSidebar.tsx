@@ -87,12 +87,12 @@ const groups: AdminGroup[] = [
 				permissions: [[action.VIEW, target.USER]],
 				icon: User,
 			},
-			{
-				title: "admin:nollning.self",
-				url: "/admin/nollning",
-				permissions: [[action.MANAGE, target.NOLLNING]],
-				icon: Gauge,
-			},
+			// {
+			// 	title: "admin:nollning.self",
+			// 	url: "/admin/nollning",
+			// 	permissions: [[action.MANAGE, target.NOLLNING]],
+			// 	icon: Gauge,
+			// },
 		],
 	},
 	{
@@ -131,13 +131,12 @@ export function AdminSidebar() {
 			</SidebarHeader>
 			<SidebarContent className="px-2 gap-2">
 				{groups.map(({ title, entries }, groupIndex) => (
-					<Collapsible
-						defaultOpen
-						className="group/collapsible"
-						key={title}
-					>
+					<Collapsible defaultOpen className="group/collapsible" key={title}>
 						<SidebarGroup className="mb-0 p-0">
-							<SidebarGroupLabel asChild className="text-base font-bold text-foreground py-1">
+							<SidebarGroupLabel
+								asChild
+								className="text-base font-bold text-foreground py-1"
+							>
 								<CollapsibleTrigger className="w-full px-3 transition-colors rounded-md hover:bg-accent">
 									{t(title)}
 									<ChevronDown className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
