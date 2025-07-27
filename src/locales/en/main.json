@@ -16,7 +16,7 @@
 		"self": "Questions answered",
 		"q1": {
 			"question": "Can I log in with my old account?",
-			"answer": "No, since we switched to a new backend you need to create a new account. You can do that at fsektionen.se/register."
+			"answer": "No, since we switched to a new backend you need to create a new account. You can do that at fsektionen.se/register. There are many things you won't have access to until you create an account, verify your email, and become verified as a member."
 		},
 		"q2": {
 			"question": "Noooo the app doesn't work anymore!!! What am I supposed to do with my life if I can't play moose game!??!?",

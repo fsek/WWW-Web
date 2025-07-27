@@ -16,7 +16,7 @@
 		"self": "Frågor besvarade",
 		"q1": {
 			"question": "Kan jag logga in med mitt gamla konto?",
-			"answer": "Nej, eftersom vi bytt till ny backend måste du skapa ett nytt konto. Det kan du göra på fsektionen.se/register."
+			"answer": "Nej, eftersom vi bytt till ny backend måste du skapa ett nytt konto. Det kan du göra på fsektionen.se/register. Det finns många saker du inte har tillgång till innan du skapat konto, verifierat din mail och blivit verifierad som medlem."
 		},
 		"q2": {
 			"question": "Neeej appen funkar inte längre!!! Vad ska jag nu göra med mitt liv om jag inte kan spela moose game!??!?",
