@@ -50,7 +50,7 @@ interface DoorAccessEditFormProps {
 	selectedAccess: UserAccessRead;
 }
 
-export default function DoorAccessEditForm({
+export default function UserDoorAccessEditForm({
 	open,
 	onClose,
 	selectedAccess,

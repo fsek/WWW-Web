@@ -43,7 +43,7 @@ const doorAccessSchema = z.object({
 	endtime: z.date().nullable(),
 });
 
-export default function DoorAccessForm() {
+export default function UserDoorAccessForm() {
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 	const doorAccessForm = useForm<z.infer<typeof doorAccessSchema>>({

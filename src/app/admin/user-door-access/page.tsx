@@ -1,14 +1,14 @@
 "use client";
 
 import { action, target, type UserAccessRead } from "../../../api";
-import DoorAccessForm from "./DoorAccessForm";
+import DoorAccessForm from "./UserDoorAccessForm";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getAllUserAccessesOptions } from "@/api/@tanstack/react-query.gen";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
-import DoorAccessEditForm from "./DoorAccessEditForm";
+import DoorAccessEditForm from "./UserDoorAccessEditForm";
 import { useState } from "react";
 import PermissionWall from "@/components/PermissionWall";
 import { Suspense } from "react";
@@ -45,7 +45,7 @@ const columns = [
 	}),
 ];
 
-export default function DoorAccess() {
+export default function UserDoorAccess() {
 	const { t } = useTranslation();
 
 	// edit form state
