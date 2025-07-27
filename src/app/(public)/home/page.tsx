@@ -10,6 +10,7 @@ import MainPageCalendar from "@/components/main-page-calendar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import MainPageNews from "@/components/MainPageNews";
+import Sponsors from "@/components/landing/Sponsors";
 
 export default function MainLanding() {
 	const { t } = useTranslation();
@@ -53,7 +54,15 @@ export default function MainLanding() {
 							</Link>
 						</Button>
 					</div>
+				</div>
+			</div>
 
+			<div className="w-screen">
+				<Sponsors />
+			</div>
+
+			<div className="container mx-auto flex flex-col px-4 pt-25 gap-4">
+				<div className="md:mx-[10%]">
 					<CustomTitle
 						text={t("main:newsTitle")}
 						className="text-center text-2xl font-bold mt-4 mb-2"
