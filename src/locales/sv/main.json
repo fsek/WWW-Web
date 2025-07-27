@@ -12,6 +12,21 @@
 	"cafeTitle": "Hilbert Café",
 	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang.",
 	"coolThing": "En cool grej som distraherar dig från att se att sidan inte är klar än",
+	"faq": {
+		"self": "Frågor besvarade",
+		"q1": {
+			"question": "Kan jag logga in med mitt gamla konto?",
+			"answer": "Nej, eftersom vi bytt till ny backend måste du skapa ett nytt konto. Det kan du göra på fsektionen.se/register."
+		},
+		"q2": {
+			"question": "Neeej appen funkar inte längre!!! Vad ska jag nu göra med mitt liv om jag inte kan spela moose game!??!?",
+			"answer": "Vi kommer försöka jobba på en ny release av appen så snart vi kan. Typ allt du kan göra där kan du göra på nya eller gamla hemsidan. Om du har problem, kontakta spindel."
+		},
+		"q3": {
+			"question": "Vad har ni kvar att flytta över?",
+			"answer": "Hyfsat mycket (hemsidan är förfärligt stor!). För att titta på bilder, boka lokaler, hitta advancerad kontaktinfo, läsa styrdokumenten eller gamla dokument vi inte har laddat över än, sjunga sånger från sångboken, använda motionsmaskinen och val i allmänhet kan du använda gamla hemsidan. Vi kommer inom kort att lägga till event signup också, tills dess får du vänta."
+		}
+	},
 	"next": "Nästa",
 	"previous": "Föregående",
 	"page": "Sida",

@@ -5,13 +5,28 @@
 	"welcome": "Welcome to the new F-Guild website!",
 	"welcomeText": "We are currently in a transition period to our new website. During the summer we will continuously improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the backend, the new and old systems are separated: if you have old car bookings, room bookings, settings, accounts, etc. they will not be available through the new web and you will have to make new ones. Some things e.g. the image gallery, are transferred but may not have the GUI available yet. NOTE! We plan to get rid of the old website in the near future (preferably before the introduction period), so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
 	"oldWebsiteButton": "Take me back to the old site...",
-	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the webmasters via email.",
+	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the webmasters via email (spindelman@fsektionen.se).",
 	"adminButton": "Admin Page",
 	"newsTitle": "News",
 	"newsText": "If you want to use images or more advanced formatting, use mattermost until we have added proper support.",
 	"cafeTitle": "Hilbert Cafe",
 	"cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement.",
 	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
+	"faq": {
+		"self": "Questions answered",
+		"q1": {
+			"question": "Can I log in with my old account?",
+			"answer": "No, since we switched to a new backend you need to create a new account. You can do that at fsektionen.se/register."
+		},
+		"q2": {
+			"question": "Noooo the app doesn't work anymore!!! What am I supposed to do with my life if I can't play moose game!??!?",
+			"answer": "We will try to work on a new release of the app as soon as we can. Pretty much everything you can do there you can do on the new or old website. If you have problems, contact the webmasters."
+		},
+		"q3": {
+			"question": "What do you still have left to move over?",
+			"answer": "Quite a lot (the website is terribly large!). To look at pictures, book rooms, find advanced contact info, read governing documents or old documents we haven't uploaded yet, sing songs from the songbook, use the motion machine and elections in general you can use the old website. We will soon add event signup as well, until then you'll have to wait."
+		}
+	},
 	"next": "Next",
 	"previous": "Previous",
 	"page": "Page",
