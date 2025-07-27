@@ -7,6 +7,7 @@
 	"oldWebsiteButton": "Take me back to the old site...",
 	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the head of your council (council boss).",
 	"adminButton": "Admin Page",
+	"registerButton": "Register a new account",
 	"newsTitle": "News",
 	"newsText": "If you want to use images or more advanced formatting, use mattermost until we have added proper support.",
 	"cafeTitle": "Hilbert Cafe",
