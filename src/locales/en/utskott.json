@@ -10,17 +10,17 @@
 	"post_contact": "Contact for the position",
 	"no_user": "V.A. Cant.",
 	"bokforlaget": {
-		"self": "Book Publisher",
+		"self": "The Accounting Department",
 		"about": "Fill in",
 		"contact": "Treasurer: Anton Sundström",
-		"info": "The Book Publisher handles the bookkeeping and finances of the F-guild."
+		"info": "The Accounting Department handles the bookkeeping and finances of the F-guild."
 	},
 	"cafemasteriet": {
-		"self": "Café Committee",
+		"self": "Hilbert Café",
 		"about": "Fill in, here's how you make a link <0> hello </0>",
-		"info": "The Café Committee is responsible for the guild's café operations in the Mathematics building.",
-		"contact": "Managing Director",
-		"contact2": "Operating Director",
+		"info": "Hilbert Café is responsible for the guild's café operations in the Mathematics building.",
+		"contact": "Head of the Café",
+		"contact2": "Deputy head of the Café",
 		"post_besk": "Here should be lots of info about the positions"
 	},
 	"externa-representanter": {
@@ -30,9 +30,9 @@
 		"contact": "No primary contact post"
 	},
 	"foset": {
-		"self": "Föset",
+		"self": "The Introduction Committee",
 		"about": "Fill in",
-		"info": "Föset is responsible for the welcoming and orientation of new students to the F-guild.",
+		"info": "The Introduction Committee is responsible for the welcoming and orientation of new students to the F-guild.",
 		"contact": "Överfös"
 	},
 	"kulturministeriet": {
@@ -42,23 +42,23 @@
 		"contact": "Minister for Culture"
 	},
 	"fnu": {
-		"self": "Business Committee",
+		"self": "The Corporate Relations Committee",
 		"about": "Fill in",
-		"info": "The Business Committee works to create connections between students and companies.",
+		"info": "The Corporate Relations Committee works to create connections between students and companies.",
 		"contact": "Head of Corporate Relations"
 	},
 	"prylmasteriet": {
-		"self": "Equipment Committee",
+		"self": "The Facilities Committee",
 		"about": "Fill in",
-		"info": "The Equipment Committee is responsible for the guild's equipment, car and merch.",
-		"contact": "Head of Facilities"
+		"info": "The Facilities Committee is responsible for the guild's equipment, car and merch.",
+		"contact": "Head of Facilities and Logistics"
 	},
 	"samvetet": {
-		"self": "The Conscience",
+		"self": "Committee of Conscience",
 		"about": "Fill in",
-		"info": "The Conscience works to ensure the guild is a safe and inclusive place for all members.",
+		"info": "The Commitee of Conscience works to ensure the guild is a safe and inclusive place for all members.",
 		"contact": "Master of Conscience",
-		"contact2": "President of the committee for student equality"
+		"contact2": "President of the Committee for Student Equality"
 	},
 	"sanningsministeriet": {
 		"self": "Ministry of Truth",
@@ -67,9 +67,9 @@
 		"contact": "Minister of Truth"
 	},
 	"sekret-service": {
-		"self": "Secret Service",
+		"self": "Secrete Service",
 		"about": "Fill in",
-		"info": "Secret Service keeps the guild safe from threats and is ruled by the secretary.",
+		"info": "Secrete Service keeps the guild safe from threats and is ruled by the secretary.",
 		"contact": "Secretary"
 	},
 	"sexmasteriet": {
@@ -79,14 +79,14 @@
 		"contact": "Head of Festivities"
 	},
 	"studieradet": {
-		"self": "Student Council",
+		"self": "The Students' Educational Council",
 		"about": "Fill in",
-		"info": "The Student Council voices the students' opinions and needs.",
+		"info": "The Students' Educational Council voices the students' opinions and needs.",
 		"contact": "Minister for Education",
 		"contact2": "President of the Educational Council for your program"
 	},
 	"styrelsen": {
-		"self": "Board",
+		"self": "The Board",
 		"about": "Fill in",
 		"info": "The Board leads the F-guild and is responsible for its operations.",
 		"contact": "President",
