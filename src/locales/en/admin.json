@@ -114,7 +114,11 @@
 		"personal": "Personal booking",
 		"confirmed": "Confirmed",
 		"confirm_remove": "Confirm removal of this event",
-		"confirm_remove_text": "Are you sure you want to remove this event?"
+		"confirm_remove_text": "Are you sure you want to remove this event?",
+		"basic_info": "Basic Information",
+		"date_time": "Date & Time",
+		"settings": "Settings",
+		"additional": "Additional Information"
 	},
 	"documents": {
 		"self": "Documents",

@@ -95,8 +95,6 @@ export default function AccountSettingsPage() {
 		control,
 		handleSubmit,
 		reset,
-		setValue,
-		watch,
 		formState: { errors },
 	} = form;
 

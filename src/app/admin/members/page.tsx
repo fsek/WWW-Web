@@ -44,7 +44,6 @@ export default function MembersPage() {
 	const {
 		data: userDetails,
 		error,
-		isFetching,
 		isLoading,
 	} = useQuery({
 		...adminGetAllUsersOptions(),

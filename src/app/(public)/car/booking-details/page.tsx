@@ -95,7 +95,6 @@ export default function Page() {
 	const {
 		data: userDetails,
 		error: userDetailsError,
-		isFetching: userDetailsIsFetching,
 	} = useQuery({
 		...adminGetUserOptions({
 			path: { user_id: bookingData?.user.id ?? -1 },
