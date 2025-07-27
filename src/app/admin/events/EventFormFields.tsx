@@ -122,7 +122,11 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							<FormItem>
 								<FormLabel>{t("admin:events.title_sv")}</FormLabel>
 								<FormControl>
-									<Input placeholder={t("admin:events.title_sv")} {...field} value={(field.value as string) ?? ""} />
+									<Input
+										placeholder={t("admin:events.title_sv")}
+										{...field}
+										value={(field.value as string) ?? ""}
+									/>
 								</FormControl>
 							</FormItem>
 						)}
@@ -137,7 +141,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									<Input
 										placeholder={t("admin:events.title_en")}
 										{...field}
-										value={field.value as string ?? ""}
+										value={(field.value as string) ?? ""}
 									/>
 								</FormControl>
 							</FormItem>
@@ -165,7 +169,11 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							<FormItem>
 								<FormLabel>{t("admin:events.location")}</FormLabel>
 								<FormControl>
-									<Input placeholder={t("admin:events.location")} {...field} value={field.value as string ?? ""} />
+									<Input
+										placeholder={t("admin:events.location")}
+										{...field}
+										value={(field.value as string) ?? ""}
+									/>
 								</FormControl>
 							</FormItem>
 						)}
@@ -182,7 +190,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 										placeholder={t("admin:events.description_sv")}
 										className="max-h-36"
 										{...field}
-										value={field.value as string ?? ""}
+										value={(field.value as string) ?? ""}
 									/>
 								</FormControl>
 							</FormItem>
@@ -200,7 +208,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 										placeholder={t("admin:events.description_en")}
 										className="max-h-36"
 										{...field}
-										value={field.value as string ?? ""}
+										value={(field.value as string) ?? ""}
 									/>
 								</FormControl>
 							</FormItem>
@@ -218,6 +226,24 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									onChange={(value) => field.onChange(value)}
 									className="text-sm"
 								/>
+							</FormItem>
+						)}
+					/>
+
+					<FormField
+						control={eventsForm.control}
+						name={"max_event_users" as Path<T>}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
+								<FormControl>
+									<Input
+										type="number"
+										placeholder={t("admin:events.max_event_users")}
+										{...field}
+										value={(field.value as number) ?? 0}
+									/>
+								</FormControl>
 							</FormItem>
 						)}
 					/>
@@ -242,15 +268,13 @@ export default function EventFormFields<T extends EventFormCompatible>({
 										);
 										if (
 											endValue &&
-											(
-												(
-													endValue instanceof Date
-														? endValue
-														: (typeof endValue === "string" || typeof endValue === "number")
-															? new Date(endValue)
-															: null
-												)?.getTime() ?? 0
-											) < newStart.getTime()
+											((endValue instanceof Date
+												? endValue
+												: typeof endValue === "string" ||
+														typeof endValue === "number"
+													? new Date(endValue)
+													: null
+											)?.getTime() ?? 0) < newStart.getTime()
 										) {
 											const newEnd = new Date(
 												newStart.getTime() + 60 * 60 * 1000,
@@ -300,15 +324,13 @@ export default function EventFormFields<T extends EventFormCompatible>({
 										);
 										if (
 											signupEnd &&
-											(
-												(
-													signupEnd instanceof Date
-														? signupEnd
-														: (typeof signupEnd === "string" || typeof signupEnd === "number")
-															? new Date(signupEnd)
-															: null
-												)?.getTime() ?? 0
-											) < newSignupStart.getTime()
+											((signupEnd instanceof Date
+												? signupEnd
+												: typeof signupEnd === "string" ||
+														typeof signupEnd === "number"
+													? new Date(signupEnd)
+													: null
+											)?.getTime() ?? 0) < newSignupStart.getTime()
 										) {
 											const newSignupEnd = new Date(
 												newSignupStart.getTime() + 60 * 60 * 1000,
@@ -338,24 +360,6 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									value={field.value as Date}
 									onChange={field.onChange}
 								/>
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={eventsForm.control}
-						name={"max_event_users" as Path<T>}
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
-								<FormControl>
-									<Input
-										type="number"
-										placeholder={t("admin:events.max_event_users")}
-										{...field}
-										value={field.value as number ?? 0}
-									/>
-								</FormControl>
 							</FormItem>
 						)}
 					/>
@@ -430,7 +434,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							<FormItem>
 								<FormLabel>{t("admin:events.dress_code")}</FormLabel>
 								<FormControl>
-									<Input {...field} value={field.value as string ?? ""} />
+									<Input {...field} value={(field.value as string) ?? ""} />
 								</FormControl>
 							</FormItem>
 						)}
@@ -446,7 +450,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									<Input
 										type="number"
 										{...field}
-										value={field.value as number ?? 0}
+										value={(field.value as number) ?? 0}
 									/>
 								</FormControl>
 							</FormItem>

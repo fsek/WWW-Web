@@ -110,7 +110,11 @@
 		"personal": "Personlig bokning",
 		"confirmed": "Bekräftad",
 		"confirm_remove": "Bekräfta borttagning av event",
-		"confirm_remove_text": "Är du säker på att du vill ta bort detta event?"
+		"confirm_remove_text": "Är du säker på att du vill ta bort detta event?",
+		"basic_info": "Grundläggande information",
+		"date_time": "Datum & tid",
+		"settings": "Egenskaper",
+		"additional": "Övrigt"
 	},
 	"documents": {
 		"self": "Dokument",
