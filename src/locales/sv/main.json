@@ -128,15 +128,18 @@
 			"self": "Kontakt",
 			"contactPage": {
 				"self": "Kontaktsida",
-				"desc": "Här hittar du all information du behöver för att nå oss."
+				"desc": "Här hittar du all information du behöver för att nå oss.",
+				"href": "https://old.fsektionen.se/kontakt"
 			},
 			"ordf": {
 				"self": "Ordförande",
-				"desc": "För frågor om organisationen."
+				"desc": "För frågor om organisationen.",
+				"href": "https://old.fsektionen.se/kontakter/19"
 			},
 			"web": {
 				"self": "Webbansvarig",
-				"desc": "För frågor om vår webbplats eller app."
+				"desc": "För frågor om vår webbplats eller app.",
+				"href": "mailto:spindelman@fsektionen.se"
 			},
 			"anonymousForm": {
 				"self": "Anonymt kontaktformulär",

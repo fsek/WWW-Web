@@ -22,7 +22,7 @@ export default function MainLanding() {
 				imageUrl={mh.src}
 				className="relative h-[30vh] bg-cover bg-center mt-4"
 			/>
-			<div className="container mx-auto flex flex-col px-4 pt-25 gap-4">
+			<div className="container mx-auto flex flex-col px-4 pt-25 gap-4 mb-10">
 				<div className="md:mx-[10%]">
 					<CustomTitle
 						text={t("main:welcome")}
