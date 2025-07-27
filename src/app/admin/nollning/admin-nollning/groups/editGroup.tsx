@@ -136,13 +136,13 @@ const EditGroup = ({
 			>
 				<DialogContent className="px-10 py-8 space-y-2">
 					<DialogHeader>
-						<DialogTitle className=" px-4 text-2xl underline underline-offset-4 decoration-sidebar">
+						<DialogTitle className=" px-4 text-2xl underline underline-offset-4 ">
 							{selectedGroup?.name ?? "ingen grupp vald :(("}
 						</DialogTitle>
 					</DialogHeader>
 					<div className="border border-gray-300 rounded-lg">
 						<div className="space-y-4 p-4">
-							<h3 className="underline underline-offset-2 decoration-sidebar">
+							<h3 className="underline underline-offset-2 ">
 								Administrera faddergrupp
 							</h3>
 							{children}
@@ -154,7 +154,7 @@ const EditGroup = ({
 							onSubmit={form.handleSubmit(onSubmit)}
 						>
 							<div className="space-x-4 space-y-4 p-4">
-								<h3 className="underline underline-offset-2 decoration-sidebar">
+								<h3 className="underline underline-offset-2 ">
 									Redigera Faddergrupp
 								</h3>
 								<FormField

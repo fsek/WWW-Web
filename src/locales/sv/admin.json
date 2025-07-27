@@ -14,6 +14,10 @@
 	"select_posts": "Välj poster",
 	"no_posts": "Inga poster tilldelade",
 	"unclear_program": "Oklart",
+	"welcome": {
+		"title": "Välkommen till adminsidan",
+		"message": "Här kan du hantera en otrolig mängd saker (men inte allt ännu, vi ber om ursäkt). Använd menyn till vänster för att navigera mellan de olika skärmarna. Du borde bara ha tillgång till de skärmar du har behörighet till, om så inte är fallet, kontakta en superman."
+	},
 	"categories": {
 		"general": "Allmänt",
 		"councils": "Poster och utskott"
@@ -141,7 +145,14 @@
 		"category": "Kategori",
 		"private": "Privat",
 		"private_explanation": "Endast synlig för medlemmar",
-		"read": "Öppna"
+		"read": "Öppna",
+		"title_required": "Titel krävs",
+		"upload_success": "Dokumentet har laddats upp!",
+		"upload_error": "Misslyckades att ladda upp dokument.",
+		"document_updated": "Dokumentet har uppdaterats!",
+		"document_update_error": "Misslyckades att uppdatera dokumentet.",
+		"document_removed": "Dokumentet har tagits bort!",
+		"document_remove_error": "Misslyckades att ta bort dokumentet."
 	},
 	"car": {
 		"self": "Bilbokningar",
@@ -345,6 +356,7 @@
 	"nollning": {
 		"self": "Nollning"
 	},
+	"show": "Visa",
 	"select_council": "Välj utskott",
 	"available_councils": "Tillgängliga utskott",
 	"unnamed_council": "Namnlöst utskott",

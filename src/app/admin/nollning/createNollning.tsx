@@ -77,7 +77,7 @@ const CreateNollning = () => {
 				</DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
+						<DialogTitle className="text-3xl py-3 underline underline-offset-4">
 							Skapa Nollning
 						</DialogTitle>
 					</DialogHeader>

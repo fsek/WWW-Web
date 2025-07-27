@@ -9,7 +9,6 @@ import useCreateTable from "@/widgets/useCreateTable";
 import type { _PostPermissionRead, PostRead } from "@/api";
 import PostPermissionForm from "./PostPermissionForm";
 import { useTranslation } from "react-i18next";
-import { Toaster } from "@/components/ui/sonner";
 
 // Column setup
 const columnHelper = createColumnHelper<_PostPermissionRead>();
@@ -76,7 +75,7 @@ export default function PostPermissions() {
 
 	return (
 		<div className="px-8 space-x-4">
-			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
+			<h3 className="text-3xl py-3 underline underline-offset-4">
 				{t(
 					"posts.permissions.title",
 					"Administrera specifika rättigheter för poster",
@@ -90,7 +89,6 @@ export default function PostPermissions() {
 			</p>
 			<PostPermissionForm post_values={selectedPost} />
 			<AdminTable table={table} onRowClick={handleRowClick} />
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

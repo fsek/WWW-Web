@@ -11,7 +11,6 @@ import useCreateTable from "@/widgets/useCreateTable";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import PermissionForm from "./PermissionForm";
 import PermissionEditForm from "./PermissionEditForm";
-import { Toaster } from "@/components/ui/sonner";
 import { useTranslation } from "react-i18next";
 
 // Column setup
@@ -60,7 +59,7 @@ export default function Permissions() {
 
 	return (
 		<div className="px-8 space-x-4">
-			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
+			<h3 className="text-3xl py-3 underline underline-offset-4">
 				{t("permissions.title", "Permissions")}
 			</h3>
 			<p className="py-3">{t("permissions.description")}</p>
@@ -75,7 +74,6 @@ export default function Permissions() {
 					selectedPermission={selectedPermission}
 				/>
 			)}
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

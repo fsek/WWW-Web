@@ -10,14 +10,18 @@ export default async function AdminLayout({
 }) {
 	return (
 		<LoginWall>
-			<NavBar />
-			<SidebarProvider>
-				<AdminSidebar />
-				<main className="w-full h-full flex flex-col">
-					<SidebarTrigger />
-					{children}
-				</main>
-			</SidebarProvider>
+			<div className="flex w-full h-full">
+				<SidebarProvider>
+					<AdminSidebar />
+					<div className="flex flex-col flex-1 h-full">
+						<NavBar />
+						<main className="flex-1 flex flex-col w-full h-full">
+							<SidebarTrigger />
+							{children}
+						</main>
+					</div>
+				</SidebarProvider>
+			</div>
 		</LoginWall>
 	);
 }

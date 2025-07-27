@@ -33,8 +33,6 @@ import {
 } from "@/components/ui/collapsible";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
-import ThemeToggle from "@/components/ThemeToggle";
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
 import { useAuthState, type RequiredPermission } from "@/lib/auth";
 import { action, target } from "@/api";
@@ -127,16 +125,22 @@ export function AdminSidebar() {
 	const permissions = useAuthState().getPermissions();
 
 	return (
-		<Sidebar>
-			<SidebarHeader>{t("admin:title")}</SidebarHeader>
-			<SidebarContent>
-				{groups.map(({ title, entries }) => (
-					<Collapsible defaultOpen className="group/collapsible" key={title}>
-						<SidebarGroup>
-							<SidebarGroupLabel asChild>
-								<CollapsibleTrigger>
+		<Sidebar className="text-foreground">
+			<SidebarHeader className="px-6 py-4 mb-5 underline decoration-3 items-center">
+				<h2 className="text-2xl font-bold">{t("admin:title")}</h2>
+			</SidebarHeader>
+			<SidebarContent className="px-2 gap-2">
+				{groups.map(({ title, entries }, groupIndex) => (
+					<Collapsible
+						defaultOpen
+						className="group/collapsible"
+						key={title}
+					>
+						<SidebarGroup className="mb-0 p-0">
+							<SidebarGroupLabel asChild className="text-base font-bold text-foreground py-1">
+								<CollapsibleTrigger className="w-full px-3 transition-colors rounded-md hover:bg-accent">
 									{t(title)}
-									<ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+									<ChevronDown className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
 								</CollapsibleTrigger>
 							</SidebarGroupLabel>
 							<CollapsibleContent>
@@ -151,10 +155,18 @@ export function AdminSidebar() {
 												) {
 													return (
 														<SidebarMenuItem key={item.title}>
-															<SidebarMenuButton asChild>
-																<Link href={item.url}>
-																	{<item.icon />}
-																	<span>{t(item.title)}</span>
+															<SidebarMenuButton
+																asChild
+																className="h-9 px-3 rounded-md bg-transparent hover:bg-accent/15 hover:text-background"
+															>
+																<Link
+																	href={item.url}
+																	className="flex items-center gap-3"
+																>
+																	<item.icon className="h-4 w-4 shrink-0" />
+																	<span className="text-sm">
+																		{t(item.title)}
+																	</span>
 																</Link>
 															</SidebarMenuButton>
 														</SidebarMenuItem>
@@ -169,10 +181,6 @@ export function AdminSidebar() {
 					</Collapsible>
 				))}
 			</SidebarContent>
-			<div className="absolute bottom-0 left-0 w-full flex flex-row items-center justify-end gap-2 px-4 py-3 border-t border-sidebar-border bg-sidebar z-10">
-				<LanguageSwitcher />
-				<ThemeToggle />
-			</div>
 		</Sidebar>
 	);
 }

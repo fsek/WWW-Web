@@ -17,7 +17,6 @@ import {
 	getAllDocumentsQueryKey,
 	updateDocumentMutation,
 	deleteDocumentMutation,
-	getDocumentFileByIdOptions,
 } from "@/api/@tanstack/react-query.gen";
 import type { DocumentRead, DocumentUpdate } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -26,6 +25,7 @@ import { use, useEffect, useState } from "react";
 import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
 
 interface DocumentsEditFormProps {
 	open: boolean;
@@ -86,9 +86,11 @@ export default function DocumentsEditForm({
 		...updateDocumentMutation(),
 		throwOnError: false,
 		onSuccess: () => {
+			toast.success(t("admin:documents.document_updated"));
 			queryClient.invalidateQueries({ queryKey: getAllDocumentsQueryKey() });
 		},
 		onError: () => {
+			toast.error(t("admin:documents.document_update_error"));
 			onClose();
 		},
 	});
@@ -97,9 +99,11 @@ export default function DocumentsEditForm({
 		...deleteDocumentMutation(),
 		throwOnError: false,
 		onSuccess: () => {
+			toast.success(t("admin:documents.document_removed"));
 			queryClient.invalidateQueries({ queryKey: getAllDocumentsQueryKey() });
 		},
 		onError: () => {
+			toast.error(t("admin:documents.document_remove_error"));
 			onClose();
 		},
 	});

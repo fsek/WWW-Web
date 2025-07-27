@@ -74,7 +74,7 @@ export default function News() {
 		<PermissionWall requiredPermissions={[[action.MANAGE, target.NEWS]]}>
 			<Suspense fallback={<LoadingErrorCard isLoading={true} />}>
 				<div className="px-8 space-x-4">
-					<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
+					<h3 className="text-3xl py-3 underline underline-offset-4">
 						{t("admin:news.page_title")}
 					</h3>
 					<p className="py-3">{t("admin:news.page_description")}</p>

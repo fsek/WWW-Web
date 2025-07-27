@@ -20,8 +20,8 @@ import {
 	uploadDocumentMutation,
 	getAllDocumentsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
-
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 export default function DocumentsForm() {
 	const { t } = useTranslation();
@@ -62,12 +62,14 @@ export default function DocumentsForm() {
 	const uploadDocument = useMutation({
 		...uploadDocumentMutation(),
 		onSuccess: () => {
+			toast.success(t("admin:documents.upload_success"));
 			queryClient.invalidateQueries({ queryKey: getAllDocumentsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
 			documentsForm.reset();
 		},
 		onError: () => {
+			toast.error(t("admin:documents.upload_error"));
 			setSubmitEnabled(true);
 		},
 	});

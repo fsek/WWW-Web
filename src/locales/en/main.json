@@ -35,6 +35,11 @@
 			"privacy": {
 				"self": "Privacy Policy",
 				"desc": "Learn how we protect your data and ensure your confidentiality."
+			},
+			"documents": {
+				"self": "Documents",
+				"desc": "Here you can find all the fine documents that have been produced.",
+				"href": "/documents"
 			}
 		},
 		"engage": {
@@ -274,5 +279,17 @@
 		"quote": "You are not a subset of the set of all users with access to this page.",
 		"quote_author": "The wise Debianne server",
 		"button": "Back to homepage"
-	}
+	},
+	"documents": {
+		"title": "Title",
+		"created_at": "Created At",
+		"private_explanation": "Private",
+		"author": "Author",
+		"view": "View",
+		"view_doc": "View Document",
+		"page_title": "Documents",
+		"description": "Here you can find and view documents shared within the guild. Some documents may be private and require special access."
+	},
+	"yes": "Yes",
+	"no": "No"
 }

@@ -35,6 +35,11 @@
 			"secrecy": {
 				"self": "Sekretessvillkor",
 				"desc": "Läs hur vi skyddar din information och upprätthåller integriteten."
+			},
+			"documents": {
+				"self": "Dokument",
+				"desc": "Här kan du hitta alla de fina dokument som producerats.",
+				"href": "/documents"
 			}
 		},
 		"engage": {
@@ -274,5 +279,17 @@
 		"quote": "Här har vi begått lite småillegala saker längs vägen.",
 		"quote_author": "Micke P",
 		"button": "Tillbaka till hemsidan"
-	}
+	},
+	"documents": {
+		"title": "Titel",
+		"created_at": "Skapad",
+		"private_explanation": "Privat",
+		"author": "Författare",
+		"view": "Visa",
+		"view_doc": "Visa dokumentet",
+		"page_title": "Dokument",
+		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara privata och kräva särskild åtkomst."
+	},
+	"yes": "Ja",
+	"no": "Nej"
 }

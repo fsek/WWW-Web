@@ -15,7 +15,6 @@ import PostForm from "./PostForm";
 import PostEditForm from "./PostEditForm";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import { Toaster } from "@/components/ui/sonner";
 
 export default function Posts() {
 	const { t, i18n } = useTranslation("admin");
@@ -80,7 +79,7 @@ export default function Posts() {
 
 	return (
 		<div className="px-8 space-x-4">
-			<h3 className="text-xl px-8 py-3 underline underline-offset-4 decoration-sidebar">
+			<h3 className="text-3xl py-3 underline underline-offset-4">
 				{t("posts.title")}
 			</h3>
 			<p className="py-3">{t("posts.description")}</p>
@@ -93,7 +92,6 @@ export default function Posts() {
 				onClose={() => handleClose()}
 				selectedPost={selectedEvent as PostRead}
 			/>
-			<Toaster position="top-center" richColors />
 		</div>
 	);
 }

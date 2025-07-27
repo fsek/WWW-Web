@@ -15,7 +15,7 @@ const Nollning = () => {
 	return (
 		<Suspense fallback={<div>{"Nollningar kunde inte hämtas"}</div>}>
 			<div className="px-12 py-4 space-x-4 space-y-4 w-[1000px]">
-				<h3 className="text-xl underline underline-offset-4 decoration-sidebar">
+				<h3 className="text-3xl py-3 underline underline-offset-4">
 					Administrera Nollningar
 				</h3>
 				<CreateNollning />
