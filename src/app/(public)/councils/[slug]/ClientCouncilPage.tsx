@@ -159,7 +159,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 							);
 						})
 					) : (
-						<p>{t("utskott:no_posts")}</p>
+						<p>{t("admin:no_posts")}</p>
 					)}
 				</div>
 			</div>

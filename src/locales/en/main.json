@@ -312,12 +312,12 @@
 	"documents": {
 		"title": "Title",
 		"created_at": "Created At",
-		"private_explanation": "Private",
+		"private_explanation": "Members only",
 		"author": "Author",
 		"view": "View",
 		"view_doc": "View Document",
 		"page_title": "Documents",
-		"description": "Here you can find and view documents shared within the guild. Some documents may be private and require special access."
+		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members."
 	},
 	"yes": "Yes",
 	"no": "No"
