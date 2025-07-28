@@ -252,6 +252,8 @@
 		"success": "Registreringen lyckades! Kontrollera din e-post för att verifiera ditt konto.",
 		"goLogin": "Gå till inloggning",
 		"passwordMismatch": "Lösenorden matchar inte. Försök igen.",
+		"passwordNoNumber": "Lösenordet måste innehålla minst ett nummer.",
+		"passwordNoLetter": "Lösenordet måste innehålla minst en bokstav (som inte är åäö).",
 		"startYearInvalid": "Startåret måste vara mellan 1960 och nuvarande år.",
 		"emailInvalid": "Ogiltig e-postadress",
 		"passwordShort": "Lösenordet måste vara minst 8 tecken",

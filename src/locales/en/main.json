@@ -252,6 +252,8 @@
 		"success": "Registration successful! Please check your email to verify your account.",
 		"goLogin": "Go to Login",
 		"passwordMismatch": "Passwords do not match. Please try again.",
+		"passwordNoNumber": "Password must contain at least one number.",
+		"passwordNoLetter": "Password must contain at least one english letter.",
 		"startYearInvalid": "Start year must be between 1960 and the current year.",
 		"emailInvalid": "Invalid email address",
 		"passwordShort": "Password must be at least 8 characters",

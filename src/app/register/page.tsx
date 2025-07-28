@@ -84,7 +84,25 @@ export default function RegistrationPage() {
 				"Passwords do not match. Please try again.",
 			),
 			path: ["confirmPassword"],
-		});
+		})
+		.refine((data) => /\d/.test(data.password), {
+			message: t(
+				"register.passwordNoNumber",
+				"Password must contain at least one number",
+			),
+			path: ["password"],
+		})
+		.refine(
+			// Match at least one letter (any case, including åäöÅÄÖ)
+			(data) => /[a-zA-Z]/.test(data.password.normalize("NFC")),
+			{
+				message: t(
+					"register.passwordNoLetter",
+					"Password must contain at least one letter",
+				),
+				path: ["password"],
+			},
+		);
 
 	const [status, setStatus] = useState<Status>("idle");
 	const [errorMsg, setErrorMsg] = useState<string | undefined>(undefined);
