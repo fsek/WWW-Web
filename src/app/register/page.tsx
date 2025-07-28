@@ -93,7 +93,7 @@ export default function RegistrationPage() {
 			path: ["password"],
 		})
 		.refine(
-			// Match at least one letter (any case, including åäöÅÄÖ)
+			// Match at least one letter, any case
 			(data) => /[a-zA-Z]/.test(data.password.normalize("NFC")),
 			{
 				message: t(
