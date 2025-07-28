@@ -54,7 +54,7 @@ export default function AboutPage() {
 
 	return (
 		<main className="p-4 md:p-8 min-h-screen">
-			<div className="grid md:grid-cols-2 gap-8 items-stretch h-full">
+			<div className="gap-8 items-stretch h-full ">
 				<div className="relative w-full flex flex-col h-full mb-8 md:mb-0">
 					<Carousel
 						plugins={[
@@ -71,8 +71,8 @@ export default function AboutPage() {
 										<Image
 											src={img.src}
 											alt={img.alt}
-											height={400}
-											width={600}
+											height={1180}
+											width={1920}
 											className="w-full h-full object-cover rounded-lg"
 										/>
 									</div>

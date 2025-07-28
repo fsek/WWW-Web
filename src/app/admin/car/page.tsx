@@ -387,7 +387,7 @@ export default function Car() {
 
 	return (
 		<div className="px-8 space-x-4">
-			<h3 className="text-3xl py-3 underline underline-offset-4">
+			<h3 className="text-3xl py-3  font-bold  text-primary">
 				{t("admin:car.title")}
 			</h3>
 			<p className="py-3">{t("admin:car.description")}</p>
@@ -491,7 +491,7 @@ export default function Car() {
 							}}
 							className="flex flex-col w-full items-center"
 						>
-							<TabsList className="flex justify-center mb-2">
+							<TabsList className="flex justify-center mb-2 ">
 								<TabsTrigger value="calendar">
 									{t("admin:car.calendar")}
 								</TabsTrigger>
@@ -502,10 +502,10 @@ export default function Car() {
 							</TabsList>
 							<TabsContent value="calendar" className="w-full px-5 space-y-5">
 								<div className="space-y-0">
-									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl text-primary">
 										{t("admin:car.calendar")}
 									</h2>
-									<p className="text-xs md:text-sm font-medium">
+									<p className="text-xs md:text-sm font-medium ">
 										{t("admin:car.calendar_description")}
 									</p>
 								</div>
@@ -526,10 +526,10 @@ export default function Car() {
 							</TabsContent>
 							<TabsContent value="list" className="w-full px-5 space-y-5">
 								<div className="space-y-0">
-									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl text-primary">
 										{t("admin:car.list")}
 									</h2>
-									<p className="text-xs md:text-sm font-medium">
+									<p className="text-xs md:text-sm font-medium ">
 										{t("admin:car.list_description")}
 									</p>
 								</div>
@@ -555,7 +555,7 @@ export default function Car() {
 							</TabsContent>
 							<TabsContent value="blockings" className="w-full px-5 space-y-5">
 								<div className="space-y-0">
-									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl text-primary">
 										{t("admin:car.blockings")}
 									</h2>
 									<p className="text-xs md:text-sm font-medium">
