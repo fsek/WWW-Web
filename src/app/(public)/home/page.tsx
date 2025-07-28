@@ -40,7 +40,7 @@ export default function MainLanding() {
 					/>
 					<div className="text-left text-lg mb-8">{t("main:welcomeText")}</div>
 					<div className="text-left text-lg mb-8">{t("main:welcomeAdmin")}</div>
-					<div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-3 justify-center">
+					<div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3 justify-center">
 						<Button
 							className="w-full md:w-auto text-xl py-3 px-6 rounded-lg flex items-center justify-center gap-2"
 							variant="outline"
@@ -61,6 +61,17 @@ export default function MainLanding() {
 								className=" w-full md:w-auto flex justify-center to-primary-light from-primary bg-gradient-to-t text-transparent bg-clip-text"
 							>
 								{t("main:adminButton")}
+							</Link>
+						</Button>
+						<Button
+							className="w-full md:w-auto text-xl py-3 px-6 rounded-lg flex items-center justify-center gap-2"
+							variant="default"
+						>
+							<Link
+								href="/register"
+								className=" w-full md:w-auto flex justify-center text-foreground"
+							>
+								{t("main:registerButton")}
 							</Link>
 						</Button>
 					</div>

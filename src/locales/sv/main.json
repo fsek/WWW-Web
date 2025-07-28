@@ -7,6 +7,7 @@
 	"oldWebsiteButton": "Det var bättre förr...",
 	"welcomeAdmin": "Om du tycker att du borde ha någon form av admin-åtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, kontakta utskottsordförande.",
 	"adminButton": "Admin sidan",
+	"registerButton": "Registrera nytt konto",
 	"newsTitle": "Nyheter",
 	"newsText": "Om du vill använda bilder eller mer avancerad formatering, använd Mattermost tills vi har lagt till ordentligt stöd.",
 	"cafeTitle": "Hilbert Café",
