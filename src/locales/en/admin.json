@@ -20,7 +20,8 @@
 	},
 	"categories": {
 		"general": "General",
-		"councils": "Councils and Posts"
+		"councils": "Councils and Posts",
+		"spider": "Webmaster only"
 	},
 	"news": {
 		"self": "News",

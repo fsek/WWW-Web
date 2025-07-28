@@ -76,12 +76,6 @@ const groups: AdminGroup[] = [
 				icon: Car,
 			},
 			{
-				title: "admin:permissions.self",
-				url: "/admin/permissions",
-				permissions: [[action.MANAGE, target.PERMISSION]],
-				icon: FolderLock,
-			},
-			{
 				title: "admin:member.self",
 				url: "/admin/members",
 				permissions: [[action.VIEW, target.USER]],
@@ -115,6 +109,17 @@ const groups: AdminGroup[] = [
 				url: "/admin/posts",
 				permissions: [[action.MANAGE, target.POST]],
 				icon: Briefcase,
+			},
+		],
+	},
+	{
+		title: "admin:categories.spider",
+		entries: [
+			{
+				title: "admin:permissions.self",
+				url: "/admin/permissions",
+				permissions: [[action.MANAGE, target.PERMISSION]],
+				icon: FolderLock,
 			},
 		],
 	},
