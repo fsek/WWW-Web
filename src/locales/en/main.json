@@ -124,6 +124,11 @@
 			"gallery": {
 				"self": "Gallery",
 				"desc": "Explore our photo gallery showcasing events and activities."
+			},
+			"calendar": {
+				"self": "Calendar",
+				"desc": "Keep track of upcoming events and activities.",
+				"href": "/calendar"
 			}
 		},
 		"companies": {

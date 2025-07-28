@@ -124,6 +124,11 @@
 			"gallery": {
 				"self": "Galleri",
 				"desc": "Utforska vårt bildgalleri som visar evenemang och aktiviteter."
+			},
+			"calendar": {
+				"self": "Kalender",
+				"desc": "Håll koll på kommande evenemang och aktiviteter.",
+				"href": "/calendar"
 			}
 		},
 		"companies": {
