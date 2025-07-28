@@ -87,12 +87,12 @@ const groups: AdminGroup[] = [
 				permissions: [[action.VIEW, target.USER]],
 				icon: User,
 			},
-			// {
-			// 	title: "admin:nollning.self",
-			// 	url: "/admin/nollning",
-			// 	permissions: [[action.MANAGE, target.NOLLNING]],
-			// 	icon: Gauge,
-			// },
+			{
+				title: "admin:nollning.self",
+				url: "/admin/nollning",
+				permissions: [[action.MANAGE, target.NOLLNING]],
+				icon: Gauge,
+			},
 		],
 	},
 	{
