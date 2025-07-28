@@ -28,7 +28,7 @@ export const Navbar = () => {
 	>;
 
 	return (
-		<header className="sticky border-b-[1px] top-0 z-40 w-full bg-white/50 dark:border-b-slate-700 dark:bg-background/40 backdrop-blur-md">
+		<header className="sticky top-0 z-40 w-full bg-white/50  dark:bg-background/40 backdrop-blur-md">
 			<NavigationMenu className="mx-auto">
 				<NavigationMenuList className="container h-20 px-4 w-screen flex justify-between ">
 					<NavigationMenuItem className="font-bold flex">
