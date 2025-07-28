@@ -64,11 +64,11 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 								className="mt-4"
 								size={3}
 							/>
-							<p className="mt-4">
+							<p className="mt-4 whitespace-normal">
 								{/* {council.description || ( */}
 								{/* <Trans i18nKey={`utskott:${slug}.about`}>
 									Temporarily using a short info text */}
-								{t(`utskott:${slug}.info`, "No text found :/")}
+								{/* {t(`utskott:${slug}.info`, "No text found :/")} */}
 								{/* <Trans i18nKey={`utskott:${slug}.info`}>
 									<a
 										href="/admin"
@@ -80,6 +80,9 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 									</a>
 								</Trans> */}
 								{/* )} */}
+								{i18n.language === "en"
+									? council.description_en || "No description available"
+									: council.description_sv || "Ingen beskrivning tillgänglig"}
 							</p>
 						</>
 					}
@@ -156,7 +159,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 							);
 						})
 					) : (
-						<p>{t("utskott:no_posts")}</p>
+						<p>{t("admin:no_posts")}</p>
 					)}
 				</div>
 			</div>

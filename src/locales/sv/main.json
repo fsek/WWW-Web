@@ -124,6 +124,11 @@
 			"gallery": {
 				"self": "Galleri",
 				"desc": "Utforska vårt bildgalleri som visar evenemang och aktiviteter."
+			},
+			"calendar": {
+				"self": "Kalender",
+				"desc": "Håll koll på kommande evenemang och aktiviteter.",
+				"href": "/calendar"
 			}
 		},
 		"companies": {
@@ -153,7 +158,7 @@
 			"contactPage": {
 				"self": "Kontaktsida",
 				"desc": "Här hittar du all information du behöver för att nå oss.",
-				"href": "https://old.fsektionen.se/kontakt"
+				"href": "https://old.fsektionen.se/kontakter"
 			},
 			"ordf": {
 				"self": "Ordförande",
@@ -247,6 +252,8 @@
 		"success": "Registreringen lyckades! Kontrollera din e-post för att verifiera ditt konto.",
 		"goLogin": "Gå till inloggning",
 		"passwordMismatch": "Lösenorden matchar inte. Försök igen.",
+		"passwordNoNumber": "Lösenordet måste innehålla minst ett nummer.",
+		"passwordNoLetter": "Lösenordet måste innehålla minst en bokstav (som inte är åäö).",
 		"startYearInvalid": "Startåret måste vara mellan 1960 och nuvarande år.",
 		"emailInvalid": "Ogiltig e-postadress",
 		"passwordShort": "Lösenordet måste vara minst 8 tecken",
@@ -307,12 +314,12 @@
 	"documents": {
 		"title": "Titel",
 		"created_at": "Skapad",
-		"private_explanation": "Privat",
+		"private_explanation": "Endast medlemmar",
 		"author": "Författare",
 		"view": "Visa",
 		"view_doc": "Visa dokumentet",
 		"page_title": "Dokument",
-		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara privata och kräva särskild åtkomst."
+		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara markerade för att endast vara synliga för medlemmar."
 	},
 	"yes": "Ja",
 	"no": "Nej"

@@ -124,6 +124,11 @@
 			"gallery": {
 				"self": "Gallery",
 				"desc": "Explore our photo gallery showcasing events and activities."
+			},
+			"calendar": {
+				"self": "Calendar",
+				"desc": "Keep track of upcoming events and activities.",
+				"href": "/calendar"
 			}
 		},
 		"companies": {
@@ -153,7 +158,7 @@
 			"contactPage": {
 				"self": "Contact Page",
 				"desc": "Find all the information you need to get in touch with us.",
-				"href": "https://old.fsektionen.se/kontakt"
+				"href": "https://old.fsektionen.se/kontakter"
 			},
 			"ordf": {
 				"self": "President",
@@ -247,6 +252,8 @@
 		"success": "Registration successful! Please check your email to verify your account.",
 		"goLogin": "Go to Login",
 		"passwordMismatch": "Passwords do not match. Please try again.",
+		"passwordNoNumber": "Password must contain at least one number.",
+		"passwordNoLetter": "Password must contain at least one english letter.",
 		"startYearInvalid": "Start year must be between 1960 and the current year.",
 		"emailInvalid": "Invalid email address",
 		"passwordShort": "Password must be at least 8 characters",
@@ -307,12 +314,12 @@
 	"documents": {
 		"title": "Title",
 		"created_at": "Created At",
-		"private_explanation": "Private",
+		"private_explanation": "Members only",
 		"author": "Author",
 		"view": "View",
 		"view_doc": "View Document",
 		"page_title": "Documents",
-		"description": "Here you can find and view documents shared within the guild. Some documents may be private and require special access."
+		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members."
 	},
 	"yes": "Yes",
 	"no": "No"

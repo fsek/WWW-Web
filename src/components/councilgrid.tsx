@@ -31,7 +31,11 @@ const councils = [
 		url: "/councils/kulturministeriet",
 		icon: LayoutGrid,
 	},
-	{ key: "fnu", url: "/councils/fnu", icon: ClipboardList },
+	{
+		key: "naringslivsutskottet",
+		url: "/councils/naringslivsutskottet",
+		icon: ClipboardList,
+	},
 	{ key: "prylmasteriet", url: "/councils/prylmasteriet", icon: Archive },
 	{ key: "samvetet", url: "/councils/samvetet", icon: SlidersHorizontal },
 	{
