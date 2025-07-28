@@ -68,7 +68,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 								{/* {council.description || ( */}
 								{/* <Trans i18nKey={`utskott:${slug}.about`}>
 									Temporarily using a short info text */}
-								{t(`utskott:${slug}.about`, "No text found :/")}
+								{t(`utskott:${slug}.info`, "No text found :/")}
 								{/* <Trans i18nKey={`utskott:${slug}.info`}>
 									<a
 										href="/admin"

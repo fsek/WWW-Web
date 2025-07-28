@@ -91,7 +91,7 @@ export function NavBar() {
 		user?.is_member && Array.isArray(user.posts) && user.posts.length > 0;
 
 	return (
-		<header className="sticky top-0 z-50 w-full border-b border-border bg-white/50 dark:bg-background/40 dark:border-b-slate-700 backdrop-blur-md">
+		<header className="sticky top-0 z-50 w-full border-transparent  bg-white/50 dark:bg-background/40  backdrop-blur-md">
 			<div className="container flex items-center justify-between h-20 px-4 mx-auto">
 				<div className="flex items-center gap-4">
 					<Link href="/home" className="flex items-center">
