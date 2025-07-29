@@ -76,9 +76,9 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 				description: values.description,
 				max_points: values.max_points,
 				min_points: values.min_points,
-				nollning_id: nollningID,
 				nollning_week: values.nollning_week,
 			},
+			path: { nollning_id: nollningID },
 		});
 	}
 

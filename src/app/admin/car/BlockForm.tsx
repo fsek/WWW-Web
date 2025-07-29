@@ -45,8 +45,6 @@ export default function form() {
 
 	const {
 		data: users,
-		error: userError,
-		isPending: isUserFetching,
 	} = useQuery({
 		...adminGetAllUsersOptions(),
 	});

@@ -5,13 +5,37 @@
 	"welcome": "Welcome to the new F-Guild website!",
 	"welcomeText": "We are currently in a transition period to our new website. During the summer we will continuously improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the backend, the new and old systems are separated: if you have old car bookings, room bookings, settings, accounts, etc. they will not be available through the new web and you will have to make new ones. Some things e.g. the image gallery, are transferred but may not have the GUI available yet. NOTE! We plan to get rid of the old website in the near future (preferably before the introduction period), so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
 	"oldWebsiteButton": "Take me back to the old site...",
-	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the webmasters via email.",
+	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the head of your council (council boss).",
 	"adminButton": "Admin Page",
+	"registerButton": "Register a new account",
 	"newsTitle": "News",
 	"newsText": "If you want to use images or more advanced formatting, use mattermost until we have added proper support.",
 	"cafeTitle": "Hilbert Cafe",
 	"cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement.",
 	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
+	"faq": {
+		"self": "Questions answered",
+		"q1": {
+			"question": "Can I log in with my old account?",
+			"answer": "No, since we switched to a new backend you need to create a new account. You can do that at fsektionen.se/register. There are many things you won't have access to until you create an account, verify your email, and become verified as a member."
+		},
+		"q2": {
+			"question": "How do I become verified as a member?",
+			"answer": "Create an account, verify your email, and add your Stil-ID (hi6122al-s) in the user settings (check the top right corner). After this, you will have to wait for the webmasters to check if you are a member or a bot (like a certain Anna I know). Membership verification is therefore automatic for you, but if you feel it takes too long you can contact your council boss."
+		},
+		"q3": {
+			"question": "Noooo the app doesn't work anymore!!! What am I supposed to do with my life if I can't play moose game!??!?",
+			"answer": "We will try to work on a new release of the app as soon as we can. Pretty much everything you can do there you can do on the new or old website. If you have problems, contact the webmasters."
+		},
+		"q4": {
+			"question": "What do you still have left to move over?",
+			"answer": "Quite a lot (the website is terribly large!). To look at pictures, book rooms, find advanced contact info, read governing documents or old documents we haven't uploaded yet, sing songs from the songbook, use the motion machine and elections in general you can use the old website. We will soon add event signup as well, until then you'll have to wait."
+		},
+		"q5": {
+			"question": "Help! I don't have any of my old admin rights!",
+			"answer": "Please wait or contact your council boss. Not all admin pages are ready, but we will be able to give you access to the ones that are as soon as possible."
+		}
+	},
 	"next": "Next",
 	"previous": "Previous",
 	"page": "Page",
@@ -28,13 +52,9 @@
 				"desc": "Stay updated with the latest announcements and events."
 			},
 			"councils": {
-				"self": "Committees",
+				"self": "Councils",
 				"desc": "Explore the dedicated teams that drive our initiatives.",
 				"href": "/councils"
-			},
-			"privacy": {
-				"self": "Privacy Policy",
-				"desc": "Learn how we protect your data and ensure your confidentiality."
 			},
 			"documents": {
 				"self": "Documents",
@@ -104,6 +124,11 @@
 			"gallery": {
 				"self": "Gallery",
 				"desc": "Explore our photo gallery showcasing events and activities."
+			},
+			"calendar": {
+				"self": "Calendar",
+				"desc": "Keep track of upcoming events and activities.",
+				"href": "/calendar"
 			}
 		},
 		"companies": {
@@ -132,15 +157,18 @@
 			"self": "Contact",
 			"contactPage": {
 				"self": "Contact Page",
-				"desc": "Find all the information you need to get in touch with us."
+				"desc": "Find all the information you need to get in touch with us.",
+				"href": "https://old.fsektionen.se/kontakter"
 			},
 			"ordf": {
 				"self": "President",
-				"desc": "For questions about the organisation."
+				"desc": "For questions about the organisation.",
+				"href": "https://old.fsektionen.se/kontakter/19"
 			},
 			"web": {
 				"self": "Webmaster",
-				"desc": "For questions about the website or app."
+				"desc": "For questions about the website or app.",
+				"href": "mailto:spindelman@fsektionen.se"
 			},
 			"anonymousForm": {
 				"self": "Anonymous Contact",
@@ -157,7 +185,8 @@
 		"documents": "Documents",
 		"account-settings": "Account Settings",
 		"logout": "Log out",
-		"logoutError": "Logout failed. Please try again later."
+		"logoutError": "Logout failed. Please try again later.",
+		"verify": "Verify Email"
 	},
 	"footer": {
 		"contact": "Contact",
@@ -223,6 +252,8 @@
 		"success": "Registration successful! Please check your email to verify your account.",
 		"goLogin": "Go to Login",
 		"passwordMismatch": "Passwords do not match. Please try again.",
+		"passwordNoNumber": "Password must contain at least one number.",
+		"passwordNoLetter": "Password must contain at least one english letter.",
 		"startYearInvalid": "Start year must be between 1960 and the current year.",
 		"emailInvalid": "Invalid email address",
 		"passwordShort": "Password must be at least 8 characters",
@@ -283,12 +314,12 @@
 	"documents": {
 		"title": "Title",
 		"created_at": "Created At",
-		"private_explanation": "Private",
+		"private_explanation": "Members only",
 		"author": "Author",
 		"view": "View",
 		"view_doc": "View Document",
 		"page_title": "Documents",
-		"description": "Here you can find and view documents shared within the guild. Some documents may be private and require special access."
+		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members."
 	},
 	"yes": "Yes",
 	"no": "No"

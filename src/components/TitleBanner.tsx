@@ -41,7 +41,7 @@ const TitleBanner: React.FC<TitleBannerProps> = ({
 			/>
 
 			{/* Title Text */}
-			<div className="relative text-5xl lg:text-6xl font-bold text-center px-5 inline-block text-orange-500 underline">
+			<div className="relative text-5xl lg:text-7xl font-bold text-center px-5 inline-block text-primary underline">
 				{title}
 			</div>
 		</div>

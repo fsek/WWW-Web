@@ -20,7 +20,6 @@ import {
 	Star,
 	Utensils,
 	Beer,
-	HandCoins,
 	CreditCard,
 	Lock,
 } from "lucide-react";
@@ -63,7 +62,7 @@ export function EventView({
 
 	// Calculate if the event should be editable
 
-	const { data, error, isFetching } = useQuery({
+	const { data } = useQuery({
 		...getMeOptions(),
 		staleTime: 30 * 60 * 1000, // Don't refetch for 30 minutes
 		refetchOnWindowFocus: false,
