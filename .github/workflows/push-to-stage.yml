@@ -1,0 +1,25 @@
+name: Push to stage
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write  
+
+jobs:
+  deploy-to-stage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Force‑push main → stage
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout main
+          git push origin main:stage --force
