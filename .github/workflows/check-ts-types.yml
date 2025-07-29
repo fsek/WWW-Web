@@ -1,0 +1,50 @@
+name: Typechecking typescript
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+
+jobs:
+  test_ts-types:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout API repo
+        uses: actions/checkout@v4
+        with:
+          repository: fsek/WebWebWeb 
+          ref: main
+
+      - name: Build & enter DevContainer
+        uses: devcontainers/ci@latest
+        with:
+          devcontainerPath: .
+          runCmd: |
+            until curl --silent --fail http://localhost:8000/openapi.json; do
+              sleep 1
+            done
+
+            # Write spec into the workspace root
+            curl --silent http://localhost:8000/openapi.json > openapi.json
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies (host)
+        run: bun install --frozen-lockfile
+
+      - name: Generate API client
+        run: bun run openapi-ts --input openapi.json
+
+      - name: Check types
+        run: bunx tsc --project tsconfig.json
+
