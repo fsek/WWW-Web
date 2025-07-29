@@ -45,9 +45,6 @@ jobs:
             curl --silent http://localhost:8000/openapi.json \
               > openapi.json
 
-      - name: Debug workspace
-        run: ls -R $GITHUB_WORKSPACE
-
       - name: Install Bun
         uses: oven-sh/setup-bun@v2
         with:
@@ -60,5 +57,5 @@ jobs:
         run: bun run openapi-ts --input ./api-repo/openapi.json
 
       - name: Check types
-        run: bunx tsc --project tsconfig.json
+        run: bun run build
 
