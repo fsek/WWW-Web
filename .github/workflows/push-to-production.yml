@@ -31,7 +31,7 @@ jobs:
           git add README.md
 
           # Commit with a consistent message
-          git commit -m "chore: trigger production workflow [ci skip]"
+          git commit -m "chore: trigger production workflow"
 
       - name: Push to stage
         run: |
