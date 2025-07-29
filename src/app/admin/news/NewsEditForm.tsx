@@ -294,6 +294,7 @@ export default function NewsEditForm({
 									<AdminChooseDates
 										value={field.value ?? undefined}
 										onChange={field.onChange}
+										disabled={!usePinning}
 									/>
 								</FormItem>
 							)}
@@ -308,6 +309,7 @@ export default function NewsEditForm({
 									<AdminChooseDates
 										value={field.value ?? undefined}
 										onChange={field.onChange}
+										disabled={!usePinning}
 									/>
 								</FormItem>
 							)}
