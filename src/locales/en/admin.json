@@ -45,7 +45,9 @@
 		"no_news": "No news available.",
 		"confirm_remove": "Confirm removal",
 		"confirm_remove_text": "Are you sure you want to remove this news item?",
-		"page_description": "Here you can create news and edit existing news on the website."
+		"page_description": "Here you can create news and edit existing news on the website.",
+		"use_pinning": "Pin the news item to the top of the news list",
+		"image_uploaded": "An image has been uploaded"
 	},
 	"events": {
 		"self": "Events",

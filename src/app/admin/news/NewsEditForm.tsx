@@ -18,11 +18,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import {
 	updateNewsMutation,
 	getAllNewsQueryKey,
 	deleteNewsMutation,
+	getNewsImageOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
@@ -30,6 +31,7 @@ import { toast } from "sonner";
 import type { NewsRead } from "@/api";
 import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const newsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -54,6 +56,7 @@ export default function NewsEditForm({
 }: NewsEditFormProps) {
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 	const [confirmOpen, setConfirmOpen] = useState(false);
+	const [usePinning, setUsePinning] = useState(false);
 	const newsEditForm = useForm<z.infer<typeof newsSchema>>({
 		resolver: zodResolver(newsSchema),
 	});
@@ -61,9 +64,18 @@ export default function NewsEditForm({
 
 	const queryClient = useQueryClient();
 
+	const { data: newsImage } = useQuery({
+		...getNewsImageOptions({ path: { news_id: selectedNews.id } }),
+		retry: false,
+		throwOnError: false,
+	});
+
 	// Initialize form with existing news data
 	useEffect(() => {
 		if (selectedNews) {
+			if (!selectedNews.pinned_from && !selectedNews.pinned_to) {
+				setUsePinning(false);
+			}
 			newsEditForm.reset({
 				title_sv: selectedNews.title_sv || "",
 				title_en: selectedNews.title_en || "",
@@ -217,15 +229,61 @@ export default function NewsEditForm({
 						<FormField
 							control={newsEditForm.control}
 							name="picture"
-							render={({ field }) => (
-								<FormItem className="lg:col-span-2">
+							render={({ field: { onChange, value, ...field } }) => (
+								<FormItem className="lg:col-span-1">
 									<FormLabel>{t("news.picture")}</FormLabel>
-									<FormControl>
-										<Input id="picture" type="file" disabled {...field} />
-									</FormControl>
+									<div className="flex space-x-2 flex-col">
+										<FormControl>
+											<Input
+												{...field}
+												type="file"
+												accept=".jpg,.jpeg,.png,.gif,.webp"
+												onChange={(e) => {
+													const file = e.target.files?.[0];
+													onChange(file);
+												}}
+											/>
+										</FormControl>
+										{newsImage !== undefined && (
+											<div className="mt-2 text-muted-foreground">
+												{t("news.image_uploaded")}
+											</div>
+										)}
+									</div>
 								</FormItem>
 							)}
 						/>
+
+						{/* Use pinning */}
+						<label
+							// key={permission.id}
+							htmlFor={"use-pinning"}
+							className="flex items-center space-x-3 rounded-md border p-3 hover:bg-accent/50 transition-colors cursor-pointer lg:col-span-1"
+						>
+							<Checkbox
+								id={"use-pinning"}
+								checked={usePinning}
+								onCheckedChange={(checked) => {
+									if (!checked) {
+										newsEditForm.setValue("pinned_from", null);
+										newsEditForm.setValue("pinned_to", null);
+										setUsePinning(false);
+									} else {
+										newsEditForm.setValue("pinned_from", new Date());
+										newsEditForm.setValue(
+											"pinned_to",
+											new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+										);
+										setUsePinning(true);
+									}
+								}}
+								className="h-5 w-5"
+							/>
+							<span className="text-sm font-medium">
+								{t("news.use_pinning")}
+							</span>
+						</label>
+
 						{/* Pinned From */}
 						<FormField
 							control={newsEditForm.control}

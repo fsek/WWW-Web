@@ -7,9 +7,14 @@ import { sv } from "date-fns/locale";
 interface AdminChooseDatesProps {
 	value: Date | undefined;
 	onChange: (value: Date) => void;
+	disabled?: boolean;
 }
 
-export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
+export function AdminChooseDates({
+	value,
+	onChange,
+	disabled = false,
+}: AdminChooseDatesProps) {
 	const handleDateChange = (newDate: Date | undefined) => {
 		if (newDate) {
 			const adjustedDate = new Date(newDate.getTime());
@@ -32,6 +37,7 @@ export function AdminChooseDates({ value, onChange }: AdminChooseDatesProps) {
 					locale={sv}
 					showWeekNumber={false}
 					showOutsideDays={true}
+					disabled={disabled}
 				/>
 			</div>
 		</div>
