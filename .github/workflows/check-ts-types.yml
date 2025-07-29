@@ -43,8 +43,10 @@ jobs:
               sleep 1
             done
 
-            curl --silent http://localhost:8000/openapi.json > api-repo/openapi.json
-
+      - name: Dump OpenAPI spec
+        run: |
+          curl --silent http://localhost:8000/openapi.json \
+            > openapi.json
 
       - name: Debug workspace
         run: ls -R $GITHUB_WORKSPACE
