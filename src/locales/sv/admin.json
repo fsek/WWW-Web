@@ -375,5 +375,30 @@
 	"unnamed_council": "Namnlöst utskott",
 	"remove_confirm_title": "Bekräfta borttagning",
 	"remove_confirm_text": "Är du säker på att du vill ta bort detta objekt?",
-	"remove_confirm_description": "En popup-dialog som bekräftar borttagning av ett objekt."
+	"remove_confirm_description": "En popup-dialog som bekräftar borttagning av ett objekt.",
+	"door_access": {
+		"self": "Dörrbehörigheter",
+		"page_title": "Hantera dörrbehörigheter",
+		"page_description": "Här kan du hantera användarnas tillgång till dörrar.",
+		"create_access": "Skapa dörrbehörighet",
+		"edit_access": "Redigera dörrbehörighet för",
+		"user": "Användare",
+		"user_id": "Användar-ID",
+		"door": "Dörr",
+		"select_door": "Välj dörr",
+		"starttime": "Starttid",
+		"start_time": "Starttid",
+		"endtime": "Sluttid",
+		"end_time": "Sluttid",
+		"add": "Lägg till",
+		"success_add": "Dörrbehörighet skapad!",
+		"success_edit": "Dörrbehörighet uppdaterad!",
+		"success_delete": "Dörrbehörighet borttagen!",
+		"error_add": "Misslyckades att skapa dörrbehörighet: ",
+		"error_edit": "Misslyckades att uppdatera dörrbehörighet.",
+		"error_delete": "Misslyckades att ta bort dörrbehörighet.",
+		"confirm_remove": "Bekräfta borttagning av dörrbehörighet",
+		"confirm_remove_text": "Är du säker på att du vill ta bort denna dörrbehörighet?",
+		"unknown": "Okänt"
+	}
 }

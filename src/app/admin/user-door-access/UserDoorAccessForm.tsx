@@ -35,12 +35,13 @@ import { useTranslation } from "react-i18next";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { toast } from "sonner";
 import { door } from "@/api";
+import { AdminChooseUser } from "@/widgets/AdminChooseUser";
 
 const doorAccessSchema = z.object({
 	user_id: z.number().min(1, "User ID is required"),
 	door: z.nativeEnum(door),
-	starttime: z.date().nullable(),
-	endtime: z.date().nullable(),
+	starttime: z.date(),
+	endtime: z.date(),
 });
 
 export default function UserDoorAccessForm() {
@@ -61,7 +62,7 @@ export default function UserDoorAccessForm() {
 		...postUserAccessMutation(),
 		throwOnError: false,
 		onSuccess: () => {
-			toast.success(t("door_access.success_add", "Dörråtkomst har lagts till"));
+			toast.success(t("door_access.success_add"));
 			queryClient.invalidateQueries({ queryKey: getAllUserAccessesQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
@@ -69,7 +70,6 @@ export default function UserDoorAccessForm() {
 		onError: (error) => {
 			toast.error(
 				t("door_access.error_add", {
-					defaultValue: "Det gick inte att lägga till dörråtkomst",
 					error: error?.detail ?? "Unknown error",
 				}),
 			);
@@ -101,15 +101,13 @@ export default function UserDoorAccessForm() {
 				}}
 			>
 				<Plus />
-				{t("door_access.create_access", "Lägg till dörråtkomst")}
+				{t("door_access.create_access")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="min-w-fit lg:max-w-7xl">
 					<DialogHeader>
-						<DialogTitle>
-							{t("door_access.create_access", "Lägg till dörråtkomst")}
-						</DialogTitle>
+						<DialogTitle>{t("door_access.create_access")}</DialogTitle>
 					</DialogHeader>
 					<hr />
 					<Form {...doorAccessForm}>
@@ -122,18 +120,11 @@ export default function UserDoorAccessForm() {
 								name="user_id"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>
-											{t("door_access.user_id", "Användar-ID")}
-										</FormLabel>
+										<FormLabel>{t("door_access.user_id")}</FormLabel>
 										<FormControl>
-											<Input
-												type="number"
-												placeholder={t("door_access.user_id", "Användar-ID")}
-												{...field}
-												value={field.value?.toString() ?? ""}
-												onChange={(e) =>
-													field.onChange(Number.parseInt(e.target.value) || 0)
-												}
+											<AdminChooseUser
+												value={field.value ?? 0}
+												onChange={(val) => field.onChange(val)}
 											/>
 										</FormControl>
 										<FormMessage />
@@ -145,7 +136,7 @@ export default function UserDoorAccessForm() {
 								name="door"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("door_access.door", "Dörr")}</FormLabel>
+										<FormLabel>{t("door_access.door")}</FormLabel>
 										<Select
 											onValueChange={field.onChange}
 											defaultValue={field.value}
@@ -153,10 +144,7 @@ export default function UserDoorAccessForm() {
 											<FormControl>
 												<SelectTrigger>
 													<SelectValue
-														placeholder={t(
-															"door_access.select_door",
-															"Välj dörr",
-														)}
+														placeholder={t("door_access.select_door")}
 													/>
 												</SelectTrigger>
 											</FormControl>
@@ -177,9 +165,7 @@ export default function UserDoorAccessForm() {
 								name="starttime"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>
-											{t("door_access.starttime", "Startdatum")}
-										</FormLabel>
+										<FormLabel>{t("door_access.starttime")}</FormLabel>
 										<AdminChooseDates
 											value={field.value ?? undefined}
 											onChange={field.onChange}
@@ -193,9 +179,7 @@ export default function UserDoorAccessForm() {
 								name="endtime"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>
-											{t("door_access.endtime", "Slutdatum")}
-										</FormLabel>
+										<FormLabel>{t("door_access.endtime")}</FormLabel>
 										<AdminChooseDates
 											value={field.value ?? undefined}
 											onChange={field.onChange}
@@ -210,7 +194,7 @@ export default function UserDoorAccessForm() {
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									{t("door_access.add", "Lägg till")}
+									{t("door_access.add")}
 								</Button>
 							</div>
 						</form>

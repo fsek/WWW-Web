@@ -68,7 +68,7 @@ export default function UserDoorAccessEditForm({
 	useEffect(() => {
 		if (selectedAccess) {
 			doorAccessEditForm.reset({
-				door: selectedAccess.door as any,
+				door: selectedAccess.door as door,
 				starttime: selectedAccess.starttime
 					? new Date(selectedAccess.starttime)
 					: null,
@@ -86,14 +86,10 @@ export default function UserDoorAccessEditForm({
 			queryClient.invalidateQueries({ queryKey: getAllUserAccessesQueryKey() });
 			onClose();
 			setSubmitEnabled(true);
-			toast.success(
-				t("door_access.success_edit", "Dörråtkomst har uppdaterats"),
-			);
+			toast.success(t("door_access.success_edit"));
 		},
 		onError: () => {
-			toast.error(
-				t("door_access.error_edit", "Det gick inte att uppdatera dörråtkomst"),
-			);
+			toast.error(t("door_access.error_edit"));
 			setSubmitEnabled(true);
 		},
 	});
@@ -104,21 +100,19 @@ export default function UserDoorAccessEditForm({
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllUserAccessesQueryKey() });
 			onClose();
-			toast.success(
-				t("door_access.success_delete", "Dörråtkomst har tagits bort"),
-			);
+			toast.success(t("door_access.success_delete"));
 		},
 		onError: () => {
-			toast.error(
-				t("door_access.error_delete", "Det gick inte att ta bort dörråtkomst"),
-			);
+			toast.error(t("door_access.error_delete"));
 		},
 	});
 
 	function onSubmit(values: z.infer<typeof doorAccessSchema>) {
 		setSubmitEnabled(false);
 		updateAccess.mutate({
-			path: { access_id: selectedAccess.user_access_id },
+			path: {
+				access_id: selectedAccess.user_access_id,
+			},
 			body: {
 				door: values.door,
 				starttime: values.starttime,
@@ -129,7 +123,9 @@ export default function UserDoorAccessEditForm({
 
 	function handleRemoveAccess() {
 		deleteAccess.mutate({
-			path: { access_id: selectedAccess.user_access_id },
+			path: {
+				access_id: selectedAccess.user_access_id,
+			},
 		});
 	}
 
@@ -145,8 +141,8 @@ export default function UserDoorAccessEditForm({
 			<DialogContent className="min-w-fit lg:max-w-7xl">
 				<DialogHeader>
 					<DialogTitle>
-						{t("door_access.edit_access", "Redigera dörråtkomst för")}{" "}
-						{selectedAccess?.user?.username}
+						{t("door_access.edit_access")} {selectedAccess?.user?.first_name}{" "}
+						{selectedAccess?.user?.last_name}
 					</DialogTitle>
 				</DialogHeader>
 				<hr />
@@ -160,7 +156,7 @@ export default function UserDoorAccessEditForm({
 							name="door"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("door_access.door", "Dörr")}</FormLabel>
+									<FormLabel>{t("door_access.door")}</FormLabel>
 									<Select
 										onValueChange={field.onChange}
 										defaultValue={field.value}
@@ -168,10 +164,7 @@ export default function UserDoorAccessEditForm({
 										<FormControl>
 											<SelectTrigger>
 												<SelectValue
-													placeholder={t(
-														"door_access.select_door",
-														"Välj dörr",
-													)}
+													placeholder={t("door_access.select_door")}
 												/>
 											</SelectTrigger>
 										</FormControl>
@@ -187,15 +180,13 @@ export default function UserDoorAccessEditForm({
 								</FormItem>
 							)}
 						/>
-						<div className="hidden lg:block"></div>
+						<div className="hidden lg:block" />
 						<FormField
 							control={doorAccessEditForm.control}
 							name="starttime"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>
-										{t("door_access.starttime", "Startdatum")}
-									</FormLabel>
+									<FormLabel>{t("door_access.starttime")}</FormLabel>
 									<AdminChooseDates
 										value={field.value ?? undefined}
 										onChange={field.onChange}
@@ -209,7 +200,7 @@ export default function UserDoorAccessEditForm({
 							name="endtime"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("door_access.endtime", "Slutdatum")}</FormLabel>
+									<FormLabel>{t("door_access.endtime")}</FormLabel>
 									<AdminChooseDates
 										value={field.value ?? undefined}
 										onChange={field.onChange}
@@ -225,20 +216,17 @@ export default function UserDoorAccessEditForm({
 								className="w-32 min-w-fit"
 							>
 								<Save />
-								{t("save", "Spara")}
+								{t("save")}
 							</Button>
 							<ConfirmDeleteDialog
 								open={confirmOpen}
 								onOpenChange={setConfirmOpen}
 								onConfirm={handleRemoveAccess}
-								triggerText={t("remove", "Ta bort")}
-								title={t("door_access.confirm_remove", "Bekräfta borttagning")}
-								description={t(
-									"door_access.confirm_remove_text",
-									"Är du säker på att du vill ta bort denna dörråtkomst?",
-								)}
-								confirmText={t("remove", "Ta bort")}
-								cancelText={t("cancel", "Avbryt")}
+								triggerText={t("remove")}
+								title={t("door_access.confirm_remove")}
+								description={t("door_access.confirm_remove_text")}
+								confirmText={t("remove")}
+								cancelText={t("cancel")}
 							/>
 						</div>
 					</form>
