@@ -41,4 +41,4 @@ This repo uses VSCode's Dev Containers extension to standardize the development 
 
 
 ## Tips and tricks
-- Use https://www.creative-tim.com/twcomponents/cheatsheet to find different Tailwind css classes
+- Use https://www.creative-tim.com/twcomponents/cheatsheet to find different Tailwind css classes 
