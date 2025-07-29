@@ -9,15 +9,19 @@ import AdminTable from "@/widgets/AdminTable";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
 import DoorAccessEditForm from "./UserDoorAccessEditForm";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import PermissionWall from "@/components/PermissionWall";
 import { Suspense } from "react";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const columnHelper = createColumnHelper<UserAccessRead>();
 
 export default function UserDoorAccess() {
 	const { t } = useTranslation("admin");
+	const [searchUser, setSearchUser] = useState<string | undefined>(undefined);
+	const [showOldAccess, setShowOldAccess] = useState(false);
 
 	const columns = [
 		columnHelper.accessor("user", {
@@ -62,7 +66,28 @@ export default function UserDoorAccess() {
 		refetchOnWindowFocus: false,
 	});
 
-	const table = useCreateTable({ data: data ?? [], columns });
+	const filteredUsers = useMemo(() => {
+		if (!data) return [];
+		const lower = (searchUser ?? "").toLowerCase();
+		return data.filter((u) => {
+			const matchesSearch =
+				u.user.first_name.toLowerCase().includes(lower) ||
+				u.user.last_name.toLowerCase().includes(lower) ||
+				`${u.user.first_name} ${u.user.last_name}`
+					.toLowerCase()
+					.includes(lower) ||
+				String(u.user.id).toLowerCase().includes(lower);
+
+			let showAccess = true;
+			if (!showOldAccess && u.endtime) {
+				showAccess = new Date(u.endtime) >= new Date();
+			}
+
+			return matchesSearch && showAccess;
+		});
+	}, [data, searchUser, showOldAccess]);
+
+	const table = useCreateTable({ data: filteredUsers ?? [], columns });
 
 	const handleRowClick = (row: Row<UserAccessRead>) => {
 		setSelectedAccess(row.original);
@@ -84,6 +109,41 @@ export default function UserDoorAccess() {
 					</h3>
 					<p className="py-3">{t("admin:door_access.page_description")}</p>
 					<DoorAccessForm />
+					<div className="py-3 flex flex-row">
+						<Input
+							type="search"
+							placeholder={t("admin:door_access.search_user")}
+							value={searchUser ?? ""}
+							onChange={(e) => {
+								const value = e.target.value;
+								if (value === "") {
+									setSearchUser(undefined);
+								} else {
+									setSearchUser(value);
+								}
+								refetch();
+							}}
+							autoFocus
+							className="w-96"
+						/>
+						<label
+							htmlFor="show-old-access"
+							className="flex items-center space-x-3 rounded-md border p-3 hover:bg-accent/50 transition-colors cursor-pointer ml-4"
+						>
+							<Checkbox
+								id="show-old-access"
+								checked={showOldAccess}
+								onCheckedChange={(checked) => {
+									setShowOldAccess(checked as boolean);
+									refetch();
+								}}
+								className="h-5 w-5"
+							/>
+							<span className="text-sm font-medium">
+								{t("admin:door_access.show_old_access")}
+							</span>
+						</label>
+					</div>
 					<AdminTable table={table} onRowClick={handleRowClick} />
 					{selectedAccess && (
 						<DoorAccessEditForm

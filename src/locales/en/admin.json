@@ -268,7 +268,7 @@
 		"self": "Posts",
 		"council_not_found": "Council not found.",
 		"title": "Manage Posts",
-		"description": "Here you can create and manage posts.",
+		"description": "Here you can create and manage council posts. The email doesn't have to be unique, and will be displayed publicly (to members) on thselect_doorse council page. You can also assign door access to posts.",
 		"submit": "Create Post",
 		"edit": "Edit Post",
 		"name": "Name",
@@ -294,7 +294,9 @@
 			"edit": "Edit permissions",
 			"update_success": "Permissions updated!",
 			"update_error": "Could not update permissions."
-		}
+		},
+		"door_access": "Door Access",
+		"select_doors": "Select doors to grant access to"
 	},
 	"user-posts": {
 		"self": "User Posts",
@@ -376,8 +378,8 @@
 	"remove_confirm_text": "Are you sure you want to remove this item?",
 	"remove_confirm_description": "A popup dialog confirming the deletion of an item.",
 	"door_access": {
-		"self": "Door Access",
-		"page_title": "Manage Door Access",
+		"self": "Door Access for Users",
+		"page_title": "Manage Door Access for Individual Users",
 		"page_description": "Here you can manage user access to doors.",
 		"create_access": "Create Door Access",
 		"edit_access": "Edit Door Access for",
@@ -398,6 +400,8 @@
 		"error_delete": "Failed to delete door access.",
 		"confirm_remove": "Confirm removal of door access",
 		"confirm_remove_text": "Are you sure you want to remove this door access?",
-		"unknown": "Unknown"
+		"unknown": "Unknown",
+		"search_user": "Search by name or user ID",
+		"show_old_access": "Show old accesses"
 	}
 }

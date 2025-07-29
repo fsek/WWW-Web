@@ -54,6 +54,7 @@ export default function UserPostsPage() {
 				u.first_name.toLowerCase().includes(lower) ||
 				u.last_name.toLowerCase().includes(lower) ||
 				u.email.toLowerCase().includes(lower) ||
+				`${u.first_name} ${u.last_name}`.toLowerCase().includes(lower) ||
 				String(u.stil_id).toLowerCase().includes(lower) ||
 				String(u.id).toLowerCase().includes(lower);
 
