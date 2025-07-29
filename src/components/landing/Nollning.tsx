@@ -20,15 +20,15 @@ export const Nollning = () => {
 
 	const images = [
 		{
-			src: IMG_1.src,
+			src: IMG_1,
 			alt: "People dancing outside at a nollning event",
 		},
 		{
-			src: IMG_2.src,
+			src: IMG_2,
 			alt: "People sitting and eating at tables",
 		},
 		{
-			src: IMG_3.src,
+			src: IMG_3,
 			alt: "A group of people discussing and laughing together at a nollning event",
 		},
 	];
@@ -46,14 +46,13 @@ export const Nollning = () => {
 				>
 					<CarouselContent>
 						{images.map((img) => (
-							<CarouselItem key={img.src}>
+							<CarouselItem key={img.src.src}>
 								<div className="relative w-full h-72 md:h-96">
 									<Image
 										src={img.src}
 										alt={img.alt}
-										height={400}
-										width={600}
 										className="w-full h-full object-cover rounded-lg"
+										fill
 									/>
 								</div>
 							</CarouselItem>

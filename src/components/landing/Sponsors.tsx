@@ -31,6 +31,7 @@ const Sponsors = () => {
 								<Image
 									src={janestreet}
 									alt="Jane Street Logo"
+									fill
 									className="w-32 sm:w-40 md:w-40 h-auto object-contain filter brightness-0 invert transition-all duration-300 group-hover:brightness-100 group-hover:invert-0"
 								/>
 							</Link>
