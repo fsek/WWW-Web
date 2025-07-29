@@ -21,11 +21,13 @@ jobs:
         with:
           repository: fsek/WebWebWeb 
           ref: main
+          path: api-repo
+
 
       - name: Build & enter DevContainer
         uses: devcontainers/ci@v0.3
         with:
-          devcontainerPath: .
+          devcontainerPath: ./api-repo
           runCmd: |
 
             sudo apt-get install -y curl
