@@ -42,8 +42,9 @@ export default async function initTranslations(
 	const detectionOptions = {
 		order: ["querystring", "cookie", "localStorage", "navigator", "htmlTag"],
 		caches: ["cookie", "localStorage"],
+		cookieMinutes: 60 * 24 * 365, // 1 year
 		load: "languageOnly",
-		// Don't detect from path, subdomain, or querystring (no internationalized routing)
+		// cimode can be used in dev for i18n to test translations, we don't but might as well support it
 		excludeCacheFor: ["cimode"],
 	};
 
@@ -68,19 +69,3 @@ export default async function initTranslations(
 		t: guaranteedI18nInstance.t,
 	};
 }
-
-// i18n
-// 	.use(initReactI18next)
-// 	.use(HttpBackend)
-// 	.use(LanguageDetector)
-// 	.init<FsBackendOptions>({
-// 		backend: {
-// 			loadPath: "/locales/{{lng}}/{{ns}}.json",
-// 		},
-// 		fallbackLng: "en",
-// 		debug: true,
-// 		ns: ["admin"],
-// 		interpolation: {
-// 			escapeValue: false, // react already escapes values
-// 		},
-// 	});
