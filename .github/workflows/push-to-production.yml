@@ -1,4 +1,4 @@
-name: Push to stage
+name: Push to production
 
 on:
   workflow_dispatch:
@@ -24,15 +24,15 @@ jobs:
 
           # Fetch and reset a local 'stage' to main
           git fetch origin main
-          git checkout -B stage origin/main
+          git checkout -B production origin/main
 
-          # Ensure there's a change even if main==stage
+          # Ensure there's a change even if main==production
           echo " " >> README.md
           git add README.md
 
           # Commit with a consistent message
-          git commit -m "chore: trigger stage workflow [ci skip]"
+          git commit -m "chore: trigger production workflow [ci skip]"
 
       - name: Push to stage
         run: |
-          git push origin stage --force
+          git push origin production --force
