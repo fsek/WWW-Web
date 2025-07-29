@@ -4,24 +4,20 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Which environment to deploy (stage or prod)'
+        description: 'Which environment to deploy'
         required: true
         default: 'stage'
         type: choice
         options:
           - stage
           - prod
-  push:
-    branches:
-      - stage
-      - prod
 
 env:
   IMAGE_NAME: ${{ github.repository }}
   REGISTRY: ghcr.io
 
 jobs:
-  build-and-push-image:
+  deploy:
     runs-on: ubuntu-latest
 
     permissions:
@@ -31,26 +27,17 @@ jobs:
       id-token: write
 
     steps:
-      - name: Determine “target” and checkout ref
+      - name: Determine target
         id: pick
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "target=${{ github.event.inputs.target }}" >> $GITHUB_OUTPUT
-            echo "ref=main"                 >> $GITHUB_OUTPUT
-          else
-            # on push, the branch name is either "stage" or "prod"
-            BRANCH=${GITHUB_REF#refs/heads/}
-            echo "target=$BRANCH"           >> $GITHUB_OUTPUT
-            echo "ref=$BRANCH"              >> $GITHUB_OUTPUT
-          fi
+        run: echo "target=${{ github.event.inputs.target }}" >> $GITHUB_OUTPUT
 
-      - name: Checkout code
+      - name: Checkout main
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.pick.outputs.ref }}
+          ref: main
           fetch-depth: 0
 
-      - name: Set OPENAPI_JSON_URL
+      - name: Set environment URLs
         run: |
           if [ "${{ steps.pick.outputs.target }}" = "stage" ]; then
             echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_STAGE }}" >> $GITHUB_ENV
@@ -70,7 +57,7 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install dependencies (host)
+      - name: Install dependencies
         run: bun install --frozen-lockfile
 
       - name: Generate API client
@@ -83,16 +70,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata
+      - name: Extract metadata (raw tag)
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=ref,event=branch
+            type=raw,value=${{ steps.pick.outputs.target }}
 
       - name: Build and push Docker image
-        id: build-image
         uses: docker/build-push-action@v6
         with:
           context: .
