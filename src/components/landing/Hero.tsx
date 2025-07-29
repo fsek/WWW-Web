@@ -13,8 +13,7 @@ export const Hero = () => {
 			<Image
 				src={bannerImg}
 				alt="Banner image"
-				width={1920}
-				height={600}
+				fill
 				loading="eager"
 				priority={true}
 				fetchPriority="high"

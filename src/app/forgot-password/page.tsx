@@ -105,6 +105,7 @@ export default function ForgotPasswordPage() {
 				className="absolute inset-0 size-full z-0 object-cover"
 				src={mh}
 				alt="Matematikhuset, LTH"
+				fill
 			/>
 			<div className="pointer-events-none absolute inset-0 z-0 dark:bg-black/60" />
 			<div className="relative w-full z-10 flex justify-center">
