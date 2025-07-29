@@ -27,7 +27,13 @@ jobs:
         with:
           devcontainerPath: .
           runCmd: |
+
             sudo apt-get install -y curl
+
+            uvicorn app.main:app --host 0.0.0.0 --port 8000 
+
+            # Wait for the API to be ready
+
             until curl --silent --fail http://localhost:8000/openapi.json; do
               sleep 1
             done
