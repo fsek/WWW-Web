@@ -1,6 +1,16 @@
 name: Deploy Frontend
 
 on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Which environment to deploy (stage or prod)'
+        required: true
+        default: 'stage'
+        type: choice
+        options:
+          - stage
+          - prod
   push:
     branches:
       - stage
@@ -21,26 +31,34 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout repository
+      - name: Determine “target” and checkout ref
+        id: pick
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "target=${{ github.event.inputs.target }}" >> $GITHUB_OUTPUT
+            echo "ref=main"                 >> $GITHUB_OUTPUT
+          else
+            # on push, the branch name is either "stage" or "prod"
+            BRANCH=${GITHUB_REF#refs/heads/}
+            echo "target=$BRANCH"           >> $GITHUB_OUTPUT
+            echo "ref=$BRANCH"              >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.pick.outputs.ref }}
+          fetch-depth: 0
 
-      # ─── Branch‑specific secrets and URLs ─────────────────────────
-      - name: Set OPENAPI_JSON_URL for stage
-        if: github.ref == 'refs/heads/stage'
-        run: echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_STAGE }}" >> $GITHUB_ENV
-
-      - name: Set OPENAPI_JSON_URL for prod
-        if: github.ref == 'refs/heads/prod'
-        run: echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_PROD }}" >> $GITHUB_ENV
-
-      - name: Set API_BASE_URL for stage
-        if: github.ref == 'refs/heads/stage'
-        run: echo "API_BASE_URL=https://stage.backend.fsektionen.se" >> $GITHUB_ENV
-
-      - name: Set API_BASE_URL for prod
-        if: github.ref == 'refs/heads/prod'
-        run: echo "API_BASE_URL=https://backend.fsektionen.se" >> $GITHUB_ENV
-      # ──────────────────────────────────────────────────────────────
+      - name: Set OPENAPI_JSON_URL
+        run: |
+          if [ "${{ steps.pick.outputs.target }}" = "stage" ]; then
+            echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_STAGE }}" >> $GITHUB_ENV
+            echo "API_BASE_URL=https://stage.backend.fsektionen.se"     >> $GITHUB_ENV
+          else
+            echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_PROD }}"  >> $GITHUB_ENV
+            echo "API_BASE_URL=https://backend.fsektionen.se"            >> $GITHUB_ENV
+          fi
 
       - name: Download OpenAPI spec
         run: |
