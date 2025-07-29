@@ -27,6 +27,7 @@ jobs:
         with:
           devcontainerPath: .
           runCmd: |
+            sudo apt-get install -y curl
             until curl --silent --fail http://localhost:8000/openapi.json; do
               sleep 1
             done
