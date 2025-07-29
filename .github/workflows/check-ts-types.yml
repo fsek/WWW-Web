@@ -32,8 +32,8 @@ jobs:
 
             source .venv/bin/activate
 
-            uvicorn main:app --host 0.0.0.0 --port 8000 
-
+            nohup uvicorn main:app --host 0.0.0.0 --port 8000 \
+              > uvicorn.log 2>&1 & disown
             # Wait for the API to be ready
 
             until curl --silent --fail http://localhost:8000/openapi.json; do
