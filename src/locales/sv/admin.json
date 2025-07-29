@@ -47,7 +47,8 @@
 		"confirm_remove_text": "Är du säker på att du vill ta bort denna nyhet?",
 		"page_description": "Här kan du skapa nyheter och redigera existerande nyheter på hemsidan.",
 		"use_pinning": "Fastnåla nyhetsinlägget högst upp i nyhetslistan",
-		"image_uploaded": "En bild har laddats upp"
+		"image_uploaded": "En bild har laddats upp",
+		"no_pin": "Ingen fastnålning"
 	},
 	"events": {
 		"self": "Evenemang",

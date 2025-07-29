@@ -38,14 +38,18 @@ export default function News() {
 			header: t("news.pinned_from"),
 			cell: (info) => {
 				const date = info.getValue();
-				return date ? new Date(date).toLocaleDateString("sv-SE") : "Oklart";
+				return date
+					? new Date(date).toLocaleDateString("sv-SE")
+					: t("news.no_pin");
 			},
 		}),
 		columnHelper.accessor("pinned_to", {
 			header: t("news.pinned_to"),
 			cell: (info) => {
 				const date = info.getValue();
-				return date ? new Date(date).toLocaleDateString("sv-SE") : "Oklart";
+				return date
+					? new Date(date).toLocaleDateString("sv-SE")
+					: t("news.no_pin");
 			},
 		}),
 	];
