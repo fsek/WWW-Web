@@ -27,7 +27,7 @@ jobs:
       - name: Build & enter DevContainer
         uses: devcontainers/ci@v0.3
         with:
-          checkoutPath: api-repo            # where you checked out your FastAPI code
+          checkoutPath: api-repo           
           subFolder: . 
           runCmd: |
 
@@ -43,8 +43,10 @@ jobs:
               sleep 1
             done
 
-            # Write spec into the workspace root
             curl --silent http://localhost:8000/openapi.json > $GITHUB_WORKSPACE/openapi.json
+
+      - name: Debug workspace
+        run: ls -R $GITHUB_WORKSPACE
 
       - name: Install Bun
         uses: oven-sh/setup-bun@v2
