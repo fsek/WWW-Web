@@ -25,9 +25,9 @@ jobs:
 
 
       - name: Build & enter DevContainer
-        uses: devcontainers/ci@v0.3
+        uses: devcontainers/ci@v0.4
         with:
-          devcontainerPath: ./api-repo
+          devcontainerPath: api-repo
           runCmd: |
 
             sudo apt-get install -y curl
@@ -43,7 +43,7 @@ jobs:
             done
 
             # Write spec into the workspace root
-            curl --silent http://localhost:8000/openapi.json > openapi.json
+            curl --silent http://localhost:8000/openapi.json > $GITHUB_WORKSPACE/openapi.json
 
       - name: Install Bun
         uses: oven-sh/setup-bun@v2
