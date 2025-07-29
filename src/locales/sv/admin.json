@@ -45,10 +45,15 @@
 		"no_news": "Inga nyheter tillgängliga.",
 		"confirm_remove": "Bekräfta borttagning",
 		"confirm_remove_text": "Är du säker på att du vill ta bort denna nyhet?",
-		"page_description": "Här kan du skapa nyheter och redigera existerande nyheter på hemsidan.",
+		"page_description": "Här kan du skapa nyheter och redigera existerande nyheter på hemsidan. Nyheterna kommer sorteras efter fastnålningsdatum, sedan bumpdatum och sist publiceringsdatum. Du kan alltså använda bump-funktionen för att flytta nyheter till toppen av listan, och fastnålning för att hålla en nyhet högst upp i listan under en viss tid.",
 		"use_pinning": "Fastnåla nyhetsinlägget högst upp i nyhetslistan",
 		"image_uploaded": "En bild har laddats upp",
-		"no_pin": "Ingen fastnålning"
+		"no_pin": "Ingen fastnålning",
+		"bump_success": "Nyhetsinlägget har bumpats till toppen av listan!",
+		"bump_error": "Misslyckades att bumpa nyhetsinlägget.",
+		"last_bumped": "Senast bumpat: ",
+		"no_bump": "Aldrig bumpat",
+		"bump_header": "Bumpa"
 	},
 	"events": {
 		"self": "Evenemang",

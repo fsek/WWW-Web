@@ -45,10 +45,15 @@
 		"no_news": "No news available.",
 		"confirm_remove": "Confirm removal",
 		"confirm_remove_text": "Are you sure you want to remove this news item?",
-		"page_description": "Here you can create news and edit existing news on the website.",
+		"page_description": "Here you can create news and edit existing news on the website. News will be sorted by pin date, then bump date, and finally publish date. You can use the bump function to move news to the top of the list, and pinning to keep a news item at the top of the list for a certain time.",
 		"use_pinning": "Pin the news item to the top of the news list",
 		"image_uploaded": "An image has been uploaded",
-		"no_pin": "No pin set"
+		"no_pin": "No pin set",
+		"bump_success": "News item bumped successfully!",
+		"bump_error": "Failed to bump news item. ",
+		"last_bumped": "Last bumped: ",
+		"no_bump": "Never bumped",
+		"bump_header": "Bump to top of list"
 	},
 	"events": {
 		"self": "Events",

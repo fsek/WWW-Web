@@ -1,9 +1,17 @@
 "use client";
 
-import { action, target, type NewsRead } from "../../../api";
+import {
+	action,
+	type NewsBumpNewsData,
+	target,
+	type NewsRead,
+} from "../../../api";
 import NewsForm from "./NewsForm";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getAllNewsOptions } from "@/api/@tanstack/react-query.gen";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import {
+	bumpNewsMutation,
+	getAllNewsOptions,
+} from "@/api/@tanstack/react-query.gen";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import useCreateTable from "@/widgets/useCreateTable";
@@ -13,12 +21,31 @@ import { useState } from "react";
 import PermissionWall from "@/components/PermissionWall";
 import { Suspense } from "react";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 export interface NewsItem {
 	title: string;
 	creator: string;
 	dateCreated: string;
 	id: number;
+}
+
+function getBumpDate(news: NewsRead): string | undefined {
+	if (!news.bumped_at) {
+		return undefined;
+	}
+	const createdAt = new Date(news.created_at);
+	const bumpedAt = new Date(news.bumped_at);
+
+	// Compare down to whole seconds
+	const createdAtSec = Math.floor(createdAt.getTime() / 1000);
+	const bumpedAtSec = Math.floor(bumpedAt.getTime() / 1000);
+
+	if (createdAtSec === bumpedAtSec) {
+		return undefined;
+	}
+	return bumpedAt.toLocaleDateString("sv-SE");
 }
 
 const columnHelper = createColumnHelper<NewsRead>();
@@ -52,14 +79,56 @@ export default function News() {
 					: t("news.no_pin");
 			},
 		}),
+		{
+			id: "bump",
+			header: t("news.bump_header"),
+			cell: ({ row }: { row: Row<NewsRead> }) => (
+				<Button
+					variant={getBumpDate(row.original) ? "default" : "outline"}
+					size="sm"
+					onClick={(e) => {
+						e.stopPropagation();
+						const newsBump: NewsBumpNewsData = {
+							path: { news_id: row.original.id },
+						};
+						handleBumpNews.mutate(newsBump, {
+							onError: (error) => {
+								toast.error(
+									t("news.bump_error") +
+										(error?.detail ? `: ${error.detail}` : ""),
+								);
+							},
+						});
+					}}
+				>
+					{getBumpDate(row.original) ? (
+						<>
+							{t("news.last_bumped")} {getBumpDate(row.original)}
+						</>
+					) : (
+						<>{t("news.no_bump")}</>
+					)}
+				</Button>
+			),
+		},
 	];
+
+	const handleBumpNews = useMutation({
+		...bumpNewsMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			toast.success(t("news.bump_success"));
+			refetch();
+		},
+	});
 
 	// edit form state
 	const [editFormOpen, setEditFormOpen] = useState(false);
 	const [selectedNews, setSelectedNews] = useState<NewsRead | null>(null);
 
-	const { data, error } = useSuspenseQuery({
+	const { data, error, refetch } = useSuspenseQuery({
 		...getAllNewsOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const table = useCreateTable({ data: data ?? [], columns });
