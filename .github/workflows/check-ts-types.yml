@@ -24,6 +24,8 @@ jobs:
           path: api-repo
 
 
+      - name: 
+
       - name: Build & enter DevContainer
         uses: devcontainers/ci@v0.3
         with:
@@ -58,7 +60,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Generate API client
-        run: bun run openapi-ts --input openapi.json
+        run: bun run openapi-ts --input ./api-repo/openapi.json
 
       - name: Check types
         run: bunx tsc --project tsconfig.json
