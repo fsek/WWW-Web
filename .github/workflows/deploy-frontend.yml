@@ -79,6 +79,7 @@ jobs:
             type=raw,value=${{ steps.pick.outputs.target }}
 
       - name: Build and push Docker image
+        id: build-image
         uses: docker/build-push-action@v6
         with:
           context: .
