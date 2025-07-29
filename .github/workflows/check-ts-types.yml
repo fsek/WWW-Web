@@ -25,9 +25,10 @@ jobs:
 
 
       - name: Build & enter DevContainer
-        uses: devcontainers/ci@v0.4
+        uses: devcontainers/ci@v0.3
         with:
-          devcontainerPath: api-repo
+          checkoutPath: api-repo            # where you checked out your FastAPI code
+          subFolder: . 
           runCmd: |
 
             sudo apt-get install -y curl
