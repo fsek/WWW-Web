@@ -23,7 +23,7 @@ jobs:
           ref: main
 
       - name: Build & enter DevContainer
-        uses: devcontainers/ci@latest
+        uses: devcontainers/ci@v0.3
         with:
           devcontainerPath: .
           runCmd: |
