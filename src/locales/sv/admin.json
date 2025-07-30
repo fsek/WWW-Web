@@ -403,6 +403,8 @@
 		"confirm_remove_text": "Är du säker på att du vill ta bort denna dörrbehörighet?",
 		"unknown": "Okänt",
 		"search_user": "Sök efter namn eller användar-ID",
-		"show_old_access": "Visa gamla access"
+		"show_old_access": "Visa gamla access",
+		"unknown_error": "Okänt fel",
+		"user_id_required": "Användare krävs"
 	}
 }

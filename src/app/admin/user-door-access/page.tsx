@@ -121,7 +121,6 @@ export default function UserDoorAccess() {
 								} else {
 									setSearchUser(value);
 								}
-								refetch();
 							}}
 							autoFocus
 							className="w-96"
@@ -135,7 +134,6 @@ export default function UserDoorAccess() {
 								checked={showOldAccess}
 								onCheckedChange={(checked) => {
 									setShowOldAccess(checked as boolean);
-									refetch();
 								}}
 								className="h-5 w-5"
 							/>

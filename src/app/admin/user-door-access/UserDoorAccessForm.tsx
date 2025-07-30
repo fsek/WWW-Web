@@ -37,16 +37,16 @@ import { toast } from "sonner";
 import { door } from "@/api";
 import { AdminChooseUser } from "@/widgets/AdminChooseUser";
 
-const doorAccessSchema = z.object({
-	user_id: z.number().min(1, "User ID is required"),
-	door: z.nativeEnum(door),
-	starttime: z.date(),
-	endtime: z.date(),
-});
-
 export default function UserDoorAccessForm() {
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
+	const { t } = useTranslation("admin");
+	const doorAccessSchema = z.object({
+		user_id: z.number().min(1, t("door_access.user_id_required")),
+		door: z.nativeEnum(door),
+		starttime: z.date(),
+		endtime: z.date(),
+	});
 	const doorAccessForm = useForm<z.infer<typeof doorAccessSchema>>({
 		resolver: zodResolver(doorAccessSchema),
 		defaultValues: {
@@ -56,7 +56,6 @@ export default function UserDoorAccessForm() {
 			door: undefined,
 		},
 	});
-	const { t } = useTranslation("admin");
 
 	const createAccess = useMutation({
 		...postUserAccessMutation(),
@@ -70,7 +69,7 @@ export default function UserDoorAccessForm() {
 		onError: (error) => {
 			toast.error(
 				t("door_access.error_add", {
-					error: error?.detail ?? "Unknown error",
+					error: error?.detail ?? t("door_access.unknown_error"),
 				}),
 			);
 			setSubmitEnabled(true);

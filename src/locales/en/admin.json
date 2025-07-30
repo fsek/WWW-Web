@@ -402,6 +402,8 @@
 		"confirm_remove_text": "Are you sure you want to remove this door access?",
 		"unknown": "Unknown",
 		"search_user": "Search by name or user ID",
-		"show_old_access": "Show old accesses"
+		"show_old_access": "Show old accesses",
+		"unknown_error": "Unknown error",
+		"user_id_required": "User is required"
 	}
 }
