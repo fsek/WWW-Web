@@ -26,7 +26,6 @@ import {
 	FormControl,
 	FormField,
 	FormItem,
-	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
 
@@ -85,7 +84,25 @@ export default function RegistrationPage() {
 				"Passwords do not match. Please try again.",
 			),
 			path: ["confirmPassword"],
-		});
+		})
+		.refine((data) => /\d/.test(data.password), {
+			message: t(
+				"register.passwordNoNumber",
+				"Password must contain at least one number",
+			),
+			path: ["password"],
+		})
+		.refine(
+			// Match at least one letter, any case
+			(data) => /[a-zA-Z]/.test(data.password.normalize("NFC")),
+			{
+				message: t(
+					"register.passwordNoLetter",
+					"Password must contain at least one letter",
+				),
+				path: ["password"],
+			},
+		);
 
 	const [status, setStatus] = useState<Status>("idle");
 	const [errorMsg, setErrorMsg] = useState<string | undefined>(undefined);
@@ -177,6 +194,7 @@ export default function RegistrationPage() {
 				className="absolute inset-0 size-full z-0 object-cover"
 				src={mh}
 				alt="Matematikhuset, LTH"
+				fill
 			/>
 			{/* Dark overlay for dark mode */}
 			<div className="pointer-events-none absolute inset-0 z-0 dark:bg-black/60" />

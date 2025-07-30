@@ -5,8 +5,9 @@
 	"welcome": "Välkommen till nya hemsidan för F-sektionen!",
 	"welcomeText": "Just nu är vi i en övergångsperiod till vår nya hemsida. Under sommaren kommer vi att kontinuerligt förbättra design och funktionalitet, och lägga till saker som just nu saknas gentemot den gamla hemsidan. Den går förresten fortfarande att använda på old.fsektionen.se. Eftersom vi dessutom har bytt ut servern och backenden är det nya och gamla systemet separerade: om du har gamla bilbokningar, lokalbokningar, inställningar, konton etc. så kommer de inte vara tillgängliga genom den nya webben och du kommer att behöva göra nya. Vissa saker t.ex. bildgalleriet, är överdraget men kanske inte har GUI tillgängligt ännu. OBS! Vi planerar att göra oss av med den gamla hemsidan inom en snar framtid (helst innan nollningen), så försök att i största mån använda den nya. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
 	"oldWebsiteButton": "Det var bättre förr...",
-	"welcomeAdmin": "Om du tycker att du borde ha någon form av admin-åtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, vänligen kontakta spindel via e-post.",
+	"welcomeAdmin": "Om du tycker att du borde ha någon form av admin-åtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, kontakta utskottsordförande.",
 	"adminButton": "Admin sidan",
+	"registerButton": "Registrera nytt konto",
 	"newsTitle": "Nyheter",
 	"newsText": "Om du vill använda bilder eller mer avancerad formatering, använd Mattermost tills vi har lagt till ordentligt stöd.",
 	"cafeTitle": "Hilbert Café",
@@ -16,15 +17,23 @@
 		"self": "Frågor besvarade",
 		"q1": {
 			"question": "Kan jag logga in med mitt gamla konto?",
-			"answer": "Nej, eftersom vi bytt till ny backend måste du skapa ett nytt konto. Det kan du göra på fsektionen.se/register."
+			"answer": "Nej, eftersom vi bytt till ny backend måste du skapa ett nytt konto. Det kan du göra på fsektionen.se/register. Det finns många saker du inte har tillgång till innan du skapat konto, verifierat din mail och blivit verifierad som medlem."
 		},
 		"q2": {
+			"question": "Hur blir jag verifierad som medlem?",
+			"answer": "Skapa ett konto, verifiera din mejl och lägg till ditt Stil-ID (hi6122al-s) i användarinställningarna (kolla i övre högra hörnet). Efter detta måste du vänta på att spindel ska se om du är medlem eller bot (som en viss Anna jag känner). Medlemsverifiering sker alltså automatiskt för dig, men om du känner att det tar för lång tid kan du kontakta din utskottsordförande."
+		},
+		"q3": {
 			"question": "Neeej appen funkar inte längre!!! Vad ska jag nu göra med mitt liv om jag inte kan spela moose game!??!?",
 			"answer": "Vi kommer försöka jobba på en ny release av appen så snart vi kan. Typ allt du kan göra där kan du göra på nya eller gamla hemsidan. Om du har problem, kontakta spindel."
 		},
-		"q3": {
+		"q4": {
 			"question": "Vad har ni kvar att flytta över?",
 			"answer": "Hyfsat mycket (hemsidan är förfärligt stor!). För att titta på bilder, boka lokaler, hitta advancerad kontaktinfo, läsa styrdokumenten eller gamla dokument vi inte har laddat över än, sjunga sånger från sångboken, använda motionsmaskinen och val i allmänhet kan du använda gamla hemsidan. Vi kommer inom kort att lägga till event signup också, tills dess får du vänta."
+		},
+		"q5": {
+			"question": "Hjälp! Jag har ingen av mina gamla adminrättigheter!",
+			"answer": "pls vänta eller kontakta utskottsordförande. Alla adminsidor är inte klara, men vi kommer att kunna ge er åtkomst till de som finns så snart som möjligt."
 		}
 	},
 	"next": "Nästa",
@@ -115,6 +124,11 @@
 			"gallery": {
 				"self": "Galleri",
 				"desc": "Utforska vårt bildgalleri som visar evenemang och aktiviteter."
+			},
+			"calendar": {
+				"self": "Kalender",
+				"desc": "Håll koll på kommande evenemang och aktiviteter.",
+				"href": "/calendar"
 			}
 		},
 		"companies": {
@@ -144,7 +158,7 @@
 			"contactPage": {
 				"self": "Kontaktsida",
 				"desc": "Här hittar du all information du behöver för att nå oss.",
-				"href": "https://old.fsektionen.se/kontakt"
+				"href": "https://old.fsektionen.se/kontakter"
 			},
 			"ordf": {
 				"self": "Ordförande",
@@ -238,6 +252,8 @@
 		"success": "Registreringen lyckades! Kontrollera din e-post för att verifiera ditt konto.",
 		"goLogin": "Gå till inloggning",
 		"passwordMismatch": "Lösenorden matchar inte. Försök igen.",
+		"passwordNoNumber": "Lösenordet måste innehålla minst ett nummer.",
+		"passwordNoLetter": "Lösenordet måste innehålla minst en bokstav (som inte är åäö).",
 		"startYearInvalid": "Startåret måste vara mellan 1960 och nuvarande år.",
 		"emailInvalid": "Ogiltig e-postadress",
 		"passwordShort": "Lösenordet måste vara minst 8 tecken",
@@ -298,12 +314,12 @@
 	"documents": {
 		"title": "Titel",
 		"created_at": "Skapad",
-		"private_explanation": "Privat",
+		"private_explanation": "Endast medlemmar",
 		"author": "Författare",
 		"view": "Visa",
 		"view_doc": "Visa dokumentet",
 		"page_title": "Dokument",
-		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara privata och kräva särskild åtkomst."
+		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara markerade för att endast vara synliga för medlemmar."
 	},
 	"yes": "Ja",
 	"no": "Nej"

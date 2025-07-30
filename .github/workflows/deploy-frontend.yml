@@ -1,18 +1,25 @@
-name: Deploy Frontend‑stage
+name: Deploy Frontend
 
 on:
-  push:
-    branches: [ stage ]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Which environment to deploy'
+        required: true
+        default: 'stage'
+        type: choice
+        options:
+          - stage
+          - prod
 
 env:
-  OPENAPI_JSON_URL: ${{ secrets.OPENAPI_JSON_URL }}
-  API_BASE_URL: https://stage.backend.fsektionen.se
-  REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  REGISTRY: ghcr.io
 
 jobs:
-  build-and-push-image:
+  deploy:
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
@@ -20,20 +27,37 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout repository
+      - name: Determine target
+        id: pick
+        run: echo "target=${{ github.event.inputs.target }}" >> $GITHUB_OUTPUT
+
+      - name: Checkout main
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set environment URLs
+        run: |
+          if [ "${{ steps.pick.outputs.target }}" = "stage" ]; then
+            echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_STAGE }}" >> $GITHUB_ENV
+            echo "API_BASE_URL=https://stage.backend.fsektionen.se"     >> $GITHUB_ENV
+          else
+            echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_PROD }}"  >> $GITHUB_ENV
+            echo "API_BASE_URL=https://backend.fsektionen.se"            >> $GITHUB_ENV
+          fi
 
       - name: Download OpenAPI spec
         run: |
           mkdir -p src/api
           curl -fSL "$OPENAPI_JSON_URL" -o src/api/openapi.json
-        
+
       - name: Install Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: Install dependencies (host)
+      - name: Install dependencies
         run: bun install --frozen-lockfile
 
       - name: Generate API client
@@ -46,11 +70,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata
+      - name: Extract metadata (raw tag)
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ steps.pick.outputs.target }}
 
       - name: Build and push Docker image
         id: build-image

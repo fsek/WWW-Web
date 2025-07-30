@@ -171,7 +171,7 @@ export default function UserPostsPage() {
 	return (
 		<div className="px-8 space-x-4">
 			<div className="space-y-0">
-				<h3 className="text-3xl py-3 underline underline-offset-4">
+				<h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
 					{t("admin:user-posts.list")}
 				</h3>
 				<p className="text-xs md:text-sm font-medium">

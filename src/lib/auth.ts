@@ -1,6 +1,6 @@
 "use client";
 
-import type { BearerResponse, PermissionRead } from "@/api";
+import type { BearerResponse } from "@/api";
 import type { action, target } from "@/api";
 import { create } from "zustand";
 

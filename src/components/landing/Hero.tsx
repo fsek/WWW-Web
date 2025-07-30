@@ -13,8 +13,7 @@ export const Hero = () => {
 			<Image
 				src={bannerImg}
 				alt="Banner image"
-				width={1920}
-				height={600}
+				fill
 				loading="eager"
 				priority={true}
 				fetchPriority="high"
@@ -63,7 +62,7 @@ export const Hero = () => {
 							<Link href="/foretag">{t("hero.companies")}</Link>
 						</Button>
 						<Button variant="outline" className="w-full md:w-auto">
-							<Link href="/login?next=/home">{t("hero.login")}</Link>
+							<Link href="/home">{t("hero.login")}</Link>
 						</Button>
 					</div>
 				</div>

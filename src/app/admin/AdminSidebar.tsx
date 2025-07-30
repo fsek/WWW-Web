@@ -76,12 +76,6 @@ const groups: AdminGroup[] = [
 				icon: Car,
 			},
 			{
-				title: "admin:permissions.self",
-				url: "/admin/permissions",
-				permissions: [[action.MANAGE, target.PERMISSION]],
-				icon: FolderLock,
-			},
-			{
 				title: "admin:member.self",
 				url: "/admin/members",
 				permissions: [[action.VIEW, target.USER]],
@@ -118,6 +112,17 @@ const groups: AdminGroup[] = [
 			},
 		],
 	},
+	{
+		title: "admin:categories.spider",
+		entries: [
+			{
+				title: "admin:permissions.self",
+				url: "/admin/permissions",
+				permissions: [[action.MANAGE, target.PERMISSION]],
+				icon: FolderLock,
+			},
+		],
+	},
 ];
 
 export function AdminSidebar() {
@@ -125,19 +130,18 @@ export function AdminSidebar() {
 	const permissions = useAuthState().getPermissions();
 
 	return (
-		<Sidebar className="text-foreground">
-			<SidebarHeader className="px-6 py-4 mb-5 underline decoration-3 items-center">
-				<h2 className="text-2xl font-bold">{t("admin:title")}</h2>
+		<Sidebar className="text-foreground ">
+			<SidebarHeader className="px-6 py-4 decoration-3 items-center bg-[#fa7909]">
+				<h2 className="text-2xl mt-2">{t("admin:title")}</h2>
 			</SidebarHeader>
-			<SidebarContent className="px-2 gap-2">
+			<SidebarContent className="px-2 gap-2 bg-[#fa7909]">
 				{groups.map(({ title, entries }, groupIndex) => (
-					<Collapsible
-						defaultOpen
-						className="group/collapsible"
-						key={title}
-					>
+					<Collapsible defaultOpen className="group/collapsible" key={title}>
 						<SidebarGroup className="mb-0 p-0">
-							<SidebarGroupLabel asChild className="text-base font-bold text-foreground py-1">
+							<SidebarGroupLabel
+								asChild
+								className="text-base text-foreground py-1 "
+							>
 								<CollapsibleTrigger className="w-full px-3 transition-colors rounded-md hover:bg-accent">
 									{t(title)}
 									<ChevronDown className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
@@ -157,7 +161,7 @@ export function AdminSidebar() {
 														<SidebarMenuItem key={item.title}>
 															<SidebarMenuButton
 																asChild
-																className="h-9 px-3 rounded-md bg-transparent hover:bg-accent/15 hover:text-background"
+																className="h-9 px-3 rounded-md bg-transparent hover:bg-accent/15 hover:text-background hover:bg-gradient-to-r hover:to-[#f9203d] hover:from-[#fa7909] hover:bg-[length:100%] hover:bg-no-repeat hover:bg-bottom"
 															>
 																<Link
 																	href={item.url}

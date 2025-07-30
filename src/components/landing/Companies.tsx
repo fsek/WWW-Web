@@ -97,11 +97,10 @@ export const Companies = () => {
 					className="relative flex-1 group cursor-pointer"
 				>
 					<Image
-						src={faradImg.src}
-						width={600}
-						height={400}
+						src={faradImg}
 						alt="People at FARAD event"
 						className="w-full h-full object-cover rounded-lg shadow-lg group-hover:blur-xs transition-all"
+						fill
 					/>
 					<div className="absolute inset-0 flex flex-col items-center justify-center">
 						<div className="text-2xl font-bold text-white mb-4 bg-gradient-to-r from-[#fe5f75] to-[#fc9840] bg-no-repeat bg-[position:bottom] bg-[length:100%_6px] group-hover:bg-[length:100%_100%] transition-[background-size]">

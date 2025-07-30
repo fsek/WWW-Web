@@ -158,10 +158,9 @@ export default function PostEditForm({
 		setShowDeleteDialog(false);
 		handleRemoveSubmit();
 	}
-
-	function handleDeleteCancel() {
-		setShowDeleteDialog(false);
-	}
+	// function handleDeleteCancel() {
+	// 	setShowDeleteDialog(false);
+	// }
 
 	return (
 		<Dialog

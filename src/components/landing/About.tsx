@@ -13,10 +13,10 @@ export const About = () => {
 					<div className="px-6 flex flex-col-reverse md:flex-row gap-8 md:gap-12">
 						<Image
 							src={mh.src}
-							height={400}
-							width={300}
+							height={300}
+							width={400}
 							alt="Matematikhuset, LTH"
-							className="w-[300px] object-contain rounded-lg"
+							className="w-[400px] object-contain rounded-lg"
 						/>
 						<div className="bg-green-0 flex flex-col justify-between">
 							<div className="pb-6">

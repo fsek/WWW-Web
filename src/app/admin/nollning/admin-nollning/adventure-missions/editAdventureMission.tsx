@@ -107,7 +107,6 @@ const EditAdventureMission = ({
 					description: values.description,
 					max_points: values.max_points,
 					min_points: values.min_points,
-					nollning_id: nollning_id,
 					nollning_week: values.nollning_week,
 				},
 			},
@@ -121,7 +120,10 @@ const EditAdventureMission = ({
 
 	function onDelete() {
 		removeAdventureMission.mutate(
-			{ path: { mission_id: selectedMission.id } },
+			{
+				path: { mission_id: selectedMission.id },
+				query: { nollning_id: nollning_id },
+			},
 			{
 				onSuccess: () => {
 					onClose();
