@@ -2,13 +2,13 @@
 
 import type { AdventureMissionRead } from "@/api";
 import {
-	addCompletedMissionToGroupMutation,
-	editCompletedMissionInGroupMutation,
+	addGroupMissionMutation,
+	editGroupMissionMutation,
+	deleteGroupMissionMutation,
+	getGroupMissionsFromNollningGroupOptions,
 	getAllAdventureMissionsInNollningOptions,
-	getCompletedMissionsFromGroupOptions,
-	getCompletedMissionsFromGroupQueryKey,
 	getSingleGroupOptions,
-	removeCompletedMissionFromGroupMutation,
+	getAllAdventureMissionsInNollningQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import {
 	useMutation,
@@ -44,8 +44,8 @@ const page = () => {
 	});
 
 	const completedAdventureMissions = useSuspenseQuery({
-		...getCompletedMissionsFromGroupOptions({
-			path: { nollning_id: nollningID, group_id: groupID },
+		...getGroupMissionsFromNollningGroupOptions({
+			path: { nollning_group_id: groupID },
 		}),
 	});
 
@@ -69,10 +69,10 @@ const page = () => {
 	const queryClient = useQueryClient();
 
 	const addCompletedMission = useMutation({
-		...addCompletedMissionToGroupMutation(),
+		...addGroupMissionMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: getCompletedMissionsFromGroupQueryKey({
+				queryKey: getAllAdventureMissionsInNollningQueryKey({
 					path: { nollning_id: nollningID, group_id: groupID },
 				}),
 			});
@@ -81,10 +81,10 @@ const page = () => {
 	});
 
 	const removeCompletedMission = useMutation({
-		...removeCompletedMissionFromGroupMutation(),
+		...deleteGroupMissionMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: getCompletedMissionsFromGroupQueryKey({
+				queryKey: getAllAdventureMissionsInNollningQueryKey({
 					path: { nollning_id: nollningID, group_id: groupID },
 				}),
 			});
@@ -93,10 +93,10 @@ const page = () => {
 	});
 
 	const editCompletedMission = useMutation({
-		...editCompletedMissionInGroupMutation(),
+		...editGroupMissionMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: getCompletedMissionsFromGroupQueryKey({
+				queryKey: getAllAdventureMissionsInNollningQueryKey({
 					path: { nollning_id: nollningID, group_id: groupID },
 				}),
 			});
@@ -134,10 +134,9 @@ const page = () => {
 		} else {
 			addCompletedMission.mutate(
 				{
-					path: { group_id: groupID },
+					path: { nollning_group_id: groupID },
 					body: {
 						adventure_mission_id: row.original.id,
-						points: row.original.max_points,
 					},
 				},
 				mutationOptions,
@@ -246,7 +245,7 @@ const page = () => {
 					onSubmit={(points: number, adventure_mission_id: number) =>
 						editCompletedMission.mutate(
 							{
-								path: { group_id: groupID },
+								path: { nollning_group_id: groupID },
 								body: {
 									adventure_mission_id: adventure_mission_id,
 									points: points,
@@ -289,10 +288,9 @@ const page = () => {
 					onSubmit={(points: number, adventure_mission_id: number) =>
 						addCompletedMission.mutate(
 							{
-								path: { group_id: groupID },
+								path: { nollning_group_id: groupID },
 								body: {
 									adventure_mission_id: adventure_mission_id,
-									points: points,
 								},
 							},
 							mutationOptions,
