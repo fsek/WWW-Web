@@ -11,6 +11,7 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
@@ -20,7 +21,7 @@ import {
 	getAllPostsQueryKey,
 	updatePostMutation,
 } from "@/api/@tanstack/react-query.gen";
-import type { PostRead, PostUpdate } from "@/api";
+import type { PostRead, PostUpdate, PostDoorAccessRead } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
@@ -28,6 +29,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
+import { door } from "@/api";
+import StyledMultiSelect from "@/components/StyledMultiSelect";
 
 const postEditSchema = z.object({
 	id: z.number(),
@@ -37,6 +40,7 @@ const postEditSchema = z.object({
 	description_en: z.string().optional(),
 	email: z.string().email(),
 	council_id: z.number().int(),
+	doors: z.array(z.string()).optional(),
 });
 
 type PostEditFormType = z.infer<typeof postEditSchema>;
@@ -61,6 +65,7 @@ export default function PostEditForm({
 			description_sv: "",
 			description_en: "",
 			email: "",
+			doors: [],
 		},
 	});
 
@@ -70,6 +75,9 @@ export default function PostEditForm({
 		if (open && selectedPost) {
 			form.reset({
 				...selectedPost,
+				doors: selectedPost.post_door_accesses.map(
+					(doorAccess) => doorAccess.door,
+				),
 			});
 		}
 	}, [selectedPost, form, open]);
@@ -118,6 +126,7 @@ export default function PostEditForm({
 			description_en: values.description_en,
 			email: values.email,
 			council_id: values.council_id,
+			doors: values.doors as PostDoorAccessRead["door"][],
 		};
 
 		updatePost.mutate(
@@ -290,6 +299,41 @@ export default function PostEditForm({
 										value={field.value}
 										onChange={field.onChange}
 									/>
+								</FormItem>
+							)}
+						/>
+
+						{/* Door access */}
+						<FormField
+							control={form.control}
+							name="doors"
+							render={({ field }) => (
+								<FormItem className="lg:col-span-2">
+									<FormLabel>{t("posts.door_access")}</FormLabel>
+									<FormControl>
+										<StyledMultiSelect
+											isMulti
+											// Simplifying these seems straightforward,
+											// but I could not do it without creating type errors
+											options={Object.values(door).map((d) => ({
+												value: d,
+												label: d,
+											}))}
+											value={field.value?.map((d) => ({
+												value: d,
+												label: d,
+											}))}
+											onChange={(options) => {
+												const vals = Array.isArray(options)
+													? options.map((o) => o.value)
+													: [];
+												field.onChange(vals);
+											}}
+											placeholder={t("posts.select_doors")}
+											className="w-full"
+										/>
+									</FormControl>
+									<FormMessage />
 								</FormItem>
 							)}
 						/>

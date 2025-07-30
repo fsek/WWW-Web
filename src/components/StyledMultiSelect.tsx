@@ -52,11 +52,11 @@ export default function StyledMultiSelect({
 							: "border-border hover:border-ring dark:border-border dark:hover:border-ring"
 					}`,
 				multiValue: () =>
-					"bg-primary-light text-primary-foreground dark:bg-primary dark:text-primary-foreground rounded px-2 py-1 m-0.5 text-xs",
+					"bg-primary text-primary-foreground dark:bg-primary dark:text-primary-foreground rounded px-2 py-1 m-0.5 text-xs",
 				multiValueLabel: () =>
 					"text-primary-foreground dark:text-primary-foreground",
 				multiValueRemove: () =>
-					"text-primary hover:text-primary-foreground hover:bg-primary-light dark:text-primary-light dark:hover:text-primary-foreground dark:hover:bg-primary rounded-r px-1",
+					"text-primary-foreground hover:bg-destructive dark:text-foreground dark:hover:bg-destructive rounded-r px-1",
 				menu: () =>
 					"mt-1 border border-border dark:border-border rounded-md shadow-lg bg-popover dark:bg-popover z-50",
 				menuList: () => "py-1 max-h-60 overflow-auto",
