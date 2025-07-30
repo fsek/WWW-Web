@@ -32,74 +32,17 @@ import SourceForm from "./SourceForm";
 
 const columnHelper = createColumnHelper<AliasRead>();
 
-// Use fake data instead of API
-const useFakeData = true;
-
-const fakeAliasData: AliasRead[] = [
-	{
-		alias: "board@fsektionen.se",
-		members: [
-			"president@fsektionen.se",
-			"vice-president@fsektionen.se",
-			"treasurer@fsektionen.se",
-		],
-	},
-	{
-		alias: "teknikfokus@fsektionen.se",
-		members: [
-			"editor@fsektionen.se",
-			"journalist1@fsektionen.se",
-			"journalist2@fsektionen.se",
-		],
-	},
-	{
-		alias: "sexmasteriet@fsektionen.se",
-		members: ["sexmaster@fsektionen.se", "vice-sexmaster@fsektionen.se"],
-	},
-	{
-		alias: "cafe@fsektionen.se",
-		members: [
-			"cafemaster@fsektionen.se",
-			"barista1@fsektionen.se",
-			"barista2@fsektionen.se",
-			"barista3@fsektionen.se",
-		],
-	},
-	{
-		alias: "event@fsektionen.se",
-		members: [
-			"eventmaster@fsektionen.se",
-			"event-coordinator@fsektionen.se",
-			"president@fsektionen.se",
-		],
-	},
-	{
-		alias: "info@fsektionen.se",
-		members: [
-			"infomaster@fsektionen.se",
-			"webmaster@fsektionen.se",
-			"social-media@fsektionen.se",
-		],
-	},
-	{
-		alias: "study@fsektionen.se",
-		members: ["studieradgivare@fsektionen.se", "studierektor@fsektionen.se"],
-	},
-];
-
 export default function MailAliasPage() {
 	const { t } = useTranslation();
 	const {
-		data: aliasListFromAPI,
+		data: aliasPairList,
 		error,
 		isLoading,
 		refetch: refetchAliasList,
 	} = useQuery({
 		...aliasListAliasesOptions(),
-		enabled: !useFakeData,
+		refetchOnWindowFocus: false,
 	});
-
-	const aliasPairList = useFakeData ? fakeAliasData : aliasListFromAPI;
 
 	// add search state
 	const [search, setSearch] = useState<string>("");
@@ -407,11 +350,11 @@ export default function MailAliasPage() {
 	});
 
 	// only bail out on the very first load
-	if (!useFakeData && isLoading) {
+	if (isLoading) {
 		return <LoadingErrorCard />;
 	}
 
-	if (!useFakeData && error) {
+	if (error) {
 		return <LoadingErrorCard error={error} />;
 	}
 	return (
