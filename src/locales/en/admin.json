@@ -268,7 +268,7 @@
 		"self": "Posts",
 		"council_not_found": "Council not found.",
 		"title": "Manage Posts",
-		"description": "Here you can create and manage council posts. The email doesn't have to be unique, and will be displayed publicly (to members) on thselect_doorse council page. You can also assign door access to posts.",
+		"description": "Here you can create and manage council posts. The email doesn't have to be unique, and will be displayed publicly (to members) on the council page. You can also assign door access to posts.",
 		"submit": "Create Post",
 		"edit": "Edit Post",
 		"name": "Name",
