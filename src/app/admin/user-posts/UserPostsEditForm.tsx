@@ -9,7 +9,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import type { AdminUserRead } from "@/api";
 import { useTranslation } from "react-i18next";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { toast } from "sonner";
 import { AdminChooseMultPosts } from "@/widgets/AdminChooseMultPosts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
