@@ -1,0 +1,61 @@
+name: Typechecking typescript
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+
+jobs:
+  test_ts-types:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout API repo
+        uses: actions/checkout@v4
+        with:
+          repository: fsek/WebWebWeb 
+          ref: main
+          path: api-repo
+
+      - name: Build & enter DevContainer
+        uses: devcontainers/ci@v0.3
+        with:
+          checkoutPath: api-repo           
+          subFolder: . 
+          runCmd: |
+
+            sudo apt-get install -y curl
+
+            source .venv/bin/activate
+
+            nohup uvicorn main:app --host 0.0.0.0 --port 8000 \
+              > uvicorn.log 2>&1 & disown
+            # Wait for the API to be ready
+
+            until curl --silent --fail http://localhost:8000/openapi.json; do
+              sleep 1
+            done
+
+            curl --silent http://localhost:8000/openapi.json \
+              > openapi.json
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies (host)
+        run: bun install --frozen-lockfile
+
+      - name: Generate API client
+        run: bun run openapi-ts --input ./api-repo/openapi.json
+
+      - name: Check types
+        run: bun run build
+

@@ -15,6 +15,7 @@ export default function LoginPage() {
 				className="absolute inset-0 size-full z-0 object-cover"
 				src={mh}
 				alt="Matematikhuset, LTH"
+				fill
 			/>
 			{/* Dark overlay for dark mode */}
 			<div className="pointer-events-none absolute inset-0 z-0 dark:bg-black/60" />

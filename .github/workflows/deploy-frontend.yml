@@ -1,17 +1,23 @@
 name: Deploy Frontend
 
 on:
-  push:
-    branches:
-      - stage
-      - prod
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Which environment to deploy'
+        required: true
+        default: 'stage'
+        type: choice
+        options:
+          - stage
+          - prod
 
 env:
   IMAGE_NAME: ${{ github.repository }}
   REGISTRY: ghcr.io
 
 jobs:
-  build-and-push-image:
+  deploy:
     runs-on: ubuntu-latest
 
     permissions:
@@ -21,26 +27,25 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout repository
+      - name: Determine target
+        id: pick
+        run: echo "target=${{ github.event.inputs.target }}" >> $GITHUB_OUTPUT
+
+      - name: Checkout main
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
 
-      # ─── Branch‑specific secrets and URLs ─────────────────────────
-      - name: Set OPENAPI_JSON_URL for stage
-        if: github.ref == 'refs/heads/stage'
-        run: echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_STAGE }}" >> $GITHUB_ENV
-
-      - name: Set OPENAPI_JSON_URL for prod
-        if: github.ref == 'refs/heads/prod'
-        run: echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_PROD }}" >> $GITHUB_ENV
-
-      - name: Set API_BASE_URL for stage
-        if: github.ref == 'refs/heads/stage'
-        run: echo "API_BASE_URL=https://stage.backend.fsektionen.se" >> $GITHUB_ENV
-
-      - name: Set API_BASE_URL for prod
-        if: github.ref == 'refs/heads/prod'
-        run: echo "API_BASE_URL=https://backend.fsektionen.se" >> $GITHUB_ENV
-      # ──────────────────────────────────────────────────────────────
+      - name: Set environment URLs
+        run: |
+          if [ "${{ steps.pick.outputs.target }}" = "stage" ]; then
+            echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_STAGE }}" >> $GITHUB_ENV
+            echo "API_BASE_URL=https://stage.backend.fsektionen.se"     >> $GITHUB_ENV
+          else
+            echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_PROD }}"  >> $GITHUB_ENV
+            echo "API_BASE_URL=https://backend.fsektionen.se"            >> $GITHUB_ENV
+          fi
 
       - name: Download OpenAPI spec
         run: |
@@ -52,7 +57,7 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install dependencies (host)
+      - name: Install dependencies
         run: bun install --frozen-lockfile
 
       - name: Generate API client
@@ -65,13 +70,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata
+      - name: Extract metadata (raw tag)
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=ref,event=branch
+            type=raw,value=${{ steps.pick.outputs.target }}
 
       - name: Build and push Docker image
         id: build-image
