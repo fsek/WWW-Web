@@ -109,7 +109,7 @@ export const Footer = () => {
 
 					<div>
 						<Link
-							href="https://old.fsektionen.se/styrdokument"
+							href="https://old.fsektionen.se/sida/styrdokument"
 							className="opacity-60 hover:opacity-100"
 						>
 							{t("footer.old_styrdokument")}
