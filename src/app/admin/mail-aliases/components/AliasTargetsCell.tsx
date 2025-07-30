@@ -75,6 +75,26 @@ export function AliasTargetsCell({
 		setEditValue(e.target.value);
 	};
 
+	const handleUpdateTarget = () => {
+		// Remove and then add the updated target
+		if (editTarget && editValue) {
+			removeTargetMutation.mutate(
+				{
+					path: { alias_email: editTarget.source },
+					query: { member_email: editTarget.target },
+				},
+				{
+					onSuccess: () => {
+						addTargetMutation.mutate({
+							path: { alias_email: editTarget.source },
+							query: { member_email: editValue.trim() },
+						});
+					},
+				},
+			);
+		}
+	};
+
 	const handleEditBlur = () => {
 		if (editValue.trim() === "") {
 			setEditTarget(null);
@@ -88,14 +108,7 @@ export function AliasTargetsCell({
 					query: { member_email: editValue.trim() },
 				});
 			} else {
-				removeTargetMutation.mutate({
-					path: { alias_email: editTarget.source },
-					query: { member_email: editTarget.target },
-				});
-				addTargetMutation.mutate({
-					path: { alias_email: editTarget.source },
-					query: { member_email: editValue.trim() },
-				});
+				handleUpdateTarget();
 			}
 		}
 		setEditTarget(null);
@@ -116,14 +129,7 @@ export function AliasTargetsCell({
 						query: { member_email: editValue.trim() },
 					});
 				} else {
-					removeTargetMutation.mutate({
-						path: { alias_email: editTarget.source },
-						query: { member_email: editTarget.target },
-					});
-					addTargetMutation.mutate({
-						path: { alias_email: editTarget.source },
-						query: { member_email: editValue.trim() },
-					});
+					handleUpdateTarget();
 				}
 			}
 			setEditTarget(null);
