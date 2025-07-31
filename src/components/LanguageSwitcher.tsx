@@ -25,10 +25,10 @@ const LanguageSwitcher = () => {
 	const otherLanguage: LanguageKey = language === "sv" ? "en" : "sv";
 
 	return (
-		<div className="flex gap-2">
+		<div className="flex gap-2 flex-shrink-0">
 			<button
 				onClick={() => handleLanguageChange(otherLanguage)}
-				className="p-1 transition-opacity opacity-80 hover:opacity-100"
+				className="p-1 transition-opacity opacity-80 hover:opacity-100 flex-shrink-0"
 				type="button"
 				aria-label={`Switch to ${languages[otherLanguage].alt}`}
 			>
@@ -37,6 +37,7 @@ const LanguageSwitcher = () => {
 					alt={languages[otherLanguage].alt}
 					width={24}
 					height={16}
+					className="h-6 w-8 flex-shrink-0"
 				/>
 			</button>
 		</div>
