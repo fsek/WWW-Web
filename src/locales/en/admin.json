@@ -352,6 +352,31 @@
 		"block": "Block",
 		"error_unblock": "Failed to update membership status"
 	},
+	"albums": {
+		"page_title": "Manage Albums",
+		"page_description": "Here you can create and manage albums. After creating an album can you add photographers and photos.",
+		"warning": "Please note that the album date cannot be changed later!",
+		"create_album": "Create album",
+		"year": "Year",
+		"title": "Title",
+		"title_sv": "Title (Swedish)",
+		"title_en": "Title (English)",
+		"desc_sv": "Description (Swedish)",
+		"desc_en": "Description (English)",
+		"location": "Location",
+		"publish": "Create",
+		"date": "Date",
+		"photographer": "Photographer",
+		"actions": "Actions",
+		"manage": "Manage album"
+	},
+	"album": {
+		"dragndrop": "Drag images here or click to upload",
+		"dragndrop_hover": "Release to upload",
+		"page_title": "Administrating album",
+		"back": "Go back",
+		"add_photographer": "Add photographer"
+	},
 	"id": "ID",
 	"first_name": "First Name",
 	"last_name": "Last Name",
@@ -368,6 +393,9 @@
 	"nollning": {
 		"self": "Nollning"
 	},
+	"searching": "Searching",
+	"user_not_found": "No users found",
+	"unknown_error": "Unknown error",
 	"show": "Show",
 	"select_council": "Select a Council",
 	"available_councils": "Available Councils",
