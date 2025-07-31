@@ -124,9 +124,30 @@ export default function MainPageNews({ mini = false }: MainPageNewsProps) {
 									/>
 								</div>
 							)}
-							<p className="whitespace-pre-line">
-								{i18n.language === "sv" ? news.content_sv : news.content_en}
-							</p>
+							{(() => {
+								const content =
+									i18n.language === "sv" ? news.content_sv : news.content_en;
+								let contentLimit = mini ? 300 : 500;
+								const shortContent = content.length > contentLimit
+									? content.slice(0, contentLimit) + "…"
+									: content;
+								return (
+									<>
+										<p className="whitespace-pre-wrap">{shortContent}</p>
+										{content.length > contentLimit && (
+											<div className="mt-2">
+												<Button
+													variant="outline"
+													size="sm"
+													onClick={() => router.push(`/news/${news.id}`)}
+												>
+													{t("main:news.read_more")}
+												</Button>
+											</div>
+										)}
+									</>
+								);
+							})()}
 						</CardContent>
 					</Card>
 				))}
