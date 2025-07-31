@@ -75,8 +75,10 @@ export default function NewsEditForm({
 	// Initialize form with existing news data
 	useEffect(() => {
 		if (selectedNews) {
-			if (!selectedNews.pinned_from && !selectedNews.pinned_to) {
+			if (selectedNews.pinned_from == null && selectedNews.pinned_to == null) {
 				setUsePinning(false);
+			} else {
+				setUsePinning(true);
 			}
 			newsEditForm.reset({
 				title_sv: selectedNews.title_sv || "",
