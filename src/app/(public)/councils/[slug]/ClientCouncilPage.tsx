@@ -64,22 +64,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 								className="mt-4"
 								size={3}
 							/>
-							<p className="mt-4 whitespace-normal">
-								{/* {council.description || ( */}
-								{/* <Trans i18nKey={`utskott:${slug}.about`}>
-									Temporarily using a short info text */}
-								{/* {t(`utskott:${slug}.info`, "No text found :/")} */}
-								{/* <Trans i18nKey={`utskott:${slug}.info`}>
-									<a
-										href="/admin"
-										className="underline text-primary hover:text-orange-400"
-										target="_blank"
-										rel="noreferrer"
-									>
-										Ingen text kunde hittas :/
-									</a>
-								</Trans> */}
-								{/* )} */}
+							<p className="mt-4 whitespace-pre-wrap">
 								{i18n.language === "en"
 									? council.description_en || "No description available"
 									: council.description_sv || "Ingen beskrivning tillgänglig"}
@@ -120,7 +105,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 										size={2}
 										text={i18n.language === "en" ? post.name_en : post.name_sv}
 									/>
-									<p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+									<p className="mt-2 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
 										{i18n.language === "en"
 											? post.description_en
 											: post.description_sv}

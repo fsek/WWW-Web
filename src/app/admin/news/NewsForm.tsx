@@ -150,7 +150,7 @@ export default function NewsForm() {
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogContent className="min-w-fit lg:max-w-7xl">
+				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 					<DialogHeader>
 						<DialogTitle>{t("news.create_news")}</DialogTitle>
 					</DialogHeader>

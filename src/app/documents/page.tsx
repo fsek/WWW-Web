@@ -52,25 +52,24 @@ export default function Documents() {
 			},
 		}),
 		{
-					id: "view",
-					header: t("main:documents.view"),
-					cell: (row: { row: Row<DocumentRead> }) => {
-						return (
-							<Button
-								variant="outline"
-								className={"px-2 py-1 border"}
-								onClick={(e) => {
-									e.stopPropagation();
-									router.push(
-										`/documents/${row.row.original.id}`,
-									);
-								}}
-							>
-								{t("main:documents.view")}
-							</Button>
-						);
-					},
-				},
+			id: "view",
+			header: t("main:documents.view"),
+			cell: (row: { row: Row<DocumentRead> }) => {
+				return (
+					<Button
+						variant="outline"
+						className={"px-2 py-1 border"}
+						onClick={(e) => {
+							e.stopPropagation();
+							const url = `/documents/${row.row.original.id}`;
+							window.open(url, "_blank", "noopener,noreferrer");
+						}}
+					>
+						{t("main:documents.view")}
+					</Button>
+				);
+			},
+		},
 	];
 
 	const table = useCreateTable({ data: data ?? [], columns });
@@ -86,9 +85,7 @@ export default function Documents() {
 					<p className="py-3">{t("main:documents.description")}</p>
 					{isPending && <LoadingErrorCard />}
 					{error && <LoadingErrorCard error={error} />}
-					{!isPending && !error && (
-						<AdminTable table={table} />
-					)}
+					{!isPending && !error && <AdminTable table={table} />}
 				</div>
 			</main>
 			<Footer />

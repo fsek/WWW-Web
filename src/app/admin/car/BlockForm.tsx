@@ -43,9 +43,7 @@ export default function form() {
 		},
 	});
 
-	const {
-		data: users,
-	} = useQuery({
+	const { data: users } = useQuery({
 		...adminGetAllUsersOptions(),
 	});
 
@@ -93,7 +91,7 @@ export default function form() {
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogContent className="min-w-fit lg:max-w-7xl">
+				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 					<DialogHeader>
 						<DialogTitle>{t("admin:block.create_blocking")}</DialogTitle>
 					</DialogHeader>

@@ -99,7 +99,7 @@ export default function PostForm() {
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogContent className="min-w-fit lg:max-w-7xl">
+				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 					<DialogHeader>
 						<DialogTitle>{t("posts.title", "Skapa post")}</DialogTitle>
 					</DialogHeader>
