@@ -15,13 +15,30 @@ import { UserPlus } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
-export default function PhotographerForm({ album_id }: { album_id: number }) {
+const photographerSchema = z.object({
+	user: z.number(),
+});
+
+export default function PhotographerForm({
+	album_id,
+	excluded_users,
+}: { album_id: number; excluded_users: number[] }) {
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(false);
 	const [user, setUser] = useState<number | undefined>(undefined);
 	const { t } = useTranslation("admin");
 	const queryClient = useQueryClient();
+
+	const photographerForm = useForm<z.infer<typeof photographerSchema>>({
+		resolver: zodResolver(photographerSchema),
+		defaultValues: {},
+	});
+
 	const addPhotographer = useMutation({
 		...addAlbumPhotographerMutation(),
 		onSuccess: () => {
@@ -43,7 +60,13 @@ export default function PhotographerForm({ album_id }: { album_id: number }) {
 
 	return (
 		<div className="p-3">
-			<Button onClick={() => setOpen(true)}>
+			<Button
+				onClick={() => {
+					photographerForm.reset();
+					setOpen(true);
+					setSubmitEnabled(true);
+				}}
+			>
 				<UserPlus /> {t("album.add_photographer")}
 			</Button>
 			<Dialog open={open} onOpenChange={setOpen}>
@@ -54,32 +77,42 @@ export default function PhotographerForm({ album_id }: { album_id: number }) {
 						</DialogTitle>
 					</DialogHeader>
 					<hr />
-					<AdminChooseUser
-						isMulti={false}
-						onChange={(user) => {
-							if (user) {
-								setSubmitEnabled(true);
-								setUser((user as Option).value as number);
-								console.log(user);
-							} else {
+					<Form {...photographerForm}>
+						<form
+							onSubmit={photographerForm.handleSubmit((data) => {
 								setSubmitEnabled(false);
-								setUser(undefined);
-							}
-						}}
-					/>
-					<Button
-						type="submit"
-						disabled={!submitEnabled}
-						onClick={() =>
-							addPhotographer.mutate({
-								body: { album_id: album_id, user_id: user as number },
-							})
-						}
-						className="w-32 min-w-fit"
-					>
-						<UserPlus />
-						{t("album.add_photographer")}
-					</Button>
+								addPhotographer.mutate({
+									body: { album_id: album_id, user_id: data.user },
+								});
+							})}
+							className="grid gap-x-4 gap-y-3 lg:grid-cols-2"
+						>
+							<FormField
+								control={photographerForm.control}
+								name="user"
+								render={({ field }) => (
+									<FormItem>
+										<AdminChooseUser
+											isMulti={false}
+											onChange={(user) => {
+												field.onChange((user as Option)?.value);
+											}}
+											additionalFilters={{ exclude_ids: excluded_users }}
+										/>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<Button
+								type="submit"
+								disabled={!submitEnabled}
+								className="w-32 min-w-fit"
+							>
+								<UserPlus />
+								{t("album.add_photographer")}
+							</Button>
+						</form>
+					</Form>
 				</DialogContent>
 			</Dialog>
 		</div>

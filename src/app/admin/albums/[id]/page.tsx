@@ -151,7 +151,10 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 						{t("album.back")}
 					</Button>
 				</div>
-				<PhotographerForm album_id={albumId} />
+				<PhotographerForm
+					album_id={albumId}
+					excluded_users={album.photographer.map((p) => p.user.id)}
+				/>
 				<div className="flex flex-row flex-wrap gap-x-1.5 gap-y-1 p-2">
 					{album.photographer.map((p) => (
 						<div
@@ -173,6 +176,7 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 						</div>
 					))}
 				</div>
+				<hr />
 				<ImageDropzone onDrop={handleFileUpload} />
 				<div className="flex flex-row flex-wrap gap-x-1.5 gap-y-1 p-2">
 					{Array.from(uploads).map((value) => (
