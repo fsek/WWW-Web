@@ -53,7 +53,8 @@
 		"bump_error": "Failed to bump news item. ",
 		"last_bumped": "Last bumped: ",
 		"no_bump": "Never bumped",
-		"bump_header": "Bump to top of list"
+		"bump_header": "Bump to top of list",
+		"view_news": "View News"
 	},
 	"events": {
 		"self": "Events",

@@ -53,7 +53,8 @@
 		"bump_error": "Misslyckades att bumpa nyhetsinlägget.",
 		"last_bumped": "Senast bumpat: ",
 		"no_bump": "Aldrig bumpat",
-		"bump_header": "Bumpa"
+		"bump_header": "Bumpa",
+		"view_news": "Visa nyhet"
 	},
 	"events": {
 		"self": "Evenemang",
