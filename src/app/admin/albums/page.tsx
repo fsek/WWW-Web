@@ -1,6 +1,6 @@
 "use client";
 
-import type { AlbumRead } from "@/api";
+import type { AlbumRead, PhotographerInAlbumRead } from "@/api";
 import { getAlbumsOptions } from "@/api/@tanstack/react-query.gen";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import AdminTable from "@/widgets/AdminTable";
@@ -8,10 +8,12 @@ import useCreateTable from "@/widgets/useCreateTable";
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
 import AlbumsForm from "./AlbumsForm";
+import { Button } from "@/components/ui/button";
+import { Pencil } from "lucide-react";
 
 const columnHelper = createColumnHelper<AlbumRead>();
 
@@ -21,6 +23,8 @@ export default function AlbumsPage() {
 
 	const [editFormOpen, setEditFormOpen] = useState(false);
 	const [selectedAlbum, setSelectedAlbum] = useState<AlbumRead | null>(null);
+
+	const router = useRouter();
 
 	const columns = [
 		columnHelper.accessor("year", {
@@ -42,8 +46,33 @@ export default function AlbumsPage() {
 		}),
 		columnHelper.accessor("photographer", {
 			header: t("albums.photographer"),
-			cell: (info) =>
-				`${info.getValue()?.first_name ?? "F. T."} ${info.getValue()?.last_name ?? "Graf"}`,
+			cell: (info) => (
+				<p>
+					{info
+						.getValue()
+						.map(
+							(photographer) =>
+								`${photographer.user.first_name} ${photographer.user.last_name}`,
+						)
+						.join(", ")}
+				</p>
+			),
+		}),
+		columnHelper.display({
+			id: "actions",
+			header: t("albums.actions"),
+			cell: (info) => (
+				<Button
+					onClick={(e) => {
+						e.stopPropagation();
+						setSelectedAlbum(info.row.original);
+						setEditFormOpen(true);
+					}}
+				>
+					<Pencil />
+					{t("albums.manage")}
+				</Button>
+			),
 		}),
 	];
 
@@ -53,7 +82,7 @@ export default function AlbumsPage() {
 
 	const handleRowClick = (row: Row<AlbumRead>) => {
 		setSelectedAlbum(row.original);
-		setEditFormOpen(true);
+		router.push(`/admin/albums/${row.original.id}`);
 	};
 
 	return (

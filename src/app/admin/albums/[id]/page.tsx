@@ -17,6 +17,7 @@ import {
 	deleteImageMutation,
 	uploadImageOptions,
 	getOneAlbumQueryKey,
+	removeAlbumPhotographerMutation,
 } from "@/api/@tanstack/react-query.gen";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import type { AlbumRead } from "@/api";
@@ -28,7 +29,7 @@ import { map } from "zod";
 import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import ImageDropzone from "./ImageDropzone";
 import { Spinner } from "@/components/Spinner";
-import { ArrowLeft, Check, CircleX, Trash2 } from "lucide-react";
+import { ArrowLeft, Check, CircleX, Trash2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface AlbumPageProps {
@@ -53,11 +54,15 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 
 	const [uploads, setUploads] = useState<Map<string, STATUS>>(new Map());
 
-	const { data, error, refetch } = useSuspenseQuery({
+	const {
+		data: album,
+		error,
+		refetch,
+	} = useSuspenseQuery({
 		...getOneAlbumOptions({ path: { album_id: albumId } }),
 	});
 
-	const imagesQueries = data.imgs.map((img) => ({
+	const imagesQueries = album.imgs.map((img) => ({
 		...getImageStreamOptions({ path: { img_id: img.id } }),
 		refreshOnWindowFocus: false,
 	}));
@@ -108,6 +113,14 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 			}),
 	});
 
+	const removePhotographer = useMutation({
+		...removeAlbumPhotographerMutation(),
+		onSuccess: (response) =>
+			queryClient.invalidateQueries({
+				queryKey: getOneAlbumQueryKey({ path: { album_id: albumId } }),
+			}),
+	});
+
 	function handleFileUpload(acceptedFiles: File[]) {
 		for (const file of acceptedFiles) {
 			//if (file.type === "image/jpeg") {
@@ -127,7 +140,7 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
 						{t("album.page_title")} "
-						{i18n.language === "sv" ? data.title_sv : data.title_en}"
+						{i18n.language === "sv" ? album.title_sv : album.title_en}"
 					</h3>
 					<Button
 						variant="ghost"
@@ -138,7 +151,28 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 						{t("album.back")}
 					</Button>
 				</div>
-				<PhotographerForm />
+				<PhotographerForm album_id={albumId} />
+				<div className="flex flex-row flex-wrap gap-x-1.5 gap-y-1 p-2">
+					{album.photographer.map((p) => (
+						<div
+							className="pl-2 flex text-primary-foreground text-sm flex-row gap-1 border-1 items-center size-min p-1 rounded-sm bg-primary select-none break-keep whitespace-nowrap"
+							key={p.user.id}
+						>
+							<p>
+								{p.user.first_name} {p.user.last_name}
+							</p>
+							<X
+								size={20}
+								className="hover:text-destructive cursor-pointer"
+								onClick={() =>
+									removePhotographer.mutate({
+										body: { user_id: p.user.id, album_id: albumId },
+									})
+								}
+							/>
+						</div>
+					))}
+				</div>
 				<ImageDropzone onDrop={handleFileUpload} />
 				<div className="flex flex-row flex-wrap gap-x-1.5 gap-y-1 p-2">
 					{Array.from(uploads).map((value) => (
@@ -168,7 +202,7 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 								const url = URL.createObjectURL(img as Blob);
 								return (
 									<div
-										key={`${data.imgs[index].id}-${index}`}
+										key={`${album.imgs[index].id}-${index}`}
 										className="relative w-56 h-56"
 									>
 										<Image
@@ -183,7 +217,7 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 											variant={"destructive"}
 											onClick={() =>
 												imageDeleteMutation.mutate({
-													path: { id: data.imgs[index].id },
+													path: { id: album.imgs[index].id },
 												})
 											}
 										>

@@ -366,7 +366,9 @@
 		"location": "Location",
 		"publish": "Create",
 		"date": "Date",
-		"photographer": "Photographer"
+		"photographer": "Photographer",
+		"actions": "Actions",
+		"manage": "Manage album"
 	},
 	"album": {
 		"dragndrop": "Drag images here or click to upload",
@@ -391,6 +393,9 @@
 	"nollning": {
 		"self": "Nollning"
 	},
+	"searching": "Searching",
+	"user_not_found": "No users found",
+	"unknown_error": "Unknown error",
 	"show": "Show",
 	"select_council": "Select a Council",
 	"available_councils": "Available Councils",
