@@ -140,8 +140,9 @@ export default function DocumentsEditForm({
 		);
 	}
 
-	async function handleReadDocument(selectedDocument: DocumentRead) {
-		router.push(`/documents/${selectedDocument.id}`);
+	function handleReadDocument(selectedDocument: DocumentRead) {
+		const url = `/documents/${selectedDocument.id}`;
+		window.open(url, "_blank", "noopener,noreferrer");
 	}
 
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
