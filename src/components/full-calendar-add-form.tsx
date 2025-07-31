@@ -344,7 +344,7 @@ export function EventAddForm({
 					</Button>
 				</AlertDialogTrigger>
 			)}
-			<AlertDialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0">
+			<AlertDialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0 max-h-[80vh] overflow-y-auto">
 				<AlertDialogDescription className="sr-only">
 					A popup dialog to add a new event of some kind.
 				</AlertDialogDescription>
@@ -358,9 +358,7 @@ export function EventAddForm({
 						{enableTrueEventProperties ? (
 							<EventFormFields
 								eventsForm={form as any}
-								checkboxFields={
-									checkboxFields
-								}
+								checkboxFields={checkboxFields}
 							/>
 						) : (
 							<div className="grid gap-x-4 gap-y-3 lg:grid-cols-4">

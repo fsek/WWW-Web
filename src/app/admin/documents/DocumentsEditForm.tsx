@@ -155,7 +155,7 @@ export default function DocumentsEditForm({
 				}
 			}}
 		>
-			<DialogContent className="min-w-fit lg:max-w-7xl">
+			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>{t("admin:documents.edit_document")}</DialogTitle>
 				</DialogHeader>

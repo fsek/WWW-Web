@@ -145,7 +145,7 @@ export default function CouncilEditForm({
 				}
 			}}
 		>
-			<DialogContent className="min-w-fit lg:max-w-7xl">
+			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
 						{t("councils.edit_council", "Redigera utskott")}

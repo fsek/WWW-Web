@@ -198,7 +198,7 @@ export default function CarEditForm({
 				}
 			}}
 		>
-			<DialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0">
+			<DialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0 max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>{t("admin:car.edit_booking")}</DialogTitle>
 				</DialogHeader>
