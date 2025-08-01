@@ -44,7 +44,7 @@ type RoomBookingFormCompatible = (CalendarRoomBookingFields | AdminRoomBookingFi
 interface RoomBookingFormFieldsProps<T extends RoomBookingFormCompatible> {
 	roomBookingForm: UseFormReturn<T>;
 	checkboxFields: ReadonlyArray<Path<T>>;
-	disabled_fields?: String[];
+	disabled_fields?: string[];
 }
 
 export default function RoomBookingFormFields<T extends RoomBookingFormCompatible>({
@@ -110,16 +110,50 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 						<FormField
 							control={roomBookingForm.control}
 							name={"council_id" as Path<T>}
-							render={({ field }) => (
-								<FormItem className="w-full">
-									<FormLabel>{t("admin:room_bookings.council")}</FormLabel>
-									<AdminChooseCouncil
-										value={field.value as number}
-										onChange={field.onChange}
-									/>
-								</FormItem>
-							)}
+							render={({ field }) => {
+								const personalChecked = roomBookingForm.watch("personal" as Path<T>);
+								return (
+									<FormItem className="w-full">
+										<FormLabel>{t("admin:room_bookings.council")}</FormLabel>
+										{personalChecked ? (
+											<div className="text-muted-foreground text-sm py-2">
+												{t("admin:room_bookings.no_council_needed")}
+											</div>
+										) : (
+											<AdminChooseCouncil
+												value={field.value as number}
+												onChange={field.onChange}
+											/>
+										)}
+										<FormMessage />
+									</FormItem>
+								);
+							}}
 						/>
+					)}
+
+					{!disabled_fields.includes("personal") && (
+						checkboxFields.map((fieldName) => (
+							<FormField
+								key={fieldName as string}
+								control={roomBookingForm.control}
+								name={fieldName}
+								render={({ field }) => (
+									<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
+										<Checkbox
+											checked={field.value as boolean}
+											onCheckedChange={field.onChange}
+											className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+										/>
+										<div className="grid gap-1.5 font-normal">
+											<p className="text-sm leading-none font-medium">
+												{t(`admin:events.${fieldName as string}`)}
+											</p>
+										</div>
+									</Label>
+								)}
+							/>
+						))
 					)}
 
 					<FormField

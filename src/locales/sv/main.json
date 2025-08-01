@@ -103,8 +103,8 @@
 			},
 			"rooms": {
 				"self": "Lokalbokning",
-				"desc": "Boka mötes- eller evenemangsutrymmen med ett klick.",
-				"href": "/book-rooms"
+				"desc": "Boka sektionens tre rum i mattehuset för personliga evenemang eller utskottsmöten.",
+				"href": "/room-bookings"
 			},
 			"tools": {
 				"self": "Verktygsutlåning",
@@ -281,6 +281,20 @@
 			"a6": "Olika färger visar status och ägarskap för varje bokning. En admin (bilförmannen) måste bekräfta bokningar utanför ordinarie tider. Färgerna har följande mening: \n- Ljusorange färg innebär att det är din bokning, men den är inte bekräftad.\n- Mörkorange färg innebär att det är din bokning och den är bekräftad. \n- Grön färg markerar någon annans bekräftade bokning.\n- Gul färg visar någon annans obekräftade bokning.\n- Ljusblå färg används för bokningar som lagts till lokalt men inte hämtats från servern än. Ser du blått kan något ha gått fel, ladda om sidan manuellt.",
 			"q7": "Jag har fler frågor!",
 			"a7": "Du kan kontakta bilförmannen bland annat genom <0>kontaktsidan</0>. Be gärna bilförmannen eller någon spindelman att lägga till frågan med svar här."
+		}
+	},
+	"room-booking": {
+		"title": "Lokalbokning",
+		"description-title": "FAQ och regler",
+		"description": "Som medlem kan du boka sektionens lokaler för personliga och sektionrelaterade behov. Om du är administratör kan du hantera bokningar <0>här</0> istället.",
+		"faq": {
+			"title": "Vanliga frågor",
+			"q1": "Vem kan boka lokalerna?",
+			"a1": "Alla medlemmar i sektionen kan boka lokalerna.",
+			"q2": "Neeej varför har ni inte kvar systemet med obekräftade och bekräftade bokningar!?",
+			"a2": "Kontakta spindel om du faktiskt behöver att vi lägger till det, det skapar en del komplexitet i systemet som är onödig om det ändå inte används.",
+			"q3": "Jag har andra frågor!",
+			"a3": "Det finns ingen huvudansvarig för lokalbokning, kontakta prylmästaren eller styrelsen om du undrar något. Du kan då också be dem att lägga till frågan med svar här."
 		}
 	},
 	"loading": {

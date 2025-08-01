@@ -30,7 +30,8 @@ import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
-import { room } from "@/api";
+import type { room } from "@/api";
+import { toast } from "sonner";
 
 // Column setup
 const columnHelper = createColumnHelper<RoomBookingRead>();
@@ -150,9 +151,10 @@ export default function RoomBookings() {
 	interface CustomRoomBookingData extends CustomEventData {
 		// We define these manually to avoid having start_time and start as different fields
 		room: string;
-		council_id: number;
-		council_name_sv: string;
-		council_name_en: string;
+		council_id?: number;
+		council_name_sv?: string;
+		council_name_en?: string;
+		personal: boolean;
 	}
 
 	// Map fetched bookings to calendar events
@@ -160,16 +162,17 @@ export default function RoomBookings() {
 		(data as RoomBookingRead[])?.map((booking) => ({
 			id: booking.id.toString(),
 			room: booking.room,
-			council_id: booking.council.id,
-			council_name_sv: booking.council.name_sv || "None",
-			council_name_en: booking.council.name_en || "None",
+			council_id: booking.council?.id,
+			council_name_sv: booking.council?.name_sv,
+			council_name_en: booking.council?.name_en,
 			user_id: booking.user.id,
-			title_sv: `${booking.user.first_name} ${booking.user.last_name} - ${booking.council.name_sv}`,
-			title_en: `${booking.user.first_name} ${booking.user.last_name} - ${booking.council.name_en}`,
+			title_sv: `${booking.user.first_name} ${booking.user.last_name}`,
+			title_en: `${booking.user.first_name} ${booking.user.last_name}`,
 			start: booking.start_time,
 			end: booking.end_time,
 			description_sv: booking.description,
 			description_en: booking.description,
+			personal: booking.personal,
 		})) ?? [];
 
 	// Handler for when calendar date range changes
@@ -215,10 +218,14 @@ export default function RoomBookings() {
 								end_time: event.end,
 								description: event.description_sv,
 								council_id: event.council_id as number,
+								personal: event.personal as boolean,
 							},
 						},
 						{
-							onError: (err) => console.error(t("admin:room_bookings.error_add"), err),
+							onError: () => toast.error(t("admin:room_bookings.error_add")),
+							onSuccess: () => {
+								toast.success(t("admin:room_bookings.success_add"));
+							},
 						},
 					)
 				}
@@ -226,14 +233,17 @@ export default function RoomBookings() {
 					deleteBooking.mutate(
 						{ path: { booking_id: Number(id) } },
 						{
-							onError: (err) =>
-								console.error(`${t("admin:room_bookings.error_delete")} ${id}`, err),
+							onError: () =>
+								toast.error(`${t("admin:room_bookings.error_delete")} ${id}`),
+							onSuccess: () => {
+								toast.success(t("admin:room_bookings.success_delete"));
+							}
 						},
 					)
 				}
 				handleEdit={(event) => {
 					if (!event.id) {
-						console.error(t("admin:room_bookings.error_missing_id"), event);
+						toast.error(t("admin:room_bookings.error_missing_id"));
 						return;
 					}
 					editBooking.mutate(
@@ -246,11 +256,11 @@ export default function RoomBookings() {
 							},
 						},
 						{
-							onError: (err) =>
-								console.error(
-									`${t("admin:room_bookings.error_edit")} ${event.id}`,
-									err,
-								),
+							onError: () =>
+								toast.error(`${t("admin:room_bookings.error_edit")} ${event.id}`),
+							onSuccess: () => {
+								toast.success(t("admin:room_bookings.success_edit"));
+							}
 						},
 					);
 				}}
@@ -288,7 +298,7 @@ export default function RoomBookings() {
 								editDescription={true}
 								handleOpenDetails={(event) => {
 									if (event) {
-										router.push(`/room-bookings/details/${event.id}`);
+										router.push(`/room-bookings/details?id=${event.id}`);
 									}
 								}}
 								disableEdit={false}

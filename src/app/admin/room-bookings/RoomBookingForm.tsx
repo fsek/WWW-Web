@@ -17,43 +17,6 @@ import { useTranslation } from "react-i18next";
 import RoomBookingFormFields from "./RoomBookingFormFields";
 import { room as RoomEnum } from "@/api";
 
-const roomBookingSchema = z
-	.object({
-		room: z.nativeEnum(RoomEnum),
-		start_time: z.date(),
-		end_time: z.date(),
-		description_sv: z.string().min(1).max(1000),
-		council_id: z.number().int().positive(),
-	})
-	.refine(
-		(data) => {
-			// Check if booking is in the past
-			if (data.start_time.getTime() < Date.now()) {
-				return false;
-			}
-			return true;
-		},
-		{
-			message: "Booking start time cannot be in the past",
-			path: ["start_time"],
-		},
-	)
-	.refine(
-		(data) => {
-			// Check if end time is after start time
-			if (data.end_time.getTime() <= data.start_time.getTime()) {
-				return false;
-			}
-			return true;
-		},
-		{
-			message: "End time must be after start time",
-			path: ["end_time"],
-		},
-	);
-
-// export form values type for use in RoomBookingFormFields.tsx
-export type RoomBookingFormValues = z.infer<typeof roomBookingSchema>;
 
 export default function RoomBookingForm({
 	defaultRoom,
@@ -64,7 +27,44 @@ export default function RoomBookingForm({
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 
-	const roomBookingForm = useForm<z.infer<typeof roomBookingSchema>>({
+	const roomBookingSchema = z
+		.object({
+			room: z.nativeEnum(RoomEnum),
+			start_time: z.date(),
+			end_time: z.date(),
+			description_sv: z.string().min(1).max(1000),
+			council_id: z.number().int().positive().optional(),
+			personal: z.boolean(),
+		})
+		.refine(
+			(data) => {
+				// Check if end time is after start time
+				if (data.end_time.getTime() <= data.start_time.getTime()) {
+					return false;
+				}
+				return true;
+			},
+			{
+				message: "End time must be after start time",
+				path: ["end_time"],
+			},
+		).refine(
+			(data) => {
+				// Check if personal is false and council_id is not set
+				if (data.personal === false && !data.council_id) {
+					return false;
+				}
+				return true;
+			},
+			{
+				message: t("calendar:error_missing_council"),
+				path: ["council_id"],
+			},
+		);
+	// export form values type for use in RoomBookingFormFields.tsx
+	type RoomBookingFormValues = z.infer<typeof roomBookingSchema>;
+
+	const roomBookingForm = useForm<RoomBookingFormValues>({
 		resolver: zodResolver(roomBookingSchema),
 		defaultValues: {
 			room: defaultRoom as RoomEnum,
@@ -72,6 +72,7 @@ export default function RoomBookingForm({
 			end_time: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
 			description_sv: "",
 			council_id: 0,
+			personal: true,
 		},
 	});
 
@@ -84,11 +85,12 @@ export default function RoomBookingForm({
 				end_time: new Date(Date.now() + 1000 * 60 * 60 * 3),
 				description_sv: "",
 				council_id: 0,
+				personal: true,
 			});
 		}
 	}, [defaultRoom, open]);
 
-	const checkboxFields = [] as const;
+	const checkboxFields = ["personal"] as const;
 
 	const queryClient = useQueryClient();
 
@@ -114,6 +116,7 @@ export default function RoomBookingForm({
 				end_time: values.end_time,
 				description: values.description_sv,
 				council_id: values.council_id,
+				personal: values.personal,
 			},
 		});
 	}

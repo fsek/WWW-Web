@@ -130,7 +130,8 @@ export function EventAddForm({
 			...(enableRoomBookingProperties
 				? {
 					room: z.enum(Object.values(room) as [string, ...string[]]),
-					council_id: z.number().int().positive(),
+					council_id: z.number().int().positive().optional(),
+					personal: z.boolean().default(true),
 				}
 				: {}),
 		})
@@ -170,7 +171,7 @@ export function EventAddForm({
 		)
 		.refine(
 			(data) => {
-				if (enableCarProperties) {
+				if (enableCarProperties || enableRoomBookingProperties) {
 					// Check if personal is false and council_id is not set
 					if (data.personal === false && !data.council_id) {
 						return false;
@@ -198,6 +199,7 @@ export function EventAddForm({
 			]
 			: []),
 		...(enableCarProperties ? ["personal"] : []),
+		...(enableRoomBookingProperties ? ["personal"] : []),
 	] as const;
 
 	type EventAddFormValues = z.infer<typeof eventAddFormSchema>;
@@ -281,6 +283,7 @@ export function EventAddForm({
 				? {
 					room: defaultRoom,
 					council_id: 1,
+					personal: true,
 				}
 				: {}),
 		});
@@ -329,6 +332,7 @@ export function EventAddForm({
 					? {
 						room: data.room,
 						council_id: data.council_id,
+						personal: data.personal,
 					}
 					: {}),
 			};

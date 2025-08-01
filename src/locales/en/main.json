@@ -103,8 +103,8 @@
 			},
 			"rooms": {
 				"self": "Room Bookings",
-				"desc": "Reserve meeting or event spaces with just a few clicks.",
-				"href": "/book-rooms"
+				"desc": "Book the three rooms in mattehuset for personal events or guild meetings.",
+				"href": "/room-bookings"
 			},
 			"tools": {
 				"self": "Tool Library",
@@ -281,6 +281,20 @@
 			"a6": "Different colors show status and ownership for each booking. An admin (the car foreman) must confirm bookings outside regular hours. The colors have the following meaning:\n- Light orange color means it's your booking, but it's not confirmed.\n- Dark orange color means it's your booking and it's confirmed.\n- Green color marks someone else's confirmed booking.\n- Yellow color shows someone else's unconfirmed booking.\n- Light blue color is used for bookings that have been added locally but haven't been retrieved from the server yet. If you see blue, something may have gone wrong, reload the page manually.",
 			"q7": "I have more questions!",
 			"a7": "You can contact the car foreman through, among other ways, the <0>contact page</0>. Please ask the car foreman or a webmaster to add the question with an answer here."
+		}
+	},
+	"room-booking": {
+		"title": "Room Bookings",
+		"description-title": "FAQ and rules",
+		"description": "As a member, you can book the guild rooms for your personal and guild-related needs. If you are an admin, you can manage bookings <0>here</0> instead.",
+		"faq": {
+			"title": "Frequently Asked Questions",
+			"q1": "Who can book the rooms?",
+			"a1": "Any member of the guild can book the rooms.",
+			"q2": "Noooo why is this not like the old website with confirmed and unconfirmed bookings?",
+			"a2": "Contact the webmasters if you want this feature back.",
+			"q3": "I have more questions!",
+			"a3": "There is no main responsible person for room bookings, contact the equipment master or the board if you have any questions. You can also ask them to add the question with an answer here."
 		}
 	},
 	"loading": {
