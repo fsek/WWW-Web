@@ -286,15 +286,13 @@
 	"room-booking": {
 		"title": "Room Bookings",
 		"description-title": "FAQ and rules",
-		"description": "As a member, you can book the guild rooms for your personal and guild-related needs. If you are an admin, you can manage bookings <0>here</0> instead.",
+		"description": "As a member, you must ask an admin if you want to book a room, but you can view all room bookings here. If you are an admin, you can book rooms <0>here</0> instead.",
 		"faq": {
 			"title": "Frequently Asked Questions",
 			"q1": "Who can book the rooms?",
-			"a1": "Any member of the guild can book the rooms.",
-			"q2": "Noooo why is this not like the old website with confirmed and unconfirmed bookings?",
-			"a2": "Contact the webmasters if you want this feature back.",
-			"q3": "I have more questions!",
-			"a3": "There is no main responsible person for room bookings, contact the equipment master or the board if you have any questions. You can also ask them to add the question with an answer here."
+			"a1": "Only admins can book the rooms. If you are a member, you can contact an admin from nämnden to ask them to book a room.",
+			"q2": "I have more questions!",
+			"a2": "There is no main responsible person for room bookings, contact the equipment master or the board if you have any questions. You can also ask them to add the question with an answer here."
 		}
 	},
 	"loading": {

@@ -4,18 +4,12 @@
 
 import { useState } from "react";
 import type { RoomBookingRead } from "@/api/index";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-	createRoomBookingMutation,
 	getAllRoomBookingsOptions,
 } from "@/api/@tanstack/react-query.gen";
 import Calendar from "@/components/full-calendar";
 import { EventsProvider } from "@/utils/full-calendar-event-context";
-import {
-	removeRoomBookingMutation,
-	getAllRoomBookingsQueryKey,
-	updateRoomBookingMutation,
-} from "@/api/@tanstack/react-query.gen";
 import type {
 	CalendarEvent,
 	CustomEventData,
@@ -33,14 +27,14 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import { toast } from "sonner";
+import { SelectFromOptions } from "@/widgets/SelectFromOptions";
+import type { room } from "@/api";
 
 export default function RoomBookings() {
 	const router = useRouter();
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
-	const [, setOpen] = useState(false);
-	const [, setSubmitEnabled] = useState(true);
+	const [selectedRoom, setSelectedRoom] = useState<room | "All">("All");
 
 	const {
 		data: bookingData,
@@ -62,36 +56,6 @@ export default function RoomBookings() {
 		staleTime: 30 * 60 * 1000, // Don't refetch for 30 minutes
 	});
 
-	const handleEventAdd = useMutation({
-		...createRoomBookingMutation(),
-		throwOnError: false,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllRoomBookingsQueryKey() });
-			setOpen(false);
-			setSubmitEnabled(true);
-		},
-	});
-
-	const handleEventDelete = useMutation({
-		...removeRoomBookingMutation(),
-		throwOnError: false,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllRoomBookingsQueryKey() });
-			setOpen(false);
-			setSubmitEnabled(true);
-		},
-	});
-
-	const handleEventEdit = useMutation({
-		...updateRoomBookingMutation(),
-		throwOnError: false,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllRoomBookingsQueryKey() });
-			setOpen(false);
-			setSubmitEnabled(true);
-		},
-	});
-
 	// only show full‐page loading on initial mount
 	if (isLoading || userIsLoading) {
 		return <LoadingErrorCard />;
@@ -103,16 +67,17 @@ export default function RoomBookings() {
 
 	interface CustomRoomEventData extends CustomEventData {
 		room: string;
-		council_id?: number;
-		personal: boolean;
-		council_name_sv?: string;
-		council_name_en?: string;
+		council_id: number;
+		council_name_sv: string;
+		council_name_en: string;
 		user_id: number;
 	}
 
 	// Transform the fetched data into CalendarEvent type
 	const events: CalendarEvent<CustomRoomEventData>[] =
-		(bookingData as RoomBookingRead[])?.map((booking) => {
+		(bookingData as RoomBookingRead[])?.filter((booking) =>
+			selectedRoom === "All" ? true : booking.room === selectedRoom
+		).map((booking) => {
 			const userName =
 				booking.user.first_name && booking.user.last_name
 					? `${booking.user.first_name} ${booking.user.last_name}`
@@ -131,7 +96,6 @@ export default function RoomBookings() {
 				room: booking.room,
 				council_name_sv: booking.council?.name_sv ?? undefined,
 				council_name_en: booking.council?.name_en ?? undefined,
-				personal: booking.personal ?? true,
 				council_id: booking.council?.id ?? undefined,
 				user_id: booking.user.id,
 				backgroundColor: backgroundColor,
@@ -149,99 +113,39 @@ export default function RoomBookings() {
 								className="mt-4"
 								size={4}
 							/>
+							<div className="py-2 w-64">
+								<SelectFromOptions
+									placeholder={t("admin:room_bookings.select_room") || "Välj rum"}
+									options={[
+										{ value: "LC", label: "LC" },
+										{ value: "Alumni", label: "Alumni" },
+										{ value: "SK", label: "SK" },
+										{ value: "All", label: t("admin:room_bookings.all_rooms") },
+									]}
+									value={selectedRoom}
+									onChange={(value) => setSelectedRoom(value as room | "All")}
+								/>
+							</div>
 							{!isFetching && !userIsFetching ? (
 								<EventsProvider
+									key={selectedRoom}
 									initialCalendarEvents={events}
 									eventColor="#f6ad55"
 									carEvents={false}
-									handleAdd={(event) => {
-										handleEventAdd.mutate(
-											{
-												body: {
-													room: event.room as "LC" | "Alumni" | "SK",
-													description: event.description_sv,
-													start_time: event.start,
-													end_time: event.end,
-													personal: (event.personal as boolean) ?? true,
-													council_id: event.council_id
-														? (event.council_id as number)
-														: undefined,
-												},
-											},
-											{
-												onError: (error) => {
-													toast.error(
-														t("admin:room_bookings.error_add") +
-														(error?.detail ? `: ${error.detail}` : ""),
-													);
-												},
-												onSuccess: () => {
-													toast.success(t("admin:room_bookings.success_add"));
-												},
-											},
-										);
-									}}
-									handleDelete={(id) => {
-										handleEventDelete.mutate(
-											{ path: { booking_id: Number(id) } },
-											{
-												onError: (error) => {
-													toast.error(
-														t("admin:room_bookings.error_delete") +
-														(error?.detail ? `: ${error.detail}` : ""),
-													);
-												},
-												onSuccess: () => {
-													toast.success(t("admin:room_bookings.success_delete"));
-												},
-											},
-										);
-									}}
-									handleEdit={(event) => {
-										if (!event.id) {
-											toast.error(t("admin:room_bookings.error_missing_id"));
-											return;
-										}
-
-										if (!event.title_sv) {
-											const msg = "Missing title";
-											toast.error(msg);
-											throw new Error(msg);
-										}
-
-										handleEventEdit.mutate(
-											{
-												path: { booking_id: Number(event.id) },
-												body: {
-													description: event.description_sv,
-													start_time: event.start,
-													end_time: event.end,
-												},
-											},
-											{
-												onError: (error) => {
-													toast.error(
-														t("admin:room_bookings.error_edit") +
-														(error?.detail ? `: ${error.detail}` : ""),
-													);
-												},
-												onSuccess: () => {
-													toast.success(t("admin:room_bookings.success_edit"));
-												},
-											},
-										);
-									}}
+									handleAdd={() => { }}
+									handleDelete={() => { }}
+									handleEdit={() => { }}
 								>
 									<div className="flex-1 flex flex-col h-full">
 										<Calendar
 											showDescription={true}
-											editDescription={true}
+											editDescription={false}
 											handleOpenDetails={(event) => {
 												if (event) {
 													router.push(`/room-bookings/details?id=${event.id}`);
 												}
 											}}
-											disableEdit={false}
+											disableEdit={true}
 											enableAllDay={false}
 											enableRoomBookingProperties={true}
 											disableEditOfOthers={true}
@@ -291,14 +195,6 @@ export default function RoomBookings() {
 								</AccordionTrigger>
 								<AccordionContent>
 									{t("main:room-booking.faq.a2")}
-								</AccordionContent>
-							</AccordionItem>
-							<AccordionItem value="item-3">
-								<AccordionTrigger>
-									{t("main:room-booking.faq.q3")}
-								</AccordionTrigger>
-								<AccordionContent>
-									{t("main:room-booking.faq.a3")}
 								</AccordionContent>
 							</AccordionItem>
 						</Accordion>
