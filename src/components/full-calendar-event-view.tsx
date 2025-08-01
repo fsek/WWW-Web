@@ -267,21 +267,21 @@ export function EventView({
 										</tr>
 									</>
 								)}
-								{event && (enableCarProperties || enableRoomBookingProperties) && (
-									<tr>
-										<th>{t("admin:car.personal")}</th>
-										<td>{event.personal ? t("admin:yes") : t("admin:no")}</td>
-									</tr>
-								)}
 								{event && enableCarProperties && (
-									<tr>
-										<th>{t("admin:car.confirmed")}</th>
-										<td>
-											{event.confirmed ? t("admin:yes") : t("admin:no")}
-										</td>
-									</tr>
+									<>
+										<tr>
+											<th>{t("admin:car.personal")}</th>
+											<td>{event.personal ? t("admin:yes") : t("admin:no")}</td>
+										</tr>
+										<tr>
+											<th>{t("admin:car.confirmed")}</th>
+											<td>
+												{event.confirmed ? t("admin:yes") : t("admin:no")}
+											</td>
+										</tr>
+									</>
 								)}
-								{event && (enableCarProperties || enableRoomBookingProperties) && (
+								{event && (enableCarProperties) && (
 									<tr>
 										<th>{t("admin:events.council")}</th>
 										<td>

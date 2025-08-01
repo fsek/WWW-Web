@@ -151,10 +151,9 @@ export default function RoomBookings() {
 	interface CustomRoomBookingData extends CustomEventData {
 		// We define these manually to avoid having start_time and start as different fields
 		room: string;
-		council_id?: number;
-		council_name_sv?: string;
-		council_name_en?: string;
-		personal: boolean;
+		council_id: number;
+		council_name_sv: string;
+		council_name_en: string;
 	}
 
 	// Map fetched bookings to calendar events
@@ -162,17 +161,16 @@ export default function RoomBookings() {
 		(data as RoomBookingRead[])?.map((booking) => ({
 			id: booking.id.toString(),
 			room: booking.room,
-			council_id: booking.council?.id,
-			council_name_sv: booking.council?.name_sv,
-			council_name_en: booking.council?.name_en,
+			council_id: booking.council.id,
+			council_name_sv: booking.council.name_sv || "None",
+			council_name_en: booking.council.name_en || "None",
 			user_id: booking.user.id,
-			title_sv: `${booking.user.first_name} ${booking.user.last_name}`,
-			title_en: `${booking.user.first_name} ${booking.user.last_name}`,
+			title_sv: `${booking.user.first_name} ${booking.user.last_name} - ${booking.council.name_sv}`,
+			title_en: `${booking.user.first_name} ${booking.user.last_name} - ${booking.council.name_en}`,
 			start: booking.start_time,
 			end: booking.end_time,
 			description_sv: booking.description,
 			description_en: booking.description,
-			personal: booking.personal,
 		})) ?? [];
 
 	// Handler for when calendar date range changes
@@ -218,7 +216,6 @@ export default function RoomBookings() {
 								end_time: event.end,
 								description: event.description_sv,
 								council_id: event.council_id as number,
-								personal: event.personal as boolean,
 							},
 						},
 						{

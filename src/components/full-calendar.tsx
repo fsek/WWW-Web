@@ -165,7 +165,6 @@ export default function Calendar({
 					council_id: info.event.extendedProps.council_id,
 					council_name_sv: info.event.extendedProps.council_name_sv,
 					council_name_en: info.event.extendedProps.council_name_en,
-					personal: info.event.extendedProps.personal,
 				}
 				: {}),
 		};
@@ -228,7 +227,6 @@ export default function Calendar({
 					council_id: info.event.extendedProps.council_id,
 					council_name_sv: info.event.extendedProps.council_name_sv,
 					council_name_en: info.event.extendedProps.council_name_en,
-					personal: info.event.extendedProps.personal,
 				}
 				: {}),
 		};
@@ -285,7 +283,6 @@ export default function Calendar({
 					council_id: info.oldEvent.extendedProps.council_id,
 					council_name_sv: info.oldEvent.extendedProps.council_name_sv,
 					council_name_en: info.oldEvent.extendedProps.council_name_en,
-					personal: info.oldEvent.extendedProps.personal,
 				}
 				: {}),
 		};
