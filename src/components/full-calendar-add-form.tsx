@@ -36,6 +36,8 @@ import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 import EventFormFields from "@/app/admin/events/EventFormFields";
+import EventRoomBookingFields from "@/app/admin/room-bookings/RoomBookingFormFields";
+import { room } from "@/api";
 
 interface EventAddFormProps {
 	start: Date;
@@ -45,6 +47,8 @@ interface EventAddFormProps {
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
 	enableCarProperties?: boolean;
+	enableRoomBookingProperties?: boolean;
+	defaultRoom?: "LC" | "Alumni" | "SK";
 }
 
 export function EventAddForm({
@@ -55,6 +59,8 @@ export function EventAddForm({
 	enableAllDay = true,
 	enableTrueEventProperties = false,
 	enableCarProperties = false,
+	enableRoomBookingProperties = false,
+	defaultRoom = "LC",
 }: EventAddFormProps) {
 	const { t } = useTranslation("calendar");
 
@@ -62,9 +68,9 @@ export function EventAddForm({
 		.object({
 			description_sv: editDescription
 				? z
-						.string({ required_error: t("add.error_description") })
-						.min(1, { message: t("add.error_description") })
-						.max(1000)
+					.string({ required_error: t("add.error_description") })
+					.min(1, { message: t("add.error_description") })
+					.max(1000)
 				: z.string().optional().default(""),
 			start: z.date({
 				required_error: t("add.error_start_time"),
@@ -78,48 +84,54 @@ export function EventAddForm({
 			color: z
 				.string({ required_error: "Please select an event color." })
 				.min(1, { message: "Must provide a title for this event." }),
-			...(!enableCarProperties
+			...(!enableCarProperties && !enableRoomBookingProperties
 				? {
-						title_sv: z
-							.string({ required_error: t("add.error_title") })
-							.min(1, { message: t("add.error_title") }),
-					}
+					title_sv: z
+						.string({ required_error: t("add.error_title") })
+						.min(1, { message: t("add.error_title") }),
+				}
 				: {}),
 			...(enableTrueEventProperties
 				? {
-						council_id: z.number().int().positive(),
-						signup_start: z.date(),
-						signup_end: z.date(),
-						title_en: z.string().min(1),
-						description_en: editDescription
-							? z
-									.string({ required_error: t("add.error_description") })
-									.min(1, { message: t("add.error_description") })
-									.max(1000)
-							: z.string().optional().default(""),
-						location: z.string().max(100),
-						max_event_users: z.coerce.number().nonnegative(),
-						recurring: z.boolean(),
-						food: z.boolean(),
-						closed: z.boolean(),
-						can_signup: z.boolean(),
-						drink_package: z.boolean(),
-						is_nollning_event: z.boolean(),
-						priorities: z.array(z.string()).optional().default([]),
-						alcohol_event_type: z
-							.enum(["Alcohol", "Alcohol-Served", "None"])
-							.default("None"),
-						dress_code: z.string().max(100).optional().default(""),
-						price: z.coerce.number().nonnegative().optional().default(0),
-						dot: z.enum(["None", "Single", "Double"]).default("None"),
-						lottery: z.boolean().default(false),
-					}
+					council_id: z.number().int().positive(),
+					signup_start: z.date(),
+					signup_end: z.date(),
+					title_en: z.string().min(1),
+					description_en: editDescription
+						? z
+							.string({ required_error: t("add.error_description") })
+							.min(1, { message: t("add.error_description") })
+							.max(1000)
+						: z.string().optional().default(""),
+					location: z.string().max(100),
+					max_event_users: z.coerce.number().nonnegative(),
+					recurring: z.boolean(),
+					food: z.boolean(),
+					closed: z.boolean(),
+					can_signup: z.boolean(),
+					drink_package: z.boolean(),
+					is_nollning_event: z.boolean(),
+					priorities: z.array(z.string()).optional().default([]),
+					alcohol_event_type: z
+						.enum(["Alcohol", "Alcohol-Served", "None"])
+						.default("None"),
+					dress_code: z.string().max(100).optional().default(""),
+					price: z.coerce.number().nonnegative().optional().default(0),
+					dot: z.enum(["None", "Single", "Double"]).default("None"),
+					lottery: z.boolean().default(false),
+				}
 				: {}),
 			...(enableCarProperties
 				? {
-						personal: z.boolean().default(true),
-						council_id: z.number().int().positive(),
-					}
+					personal: z.boolean().default(true),
+					council_id: z.number().int().positive(),
+				}
+				: {}),
+			...(enableRoomBookingProperties
+				? {
+					room: z.enum(Object.values(room) as [string, ...string[]]),
+					council_id: z.number().int().positive(),
+				}
 				: {}),
 		})
 		.refine(
@@ -176,14 +188,14 @@ export function EventAddForm({
 		...(enableAllDay ? ["all_day"] : []),
 		...(enableTrueEventProperties
 			? [
-					"recurring",
-					"food",
-					"closed",
-					"can_signup",
-					"drink_package",
-					"is_nollning_event",
-					"lottery",
-				]
+				"recurring",
+				"food",
+				"closed",
+				"can_signup",
+				"drink_package",
+				"is_nollning_event",
+				"lottery",
+			]
 			: []),
 		...(enableCarProperties ? ["personal"] : []),
 	] as const;
@@ -224,6 +236,7 @@ export function EventAddForm({
 			dot: "None",
 			lottery: false,
 			personal: true,
+			room: defaultRoom,
 		},
 	});
 
@@ -239,33 +252,39 @@ export function EventAddForm({
 			color: "#76c7ef",
 			...(enableTrueEventProperties
 				? {
-						council_id: 1,
-						signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later
-						signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
-						location: "",
-						max_event_users: 0,
-						recurring: false,
-						food: false,
-						closed: false,
-						can_signup: false,
-						drink_package: false,
-						is_nollning_event: false,
-						priorities: [],
-						alcohol_event_type: "None",
-						dress_code: "",
-						price: 0,
-						dot: "None",
-						lottery: false,
-					}
+					council_id: 1,
+					signup_start: new Date(Date.now() + 1000 * 60 * 60 * 1), // 1 hour later
+					signup_end: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
+					location: "",
+					max_event_users: 0,
+					recurring: false,
+					food: false,
+					closed: false,
+					can_signup: false,
+					drink_package: false,
+					is_nollning_event: false,
+					priorities: [],
+					alcohol_event_type: "None",
+					dress_code: "",
+					price: 0,
+					dot: "None",
+					lottery: false,
+				}
 				: {}),
 			...(enableCarProperties
 				? {
-						personal: true,
-						council_id: 1,
-					}
+					personal: true,
+					council_id: 1,
+				}
+				: {}),
+			...(enableRoomBookingProperties
+				? {
+					room: defaultRoom,
+					council_id: 1,
+				}
 				: {}),
 		});
-	}, [form, start, end, enableTrueEventProperties, enableCarProperties]);
+	}, [form, start, end, enableTrueEventProperties, enableCarProperties, enableRoomBookingProperties]);
 
 	const onSubmit = useCallback(
 		async (data: EventAddFormValues) => {
@@ -279,32 +298,38 @@ export function EventAddForm({
 				color: data.color,
 				...(enableTrueEventProperties
 					? {
-							council_id: data.council_id,
-							signup_start: data.signup_start,
-							signup_end: data.signup_end,
-							title_en: data.title_en,
-							description_en: data.description_en,
-							location: data.location,
-							max_event_users: data.max_event_users,
-							recurring: data.recurring,
-							food: data.food,
-							closed: data.closed,
-							can_signup: data.can_signup,
-							drink_package: data.drink_package,
-							is_nollning_event: data.is_nollning_event,
-							priorities: data.priorities ?? [],
-							alcohol_event_type: data.alcohol_event_type,
-							dress_code: data.dress_code,
-							price: data.price,
-							dot: data.dot,
-							lottery: data.lottery,
-						}
+						council_id: data.council_id,
+						signup_start: data.signup_start,
+						signup_end: data.signup_end,
+						title_en: data.title_en,
+						description_en: data.description_en,
+						location: data.location,
+						max_event_users: data.max_event_users,
+						recurring: data.recurring,
+						food: data.food,
+						closed: data.closed,
+						can_signup: data.can_signup,
+						drink_package: data.drink_package,
+						is_nollning_event: data.is_nollning_event,
+						priorities: data.priorities ?? [],
+						alcohol_event_type: data.alcohol_event_type,
+						dress_code: data.dress_code,
+						price: data.price,
+						dot: data.dot,
+						lottery: data.lottery,
+					}
 					: {}),
 				...(enableCarProperties
 					? {
-							personal: data.personal,
-							council_id: data.council_id,
-						}
+						personal: data.personal,
+						council_id: data.council_id,
+					}
+					: {}),
+				...(enableRoomBookingProperties
+					? {
+						room: data.room,
+						council_id: data.council_id,
+					}
 					: {}),
 			};
 			addEvent(newEvent);
@@ -327,6 +352,7 @@ export function EventAddForm({
 			t,
 			enableTrueEventProperties,
 			enableCarProperties,
+			enableRoomBookingProperties,
 		],
 	);
 
@@ -362,6 +388,11 @@ export function EventAddForm({
 									checkboxFields
 								}
 							/>
+						) : enableRoomBookingProperties ? (
+							<EventRoomBookingFields
+								roomBookingForm={form as any}
+								checkboxFields={checkboxFields}
+							/>
 						) : (
 							<div className="grid gap-x-4 gap-y-3 lg:grid-cols-4">
 								{/* Title (sv) */}
@@ -384,70 +415,26 @@ export function EventAddForm({
 									/>
 								)}
 
-								{/* Title (en) */}
-								{enableTrueEventProperties && (
+								{editDescription && (
 									<FormField
 										control={form.control}
-										name="title_en"
+										name="description_sv"
 										render={({ field }) => (
 											<FormItem>
-												<FormLabel>{t("admin:events.title_en")}</FormLabel>
+												<FormLabel>
+													{t("admin:events.description_sv")}
+												</FormLabel>
 												<FormControl>
-													<Input
-														placeholder={t("add.placeholder.title")}
+													<Textarea
+														placeholder={t("add.placeholder.description")}
+														className="max-h-36"
 														{...field}
-														value={field.value as string}
 													/>
 												</FormControl>
+												<FormMessage />
 											</FormItem>
 										)}
 									/>
-								)}
-
-								{editDescription && (
-									<>
-										<FormField
-											control={form.control}
-											name="description_sv"
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>
-														{t("admin:events.description_sv")}
-													</FormLabel>
-													<FormControl>
-														<Textarea
-															placeholder={t("add.placeholder.description")}
-															className="max-h-36"
-															{...field}
-														/>
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-										{enableTrueEventProperties && (
-											<FormField
-												control={form.control}
-												name="description_en"
-												render={({ field }) => (
-													<FormItem>
-														<FormLabel>
-															{t("admin:events.description_en")}
-														</FormLabel>
-														<FormControl>
-															<Textarea
-																placeholder={t("add.placeholder.description")}
-																className="max-h-36"
-																{...field}
-																value={field.value as string}
-															/>
-														</FormControl>
-														<FormMessage />
-													</FormItem>
-												)}
-											/>
-										)}
-									</>
 								)}
 								<FormField
 									control={form.control}
@@ -496,67 +483,6 @@ export function EventAddForm({
 										</FormItem>
 									)}
 								/>
-								{enableTrueEventProperties && (
-									<>
-										<FormField
-											control={form.control}
-											name="signup_start"
-											render={({ field }) => (
-												<FormItem className="flex flex-col">
-													<FormLabel htmlFor="datetime">
-														{t("admin:events.signup_start")}
-													</FormLabel>
-													<FormControl>
-														<AdminChooseDates
-															value={field.value as Date}
-															onChange={(newSignupStart: Date) => {
-																field.onChange(newSignupStart);
-																const signupEnd = form.getValues(
-																	"signup_end",
-																) as Date;
-																if (
-																	signupEnd &&
-																	signupEnd.getTime() < newSignupStart.getTime()
-																) {
-																	const newSignupEnd = new Date(
-																		newSignupStart.getTime() + 60 * 60 * 1000,
-																	);
-																	form.setValue<"signup_end">(
-																		"signup_end",
-																		newSignupEnd,
-																		{
-																			shouldDirty: true,
-																			shouldValidate: true,
-																		},
-																	);
-																}
-															}}
-														/>
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-										<FormField
-											control={form.control}
-											name="signup_end"
-											render={({ field }) => (
-												<FormItem className="flex flex-col">
-													<FormLabel htmlFor="datetime">
-														{t("admin:events.signup_end")}
-													</FormLabel>
-													<FormControl>
-														<AdminChooseDates
-															value={field.value as Date}
-															onChange={field.onChange}
-														/>
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-									</>
-								)}
 
 								{/* Council */}
 								{(enableTrueEventProperties || enableCarProperties) && (
