@@ -40,6 +40,7 @@ interface EventViewProps {
 	enableCarProperties?: boolean;
 	disableConfirmField?: boolean;
 	disableEditOfOthers?: boolean; // Optional prop to disable editing of others' events
+	enableRoomBookingProperties?: boolean;
 }
 
 export function EventView({
@@ -53,6 +54,7 @@ export function EventView({
 	enableCarProperties = false,
 	disableConfirmField = false,
 	disableEditOfOthers = false,
+	enableRoomBookingProperties = false,
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 	const { t, i18n } = useTranslation("calendar");
@@ -112,7 +114,7 @@ export function EventView({
 										<td>
 											{(() => {
 												const raw =
-													i18n.language === "en" && !enableCarProperties
+													i18n.language === "en" && !enableCarProperties && !enableRoomBookingProperties
 														? event?.description_en
 														: event?.description_sv;
 												const desc = typeof raw === "string" ? raw : "";
@@ -279,10 +281,12 @@ export function EventView({
 										</tr>
 									</>
 								)}
-								{event && enableCarProperties && (
+								{event && (enableCarProperties) && (
 									<tr>
 										<th>{t("admin:events.council")}</th>
 										<td>
+											{/* If there is no council name, or if the event is personal */}
+											{/* show "No Council", otherwise show the council name */}
 											{!(i18n.language === "en"
 												? event.council_name_en
 												: event.council_name_sv) || event.personal ? (
@@ -297,6 +301,22 @@ export function EventView({
 												</>
 											)}
 										</td>
+									</tr>
+								)}
+								{event && enableRoomBookingProperties && (
+									<tr>
+										<th>{t("admin:room_bookings.council")}</th>
+										<td>
+											{i18n.language === "en"
+												? event.council_name_en as string
+												: event.council_name_sv as string}
+										</td>
+									</tr>
+								)}
+								{event && enableRoomBookingProperties && (
+									<tr>
+										<th>{t("admin:room_bookings.room")}</th>
+										<td>{event.room as string}</td>
 									</tr>
 								)}
 							</tbody>
@@ -333,6 +353,7 @@ export function EventView({
 								enableTrueEventProperties={enableTrueEventProperties}
 								enableCarProperties={enableCarProperties}
 								disableConfirmField={disableConfirmField}
+								enableRoomBookingProperties={enableRoomBookingProperties}
 							/>
 						)}
 					</AlertDialogFooter>
