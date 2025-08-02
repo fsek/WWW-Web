@@ -1,13 +1,6 @@
 import { useState } from "react";
-import {
-	Popover,
-	PopoverTrigger,
-	PopoverContent,
-} from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Combobox } from "@/components/ui/combobox";
 import { cn } from "@/lib/utils";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const currentYear = new Date().getFullYear();
 const recentYears = Array.from({ length: 8 }, (_, i) =>
@@ -30,105 +23,71 @@ const isInputValid = (input: string) => {
 };
 
 export default function StartYearFilter({ value, onChange }: Props) {
-	const [open, setOpen] = useState(false);
 	const [inputValue, setInputValue] = useState(value?.toString() || "");
 	const [inputValid, setInputValid] = useState(true);
 
-	const handleSelect = (year: string) => {
-		if (isInputValid(year)) {
+	const handleChange = (val: string | null) => {
+		if (val === null || val === "") {
+			setInputValue("");
 			setInputValid(true);
-			setInputValue(year);
-			onChange(Number(year));
-			setOpen(false);
+			onChange(null);
+			return;
+		}
+		setInputValue(val);
+		if (isInputValid(val)) {
+			setInputValid(true);
+			onChange(Number(val));
 		} else {
 			setInputValid(false);
+			onChange(null);
 		}
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-
-		const parsed = Number.parseInt(inputValue);
-		if (isInputValid(inputValue)) {
-			setInputValid(true);
-			onChange(Number.isNaN(parsed) ? null : parsed);
-		} else {
-			setInputValid(false);
-			onChange(null); // treat invalid year as unselected
-		}
-	};
-
-	const handleClear = () => {
-		setInputValue("");
-		onChange(null);
-		setOpen(false);
 	};
 
 	return (
-		<div className="w-full max-w-xs">
-			<Popover
-				open={open}
-				onOpenChange={(next) => {
-					if (next) {
+		<div className="w-full max-w-sm">
+			<Combobox
+				options={recentYears.map((year) => ({
+					label: year,
+					value: year,
+				}))}
+				inputValue={inputValue}
+				onInputChange={(val: string) => {
+					setInputValue(val);
+					if (isInputValid(val)) {
 						setInputValid(true);
-						setOpen(next);
 					} else {
-						handleClose();
+						setInputValid(false);
 					}
 				}}
-			>
-				<PopoverTrigger asChild>
-					<Button
-						variant="outline"
-						className={cn(
-							"w-full justify-start p-3 ",
-							!inputValid && "border-red-500 text-red-500",
-							inputValue === "" && "text-gray-500",
-						)}
-					>
-						{inputValue || "Select start year"}
-					</Button>
-				</PopoverTrigger>
-				<PopoverContent className="w-full p-0 ">
-					<ScrollArea className="h-[200px]">
-						<div className="p-3">
-							<Input
-								placeholder="Enter year"
-								value={inputValue}
-								onChange={(e) => setInputValue(e.target.value)}
-								className={cn(
-									"mb-2 text-sm font-normal",
-									!inputValid && "border-red-500",
-								)}
-							/>
-							{!inputValid && (
-								<p className="text-red-500 text-sm mt-1">
-									Year must be between {MIN_YEAR} and {currentYear}
-								</p>
-							)}
-							<div className="flex flex-col gap-1">
-								<Button
-									variant="ghost"
-									className="w-full justify-start text-red-500 text-sm font-normal"
-									onClick={handleClear}
-								>
-									Clear
-								</Button>
-								{recentYears.map((year) => (
-									<Button
-										key={year}
-										variant="ghost"
-										className="w-full justify-start text-sm font-normal"
-										onClick={() => handleSelect(year)}
-									>
-										{year}
-									</Button>
-								))}
-							</div>
-						</div>
-					</ScrollArea>
-				</PopoverContent>
-			</Popover>
+				value={inputValue === "" ? null : inputValue}
+				onChange={handleChange}
+				placeholder="Select start year"
+				clearable
+				renderOption={(option: { label: string; value: string }) => (
+					<span className="text-sm font-normal">{option.label}</span>
+				)}
+				inputProps={{
+					className: cn(
+						"p-3 text-sm font-normal",
+						!inputValid && "border-red-500 text-red-500",
+					),
+					"aria-invalid": !inputValid,
+				}}
+				noOptionsMessage={() =>
+					!inputValid ? (
+						<span className="text-red-500 text-sm">
+							Year must be between {MIN_YEAR} and {currentYear}
+						</span>
+					) : (
+						<span className="text-gray-500 text-sm">No years found</span>
+					)
+				}
+			/>
+			{!inputValid && (
+				<p className="text-red-500 text-sm mt-1">
+					Year must be between {MIN_YEAR} and {currentYear}
+				</p>
+			)}
 		</div>
 	);
 }

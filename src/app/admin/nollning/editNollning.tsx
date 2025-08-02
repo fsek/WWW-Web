@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -34,6 +34,7 @@ const nollningSchema = z.object({
 	id: z.number(),
 	name: z.string().min(1),
 	description: z.string().min(1),
+	year: z.coerce.number().min(1960).max(2100),
 });
 
 const EditNollning = ({ nollning }: Props) => {
@@ -41,12 +42,16 @@ const EditNollning = ({ nollning }: Props) => {
 
 	const nollningForm = useForm<z.infer<typeof nollningSchema>>({
 		resolver: zodResolver(nollningSchema),
-		defaultValues: {
+	});
+
+	useEffect(() => {
+		nollningForm.reset({
 			id: nollning.id,
 			name: nollning.name,
 			description: nollning.description,
-		},
-	});
+			year: nollning.year,
+		});
+	}, [nollning, nollningForm]);
 
 	const queryClient = useQueryClient();
 
@@ -67,6 +72,7 @@ const EditNollning = ({ nollning }: Props) => {
 			body: {
 				name: values.name,
 				description: values.description,
+				year: values.year,
 			},
 		});
 	};
@@ -100,6 +106,22 @@ const EditNollning = ({ nollning }: Props) => {
 											<FormLabel>Namn </FormLabel>
 											<FormControl>
 												<Input placeholder={nollning.name} {...field} />
+											</FormControl>
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={nollningForm.control}
+									name={"year"}
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>År</FormLabel>
+											<FormControl>
+												<Input
+													type="number"
+													placeholder={nollning.year.toString()}
+													{...field}
+												/>
 											</FormControl>
 										</FormItem>
 									)}

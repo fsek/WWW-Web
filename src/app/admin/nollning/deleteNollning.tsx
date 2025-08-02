@@ -4,6 +4,7 @@ import {
 	getAllNollningQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
+import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
 import {
 	Dialog,
 	DialogClose,
@@ -32,49 +33,28 @@ const DeleteNollning = ({ nollning }: Props) => {
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllNollningQueryKey() });
 		},
-		onError: () => {},
+		onError: () => { },
 	});
 
 	return (
 		<div>
-			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogTrigger asChild>
-					<Button
-						variant="destructive"
-						type="button"
-						className="w-32 min-w-fit"
-					>
-						Förinta
-					</Button>
-				</DialogTrigger>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle className="text-3xl py-3 underline underline-offset-4">
-							Vill du verkligen radera {nollning.name}
-						</DialogTitle>
-						<DialogDescription>
-							{nollning.name} kommer permanent raderas, dett går inte att ångra
-						</DialogDescription>
-					</DialogHeader>
-					<DialogFooter>
-						<div>
-							<Button
-								variant="destructive"
-								type="button"
-								className="w-32 min-w-fit"
-								onClick={() =>
-									deleteNollning.mutate({
-										path: { nollning_id: nollning.id },
-									})
-								}
-							>
-								Förinta
-							</Button>
-							<DialogClose>Avbryt</DialogClose>
-						</div>
-					</DialogFooter>
-				</DialogContent>
-			</Dialog>
+			<ConfirmDeleteDialog
+				open={open}
+				onOpenChange={setOpen}
+				onConfirm={() =>
+					deleteNollning.mutate({
+						path: { nollning_id: nollning.id },
+					})
+				}
+				triggerText="Förinta"
+				title={`Radera ${nollning.name}`}
+				description={`Är du säker på att du vill radera ${nollning.name}? Detta kan inte ångras.`}
+				confirmText="Förinta"
+				cancelText="Avbryt"
+				confirmByTyping={true}
+				confirmByTypingText={`Skriv "${nollning.name}" nedan för att bekräfta borttagningen.`}
+				confirmByTypingKey={nollning.name}
+			/>
 		</div>
 	);
 };

@@ -29,8 +29,10 @@ import { Button } from "@/components/ui/button";
 import SearchBar from "./searchBar";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { DialogTitle } from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
-const page = () => {
+export default function GroupUsersPage() {
 	const searchParams = useSearchParams();
 	const searchID = searchParams.get("id");
 	const searchGroup = searchParams.get("group");
@@ -152,7 +154,33 @@ const page = () => {
 					</Button>
 				</div>
 				<div className="space-y-4 flex flex-row space-x-8">
-					<div className="space-x-4 flex-4">
+					<div className="space-x-4">
+						<div className="flex flex-row space-y-2">
+							<div className="border border-card-foreground/20 rounded-lg bg-card mb-5 w-sm">
+								<div className="space-x-4 space-y-4 flex-2 p-4">
+									<h3 className="text-xl">
+										Lägg till medlemmar
+									</h3>
+
+									<SearchBar
+										excludedFromSearch={group.data.group_users}
+										onRowClick={handleAddUser}
+									/>
+								</div>
+							</div>
+							<div className="border border-card-foreground/20 rounded-lg bg-card mb-5 mx-5 w-sm">
+								<div className="space-x-4 space-y-4 flex-2 p-4">
+									<h3 className="text-xl">Information</h3>
+									<p className="text-sm text-muted-foreground">
+										På denna sida kan du hantera medlemmar i
+										"{group.data.name}"-gruppen. Du kan lägga till
+										eller ta bort medlemmar från gruppen.
+										Använd sökfältet för att hitta användare som du vill lägga till i
+										gruppen. Du kan söka på namn, program och startår.
+									</p>
+								</div>
+							</div>
+						</div>
 						<AdminTable
 							table={table}
 							onRowClick={(row) => {
@@ -169,6 +197,11 @@ const page = () => {
 							}}
 						>
 							<DialogContent>
+								<VisuallyHidden>
+									<DialogTitle>
+										Remove member from group
+									</DialogTitle>
+								</VisuallyHidden>
 								<DialogHeader>
 									Ta bort {selectedUser?.user.first_name}{" "}
 									{selectedUser?.user.last_name} från {group.data.name}
@@ -184,22 +217,8 @@ const page = () => {
 							</DialogContent>
 						</Dialog>
 					</div>
-					<div className="border border-gray-200 rounded-lg bg-gray-100">
-						<div className="space-x-4 space-y-4 flex-2 p-4">
-							<h3 className="text-3xl py-3 underline underline-offset-4">
-								Lägg till medlemmar
-							</h3>
-
-							<SearchBar
-								excludedFromSearch={group.data.group_users}
-								onRowClick={handleAddUser}
-							/>
-						</div>
-					</div>
 				</div>
 			</div>
 		</Suspense>
 	);
 };
-
-export default page;
