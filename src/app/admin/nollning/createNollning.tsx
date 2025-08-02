@@ -27,6 +27,7 @@ import { z } from "zod";
 const nollningSchema = z.object({
 	name: z.string().min(1),
 	description: z.string().min(1),
+	year: z.coerce.number().min(1960).max(2100),
 });
 
 const CreateNollning = () => {
@@ -37,6 +38,7 @@ const CreateNollning = () => {
 		defaultValues: {
 			name: "",
 			description: "",
+			year: new Date().getFullYear(),
 		},
 	});
 
@@ -58,6 +60,7 @@ const CreateNollning = () => {
 			body: {
 				name: values.name,
 				description: values.description,
+				year: values.year,
 			},
 		});
 	}
@@ -92,6 +95,22 @@ const CreateNollning = () => {
 											<FormLabel>Namn </FormLabel>
 											<FormControl>
 												<Input placeholder="Namn" {...field} />
+											</FormControl>
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={nollningForm.control}
+									name={"year"}
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>År</FormLabel>
+											<FormControl>
+												<Input
+													type="number"
+													placeholder="År"
+													{...field}
+												/>
 											</FormControl>
 										</FormItem>
 									)}

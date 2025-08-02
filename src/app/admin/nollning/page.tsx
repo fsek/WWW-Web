@@ -14,17 +14,17 @@ const Nollning = () => {
 
 	return (
 		<Suspense fallback={<div>{"Nollningar kunde inte hämtas"}</div>}>
-			<div className="px-12 py-4 space-x-4 space-y-4 w-[1000px]">
+			<div className="px-12 py-4 space-x-4 space-y-4">
 				<h3 className="text-3xl py-3 text-primary font-bold">
 					Administrera Nollningar
 				</h3>
 				<CreateNollning />
 				<Accordion
 					className="w-full border rounded-md"
-					type="single"
+					type="single" // Only one item can be expanded at a time
 					collapsible
 				>
-					{data.map((nollning) => {
+					{data.sort((a, b) => b.year - a.year).map((nollning) => { // Newer first
 						return (
 							<NollningAccordionItem key={nollning.id} nollning={nollning} />
 						);

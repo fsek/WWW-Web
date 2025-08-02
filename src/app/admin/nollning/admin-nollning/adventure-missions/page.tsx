@@ -13,8 +13,10 @@ import CreateAdventureMission from "./createAdventureMission";
 import EditAdventureMission from "./editAdventureMission";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const page = () => {
+	const { t, i18n } = useTranslation();
 	const searchParams = useSearchParams();
 	const search = searchParams.get("id");
 	const nollningID = idAsNumber(search);
@@ -30,11 +32,11 @@ const page = () => {
 
 	const columnHelper = createColumnHelper<AdventureMissionRead>();
 	const columns = [
-		columnHelper.accessor("title", {
+		columnHelper.accessor(i18n.language === "en" ? "title_en" : "title_sv", {
 			header: "Titel",
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.accessor("description", {
+		columnHelper.accessor(i18n.language === "en" ? "description_en" : "description_sv", {
 			header: "Uppdrag",
 			cell: (info) => info.getValue(),
 		}),

@@ -24,8 +24,10 @@ import AdminTable from "@/widgets/AdminTable";
 import MissionPointRangeDialog from "./missionPointRangeDialog";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const page = () => {
+	const { t, i18n } = useTranslation();
 	const searchParams = useSearchParams();
 	const searchID = searchParams.get("id");
 	const searchGroup = searchParams.get("group");
@@ -77,7 +79,7 @@ const page = () => {
 				}),
 			});
 		},
-		onError: () => {},
+		onError: () => { },
 	});
 
 	const removeCompletedMission = useMutation({
@@ -89,7 +91,7 @@ const page = () => {
 				}),
 			});
 		},
-		onError: () => {},
+		onError: () => { },
 	});
 
 	const editCompletedMission = useMutation({
@@ -101,7 +103,7 @@ const page = () => {
 				}),
 			});
 		},
-		onError: () => {},
+		onError: () => { },
 	});
 
 	const mutationOptions = {
@@ -155,7 +157,7 @@ const page = () => {
 
 	const columnHelper = createColumnHelper<AdventureMissionRead>();
 	const columns = [
-		columnHelper.accessor("description", {
+		columnHelper.accessor(i18n.language === "en" ? "description_en" : "description_sv", {
 			header: "Uppdrag",
 			cell: (info) => info.getValue(),
 		}),

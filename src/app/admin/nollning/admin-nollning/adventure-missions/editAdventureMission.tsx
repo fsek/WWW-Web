@@ -27,8 +27,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const AdventureMissionSchema = z.object({
-	title: z.string().min(2),
-	description: z.string().min(2),
+	title_sv: z.string().min(2),
+	title_en: z.string().min(2),
+	description_sv: z.string().min(2),
+	description_en: z.string().min(2),
 	max_points: z.number().min(1),
 	min_points: z.number().min(0),
 	nollning_week: z.number().min(1).max(5),
@@ -50,8 +52,10 @@ const EditAdventureMission = ({
 	const form = useForm<z.infer<typeof AdventureMissionSchema>>({
 		resolver: zodResolver(AdventureMissionSchema),
 		defaultValues: {
-			title: "",
-			description: "",
+			title_sv: "",
+			title_en: "",
+			description_sv: "",
+			description_en: "",
 			max_points: 1,
 			min_points: 1,
 			nollning_week: 1,
@@ -103,8 +107,10 @@ const EditAdventureMission = ({
 			{
 				path: { mission_id: selectedMission.id },
 				body: {
-					title: values.title,
-					description: values.description,
+					title_sv: values.title_sv,
+					title_en: values.title_en,
+					description_sv: values.description_sv,
+					description_en: values.description_en,
 					max_points: values.max_points,
 					min_points: values.min_points,
 					nollning_week: values.nollning_week,
@@ -155,10 +161,10 @@ const EditAdventureMission = ({
 						<div className="px-8 space-x-4">
 							<FormField
 								control={form.control}
-								name={"title"}
+								name={"title_sv"}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Titel </FormLabel>
+										<FormLabel>Titel (Svenska)</FormLabel>
 										<FormControl>
 											<Input placeholder="Titel" {...field} />
 										</FormControl>
@@ -167,10 +173,38 @@ const EditAdventureMission = ({
 							/>
 							<FormField
 								control={form.control}
-								name={"description"}
+								name={"title_en"}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Beskrivning</FormLabel>
+										<FormLabel>Titel (Engelska)</FormLabel>
+										<FormControl>
+											<Input placeholder="Titel" {...field} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name={"description_sv"}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Beskrivning (Svenska)</FormLabel>
+										<FormControl>
+											<textarea
+												className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+												placeholder="Beskrivning"
+												{...field}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name={"description_en"}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Beskrivning (Engelska)</FormLabel>
 										<FormControl>
 											<textarea
 												className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"

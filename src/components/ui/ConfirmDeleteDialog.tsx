@@ -11,6 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { Input } from "@/components/ui/input"
 
 interface ConfirmDeleteDialogProps {
 	open: boolean;
@@ -22,6 +24,9 @@ interface ConfirmDeleteDialogProps {
 	confirmText?: string;
 	cancelText?: string;
 	children?: React.ReactNode;
+	confirmByTyping?: boolean;
+	confirmByTypingText?: string;
+	confirmByTypingKey?: string;
 }
 
 export function ConfirmDeleteDialog({
@@ -34,8 +39,16 @@ export function ConfirmDeleteDialog({
 	confirmText,
 	cancelText,
 	children,
+	confirmByTyping = false,
+	confirmByTypingText,
+	confirmByTypingKey = "confirm",
 }: ConfirmDeleteDialogProps) {
 	const { t } = useTranslation();
+	const [typedValue, setTypedValue] = useState("");
+
+	const isConfirmEnabled =
+		!confirmByTyping ||
+		typedValue.trim() === (confirmByTypingKey ?? "").trim();
 
 	return (
 		<AlertDialog open={open} onOpenChange={onOpenChange}>
@@ -59,9 +72,30 @@ export function ConfirmDeleteDialog({
 						{title ?? t("admin:remove_confirm_title")}
 					</AlertDialogTitle>
 					{children ?? description ?? t("admin:remove_confirm_text")}
+					{confirmByTyping && (
+						<div className="mt-4 flex flex-col gap-2">
+							<span>
+								{confirmByTypingText ??
+									t("admin:remove_confirm_by_typing", {
+										key: confirmByTypingKey,
+									})}
+							</span>
+							<Input
+								type="text"
+								className="input input-bordered w-full"
+								value={typedValue}
+								onChange={(e) => setTypedValue(e.target.value)}
+							/>
+						</div>
+					)}
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel onClick={() => onOpenChange(false)}>
+					<AlertDialogCancel
+						onClick={() => {
+							onOpenChange(false);
+							setTypedValue("");
+						}}
+					>
 						{cancelText ?? t("admin:cancel")}
 					</AlertDialogCancel>
 					<Button
@@ -69,7 +103,9 @@ export function ConfirmDeleteDialog({
 						onClick={() => {
 							onConfirm();
 							onOpenChange(false);
+							setTypedValue("");
 						}}
+						disabled={!isConfirmEnabled}
 					>
 						<Trash2 />
 						{confirmText ?? t("admin:remove")}
