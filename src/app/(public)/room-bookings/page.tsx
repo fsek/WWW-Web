@@ -87,8 +87,8 @@ export default function RoomBookings() {
 				: "#66cc00"; // Other users' bookings
 			return {
 				id: booking.id.toString(),
-				title_sv: `${booking.user.first_name} ${booking.user.last_name}`,
-				title_en: `${booking.user.first_name} ${booking.user.last_name}`,
+				title_sv: `${booking.room} - ${userName}`,
+				title_en: `${booking.room} - ${userName}`,
 				start: booking.start_time,
 				end: booking.end_time,
 				all_day: false,
