@@ -1,11 +1,8 @@
 "use client";
 
 import {
-	getMeOptions,
 	getRoomBookingOptions,
-	adminGetUserOptions,
 } from "@/api/@tanstack/react-query.gen";
-import { parsePhoneNumberWithError } from "libphonenumber-js";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
@@ -15,46 +12,18 @@ import {
 	MapPin,
 	User,
 	ArrowLeft,
-	Mail,
-	IdCard,
-	Phone,
 	Home,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import type { AdminUserRead } from "@/api/index";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
 	const num = Number(value);
 	return Number.isNaN(num) ? -1 : num;
-}
-
-function viewingUserGotPerms(
-	userData: AdminUserRead | undefined,
-	userError: Error | null,
-	userIsFetching: boolean,
-): boolean {
-	if (userIsFetching) return false;
-	if (userError !== null || !userData) {
-		return false;
-	}
-
-	if (userData.posts) {
-		return userData.posts.some((post) =>
-			post.permissions.some(
-				(permission) =>
-					(permission.action === "manage" && permission.target === "user") ||
-					(permission.action === "view" && permission.target === "user") ||
-					true,
-			),
-		);
-	}
-	return false;
 }
 
 export default function Page() {
@@ -64,18 +33,7 @@ export default function Page() {
 	const search = searchParams.get("id");
 	const bookingID = idAsNumber(search);
 
-	// Always call all hooks in the same order
-	// 1. Fetch user data first - always enabled
-	const {
-		data: userData,
-		error: userError,
-		isFetching: userIsFetching,
-	} = useQuery({
-		...getMeOptions(),
-		staleTime: 30 * 60 * 1000,
-	});
-
-	// 2. Then fetch booking data - enabled if bookingID is valid
+	// Fetch booking data
 	const {
 		data: bookingData,
 		error: bookingError,
@@ -87,22 +45,7 @@ export default function Page() {
 		enabled: bookingID > 0,
 	});
 
-	// 3. Check permissions based on user data
-	const userHasPerms = viewingUserGotPerms(userData, userError, userIsFetching);
-
-	// 4. Finally fetch user details - enabled if permissions and bookingData exist
-	const {
-		data: userDetails,
-		error: userDetailsError,
-	} = useQuery({
-		...adminGetUserOptions({
-			path: { user_id: bookingData?.user.id ?? -1 },
-		}),
-		enabled: userHasPerms && !!bookingData?.user.id,
-		staleTime: 30 * 60 * 1000,
-	});
-
-	// Rendering logic after all hooks
+	// Rendering logic
 	if (bookingID === -1) {
 		return (
 			<LoadingErrorCard
@@ -123,10 +66,6 @@ export default function Page() {
 				isLoading={false}
 			/>
 		);
-	}
-
-	if (userHasPerms && userDetailsError) {
-		return <LoadingErrorCard error={userDetailsError} isLoading={false} />;
 	}
 
 	const formatDateShort = (date: Date) => {
@@ -187,31 +126,6 @@ export default function Page() {
 									: `User ${bookingData.user.id}`}
 							</span>
 						</div>
-						{userHasPerms && userDetails && (
-							<>
-								<div className="flex items-center gap-2">
-									<Mail className="w-4 h-4 text-muted-foreground" />
-									<span>
-										{t("admin:room_bookings.email")}: {userDetails.email}
-									</span>
-								</div>
-								<div className="flex items-center gap-2">
-									<Phone className="w-4 h-4 text-muted-foreground" />
-									<span>
-										{t("admin:room_bookings.telephone_number")}:{" "}
-										{parsePhoneNumberWithError(
-											userDetails.telephone_number,
-										).formatNational() ?? userDetails.telephone_number}
-									</span>
-								</div>
-								<div className="flex items-center gap-2">
-									<IdCard className="w-4 h-4 text-muted-foreground" />
-									<span>
-										{t("admin:room_bookings.stil_id")}:{userDetails.stil_id}
-									</span>
-								</div>
-							</>
-						)}
 						{bookingData.council && (
 							<div className="flex items-center gap-2">
 								<MapPin className="w-4 h-4 text-muted-foreground" />
@@ -223,13 +137,6 @@ export default function Page() {
 								</span>
 							</div>
 						)}
-						<div className="flex items-center gap-2">
-							<Badge variant={bookingData.personal ? "default" : "secondary"}>
-								{bookingData.personal
-									? t("admin:room_bookings.personal")
-									: t("admin:room_bookings.council_booking")}
-							</Badge>
-						</div>
 					</CardContent>
 				</Card>
 

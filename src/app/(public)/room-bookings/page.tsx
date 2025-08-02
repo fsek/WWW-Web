@@ -82,9 +82,6 @@ export default function RoomBookings() {
 				booking.user.first_name && booking.user.last_name
 					? `${booking.user.first_name} ${booking.user.last_name}`
 					: `User ${booking.user.id}`;
-			const backgroundColor = (userData ? userData.id === booking.user.id : false)
-				? "#e68a00" // User's own bookings
-				: "#66cc00"; // Other users' bookings
 			return {
 				id: booking.id.toString(),
 				title_sv: `${booking.room} - ${userName}`,
@@ -98,7 +95,6 @@ export default function RoomBookings() {
 				council_name_en: booking.council?.name_en ?? undefined,
 				council_id: booking.council?.id ?? undefined,
 				user_id: booking.user.id,
-				backgroundColor: backgroundColor,
 			};
 		}) ?? [];
 

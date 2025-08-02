@@ -305,6 +305,16 @@ export function EventView({
 								)}
 								{event && enableRoomBookingProperties && (
 									<tr>
+										<th>{t("admin:room_bookings.council")}</th>
+										<td>
+											{i18n.language === "en"
+												? event.council_name_en as string
+												: event.council_name_sv as string}
+										</td>
+									</tr>
+								)}
+								{event && enableRoomBookingProperties && (
+									<tr>
 										<th>{t("admin:room_bookings.room")}</th>
 										<td>{event.room as string}</td>
 									</tr>
