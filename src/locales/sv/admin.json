@@ -425,7 +425,14 @@
 		"basic_info": "Grundläggande information",
 		"date_time": "Datum & tid",
 		"confirm_remove": "Bekräfta borttagning",
-		"confirm_remove_text": "Är du säker på att du vill ta bort denna rumsbokning?"
+		"confirm_remove_text": "Är du säker på att du vill ta bort denna rumsbokning?",
+		"no_recurrence": "Endast en bokning",
+		"every_week": "Varje vecka",
+		"every_two_weeks": "Varannan vecka",
+		"every_month": "Varje månad",
+		"recurrence": "Välj upprepningfrekvens",
+		"recurrence_warning": "Var försiktig! Du kan skapa upp till 50 bokningar åt gången, men måste redigera eller ta bort dem individuellt! Du kan inte ångra upprepningen efter att du skapat bokningarna.",
+		"recurrence_end": "Upprepningens slutdatum (inklusive)"
 	},
 	"show": "Visa",
 	"select_council": "Välj utskott",

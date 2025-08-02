@@ -131,6 +131,8 @@ export function EventAddForm({
 				? {
 					room: z.enum(Object.values(room) as [string, ...string[]]),
 					council_id: z.number().int().positive(),
+					recur_interval_days: z.number().int().nonnegative().optional(),
+					recur_until: z.date().optional(),
 				}
 				: {}),
 		})
@@ -237,6 +239,8 @@ export function EventAddForm({
 			lottery: false,
 			personal: true,
 			room: defaultRoom,
+			recur_interval_days: undefined,
+			recur_until: undefined,
 		},
 	});
 
@@ -281,6 +285,8 @@ export function EventAddForm({
 				? {
 					room: defaultRoom,
 					council_id: 1,
+					recur_interval_days: undefined,
+					recur_until: undefined,
 				}
 				: {}),
 		});
@@ -329,6 +335,8 @@ export function EventAddForm({
 					? {
 						room: data.room,
 						council_id: data.council_id,
+						recur_interval_days: data.recur_interval_days,
+						recur_until: data.recur_until,
 					}
 					: {}),
 			};

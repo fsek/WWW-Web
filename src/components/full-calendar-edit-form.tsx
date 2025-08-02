@@ -431,7 +431,7 @@ export function EventEditForm({
 							<RoomBookingFormFields
 								roomBookingForm={form as any}
 								checkboxFields={checkboxFields}
-								disabled_fields={["room", "council_id"]}
+								disabled_fields={["room", "council_id", "recur_interval_days", "recur_until"]}
 							/>
 						) : (
 							<div className="grid gap-x-4 gap-y-3 lg:grid-cols-4">

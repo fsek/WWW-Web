@@ -165,8 +165,8 @@ export default function RoomBookings() {
 			council_name_sv: booking.council.name_sv || "None",
 			council_name_en: booking.council.name_en || "None",
 			user_id: booking.user.id,
-			title_sv: `${booking.user.first_name} ${booking.user.last_name} - ${booking.council.name_sv}`,
-			title_en: `${booking.user.first_name} ${booking.user.last_name} - ${booking.council.name_en}`,
+			title_sv: `${booking.council.name_sv} - ${booking.room}`,
+			title_en: `${booking.council.name_en} - ${booking.room}`,
 			start: booking.start_time,
 			end: booking.end_time,
 			description_sv: booking.description,
@@ -210,12 +210,14 @@ export default function RoomBookings() {
 					addBooking.mutate(
 						{
 							body: {
-								// Having to define this sux, having to type "as string" also does. Basically TODO: fix this
+								// Having to define this sux, having to type "as number" also does. Basically TODO: fix this
 								room: event.room as "LC" | "Alumni" | "SK",
 								start_time: event.start,
 								end_time: event.end,
 								description: event.description_sv,
 								council_id: event.council_id as number,
+								recur_interval_days: event.recur_interval_days as number | undefined,
+								recur_until: event.recur_until as Date | undefined,
 							},
 						},
 						{

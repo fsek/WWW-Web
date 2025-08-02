@@ -146,7 +146,7 @@ export default function RoomBookingEditForm({
 						<RoomBookingFormFields
 							roomBookingForm={form}
 							checkboxFields={checkboxFields}
-							disabled_fields={["room", "council_id"]}
+							disabled_fields={["room", "council_id", "recur_interval_days", "recur_until"]}
 						/>
 
 						<div className="space-x-2 mt-6 flex justify-end">

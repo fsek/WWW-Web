@@ -424,7 +424,14 @@
 		"basic_info": "Basic Information",
 		"date_time": "Date & Time",
 		"confirm_remove": "Confirm removal of this booking",
-		"confirm_remove_text": "Are you sure you want to remove this booking?"
+		"confirm_remove_text": "Are you sure you want to remove this booking?",
+		"no_recurrence": "Only one booking",
+		"every_week": "Every week",
+		"every_two_weeks": "Every two weeks",
+		"every_month": "Every month",
+		"recurrence": "Select recurrence frequency",
+		"recurrence_warning": "Be careful! You can create up to 50 bookings at once, but must edit or remove them individually! You cannot undo the recurrence after creating the bookings.",
+		"recurrence_end": "Recurrence end date (inclusive)"
 	},
 	"show": "Show",
 	"select_council": "Select a Council",

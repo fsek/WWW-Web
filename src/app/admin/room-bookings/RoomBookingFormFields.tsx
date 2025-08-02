@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
 	FormControl,
 	FormField,
@@ -5,24 +6,24 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
-import { Checkbox } from "@/components/ui/checkbox";
 import { TabsList } from "@/components/ui/tabs";
-import type { UseFormReturn, Path } from "react-hook-form";
-import { Label } from "@/components/ui/label";
+import type { UseFormReturn, Path, PathValue } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
+import { TriangleAlert } from "lucide-react";
+
 
 // Common base fields expected by the form component
 interface RoomBookingFormFieldsBase {
 	room?: "LC" | "Alumni" | "SK";
 	description_sv?: string;
 	council_id?: number;
+	recur_interval_days?: number; // 0 for no recurrence, 7 for weekly, etc.
+	recur_until?: Date; // Date until which the recurrence applies
 }
 
 // Field mappings for calendar forms (which use start/end instead of start_time/end_time)
@@ -63,6 +64,33 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 	const useStartFormat = hasField("start");
 	const startFieldName = useStartFormat ? "start" : "start_time";
 	const endFieldName = useStartFormat ? "end" : "end_time";
+
+	const recurInterval = roomBookingForm.watch("recur_interval_days" as Path<T>);
+	const [useRecurrence, setUseRecurrence] = useState(
+		!!recurInterval && recurInterval !== 0
+	);
+
+	// Keep local state in sync with form value
+	useEffect(() => {
+		if (recurInterval && recurInterval !== 0) {
+			setUseRecurrence(true);
+			// Set default recur_until if not set
+			const recurUntil = roomBookingForm.getValues("recur_until" as Path<T>);
+			if (!recurUntil) {
+				const start =
+					roomBookingForm.getValues(startFieldName as Path<T>) ||
+					new Date();
+				const defaultUntil = new Date(
+					(start instanceof Date ? start : new Date(start as string)).getTime() +
+					30 * 24 * 60 * 60 * 1000 // 30 days
+				);
+				roomBookingForm.setValue("recur_until" as Path<T>, defaultUntil as PathValue<T, Path<T>>);
+			}
+		} else {
+			setUseRecurrence(false);
+			roomBookingForm.setValue("recur_until" as Path<T>, undefined as PathValue<T, Path<T>>);
+		}
+	}, [recurInterval, roomBookingForm, startFieldName]);
 
 	return (
 		<>
@@ -173,7 +201,7 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 											);
 											roomBookingForm.setValue(
 												endFieldName as Path<T>,
-												newEnd as any,
+												newEnd as PathValue<T, Path<T>>,
 												{
 													shouldDirty: true,
 													shouldValidate: true,
@@ -200,6 +228,61 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 							</FormItem>
 						)}
 					/>
+
+					{!disabled_fields.includes("recur_interval_days") && (
+						<FormField
+							control={roomBookingForm.control}
+							name={"recur_interval_days" as Path<T>}
+							render={({ field }) => {
+								const showWarning = !!field.value;
+								return (
+									<FormItem className="lg:col-span-2">
+										<FormControl>
+											<FormLabel className="flex items-center gap-2">
+												<SelectFromOptions
+													options={[
+														{ value: "0", label: t("admin:room_bookings.no_recurrence") },
+														{ value: "7", label: t("admin:room_bookings.every_week") },
+														{ value: "14", label: t("admin:room_bookings.every_two_weeks") },
+														{ value: "30", label: t("admin:room_bookings.every_month") },
+													]}
+													value={field.value?.toString() ?? "0"}
+													onChange={(value) => field.onChange(Number(value))}
+													placeholder={t("admin:room_bookings.recurrence")}
+												/>
+											</FormLabel>
+										</FormControl>
+										{showWarning && (
+											<div className="text-sm text-foreground bg-amber-400 dark:bg-yellow-900 rounded px-2 py-1 mt-2">
+												<TriangleAlert className="inline px-1" />
+												{t("admin:room_bookings.recurrence_warning")}
+											</div>
+										)}
+									</FormItem>
+								);
+							}}
+						/>
+					)}
+					{!disabled_fields.includes("recur_until") && (
+						<FormField
+							control={roomBookingForm.control}
+							name={"recur_until" as Path<T>}
+							render={({ field }) => (
+								<FormItem className="lg:col-span-2">
+									<FormControl>
+										<FormLabel>{t("admin:room_bookings.recurrence_end")}
+											<AdminChooseDates
+												value={field.value as Date}
+												onChange={field.onChange}
+												disabled={!useRecurrence}
+											/>
+										</FormLabel>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+					)}
+
 				</TabsContent>
 			</Tabs>
 		</>

@@ -24,6 +24,8 @@ const roomBookingSchema = z
 		end_time: z.date(),
 		description_sv: z.string().min(1).max(1000),
 		council_id: z.number().int().positive(),
+		recur_interval_days: z.number().int().nonnegative().optional(),
+		recur_until: z.date().optional(),
 	})
 	.refine(
 		(data) => {
@@ -72,6 +74,8 @@ export default function RoomBookingForm({
 			end_time: new Date(Date.now() + 1000 * 60 * 60 * 3), // 3 hours later
 			description_sv: "",
 			council_id: 0,
+			recur_interval_days: undefined,
+			recur_until: undefined,
 		},
 	});
 
@@ -84,6 +88,8 @@ export default function RoomBookingForm({
 				end_time: new Date(Date.now() + 1000 * 60 * 60 * 3),
 				description_sv: "",
 				council_id: 0,
+				recur_interval_days: undefined,
+				recur_until: undefined,
 			});
 		}
 	}, [defaultRoom, open]);
@@ -114,6 +120,8 @@ export default function RoomBookingForm({
 				end_time: values.end_time,
 				description: values.description_sv,
 				council_id: values.council_id,
+				recur_interval_days: values.recur_interval_days,
+				recur_until: values.recur_until,
 			},
 		});
 	}
