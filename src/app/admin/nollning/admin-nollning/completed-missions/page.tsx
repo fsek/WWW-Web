@@ -26,7 +26,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const page = () => {
+export default function CompletedMissionsPage() {
 	const { t, i18n } = useTranslation();
 	const searchParams = useSearchParams();
 	const searchID = searchParams.get("id");
@@ -303,5 +303,3 @@ const page = () => {
 		</Suspense>
 	);
 };
-
-export default page;
