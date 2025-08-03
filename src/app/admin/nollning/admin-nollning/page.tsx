@@ -1,6 +1,6 @@
 "use client";
 
-import { getNollningOptions } from "@/api/@tanstack/react-query.gen";
+import { getNollningByYearOptions, getNollningOptions } from "@/api/@tanstack/react-query.gen";
 import React, { Suspense, useMemo, useState } from "react";
 import type { GroupRead, NollningGroupRead } from "@/api";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -19,17 +19,25 @@ import { Input } from "@/components/ui/input";
 export default function Page() {
 	const searchParams = useSearchParams();
 	const idParam = searchParams.get("id");
-	const nollningID = idAsNumber(idParam);
+	let nollningID = idAsNumber(idParam);
 	const router = useRouter();
 	const [open, setOpen] = useState(false);
 	const [selectedGroup, setSelectedGroup] = useState<GroupRead | null>(null);
 	const [searchTerm, setSearchTerm] = useState("");
 
-	const { data } = useSuspenseQuery({
-		...getNollningOptions({
-			path: { nollning_id: nollningID },
-		}),
-	});
+	const { data } =
+		idParam === null || idParam === "current"
+			? useSuspenseQuery(getNollningByYearOptions({
+				path: { year: new Date().getFullYear() },
+			}))
+			: useSuspenseQuery(getNollningOptions({
+				path: { nollning_id: nollningID },
+			}));
+
+	// After getting the data, switch the parameter to nollningID, to make it easier to pass down
+	if (idParam === null || idParam === "current") {
+		nollningID = data.id;
+	}
 
 	// Filter groups based on search term
 	const filteredGroups = useMemo(() => {
@@ -65,16 +73,18 @@ export default function Page() {
 		columnHelper.accessor("group.group_type", {
 			header: "Group Type",
 			cell: (info) => info.getValue(),
+			size: 100,
 		}),
 		columnHelper.accessor("group.group_users", {
 			header: "Members",
 			cell: (info) => info.getValue().length,
+			size: 100,
 		}),
 		{
 			id: "links",
 			header: "Genvägar",
 			cell: ({ row }: { row: Row<NollningGroupRead> }) => (
-				<div className="flex flex-row justify-end gap-2">
+				<div className="flex max-2xl:flex-col justify-end gap-2">
 					<Button
 						variant={"outline"}
 						size="sm"

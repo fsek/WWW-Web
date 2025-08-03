@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import idAsNumber from "../idAsNumber";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getNollningOptions } from "@/api/@tanstack/react-query.gen";
+import { getNollningByYearOptions, getNollningOptions } from "@/api/@tanstack/react-query.gen";
 import { createColumnHelper } from "@tanstack/react-table";
 import type { AdventureMissionRead } from "@/api";
 import useCreateTable from "@/widgets/useCreateTable";
@@ -21,7 +21,7 @@ export default function AdventureMissionsPage() {
 	const { t, i18n } = useTranslation();
 	const searchParams = useSearchParams();
 	const search = searchParams.get("id");
-	const nollningID = idAsNumber(search);
+	let nollningID = idAsNumber(search);
 	const [selectedMission, setSelectedMission] =
 		useState<AdventureMissionRead | null>(null);
 	const [open, setOpen] = useState<boolean>(false);
@@ -46,11 +46,19 @@ export default function AdventureMissionsPage() {
 		}
 	}, [selectedWeek, weekLoaded]);
 
-	const { data } = useSuspenseQuery({
-		...getNollningOptions({
-			path: { nollning_id: nollningID },
-		}),
-	});
+	const { data } =
+		search === null || search === "current"
+			? useSuspenseQuery(getNollningByYearOptions({
+				path: { year: new Date().getFullYear() },
+			}))
+			: useSuspenseQuery(getNollningOptions({
+				path: { nollning_id: nollningID },
+			}));
+
+	// After getting the data, switch the parameter to nollningID, to make it easier to pass down
+	if (search === null || search === "current") {
+		nollningID = data.id;
+	}
 
 	// Filter missions based on selected week
 	const filteredAdventureMissions = useMemo(() => {

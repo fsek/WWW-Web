@@ -9,10 +9,12 @@ import {
 	Briefcase,
 	FolderLock,
 	User,
-	Gauge,
 	type LucideProps,
 	Users,
 	UserPen,
+	List,
+	Apple,
+	Award,
 } from "lucide-react";
 
 import {
@@ -81,12 +83,6 @@ const groups: AdminGroup[] = [
 				permissions: [[action.VIEW, target.USER]],
 				icon: User,
 			},
-			{
-				title: "admin:nollning.self",
-				url: "/admin/nollning",
-				permissions: [[action.MANAGE, target.NOLLNING]],
-				icon: Gauge,
-			},
 		],
 	},
 	{
@@ -109,6 +105,29 @@ const groups: AdminGroup[] = [
 				url: "/admin/posts",
 				permissions: [[action.MANAGE, target.POST]],
 				icon: Briefcase,
+			},
+		],
+	},
+	{
+		title: "admin:categories.nollning",
+		entries: [
+			{
+				title: "admin:nollning.self_all",
+				url: "/admin/nollning",
+				permissions: [[action.MANAGE, target.NOLLNING]],
+				icon: List,
+			},
+			{
+				title: "admin:nollning.self_current",
+				url: "/admin/nollning/admin-nollning?id=current",
+				permissions: [[action.MANAGE, target.NOLLNING]],
+				icon: Apple,
+			},
+			{
+				title: "admin:nollning.self_mission",
+				url: "/admin/nollning/admin-nollning/adventure-missions?id=current",
+				permissions: [[action.MANAGE, target.NOLLNING]],
+				icon: Award,
 			},
 		],
 	},

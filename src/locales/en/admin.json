@@ -21,7 +21,8 @@
 	"categories": {
 		"general": "General",
 		"councils": "Councils and Posts",
-		"spider": "Webmaster only"
+		"spider": "Webmaster only",
+		"nollning": "Nollning"
 	},
 	"news": {
 		"self": "News",
@@ -366,7 +367,9 @@
 	"telephone_number": "Phone Number",
 	"not_provided": "Not provided",
 	"nollning": {
-		"self": "Nollning"
+		"self_all": "All Introductions",
+		"self_current": "Current Introduction",
+		"self_mission": "Adventure Missions"
 	},
 	"show": "Show",
 	"select_council": "Select a Council",

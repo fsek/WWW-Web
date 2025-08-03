@@ -21,7 +21,8 @@
 	"categories": {
 		"general": "Allmänt",
 		"councils": "Poster och utskott",
-		"spider": "Spindelsaker"
+		"spider": "Spindelsaker",
+		"nollning": "Nollning"
 	},
 	"news": {
 		"self": "Nyheter",
@@ -367,7 +368,9 @@
 	"telephone_number": "Telefonnummer",
 	"not_provided": "Ej angiven",
 	"nollning": {
-		"self": "Nollning"
+		"self_all": "Alla nollningar",
+		"self_current": "Årets nollning",
+		"self_mission": "Äventyrsuppdrag"
 	},
 	"show": "Visa",
 	"select_council": "Välj utskott",
