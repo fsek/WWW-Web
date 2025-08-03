@@ -91,7 +91,7 @@ const EditNollning = ({ nollning }: Props) => {
 				</DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle className="text-3xl py-3 underline underline-offset-4">
+						<DialogTitle className="text-3xl py-3 font-bold text-primary">
 							Redigera Nollning
 						</DialogTitle>
 					</DialogHeader>

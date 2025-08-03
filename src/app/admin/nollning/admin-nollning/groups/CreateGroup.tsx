@@ -27,10 +27,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import GroupTypeSelect from "./GroupTypeSelect";
+import { ValueSetter } from "node_modules/date-fns/parse/_lib/Setter";
 
 const GroupSchema = z.object({
 	name: z.string().min(2),
 	group_type: z.enum(["Mentor", "Mission"]),
+	nollning_group_number: z.coerce.number().min(1).optional(),
 });
 
 interface Props {
@@ -40,12 +42,16 @@ interface Props {
 
 const CreateAdventureMission = ({ nollningID, className }: Props) => {
 	const [open, setOpen] = useState(false);
+	const [pendingGroupNumber, setPendingGroupNumber] = useState<number | undefined>(
+		undefined
+	);
 
 	const groupForm = useForm<z.infer<typeof GroupSchema>>({
 		resolver: zodResolver(GroupSchema),
 		defaultValues: {
 			name: "",
 			group_type: "Mentor",
+			nollning_group_number: undefined,
 		},
 	});
 
@@ -56,14 +62,19 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 		onSuccess: (group) => {
 			addGroupToNollning.mutate({
 				path: { nollning_id: nollningID },
-				body: { group_id: group.id },
+				body: {
+					group_id: group.id,
+					nollning_group_number: pendingGroupNumber,
+				},
 			});
 			queryClient.invalidateQueries({
 				queryKey: getGroupsQueryKey(),
 			});
 			setOpen(false);
+			setPendingGroupNumber(undefined);
 		},
 		onError: () => {
+			setPendingGroupNumber(undefined);
 			setOpen(false);
 		},
 	});
@@ -84,6 +95,7 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 	});
 
 	function onSubmit(values: z.infer<typeof GroupSchema>) {
+		setPendingGroupNumber(values.nollning_group_number);
 		createGroup.mutate({
 			body: {
 				name: values.name,
@@ -107,7 +119,7 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 				</DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle className="text-3xl py-3 underline underline-offset-4">
+						<DialogTitle className="text-3xl py-3 font-bold text-primary">
 							Skapa Faddergrupp
 						</DialogTitle>
 					</DialogHeader>
@@ -139,7 +151,26 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 										</FormItem>
 									)}
 								/>
-
+								<FormField
+									control={groupForm.control}
+									name={"nollning_group_number"}
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Gruppnummer</FormLabel>
+											<FormControl>
+												<Input
+													type="number"
+													placeholder="Gruppnummer"
+													value={field.value === undefined ? "" : field.value}
+													onChange={e => {
+														const val = e.target.value;
+														field.onChange(val === "" ? undefined : Number(val));
+													}}
+												/>
+											</FormControl>
+										</FormItem>
+									)}
+								/>
 								<Button type="submit" className="w-32 min-w-fit">
 									Skapa
 								</Button>

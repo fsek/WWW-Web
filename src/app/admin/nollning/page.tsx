@@ -23,6 +23,8 @@ const Nollning = () => {
 					className="w-full border rounded-md"
 					type="single" // Only one item can be expanded at a time
 					collapsible
+					// Open the first item by default
+					defaultValue={data.length > 0 ? data[0].id.toString() : undefined}
 				>
 					{data.sort((a, b) => b.year - a.year).map((nollning) => { // Newer first
 						return (

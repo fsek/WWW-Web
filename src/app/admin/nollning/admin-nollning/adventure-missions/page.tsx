@@ -111,7 +111,7 @@ export default function AdventureMissionsPage() {
 		<Suspense fallback={<div>{"Ingen nollning vald :(("}</div>}>
 			<div className="px-12 py-4 space-x-4 space-y-4">
 				<div className="justify-between w-full flex flex-row">
-					<h3 className="text-3xl py-3 underline underline-offset-4">
+					<h3 className="text-3xl py-3 font-bold text-primary">
 						Administrera äventyrsuppdrag för "{data.name}"
 					</h3>
 					<Button

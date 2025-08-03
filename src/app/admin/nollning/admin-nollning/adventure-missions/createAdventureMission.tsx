@@ -102,7 +102,7 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 				</DialogTrigger>
 				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 					<DialogHeader>
-						<DialogTitle className="text-3xl py-3 underline underline-offset-4">
+						<DialogTitle className="text-3xl py-3 font-bold text-primary">
 							Skapa Äventyrsuppdrag
 						</DialogTitle>
 					</DialogHeader>

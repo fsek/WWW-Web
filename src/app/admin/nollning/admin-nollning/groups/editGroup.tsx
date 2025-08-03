@@ -189,6 +189,7 @@ const EditGroup = ({
 									</Button>
 									<Button
 										variant="destructive"
+										type="button"
 										className="flex-1"
 										onClick={onDelete}
 									>
