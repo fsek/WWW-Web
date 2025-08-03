@@ -85,7 +85,7 @@ export default function AdventureMissionsPage() {
 				</div>
 				<div className="flex flex-row w-full justify-between items-end">
 					<p className="">
-						Klicka på ett uppdrag för att redigera eller förinta det!
+						Klicka på ett uppdrag för att redigera eller förinta det! Du kan skapa nya uppdrag med knappen nedan. Tips: Sätt minsta poäng till 0 för att inte ge grupper poäng även om det markeras som ej godkänt.
 					</p>
 					<CreateAdventureMission nollningID={nollningID} />
 				</div>
