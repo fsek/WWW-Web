@@ -24,6 +24,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "sonner";
 
 const AdventureMissionSchema = z.object({
 	title_sv: z.string().min(2),
@@ -65,9 +66,11 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 					path: { nollning_id: nollningID },
 				}),
 			});
+			toast.success("Äventyrsuppdrag skapat!");
 			setOpen(false);
 		},
 		onError: () => {
+			toast.error("Kunde inte skapa äventyrsuppdrag.");
 			setOpen(false);
 		},
 	});

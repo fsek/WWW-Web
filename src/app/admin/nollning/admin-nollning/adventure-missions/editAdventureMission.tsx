@@ -27,6 +27,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const AdventureMissionSchema = z.object({
 	title_sv: z.string().min(2),
@@ -88,8 +89,10 @@ const EditAdventureMission = ({
 					path: { year: new Date().getFullYear() },
 				}),
 			});
+			toast.success("Äventyrsuppdrag uppdaterat!");
 		},
 		onError: () => {
+			toast.error("Kunde inte uppdatera äventyrsuppdrag.");
 			onClose();
 		},
 	});
@@ -108,8 +111,10 @@ const EditAdventureMission = ({
 					path: { year: new Date().getFullYear() },
 				}),
 			});
+			toast.success("Äventyrsuppdrag raderat!");
 		},
 		onError: () => {
+			toast.error("Kunde inte radera äventyrsuppdrag.");
 			onClose();
 		},
 	});

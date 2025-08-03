@@ -29,6 +29,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import GroupTypeSelect from "./GroupTypeSelect";
 import { ValueSetter } from "node_modules/date-fns/parse/_lib/Setter";
+import { toast } from "sonner";
 
 const GroupSchema = z.object({
 	name: z.string().min(2),
@@ -71,10 +72,12 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 			queryClient.invalidateQueries({
 				queryKey: getGroupsQueryKey(),
 			});
+			toast.success("Faddergrupp skapad!");
 			setOpen(false);
 			setPendingGroupNumber(undefined);
 		},
 		onError: () => {
+			toast.error("Kunde inte skapa faddergrupp.");
 			setPendingGroupNumber(undefined);
 			setOpen(false);
 		},
@@ -93,9 +96,11 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 					path: { year: new Date().getFullYear() },
 				}),
 			});
+			toast.success("Faddergrupp tillagd i nollning!");
 			setOpen(false);
 		},
 		onError: () => {
+			toast.error("Kunde inte lägga till faddergrupp i nollning.");
 			setOpen(false);
 		},
 	});

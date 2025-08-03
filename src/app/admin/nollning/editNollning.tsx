@@ -22,9 +22,10 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "sonner";
 
 interface Props {
 	nollning: NollningRead;
@@ -59,9 +60,11 @@ const EditNollning = ({ nollning }: Props) => {
 		...patchNollningMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllNollningQueryKey() });
+			toast.success("Nollning uppdaterad!");
 			setOpen(false);
 		},
 		onError: () => {
+			toast.error("Kunde inte uppdatera nollning.");
 			setOpen(false);
 		},
 	});

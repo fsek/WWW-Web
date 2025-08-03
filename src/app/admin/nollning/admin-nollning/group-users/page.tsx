@@ -31,6 +31,7 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { toast } from "sonner";
 
 export default function GroupUsersPage() {
 	const searchParams = useSearchParams();
@@ -89,8 +90,10 @@ export default function GroupUsersPage() {
 					path: { id: groupID },
 				}),
 			});
+			toast.success("Användare borttagen från gruppen!");
 		},
 		onError: () => {
+			toast.error("Kunde inte ta bort användare från gruppen.");
 			onClose();
 		},
 	});
@@ -112,6 +115,10 @@ export default function GroupUsersPage() {
 					path: { id: groupID },
 				}),
 			});
+			toast.success("Användare tillagd i gruppen!");
+		},
+		onError: () => {
+			toast.error("Kunde inte lägga till användare i gruppen.");
 		},
 	});
 

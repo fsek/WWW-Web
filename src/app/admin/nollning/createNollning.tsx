@@ -23,6 +23,7 @@ import { Plus } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "sonner";
 
 const nollningSchema = z.object({
 	name: z.string().min(1),
@@ -48,9 +49,11 @@ const CreateNollning = () => {
 		...postNollningMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllNollningQueryKey() });
+			toast.success("Nollning skapad!");
 			setOpen(false);
 		},
 		onError: () => {
+			toast.error("Kunde inte skapa nollning.");
 			setOpen(false);
 		},
 	});

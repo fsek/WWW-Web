@@ -30,6 +30,7 @@ import { useTranslation } from "react-i18next";
 import WeekFilter from "@/components/WeekFilter";
 import { Input } from "@/components/ui/input";
 import { is_accepted as acceptEnum } from "@/api";
+import { toast } from "sonner";
 
 export default function CompletedMissionsPage() {
 	const { t, i18n } = useTranslation();
@@ -153,24 +154,33 @@ export default function CompletedMissionsPage() {
 		...addCompletedGroupMissionMutation(),
 		onSuccess: () => {
 			invalidateAllQueries();
+			toast.success("Uppdrag markerat som avklarat!");
 		},
-		onError: () => { },
+		onError: () => {
+			toast.error("Kunde inte markera uppdrag som avklarat.");
+		},
 	});
 
 	const removeCompletedMission = useMutation({
 		...uncompleteGroupMissionMutation(),
 		onSuccess: () => {
 			invalidateAllQueries();
+			toast.success("Uppdrag markerat som oavklarat!");
 		},
-		onError: () => { },
+		onError: () => {
+			toast.error("Kunde inte markera uppdrag som oavklarat.");
+		},
 	});
 
 	const editCompletedMission = useMutation({
 		...editCompletedGroupMissionMutation(),
 		onSuccess: () => {
 			invalidateAllQueries();
+			toast.success("Uppdrag uppdaterat!");
 		},
-		onError: () => { },
+		onError: () => {
+			toast.error("Kunde inte uppdatera uppdrag.");
+		},
 	});
 
 	const mutationOptions = {

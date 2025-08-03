@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 interface Props {
 	nollning: NollningRead;
@@ -32,8 +33,11 @@ const DeleteNollning = ({ nollning }: Props) => {
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllNollningQueryKey() });
+			toast.success("Nollning raderad!");
 		},
-		onError: () => { },
+		onError: () => {
+			toast.error("Kunde inte radera nollning.");
+		},
 	});
 
 	return (

@@ -27,6 +27,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import GroupTypeSelect from "./GroupTypeSelect";
+import { toast } from "sonner";
 
 const GroupSchema = z.object({
 	id: z.number().int(),
@@ -81,8 +82,10 @@ const EditGroup = ({
 					path: { year: new Date().getFullYear() },
 				}),
 			});
+			toast.success("Faddergrupp uppdaterad!");
 		},
 		onError: () => {
+			toast.error("Kunde inte uppdatera faddergrupp.");
 			onClose();
 		},
 	});
@@ -101,8 +104,10 @@ const EditGroup = ({
 					path: { year: new Date().getFullYear() },
 				}),
 			});
+			toast.success("Faddergrupp raderad!");
 		},
 		onError: () => {
+			toast.error("Kunde inte radera faddergrupp.");
 			onClose();
 		},
 	});
