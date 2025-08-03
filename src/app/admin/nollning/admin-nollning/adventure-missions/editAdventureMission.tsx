@@ -25,6 +25,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useState } from "react";
 
 const AdventureMissionSchema = z.object({
 	title_sv: z.string().min(2),
@@ -33,7 +34,7 @@ const AdventureMissionSchema = z.object({
 	description_en: z.string().min(2),
 	max_points: z.number().min(1),
 	min_points: z.number().min(0),
-	nollning_week: z.number().min(1).max(5),
+	nollning_week: z.number().min(0).max(4),
 });
 
 interface Props {
@@ -57,8 +58,8 @@ const EditAdventureMission = ({
 			description_sv: "",
 			description_en: "",
 			max_points: 1,
-			min_points: 1,
-			nollning_week: 1,
+			min_points: 0,
+			nollning_week: 0,
 		},
 	});
 
@@ -141,24 +142,24 @@ const EditAdventureMission = ({
 	return (
 		<Dialog
 			open={open}
-			onOpenChange={(isOpen) => {
-				if (!isOpen) {
+			onOpenChange={(open) => {
+				if (!open) {
 					onClose();
 				}
 			}}
 		>
-			<DialogContent>
+			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>Redigera Äventyrsuppdrag</DialogTitle>
 				</DialogHeader>
-
 				<Form {...form}>
 					<form
 						onSubmit={form.handleSubmit(onSubmit, (error) =>
 							console.log(error),
 						)}
+						className="w-full"
 					>
-						<div className="px-8 space-x-4">
+						<div className="px-8 space-x-4 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
 							<FormField
 								control={form.control}
 								name={"title_sv"}
@@ -225,7 +226,11 @@ const EditAdventureMission = ({
 											<Input
 												type="number"
 												placeholder="0"
-												{...field}
+												value={
+													typeof field.value === "number" && !Number.isNaN(field.value)
+														? field.value
+														: ""
+												}
 												onChange={(e) => field.onChange(e.target.valueAsNumber)}
 											/>
 										</FormControl>
@@ -241,8 +246,12 @@ const EditAdventureMission = ({
 										<FormControl>
 											<Input
 												type="number"
-												placeholder="0"
-												{...field}
+												placeholder="1"
+												value={
+													typeof field.value === "number" && !Number.isNaN(field.value)
+														? field.value
+														: ""
+												}
 												onChange={(e) => field.onChange(e.target.valueAsNumber)}
 											/>
 										</FormControl>
@@ -259,13 +268,27 @@ const EditAdventureMission = ({
 											<Input
 												type="number"
 												placeholder="0"
-												{...field}
+												value={
+													typeof field.value === "number" && !Number.isNaN(field.value)
+														? field.value
+														: ""
+												}
 												onChange={(e) => field.onChange(e.target.valueAsNumber)}
 											/>
 										</FormControl>
 									</FormItem>
 								)}
 							/>
+						</div>
+						<div className="flex flex-row justify-end space-x-2 mt-4">
+							<Button
+								type="button"
+								variant="outline"
+								onClick={onClose}
+								className="w-32 min-w-fit"
+							>
+								Avbryt
+							</Button>
 							<Button type="submit" className="w-32 min-w-fit">
 								Spara
 							</Button>
@@ -277,7 +300,6 @@ const EditAdventureMission = ({
 							>
 								Förinta
 							</Button>
-							<DialogClose>Avbryt</DialogClose>
 						</div>
 					</form>
 				</Form>

@@ -32,7 +32,7 @@ const AdventureMissionSchema = z.object({
 	description_en: z.string().min(2),
 	max_points: z.number().min(1),
 	min_points: z.number().min(0),
-	nollning_week: z.number().min(1).max(5),
+	nollning_week: z.number().min(0).max(4),
 });
 
 interface Props {
@@ -50,8 +50,8 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 			description_sv: "",
 			description_en: "",
 			max_points: 1,
-			min_points: 1,
-			nollning_week: 1,
+			min_points: 0,
+			nollning_week: 0,
 		},
 	});
 
@@ -100,15 +100,15 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 						Skapa Äventyrsuppdrag
 					</Button>
 				</DialogTrigger>
-				<DialogContent>
+				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 					<DialogHeader>
 						<DialogTitle className="text-3xl py-3 underline underline-offset-4">
 							Skapa Äventyrsuppdrag
 						</DialogTitle>
 					</DialogHeader>
-					<Form {...adventureMissionForm}>
-						<form onSubmit={adventureMissionForm.handleSubmit(onSubmit)}>
-							<div className="px-8 space-x-4">
+					<Form {...adventureMissionForm} >
+						<form onSubmit={adventureMissionForm.handleSubmit(onSubmit)} className="w-full">
+							<div className="px-8 space-x-4 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
 								<FormField
 									control={adventureMissionForm.control}
 									name={"title_sv"}
@@ -175,7 +175,11 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 												<Input
 													type="number"
 													placeholder="0"
-													{...field}
+													value={
+														typeof field.value === "number" && !Number.isNaN(field.value)
+															? field.value
+															: ""
+													}
 													onChange={(e) =>
 														field.onChange(e.target.valueAsNumber)
 													}
@@ -193,8 +197,12 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 											<FormControl>
 												<Input
 													type="number"
-													placeholder="0"
-													{...field}
+													placeholder="1"
+													value={
+														typeof field.value === "number" && !Number.isNaN(field.value)
+															? field.value
+															: ""
+													}
 													onChange={(e) =>
 														field.onChange(e.target.valueAsNumber)
 													}
@@ -213,7 +221,11 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 												<Input
 													type="number"
 													placeholder="0"
-													{...field}
+													value={
+														typeof field.value === "number" && !Number.isNaN(field.value)
+															? field.value
+															: ""
+													}
 													onChange={(e) =>
 														field.onChange(e.target.valueAsNumber)
 													}
@@ -222,10 +234,20 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 										</FormItem>
 									)}
 								/>
+
+							</div>
+							<div className="flex flex-row justify-end space-x-2 mt-4">
+								<Button
+									type="button"
+									variant="outline"
+									onClick={() => setOpen(false)}
+									className="w-32 min-w-fit"
+								>
+									Avbryt
+								</Button>
 								<Button type="submit" className="w-32 min-w-fit">
 									Skapa
 								</Button>
-								<DialogClose>Avbryt</DialogClose>
 							</div>
 						</form>
 					</Form>
