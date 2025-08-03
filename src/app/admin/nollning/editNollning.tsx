@@ -26,6 +26,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 interface Props {
 	nollning: NollningRead;
@@ -40,6 +41,7 @@ const nollningSchema = z.object({
 
 const EditNollning = ({ nollning }: Props) => {
 	const [open, setOpen] = useState(false);
+	const { t } = useTranslation("admin");
 
 	const nollningForm = useForm<z.infer<typeof nollningSchema>>({
 		resolver: zodResolver(nollningSchema),
@@ -60,11 +62,11 @@ const EditNollning = ({ nollning }: Props) => {
 		...patchNollningMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllNollningQueryKey() });
-			toast.success("Nollning uppdaterad!");
+			toast.success(t("nollning.main.edit_success"));
 			setOpen(false);
 		},
 		onError: () => {
-			toast.error("Kunde inte uppdatera nollning.");
+			toast.error(t("nollning.main.edit_error"));
 			setOpen(false);
 		},
 	});
@@ -89,13 +91,13 @@ const EditNollning = ({ nollning }: Props) => {
 							nollningForm.reset();
 						}}
 					>
-						Redigera Nollning
+						{t("nollning.main.edit_button")}
 					</Button>
 				</DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle className="text-3xl py-3 font-bold text-primary">
-							Redigera Nollning
+							{t("nollning.main.edit_title")}
 						</DialogTitle>
 					</DialogHeader>
 					<Form {...nollningForm}>
@@ -106,7 +108,7 @@ const EditNollning = ({ nollning }: Props) => {
 									name={"name"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Namn </FormLabel>
+											<FormLabel>{t("nollning.main.name")}</FormLabel>
 											<FormControl>
 												<Input placeholder={nollning.name} {...field} />
 											</FormControl>
@@ -118,7 +120,7 @@ const EditNollning = ({ nollning }: Props) => {
 									name={"year"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>År</FormLabel>
+											<FormLabel>{t("nollning.main.year")}</FormLabel>
 											<FormControl>
 												<Input
 													type="number"
@@ -134,7 +136,7 @@ const EditNollning = ({ nollning }: Props) => {
 									name={"description"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Beskrivning</FormLabel>
+											<FormLabel>{t("nollning.main.description")}</FormLabel>
 											<FormControl>
 												<textarea
 													className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -145,11 +147,11 @@ const EditNollning = ({ nollning }: Props) => {
 									)}
 								/>
 								<Button type="submit" className="w-32 min-w-fit">
-									Spara
+									{t("nollning.main.save")}
 								</Button>
 
 								<DialogClose type="button" className="w-32 min-w-fit">
-									Avbryt
+									{t("nollning.main.cancel")}
 								</DialogClose>
 							</div>
 						</form>

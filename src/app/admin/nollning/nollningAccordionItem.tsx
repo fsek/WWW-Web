@@ -9,6 +9,7 @@ import EditNollning from "./editNollning";
 import DeleteNollning from "./deleteNollning";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface Props {
 	nollning: NollningRead;
@@ -16,6 +17,7 @@ interface Props {
 
 const NollningAccordionItem = ({ nollning }: Props) => {
 	const router = useRouter();
+	const { t } = useTranslation("admin");
 	function administreraNollning() {
 		router.push(`/admin/nollning/admin-nollning?id=${nollning.id}`);
 	}
@@ -35,7 +37,9 @@ const NollningAccordionItem = ({ nollning }: Props) => {
 				<div className="space-x-3 lg:col-span-3 flex">
 					<EditNollning nollning={nollning} />
 					<DeleteNollning nollning={nollning} />
-					<Button onClick={administreraNollning}>Administrera</Button>
+					<Button onClick={administreraNollning}>
+						{t("nollning.main.admin_button")}
+					</Button>
 				</div>
 			</AccordionContent>
 		</AccordionItem>

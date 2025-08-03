@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Combobox } from "@/components/ui/combobox";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 const currentYear = new Date().getFullYear();
 const recentYears = Array.from({ length: 8 }, (_, i) =>
@@ -23,6 +24,7 @@ const isInputValid = (input: string) => {
 };
 
 export default function StartYearFilter({ value, onChange }: Props) {
+	const { t } = useTranslation("admin");
 	const [inputValue, setInputValue] = useState(value?.toString() || "");
 	const [inputValid, setInputValid] = useState(true);
 
@@ -61,7 +63,7 @@ export default function StartYearFilter({ value, onChange }: Props) {
 				}}
 				value={inputValue === "" ? null : inputValue}
 				onChange={handleChange}
-				placeholder="Select start year"
+				placeholder={t("nollning.group_members.select_start_year")}
 				clearable
 				renderOption={(option: { label: string; value: string }) => (
 					<span className="text-sm font-normal">{option.label}</span>
@@ -76,16 +78,16 @@ export default function StartYearFilter({ value, onChange }: Props) {
 				noOptionsMessage={() =>
 					!inputValid ? (
 						<span className="text-red-500 text-sm">
-							Year must be between {MIN_YEAR} and {currentYear}
+							{t("nollning.group_members.year_invalid", { min: MIN_YEAR, max: currentYear })}
 						</span>
 					) : (
-						<span className="text-gray-500 text-sm">No years found</span>
+						<span className="text-gray-500 text-sm">{t("nollning.group_members.no_years_found")}</span>
 					)
 				}
 			/>
 			{!inputValid && (
 				<p className="text-red-500 text-sm mt-1">
-					Year must be between {MIN_YEAR} and {currentYear}
+					{t("nollning.group_members.year_invalid", { min: MIN_YEAR, max: currentYear })}
 				</p>
 			)}
 		</div>

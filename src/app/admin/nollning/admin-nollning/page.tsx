@@ -15,8 +15,10 @@ import CreateGroup from "./groups/CreateGroup";
 import EditGroup from "./groups/editGroup";
 import { ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
+	const { t } = useTranslation("admin");
 	const searchParams = useSearchParams();
 	const idParam = searchParams.get("id");
 	let nollningID = idAsNumber(idParam);
@@ -63,26 +65,37 @@ export default function Page() {
 	const columnHelper = createColumnHelper<NollningGroupRead>();
 	const columns = [
 		columnHelper.accessor("nollning_group_number", {
-			header: "Group Number",
+			header: t("nollning.group_admin.group_number"),
 			cell: (info) => info.getValue() ?? "N/A",
 		}),
 		columnHelper.accessor("group.name", {
-			header: "Group Name",
+			header: t("nollning.group_admin.group_name"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("group.group_type", {
-			header: "Group Type",
-			cell: (info) => info.getValue(),
+			header: t("nollning.group_admin.group_type"),
+			cell: (info) => {
+				// Map to translated group type
+				const groupType = info.getValue();
+				switch (groupType) {
+					case "Mentor":
+						return t("nollning.group_admin.fadder");
+					case "Mission":
+						return t("nollning.group_admin.uppdrag");
+					default:
+						return t("nollning.group_admin.unknown_type");
+				}
+			},
 			size: 100,
 		}),
 		columnHelper.accessor("group.group_users", {
-			header: "Members",
+			header: t("nollning.group_admin.members"),
 			cell: (info) => info.getValue().length,
 			size: 100,
 		}),
 		{
 			id: "links",
-			header: "Genvägar",
+			header: t("nollning.group_admin.shortcuts"),
 			cell: ({ row }: { row: Row<NollningGroupRead> }) => (
 				<div className="flex max-2xl:flex-col justify-end gap-2">
 					<Button
@@ -93,7 +106,7 @@ export default function Page() {
 							router.push(`/admin/nollning/admin-nollning/completed-missions?id=${nollningID}&group=${row.original.group.id}`);
 						}}
 					>
-						Till uppdrag
+						{t("nollning.group_admin.to_missions")}
 					</Button>
 					<Button
 						variant={"outline"}
@@ -104,7 +117,7 @@ export default function Page() {
 							router.push(`/admin/nollning/admin-nollning/group-users?id=${nollningID}&group=${row.original.group.id}`);
 						}}
 					>
-						Till medlemmar
+						{t("nollning.group_admin.to_members")}
 					</Button>
 				</div>
 			),
@@ -135,11 +148,11 @@ export default function Page() {
 	};
 
 	return (
-		<Suspense fallback={<div>{"Ingen nollning vald :(("}</div>}>
+		<Suspense fallback={<div>{t("nollning.group_admin.no_nollning_selected")}</div>}>
 			<div className="px-12 py-4 space-x-4 space-y-4">
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
-						Administrera "{data.name}"
+						{t("nollning.group_admin.admin_title", { name: data.name })}
 					</h3>
 					<Button
 						variant="ghost"
@@ -147,25 +160,25 @@ export default function Page() {
 						onClick={() => router.push("/admin/nollning")}
 					>
 						<ArrowLeft className="w-4 h-4" />
-						Tillbaka
+						{t("nollning.group_admin.back")}
 					</Button>
 				</div>
 				<p className="">
-					Här kan du skapa och redigera faddergrupper och äventyrsuppdrag
+					{t("nollning.group_admin.intro")}
 				</p>
 				<div className="space-x-2 lg:col-span-2 flex">
 					<Button className="w-32 min-w-fit" onClick={adminAdventureMissions}>
-						Administrera äventyrsuppdrag
+						{t("nollning.group_admin.admin_missions")}
 					</Button>
 					<CreateGroup className="w-32 min-w-fit" nollningID={nollningID} />
 				</div>
 				<div className="flex flex-row gap-3 items-center">
 					<span>
-						Filter: (gruppnamn, medlemmars namn)
+						{t("nollning.group_admin.filter_label")}
 					</span>
 					<Input
 						type="text"
-						placeholder="Sök uppdrag..."
+						placeholder={t("nollning.group_admin.search_placeholder")}
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
 						className="w-64"
@@ -186,13 +199,13 @@ export default function Page() {
 							className="flex-1"
 							onClick={() => routerPush("completed-missions")}
 						>
-							Avklarade Uppdrag
+							{t("nollning.group_admin.completed_missions")}
 						</Button>
 						<Button
 							className="flex-1"
 							onClick={() => routerPush("group-users")}
 						>
-							Medlemmar
+							{t("nollning.group_admin.members_btn")}
 						</Button>
 					</div>
 				</EditGroup>

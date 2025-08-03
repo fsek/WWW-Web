@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import {
 	Select,
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export default function WeekFilter({ value, onChange }: Props) {
+	const { t } = useTranslation("admin");
 	const [inputValue, setInputValue] = useState(value?.toString() || "");
 	const [inputValid, setInputValid] = useState(true);
 
@@ -46,21 +48,21 @@ export default function WeekFilter({ value, onChange }: Props) {
 					)}
 					aria-invalid={!inputValid}
 				>
-					<SelectValue placeholder="Select week" />
+					<SelectValue placeholder={t("week_selector.placeholder")} />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="clear">Show all</SelectItem>
+					<SelectItem value="clear">{t("week_selector.show_all")}</SelectItem>
 					<SelectSeparator />
 					{weekOptions.map((week) => (
 						<SelectItem key={week} value={week}>
-							Week {week}
+							{t("week_selector.week", { week })}
 						</SelectItem>
 					))}
 				</SelectContent>
 			</Select>
 			{!inputValid && (
 				<p className="text-red-500 text-sm mt-1">
-					Week must be between {MIN_WEEK} and {MAX_WEEK}
+					{t("week_selector.invalid", { min: MIN_WEEK, max: MAX_WEEK })}
 				</p>
 			)}
 		</div>

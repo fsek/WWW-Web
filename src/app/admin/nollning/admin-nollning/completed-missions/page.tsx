@@ -33,7 +33,7 @@ import { is_accepted as acceptEnum } from "@/api";
 import { toast } from "sonner";
 
 export default function CompletedMissionsPage() {
-	const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation("admin");
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const searchID = searchParams.get("id");
@@ -154,10 +154,10 @@ export default function CompletedMissionsPage() {
 		...addCompletedGroupMissionMutation(),
 		onSuccess: () => {
 			invalidateAllQueries();
-			toast.success("Uppdrag markerat som avklarat!");
+			toast.success(t("nollning.mission_grading.toast_add_success"));
 		},
 		onError: () => {
-			toast.error("Kunde inte markera uppdrag som avklarat.");
+			toast.error(t("nollning.mission_grading.toast_add_error"));
 		},
 	});
 
@@ -165,10 +165,10 @@ export default function CompletedMissionsPage() {
 		...uncompleteGroupMissionMutation(),
 		onSuccess: () => {
 			invalidateAllQueries();
-			toast.success("Uppdrag markerat som oavklarat!");
+			toast.success(t("nollning.mission_grading.toast_remove_success"));
 		},
 		onError: () => {
-			toast.error("Kunde inte markera uppdrag som oavklarat.");
+			toast.error(t("nollning.mission_grading.toast_remove_error"));
 		},
 	});
 
@@ -176,10 +176,10 @@ export default function CompletedMissionsPage() {
 		...editCompletedGroupMissionMutation(),
 		onSuccess: () => {
 			invalidateAllQueries();
-			toast.success("Uppdrag uppdaterat!");
+			toast.success(t("nollning.mission_grading.toast_edit_success"));
 		},
 		onError: () => {
-			toast.error("Kunde inte uppdatera uppdrag.");
+			toast.error(t("nollning.mission_grading.toast_edit_error"));
 		},
 	});
 
@@ -195,7 +195,7 @@ export default function CompletedMissionsPage() {
 	};
 
 	function handleRowClick(row: Row<AdventureMissionRead>) {
-		// This always called when the user clicks on a row
+		// This is always called when the user clicks on a row
 		const completedMission = completedAdventureMissions.data.find(
 			(mission) => mission.adventure_mission.id === row.original.id,
 		);
@@ -268,16 +268,16 @@ export default function CompletedMissionsPage() {
 	const columnHelper = createColumnHelper<AdventureMissionRead>();
 	const columns = [
 		columnHelper.accessor(i18n.language === "en" ? "title_en" : "title_sv", {
-			header: "Titel",
+			header: t("nollning.mission_grading.header_title"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor(i18n.language === "en" ? "description_en" : "description_sv", {
-			header: "Uppdrag",
+			header: t("nollning.mission_grading.header_description"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.display({
 			id: "points",
-			header: "Poäng",
+			header: t("nollning.mission_grading.header_points"),
 			cell: (info) => {
 				const row = info.row.original;
 				return row.min_points === row.max_points
@@ -287,7 +287,7 @@ export default function CompletedMissionsPage() {
 		}),
 		columnHelper.accessor("id", {
 			id: "id",
-			header: "Fådda Poäng",
+			header: t("nollning.mission_grading.header_awarded_points"),
 			cell: (info) => {
 				if (completedMissionsID.includes(info.getValue())) {
 					return `${completedAdventureMissions.data.find((e) => e.adventure_mission.id === info.getValue())?.points ?? 0}`;
@@ -296,12 +296,12 @@ export default function CompletedMissionsPage() {
 			},
 		}),
 		columnHelper.accessor("nollning_week", {
-			header: "Vecka",
+			header: t("nollning.mission_grading.header_week"),
 			cell: (info) => info.getValue(),
 		}),
 		{
 			id: "actions",
-			header: "Åtgärder",
+			header: t("nollning.mission_grading.header_actions"),
 			cell: ({ row }: { row: Row<AdventureMissionRead> }) => (
 				<Button
 					variant={completedMissionsID.includes(row.original.id) ? "outline" : "default"}
@@ -309,7 +309,9 @@ export default function CompletedMissionsPage() {
 					className="text-foreground"
 					onClick={(e) => { e.stopPropagation(); handleClickAdvanced(row) }}
 				>
-					{completedMissionsID.includes(row.original.id) ? "Redigera" : "Lägg till"}
+					{completedMissionsID.includes(row.original.id)
+						? t("nollning.mission_grading.edit")
+						: t("nollning.mission_grading.add")}
 				</Button>
 			),
 		},
@@ -322,12 +324,12 @@ export default function CompletedMissionsPage() {
 
 	return (
 		<Suspense
-			fallback={<div>{"Ingen faddergrupp (eller nollning) vald :(("}</div>}
+			fallback={<div>{t("nollning.mission_grading.no_group_selected")}</div>}
 		>
 			<div className="px-12 py-4 space-x-4 space-y-4">
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
-						Avklarade uppdrag för "{group.data.name}"
+						{t("nollning.mission_grading.completed_for_group", { group: group.data.name })}
 					</h3>
 					<Button
 						variant="ghost"
@@ -337,20 +339,20 @@ export default function CompletedMissionsPage() {
 						}
 					>
 						<ArrowLeft className="w-4 h-4" />
-						Tillbaka
+						{t("nollning.mission_grading.back")}
 					</Button>
 				</div>
 				<p className="py-3">
-					Här kan du redigera avklarade uppdrag och sätta poäng för dem. En grön färg indikerar att uppdraget är avklarat, gul att det inte har tittats på än och röd att det är underkänt (gör om gör rätt).
+					{t("nollning.mission_grading.intro")}
 				</p>
 
 				<div className="flex flex-row gap-3 items-center">
 					<span>
-						Filter:
+						{t("nollning.mission_grading.filter_label")}
 					</span>
 					<Input
 						type="text"
-						placeholder="Sök uppdrag..."
+						placeholder={t("nollning.mission_grading.search_placeholder")}
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
 						className="w-64"
@@ -369,7 +371,7 @@ export default function CompletedMissionsPage() {
 					rowClassName={rowColor}
 				/>
 				<MissionPointRangeDialog
-					title={"Ändra avklarat uppdrag"}
+					title={t("nollning.mission_grading.edit_dialog_title")}
 					open={editDialogOpen}
 					defaultPoints={
 						completedAdventureMissions.data.find(
@@ -425,11 +427,11 @@ export default function CompletedMissionsPage() {
 						}
 						}
 					>
-						Gör Oavklarat
+						{t("nollning.mission_grading.mark_uncompleted")}
 					</Button>
 				</MissionPointRangeDialog>
 				<MissionPointRangeDialog
-					title={"Lägg till avklarat uppdrag"}
+					title={t("nollning.mission_grading.add_dialog_title")}
 					open={addDialogOpen}
 					defaultPoints={selectedMission?.max_points}
 					maxPoints={selectedMission?.max_points}

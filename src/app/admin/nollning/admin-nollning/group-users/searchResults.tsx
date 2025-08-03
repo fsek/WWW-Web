@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
 	nameFilter: string;
@@ -20,6 +21,7 @@ const SearchResults = ({
 	excludedFromSearch,
 	onRowClick,
 }: Props) => {
+	const { t } = useTranslation("admin");
 	const users = useSuspenseQuery({
 		...searchUsersOptions({
 			query: {
@@ -63,7 +65,7 @@ const SearchResults = ({
 						className="w-full justify-start text-muted-foreground"
 						disabled
 					>
-						Inga användare hittade
+						{t("nollning.group_members.no_users_found")}
 					</Button>
 				)}
 			</div>

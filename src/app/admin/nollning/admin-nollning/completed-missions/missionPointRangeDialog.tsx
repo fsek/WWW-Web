@@ -28,6 +28,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { useTranslation } from "react-i18next";
 
 interface Props {
 	title: string;
@@ -54,6 +55,7 @@ const MissionPointRangeDialog = ({
 	onClose,
 	defaultIsAccepted = acceptEnum.ACCEPTED,
 }: Props) => {
+	const { t } = useTranslation("admin");
 
 	const editCompletedMissionSchema = z.object({
 		points: z.number().int(),
@@ -69,7 +71,7 @@ const MissionPointRangeDialog = ({
 		return true;
 	},
 		{
-			message: `Points must be between ${minPoints ?? 0} and ${maxPoints ?? "∞"}.`,
+			message: t("nollning.mission_grading.points_range", { min: minPoints ?? 0, max: maxPoints ?? "∞" }),
 			path: ["points"]
 		});
 
@@ -122,13 +124,18 @@ const MissionPointRangeDialog = ({
 								name={"points"}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Points </FormLabel>
+										<FormLabel>{t("nollning.mission_grading.points_label")}</FormLabel>
 										<FormControl>
 											<Input
 												type="number"
 												placeholder="0"
 												{...field}
-												onChange={(e) => field.onChange(e.target.valueAsNumber)}
+												value={Number.isNaN(field.value) || field.value === undefined ? "" : field.value}
+												onChange={(e) => {
+													const val = e.target.value;
+													const num = val === "" ? "" : Number(val);
+													field.onChange(num);
+												}}
 											/>
 										</FormControl>
 										{form.formState.errors.points && (
@@ -144,7 +151,7 @@ const MissionPointRangeDialog = ({
 								name={"is_accepted"}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Status</FormLabel>
+										<FormLabel>{t("nollning.mission_grading.status_label")}</FormLabel>
 										<FormControl>
 											<Select
 												value={field.value}
@@ -154,9 +161,9 @@ const MissionPointRangeDialog = ({
 													<SelectValue />
 												</SelectTrigger>
 												<SelectContent>
-													<SelectItem value={acceptEnum.ACCEPTED}>Godkänd</SelectItem>
-													<SelectItem value={acceptEnum.REVIEW}>Granskas</SelectItem>
-													<SelectItem value={acceptEnum.FAILED}>Underkänd</SelectItem>
+													<SelectItem value={acceptEnum.ACCEPTED}>{t("nollning.mission_grading.status_accepted")}</SelectItem>
+													<SelectItem value={acceptEnum.REVIEW}>{t("nollning.mission_grading.status_review")}</SelectItem>
+													<SelectItem value={acceptEnum.FAILED}>{t("nollning.mission_grading.status_failed")}</SelectItem>
 												</SelectContent>
 											</Select>
 										</FormControl>
@@ -164,10 +171,10 @@ const MissionPointRangeDialog = ({
 								)}
 							/>
 							<Button type="submit" className="w-32 min-w-fit">
-								Spara
+								{t("nollning.mission_grading.save")}
 							</Button>
 							{children}
-							<DialogClose>Avbryt</DialogClose>
+							<DialogClose>{t("nollning.mission_grading.cancel")}</DialogClose>
 						</div>
 					</form>
 				</Form>

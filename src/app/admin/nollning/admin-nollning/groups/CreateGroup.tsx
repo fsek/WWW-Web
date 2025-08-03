@@ -30,6 +30,7 @@ import { z } from "zod";
 import GroupTypeSelect from "./GroupTypeSelect";
 import { ValueSetter } from "node_modules/date-fns/parse/_lib/Setter";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const GroupSchema = z.object({
 	name: z.string().min(2),
@@ -58,6 +59,7 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 	});
 
 	const queryClient = useQueryClient();
+	const { t } = useTranslation("admin");
 
 	const createGroup = useMutation({
 		...uploadGroupMutation(),
@@ -72,12 +74,12 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 			queryClient.invalidateQueries({
 				queryKey: getGroupsQueryKey(),
 			});
-			toast.success("Faddergrupp skapad!");
+			toast.success(t("nollning.groups.create_success"));
 			setOpen(false);
 			setPendingGroupNumber(undefined);
 		},
 		onError: () => {
-			toast.error("Kunde inte skapa faddergrupp.");
+			toast.error(t("nollning.groups.create_error"));
 			setPendingGroupNumber(undefined);
 			setOpen(false);
 		},
@@ -96,11 +98,11 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 					path: { year: new Date().getFullYear() },
 				}),
 			});
-			toast.success("Faddergrupp tillagd i nollning!");
+			toast.success(t("nollning.groups.add_success"));
 			setOpen(false);
 		},
 		onError: () => {
-			toast.error("Kunde inte lägga till faddergrupp i nollning.");
+			toast.error(t("nollning.groups.add_error"));
 			setOpen(false);
 		},
 	});
@@ -125,13 +127,13 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 							groupForm.reset();
 						}}
 					>
-						Skapa Faddergrupp
+						{t("nollning.groups.create_group")}
 					</Button>
 				</DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle className="text-3xl py-3 font-bold text-primary">
-							Skapa Faddergrupp
+							{t("nollning.groups.create_group")}
 						</DialogTitle>
 					</DialogHeader>
 					<Form {...groupForm}>
@@ -142,9 +144,9 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 									name={"name"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Titel </FormLabel>
+											<FormLabel>{t("nollning.groups.title")}</FormLabel>
 											<FormControl>
-												<Input placeholder="Namn" {...field} />
+												<Input placeholder={t("nollning.groups.title")} {...field} />
 											</FormControl>
 										</FormItem>
 									)}
@@ -154,7 +156,7 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 									name={"group_type"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Grupptyp</FormLabel>
+											<FormLabel>{t("nollning.groups.group_type")}</FormLabel>
 											<GroupTypeSelect
 												value={field.value}
 												onChange={field.onChange}
@@ -167,11 +169,11 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 									name={"nollning_group_number"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Gruppnummer</FormLabel>
+											<FormLabel>{t("nollning.groups.group_number")}</FormLabel>
 											<FormControl>
 												<Input
 													type="number"
-													placeholder="Gruppnummer"
+													placeholder={t("nollning.groups.group_number")}
 													value={field.value === undefined ? "" : field.value}
 													onChange={e => {
 														const val = e.target.value;
@@ -183,9 +185,9 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 									)}
 								/>
 								<Button type="submit" className="w-32 min-w-fit">
-									Skapa
+									{t("nollning.groups.create_group")}
 								</Button>
-								<DialogClose>Avbryt</DialogClose>
+								<DialogClose>{t("nollning.groups.cancel")}</DialogClose>
 							</div>
 						</form>
 					</Form>

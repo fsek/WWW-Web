@@ -17,6 +17,7 @@ import {
 	PopoverContent,
 } from "@/components/ui/popover-no-portal";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface Props {
 	excludedFromSearch?: GroupUserRead[];
@@ -37,6 +38,7 @@ function toGroupUserType(s: string): GroupUserTypes {
 }
 
 export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props) {
+	const { t } = useTranslation("admin");
 	const [nameFilter, setNameFilter] = useState("");
 	const [programFilter, setProgramFilter] = useState("");
 	const [startingYearRangeFilter, setStartingYearRangeFilter] = useState<
@@ -63,11 +65,11 @@ export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props
 				value={groupUserType}
 			>
 				<SelectTrigger className="w-full bg-white max-w-sm">
-					<SelectValue placeholder="Filtrera efter program" />
+					<SelectValue placeholder={t("nollning.group_members.select_role_placeholder")} />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="Mentee">Lägg till som nolla</SelectItem>
-					<SelectItem value="Mentor">Lägg till som fadder</SelectItem>
+					<SelectItem value="Mentee">{t("nollning.group_members.add_as_mentee")}</SelectItem>
+					<SelectItem value="Mentor">{t("nollning.group_members.add_as_mentor")}</SelectItem>
 				</SelectContent>
 			</Select>
 			<Select
@@ -81,10 +83,10 @@ export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props
 				}}
 			>
 				<SelectTrigger className="w-full bg-white max-w-sm">
-					<SelectValue placeholder="Filtrera efter program" />
+					<SelectValue placeholder={t("nollning.group_members.filter_by_program")} />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="clear">Rensa</SelectItem>
+					<SelectItem value="clear">{t("nollning.group_members.clear")}</SelectItem>
 					<SelectItem value="F">F</SelectItem>
 					<SelectItem value="Pi">Pi</SelectItem>
 					<SelectItem value="N">N</SelectItem>
@@ -102,7 +104,7 @@ export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props
 						<div>
 							<Input
 								className="bg-white"
-								placeholder="Sök användare"
+								placeholder={t("nollning.group_members.search_user_placeholder")}
 								value={nameFilter}
 								onChange={(e) => {
 									setNameFilter(e.target.value);
@@ -129,7 +131,7 @@ export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props
 							fallback={
 								<div className="p-4">
 									<Button variant="ghost" className="w-full justify-start" disabled>
-										Söker...{" "}
+										{t("nollning.group_members.searching")}
 									</Button>
 								</div>
 							}

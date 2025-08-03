@@ -25,6 +25,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const AdventureMissionSchema = z.object({
 	title_sv: z.string().min(2),
@@ -42,6 +43,7 @@ interface Props {
 
 const CreateAdventureMission = ({ nollningID }: Props) => {
 	const [open, setOpen] = useState(false);
+	const { t } = useTranslation("admin");
 
 	const adventureMissionForm = useForm<z.infer<typeof AdventureMissionSchema>>({
 		resolver: zodResolver(AdventureMissionSchema),
@@ -66,17 +68,16 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 					path: { nollning_id: nollningID },
 				}),
 			});
-			toast.success("Äventyrsuppdrag skapat!");
+			toast.success(t("nollning.missions.create_success"));
 			setOpen(false);
 		},
 		onError: () => {
-			toast.error("Kunde inte skapa äventyrsuppdrag.");
+			toast.error(t("nollning.missions.create_error"));
 			setOpen(false);
 		},
 	});
 
 	function onSubmit(values: z.infer<typeof AdventureMissionSchema>) {
-		console.log("hejHejHej");
 		createAdventureMission.mutate({
 			body: {
 				title_sv: values.title_sv,
@@ -100,13 +101,13 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 							adventureMissionForm.reset();
 						}}
 					>
-						Skapa Äventyrsuppdrag
+						{t("nollning.missions.create_button")}
 					</Button>
 				</DialogTrigger>
 				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 					<DialogHeader>
 						<DialogTitle className="text-3xl py-3 font-bold text-primary">
-							Skapa Äventyrsuppdrag
+							{t("nollning.missions.create_title")}
 						</DialogTitle>
 					</DialogHeader>
 					<Form {...adventureMissionForm} >
@@ -117,9 +118,9 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 									name={"title_sv"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Titel (Svenska) </FormLabel>
+											<FormLabel>{t("nollning.missions.title_sv")}</FormLabel>
 											<FormControl>
-												<Input placeholder="Titel" {...field} />
+												<Input placeholder={t("nollning.missions.title_placeholder")} {...field} />
 											</FormControl>
 										</FormItem>
 									)}
@@ -129,9 +130,9 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 									name={"title_en"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Titel (Engelska) </FormLabel>
+											<FormLabel>{t("nollning.missions.title_en")}</FormLabel>
 											<FormControl>
-												<Input placeholder="Titel" {...field} />
+												<Input placeholder={t("nollning.missions.title_placeholder")} {...field} />
 											</FormControl>
 										</FormItem>
 									)}
@@ -141,11 +142,11 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 									name={"description_sv"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Beskrivning (Svenska)</FormLabel>
+											<FormLabel>{t("nollning.missions.description_sv")}</FormLabel>
 											<FormControl>
 												<textarea
 													className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-													placeholder="Beskrivning"
+													placeholder={t("nollning.missions.description_placeholder")}
 													{...field}
 												/>
 											</FormControl>
@@ -157,11 +158,11 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 									name={"description_en"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Beskrivning (Engelska)</FormLabel>
+											<FormLabel>{t("nollning.missions.description_en")}</FormLabel>
 											<FormControl>
 												<textarea
 													className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-													placeholder="Beskrivning"
+													placeholder={t("nollning.missions.description_placeholder")}
 													{...field}
 												/>
 											</FormControl>
@@ -173,7 +174,7 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 									name={"min_points"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Min Poäng </FormLabel>
+											<FormLabel>{t("nollning.missions.min_points")}</FormLabel>
 											<FormControl>
 												<Input
 													type="number"
@@ -196,7 +197,7 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 									name={"max_points"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Max Poäng </FormLabel>
+											<FormLabel>{t("nollning.missions.max_points")}</FormLabel>
 											<FormControl>
 												<Input
 													type="number"
@@ -219,7 +220,7 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 									name={"nollning_week"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Vecka </FormLabel>
+											<FormLabel>{t("nollning.missions.week")}</FormLabel>
 											<FormControl>
 												<Input
 													type="number"
@@ -246,10 +247,10 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 									onClick={() => setOpen(false)}
 									className="w-32 min-w-fit"
 								>
-									Avbryt
+									{t("nollning.missions.cancel")}
 								</Button>
 								<Button type="submit" className="w-32 min-w-fit">
-									Skapa
+									{t("nollning.missions.create")}
 								</Button>
 							</div>
 						</form>

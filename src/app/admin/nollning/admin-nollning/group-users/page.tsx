@@ -32,8 +32,10 @@ import { useRouter } from "next/navigation";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export default function GroupUsersPage() {
+	const { t } = useTranslation("admin");
 	const searchParams = useSearchParams();
 	const searchID = searchParams.get("id");
 	const searchGroup = searchParams.get("group");
@@ -52,20 +54,35 @@ export default function GroupUsersPage() {
 	const columnHelper = createColumnHelper<GroupUserRead>();
 	const columns = [
 		columnHelper.accessor("user.first_name", {
-			header: "Förnamn",
+			header: t("nollning.group_members.header_first_name"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("user.last_name", {
-			header: "Efternamn",
+			header: t("nollning.group_members.header_last_name"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("user.program", {
-			header: "Program",
-			cell: (info) => info.getValue(),
+			header: t("nollning.group_members.header_program"),
+			cell: (info) => {
+				if (info.getValue() === "Oklart") {
+					return t("nollning.group_members.unclear");
+				}
+				return info.getValue();
+			},
 		}),
 		columnHelper.accessor("group_user_type", {
-			header: "roll",
-			cell: (info) => info.getValue(),
+			header: t("nollning.group_members.header_role"),
+			cell: (info) => {
+				// get translated value for group_user_type
+				const groupUserType = info.getValue();
+				if (groupUserType === "Mentor") {
+					return t("nollning.group_members.fadder");
+				}
+				if (groupUserType === "Mentee") {
+					return t("nollning.group_members.nolla");
+				}
+				return groupUserType;
+			},
 		}),
 	];
 
@@ -90,10 +107,10 @@ export default function GroupUsersPage() {
 					path: { id: groupID },
 				}),
 			});
-			toast.success("Användare borttagen från gruppen!");
+			toast.success(t("nollning.group_members.toast_remove_success"));
 		},
 		onError: () => {
-			toast.error("Kunde inte ta bort användare från gruppen.");
+			toast.error(t("nollning.group_members.toast_remove_error"));
 			onClose();
 		},
 	});
@@ -115,10 +132,10 @@ export default function GroupUsersPage() {
 					path: { id: groupID },
 				}),
 			});
-			toast.success("Användare tillagd i gruppen!");
+			toast.success(t("nollning.group_members.toast_add_success"));
 		},
 		onError: () => {
-			toast.error("Kunde inte lägga till användare i gruppen.");
+			toast.error(t("nollning.group_members.toast_add_error"));
 		},
 	});
 
@@ -139,7 +156,7 @@ export default function GroupUsersPage() {
 			fallback={
 				<div>
 					<h3>
-						{"ingen grupp vald :(( [eller så existerar inte den valda gruppen]"}
+						{t("nollning.group_members.no_group_selected")}
 					</h3>
 				</div>
 			}
@@ -147,7 +164,7 @@ export default function GroupUsersPage() {
 			<div className="px-12 py-4  space-y-4 ">
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
-						Medlemmar i "{group.data.name}"
+						{t("nollning.group_members.header_group_members", { group: group.data.name })}
 					</h3>
 					<Button
 						variant="ghost"
@@ -157,7 +174,7 @@ export default function GroupUsersPage() {
 						}
 					>
 						<ArrowLeft className="w-4 h-4" />
-						Tillbaka
+						{t("nollning.group_members.back")}
 					</Button>
 				</div>
 				<div className="space-y-4 flex flex-row space-x-8">
@@ -166,7 +183,7 @@ export default function GroupUsersPage() {
 							<div className="border border-card-foreground/20 rounded-lg bg-card mb-5 w-sm">
 								<div className="space-x-4 space-y-4 flex-2 p-4">
 									<h3 className="text-xl">
-										Lägg till medlemmar
+										{t("nollning.group_members.add_members")}
 									</h3>
 
 									<SearchBar
@@ -177,13 +194,9 @@ export default function GroupUsersPage() {
 							</div>
 							<div className="border border-card-foreground/20 rounded-lg bg-card mb-5 mx-5 w-sm">
 								<div className="space-x-4 space-y-4 flex-2 p-4">
-									<h3 className="text-xl">Information</h3>
+									<h3 className="text-xl">{t("nollning.group_members.info_header")}</h3>
 									<p className="text-sm text-muted-foreground">
-										På denna sida kan du hantera medlemmar i
-										"{group.data.name}"-gruppen. Du kan lägga till
-										eller ta bort medlemmar från gruppen.
-										Använd sökfältet för att hitta användare som du vill lägga till i
-										gruppen. Du kan söka på namn, program och startår.
+										{t("nollning.group_members.info_text", { group: group.data.name })}
 									</p>
 								</div>
 							</div>
@@ -206,19 +219,22 @@ export default function GroupUsersPage() {
 							<DialogContent>
 								<VisuallyHidden>
 									<DialogTitle>
-										Remove member from group
+										{t("nollning.group_members.remove_dialog_title")}
 									</DialogTitle>
 								</VisuallyHidden>
 								<DialogHeader>
-									Ta bort {selectedUser?.user.first_name}{" "}
-									{selectedUser?.user.last_name} från {group.data.name}
+									{t("nollning.group_members.remove_dialog_header", {
+										first_name: selectedUser?.user.first_name,
+										last_name: selectedUser?.user.last_name,
+										group: group.data.name,
+									})}
 								</DialogHeader>
 								<DialogFooter>
 									<div className="px-8 space-x-4 space-y-4">
 										<Button variant="destructive" onClick={handleRemoveUser}>
-											Ta bort
+											{t("nollning.group_members.remove")}
 										</Button>
-										<DialogClose>Avbryt</DialogClose>
+										<DialogClose>{t("nollning.group_members.cancel")}</DialogClose>
 									</div>
 								</DialogFooter>
 							</DialogContent>

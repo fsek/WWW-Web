@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import WeekFilter from "@/components/WeekFilter";
 
 export default function AdventureMissionsPage() {
-	const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation("admin");
 	const searchParams = useSearchParams();
 	const search = searchParams.get("id");
 	let nollningID = idAsNumber(search);
@@ -83,16 +83,16 @@ export default function AdventureMissionsPage() {
 	const columnHelper = createColumnHelper<AdventureMissionRead>();
 	const columns = [
 		columnHelper.accessor(i18n.language === "en" ? "title_en" : "title_sv", {
-			header: "Titel",
+			header: t("nollning.missions.title_header"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor(i18n.language === "en" ? "description_en" : "description_sv", {
-			header: "Uppdrag",
+			header: t("nollning.missions.description_header"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.display({
 			id: "points",
-			header: "Tillåtna poäng",
+			header: t("nollning.missions.points_header"),
 			cell: (info) => {
 				const row = info.row.original;
 				return row.min_points === row.max_points
@@ -101,7 +101,7 @@ export default function AdventureMissionsPage() {
 			},
 		}),
 		columnHelper.accessor("nollning_week", {
-			header: "Vecka",
+			header: t("nollning.missions.week_header"),
 			cell: (info) => info.getValue(),
 		}),
 	];
@@ -116,11 +116,11 @@ export default function AdventureMissionsPage() {
 	const router = useRouter();
 
 	return (
-		<Suspense fallback={<div>{"Ingen nollning vald :(("}</div>}>
+		<Suspense fallback={<div>{t("nollning.group_admin.no_nollning_selected")}</div>}>
 			<div className="px-12 py-4 space-x-4 space-y-4">
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
-						Administrera äventyrsuppdrag för "{data.name}"
+						{t("nollning.missions.admin_title", { name: data.name })}
 					</h3>
 					<Button
 						variant="ghost"
@@ -130,22 +130,22 @@ export default function AdventureMissionsPage() {
 						}
 					>
 						<ArrowLeft className="w-4 h-4" />
-						Tillbaka
+						{t("nollning.missions.back")}
 					</Button>
 				</div>
 				<div className="flex flex-row w-full justify-between items-end">
 					<p className="">
-						Klicka på ett uppdrag för att redigera eller förinta det! Du kan skapa nya uppdrag med knappen nedan. Tips: Sätt minsta poäng till 0 eftersom minsta poängen kan ges till grupper som slutfört uppdraget men fått icke godkänt resultat.
+						{t("nollning.missions.intro")}
 					</p>
 				</div>
 				<CreateAdventureMission nollningID={nollningID} />
 				<div className="flex flex-row gap-3 items-center">
 					<span>
-						Filter:
+						{t("nollning.missions.filter_label")}
 					</span>
 					<Input
 						type="text"
-						placeholder="Sök uppdrag..."
+						placeholder={t("nollning.missions.search_placeholder")}
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
 						className="w-64"

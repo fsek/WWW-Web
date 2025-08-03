@@ -18,6 +18,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 interface Props {
 	nollning: NollningRead;
@@ -25,6 +26,7 @@ interface Props {
 
 const DeleteNollning = ({ nollning }: Props) => {
 	const [open, setOpen] = useState(false);
+	const { t } = useTranslation("admin");
 
 	const queryClient = useQueryClient();
 
@@ -33,10 +35,10 @@ const DeleteNollning = ({ nollning }: Props) => {
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllNollningQueryKey() });
-			toast.success("Nollning raderad!");
+			toast.success(t("nollning.main.delete_success"));
 		},
 		onError: () => {
-			toast.error("Kunde inte radera nollning.");
+			toast.error(t("nollning.main.delete_error"));
 		},
 	});
 
@@ -50,13 +52,13 @@ const DeleteNollning = ({ nollning }: Props) => {
 						path: { nollning_id: nollning.id },
 					})
 				}
-				triggerText="Förinta"
-				title={`Radera ${nollning.name}`}
-				description={`Är du säker på att du vill radera ${nollning.name}? Detta kan inte ångras.`}
-				confirmText="Förinta"
-				cancelText="Avbryt"
+				triggerText={t("nollning.main.delete_button")}
+				title={t("nollning.main.delete_title", { name: nollning.name })}
+				description={t("nollning.main.delete_description", { name: nollning.name })}
+				confirmText={t("nollning.main.delete_confirm")}
+				cancelText={t("nollning.main.cancel")}
 				confirmByTyping={true}
-				confirmByTypingText={`Skriv "${nollning.name}" nedan för att bekräfta borttagningen.`}
+				confirmByTypingText={t("nollning.main.delete_confirm_typing", { name: nollning.name })}
 				confirmByTypingKey={nollning.name}
 			/>
 		</div>

@@ -6,17 +6,19 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import React, { Suspense } from "react";
 import CreateNollning from "./createNollning";
 import NollningAccordionItem from "./nollningAccordionItem";
+import { useTranslation } from "react-i18next";
 
 const Nollning = () => {
 	const { data } = useSuspenseQuery({
 		...getAllNollningOptions(),
 	});
+	const { t } = useTranslation("admin");
 
 	return (
-		<Suspense fallback={<div>{"Nollningar kunde inte hämtas"}</div>}>
+		<Suspense fallback={<div>{t("nollning.main.error_loading")}</div>}>
 			<div className="px-12 py-4 space-x-4 space-y-4">
 				<h3 className="text-3xl py-3 text-primary font-bold">
-					Administrera Nollningar
+					{t("nollning.main.admin_title")}
 				</h3>
 				<CreateNollning />
 				<Accordion
