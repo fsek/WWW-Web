@@ -1,6 +1,7 @@
 import {
 	addGroupToNollningMutation,
 	getGroupsQueryKey,
+	getNollningByYearQueryKey,
 	getNollningQueryKey,
 	uploadGroupMutation,
 } from "@/api/@tanstack/react-query.gen";
@@ -85,6 +86,11 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 			queryClient.invalidateQueries({
 				queryKey: getNollningQueryKey({
 					path: { nollning_id: nollningID },
+				}),
+			});
+			queryClient.invalidateQueries({
+				queryKey: getNollningByYearQueryKey({
+					path: { year: new Date().getFullYear() },
 				}),
 			});
 			setOpen(false);

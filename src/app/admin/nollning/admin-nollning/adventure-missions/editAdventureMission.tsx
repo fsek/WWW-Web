@@ -2,6 +2,7 @@ import type { AdventureMissionRead } from "@/api";
 import {
 	deleteAdventureMissionMutation,
 	editAdventureMissionMutation,
+	getNollningByYearQueryKey,
 	getNollningQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
@@ -82,6 +83,11 @@ const EditAdventureMission = ({
 					path: { nollning_id: nollning_id },
 				}),
 			});
+			queryClient.invalidateQueries({
+				queryKey: getNollningByYearQueryKey({
+					path: { year: new Date().getFullYear() },
+				}),
+			});
 		},
 		onError: () => {
 			onClose();
@@ -95,6 +101,11 @@ const EditAdventureMission = ({
 			queryClient.invalidateQueries({
 				queryKey: getNollningQueryKey({
 					path: { nollning_id: nollning_id },
+				}),
+			});
+			queryClient.invalidateQueries({
+				queryKey: getNollningByYearQueryKey({
+					path: { year: new Date().getFullYear() },
 				}),
 			});
 		},

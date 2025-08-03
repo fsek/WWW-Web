@@ -1,5 +1,6 @@
 import type { GroupRead } from "@/api";
 import {
+	getNollningByYearQueryKey,
 	getNollningQueryKey,
 	patchGroupMutation,
 	removeGroupMutation,
@@ -75,6 +76,11 @@ const EditGroup = ({
 					path: { nollning_id: nollning_id },
 				}),
 			});
+			queryClient.invalidateQueries({
+				queryKey: getNollningByYearQueryKey({
+					path: { year: new Date().getFullYear() },
+				}),
+			});
 		},
 		onError: () => {
 			onClose();
@@ -88,6 +94,11 @@ const EditGroup = ({
 			queryClient.invalidateQueries({
 				queryKey: getNollningQueryKey({
 					path: { nollning_id: nollning_id },
+				}),
+			});
+			queryClient.invalidateQueries({
+				queryKey: getNollningByYearQueryKey({
+					path: { year: new Date().getFullYear() },
 				}),
 			});
 		},
