@@ -65,8 +65,12 @@ export default function StartYearFilter({ value, onChange }: Props) {
 				onChange={handleChange}
 				placeholder={t("nollning.group_members.select_start_year")}
 				clearable
-				renderOption={(option: { label: string; value: string }) => (
-					<span className="text-sm font-normal">{option.label}</span>
+				renderOption={(option) => (
+					<span className="text-sm font-normal">
+						{typeof option.label === "string" || typeof option.label === "number"
+							? option.label
+							: "Something went wrong"}
+					</span>
 				)}
 				inputProps={{
 					className: cn(
