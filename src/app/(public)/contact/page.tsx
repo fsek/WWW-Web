@@ -62,7 +62,7 @@ export default function ContactPage() {
 								id="vice"
 								title={t("board.vice")}
 								fullName="Lovisa Werselius"
-								email="viceordf@fsektionen.se "
+								email="viceordf@fsektionen.se"
 								highlight={highlightedId === "vice"}
 							/>
 							<ContactCard
@@ -136,7 +136,7 @@ export default function ContactPage() {
 								id="cafe"
 								title={t("other.cafe")}
 								fullName="Ellen Boström"
-								email="cafe@fsektionen.se "
+								email="cafe@fsektionen.se"
 								highlight={highlightedId === "cafe"}
 							/>
 							<ContactCard
@@ -150,14 +150,14 @@ export default function ContactPage() {
 								id="culture"
 								title={t("other.culture")}
 								fullName="Manne Mönster"
-								email="km@fsektionen.se "
+								email="km@fsektionen.se"
 								highlight={highlightedId === "culture"}
 							/>
 							<ContactCard
 								id="education"
 								title={t("other.education")}
 								fullName="Mattis Mattsson"
-								email="um@fsektionen.se "
+								email="um@fsektionen.se"
 								highlight={highlightedId === "education"}
 							/>
 							<ContactCard
