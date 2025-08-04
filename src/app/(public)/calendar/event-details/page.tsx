@@ -28,6 +28,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import type { EventRead } from "@/api/types.gen";
+import SignupCard from "./SignupCard";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
@@ -63,13 +64,6 @@ export default function Page() {
 		);
 	}
 
-	// const formatDate = (date: Date) => {
-	// 	return new Intl.DateTimeFormat(i18n.language === "en" ? "en-US" : "sv-SE", {
-	// 		dateStyle: "full",
-	// 		timeStyle: "short",
-	// 	}).format(new Date(date));
-	// };
-
 	const formatDateShort = (date: Date) => {
 		return new Intl.DateTimeFormat(i18n.language === "en" ? "en-US" : "sv-SE", {
 			dateStyle: "medium",
@@ -79,6 +73,18 @@ export default function Page() {
 
 	const featureDivClassName = "flex items-center gap-1 text-sm";
 	const featureClassName = "w-10 h-10";
+
+
+	// Check if signup is allowed right now
+	const currentDate = new Date();
+	const signupStart = new Date(data.signup_start);
+	const signupEnd = new Date(data.signup_end);
+	const isSignupAllowed =
+		data.can_signup &&
+		!data.closed &&
+		signupStart <= currentDate &&
+		currentDate <= signupEnd;
+
 
 	return (
 		<Suspense fallback={<div>{t("admin:events.no_event_selected")}</div>}>
@@ -319,19 +325,18 @@ export default function Page() {
 							<div className="flex items-center gap-2 mt-2">
 								<Users className="w-4 h-4 text-muted-foreground" />
 								<span>
-									{`${t("admin:events.signup_count")}: ${
-										data.signup_count
-									} / ${data.max_event_users}`}
+									{`${t("admin:events.signup_count")}: ${data.signup_count
+										} / ${data.max_event_users}`}
 								</span>
 							</div>
 
 							{(data.can_signup === false ||
 								data.signup_start === null ||
 								data.signup_end === null) && (
-								<p className="text-sm text-muted-foreground">
-									{t("admin:events.signup_not_available")}
-								</p>
-							)}
+									<p className="text-sm text-muted-foreground">
+										{t("admin:events.signup_not_available")}
+									</p>
+								)}
 
 							<div className="flex flex-wrap gap-2">
 								{data.can_signup && (
@@ -374,6 +379,10 @@ export default function Page() {
 							)}
 						</CardContent>
 					</Card>
+
+					{data && isSignupAllowed && (
+						<SignupCard event={data} availablePriorities={data.priorities.map(p => p.priority)} />
+					)}
 				</div>
 			</div>
 		</Suspense>
