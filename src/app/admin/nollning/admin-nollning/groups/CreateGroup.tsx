@@ -35,7 +35,7 @@ import { useTranslation } from "react-i18next";
 const GroupSchema = z.object({
 	name: z.string().min(2),
 	group_type: z.enum(["Mentor", "Mission"]),
-	nollning_group_number: z.coerce.number().min(1).optional(),
+	mentor_group_number: z.coerce.number().min(1).optional(),
 });
 
 interface Props {
@@ -54,7 +54,7 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 		defaultValues: {
 			name: "",
 			group_type: "Mentor",
-			nollning_group_number: undefined,
+			mentor_group_number: undefined,
 		},
 	});
 
@@ -68,7 +68,7 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 				path: { nollning_id: nollningID },
 				body: {
 					group_id: group.id,
-					nollning_group_number: pendingGroupNumber,
+					mentor_group_number: pendingGroupNumber,
 				},
 			});
 			queryClient.invalidateQueries({
@@ -108,7 +108,7 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 	});
 
 	function onSubmit(values: z.infer<typeof GroupSchema>) {
-		setPendingGroupNumber(values.nollning_group_number);
+		setPendingGroupNumber(values.mentor_group_number);
 		createGroup.mutate({
 			body: {
 				name: values.name,
@@ -166,7 +166,7 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 								/>
 								<FormField
 									control={groupForm.control}
-									name={"nollning_group_number"}
+									name={"mentor_group_number"}
 									render={({ field }) => (
 										<FormItem>
 											<FormLabel>{t("nollning.groups.group_number")}</FormLabel>

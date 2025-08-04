@@ -6,9 +6,9 @@ import {
 	getAllAdventureMissionsInNollningOptions,
 	getSingleGroupOptions,
 	getAllAdventureMissionsInNollningQueryKey,
-	addCompletedGroupMissionMutation,
-	uncompleteGroupMissionMutation,
-	editCompletedGroupMissionMutation,
+	addGroupMissionMutation,
+	deleteGroupMissionMutation,
+	editGroupMissionMutation,
 	getGroupMissionsFromNollningGroupQueryKey,
 	getSingleGroupQueryKey,
 } from "@/api/@tanstack/react-query.gen";
@@ -29,7 +29,7 @@ import { ArrowLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import WeekFilter from "@/components/WeekFilter";
 import { Input } from "@/components/ui/input";
-import { is_accepted as acceptEnum } from "@/api";
+import { type AcceptEnum as acceptEnum, ACCEPT_ENUM } from "@/constants";
 import { toast } from "sonner";
 
 export default function CompletedMissionsPage() {
@@ -118,13 +118,13 @@ export default function CompletedMissionsPage() {
 		if (!completedMission) {
 			return "";
 		}
-		if (completedMission.is_accepted === acceptEnum.ACCEPTED) {
+		if (completedMission.is_accepted === ACCEPT_ENUM.ACCEPTED) {
 			return "bg-green-500 text-white hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-800";
 		}
-		if (completedMission.is_accepted === acceptEnum.FAILED) {
+		if (completedMission.is_accepted === ACCEPT_ENUM.FAILED) {
 			return "bg-red-500 text-white hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-800";
 		}
-		if (completedMission.is_accepted === acceptEnum.REVIEW) {
+		if (completedMission.is_accepted === ACCEPT_ENUM.REVIEW) {
 			return "bg-yellow-500 text-white hover:bg-yellow-600 dark:bg-yellow-700 dark:hover:bg-yellow-800";
 		}
 		return "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-800";
@@ -151,7 +151,7 @@ export default function CompletedMissionsPage() {
 	}
 
 	const addCompletedMission = useMutation({
-		...addCompletedGroupMissionMutation(),
+		...addGroupMissionMutation(),
 		onSuccess: () => {
 			invalidateAllQueries();
 			toast.success(t("nollning.mission_grading.toast_add_success"));
@@ -162,7 +162,7 @@ export default function CompletedMissionsPage() {
 	});
 
 	const removeCompletedMission = useMutation({
-		...uncompleteGroupMissionMutation(),
+		...deleteGroupMissionMutation(),
 		onSuccess: () => {
 			invalidateAllQueries();
 			toast.success(t("nollning.mission_grading.toast_remove_success"));
@@ -173,7 +173,7 @@ export default function CompletedMissionsPage() {
 	});
 
 	const editCompletedMission = useMutation({
-		...editCompletedGroupMissionMutation(),
+		...editGroupMissionMutation(),
 		onSuccess: () => {
 			invalidateAllQueries();
 			toast.success(t("nollning.mission_grading.toast_edit_success"));
@@ -207,7 +207,7 @@ export default function CompletedMissionsPage() {
 					body: {
 						adventure_mission_id: row.original.id,
 						points: row.original.max_points, // Use max points as default
-						is_accepted: acceptEnum.ACCEPTED, // Default to accepted
+						is_accepted: ACCEPT_ENUM.ACCEPTED, // Default to accepted
 					},
 				},
 				mutationOptions,
@@ -217,20 +217,20 @@ export default function CompletedMissionsPage() {
 
 
 		// If mission is already completed, toggle its state
-		if (completedMissionsID.includes(row.original.id) && completedMission.is_accepted === acceptEnum.ACCEPTED) {
+		if (completedMissionsID.includes(row.original.id) && completedMission.is_accepted === ACCEPT_ENUM.ACCEPTED) {
 			editCompletedMission.mutate(
 				{
 					path: { nollning_group_id: groupID },
 					body: {
 						adventure_mission_id: row.original.id,
 						points: row.original.min_points, // Use min points as default
-						is_accepted: acceptEnum.FAILED,
+						is_accepted: ACCEPT_ENUM.FAILED,
 					},
 				},
 				mutationOptions,
 			);
 		}
-		if (completedMissionsID.includes(row.original.id) && completedMission.is_accepted === acceptEnum.FAILED) {
+		if (completedMissionsID.includes(row.original.id) && completedMission.is_accepted === ACCEPT_ENUM.FAILED) {
 			removeCompletedMission.mutate(
 				{
 					path: { nollning_group_id: groupID },
@@ -241,14 +241,14 @@ export default function CompletedMissionsPage() {
 				mutationOptions,
 			);
 		}
-		if (completedMissionsID.includes(row.original.id) && completedMission.is_accepted === acceptEnum.REVIEW) {
+		if (completedMissionsID.includes(row.original.id) && completedMission.is_accepted === ACCEPT_ENUM.REVIEW) {
 			editCompletedMission.mutate(
 				{
 					path: { nollning_group_id: groupID },
 					body: {
 						adventure_mission_id: row.original.id,
 						points: row.original.max_points, // Use max points as default
-						is_accepted: acceptEnum.ACCEPTED, // Default to accepted
+						is_accepted: ACCEPT_ENUM.ACCEPTED, // Default to accepted
 					},
 				},
 				mutationOptions,
@@ -383,7 +383,7 @@ export default function CompletedMissionsPage() {
 					defaultIsAccepted={
 						completedAdventureMissions.data.find(
 							(e) => e.adventure_mission.id === selectedMission?.id,
-						)?.is_accepted as acceptEnum ?? acceptEnum.ACCEPTED
+						)?.is_accepted as acceptEnum ?? ACCEPT_ENUM.ACCEPTED
 					}
 					onClose={() => {
 						setEditDialogOpen(false);
@@ -436,7 +436,7 @@ export default function CompletedMissionsPage() {
 					defaultPoints={selectedMission?.max_points}
 					maxPoints={selectedMission?.max_points}
 					minPoints={selectedMission?.min_points}
-					defaultIsAccepted={acceptEnum.ACCEPTED}
+					defaultIsAccepted={ACCEPT_ENUM.ACCEPTED}
 					onClose={() => {
 						setAddDialogOpen(false);
 						setSelectedMission(null);

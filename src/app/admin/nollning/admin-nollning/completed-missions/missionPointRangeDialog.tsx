@@ -20,7 +20,7 @@ import type React from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { is_accepted as acceptEnum } from "@/api";
+import { type AcceptEnum as acceptEnum, ACCEPT_ENUM } from "@/constants";
 import {
 	Select,
 	SelectContent,
@@ -53,13 +53,13 @@ const MissionPointRangeDialog = ({
 	children,
 	onSubmit,
 	onClose,
-	defaultIsAccepted = acceptEnum.ACCEPTED,
+	defaultIsAccepted = ACCEPT_ENUM.ACCEPTED,
 }: Props) => {
 	const { t } = useTranslation("admin");
 
 	const editCompletedMissionSchema = z.object({
 		points: z.number().int(),
-		is_accepted: z.nativeEnum(acceptEnum),
+		is_accepted: z.nativeEnum(ACCEPT_ENUM),
 	}).refine((data) => {
 		// Enforce point limitations
 		if (maxPoints && data.points > maxPoints) {
@@ -161,9 +161,9 @@ const MissionPointRangeDialog = ({
 													<SelectValue />
 												</SelectTrigger>
 												<SelectContent>
-													<SelectItem value={acceptEnum.ACCEPTED}>{t("nollning.mission_grading.status_accepted")}</SelectItem>
-													<SelectItem value={acceptEnum.REVIEW}>{t("nollning.mission_grading.status_review")}</SelectItem>
-													<SelectItem value={acceptEnum.FAILED}>{t("nollning.mission_grading.status_failed")}</SelectItem>
+													<SelectItem value={ACCEPT_ENUM.ACCEPTED}>{t("nollning.mission_grading.status_accepted")}</SelectItem>
+													<SelectItem value={ACCEPT_ENUM.REVIEW}>{t("nollning.mission_grading.status_review")}</SelectItem>
+													<SelectItem value={ACCEPT_ENUM.FAILED}>{t("nollning.mission_grading.status_failed")}</SelectItem>
 												</SelectContent>
 											</Select>
 										</FormControl>

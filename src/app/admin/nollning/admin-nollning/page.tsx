@@ -64,7 +64,7 @@ export default function Page() {
 
 	const columnHelper = createColumnHelper<NollningGroupRead>();
 	const columns = [
-		columnHelper.accessor("nollning_group_number", {
+		columnHelper.accessor("mentor_group_number", {
 			header: t("nollning.group_admin.group_number"),
 			cell: (info) => info.getValue() ?? "N/A",
 		}),
