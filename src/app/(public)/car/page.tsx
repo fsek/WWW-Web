@@ -121,7 +121,7 @@ export default function Car() {
 					? "#e68a00" // TODO: Use tailwind for this somehow
 					: "#ffd699"
 				: // Use a different color for the current user's bookings
-					car.confirmed
+				car.confirmed
 					? "#66cc00"
 					: "#e6e600"; // Green for confirmed, yellow for unconfirmed
 			return {
@@ -176,7 +176,7 @@ export default function Car() {
 												onError: (error) => {
 													toast.error(
 														t("admin:car.error_add") +
-															(error?.detail ? `: ${error.detail}` : ""),
+														(error?.detail ? `: ${error.detail}` : ""),
 													);
 												},
 												onSuccess: () => {
@@ -192,7 +192,7 @@ export default function Car() {
 												onError: (error) => {
 													toast.error(
 														t("admin:car.error_delete") +
-															(error?.detail ? `: ${error.detail}` : ""),
+														(error?.detail ? `: ${error.detail}` : ""),
 													);
 												},
 												onSuccess: () => {
@@ -231,7 +231,7 @@ export default function Car() {
 												onError: (error) => {
 													toast.error(
 														t("admin:car.error_edit") +
-															(error?.detail ? `: ${error.detail}` : ""),
+														(error?.detail ? `: ${error.detail}` : ""),
 													);
 												},
 												onSuccess: () => {
@@ -348,7 +348,7 @@ export default function Car() {
 									<Trans i18nKey="main:car-booking.faq.a7">
 										<Link
 											className="text-blue-500 hover:text-blue-700 underline mr-0"
-											href="/contact"
+											href="/contact#car"
 										/>
 									</Trans>
 								</AccordionContent>
