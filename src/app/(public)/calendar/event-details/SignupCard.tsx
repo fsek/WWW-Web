@@ -81,31 +81,31 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
   const createSignupMutation = useMutation({
     ...eventSignupRouteMutation(),
     onSuccess: () => {
-      toast.success(t("event.signup.success_create"));
+      toast.success(t("event_signup.success_create"));
       queryClient.invalidateQueries({ queryKey: getMeEventSignupQueryKey({ path: { event_id: event.id } }) });
       setIsEditing(false);
     },
     onError: (error) => {
-      toast.error(t("event.signup.error_create", { error: error?.detail || "Unknown error" }));
+      toast.error(t("event_signup.error_create", { error: error?.detail || "Unknown error" }));
     },
   });
 
   const updateSignupMutation = useMutation({
     ...updateEventSignupRouteMutation(),
     onSuccess: () => {
-      toast.success(t("event.signup.success_update"));
+      toast.success(t("event_signup.success_update"));
       queryClient.invalidateQueries({ queryKey: getMeEventSignupQueryKey({ path: { event_id: event.id } }) });
       setIsEditing(false);
     },
     onError: (error) => {
-      toast.error(t("event.signup.error_update", { error: error?.detail || "Unknown error" }));
+      toast.error(t("event_signup.error_update", { error: error?.detail || "Unknown error" }));
     },
   });
 
   const signoffMutation = useMutation({
     ...eventSignoffRouteMutation(),
     onSuccess: () => {
-      toast.success(t("event.signup.success_signoff"));
+      toast.success(t("event_signup.success_signoff"));
       // Remove old signup so buttons disappear
       queryClient.removeQueries({
         queryKey: getMeEventSignupQueryKey({ path: { event_id: event.id } }),
@@ -120,7 +120,7 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
       });
     },
     onError: (error) => {
-      toast.error(t("event.signup.error_signoff", { error: error?.detail || "Unknown error" }));
+      toast.error(t("event_signup.error_signoff", { error: error?.detail || "Unknown error" }));
     },
   });
 
@@ -169,9 +169,9 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
     isError && typeof error === "object" && "detail" in error && (error as any).detail.includes("Signup not found");
 
   const drinkPackageOptions = [
-    { value: "None", label: t("event.signup.drink_package.none") },
-    { value: "AlcoholFree", label: t("event.signup.drink_package.alcohol_free") },
-    { value: "Alcohol", label: t("event.signup.drink_package.alcohol") },
+    { value: "None", label: t("event_signup.drink_package.none") },
+    { value: "AlcoholFree", label: t("event_signup.drink_package.alcohol_free") },
+    { value: "Alcohol", label: t("event_signup.drink_package.alcohol") },
   ];
 
   const priorityOptions =
@@ -189,7 +189,7 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg">
           <FilePenLine className="w-5 h-5" />
-          <span>{t("event.signup.title")}</span>
+          <span>{t("event_signup.title")}</span>
 
           <div className="flex items-center gap-2 ml-auto">
             {signupData && !isEditing && !signupPeriodPassed && (
@@ -200,7 +200,7 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
                 className="flex items-center gap-2"
               >
                 <LogOut className="w-4 h-4" />
-                {t("event.signup.signoff_button")}
+                {t("event_signup.signoff_button")}
               </Button>
             )}
             {signupData && !isEditing && !signupPeriodPassed && (
@@ -211,7 +211,7 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
                 className="flex items-center gap-2"
               >
                 <Edit className="w-4 h-4" />
-                {t("event.signup.edit_button")}
+                {t("event_signup.edit_button")}
               </Button>
             )}
           </div>
@@ -228,11 +228,11 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
                   name="priority"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-semibold mb-2 text-med">{t("event.signup.priority")}</FormLabel>
+                      <FormLabel className="font-semibold mb-2 text-med">{t("event_signup.priority")}</FormLabel>
                       <FormControl>
                         <SelectFromOptions
                           options={priorityOptions}
-                          placeholder={t("event.signup.select_priority")}
+                          placeholder={t("event_signup.select_priority")}
                           value={field.value}
                           onChange={field.onChange}
                         />
@@ -248,10 +248,10 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
                 name="group_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-semibold mb-2 text-med">{t("event.signup.group_name")}</FormLabel>
+                    <FormLabel className="font-semibold mb-2 text-med">{t("event_signup.group_name")}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={t("event.signup.group_name_placeholder")}
+                        placeholder={t("event_signup.group_name_placeholder")}
                         {...field}
                         value={field.value || ""}
                       />
@@ -266,11 +266,11 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
                 name="drinkPackage"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-semibold mb-2 text-med">{t("event.signup.drink_package.title")}</FormLabel>
+                    <FormLabel className="font-semibold mb-2 text-med">{t("event_signup.drink_package.title")}</FormLabel>
                     <FormControl>
                       <SelectFromOptions
                         options={drinkPackageOptions}
-                        placeholder={t("event.signup.select_drink_package")}
+                        placeholder={t("event_signup.select_drink_package")}
                         value={field.value}
                         onChange={field.onChange}
                       />
@@ -287,7 +287,7 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
                   className="flex items-center gap-2"
                 >
                   <Save className="w-4 h-4" />
-                  {signupData ? t("event.signup.update_button") : t("event.signup.button")}
+                  {signupData ? t("event_signup.update_button") : t("event_signup.button")}
                 </Button>
                 {isEditing && (
                   <Button
@@ -300,7 +300,7 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
                     className="flex items-center gap-2"
                   >
                     <X className="w-4 h-4" />
-                    {t("common.cancel")}
+                    {t("cancel")}
                   </Button>
                 )}
               </div>
@@ -311,16 +311,16 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {signupPeriodPassed && (
                 <div className="col-span-2 text-red-600">
-                  <p className="font-semibold mb-2">{t("event.signup.period_passed_signed_up")}</p>
+                  <p className="font-semibold mb-2">{t("event_signup.period_passed_signed_up")}</p>
                 </div>
               )}
               <div>
-                <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event.signup.user")}</p>
+                <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event_signup.user")}</p>
                 <p className="font-medium">{`${signupData.user.first_name} ${signupData.user.last_name}`}</p>
               </div>
 
               <div>
-                <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event.signup.priority")}</p>
+                <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event_signup.priority")}</p>
                 <Badge variant="secondary">
                   {signupData.priority.charAt(0).toUpperCase() + signupData.priority.slice(1)}
                 </Badge>
@@ -328,33 +328,33 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
 
               {signupData.group_name && (
                 <div>
-                  <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event.signup.group_name")}</p>
+                  <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event_signup.group_name")}</p>
                   <p className="font-medium">{signupData.group_name}</p>
                 </div>
               )}
 
               <div>
-                <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event.signup.drink_package.title")}</p>
+                <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event_signup.drink_package.title")}</p>
                 <Badge variant="outline">
                   {drinkPackageOptions.find(opt => opt.value === signupData.drinkPackage)?.label || signupData.drinkPackage}
                 </Badge>
               </div>
 
               <div className="md:col-span-2">
-                <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event.signup.status")}</p>
+                <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event_signup.status")}</p>
                 <div className="flex items-center gap-2">
                   {signupData.confirmed_status ? (
                     <>
                       <UserCheck className="w-4 h-4 text-green-600" />
                       <Badge variant="default" className="bg-green-100 text-green-800">
-                        {t("event.signup.confirmed")}
+                        {t("event_signup.confirmed")}
                       </Badge>
                     </>
                   ) : (
                     <>
                       <UserX className="w-4 h-4 text-yellow-600" />
                       <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
-                        {t("event.signup.pending")}
+                        {t("event_signup.pending")}
                       </Badge>
                     </>
                   )}
@@ -364,37 +364,37 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
           </div>
         ) : (
           <div className="text-center py-4">
-            <p className="text-muted-foreground mb-4">{t("event.signup.not_found")}</p>
+            <p className="text-muted-foreground mb-4">{t("event_signup.not_found")}</p>
             {signupPeriodPassed && (
               <div className="col-span-2 text-red-600">
-                <p className="font-semibold mb-2">{t("event.signup.period_passed_not_signed_up")}</p>
+                <p className="font-semibold mb-2">{t("event_signup.period_passed_not_signed_up")}</p>
               </div>
             )}
             {isSignupAllowed && showSignupForm && (
               <Button onClick={() => setIsEditing(true)}>
-                {t("event.signup.button")}
+                {t("event_signup.button")}
               </Button>
             )}
           </div>
         )}
         <hr className="my-4" />
         <div>
-          <p className="font-semibold mb-1">{t("event.signup.food_preferences_title")}</p>
+          <p className="font-semibold mb-1">{t("event_signup.food_preferences_title")}</p>
           <p className="text-sm text-muted-foreground mb-2">
-            {t("event.signup.food_preferences_explainer")}
+            {t("event_signup.food_preferences_explainer")}
           </p>
           <div className="flex flex-col gap-1">
             <div>
-              <span className="font-medium">{t("event.signup.standard_food_preferences")}</span>{" "}
+              <span className="font-medium">{t("event_signup.standard_food_preferences")}</span>{" "}
               {meData?.standard_food_preferences && meData.standard_food_preferences.length > 0
                 ? meData.standard_food_preferences.join(", ")
-                : t("event.signup.none")}
+                : t("event_signup.none")}
             </div>
             <div>
-              <span className="font-medium">{t("event.signup.other_food_preferences")}</span>{" "}
+              <span className="font-medium">{t("event_signup.other_food_preferences")}</span>{" "}
               {meData?.other_food_preferences
                 ? meData.other_food_preferences
-                : t("event.signup.none")}
+                : t("event_signup.none")}
             </div>
           </div>
         </div>
