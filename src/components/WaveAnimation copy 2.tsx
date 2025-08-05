@@ -18,11 +18,6 @@ const WaveAnimation: React.FC<{}> = () => {
 			if (ctx == null) throw new Error("Could not get context");
 			const windowWidth = window.innerWidth;
 			const canvas = canvasRef.current;
-			canvas.style.width = `${windowWidth}px`;
-			canvas.style.height = `${200}px`;
-
-			const height_padding = 5;
-			const width_padding = 5;
 
 			const packet_width = 0.04;
 			const moose_jump_length = 0.25;
@@ -99,27 +94,27 @@ const WaveAnimation: React.FC<{}> = () => {
 			const render = () => {
 				const scale = window.devicePixelRatio;
 
-				const width = Math.floor(windowWidth * scale);
-
-				const height = Math.floor(200 * scale);
-
+				const width = windowWidth;
+				const height_padding = 50;
+				const height = width * 0.12;
+				const padding = width * 0.005;
 				const atom_size = 10;
 				canvas.width = width;
-				canvas.height = height;
-				ctx.scale(scale, scale);
+				canvas.height = (height + 2 * height_padding) * scale;
+				//ctx.scale(scale, scale);
 
 				const moose_x_ratio = 0.75;
 				const moose_x = scaled_point_2(moose_x_ratio, 1);
 
 				function scaled_point(x: number, power: number) {
-					return x;
+					return ()
 				}
 
 				function scaled_point_2(x: number, power: number) {
 					return (
-						width_padding +
+						padding +
 						atom_size +
-						x ** power * (width - 2 * (width_padding + atom_size))
+						x ** power * (width - 2 * (padding + atom_size))
 					);
 				}
 
@@ -162,10 +157,10 @@ const WaveAnimation: React.FC<{}> = () => {
 				ctx.beginPath();
 
 				ctx.arc(
-					width_padding + atom_size,
+					padding + atom_size,
 					height * 0.5 +
 						height_padding +
-						atom_L_wave * (height - width_padding * 2) * 0.5,
+						atom_L_wave * (height - padding * 2) * 0.5,
 					atom_size,
 					0,
 					2 * Math.PI,
@@ -173,10 +168,10 @@ const WaveAnimation: React.FC<{}> = () => {
 				ctx.stroke();
 				ctx.beginPath();
 				ctx.arc(
-					width - width_padding - atom_size,
+					width - padding - atom_size,
 					height * 0.5 +
 						height_padding +
-						atom_R_wave * (height - width_padding * 2) * 0.5,
+						atom_R_wave * (height - padding * 2) * 0.5,
 					atom_size,
 					0,
 					2 * Math.PI,
@@ -185,11 +180,11 @@ const WaveAnimation: React.FC<{}> = () => {
 				ctx.stroke();
 
 				// Wave
-				ctx.moveTo(width_padding + atom_size, height * 0.5 + height_padding);
+				ctx.moveTo(padding + atom_size, height * 0.5 + height_padding);
 
 				for (let i = 0; i < num_points + 1; i++) {
-					const relative_x = num_points_inv * i * width;
-					const point = relative_x; //scaled_point(relative_x, 1);
+					const relative_x = num_points_inv * i;
+					const point = scaled_point(relative_x, 1);
 					let wave1 = 0;
 					for (let i = 0; i < wave_rate; i++) {
 						wave1 += wave(
@@ -205,7 +200,7 @@ const WaveAnimation: React.FC<{}> = () => {
 						point,
 						height * 0.5 +
 							height_padding +
-							wave1 * (height - width_padding * 2) * 0.5,
+							wave1 * (height - padding * 2) * 0.5,
 					);
 					ctx.stroke();
 
@@ -216,7 +211,7 @@ const WaveAnimation: React.FC<{}> = () => {
 						point,
 						height * 0.5 +
 							height_padding +
-							wave1 * (height - width_padding * 2) * 0.5,
+							wave1 * (height - padding * 2) * 0.5,
 					);
 					ctx.lineTo(point, height * 0.5 + height_padding);
 					ctx.stroke();
@@ -227,7 +222,7 @@ const WaveAnimation: React.FC<{}> = () => {
 						point,
 						height * 0.5 +
 							height_padding +
-							wave1 * (height - width_padding * 2) * 0.5,
+							wave1 * (height - padding * 2) * 0.5,
 					);
 					ctx.lineWidth = 2.0;
 					ctx.strokeStyle = "rgba(0, 0, 0, 1)";

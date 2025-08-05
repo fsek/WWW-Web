@@ -21,7 +21,7 @@ export default function MainLanding() {
 				<p>👉👈</p>
 				<Link href="admin/documents">Goto news</Link>
 			</div>
-			<div className="flex-grow">
+			<div className="flex">
 				<WaveAnimation />
 			</div>
 			<TwoColumnLayout
