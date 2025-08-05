@@ -32,9 +32,11 @@ const signupSchema = z.object({
 interface SignupCardProps {
   event: EventRead;
   availablePriorities: string[];
+  isSignupAllowed?: boolean;
+  signupPeriodPassed?: boolean;
 }
 
-export default function SignupCard({ event, availablePriorities }: SignupCardProps) {
+export default function SignupCard({ event, availablePriorities, isSignupAllowed, signupPeriodPassed }: SignupCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const { t } = useTranslation();
   const queryClient = useQueryClient();
@@ -162,6 +164,7 @@ export default function SignupCard({ event, availablePriorities }: SignupCardPro
   }
 
   // Not a great way but works for now
+  // Show the signup form if there's an error indicating "Signup not found" (i.e. the user has not signed up yet)
   const showSignupForm =
     isError && typeof error === "object" && "detail" in error && (error as any).detail.includes("Signup not found");
 
@@ -187,8 +190,9 @@ export default function SignupCard({ event, availablePriorities }: SignupCardPro
         <CardTitle className="flex items-center gap-2 text-lg">
           <FilePenLine className="w-5 h-5" />
           <span>{t("event.signup.title")}</span>
-          {signupData && !isEditing && (
-            <div className="flex items-center gap-2 ml-auto">
+
+          <div className="flex items-center gap-2 ml-auto">
+            {signupData && !isEditing && !signupPeriodPassed && (
               <Button
                 variant="destructive"
                 size="sm"
@@ -198,6 +202,8 @@ export default function SignupCard({ event, availablePriorities }: SignupCardPro
                 <LogOut className="w-4 h-4" />
                 {t("event.signup.signoff_button")}
               </Button>
+            )}
+            {signupData && !isEditing && !signupPeriodPassed && (
               <Button
                 variant="outline"
                 size="sm"
@@ -207,12 +213,12 @@ export default function SignupCard({ event, availablePriorities }: SignupCardPro
                 <Edit className="w-4 h-4" />
                 {t("event.signup.edit_button")}
               </Button>
-            </div>
-          )}
+            )}
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {showSignupForm || isEditing ? (
+        {(isEditing) && !signupPeriodPassed ? (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               {/* Only show priority select if availablePriorities is provided and non-empty, or if event priorities exist */}
@@ -303,6 +309,11 @@ export default function SignupCard({ event, availablePriorities }: SignupCardPro
         ) : signupData ? (
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {signupPeriodPassed && (
+                <div className="col-span-2 text-red-600">
+                  <p className="font-semibold mb-2">{t("event.signup.period_passed_signed_up")}</p>
+                </div>
+              )}
               <div>
                 <p className="font-semibold mb-2 text-med text-muted-foreground">{t("event.signup.user")}</p>
                 <p className="font-medium">{`${signupData.user.first_name} ${signupData.user.last_name}`}</p>
@@ -354,9 +365,16 @@ export default function SignupCard({ event, availablePriorities }: SignupCardPro
         ) : (
           <div className="text-center py-4">
             <p className="text-muted-foreground mb-4">{t("event.signup.not_found")}</p>
-            <Button onClick={() => setIsEditing(true)}>
-              {t("event.signup.button")}
-            </Button>
+            {signupPeriodPassed && (
+              <div className="col-span-2 text-red-600">
+                <p className="font-semibold mb-2">{t("event.signup.period_passed_not_signed_up")}</p>
+              </div>
+            )}
+            {isSignupAllowed && showSignupForm && (
+              <Button onClick={() => setIsEditing(true)}>
+                {t("event.signup.button")}
+              </Button>
+            )}
           </div>
         )}
         <hr className="my-4" />

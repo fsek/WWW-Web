@@ -77,6 +77,7 @@ export default function Page() {
 
 	// Check if signup is allowed right now
 	const currentDate = new Date();
+	// It doesn't work without this
 	const signupStart = new Date(data.signup_start);
 	const signupEnd = new Date(data.signup_end);
 	const isSignupAllowed =
@@ -84,6 +85,8 @@ export default function Page() {
 		!data.closed &&
 		signupStart <= currentDate &&
 		currentDate <= signupEnd;
+
+	const signupPeriodPassed = currentDate > signupEnd;
 
 
 	return (
@@ -380,8 +383,13 @@ export default function Page() {
 						</CardContent>
 					</Card>
 
-					{data && isSignupAllowed && (
-						<SignupCard event={data} availablePriorities={data.priorities.map(p => p.priority)} />
+					{data && (
+						<SignupCard
+							event={data}
+							availablePriorities={data.priorities.map(p => p.priority)}
+							isSignupAllowed={isSignupAllowed}
+							signupPeriodPassed={signupPeriodPassed}
+						/>
 					)}
 				</div>
 			</div>
