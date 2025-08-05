@@ -34,18 +34,30 @@ export const Hero = () => {
 						<div className="inline text-primary">{t("hero.title_static")}</div>
 						<TypewriterClient
 							options={{
-								autoStart: true,
 								loop: true,
 								delay: 75,
-								strings: [
-									t("hero.title_dynamic_1"),
-									t("hero.title_dynamic_2"),
-									t("hero.title_dynamic_3"),
-								],
 								wrapperClassName:
 									"text-primary justify-start whitespace-nowrap",
-								cursorClassName: "text-primary animate-blink",
+								cursorClassName: "text-white animate-blink",
 								cursor: "|",
+							}}
+							onInit={(typewriter) => {
+								typewriter
+									.typeString(t("hero.title_dynamic_start"))
+									.typeString(t("hero.title_dynamic_1"))
+									.pauseFor(2500)
+									.deleteChars(t("hero.title_dynamic_1").length)
+									.typeString(
+										`<span style='color: #bebebe;'>${t("hero.title_dynamic_2")}</span>`,
+									)
+									.pauseFor(2500)
+									.deleteChars(t("hero.title_dynamic_2").length)
+									.typeString(
+										`<span style='color: #4e9d2d;'>${t("hero.title_dynamic_3")}</span>`,
+									)
+									.pauseFor(2500)
+									.deleteAll()
+									.start();
 							}}
 						/>
 					</div>
