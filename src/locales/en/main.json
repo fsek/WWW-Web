@@ -346,6 +346,7 @@
 		"error_create": "Failed to sign up: {{error}}",
 		"error_update": "Failed to update signup: {{error}}",
 		"error_signoff": "Failed to sign off: {{error}}",
+		"unknown_error": "Unknown error.",
 		"not_found": "You are not signed up for this event.",
 		"user": "User",
 		"status": "Status",

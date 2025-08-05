@@ -346,6 +346,7 @@
 		"error_create": "Kunde inte anmäla dig: {{error}}",
 		"error_update": "Kunde inte uppdatera anmälan: {{error}}",
 		"error_signoff": "Kunde inte avanmäla dig: {{error}}",
+		"unknown_error": "Okänt fel.",
 		"not_found": "Du är inte anmäld till detta event.",
 		"user": "Användare",
 		"status": "Status",

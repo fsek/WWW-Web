@@ -86,7 +86,7 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
       setIsEditing(false);
     },
     onError: (error) => {
-      toast.error(t("event_signup.error_create", { error: error?.detail || "Unknown error" }));
+      toast.error(t("event_signup.error_create", { error: error?.detail || t("event_signup.unknown_error") }));
     },
   });
 
@@ -98,7 +98,7 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
       setIsEditing(false);
     },
     onError: (error) => {
-      toast.error(t("event_signup.error_update", { error: error?.detail || "Unknown error" }));
+      toast.error(t("event_signup.error_update", { error: error?.detail || t("event_signup.unknown_error") }));
     },
   });
 
@@ -120,7 +120,7 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
       });
     },
     onError: (error) => {
-      toast.error(t("event_signup.error_signoff", { error: error?.detail || "Unknown error" }));
+      toast.error(t("event_signup.error_signoff", { error: error?.detail || t("event_signup.unknown_error") }));
     },
   });
 
@@ -152,7 +152,7 @@ export default function SignupCard({ event, availablePriorities, isSignupAllowed
 
   function handleSignoff() {
     if (!event.id || !signupData) {
-      return () => { };
+      return undefined;
     }
 
     return () => {
