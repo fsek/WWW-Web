@@ -26,7 +26,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { Textarea } from "@/components/ui/textarea";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
 import { door } from "@/api";

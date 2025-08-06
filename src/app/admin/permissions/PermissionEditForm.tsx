@@ -9,7 +9,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import type { PermissionRead } from "../../../api";
 import { useTranslation } from "react-i18next";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { toast } from "sonner";
 
 interface PermissionEditFormProps {

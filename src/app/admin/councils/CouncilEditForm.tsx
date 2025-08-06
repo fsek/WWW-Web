@@ -23,7 +23,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
 
 const councilEditSchema = z.object({

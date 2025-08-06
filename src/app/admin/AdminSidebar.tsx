@@ -13,6 +13,7 @@ import {
 	type LucideProps,
 	Users,
 	UserPen,
+	Mail,
 } from "lucide-react";
 
 import {
@@ -126,6 +127,12 @@ const groups: AdminGroup[] = [
 				url: "/admin/permissions",
 				permissions: [[action.MANAGE, target.PERMISSION]],
 				icon: FolderLock,
+			},
+			{
+				title: "admin:mail_aliases.self",
+				url: "/admin/mail-aliases",
+				permissions: [[action.MANAGE, target.MAIL_ALIAS]],
+				icon: Mail,
 			},
 		],
 	},
