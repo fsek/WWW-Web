@@ -13,6 +13,7 @@
 	"cafeTitle": "Hilbert Café",
 	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang.",
 	"coolThing": "En cool grej som distraherar dig från att se att sidan inte är klar än",
+	"back": "Tillbaka",
 	"faq": {
 		"self": "Frågor besvarade",
 		"q1": {
@@ -214,7 +215,8 @@
 		"self": "Nyheter",
 		"by": "Skriven av: ",
 		"pinned": "Fastnålad",
-		"see_all": "Se alla nyheter"
+		"see_all": "Se alla nyheter",
+		"read_more": "Läs mer"
 	},
 	"verifyMail": {
 		"loading": "Verifierar din e-post...",
