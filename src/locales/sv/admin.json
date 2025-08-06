@@ -269,7 +269,7 @@
 		"self": "Poster",
 		"council_not_found": "Utskottet hittades inte.",
 		"title": "Hantera poster",
-		"description": "Här kan du skapa och hantera poster.",
+		"description": "Här kan du skapa och hantera utskottsposter. E-postadressen behöver inte vara unik och kommer att visas offentligt (för medlemmar) på utskottsidan. Du kan också tilldela dörraccess till poster.",
 		"submit": "Skapa post",
 		"edit": "Redigera post",
 		"name": "Namn",
@@ -295,7 +295,9 @@
 			"edit": "Ändra behörigheter",
 			"update_success": "Behörigheter uppdaterade!",
 			"update_error": "Kunde inte uppdatera behörigheter."
-		}
+		},
+		"door_access": "Dörraccess",
+		"select_doors": "Välj dörrar att ge access till"
 	},
 	"user-posts": {
 		"self": "Poster åt användare",
@@ -375,5 +377,34 @@
 	"unnamed_council": "Namnlöst utskott",
 	"remove_confirm_title": "Bekräfta borttagning",
 	"remove_confirm_text": "Är du säker på att du vill ta bort detta objekt?",
-	"remove_confirm_description": "En popup-dialog som bekräftar borttagning av ett objekt."
+	"remove_confirm_description": "En popup-dialog som bekräftar borttagning av ett objekt.",
+	"door_access": {
+		"self": "Dörrbehörigheter för användare",
+		"page_title": "Hantera dörrbehörigheter för individuella användare",
+		"page_description": "Här kan du hantera användarnas tillgång till dörrar.",
+		"create_access": "Skapa dörrbehörighet",
+		"edit_access": "Redigera dörrbehörighet för",
+		"user": "Användare",
+		"user_id": "Användar-ID",
+		"door": "Dörr",
+		"select_door": "Välj dörr",
+		"starttime": "Starttid",
+		"start_time": "Starttid",
+		"endtime": "Sluttid",
+		"end_time": "Sluttid",
+		"add": "Lägg till",
+		"success_add": "Dörrbehörighet skapad!",
+		"success_edit": "Dörrbehörighet uppdaterad!",
+		"success_delete": "Dörrbehörighet borttagen!",
+		"error_add": "Misslyckades att skapa dörrbehörighet: ",
+		"error_edit": "Misslyckades att uppdatera dörrbehörighet.",
+		"error_delete": "Misslyckades att ta bort dörrbehörighet.",
+		"confirm_remove": "Bekräfta borttagning av dörrbehörighet",
+		"confirm_remove_text": "Är du säker på att du vill ta bort denna dörrbehörighet?",
+		"unknown": "Okänt",
+		"search_user": "Sök efter namn eller användar-ID",
+		"show_old_access": "Visa gamla access",
+		"unknown_error": "Okänt fel",
+		"user_id_required": "Användare krävs"
+	}
 }

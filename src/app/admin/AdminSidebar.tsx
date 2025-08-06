@@ -87,6 +87,12 @@ const groups: AdminGroup[] = [
 				permissions: [[action.MANAGE, target.NOLLNING]],
 				icon: Gauge,
 			},
+			{
+				title: "admin:door_access.self",
+				url: "/admin/user-door-access",
+				permissions: [[action.MANAGE, target.USER_DOOR_ACCESS]],
+				icon: Users,
+			},
 		],
 	},
 	{
