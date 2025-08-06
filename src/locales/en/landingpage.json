@@ -33,7 +33,7 @@
 	},
 	"hero": {
 		"title_static": "The guild for students of ",
-		"title_dynamic_start": "Engineering ",
+		"title_dynamic_start": "Engineering",
 		"title_dynamic_1": "Physics",
 		"title_dynamic_2": "Mathematics",
 		"title_dynamic_3": "Nanoscience",
