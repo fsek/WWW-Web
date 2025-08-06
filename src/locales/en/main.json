@@ -325,5 +325,42 @@
 		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members."
 	},
 	"yes": "Yes",
-	"no": "No"
+	"no": "No",
+	"event_signup": {
+		"title": "Event Signup",
+		"priority": "Priority",
+		"select_priority": "Select priority group to sign up as",
+		"group_name": "Group Name",
+		"group_name_placeholder": "Enter group name (optional)",
+		"drink_package": {
+			"title": "Drink Package",
+			"none": "None",
+			"alcohol_free": "Alcohol Free",
+			"alcohol": "Alcohol"
+		},
+		"select_drink_package": "Select drink package",
+		"button": "Sign up",
+		"update_button": "Update signup",
+		"edit_button": "Edit",
+		"signoff_button": "Sign off",
+		"success_create": "Signup successful!",
+		"success_update": "Signup updated!",
+		"success_signoff": "You have signed off from the event.",
+		"error_create": "Failed to sign up: {{error}}",
+		"error_update": "Failed to update signup: {{error}}",
+		"error_signoff": "Failed to sign off: {{error}}",
+		"unknown_error": "Unknown error.",
+		"not_found": "You are not signed up for this event.",
+		"user": "User",
+		"status": "Status",
+		"confirmed": "Confirmed",
+		"pending": "Pending",
+		"period_passed_signed_up": "Signup period has ended. If you want to change or withdraw your signup, please contact the event organizer.",
+		"period_passed_not_signed_up": "Signup period has ended. You can no longer sign up. If you have any questions, please contact the event organizer.",
+		"food_preferences_title": "Food Preferences",
+		"food_preferences_explainer": "These are your saved food preferences. If something doesn't look right, please update them in your account settings.",
+		"standard_food_preferences": "Standard preferences:",
+		"other_food_preferences": "Other preferences:",
+		"none": "None"
+	}
 }

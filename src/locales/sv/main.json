@@ -325,5 +325,42 @@
 		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara markerade för att endast vara synliga för medlemmar."
 	},
 	"yes": "Ja",
-	"no": "Nej"
+	"no": "Nej",
+	"event_signup": {
+		"title": "Eventanmälan",
+		"priority": "Prioritet",
+		"select_priority": "Välj prioritetsgrupp att anmäla dig med",
+		"group_name": "Gruppnamn",
+		"group_name_placeholder": "Ange gruppnamn (valfritt)",
+		"drink_package": {
+			"title": "Dryckespaket",
+			"none": "Inget",
+			"alcohol_free": "Alkoholfritt",
+			"alcohol": "Alkohol"
+		},
+		"select_drink_package": "Välj dryckespaket",
+		"button": "Anmäl dig",
+		"update_button": "Uppdatera anmälan",
+		"edit_button": "Redigera",
+		"signoff_button": "Avanmäl",
+		"success_create": "Anmälan lyckades!",
+		"success_update": "Anmälan uppdaterad!",
+		"success_signoff": "Du har avanmält dig från eventet.",
+		"error_create": "Kunde inte anmäla dig: {{error}}",
+		"error_update": "Kunde inte uppdatera anmälan: {{error}}",
+		"error_signoff": "Kunde inte avanmäla dig: {{error}}",
+		"unknown_error": "Okänt fel.",
+		"not_found": "Du är inte anmäld till detta event.",
+		"user": "Användare",
+		"status": "Status",
+		"confirmed": "Bekräftad",
+		"pending": "Väntar på bekräftelse",
+		"period_passed_signed_up": "Anmälningsperioden är slut. Om du vill ändra eller dra tillbaka din anmälan, kontakta eventansvarig.",
+		"period_passed_not_signed_up": "Anmälningsperioden är slut. Du kan inte längre anmäla dig. Om du har några frågor, vänligen kontakta eventansvarig.",
+		"food_preferences_title": "Matpreferenser",
+		"food_preferences_explainer": "Detta är dina sparade matpreferenser. Om något inte ser rätt ut kan du uppdatera dem i dina kontoinställningar.",
+		"standard_food_preferences": "Standardpreferenser:",
+		"other_food_preferences": "Övriga preferenser:",
+		"none": "Inga"
+	}
 }
