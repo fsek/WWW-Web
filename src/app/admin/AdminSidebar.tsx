@@ -14,6 +14,7 @@ import {
 	Users,
 	UserPen,
 	House,
+	Mail,
 } from "lucide-react";
 
 import {
@@ -94,6 +95,12 @@ const groups: AdminGroup[] = [
 				permissions: [[action.MANAGE, target.NOLLNING]],
 				icon: Gauge,
 			},
+			{
+				title: "admin:door_access.self",
+				url: "/admin/user-door-access",
+				permissions: [[action.MANAGE, target.USER_DOOR_ACCESS]],
+				icon: Users,
+			},
 		],
 	},
 	{
@@ -127,6 +134,12 @@ const groups: AdminGroup[] = [
 				url: "/admin/permissions",
 				permissions: [[action.MANAGE, target.PERMISSION]],
 				icon: FolderLock,
+			},
+			{
+				title: "admin:mail_aliases.self",
+				url: "/admin/mail-aliases",
+				permissions: [[action.MANAGE, target.MAIL_ALIAS]],
+				icon: Mail,
 			},
 		],
 	},

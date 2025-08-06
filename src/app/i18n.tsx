@@ -13,7 +13,8 @@ export type Namespace =
 	| "utskott"
 	| "landingpage"
 	| "user-settings"
-	| "notfound";
+	| "notfound"
+	| "contact";
 
 // If you add more you probably also have to add them to the layout.tsx file corresponding to the page you are on
 // (or only the main one, try that first)

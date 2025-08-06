@@ -409,7 +409,7 @@ export function EventEditForm({
 				</AlertDialogTrigger>
 			)}
 
-			<AlertDialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0">
+			<AlertDialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0 max-h-[80vh] overflow-y-auto">
 				<AlertDialogDescription className="sr-only">
 					A popup dialog to edit an event.
 				</AlertDialogDescription>

@@ -28,7 +28,7 @@ import type { CarBookingRead, CarBookingUpdate } from "../../../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
 
 interface CarEditFormProps {
@@ -198,7 +198,7 @@ export default function CarEditForm({
 				}
 			}}
 		>
-			<DialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0">
+			<DialogContent className="min-w-fit lg:max-w-7xl max-2xl:top-0 max-2xl:translate-y-0 max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>{t("admin:car.edit_booking")}</DialogTitle>
 				</DialogHeader>

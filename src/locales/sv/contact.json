@@ -1,0 +1,55 @@
+{
+	"title": "Kontakta Oss",
+	"note_title": "Notera:",
+	"note_text": "Inte alla kontaktlänkar är tillgängliga på denna sida. Om du är medlem kan du gå till utskottssidan för att hitta alla kontaktlänkar. Annars kan du kontakta en ordförande för utskottet och be dem vidarebefordra ditt meddelande.",
+	"emergency": {
+		"title": "Nödkontakter",
+		"text_ordf": {
+			"self": "Vid allmänna nödsituationer: ",
+			"name": "Ordförande"
+		},
+		"text_foset": {
+			"self": "Vid nödsituationer under nollningen: "
+		},
+		"text_car": {
+			"self": "Vid nödsituationer med F-bilen: ",
+			"name1": "Bilförman",
+			"name2": "Prylmästare",
+			"name3": "Ordförande"
+		}
+	},
+	"board": {
+		"self": "Styrelsen",
+		"ordf": "Ordförande",
+		"vice": "Vice ordförande",
+		"preses": "Styrelsepreses",
+		"secretary": "Sekreterare",
+		"board_members": "Styrelseledamöter"
+	},
+	"other": {
+		"self": "Andra Kontakter",
+		"facilities": "Prylmästare",
+		"car": "Bilförman",
+		"festivities": "Sexmästare",
+		"truth": "Sanningsminister",
+		"corp": "Näringslivsansvarig",
+		"nollning": "Överfös",
+		"cafe": "Cafémästare",
+		"conscience": "Samvetsmästare",
+		"culture": "Kulturminister",
+		"education": "Utbildningsminister",
+		"treasurer": "Kassör"
+	},
+	"corp": {
+		"self": "För företag",
+		"naringslivsansvarig": "Näringslivsansvarig",
+		"naringslivsutskottet": "Näringslivsutskottet",
+		"farad": "Projektledare FARAD"
+	},
+	"web": {
+		"self": "För webbrelaterade frågor",
+		"spider": "Spindelförman",
+		"webmaster": "Spindelmän",
+		"webmaster_full_name": "Kontrollerar detta nät"
+	}
+}
