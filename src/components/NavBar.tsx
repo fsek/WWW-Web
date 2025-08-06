@@ -92,7 +92,7 @@ export function NavBar() {
 
 	return (
 		<header className="sticky top-0 z-50 w-full border-transparent  bg-white/50 dark:bg-background/40  backdrop-blur-md">
-			<div className="container flex items-center justify-between h-20 px-4 mx-auto">
+			<div className="xl:container flex items-center justify-between h-20 px-4 mx-auto">
 				<div className="flex items-center gap-4">
 					<Link href="/home" className="flex items-center">
 						<FLogga className="size-14 mr-3" />

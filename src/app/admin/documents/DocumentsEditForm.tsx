@@ -140,8 +140,9 @@ export default function DocumentsEditForm({
 		);
 	}
 
-	async function handleReadDocument(selectedDocument: DocumentRead) {
-		router.push(`/documents/${selectedDocument.id}`);
+	function handleReadDocument(selectedDocument: DocumentRead) {
+		const url = `/documents/${selectedDocument.id}`;
+		window.open(url, "_blank", "noopener,noreferrer");
 	}
 
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -155,7 +156,7 @@ export default function DocumentsEditForm({
 				}
 			}}
 		>
-			<DialogContent className="min-w-fit lg:max-w-7xl">
+			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>{t("admin:documents.edit_document")}</DialogTitle>
 				</DialogHeader>
