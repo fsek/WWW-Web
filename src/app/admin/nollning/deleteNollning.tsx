@@ -4,7 +4,7 @@ import {
 	getAllNollningQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import {
 	Dialog,
 	DialogClose,
@@ -54,11 +54,15 @@ const DeleteNollning = ({ nollning }: Props) => {
 				}
 				triggerText={t("nollning.main.delete_button")}
 				title={t("nollning.main.delete_title", { name: nollning.name })}
-				description={t("nollning.main.delete_description", { name: nollning.name })}
+				description={t("nollning.main.delete_description", {
+					name: nollning.name,
+				})}
 				confirmText={t("nollning.main.delete_confirm")}
 				cancelText={t("nollning.main.cancel")}
 				confirmByTyping={true}
-				confirmByTypingText={t("nollning.main.delete_confirm_typing", { name: nollning.name })}
+				confirmByTypingText={t("nollning.main.delete_confirm_typing", {
+					name: nollning.name,
+				})}
 				confirmByTypingKey={nollning.name}
 			/>
 		</div>

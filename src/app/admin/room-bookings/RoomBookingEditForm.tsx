@@ -15,7 +15,7 @@ import type { RoomBookingRead, RoomBookingUpdate } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import RoomBookingFormFields from "./RoomBookingFormFields";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
 import { room as RoomEnum } from "@/api";
 
@@ -146,7 +146,12 @@ export default function RoomBookingEditForm({
 						<RoomBookingFormFields
 							roomBookingForm={form}
 							checkboxFields={checkboxFields}
-							disabled_fields={["room", "council_id", "recur_interval_days", "recur_until"]}
+							disabled_fields={[
+								"room",
+								"council_id",
+								"recur_interval_days",
+								"recur_until",
+							]}
 						/>
 
 						<div className="space-x-2 mt-6 flex justify-end">
