@@ -151,7 +151,8 @@
 			},
 			"contact": {
 				"self": "Business Contact",
-				"desc": "Reach out to us for partnership and business inquiries."
+				"desc": "Reach out to us for partnership and business inquiries.",
+				"href": "/contact#naringslivsutskottet"
 			}
 		},
 		"contact": {
@@ -159,17 +160,17 @@
 			"contactPage": {
 				"self": "Contact Page",
 				"desc": "Find all the information you need to get in touch with us.",
-				"href": "https://old.fsektionen.se/kontakter"
+				"href": "/contact"
 			},
 			"ordf": {
 				"self": "President",
 				"desc": "For questions about the organisation.",
-				"href": "https://old.fsektionen.se/kontakter/19"
+				"href": "/contact#ordf"
 			},
 			"web": {
 				"self": "Webmaster",
 				"desc": "For questions about the website or app.",
-				"href": "mailto:spindelman@fsektionen.se"
+				"href": "/contact#webmaster"
 			},
 			"anonymousForm": {
 				"self": "Anonymous Contact",

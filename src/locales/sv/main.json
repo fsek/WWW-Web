@@ -151,7 +151,8 @@
 			},
 			"contact": {
 				"self": "Företagskontakt",
-				"desc": "Kontakta oss för affärsförfrågningar och samarbeten."
+				"desc": "Kontakta oss för affärsförfrågningar och samarbeten.",
+				"href": "/contact#naringslivsutskottet"
 			}
 		},
 		"contact": {
@@ -159,17 +160,17 @@
 			"contactPage": {
 				"self": "Kontaktsida",
 				"desc": "Här hittar du all information du behöver för att nå oss.",
-				"href": "https://old.fsektionen.se/kontakter"
+				"href": "/contact"
 			},
 			"ordf": {
 				"self": "Ordförande",
 				"desc": "För frågor om organisationen.",
-				"href": "https://old.fsektionen.se/kontakter/19"
+				"href": "/contact#ordf"
 			},
 			"web": {
 				"self": "Webbansvarig",
 				"desc": "För frågor om vår webbplats eller app.",
-				"href": "mailto:spindelman@fsektionen.se"
+				"href": "/contact#webmaster"
 			},
 			"anonymousForm": {
 				"self": "Anonymt kontaktformulär",
