@@ -104,8 +104,8 @@
 			},
 			"rooms": {
 				"self": "Lokalbokning",
-				"desc": "Boka mötes- eller evenemangsutrymmen med ett klick.",
-				"href": "/book-rooms"
+				"desc": "Boka sektionens tre rum i mattehuset för personliga evenemang eller utskottsmöten.",
+				"href": "/room-bookings"
 			},
 			"tools": {
 				"self": "Verktygsutlåning",
@@ -284,6 +284,18 @@
 			"a6": "Olika färger visar status och ägarskap för varje bokning. En admin (bilförmannen) måste bekräfta bokningar utanför ordinarie tider. Färgerna har följande mening: \n- Ljusorange färg innebär att det är din bokning, men den är inte bekräftad.\n- Mörkorange färg innebär att det är din bokning och den är bekräftad. \n- Grön färg markerar någon annans bekräftade bokning.\n- Gul färg visar någon annans obekräftade bokning.\n- Ljusblå färg används för bokningar som lagts till lokalt men inte hämtats från servern än. Ser du blått kan något ha gått fel, ladda om sidan manuellt.",
 			"q7": "Jag har fler frågor!",
 			"a7": "Du kan kontakta bilförmannen bland annat genom <0>kontaktsidan</0>. Be gärna bilförmannen eller någon spindelman att lägga till frågan med svar här."
+		}
+	},
+	"room-booking": {
+		"title": "Lokalbokning",
+		"description-title": "FAQ och regler",
+		"description": "Som medlem måste du kontakta en admin om du vill boka ett rum, men du kan se alla rumsbokningar här. Om du är admin kan du boka rum <0>här</0> istället.",
+		"faq": {
+			"title": "Vanliga frågor",
+			"q1": "Vem kan boka lokalerna?",
+			"a1": "Endast admins kan boka lokalerna. Om du är medlem kan du kontakta en admin från nämnden eller ditt utskottsordförande för att be dem boka ett rum.",
+			"q2": "Jag har fler frågor!",
+			"a2": "Det finns ingen huvudansvarig för lokalbokning, kontakta prylmästaren eller styrelsen om du undrar något. Du kan också be dem att lägga till frågan med svar här."
 		}
 	},
 	"loading": {

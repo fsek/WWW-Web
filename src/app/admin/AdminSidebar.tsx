@@ -13,6 +13,7 @@ import {
 	type LucideProps,
 	Users,
 	UserPen,
+	House,
 	Mail,
 } from "lucide-react";
 
@@ -75,6 +76,12 @@ const groups: AdminGroup[] = [
 				url: "/admin/car",
 				permissions: [[action.MANAGE, target.CAR]],
 				icon: Car,
+			},
+			{
+				title: "admin:room_bookings.self",
+				url: "/admin/room-bookings",
+				permissions: [[action.MANAGE, target.ROOM_BOOKINGS]],
+				icon: House,
 			},
 			{
 				title: "admin:member.self",
