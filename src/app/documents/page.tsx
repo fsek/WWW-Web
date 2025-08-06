@@ -79,7 +79,7 @@ export default function Documents() {
 			<NavBar />
 			<main className="flex-1">
 				<div className="px-8 space-x-4 w-full lg:w-[80%] mx-auto">
-					<h3 className="text-3xl py-3 underline underline-offset-4">
+					<h3 className="text-3xl py-3 font-bold text-primary">
 						{t("main:documents.page_title")}
 					</h3>
 					<p className="py-3">{t("main:documents.description")}</p>

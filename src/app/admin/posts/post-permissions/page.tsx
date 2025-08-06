@@ -75,7 +75,7 @@ export default function PostPermissions() {
 
 	return (
 		<div className="px-8 space-x-4">
-			<h3 className="text-3xl py-3 underline underline-offset-4">
+			<h3 className="text-3xl py-3 font-bold text-primary">
 				{t(
 					"posts.permissions.title",
 					"Administrera specifika rättigheter för poster",

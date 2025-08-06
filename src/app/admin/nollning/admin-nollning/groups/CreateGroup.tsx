@@ -1,6 +1,7 @@
 import {
 	addGroupToNollningMutation,
 	getGroupsQueryKey,
+	getNollningByYearQueryKey,
 	getNollningQueryKey,
 	uploadGroupMutation,
 } from "@/api/@tanstack/react-query.gen";
@@ -27,10 +28,14 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import GroupTypeSelect from "./GroupTypeSelect";
+import { ValueSetter } from "node_modules/date-fns/parse/_lib/Setter";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const GroupSchema = z.object({
 	name: z.string().min(2),
 	group_type: z.enum(["Mentor", "Mission"]),
+	mentor_group_number: z.coerce.number().min(1).optional(),
 });
 
 interface Props {
@@ -40,30 +45,42 @@ interface Props {
 
 const CreateAdventureMission = ({ nollningID, className }: Props) => {
 	const [open, setOpen] = useState(false);
+	const [pendingGroupNumber, setPendingGroupNumber] = useState<number | undefined>(
+		undefined
+	);
 
 	const groupForm = useForm<z.infer<typeof GroupSchema>>({
 		resolver: zodResolver(GroupSchema),
 		defaultValues: {
 			name: "",
 			group_type: "Mentor",
+			mentor_group_number: undefined,
 		},
 	});
 
 	const queryClient = useQueryClient();
+	const { t } = useTranslation("admin");
 
 	const createGroup = useMutation({
 		...uploadGroupMutation(),
 		onSuccess: (group) => {
 			addGroupToNollning.mutate({
 				path: { nollning_id: nollningID },
-				body: { group_id: group.id },
+				body: {
+					group_id: group.id,
+					mentor_group_number: pendingGroupNumber,
+				},
 			});
 			queryClient.invalidateQueries({
 				queryKey: getGroupsQueryKey(),
 			});
+			toast.success(t("nollning.groups.create_success"));
 			setOpen(false);
+			setPendingGroupNumber(undefined);
 		},
 		onError: () => {
+			toast.error(t("nollning.groups.create_error"));
+			setPendingGroupNumber(undefined);
 			setOpen(false);
 		},
 	});
@@ -76,14 +93,22 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 					path: { nollning_id: nollningID },
 				}),
 			});
+			queryClient.invalidateQueries({
+				queryKey: getNollningByYearQueryKey({
+					path: { year: new Date().getFullYear() },
+				}),
+			});
+			toast.success(t("nollning.groups.add_success"));
 			setOpen(false);
 		},
 		onError: () => {
+			toast.error(t("nollning.groups.add_error"));
 			setOpen(false);
 		},
 	});
 
 	function onSubmit(values: z.infer<typeof GroupSchema>) {
+		setPendingGroupNumber(values.mentor_group_number);
 		createGroup.mutate({
 			body: {
 				name: values.name,
@@ -102,13 +127,13 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 							groupForm.reset();
 						}}
 					>
-						Skapa Faddergrupp
+						{t("nollning.groups.create_group")}
 					</Button>
 				</DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle className="text-3xl py-3 underline underline-offset-4">
-							Skapa Faddergrupp
+						<DialogTitle className="text-3xl py-3 font-bold text-primary">
+							{t("nollning.groups.create_group")}
 						</DialogTitle>
 					</DialogHeader>
 					<Form {...groupForm}>
@@ -119,9 +144,9 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 									name={"name"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Titel </FormLabel>
+											<FormLabel>{t("nollning.groups.title")}</FormLabel>
 											<FormControl>
-												<Input placeholder="Namn" {...field} />
+												<Input placeholder={t("nollning.groups.title")} {...field} />
 											</FormControl>
 										</FormItem>
 									)}
@@ -131,7 +156,7 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 									name={"group_type"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Grupptyp</FormLabel>
+											<FormLabel>{t("nollning.groups.group_type")}</FormLabel>
 											<GroupTypeSelect
 												value={field.value}
 												onChange={field.onChange}
@@ -139,11 +164,30 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 										</FormItem>
 									)}
 								/>
-
+								<FormField
+									control={groupForm.control}
+									name={"mentor_group_number"}
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>{t("nollning.groups.group_number")}</FormLabel>
+											<FormControl>
+												<Input
+													type="number"
+													placeholder={t("nollning.groups.group_number")}
+													value={field.value === undefined ? "" : field.value}
+													onChange={e => {
+														const val = e.target.value;
+														field.onChange(val === "" ? undefined : Number(val));
+													}}
+												/>
+											</FormControl>
+										</FormItem>
+									)}
+								/>
 								<Button type="submit" className="w-32 min-w-fit">
-									Skapa
+									{t("nollning.groups.create_group")}
 								</Button>
-								<DialogClose>Avbryt</DialogClose>
+								<DialogClose>{t("nollning.groups.cancel")}</DialogClose>
 							</div>
 						</form>
 					</Form>

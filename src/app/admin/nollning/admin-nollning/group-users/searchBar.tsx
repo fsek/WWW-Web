@@ -7,18 +7,17 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import type React from "react";
 import { Suspense, useRef, useState } from "react";
 import StartYearFilter from "./YearFilter";
 import SearchResults from "./searchResults";
-import {} from "@radix-ui/react-popover";
+import { } from "@radix-ui/react-popover";
 import {
 	PopoverTrigger,
 	Popover,
 	PopoverContent,
 } from "@/components/ui/popover-no-portal";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface Props {
 	excludedFromSearch?: GroupUserRead[];
@@ -38,7 +37,8 @@ function toGroupUserType(s: string): GroupUserTypes {
 	return "Default" as GroupUserTypes;
 }
 
-const SearchBar = ({ excludedFromSearch = [], onRowClick }: Props) => {
+export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props) {
+	const { t } = useTranslation("admin");
 	const [nameFilter, setNameFilter] = useState("");
 	const [programFilter, setProgramFilter] = useState("");
 	const [startingYearRangeFilter, setStartingYearRangeFilter] = useState<
@@ -64,12 +64,12 @@ const SearchBar = ({ excludedFromSearch = [], onRowClick }: Props) => {
 				onValueChange={(value) => setGroupUserType(toGroupUserType(value))}
 				value={groupUserType}
 			>
-				<SelectTrigger className="w-full bg-white">
-					<SelectValue placeholder="Filtrera efter program" />
+				<SelectTrigger className="w-full bg-white max-w-sm">
+					<SelectValue placeholder={t("nollning.group_members.select_role_placeholder")} />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="Mentee">Lägg till som nolla</SelectItem>
-					<SelectItem value="Mentor">Lägg till som fadder</SelectItem>
+					<SelectItem value="Mentee">{t("nollning.group_members.add_as_mentee")}</SelectItem>
+					<SelectItem value="Mentor">{t("nollning.group_members.add_as_mentor")}</SelectItem>
 				</SelectContent>
 			</Select>
 			<Select
@@ -82,11 +82,11 @@ const SearchBar = ({ excludedFromSearch = [], onRowClick }: Props) => {
 					}
 				}}
 			>
-				<SelectTrigger className="w-full bg-white">
-					<SelectValue placeholder="Filtrera efter program" />
+				<SelectTrigger className="w-full bg-white max-w-sm">
+					<SelectValue placeholder={t("nollning.group_members.filter_by_program")} />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="clear">Rensa</SelectItem>
+					<SelectItem value="clear">{t("nollning.group_members.clear")}</SelectItem>
 					<SelectItem value="F">F</SelectItem>
 					<SelectItem value="Pi">Pi</SelectItem>
 					<SelectItem value="N">N</SelectItem>
@@ -98,13 +98,13 @@ const SearchBar = ({ excludedFromSearch = [], onRowClick }: Props) => {
 					setStartingYearRangeFilter(value);
 				}}
 			/>
-			<div className="w-full max-w-xs">
+			<div className="w-full max-w-sm">
 				<Popover>
 					<PopoverTrigger asChild>
 						<div>
 							<Input
 								className="bg-white"
-								placeholder="Sök användare"
+								placeholder={t("nollning.group_members.search_user_placeholder")}
 								value={nameFilter}
 								onChange={(e) => {
 									setNameFilter(e.target.value);
@@ -114,7 +114,6 @@ const SearchBar = ({ excludedFromSearch = [], onRowClick }: Props) => {
 								}}
 								onFocus={() => {
 									if (nameFilter.length > 0) {
-										console.log("length of name: ", nameFilter.length);
 										setResultsOpen(true);
 									}
 								}}
@@ -126,34 +125,30 @@ const SearchBar = ({ excludedFromSearch = [], onRowClick }: Props) => {
 					<PopoverContent
 						ref={popoverRef}
 						onOpenAutoFocus={(e) => e.preventDefault()}
-						className="w-[230px] p-1"
+						className="p-0"
 					>
-						<ScrollArea>
-							<Suspense
-								fallback={
-									<div>
-										<Button variant="ghost" className="w-full justify-start">
-											Söker...{" "}
-										</Button>
-									</div>
-								}
-							>
-								<SearchResults
-									nameFilter={nameFilter}
-									programFilter={programFilter}
-									startYearFilter={startingYearRangeFilter}
-									excludedFromSearch={excludedFromSearch}
-									onRowClick={(user: UserRead) => {
-										onRowClick?.(user, groupUserType);
-									}}
-								/>
-							</Suspense>
-						</ScrollArea>
+						<Suspense
+							fallback={
+								<div className="p-4">
+									<Button variant="ghost" className="w-full justify-start" disabled>
+										{t("nollning.group_members.searching")}
+									</Button>
+								</div>
+							}
+						>
+							<SearchResults
+								nameFilter={nameFilter}
+								programFilter={programFilter}
+								startYearFilter={startingYearRangeFilter}
+								excludedFromSearch={excludedFromSearch}
+								onRowClick={(user: UserRead) => {
+									onRowClick?.(user, groupUserType);
+								}}
+							/>
+						</Suspense>
 					</PopoverContent>
 				</Popover>
 			</div>
 		</div>
 	);
 };
-
-export default SearchBar;
