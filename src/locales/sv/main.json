@@ -13,6 +13,7 @@
 	"cafeTitle": "Hilbert Café",
 	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang.",
 	"coolThing": "En cool grej som distraherar dig från att se att sidan inte är klar än",
+	"back": "Tillbaka",
 	"faq": {
 		"self": "Frågor besvarade",
 		"q1": {
@@ -103,8 +104,8 @@
 			},
 			"rooms": {
 				"self": "Lokalbokning",
-				"desc": "Boka mötes- eller evenemangsutrymmen med ett klick.",
-				"href": "/book-rooms"
+				"desc": "Boka sektionens tre rum i mattehuset för personliga evenemang eller utskottsmöten.",
+				"href": "/room-bookings"
 			},
 			"tools": {
 				"self": "Verktygsutlåning",
@@ -150,7 +151,8 @@
 			},
 			"contact": {
 				"self": "Företagskontakt",
-				"desc": "Kontakta oss för affärsförfrågningar och samarbeten."
+				"desc": "Kontakta oss för affärsförfrågningar och samarbeten.",
+				"href": "/contact#naringslivsutskottet"
 			}
 		},
 		"contact": {
@@ -158,17 +160,17 @@
 			"contactPage": {
 				"self": "Kontaktsida",
 				"desc": "Här hittar du all information du behöver för att nå oss.",
-				"href": "https://old.fsektionen.se/kontakter"
+				"href": "/contact"
 			},
 			"ordf": {
 				"self": "Ordförande",
 				"desc": "För frågor om organisationen.",
-				"href": "https://old.fsektionen.se/kontakter/19"
+				"href": "/contact#ordf"
 			},
 			"web": {
 				"self": "Webbansvarig",
 				"desc": "För frågor om vår webbplats eller app.",
-				"href": "mailto:spindelman@fsektionen.se"
+				"href": "/contact#webmaster"
 			},
 			"anonymousForm": {
 				"self": "Anonymt kontaktformulär",
@@ -214,7 +216,8 @@
 		"self": "Nyheter",
 		"by": "Skriven av: ",
 		"pinned": "Fastnålad",
-		"see_all": "Se alla nyheter"
+		"see_all": "Se alla nyheter",
+		"read_more": "Läs mer"
 	},
 	"verifyMail": {
 		"loading": "Verifierar din e-post...",
@@ -283,6 +286,18 @@
 			"a7": "Du kan kontakta bilförmannen bland annat genom <0>kontaktsidan</0>. Be gärna bilförmannen eller någon spindelman att lägga till frågan med svar här."
 		}
 	},
+	"room-booking": {
+		"title": "Lokalbokning",
+		"description-title": "FAQ och regler",
+		"description": "Som medlem måste du kontakta en admin om du vill boka ett rum, men du kan se alla rumsbokningar här. Om du är admin kan du boka rum <0>här</0> istället.",
+		"faq": {
+			"title": "Vanliga frågor",
+			"q1": "Vem kan boka lokalerna?",
+			"a1": "Endast admins kan boka lokalerna. Om du är medlem kan du kontakta en admin från nämnden eller ditt utskottsordförande för att be dem boka ett rum.",
+			"q2": "Jag har fler frågor!",
+			"a2": "Det finns ingen huvudansvarig för lokalbokning, kontakta prylmästaren eller styrelsen om du undrar något. Du kan också be dem att lägga till frågan med svar här."
+		}
+	},
 	"loading": {
 		"basic": "Laddar innehåll...",
 		"flavor_1": "Checkar in på Hilberts hotel...",
@@ -322,5 +337,42 @@
 		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara markerade för att endast vara synliga för medlemmar."
 	},
 	"yes": "Ja",
-	"no": "Nej"
+	"no": "Nej",
+	"event_signup": {
+		"title": "Eventanmälan",
+		"priority": "Prioritet",
+		"select_priority": "Välj prioritetsgrupp att anmäla dig med",
+		"group_name": "Gruppnamn",
+		"group_name_placeholder": "Ange gruppnamn (valfritt)",
+		"drink_package": {
+			"title": "Dryckespaket",
+			"none": "Inget",
+			"alcohol_free": "Alkoholfritt",
+			"alcohol": "Alkohol"
+		},
+		"select_drink_package": "Välj dryckespaket",
+		"button": "Anmäl dig",
+		"update_button": "Uppdatera anmälan",
+		"edit_button": "Redigera",
+		"signoff_button": "Avanmäl",
+		"success_create": "Anmälan lyckades!",
+		"success_update": "Anmälan uppdaterad!",
+		"success_signoff": "Du har avanmält dig från eventet.",
+		"error_create": "Kunde inte anmäla dig: {{error}}",
+		"error_update": "Kunde inte uppdatera anmälan: {{error}}",
+		"error_signoff": "Kunde inte avanmäla dig: {{error}}",
+		"unknown_error": "Okänt fel.",
+		"not_found": "Du är inte anmäld till detta event.",
+		"user": "Användare",
+		"status": "Status",
+		"confirmed": "Bekräftad",
+		"pending": "Väntar på bekräftelse",
+		"period_passed_signed_up": "Anmälningsperioden är slut. Om du vill ändra eller dra tillbaka din anmälan, kontakta eventansvarig.",
+		"period_passed_not_signed_up": "Anmälningsperioden är slut. Du kan inte längre anmäla dig. Om du har några frågor, vänligen kontakta eventansvarig.",
+		"food_preferences_title": "Matpreferenser",
+		"food_preferences_explainer": "Detta är dina sparade matpreferenser. Om något inte ser rätt ut kan du uppdatera dem i dina kontoinställningar.",
+		"standard_food_preferences": "Standardpreferenser:",
+		"other_food_preferences": "Övriga preferenser:",
+		"none": "Inga"
+	}
 }

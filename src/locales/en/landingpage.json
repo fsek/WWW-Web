@@ -33,9 +33,10 @@
 	},
 	"hero": {
 		"title_static": "The guild for students of ",
-		"title_dynamic_1": "Engineering Physics",
-		"title_dynamic_2": "Engineering Mathematics",
-		"title_dynamic_3": "Engineering Nanoscience",
+		"title_dynamic_start": "Engineering",
+		"title_dynamic_1": "Physics",
+		"title_dynamic_2": "Mathematics",
+		"title_dynamic_3": "Nanoscience",
 		"description": "We help welcome students to Lund University and provide a community and rich student life for our members.",
 		"new-student": "I am a new student",
 		"companies": "I represent a company",

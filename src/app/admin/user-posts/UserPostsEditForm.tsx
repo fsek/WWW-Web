@@ -9,7 +9,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import type { AdminUserRead } from "@/api";
 import { useTranslation } from "react-i18next";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { toast } from "sonner";
 import { AdminChooseMultPosts } from "@/widgets/AdminChooseMultPosts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -94,7 +94,7 @@ export default function UserPostsEditForm({
 				}
 			}}
 		>
-			<DialogContent className="min-w-fit lg:max-w-7xl">
+			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>{t("user-posts.edit", "Manage User Posts")}</DialogTitle>
 				</DialogHeader>

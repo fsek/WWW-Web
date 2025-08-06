@@ -10,6 +10,7 @@ interface CustomTitleProps {
 	fullUnderline?: boolean;
 	shortUnderline?: boolean;
 	noUnderline?: boolean;
+	id?: string;
 }
 
 const CustomTitle: FC<CustomTitleProps> = ({
@@ -20,6 +21,7 @@ const CustomTitle: FC<CustomTitleProps> = ({
 	fullUnderline,
 	shortUnderline = false,
 	noUnderline = false,
+	id,
 }) => {
 	const [animationState, setAnimationState] = useState<
 		"initial" | "text-width" | "full-width"
@@ -94,6 +96,7 @@ const CustomTitle: FC<CustomTitleProps> = ({
 		<div className="w-full py-5">
 			<div
 				ref={textRef}
+				id={id}
 				className={`inline-block font-bold text-left  to-primary-light from-primary bg-gradient-to-t text-transparent bg-clip-text bg-bottom ${getSizeClass()} ${className} ${shortUnderline ? "underline" : ""}`}
 			>
 				{text ?? children ?? "Default title"}

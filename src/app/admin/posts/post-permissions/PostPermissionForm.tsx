@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
-import {
-	Form,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
@@ -161,7 +159,7 @@ export default function PostPermissionForm({
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogContent className="min-w-fit lg:max-w-7xl">
+				<DialogContent className="max-w-full lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 					<DialogHeader>
 						<DialogTitle>
 							{t("posts.permissions.edit", "Ändra behörigheter")}
@@ -170,7 +168,7 @@ export default function PostPermissionForm({
 					<Form {...form}>
 						<form
 							onSubmit={form.handleSubmit(onSubmit)}
-							className="grid gap-4 grid-cols-3"
+							className="grid gap-4 grid-cols-2 lg:grid-cols-3"
 						>
 							<input type="hidden" {...form.register("post_id")} />
 

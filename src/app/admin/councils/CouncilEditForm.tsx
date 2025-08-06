@@ -23,7 +23,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
 
 const councilEditSchema = z.object({
@@ -145,7 +145,7 @@ export default function CouncilEditForm({
 				}
 			}}
 		>
-			<DialogContent className="min-w-fit lg:max-w-7xl">
+			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
 						{t("councils.edit_council", "Redigera utskott")}

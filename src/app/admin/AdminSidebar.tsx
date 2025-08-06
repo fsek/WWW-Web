@@ -15,6 +15,9 @@ import {
 	List,
 	Apple,
 	Award,
+	House,
+	Mail,
+	Gauge,
 } from "lucide-react";
 
 import {
@@ -78,10 +81,28 @@ const groups: AdminGroup[] = [
 				icon: Car,
 			},
 			{
+				title: "admin:room_bookings.self",
+				url: "/admin/room-bookings",
+				permissions: [[action.MANAGE, target.ROOM_BOOKINGS]],
+				icon: House,
+			},
+			{
 				title: "admin:member.self",
 				url: "/admin/members",
 				permissions: [[action.VIEW, target.USER]],
 				icon: User,
+			},
+			{
+				title: "admin:nollning.self",
+				url: "/admin/nollning",
+				permissions: [[action.MANAGE, target.NOLLNING]],
+				icon: Gauge,
+			},
+			{
+				title: "admin:door_access.self",
+				url: "/admin/user-door-access",
+				permissions: [[action.MANAGE, target.USER_DOOR_ACCESS]],
+				icon: Users,
 			},
 		],
 	},
@@ -139,6 +160,12 @@ const groups: AdminGroup[] = [
 				url: "/admin/permissions",
 				permissions: [[action.MANAGE, target.PERMISSION]],
 				icon: FolderLock,
+			},
+			{
+				title: "admin:mail_aliases.self",
+				url: "/admin/mail-aliases",
+				permissions: [[action.MANAGE, target.MAIL_ALIAS]],
+				icon: Mail,
 			},
 		],
 	},

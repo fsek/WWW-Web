@@ -61,9 +61,8 @@ export default function Documents() {
 						className={"px-2 py-1 border"}
 						onClick={(e) => {
 							e.stopPropagation();
-							router.push(
-								`/documents/${row.row.original.id}`,
-							);
+							const url = `/documents/${row.row.original.id}`;
+							window.open(url, "_blank", "noopener,noreferrer");
 						}}
 					>
 						{t("main:documents.view")}
@@ -86,9 +85,7 @@ export default function Documents() {
 					<p className="py-3">{t("main:documents.description")}</p>
 					{isPending && <LoadingErrorCard />}
 					{error && <LoadingErrorCard error={error} />}
-					{!isPending && !error && (
-						<AdminTable table={table} />
-					)}
+					{!isPending && !error && <AdminTable table={table} />}
 				</div>
 			</main>
 			<Footer />
