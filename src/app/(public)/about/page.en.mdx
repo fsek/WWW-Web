@@ -1,26 +1,94 @@
-# About Us
+import Image from 'next/image'
+import blueLandscapeTlth from '/public/images/blue_landscape_tlth.png'
+import fLogo from '/public/images/sektioner/F.avif'
+import eLogo from '/public/images/sektioner/E.avif'
+import mLogo from '/public/images/sektioner/M.avif'
+import vLogo from '/public/images/sektioner/V.avif'
+import aLogo from '/public/images/sektioner/A.avif'
+import kLogo from '/public/images/sektioner/K.avif'
+import dLogo from '/public/images/sektioner/D.avif'
+import doktLogo from '/public/images/sektioner/Dokt.avif'
+import ingLogo from '/public/images/sektioner/ING.avif'
+import wLogo from '/public/images/sektioner/W.avif'
+import iLogo from '/public/images/sektioner/I.avif'
+import älgresan from '/public/images/algresan.jpg'
+import mattehuset from '/src/assets/mh.jpg'
+import GuildLogos from '@/components/GuildLogos'
 
-The F-guild within TLTH is a non-profit organization for students enrolled in one of the engineering programs: 
-Engineering Physics, Engineering Mathematics, or Engineering Nanoscience. Its purpose is to promote camaraderie 
-among members and to safeguard their common interests.
+# About us
+The programs at [Lund University](https://www.lu.se) are divided into different faculties,
+where all engineering students belong to the faculty of engineering, [LTH](https://www.lth.se).
+Each faculty within the university has a corresponding student union, i.e. a non-profit, statutory interest organization 
+for students belonging to that faculty.
 
-## The Math Building
+<a href="https://tlth.se" target="_blank" rel="noopener noreferrer">
+  <Image src={blueLandscapeTlth} alt="Teknologkåren vid LTH logo" className="w-1/5" />
+</a>
 
-The guild is located in the Math Building, where you'll find, among other things, a lounge, microwaves, 
-and a great place to hang out. The Math Building also houses Hilbert Café, which we run. 
-There you can buy tasty coffee, baguettes, and salads.
+In our case, it is the student union [Teknologkåren vid LTH](https://www.tlth.se), which has more than 8,000
+members and works with educational monitoring, corporate relations, and recreation activities. 
+Subordinate to the Teknologkåren are 11 [guilds](https://www.tlth.se/sektioner) divided according to the different educational programs belonging to LTH.
+The guilds are, in turn, independent non-profit organizations that work for students at a more local level but are also linked to Teknologkåren.
+<GuildLogos
+  logos={[
+    { href: "https://www.fsektionen.se/", src: fLogo, alt: "F-sektionen" },
+    { href: "https://eee.esek.se/", src: eLogo, alt: "E-sektionen" },
+    { href: "https://maskinsektionen.com/", src: mLogo, alt: "Maskinsektionen" },
+    { href: "https://vsek.se/sv/", src: vLogo, alt: "V-sektionen" },
+    { href: "http://www.asektionen.se/", src: aLogo, alt: "A-sektionen" },
+    { href: "https://ksektionen.se/", src: kLogo, alt: "K-sektionen" },
+    { href: "https://www.dsek.se/", src: dLogo, alt: "D-sektionen" },
+    { href: "https://dokt.se/", src: doktLogo, alt: "Doktorandsektionen" },
+    { href: "https://www.ingsekt.se/", src: ingLogo, alt: "Ingenjörssektionen" },
+    { href: "https://www.wsektionen.com/", src: wLogo, alt: "W-sektionen" },
+    { href: "https://isek.se/", src: iLogo, alt: "Sektionen för Industriell Ekonomi" },
+  ]}
+/>
 
-## Committees
+The F-guild consists of students from the following programs.
+* *Master of Science in Engineering Physics (F)*
+* *Master of Science in Engineering Mathematics (Pi)*
+* *Master of Science in Engineering Nanoscience (N)*
+* *Master's programme in Machine Learning, Systems and Control (MMSR)*
+* *Master's programme in Photonics (MFOT)*
+* *Master's programme in Nanoscience (MNAV)*
 
-The F-guild has a variety of committees, each led by a committee chairperson. Most chairpersons are
-part of the guild’s board of operations, which handles the guild’s day-to-day activities. 
-The Executive Board is the guild’s decision-making body and makes decisions on matters affecting the guild as a whole.
 
-## Welcome!
+To become a member of the F guild, you must be studying (or have studied within the last two years) one of the programs above, as well as  [be a member of the Teknologkåren](https://www.tlth.se/bli-medlem), which costs SEK 500 
+for a five-year membership.
 
-As a member, you can choose to be highly active and engaged, moderately involved, or simply 
-attend an occasional event. If you have any questions, feel free to reach out—see the [Contact](/contact) 
-tab here on the website, or stop by the boardroom located in the southern part of the Hilbert corridor; 
-there’s almost always an active guild member around.
+## Operations 
+The F-guild's activities are divided into different units, the main ones being the board, 
+the audits, the nomination committee, and [the committees](https://fsektionen.se/councils).
+All involvement is voluntary and based on official assignments in the form of positions that all members have the opportunity to apply for once per semester.
+The guild does everything from monitoring education in each individual program in the form of course evaluations to formal dinners with parties afterwards!
 
-We hope you’ll enjoy being part of the guild!
+Many committees organize events for members, such as a classic sitting, while others work internally with the guild's resources, such as implementing all the functions of the website.
+The range of events is wide, and the guild strives to ensure that there is something for everyone!
+
+In addition to its weekly activities, the guild also works long-term with everything from equality and sustainability plans to analyses of the labor market and corporate collaborations.
+
+<Image src={älgresan} alt="Älgresan 2023" className="w-3/5 mt-4 rounded-lg mx-auto" />
+
+
+## Guildspaces
+The F guild is located in Mattehuset (Sölvegatan 18, 223 62 Lund), in the middle of LTH Campus. 
+Here you will find a lounge, microwaves, and a nice place to hang out. Mattehuset also houses Hilbert Café, which we run, where you can buy good coffee, baguettes, and salads, among other things.
+<Image src={mattehuset} alt="Mattehuset" className="w-3/5 mt-4 rounded-lg mx-auto" />
+
+## Channels of information
+Our primary information channels are the news feed here on the website and our Mattermost team, primarily in the Announcements and Announcements from the Board channels. To log in to Mattermost, you must first create an account here on the website and be
+ manually verified as a member of the guild.
+
+In addition to these channels, we also use social media as secondary and summary information channels, but also to showcase everyday activities at the guild.
+* Instagram: [@fsektionen](https://www.instagram.com/fsektionen/)
+* TikTok: [@fsektionen](https://www.tiktok.com/@fsektionen)
+* Facebook: [F-sektionen Inom TLTH](https://www.facebook.com/Fsektionen/?locale=sv_SE)
+
+For media inquiries related to the F-guild, please contact the president of Teknologkåren, whom can be reached via email at
+[ko@tlth.se](mailto:ko@tlth.se) or by phone at *070-418 79 21*.
+
+
+> **Latest update:** 30 july 2025  
+> **Spelling mistakes or some other errors in the text?**
+> Mail sanning@fsektionen.se
