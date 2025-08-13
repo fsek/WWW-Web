@@ -53,6 +53,7 @@ interface SignupCardProps {
 	availablePriorities: string[];
 	isSignupAllowed?: boolean;
 	signupPeriodPassed?: boolean;
+	useDrinkPackage?: boolean;
 }
 
 export default function SignupCard({
@@ -60,6 +61,7 @@ export default function SignupCard({
 	availablePriorities,
 	isSignupAllowed,
 	signupPeriodPassed,
+	useDrinkPackage,
 }: SignupCardProps) {
 	const [isEditing, setIsEditing] = useState(false);
 	const { t } = useTranslation();
@@ -236,11 +238,15 @@ export default function SignupCard({
 
 	const drinkPackageOptions = [
 		{ value: "None", label: t("event_signup.drink_package.none") },
-		{
-			value: "AlcoholFree",
-			label: t("event_signup.drink_package.alcohol_free"),
-		},
-		{ value: "Alcohol", label: t("event_signup.drink_package.alcohol") },
+		...(useDrinkPackage
+			? [
+					{
+						value: "AlcoholFree",
+						label: t("event_signup.drink_package.alcohol_free"),
+					},
+					{ value: "Alcohol", label: t("event_signup.drink_package.alcohol") },
+				]
+			: []),
 	];
 
 	const priorityOptions =
@@ -380,7 +386,7 @@ export default function SignupCard({
 										className="flex items-center gap-2"
 									>
 										<X className="w-4 h-4" />
-										{t("cancel")}
+										{t("admin:cancel")}
 									</Button>
 								)}
 							</div>
