@@ -270,7 +270,7 @@
 		"telephoneNumberRequired": "Telefonnummer krävs",
 		"gdprLabel": "Jag har läst och godkänner",
 		"privacyPolicy": "sekretesspolicyn.",
-		"gdprRequired": "Du måste godkänna sekretesspolicyn för att registrera dig."
+		"gdprRequired": "Du måste godkänna sekretesspolicyn för att kunna registrera dig."
 	},
 	"car-booking": {
 		"title": "Bilbokning",
