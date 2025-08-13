@@ -45,12 +45,18 @@
 			"self": "Sections",
 			"about": {
 				"self": "About Us",
-				"desc": "Welcome to our community—discover our story and values.",
+				"desc": "Welcome to our community-discover our story and values.",
 				"href": "/about"
 			},
 			"news": {
 				"self": "News",
-				"desc": "Stay updated with the latest announcements and events."
+				"desc": "Stay updated with the latest announcements and events.",
+				"href": "/news"
+			},
+			"calendar": {
+				"self": "Calendar",
+				"desc": "Keep track of upcoming events and activities.",
+				"href": "/calendar"
 			},
 			"councils": {
 				"self": "Councils",
