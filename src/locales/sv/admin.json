@@ -20,6 +20,7 @@
 	},
 	"categories": {
 		"general": "Allmänt",
+		"bookings": "Bokningar",
 		"councils": "Poster och utskott",
 		"spider": "Spindelsaker",
 		"nollning": "Nollning"
