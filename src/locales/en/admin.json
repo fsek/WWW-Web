@@ -14,6 +14,7 @@
 	"select_posts": "Select Council Posts",
 	"no_posts": "No posts assigned",
 	"unclear_program": "Unclear",
+	"milk_allergy": "Milk Protein Allergy",
 	"welcome": {
 		"title": "Welcome to the Admin Page",
 		"message": "Here you can manage a wide range of things (but not everything yet, we apologize). Use the menu on the left to navigate between the different sections. You should only have access to the sections you have permissions for; if this is not the case, please contact a webmaster."
@@ -112,10 +113,10 @@
 		"alcohol_not_allowed": "Alcohol not allowed",
 		"alcohol_none": "None (not shown)",
 		"costs_money": "Costs Money",
-		"dot_type": "Time precision",
+		"dot_type": "Time precision (ask your mentor about this)",
 		"dot_none": "No dots (academic timing applies)",
-		"dot_single": "Single dot (negates 15 minutes)",
-		"dot_double": "Double dot (negates 30 minutes)",
+		"dot_single": "Single dot",
+		"dot_double": "Double dot",
 		"select_dot": "Select time precision",
 		"lottery": "Spots may be selected by lottery",
 		"price": "Price",

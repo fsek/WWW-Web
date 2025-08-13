@@ -14,6 +14,7 @@
 	"select_posts": "Välj poster",
 	"no_posts": "Inga poster tilldelade",
 	"unclear_program": "Oklart",
+	"milk_allergy": "Mjölkproteinallergi",
 	"welcome": {
 		"title": "Välkommen till adminsidan",
 		"message": "Här kan du hantera en otrolig mängd saker (men inte allt ännu, vi ber om ursäkt). Använd menyn till vänster för att navigera mellan de olika skärmarna. Du borde bara ha tillgång till de skärmar du har behörighet till, om så inte är fallet, kontakta en superman."
