@@ -341,8 +341,8 @@
 	"member": {
 		"self": "Members",
 		"list": "Members",
-		"list_description": "This list shows all users. You can search, filter by date, and manage membership status.",
-		"search_placeholder": "Search by name, email, or STIL ID",
+		"list_description": "This list shows all users. You can search, filter by date, and manage membership status. You can search for multiple members by adding comma signs between. Your search terms must be at least 3 characters long.",
+		"search_placeholder": "Search by name, email, or STIL ID.",
 		"date_range_to": "to",
 		"actions": "Actions",
 		"make_member": "Make Member",

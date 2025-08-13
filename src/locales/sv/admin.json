@@ -342,8 +342,8 @@
 	"member": {
 		"self": "Medlemmar",
 		"list": "Medlemmar",
-		"list_description": "Denna lista visar alla användare. Du kan söka, filtrera på datum och hantera medlemskap.",
-		"search_placeholder": "Sök på namn, e-post eller STIL-ID",
+		"list_description": "Denna lista visar alla användare. Du kan söka, filtrera på datum och hantera medlemskap. Du kan söka efter flera medlemmar genom att lägga kommatecken emellan. Dina söktermer måste vara minst 3 tecken långa.",
+		"search_placeholder": "Sök på namn, e-post eller STIL-ID.",
 		"date_range_to": "till",
 		"actions": "Åtgärder",
 		"make_member": "Gör till medlem",
