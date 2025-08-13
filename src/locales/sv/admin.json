@@ -350,7 +350,7 @@
 		"remove_member": "Ta bort medlemskap",
 		"bulk_member": "Gör alla filtrerade användare till medlemmar",
 		"bulk_member_confirm_title": "Bekräfta massmedlemskap",
-		"bulk_member_confirm_desc": "Är du säker på att du vill göra följande antal användare till medlemmar",
+		"bulk_member_confirm_desc": "Läs igenom listan innan du gör detta! Är du säker på att du vill göra följande antal användare till medlemmar",
 		"bulk_member_confirm": "Bekräfta",
 		"bulk_member_loading": "Bearbetar...",
 		"bulk_member_success": "Alla användare blev medlemmar.",

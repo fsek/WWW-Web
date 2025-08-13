@@ -349,7 +349,7 @@
 		"remove_member": "Remove Member",
 		"bulk_member": "Make all filtered users members",
 		"bulk_member_confirm_title": "Confirm Bulk Membership",
-		"bulk_member_confirm_desc": "Are you sure you want to make the following number of users members",
+		"bulk_member_confirm_desc": "Read through the list of users before doing this! Are you sure you want to make the following number of users members",
 		"bulk_member_confirm": "Confirm",
 		"bulk_member_loading": "Processing...",
 		"bulk_member_success": "All users were made members successfully.",

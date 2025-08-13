@@ -327,7 +327,7 @@ export default function MembersPage() {
 					<DialogFooter>
 						<DialogClose asChild>
 							<Button variant="outline" disabled={bulkLoading}>
-								{t("cancel")}
+								{t("admin:cancel")}
 							</Button>
 						</DialogClose>
 						<Button
