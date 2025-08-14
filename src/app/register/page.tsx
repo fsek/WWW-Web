@@ -28,6 +28,7 @@ import {
 	FormItem,
 	FormMessage,
 } from "@/components/ui/form";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type Status = "idle" | "loading" | "success" | "error" | "password-mismatch";
 
@@ -106,6 +107,8 @@ export default function RegistrationPage() {
 
 	const [status, setStatus] = useState<Status>("idle");
 	const [errorMsg, setErrorMsg] = useState<string | undefined>(undefined);
+	const [gdprChecked, setGdprChecked] = useState(false);
+	const [gdprError, setGdprError] = useState<string | undefined>(undefined);
 
 	const form = useForm<z.infer<typeof registrationSchema>>({
 		resolver: zodResolver(registrationSchema),
@@ -168,6 +171,12 @@ export default function RegistrationPage() {
 	});
 
 	const handleSubmit = (values: z.infer<typeof registrationSchema>) => {
+		setGdprError(undefined);
+		if (!gdprChecked) {
+			setGdprError(t("register.gdprRequired"));
+			setStatus("idle");
+			return;
+		}
 		setStatus("loading");
 
 		// Add +46 if no country code is present
@@ -384,6 +393,42 @@ export default function RegistrationPage() {
 											</FormItem>
 										)}
 									/>
+									{/* GDPR Checkbox */}
+									<div
+										className={`
+											flex items-center space-x-2 cursor-pointer
+											rounded-md border border-input bg-background
+											hover:bg-background/80 transition-colors
+											px-3 py-1 h-9
+											focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]
+										`}
+									>
+										<Checkbox
+											id="gdpr"
+											className="accent-forange size-5 rounded border bg-background border-foreground"
+											checked={gdprChecked}
+											onCheckedChange={() => setGdprChecked(!gdprChecked)}
+										/>
+										<label
+											htmlFor="gdpr"
+											className="text-sm select-none cursor-pointer"
+										>
+											{t("register.gdprLabel")}{" "}
+											<a
+												href="/privacy"
+												target="_blank"
+												rel="noopener noreferrer"
+												className="underline text-forange hover:text-forange/80"
+											>
+												{t("register.privacyPolicy")}
+											</a>
+										</label>
+									</div>
+									{gdprError && (
+										<div className="text-destructive text-xs mt-1">
+											{gdprError}
+										</div>
+									)}
 									<div className="flex flex-row gap-2 justify-between">
 										<Button type="submit" className="w-fit">
 											{t("register.submit", "Register")}

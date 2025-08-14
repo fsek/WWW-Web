@@ -61,6 +61,11 @@
 				"self": "Dokument",
 				"desc": "Här kan du hitta alla de fina dokument som producerats.",
 				"href": "/documents"
+			},
+			"privacy": {
+				"self": "Sekretesspolicy",
+				"desc": "Läs mer om hur vi hanterar dina personuppgifter.",
+				"href": "/privacy"
 			}
 		},
 		"engage": {
@@ -262,7 +267,10 @@
 		"passwordShort": "Lösenordet måste vara minst 8 tecken",
 		"firstNameRequired": "Förnamn krävs",
 		"lastNameRequired": "Efternamn krävs",
-		"telephoneNumberRequired": "Telefonnummer krävs"
+		"telephoneNumberRequired": "Telefonnummer krävs",
+		"gdprLabel": "Jag har läst och godkänner",
+		"privacyPolicy": "sekretesspolicyn.",
+		"gdprRequired": "Du måste godkänna sekretesspolicyn för att registrera dig."
 	},
 	"car-booking": {
 		"title": "Bilbokning",

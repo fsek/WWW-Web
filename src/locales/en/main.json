@@ -61,6 +61,11 @@
 				"self": "Documents",
 				"desc": "Here you can find all the fine documents that have been produced.",
 				"href": "/documents"
+			},
+			"privacy": {
+				"self": "Privacy Policy",
+				"desc": "Learn more about how we handle your personal data.",
+				"href": "/privacy"
 			}
 		},
 		"engage": {
@@ -262,7 +267,10 @@
 		"passwordShort": "Password must be at least 8 characters",
 		"firstNameRequired": "First name required",
 		"lastNameRequired": "Last name required",
-		"telephoneNumberRequired": "Telephone number required"
+		"telephoneNumberRequired": "Telephone number required",
+		"gdprLabel": "I have read and agree to the",
+		"privacyPolicy": "privacy policy.",
+		"gdprRequired": "You must agree to the privacy policy to register."
 	},
 	"car-booking": {
 		"title": "Car Booking",
