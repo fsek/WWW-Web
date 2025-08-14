@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -44,16 +45,6 @@ export default function DocumentsEditForm({
 	const documentsEditSchema = z.object({
 		id: z.number(),
 		title: z.string(),
-		file: z
-			.instanceof(File)
-			.refine(
-				(file) => file.size <= 5 * 1024 * 1024,
-				t("admin:documents.file_size_error"),
-			)
-			.refine(
-				(file) => ["application/pdf"].includes(file.type),
-				t("admin:documents.file_type_error"),
-			),
 		is_private: z.boolean(),
 		category: z.string(),
 	});
@@ -64,10 +55,6 @@ export default function DocumentsEditForm({
 		resolver: zodResolver(documentsEditSchema),
 		defaultValues: {
 			title: "",
-			file: new File(
-				["This is an example file. You may treat getting this as an error."],
-				"sample.txt",
-			),
 			is_private: false,
 		},
 	});
@@ -184,23 +171,6 @@ export default function DocumentsEditForm({
 
 						<FormField
 							control={documentsEditForm.control}
-							name="file"
-							render={({ field }) => (
-								<FormItem className="lg:col-span-2">
-									<FormLabel>{t("admin:documents.file")}</FormLabel>
-									<FormControl>
-										<Input
-											id="document"
-											type="file"
-											onChange={(e) => field.onChange(e.target.files?.[0])}
-										/>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-
-						<FormField
-							control={documentsEditForm.control}
 							name="category"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
@@ -220,18 +190,19 @@ export default function DocumentsEditForm({
 							control={documentsEditForm.control}
 							name="is_private"
 							render={({ field }) => (
-								<FormItem className="flex flex-row space-x-3 space-y-0 lg:col-span-2 items-center-safe pl-3">
-									<FormControl>
+								<FormItem className="lg:col-span-2">
+									<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
 										<Checkbox
 											checked={field.value}
 											onCheckedChange={field.onChange}
+											className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
 										/>
-									</FormControl>
-									<div className="space-y-1 leading-none">
-										<FormLabel>
-											{t("admin:documents.private_explanation")}
-										</FormLabel>
-									</div>
+										<div className="grid gap-1.5 font-normal">
+											<p className="text-sm leading-none font-medium">
+												{t("admin:documents.private_explanation")}
+											</p>
+										</div>
+									</Label>
 								</FormItem>
 							)}
 						/>
@@ -248,7 +219,7 @@ export default function DocumentsEditForm({
 								cancelText={t("admin:cancel")}
 							/>
 							<Button type="submit" className="w-32 min-w-fit">
-								{t("admin:submit")}
+								{t("admin:save")}
 							</Button>
 							<Button
 								type="button"
