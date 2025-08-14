@@ -146,8 +146,8 @@ export default function Page() {
 								</span>
 							</div>
 
-							{!(
-								data.alcohol_event_type === "None" && !data.is_nollning_event
+							{Boolean(
+								data.alcohol_event_type !== "None" || data.is_nollning_event,
 							) && (
 								<div className="flex items-center gap-2">
 									<WineIcon className="w-4 h-4 text-muted-foreground" />
