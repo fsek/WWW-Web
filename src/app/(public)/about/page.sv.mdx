@@ -1,30 +1,94 @@
+import Image from 'next/image'
+import blueLandscapeTlth from '/public/images/blue_landscape_tlth.png'
+import fLogo from '/public/images/sektioner/F.avif'
+import eLogo from '/public/images/sektioner/E.avif'
+import mLogo from '/public/images/sektioner/M.avif'
+import vLogo from '/public/images/sektioner/V.avif'
+import aLogo from '/public/images/sektioner/A.avif'
+import kLogo from '/public/images/sektioner/K.avif'
+import dLogo from '/public/images/sektioner/D.avif'
+import doktLogo from '/public/images/sektioner/Dokt.avif'
+import ingLogo from '/public/images/sektioner/ING.avif'
+import wLogo from '/public/images/sektioner/W.avif'
+import iLogo from '/public/images/sektioner/I.avif'
+import älgresan from '/public/images/algresan.jpg'
+import mattehuset from '/src/assets/mh.jpg'
+import GuildLogos from '@/components/GuildLogos'
+
 # Om oss
+Utbildningarna vid [Lunds Universitet](https://www.lu.se) är uppdelade i olika fakulteter,
+där alla civilingenjörsstudenter tillhör den tekniska fakulteten, [Lunds Tekniska Högskola](https://www.lth.se).
+Varje fakultet inom universitetet har en motsvarande studentkår, det vill säga en ideell lagstadgad intresseorganisation 
+för studenter som tillhör den fakulteten. 
 
-F-sektionen inom TLTH är en ideell förening för studenter som läser något av 
-civilingenjörsprogrammen Teknisk Fysik, Teknisk Matematik eller Teknisk Nanovetenskap 
-och har till ändamål att främja kamratskap bland medlemmarna och tillvarata medlemmarnas 
-gemensamma intressen.
+<a href="https://tlth.se" target="_blank" rel="noopener noreferrer">
+  <Image src={blueLandscapeTlth} alt="Teknologkåren vid LTH logotyp" className="w-1/5" />
+</a>
 
-## Mattehuset
+I vårat fall är den studentkåren [Teknologkåren vid LTH](https://www.tlth.se), som har fler än 8000
+medlemmar och arbetar med utbildningsbevakning, näringsliv och fritidsaktiviteter. 
+Underställda Teknologkåren, finns 11 stycken [sektioner](https://www.tlth.se/sektioner) uppdelade utifrån de olika utbildningsprogrammen tillhörande LTH.
+Sektionerna är i sin tur egna ideella organisationer som verkar för studenter på mer lokal nivå men som även är kopplade till Teknologkåren.
+<GuildLogos
+  logos={[
+    { href: "https://www.fsektionen.se/", src: fLogo, alt: "F-sektionen" },
+    { href: "https://eee.esek.se/", src: eLogo, alt: "E-sektionen" },
+    { href: "https://maskinsektionen.com/", src: mLogo, alt: "Maskinsektionen" },
+    { href: "https://vsek.se/sv/", src: vLogo, alt: "V-sektionen" },
+    { href: "http://www.asektionen.se/", src: aLogo, alt: "A-sektionen" },
+    { href: "https://ksektionen.se/", src: kLogo, alt: "K-sektionen" },
+    { href: "https://www.dsek.se/", src: dLogo, alt: "D-sektionen" },
+    { href: "https://dokt.se/", src: doktLogo, alt: "Doktorandsektionen" },
+    { href: "https://www.ingsekt.se/", src: ingLogo, alt: "Ingenjörssektionen" },
+    { href: "https://www.wsektionen.com/", src: wLogo, alt: "W-sektionen" },
+    { href: "https://isek.se/", src: iLogo, alt: "Sektionen för Industriell Ekonomi" },
+  ]}
+/>
 
-Sektionen är belägen i Mattehuset och här hittar du bland annat uppehållsrum, 
-mikrovågsugnar och gött häng. I Mattehuset finns även Hilbert Café som vi driver, 
-och här kan du bland annat köpa gott kaffe, baguetter och sallader.
+F-sektionen tillhör du som studerar något av följande program.
+* *Civilingenjörsprogrammet i teknisk fysik (F)*
+* *Civilingenjörsprogrammet i teknisk matematik (Pi)*
+* *Civilingenjörsprogrammet i teknisk nanovetenskap (N)*
+* *Masterutbildning i maskininlärning, system och reglerteknik (MMSR)*
+* *Masterutbildning i fotonik (MFOT)*
+* *Masterutbildning i nanovetenskap (MNAV)*
 
-## Utskott
 
-F-sektionen har en mängd olika utskott, som var och ett leds av en utskottsordförande. 
-De flesta utskottsordföranden sitter med i sektionens nämnd, som är sektionens 
-operativa del. Styrelsen är sektionens beslutande del, och den tar beslut i frågor 
-som rör hela sektionen centralt.
+För att bli medlem i F-sektionen måste du studera (eller ha studerat inom de två senaste åren) något av programmen ovan, samt  [vara medlem i Teknologkåren](https://www.tlth.se/bli-medlem), vilket kostar 500 kr 
+för fem års medlemskap.
 
-## Välkommen!
+## Verksamhet
+F-sektionens verksamhet är uppdelad i olika enheter, varav de främsta delarna är styrelsen, 
+revisionen, valberedningen och [utskotten](https://fsektionen.se/councils).
+Allt engagemang är ideellt och bygger på funktionärsuppdrag i form av poster som alla medlemmar har chans att söka till en gång per termin.
+Sektionen bedriver allt ifrån utbildningsbevakning på varje enskilt program i form av kursutvärderingar till högtidsklädda storsittningar med fest efteråt!
 
-Som medlem kan du välja att vara väldigt aktiv och engagerad, lite lagom eller 
-kanske bara delta på något enstaka event. Om du har några frågor är det bara att 
-höra av sig, se fliken [Kontakt](/contact) här på hemsidan, eller sväng förbi styrelserummet 
-som ligger i den södra delen av Hilbertkorridoren; där hittar du nästan alltid 
-någon sektionsaktiv. 
+Många utskott arrangerar evenemang för medlemmarna, som till exempel en klassisk sittning, medan andra arbetar internt med sektionens resurser, så som att implementera hemsidans alla funktioner.
+Utbudet på evenemang är brett och sektionen strävar efter att det ska finnas något för alla!
 
-Vi hoppas att du kommer trivas på sektionen!
+Utöver det veckovisa arbetar sektionen även långsiktigt med allt utifrån likabehandling- och hållbarhetsplaner till analyser av arbetsmarknaden och företagssamarbeten. 
 
+<Image src={älgresan} alt="Älgresan 2023" className="w-3/5 mt-4 rounded-lg mx-auto" />
+
+
+## Sektionslokaler
+F-sektionen håller hus i Mattehuset (Sölvegatan 18, 223 62 Lund), mitt i LTH Campus. 
+Här hittar du bland annat uppehållsrum, mikrovågsugnar och gött häng. I Mattehuset finns även Hilbert Café som vi driver, och här kan du bland annat köpa gott kaffe, baguetter och sallader.
+
+<Image src={mattehuset} alt="Mattehuset" className="w-3/5 mt-4 rounded-lg mx-auto" />
+
+## Informationskanaler
+Våra primära informationskanaler är [nyhetsflödet](fsektionen.se/news) här på hemsidan och vårt [Mattermost-team](mm.fsektionen.se), då främst i kanalerna *Announcements* och *Announcements from the Board*. För att kunna logga in på Mattermost måste du först skapa ett konto här på hemsidan och bli manuellt verifierad att du är medlem i sektionen.
+
+Utöver dessa kanaler använder vi även sociala medier som sekundära och sammanfattande informationskanaler men också till att visa upp vardaglig verksamhet på sektionen.
+* Instagram: [@fsektionen](https://www.instagram.com/fsektionen/)
+* TikTok: [@fsektionen](https://www.tiktok.com/@fsektionen)
+* Facebook: [F-sektionen Inom TLTH](https://www.facebook.com/Fsektionen/?locale=sv_SE)
+
+För mediaförfrågningar kopplade till F-sektionen hänvisar vi till Teknologkårens ordförande, som går att nå via mailadressen
+[ko@tlth.se](mailto:ko@tlth.se) eller telefonnumret *070-418 79 21*.
+
+
+> **Senast uppdaterad:** 30 juli 2025  
+> **Stavfel eller annat tokigt i texten?**
+> Maila sanning@fsektionen.se
