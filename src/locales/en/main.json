@@ -337,10 +337,12 @@
 		"created_at": "Created At",
 		"private_explanation": "Members only",
 		"author": "Author",
+		"category": "Category",
 		"view": "View",
 		"view_doc": "View Document",
 		"page_title": "Documents",
-		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members."
+		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members.",
+		"search_title": "Search by title or category"
 	},
 	"yes": "Yes",
 	"no": "No",

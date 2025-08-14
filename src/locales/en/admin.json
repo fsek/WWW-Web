@@ -168,7 +168,8 @@
 		"document_updated": "Document updated successfully!",
 		"document_update_error": "Failed to update document.",
 		"document_removed": "Document removed successfully!",
-		"document_remove_error": "Failed to remove document."
+		"document_remove_error": "Failed to remove document.",
+		"search_title": "Search by title or category"
 	},
 	"car": {
 		"self": "Car bookings",
