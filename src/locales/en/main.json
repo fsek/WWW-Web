@@ -130,6 +130,11 @@
 				"self": "Calendar",
 				"desc": "Keep track of upcoming events and activities.",
 				"href": "/calendar"
+			},
+			"songs": {
+				"self": "Songs",
+				"desc": "Browse and sing along with our collection of songs.",
+				"href": "/songs"
 			}
 		},
 		"companies": {
@@ -374,5 +379,14 @@
 		"standard_food_preferences": "Standard preferences:",
 		"other_food_preferences": "Other preferences:",
 		"none": "None"
+	},
+	"songs": {
+		"by": "By",
+		"melody": "Melody",
+		"category": "Category",
+		"views": "Views",
+		"title": "Songs",
+		"description_subtitle": "Browse and sing along with our collection of songs.",
+		"search_placeholder": "Search songs..."
 	}
 }

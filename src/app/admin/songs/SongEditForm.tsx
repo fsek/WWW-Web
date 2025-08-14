@@ -28,6 +28,7 @@ import { toast } from "sonner";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
+import { useRouter } from "next/navigation";
 
 const songEditSchema = z.object({
 	id: z.number(),
@@ -52,6 +53,7 @@ export default function SongEditForm({
 	selectedSong,
 }: SongEditFormProps) {
 	const { t } = useTranslation("admin");
+	const router = useRouter();
 	const form = useForm<SongEditFormType>({
 		resolver: zodResolver(songEditSchema),
 		defaultValues: {
@@ -274,6 +276,13 @@ export default function SongEditForm({
 							<Button type="submit" className="w-32 min-w-fit">
 								<Save />
 								{t("save")}
+							</Button>
+							<Button
+								variant="outline"
+								type="button"
+								onClick={() => router.push(`/songs/${selectedSong.id}`)}
+							>
+								{t("admin:songs.view_song")}
 							</Button>
 						</div>
 					</form>
