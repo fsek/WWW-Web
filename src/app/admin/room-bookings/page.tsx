@@ -55,7 +55,8 @@ const columns = [
 	}),
 	columnHelper.accessor("user", {
 		header: "Användare",
-		cell: (info) => `${info.getValue().first_name} ${info.getValue().last_name}`,
+		cell: (info) =>
+			`${info.getValue().first_name} ${info.getValue().last_name}`,
 	}),
 ];
 
@@ -90,18 +91,29 @@ export default function RoomBookings() {
 		enabled: selectedRoom === "All",
 	});
 	const roomBookingsByRoomQuery = useQuery({
-		...getBookingsByRoomOptions({ query: { room: selectedRoom as "LC" | "Alumni" | "SK" } }),
+		...getBookingsByRoomOptions({
+			query: { room: selectedRoom as "LC" | "Alumni" | "SK" },
+		}),
 		refetchOnWindowFocus: false,
 		enabled: selectedRoom !== "All",
 	});
 
-	const data = selectedRoom === "All" ? allRoomBookingsQuery.data : roomBookingsByRoomQuery.data;
-	const error = selectedRoom === "All" ? allRoomBookingsQuery.error : roomBookingsByRoomQuery.error;
-	const isFetching = selectedRoom === "All" ? allRoomBookingsQuery.isFetching : roomBookingsByRoomQuery.isFetching;
-
+	const data =
+		selectedRoom === "All"
+			? allRoomBookingsQuery.data
+			: roomBookingsByRoomQuery.data;
+	const error =
+		selectedRoom === "All"
+			? allRoomBookingsQuery.error
+			: roomBookingsByRoomQuery.error;
+	const isFetching =
+		selectedRoom === "All"
+			? allRoomBookingsQuery.isFetching
+			: roomBookingsByRoomQuery.isFetching;
 
 	const [openEditDialog, setOpenEditDialog] = useState(false);
-	const [selectedRoomBooking, setSelectedRoomBooking] = useState<RoomBookingRead | null>(null);
+	const [selectedRoomBooking, setSelectedRoomBooking] =
+		useState<RoomBookingRead | null>(null);
 
 	const table = useCreateTable({ data: data ?? [], columns });
 
@@ -181,11 +193,9 @@ export default function RoomBookings() {
 	return (
 		<div className="px-8 space-x-4">
 			<h3 className="text-3xl py-3 font-bold text-primary">
-				Administrera rumsbokningar
+				{t("admin:room_bookings.title")}
 			</h3>
-			<p className="py-3">
-				Här kan du skapa rumsbokningar & redigera existerande rumsbokningar på hemsidan.
-			</p>
+			<p className="py-3">{t("admin:room_bookings.description")}</p>
 			<div className="py-2 w-64">
 				<SelectFromOptions
 					placeholder={t("admin:room_bookings.select_room") || "Välj rum"}
@@ -216,7 +226,9 @@ export default function RoomBookings() {
 								end_time: event.end,
 								description: event.description_sv,
 								council_id: event.council_id as number,
-								recur_interval_days: event.recur_interval_days as number | undefined,
+								recur_interval_days: event.recur_interval_days as
+									| number
+									| undefined,
 								recur_until: event.recur_until as Date | undefined,
 							},
 						},
@@ -236,7 +248,7 @@ export default function RoomBookings() {
 								toast.error(`${t("admin:room_bookings.error_delete")} ${id}`),
 							onSuccess: () => {
 								toast.success(t("admin:room_bookings.success_delete"));
-							}
+							},
 						},
 					)
 				}
@@ -256,10 +268,12 @@ export default function RoomBookings() {
 						},
 						{
 							onError: () =>
-								toast.error(`${t("admin:room_bookings.error_edit")} ${event.id}`),
+								toast.error(
+									`${t("admin:room_bookings.error_edit")} ${event.id}`,
+								),
 							onSuccess: () => {
 								toast.success(t("admin:room_bookings.success_edit"));
-							}
+							},
 						},
 					);
 				}}
@@ -269,7 +283,9 @@ export default function RoomBookings() {
 						value={tab}
 						onValueChange={(value) => {
 							setTab(value);
-							const params = new URLSearchParams(Array.from(searchParams.entries()));
+							const params = new URLSearchParams(
+								Array.from(searchParams.entries()),
+							);
 							params.set("tab", value);
 							router.replace(`${pathname}?${params.toString()}`);
 						}}
@@ -279,7 +295,9 @@ export default function RoomBookings() {
 							<TabsTrigger value="calendar">
 								{t("admin:room_bookings.calendar")}
 							</TabsTrigger>
-							<TabsTrigger value="list">{t("admin:room_bookings.list")}</TabsTrigger>
+							<TabsTrigger value="list">
+								{t("admin:room_bookings.list")}
+							</TabsTrigger>
 						</TabsList>
 						<TabsContent value="calendar" className="w-full px-5 space-y-5">
 							<div className="space-y-0">
@@ -316,7 +334,9 @@ export default function RoomBookings() {
 									{t("admin:room_bookings.list_description")}
 								</p>
 							</div>
-							<RoomBookingForm defaultRoom={selectedRoom === "All" ? "LC" : selectedRoom} />
+							<RoomBookingForm
+								defaultRoom={selectedRoom === "All" ? "LC" : selectedRoom}
+							/>
 							<Separator />
 							<AdminTable table={table} onRowClick={handleRowClick} />
 							<RoomBookingEditForm

@@ -136,7 +136,7 @@
 	"documents": {
 		"self": "Dokument",
 		"page_title": "Administrera dokument",
-		"description": "Här kan du hantera dokument som är tillgängliga för nedladdning.",
+		"description": "Här kan du hantera dokument som är tillgängliga för nedladdning. Kategorinamn är fritext, så sök efter kategorier innan så du inte skapar en kategori med liknande men olikt namn.",
 		"crate": "Skapa dokument",
 		"title": "Titel",
 		"file": "Fil",
@@ -175,7 +175,7 @@
 	"car": {
 		"self": "Bilbokningar",
 		"title": "Hantera bilbokningar",
-		"description": "Här kan du skapa och hantera bilbokningar.",
+		"description": "Här kan du skapa och hantera bilbokningar. Som bilförman vill du nog gå in här då och då för att godkänna eller neka (ta bort) bokningar från användare.",
 		"default_description": "Ange bokningstitel här (öppet synlig)",
 		"create_booking": "Skapa bokning",
 		"edit_booking": "Redigera bokning",
@@ -326,7 +326,7 @@
 	"permissions": {
 		"self": "Behörigheter",
 		"title": "Administrera permissions",
-		"description": "Här kan du skapa och redigera permissions, som sedan kan läggas till på poster. Permissions måste fortfarande stödjas av backenden.",
+		"description": "Här kan du skapa och redigera permissions, som sedan kan läggas till på poster. Permissions måste fortfarande stödjas av backenden. Det är lite cursed att vi ens har det här, och det borde inte behöva användas :( Egentligen borde detta ske automatiskt. Ingen icke-megaadmin/su-perman borde få tillgång hit.",
 		"submit": "Skapa permission",
 		"publish": "Publicera",
 		"edit": "Redigera permission",
@@ -581,7 +581,7 @@
 	"room_bookings": {
 		"self": "Rumsbokningar",
 		"title": "Hantera rumsbokningar",
-		"description": "Här kan du skapa och hantera rumsbokningar.",
+		"description": "Här kan du skapa och hantera rumsbokningar. Användare kan komma till dig med frågor om att boka rummen för personligt bruk, eftersom de inte kan boka rum själva. Du kan skapa flera bokningar samtidigt, upp till 50. Var försiktig! Du måste ta bort dem individuellt om något går fel!",
 		"create_booking": "Skapa bokning",
 		"edit_booking": "Redigera bokning",
 		"start_time": "Starttid",
@@ -659,7 +659,7 @@
 	"door_access": {
 		"self": "Dörrbehörigheter för användare",
 		"page_title": "Hantera dörrbehörigheter för individuella användare",
-		"page_description": "Här kan du hantera användarnas tillgång till dörrar.",
+		"page_description": "Här kan du hantera användarnas tillgång till dörrar. För att hantera posters access går du till adminsidan för poster och klickar för att redigera den post du vill hantera.",
 		"create_access": "Skapa dörrbehörighet",
 		"edit_access": "Redigera dörrbehörighet för",
 		"user": "Användare",

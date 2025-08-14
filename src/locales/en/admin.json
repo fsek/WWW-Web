@@ -136,7 +136,7 @@
 	"documents": {
 		"self": "Documents",
 		"page_title": "Manage Documents",
-		"description": "Here you can manage documents available for download.",
+		"description": "Here you can manage documents available for download. The category names are free text, so search for categories beforehand to avoid creating a category with a similar but different name.",
 		"title": "Title",
 		"file": "File",
 		"name": "Name",
@@ -174,7 +174,7 @@
 	"car": {
 		"self": "Car bookings",
 		"title": "Manage Car Bookings",
-		"description": "Here you can create and manage car bookings.",
+		"description": "Here you can create and manage car bookings. If you are the car foreman, you may want to come in here from time to time to approve or deny (remove) bookings from users.",
 		"default_description": "Enter title of car booking here (publicly visible)",
 		"create_booking": "Create Booking",
 		"edit_booking": "Edit Booking",
@@ -580,7 +580,7 @@
 	"room_bookings": {
 		"self": "Room bookings",
 		"title": "Manage Room Bookings",
-		"description": "Here you can create and manage room bookings.",
+		"description": "Here you can create and manage room bookings. Users without posts may come to you with questions about booking the rooms for personal use, since they cannot book rooms on their own. You can create multiple bookings at once, up to 50. Be careful! You have to remove them individually if something goes wrong!",
 		"create_booking": "Create Booking",
 		"edit_booking": "Edit Booking",
 		"start_time": "Start Time",
@@ -657,7 +657,7 @@
 	},
 	"door_access": {
 		"self": "Door Access for Users",
-		"page_title": "Manage Door Access for Individual Users",
+		"page_title": "Manage Door Access for Individual Users. To manage door access for posts, go to the post admin page and click to edit a post.",
 		"page_description": "Here you can manage user access to doors.",
 		"create_access": "Create Door Access",
 		"edit_access": "Edit Door Access for",
