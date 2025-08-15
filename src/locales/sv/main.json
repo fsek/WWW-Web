@@ -45,12 +45,18 @@
 			"self": "Sektionen",
 			"about": {
 				"self": "Om oss",
-				"desc": "Välkommen till vår sektion – lär känna oss och våra värderingar.",
+				"desc": "Välkommen till vår sektion - lär känna oss och våra värderingar.",
 				"href": "/about"
 			},
 			"news": {
 				"self": "Nyheter",
-				"desc": "Håll dig uppdaterad med de senaste nyheterna och evenemangen."
+				"desc": "Håll dig uppdaterad med de senaste nyheterna och evenemangen.",
+				"href": "/news"
+			},
+			"calendar": {
+				"self": "Kalender",
+				"desc": "Håll koll på kommande evenemang och aktiviteter.",
+				"href": "/calendar"
 			},
 			"councils": {
 				"self": "Utskott",
@@ -135,6 +141,11 @@
 				"self": "Kalender",
 				"desc": "Håll koll på kommande evenemang och aktiviteter.",
 				"href": "/calendar"
+			},
+			"songs": {
+				"self": "Sångbok",
+				"desc": "Bläddra och sjung med i vår samling av sånger.",
+				"href": "/songs"
 			}
 		},
 		"companies": {
@@ -339,10 +350,12 @@
 		"created_at": "Skapad",
 		"private_explanation": "Endast medlemmar",
 		"author": "Författare",
+		"category": "Kategori",
 		"view": "Visa",
 		"view_doc": "Visa dokumentet",
 		"page_title": "Dokument",
-		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara markerade för att endast vara synliga för medlemmar."
+		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara markerade för att endast vara synliga för medlemmar.",
+		"search_title": "Sök efter titel eller kategori"
 	},
 	"yes": "Ja",
 	"no": "Nej",
@@ -382,5 +395,14 @@
 		"standard_food_preferences": "Standardpreferenser:",
 		"other_food_preferences": "Övriga preferenser:",
 		"none": "Inga"
+	},
+	"songs": {
+		"by": "Av",
+		"melody": "Melodi",
+		"category": "Kategori",
+		"views": "Visningar",
+		"title": "Sånger",
+		"description_subtitle": "Bläddra och sjung med i vår samling av sånger.",
+		"search_placeholder": "Sök sånger..."
 	}
 }

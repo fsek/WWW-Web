@@ -19,6 +19,8 @@ import {
 	Mail,
 	Gauge,
 	ChefHat,
+	ListMusic,
+	Music3,
 } from "lucide-react";
 
 import {
@@ -76,28 +78,10 @@ const groups: AdminGroup[] = [
 				icon: FileText,
 			},
 			{
-				title: "admin:car.self",
-				url: "/admin/car",
-				permissions: [[action.MANAGE, target.CAR]],
-				icon: Car,
-			},
-			{
-				title: "admin:room_bookings.self",
-				url: "/admin/room-bookings",
-				permissions: [[action.MANAGE, target.ROOM_BOOKINGS]],
-				icon: House,
-			},
-			{
 				title: "admin:member.self",
 				url: "/admin/members",
 				permissions: [[action.VIEW, target.USER]],
 				icon: User,
-			},
-			{
-				title: "admin:nollning.self",
-				url: "/admin/nollning",
-				permissions: [[action.MANAGE, target.NOLLNING]],
-				icon: Gauge,
 			},
 			{
 				title: "admin:door_access.self",
@@ -110,6 +94,23 @@ const groups: AdminGroup[] = [
 				url: "/admin/cafe-shifts",
 				permissions: [[action.MANAGE, target.CAFE]],
 				icon: ChefHat,
+			},
+		],
+	},
+	{
+		title: "admin:categories.bookings",
+		entries: [
+			{
+				title: "admin:car.self",
+				url: "/admin/car",
+				permissions: [[action.MANAGE, target.CAR]],
+				icon: Car,
+			},
+			{
+				title: "admin:room_bookings.self",
+				url: "/admin/room-bookings",
+				permissions: [[action.MANAGE, target.ROOM_BOOKINGS]],
+				icon: House,
 			},
 		],
 	},
@@ -137,6 +138,23 @@ const groups: AdminGroup[] = [
 		],
 	},
 	{
+		title: "admin:categories.songs",
+		entries: [
+			{
+				title: "admin:song_categories.self",
+				url: "/admin/song-categories",
+				permissions: [[action.MANAGE, target.SONG]],
+				icon: ListMusic,
+			},
+			{
+				title: "admin:songs.self",
+				url: "/admin/songs",
+				permissions: [[action.MANAGE, target.SONG]],
+				icon: Music3,
+			},
+		],
+	},
+	{
 		title: "admin:categories.nollning",
 		entries: [
 			{
@@ -154,7 +172,7 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:nollning.self_mission",
 				url: "/admin/nollning/admin-nollning/adventure-missions?id=current",
-				permissions: [[action.MANAGE, target.NOLLNING]],
+				permissions: [[action.MANAGE, target.ADVENTURE_MISSIONS]],
 				icon: Award,
 			},
 		],

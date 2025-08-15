@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { z } from "zod";
@@ -170,18 +171,19 @@ export default function DocumentsForm() {
 								control={documentsForm.control}
 								name="is_private"
 								render={({ field }) => (
-									<FormItem className="flex flex-row items-center-safe space-x-3 space-y-0 lg:col-span-2 pl-3">
-										<FormControl>
+									<FormItem className="lg:col-span-2">
+										<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
 											<Checkbox
 												checked={field.value}
 												onCheckedChange={field.onChange}
+												className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
 											/>
-										</FormControl>
-										<div className="space-y-1 leading-none">
-											<FormLabel>
-												{t("admin:documents.private_explanation")}
-											</FormLabel>
-										</div>
+											<div className="grid gap-1.5 font-normal">
+												<p className="text-sm leading-none font-medium">
+													{t("admin:documents.private_explanation")}
+												</p>
+											</div>
+										</Label>
 										<FormMessage />
 									</FormItem>
 								)}

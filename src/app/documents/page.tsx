@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
@@ -10,7 +10,6 @@ import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import type { DocumentRead } from "@/api";
 import { getAllDocumentsOptions } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
 
@@ -20,7 +19,7 @@ export default function Documents() {
 	const { data, error, isPending } = useQuery({
 		...getAllDocumentsOptions(),
 	});
-	const router = useRouter();
+	const [searchTitle, setSearchTitle] = useState<string>("");
 
 	// Column setup
 	const columnHelper = createColumnHelper<DocumentRead>();
@@ -43,6 +42,10 @@ export default function Documents() {
 		columnHelper.accessor("is_private", {
 			header: t("main:documents.private_explanation"),
 			cell: (info) => (info.getValue() ? t("main:yes") : t("main:no")),
+		}),
+		columnHelper.accessor("category", {
+			header: t("main:documents.category"),
+			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("author", {
 			header: t("main:documents.author"),
@@ -72,7 +75,20 @@ export default function Documents() {
 		},
 	];
 
-	const table = useCreateTable({ data: data ?? [], columns });
+	// Filter data based on searchTitle
+	const filteredData = useMemo(() => {
+		if (!data) return [];
+		const lower = (searchTitle ?? "").toLowerCase();
+
+		return data.filter((doc) => {
+			const matchesSearch =
+				doc.title.toLowerCase().includes(lower) ||
+				doc.category.toLowerCase().includes(lower);
+			return matchesSearch;
+		});
+	}, [data, searchTitle]);
+
+	const table = useCreateTable({ data: filteredData, columns });
 
 	return (
 		<div className="flex flex-col min-h-screen">
@@ -85,7 +101,21 @@ export default function Documents() {
 					<p className="py-3">{t("main:documents.description")}</p>
 					{isPending && <LoadingErrorCard />}
 					{error && <LoadingErrorCard error={error} />}
-					{!isPending && !error && <AdminTable table={table} />}
+					{!isPending && !error && (
+						<>
+							{/* Search input for filtering by title */}
+							<div className="py-3">
+								<input
+									type="search"
+									placeholder={t("main:documents.search_title")}
+									value={searchTitle}
+									onChange={(e) => setSearchTitle(e.target.value)}
+									className="w-96 border rounded px-3 py-2"
+								/>
+							</div>
+							<AdminTable table={table} />
+						</>
+					)}
 				</div>
 			</main>
 			<Footer />
