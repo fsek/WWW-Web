@@ -255,7 +255,7 @@ export default function CafeShifts() {
 								editDescription={false}
 								handleOpenDetails={(shift) => {
 									if (shift) {
-										router.push(`/cafe/shifts?id=${shift.id}`);
+										router.push(`/cafe-shifts/${shift.id}`);
 									}
 								}}
 								disableEdit={false}

@@ -49,9 +49,10 @@ function viewingUserGotPerms(
 		return userData.posts.some((post) =>
 			post.permissions.some(
 				(permission) =>
-					(permission.action === "manage" && permission.target === "user") ||
-					(permission.action === "view" && permission.target === "user") ||
-					true,
+					(permission.action.toLowerCase() === "manage" &&
+						permission.target.toLowerCase() === "user") ||
+					(permission.action.toLowerCase() === "view" &&
+						permission.target.toLowerCase() === "user"),
 			),
 		);
 	}
@@ -92,10 +93,7 @@ export default function Page() {
 	const userHasPerms = viewingUserGotPerms(userData, userError, userIsFetching);
 
 	// 4. Finally fetch user details - enabled if permissions and bookingData exist
-	const {
-		data: userDetails,
-		error: userDetailsError,
-	} = useQuery({
+	const { data: userDetails, error: userDetailsError } = useQuery({
 		...adminGetUserOptions({
 			path: { user_id: bookingData?.user.id ?? -1 },
 		}),
