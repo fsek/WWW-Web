@@ -1,0 +1,55 @@
+{
+	"title": "Contact Us",
+	"note_title": "Note:",
+	"note_text": "Not all contact links are available on this page. If you are a member, you can go to the council page to find all contact links. Otherwise, contact a council chairperson and ask them to forward your message.",
+	"emergency": {
+		"title": "Emergency Contacts",
+		"text_ordf": {
+			"self": "For general emergencies: ",
+			"name": "President"
+		},
+		"text_foset": {
+			"self": "For emergencies during the introduction period: "
+		},
+		"text_car": {
+			"self": "For emergencies involving the F-car: ",
+			"name1": "Car Foreman",
+			"name2": "Head of Facilities",
+			"name3": "President"
+		}
+	},
+	"board": {
+		"self": "The Board",
+		"ordf": "President",
+		"vice": "Vice President",
+		"preses": "Chair of the Board",
+		"secretary": "Secretary",
+		"board_members": "Board Members"
+	},
+	"other": {
+		"self": "Other Contacts",
+		"facilities": "Head of Facilities",
+		"car": "Car Foreman",
+		"festivities": "Head of Festivities",
+		"truth": "Minister of Truth",
+		"corp": "Head of Corporate Relations",
+		"nollning": "Överfös",
+		"cafe": "Managing Director of Hilbert Café",
+		"conscience": "The Master of the Conscience",
+		"culture": "Minister for Culture",
+		"education": "Minister for Education",
+		"treasurer": "Treasurer"
+	},
+	"corp": {
+		"self": "For corporate inquiries",
+		"naringslivsansvarig": "Head of Corporate Relations",
+		"naringslivsutskottet": "Corporate Relations Committee",
+		"farad": "Project Manager of FARAD"
+	},
+	"web": {
+		"self": "For web-related inquiries",
+		"spider": "Spider master",
+		"webmaster": "Webmaster",
+		"webmaster_full_name": "With great power..."
+	}
+}

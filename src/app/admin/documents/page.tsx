@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import DocumentsForm from "./DocumentsForm";
 import DocumentsEditForm from "./DocumentsEditForm";
 import { useQuery } from "@tanstack/react-query";
@@ -14,7 +14,6 @@ import type { DocumentRead } from "@/api";
 import { getAllDocumentsOptions } from "@/api/@tanstack/react-query.gen";
 
 export default function Documents() {
-	// TODO: Fix this page lmao
 	const { t } = useTranslation();
 	const { data, error, isPending } = useQuery({
 		...getAllDocumentsOptions(),
@@ -24,6 +23,8 @@ export default function Documents() {
 	const [selectedDocument, setSelectedDocument] = useState<DocumentRead | null>(
 		null,
 	);
+
+	const [searchTitle, setSearchTitle] = useState<string>("");
 
 	// Column setup
 	const columnHelper = createColumnHelper<DocumentRead>();
@@ -43,6 +44,10 @@ export default function Documents() {
 					day: "2-digit",
 				}),
 		}),
+		columnHelper.accessor("category", {
+			header: t("admin:documents.category"),
+			cell: (info) => info.getValue(),
+		}),
 		columnHelper.accessor("is_private", {
 			header: t("admin:documents.private_explanation"),
 			cell: (info) => (info.getValue() ? t("admin:yes") : t("admin:no")),
@@ -56,7 +61,20 @@ export default function Documents() {
 		}),
 	];
 
-	const table = useCreateTable({ data: data ?? [], columns });
+	// Filter data based on searchTitle
+	const filteredData = useMemo(() => {
+		if (!data) return [];
+		const lower = (searchTitle ?? "").toLowerCase();
+
+		return data.filter((doc) => {
+			const matchesSearch =
+				doc.title.toLowerCase().includes(lower) ||
+				doc.category.toLowerCase().includes(lower);
+			return matchesSearch;
+		});
+	}, [data, searchTitle]);
+
+	const table = useCreateTable({ data: filteredData, columns });
 
 	function handleRowClick(row: Row<DocumentRead>) {
 		setSelectedDocument(row.original);
@@ -83,6 +101,17 @@ export default function Documents() {
 			</h3>
 			<p className="py-3">{t("admin:documents.description")}</p>
 			<DocumentsForm />
+
+			{/* Search input for filtering by title */}
+			<div className="py-3">
+				<input
+					type="search"
+					placeholder={t("admin:documents.search_title")}
+					value={searchTitle}
+					onChange={(e) => setSearchTitle(e.target.value)}
+					className="w-96 border rounded px-3 py-2"
+				/>
+			</div>
 
 			<AdminTable table={table} onRowClick={handleRowClick} />
 

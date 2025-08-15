@@ -84,13 +84,13 @@ export const Footer = () => {
 					</div>
 
 					<div>
-						<Link href="/contact" className="opacity-60 hover:opacity-100">
+						<Link href="/contact#ordf" className="opacity-60 hover:opacity-100">
 							{t("footer.contact_ordf")}
 						</Link>
 					</div>
 
 					<div>
-						<Link href="/contact" className="opacity-60 hover:opacity-100">
+						<Link href="/contact#webmaster" className="opacity-60 hover:opacity-100">
 							{t("footer.contact_webmaster")}
 						</Link>
 					</div>

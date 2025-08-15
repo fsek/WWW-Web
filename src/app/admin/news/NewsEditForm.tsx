@@ -29,9 +29,10 @@ import { useTranslation } from "react-i18next";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { toast } from "sonner";
 import type { NewsRead } from "@/api";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useRouter } from "next/navigation";
 
 const newsSchema = z.object({
 	title_sv: z.string().min(2),
@@ -69,12 +70,15 @@ export default function NewsEditForm({
 		retry: false,
 		throwOnError: false,
 	});
+	const router = useRouter();
 
 	// Initialize form with existing news data
 	useEffect(() => {
 		if (selectedNews) {
-			if (!selectedNews.pinned_from && !selectedNews.pinned_to) {
+			if (selectedNews.pinned_from == null && selectedNews.pinned_to == null) {
 				setUsePinning(false);
+			} else {
+				setUsePinning(true);
 			}
 			newsEditForm.reset({
 				title_sv: selectedNews.title_sv || "",
@@ -149,7 +153,7 @@ export default function NewsEditForm({
 				}
 			}}
 		>
-			<DialogContent className="min-w-fit lg:max-w-7xl">
+			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>{t("news.edit_news")}</DialogTitle>
 				</DialogHeader>
@@ -315,6 +319,12 @@ export default function NewsEditForm({
 							)}
 						/>
 						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid flex flex-row items-center">
+							<Button
+								variant="outline"
+								onClick={() => router.push(`/news/${selectedNews.id}`)}
+							>
+								{t("admin:news.view_news")}
+							</Button>
 							<Button
 								type="submit"
 								disabled={!submitEnabled}

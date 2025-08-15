@@ -15,7 +15,7 @@ import type { EventRead, EventUpdate } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import EventFormFields from "./EventFormFields";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
 
 const eventsEditSchema = z.object({
@@ -187,7 +187,7 @@ export default function EventsEditForm({
 				}
 			}}
 		>
-			<DialogContent className="min-w-fit lg:max-w-7xl">
+			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>{t("admin:events.edit_booking")}</DialogTitle>
 				</DialogHeader>

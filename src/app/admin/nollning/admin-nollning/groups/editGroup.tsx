@@ -1,5 +1,6 @@
 import type { GroupRead } from "@/api";
 import {
+	getNollningByYearQueryKey,
 	getNollningQueryKey,
 	patchGroupMutation,
 	removeGroupMutation,
@@ -26,6 +27,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import GroupTypeSelect from "./GroupTypeSelect";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const GroupSchema = z.object({
 	id: z.number().int(),
@@ -48,6 +51,7 @@ const EditGroup = ({
 	nollning_id,
 	children,
 }: Props) => {
+	const { t } = useTranslation("admin");
 	const form = useForm<z.infer<typeof GroupSchema>>({
 		resolver: zodResolver(GroupSchema),
 		defaultValues: {
@@ -75,8 +79,15 @@ const EditGroup = ({
 					path: { nollning_id: nollning_id },
 				}),
 			});
+			queryClient.invalidateQueries({
+				queryKey: getNollningByYearQueryKey({
+					path: { year: new Date().getFullYear() },
+				}),
+			});
+			toast.success(t("nollning.groups.edit_success"));
 		},
 		onError: () => {
+			toast.error(t("nollning.groups.edit_error"));
 			onClose();
 		},
 	});
@@ -90,8 +101,15 @@ const EditGroup = ({
 					path: { nollning_id: nollning_id },
 				}),
 			});
+			queryClient.invalidateQueries({
+				queryKey: getNollningByYearQueryKey({
+					path: { year: new Date().getFullYear() },
+				}),
+			});
+			toast.success(t("nollning.groups.delete_success"));
 		},
 		onError: () => {
+			toast.error(t("nollning.groups.delete_error"));
 			onClose();
 		},
 	});
@@ -143,7 +161,7 @@ const EditGroup = ({
 					<div className="border border-gray-300 rounded-lg">
 						<div className="space-y-4 p-4">
 							<h3 className="underline underline-offset-2 ">
-								Administrera faddergrupp
+								{t("nollning.groups.admin_group")}
 							</h3>
 							{children}
 						</div>
@@ -155,16 +173,19 @@ const EditGroup = ({
 						>
 							<div className="space-x-4 space-y-4 p-4">
 								<h3 className="underline underline-offset-2 ">
-									Redigera Faddergrupp
+									{t("nollning.groups.edit_group")}
 								</h3>
 								<FormField
 									control={form.control}
 									name={"name"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Titel </FormLabel>
+											<FormLabel>{t("nollning.groups.title")}</FormLabel>
 											<FormControl>
-												<Input placeholder="Namn" {...field} />
+												<Input
+													placeholder={t("nollning.groups.title")}
+													{...field}
+												/>
 											</FormControl>
 										</FormItem>
 									)}
@@ -174,7 +195,7 @@ const EditGroup = ({
 									name={"group_type"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Grupptyp</FormLabel>
+											<FormLabel>{t("nollning.groups.group_type")}</FormLabel>
 											<GroupTypeSelect
 												value={field.value}
 												onChange={field.onChange}
@@ -185,14 +206,15 @@ const EditGroup = ({
 
 								<div className=" space-x-2 flex flex-row w-full">
 									<Button type="submit" className="flex-1">
-										Spara ändringar
+										{t("nollning.groups.save_changes")}
 									</Button>
 									<Button
 										variant="destructive"
+										type="button"
 										className="flex-1"
 										onClick={onDelete}
 									>
-										Förinta
+										{t("nollning.groups.delete")}
 									</Button>
 								</div>
 							</div>

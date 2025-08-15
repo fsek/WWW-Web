@@ -9,10 +9,17 @@ import {
 	Briefcase,
 	FolderLock,
 	User,
-	Gauge,
 	type LucideProps,
 	Users,
 	UserPen,
+	List,
+	Apple,
+	Award,
+	House,
+	Mail,
+	Gauge,
+	ListMusic,
+	Music3,
 } from "lucide-react";
 
 import {
@@ -70,22 +77,33 @@ const groups: AdminGroup[] = [
 				icon: FileText,
 			},
 			{
-				title: "admin:car.self",
-				url: "/admin/car",
-				permissions: [[action.MANAGE, target.CAR]],
-				icon: Car,
-			},
-			{
 				title: "admin:member.self",
 				url: "/admin/members",
 				permissions: [[action.VIEW, target.USER]],
 				icon: User,
 			},
 			{
-				title: "admin:nollning.self",
-				url: "/admin/nollning",
-				permissions: [[action.MANAGE, target.NOLLNING]],
-				icon: Gauge,
+				title: "admin:door_access.self",
+				url: "/admin/user-door-access",
+				permissions: [[action.MANAGE, target.USER_DOOR_ACCESS]],
+				icon: Users,
+			},
+		],
+	},
+	{
+		title: "admin:categories.bookings",
+		entries: [
+			{
+				title: "admin:car.self",
+				url: "/admin/car",
+				permissions: [[action.MANAGE, target.CAR]],
+				icon: Car,
+			},
+			{
+				title: "admin:room_bookings.self",
+				url: "/admin/room-bookings",
+				permissions: [[action.MANAGE, target.ROOM_BOOKINGS]],
+				icon: House,
 			},
 		],
 	},
@@ -113,6 +131,46 @@ const groups: AdminGroup[] = [
 		],
 	},
 	{
+		title: "admin:categories.songs",
+		entries: [
+			{
+				title: "admin:song_categories.self",
+				url: "/admin/song-categories",
+				permissions: [[action.MANAGE, target.SONG]],
+				icon: ListMusic,
+			},
+			{
+				title: "admin:songs.self",
+				url: "/admin/songs",
+				permissions: [[action.MANAGE, target.SONG]],
+				icon: Music3,
+			},
+		],
+	},
+	{
+		title: "admin:categories.nollning",
+		entries: [
+			{
+				title: "admin:nollning.self_all",
+				url: "/admin/nollning",
+				permissions: [[action.MANAGE, target.NOLLNING]],
+				icon: List,
+			},
+			{
+				title: "admin:nollning.self_current",
+				url: "/admin/nollning/admin-nollning?id=current",
+				permissions: [[action.MANAGE, target.NOLLNING]],
+				icon: Apple,
+			},
+			{
+				title: "admin:nollning.self_mission",
+				url: "/admin/nollning/admin-nollning/adventure-missions?id=current",
+				permissions: [[action.MANAGE, target.ADVENTURE_MISSIONS]],
+				icon: Award,
+			},
+		],
+	},
+	{
 		title: "admin:categories.spider",
 		entries: [
 			{
@@ -120,6 +178,12 @@ const groups: AdminGroup[] = [
 				url: "/admin/permissions",
 				permissions: [[action.MANAGE, target.PERMISSION]],
 				icon: FolderLock,
+			},
+			{
+				title: "admin:mail_aliases.self",
+				url: "/admin/mail-aliases",
+				permissions: [[action.MANAGE, target.MAIL_ALIAS]],
+				icon: Mail,
 			},
 		],
 	},

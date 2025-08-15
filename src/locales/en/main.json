@@ -13,6 +13,7 @@
 	"cafeTitle": "Hilbert Cafe",
 	"cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement.",
 	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
+	"back": "Back",
 	"faq": {
 		"self": "Questions answered",
 		"q1": {
@@ -44,12 +45,18 @@
 			"self": "Sections",
 			"about": {
 				"self": "About Us",
-				"desc": "Welcome to our community—discover our story and values.",
+				"desc": "Welcome to our community - discover our story and values.",
 				"href": "/about"
 			},
 			"news": {
 				"self": "News",
-				"desc": "Stay updated with the latest announcements and events."
+				"desc": "Stay updated with the latest announcements and events.",
+				"href": "/news"
+			},
+			"calendar": {
+				"self": "Calendar",
+				"desc": "Keep track of upcoming events and activities.",
+				"href": "/calendar"
 			},
 			"councils": {
 				"self": "Councils",
@@ -60,6 +67,11 @@
 				"self": "Documents",
 				"desc": "Here you can find all the fine documents that have been produced.",
 				"href": "/documents"
+			},
+			"privacy": {
+				"self": "Privacy Policy",
+				"desc": "Learn more about how we handle your personal data.",
+				"href": "/privacy"
 			}
 		},
 		"engage": {
@@ -103,8 +115,8 @@
 			},
 			"rooms": {
 				"self": "Room Bookings",
-				"desc": "Reserve meeting or event spaces with just a few clicks.",
-				"href": "/book-rooms"
+				"desc": "Book the three rooms in mattehuset for personal events or guild meetings.",
+				"href": "/room-bookings"
 			},
 			"tools": {
 				"self": "Tool Library",
@@ -129,6 +141,11 @@
 				"self": "Calendar",
 				"desc": "Keep track of upcoming events and activities.",
 				"href": "/calendar"
+			},
+			"songs": {
+				"self": "Songs",
+				"desc": "Browse and sing along with our collection of songs.",
+				"href": "/songs"
 			}
 		},
 		"companies": {
@@ -150,7 +167,8 @@
 			},
 			"contact": {
 				"self": "Business Contact",
-				"desc": "Reach out to us for partnership and business inquiries."
+				"desc": "Reach out to us for partnership and business inquiries.",
+				"href": "/contact#naringslivsutskottet"
 			}
 		},
 		"contact": {
@@ -158,17 +176,17 @@
 			"contactPage": {
 				"self": "Contact Page",
 				"desc": "Find all the information you need to get in touch with us.",
-				"href": "https://old.fsektionen.se/kontakter"
+				"href": "/contact"
 			},
 			"ordf": {
 				"self": "President",
 				"desc": "For questions about the organisation.",
-				"href": "https://old.fsektionen.se/kontakter/19"
+				"href": "/contact#ordf"
 			},
 			"web": {
 				"self": "Webmaster",
 				"desc": "For questions about the website or app.",
-				"href": "mailto:spindelman@fsektionen.se"
+				"href": "/contact#webmaster"
 			},
 			"anonymousForm": {
 				"self": "Anonymous Contact",
@@ -214,7 +232,8 @@
 		"self": "News",
 		"by": "Written by: ",
 		"pinned": "Pinned",
-		"see_all": "See all news"
+		"see_all": "See all news",
+		"read_more": "Read more"
 	},
 	"verifyMail": {
 		"loading": "Verifying your email...",
@@ -259,7 +278,10 @@
 		"passwordShort": "Password must be at least 8 characters",
 		"firstNameRequired": "First name required",
 		"lastNameRequired": "Last name required",
-		"telephoneNumberRequired": "Telephone number required"
+		"telephoneNumberRequired": "Telephone number required",
+		"gdprLabel": "I have read and agree to the",
+		"privacyPolicy": "privacy policy.",
+		"gdprRequired": "You must agree to the privacy policy to register."
 	},
 	"car-booking": {
 		"title": "Car Booking",
@@ -281,6 +303,18 @@
 			"a6": "Different colors show status and ownership for each booking. An admin (the car foreman) must confirm bookings outside regular hours. The colors have the following meaning:\n- Light orange color means it's your booking, but it's not confirmed.\n- Dark orange color means it's your booking and it's confirmed.\n- Green color marks someone else's confirmed booking.\n- Yellow color shows someone else's unconfirmed booking.\n- Light blue color is used for bookings that have been added locally but haven't been retrieved from the server yet. If you see blue, something may have gone wrong, reload the page manually.",
 			"q7": "I have more questions!",
 			"a7": "You can contact the car foreman through, among other ways, the <0>contact page</0>. Please ask the car foreman or a webmaster to add the question with an answer here."
+		}
+	},
+	"room-booking": {
+		"title": "Room Bookings",
+		"description-title": "FAQ and rules",
+		"description": "As a member, you must ask an admin if you want to book a room, but you can view all room bookings here. If you are an admin, you can book rooms <0>here</0> instead.",
+		"faq": {
+			"title": "Frequently Asked Questions",
+			"q1": "Who can book the rooms?",
+			"a1": "Only admins can book the rooms. If you are a member, you can contact an admin from nämnden to ask them to book a room.",
+			"q2": "I have more questions!",
+			"a2": "There is no main responsible person for room bookings, contact the equipment master or the board if you have any questions. You can also ask them to add the question with an answer here."
 		}
 	},
 	"loading": {
@@ -316,11 +350,59 @@
 		"created_at": "Created At",
 		"private_explanation": "Members only",
 		"author": "Author",
+		"category": "Category",
 		"view": "View",
 		"view_doc": "View Document",
 		"page_title": "Documents",
-		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members."
+		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members.",
+		"search_title": "Search by title or category"
 	},
 	"yes": "Yes",
-	"no": "No"
+	"no": "No",
+	"event_signup": {
+		"title": "Event Signup",
+		"priority": "Priority",
+		"select_priority": "Select priority group to sign up as",
+		"group_name": "Group Name",
+		"group_name_placeholder": "Enter group name (optional)",
+		"drink_package": {
+			"title": "Drink Package",
+			"none": "None",
+			"alcohol_free": "Alcohol Free",
+			"alcohol": "Alcohol"
+		},
+		"select_drink_package": "Select drink package",
+		"button": "Sign up",
+		"update_button": "Update signup",
+		"edit_button": "Edit",
+		"signoff_button": "Sign off",
+		"success_create": "Signup successful!",
+		"success_update": "Signup updated!",
+		"success_signoff": "You have signed off from the event.",
+		"error_create": "Failed to sign up: {{error}}",
+		"error_update": "Failed to update signup: {{error}}",
+		"error_signoff": "Failed to sign off: {{error}}",
+		"unknown_error": "Unknown error.",
+		"not_found": "You are not signed up for this event.",
+		"user": "User",
+		"status": "Status",
+		"confirmed": "Confirmed",
+		"pending": "Pending",
+		"period_passed_signed_up": "Signup period has ended. If you want to change or withdraw your signup, please contact the event organizer.",
+		"period_passed_not_signed_up": "Signup period has ended. You can no longer sign up. If you have any questions, please contact the event organizer.",
+		"food_preferences_title": "Food Preferences",
+		"food_preferences_explainer": "These are your saved food preferences. If something doesn't look right, please update them in your account settings.",
+		"standard_food_preferences": "Standard preferences:",
+		"other_food_preferences": "Other preferences:",
+		"none": "None"
+	},
+	"songs": {
+		"by": "By",
+		"melody": "Melody",
+		"category": "Category",
+		"views": "Views",
+		"title": "Songs",
+		"description_subtitle": "Browse and sing along with our collection of songs.",
+		"search_placeholder": "Search songs..."
+	}
 }

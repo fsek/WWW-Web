@@ -4,6 +4,7 @@ import {
 	getAllNollningQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import {
 	Dialog,
 	DialogClose,
@@ -16,6 +17,8 @@ import {
 } from "@/components/ui/dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 interface Props {
 	nollning: NollningRead;
@@ -23,6 +26,7 @@ interface Props {
 
 const DeleteNollning = ({ nollning }: Props) => {
 	const [open, setOpen] = useState(false);
+	const { t } = useTranslation("admin");
 
 	const queryClient = useQueryClient();
 
@@ -31,50 +35,36 @@ const DeleteNollning = ({ nollning }: Props) => {
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllNollningQueryKey() });
+			toast.success(t("nollning.main.delete_success"));
 		},
-		onError: () => {},
+		onError: () => {
+			toast.error(t("nollning.main.delete_error"));
+		},
 	});
 
 	return (
 		<div>
-			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogTrigger asChild>
-					<Button
-						variant="destructive"
-						type="button"
-						className="w-32 min-w-fit"
-					>
-						Förinta
-					</Button>
-				</DialogTrigger>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle className="text-3xl py-3 underline underline-offset-4">
-							Vill du verkligen radera {nollning.name}
-						</DialogTitle>
-						<DialogDescription>
-							{nollning.name} kommer permanent raderas, dett går inte att ångra
-						</DialogDescription>
-					</DialogHeader>
-					<DialogFooter>
-						<div>
-							<Button
-								variant="destructive"
-								type="button"
-								className="w-32 min-w-fit"
-								onClick={() =>
-									deleteNollning.mutate({
-										path: { nollning_id: nollning.id },
-									})
-								}
-							>
-								Förinta
-							</Button>
-							<DialogClose>Avbryt</DialogClose>
-						</div>
-					</DialogFooter>
-				</DialogContent>
-			</Dialog>
+			<ConfirmDeleteDialog
+				open={open}
+				onOpenChange={setOpen}
+				onConfirm={() =>
+					deleteNollning.mutate({
+						path: { nollning_id: nollning.id },
+					})
+				}
+				triggerText={t("nollning.main.delete_button")}
+				title={t("nollning.main.delete_title", { name: nollning.name })}
+				description={t("nollning.main.delete_description", {
+					name: nollning.name,
+				})}
+				confirmText={t("nollning.main.delete_confirm")}
+				cancelText={t("nollning.main.cancel")}
+				confirmByTyping={true}
+				confirmByTypingText={t("nollning.main.delete_confirm_typing", {
+					name: nollning.name,
+				})}
+				confirmByTypingKey={nollning.name}
+			/>
 		</div>
 	);
 };

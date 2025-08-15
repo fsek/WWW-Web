@@ -23,20 +23,25 @@ import { Plus } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const nollningSchema = z.object({
 	name: z.string().min(1),
 	description: z.string().min(1),
+	year: z.coerce.number().min(1960).max(2100),
 });
 
 const CreateNollning = () => {
 	const [open, setOpen] = useState(false);
+	const { t } = useTranslation("admin");
 
 	const nollningForm = useForm<z.infer<typeof nollningSchema>>({
 		resolver: zodResolver(nollningSchema),
 		defaultValues: {
 			name: "",
 			description: "",
+			year: new Date().getFullYear(),
 		},
 	});
 
@@ -46,9 +51,11 @@ const CreateNollning = () => {
 		...postNollningMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllNollningQueryKey() });
+			toast.success(t("nollning.main.create_success"));
 			setOpen(false);
 		},
 		onError: () => {
+			toast.error(t("nollning.main.create_error"));
 			setOpen(false);
 		},
 	});
@@ -58,6 +65,7 @@ const CreateNollning = () => {
 			body: {
 				name: values.name,
 				description: values.description,
+				year: values.year,
 			},
 		});
 	}
@@ -72,13 +80,13 @@ const CreateNollning = () => {
 						}}
 					>
 						<Plus />
-						Skapa Nollning
+						{t("nollning.main.create_button")}
 					</Button>
 				</DialogTrigger>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle className="text-3xl py-3 underline underline-offset-4">
-							Skapa Nollning
+						<DialogTitle className="text-3xl py-3 font-bold text-primary">
+							{t("nollning.main.create_title")}
 						</DialogTitle>
 					</DialogHeader>
 					<Form {...nollningForm}>
@@ -89,9 +97,25 @@ const CreateNollning = () => {
 									name={"name"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Namn </FormLabel>
+											<FormLabel>{t("nollning.main.name")}</FormLabel>
 											<FormControl>
-												<Input placeholder="Namn" {...field} />
+												<Input placeholder={t("nollning.main.name_placeholder")} {...field} />
+											</FormControl>
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={nollningForm.control}
+									name={"year"}
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>{t("nollning.main.year")}</FormLabel>
+											<FormControl>
+												<Input
+													type="number"
+													placeholder={t("nollning.main.year_placeholder")}
+													{...field}
+												/>
 											</FormControl>
 										</FormItem>
 									)}
@@ -101,11 +125,11 @@ const CreateNollning = () => {
 									name={"description"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Beskrivning</FormLabel>
+											<FormLabel>{t("nollning.main.description")}</FormLabel>
 											<FormControl>
 												<textarea
 													className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-													placeholder="Beskrivning"
+													placeholder={t("nollning.main.description_placeholder")}
 													{...field}
 												/>
 											</FormControl>
@@ -117,9 +141,9 @@ const CreateNollning = () => {
 									className="w-32 min-w-fit"
 									disabled={createNollning.isPending}
 								>
-									{createNollning.isPending ? "Skapar..." : "Skapa"}
+									{createNollning.isPending ? t("nollning.main.creating") : t("nollning.main.create")}
 								</Button>
-								<DialogClose>Avbryt</DialogClose>
+								<DialogClose>{t("nollning.main.cancel")}</DialogClose>
 							</div>
 						</form>
 					</Form>

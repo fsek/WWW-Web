@@ -9,7 +9,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import type { PermissionRead } from "../../../api";
 import { useTranslation } from "react-i18next";
-import { ConfirmDeleteDialog } from "@/components/ui/ConfirmDeleteDialog";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { toast } from "sonner";
 
 interface PermissionEditFormProps {
@@ -69,7 +69,7 @@ export default function PermissionEditForm({
 				}
 			}}
 		>
-			<DialogContent className="min-w-fit lg:max-w-7xl">
+			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
 						{t("permissions.edit", "Redigera permission")}

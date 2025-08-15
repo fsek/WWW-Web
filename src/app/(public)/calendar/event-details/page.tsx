@@ -28,6 +28,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import type { EventRead } from "@/api/types.gen";
+import SignupCard from "./SignupCard";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
@@ -63,13 +64,6 @@ export default function Page() {
 		);
 	}
 
-	// const formatDate = (date: Date) => {
-	// 	return new Intl.DateTimeFormat(i18n.language === "en" ? "en-US" : "sv-SE", {
-	// 		dateStyle: "full",
-	// 		timeStyle: "short",
-	// 	}).format(new Date(date));
-	// };
-
 	const formatDateShort = (date: Date) => {
 		return new Intl.DateTimeFormat(i18n.language === "en" ? "en-US" : "sv-SE", {
 			dateStyle: "medium",
@@ -79,6 +73,19 @@ export default function Page() {
 
 	const featureDivClassName = "flex items-center gap-1 text-sm";
 	const featureClassName = "w-10 h-10";
+
+	// Check if signup is allowed right now
+	const currentDate = new Date();
+	// It doesn't work without this
+	const signupStart = new Date(data.signup_start);
+	const signupEnd = new Date(data.signup_end);
+	const isSignupAllowed =
+		data.can_signup &&
+		!data.closed &&
+		signupStart <= currentDate &&
+		currentDate <= signupEnd;
+
+	const signupPeriodPassed = currentDate > signupEnd;
 
 	return (
 		<Suspense fallback={<div>{t("admin:events.no_event_selected")}</div>}>
@@ -139,7 +146,9 @@ export default function Page() {
 								</span>
 							</div>
 
-							{data.alcohol_event_type !== "None" && (
+							{Boolean(
+								data.alcohol_event_type !== "None" || data.is_nollning_event,
+							) && (
 								<div className="flex items-center gap-2">
 									<WineIcon className="w-4 h-4 text-muted-foreground" />
 									<span>
@@ -148,7 +157,7 @@ export default function Page() {
 											{
 												Alcohol: t("admin:events.alcohol"),
 												"Alcohol-Served": t("admin:events.alcohol_served"),
-												None: t("admin:events.alcohol_none"),
+												None: t("admin:events.alcohol_not_allowed"),
 											} as Record<string, string>
 										)[data.alcohol_event_type] ||
 											t("admin:events.alcohol_none")}
@@ -374,6 +383,16 @@ export default function Page() {
 							)}
 						</CardContent>
 					</Card>
+
+					{data && (
+						<SignupCard
+							event={data}
+							availablePriorities={data.priorities.map((p) => p.priority)}
+							isSignupAllowed={isSignupAllowed}
+							signupPeriodPassed={signupPeriodPassed}
+							useDrinkPackage={data.drink_package}
+						/>
+					)}
 				</div>
 			</div>
 		</Suspense>

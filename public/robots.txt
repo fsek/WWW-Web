@@ -1,0 +1,93 @@
+# Allow major search engines
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Disallow: /admin/
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin/
+Crawl-delay: 1
+
+User-agent: facebookexternalhit
+Allow: /
+Disallow: /admin/
+Crawl-delay: 2
+
+User-agent: Twitterbot
+Allow: /
+Disallow: /admin/
+Crawl-delay: 1
+
+# Block a lot of AI crawlers
+# from using content for training AI models.
+# Source: robotstxt (dot) com/ai
+User-Agent: GPTBot
+User-Agent: ClaudeBot
+User-Agent: CCBot
+User-Agent: Google-Extended
+User-Agent: Applebot-Extended
+User-Agent: Facebookbot
+User-Agent: Meta-ExternalAgent
+User-Agent: Meta-ExternalFetcher
+User-Agent: diffbot
+User-Agent: PerplexityBot
+User-Agent: Omgili
+User-Agent: Omgilibot
+User-Agent: webzio-extended
+User-Agent: ImagesiftBot
+User-Agent: Bytespider
+User-Agent: TikTokSpider
+User-Agent: Amazonbot
+User-Agent: Youbot
+User-Agent: SemrushBot-OCOB
+User-Agent: Petalbot
+User-Agent: VelenPublicWebCrawler
+User-Agent: TurnitinBot
+User-Agent: Timpibot
+User-Agent: OAI-SearchBot
+User-Agent: ICC-Crawler
+User-Agent: AI2Bot
+User-Agent: AI2Bot-Dolma
+User-Agent: DataForSeoBot
+User-Agent: AwarioBot
+User-Agent: AwarioSmartBot
+User-Agent: AwarioRssBot
+User-Agent: Google-CloudVertexBot
+User-Agent: PanguBot
+User-Agent: Kangaroo Bot
+User-Agent: Sentibot
+User-Agent: img2dataset
+User-Agent: Meltwater
+User-Agent: Seekr
+User-Agent: peer39_crawler
+User-Agent: cohere-ai
+User-Agent: cohere-training-data-crawler
+User-Agent: Scrapy
+User-Agent: Cotoyogi
+User-Agent: aiHitBot
+User-Agent: Factset_spyderbot
+User-Agent: FirecrawlAgent
+
+Disallow: /
+DisallowAITraining: /
+
+# Default rules for all other bots
+User-agent: *
+# The two below are in progress 
+# and not standardised yet
+DisallowAITraining: / 
+Content-Usage: train-ai=n
+Allow: /
+Disallow: /admin/
+Crawl-delay: 5
