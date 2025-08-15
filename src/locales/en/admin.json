@@ -753,6 +753,8 @@
 		"list_description": "This list shows all cafe shifts. Click a row to edit it.",
 		"confirm_remove": "Confirm removal of shift",
 		"confirm_remove_text": "Are you sure you want to remove this shift?",
+		"show_all_shifts": "Show all shifts",
+		"hide_past_shifts": "Hide past shifts",
 		"multi": {
 			"success_create_shifts": "Shifts created successfully!",
 			"error_create_shifts": "Failed to create shifts.",

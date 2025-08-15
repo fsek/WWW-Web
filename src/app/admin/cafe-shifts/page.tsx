@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import CafeShiftsForm from "./CafeShiftsForm";
 import CafeShiftsEditForm from "./CafeShiftsEditForm";
 import {
@@ -29,6 +29,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import MultiShiftsAddForm from "./MultiShiftAddForm";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 // Column setup
 const columnHelper = createColumnHelper<CafeShiftRead>();
@@ -71,8 +72,20 @@ export default function CafeShifts() {
 	const [selectedShift, setSelectedShift] = useState<CafeShiftRead | null>(
 		null,
 	);
+	const [showOnlyCurrent, setShowOnlyCurrent] = useState(false);
 
-	const table = useCreateTable({ data: data ?? [], columns });
+	// compute table data with optional filtering for past shifts
+	const tableData = useMemo(() => {
+		if (!data) return [];
+		if (showOnlyCurrent) {
+			return (data as CafeShiftRead[]).filter(
+				(shift) => new Date(shift.ends_at) >= new Date(),
+			);
+		}
+		return data as CafeShiftRead[];
+	}, [data, showOnlyCurrent]);
+
+	const table = useCreateTable({ data: tableData ?? [], columns });
 
 	// set default sort on starts_at (recent -> old) once data arrives
 	useEffect(() => {
@@ -272,7 +285,18 @@ export default function CafeShifts() {
 									{t("admin:cafe_shifts.list_description")}
 								</p>
 							</div>
-							<CafeShiftsForm />
+							<div className="flex">
+								<CafeShiftsForm />
+								<Button
+									variant={showOnlyCurrent ? "default" : "outline"}
+									className="my-auto ml-2"
+									onClick={() => setShowOnlyCurrent((v) => !v)}
+								>
+									{showOnlyCurrent
+										? t("admin:cafe_shifts.show_all_shifts")
+										: t("admin:cafe_shifts.hide_past_shifts")}
+								</Button>
+							</div>
 							<Separator />
 							<AdminTable table={table} onRowClick={handleRowClick} />
 							<CafeShiftsEditForm

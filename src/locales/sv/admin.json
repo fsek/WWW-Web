@@ -754,6 +754,8 @@
 		"list_description": "Denna lista visar alla cafépass. Klicka på en rad för att redigera den.",
 		"confirm_remove": "Bekräfta borttagning av pass",
 		"confirm_remove_text": "Är du säker på att du vill ta bort detta pass?",
+		"show_all_shifts": "Visa alla pass",
+		"hide_past_shifts": "Dölj gamla pass",
 		"multi": {
 			"success_create_shifts": "Pass skapade framgångsrikt!",
 			"error_create_shifts": "Misslyckades att skapa pass.",
