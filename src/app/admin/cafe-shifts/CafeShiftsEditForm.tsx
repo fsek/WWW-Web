@@ -158,11 +158,7 @@ export default function CafeShiftsEditForm({
 								confirmText={t("admin:remove")}
 								cancelText={t("admin:cancel")}
 							/>
-							<Button
-								type="submit"
-								className="w-32 min-w-fit"
-								onClick={() => console.log(form.getValues("id"))}
-							>
+							<Button type="submit" className="w-32 min-w-fit">
 								<Save />
 								{t("admin:save")}
 							</Button>

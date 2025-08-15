@@ -21,7 +21,7 @@ import { useTranslation } from "react-i18next";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { toast } from "sonner";
 
-// Helper: returns week number, and the Monday (week start) for a given Date
+// Returns week number, and the Monday (week start) for a given Date
 function getISOWeekInfo(date: Date) {
 	// work in UTC to avoid timezone edge cases
 	const tmp = new Date(
@@ -110,9 +110,6 @@ export default function MultiShiftsAddForm() {
 
 	function onSubmit(values: z.infer<typeof shiftsSchema>) {
 		setSubmitEnabled(false);
-		// minimal handling: consume new configuration value and close dialog
-		// integrate with createShift.mutate(...) as needed by backend shape
-		console.log("Create shifts:", values);
 
 		const startWeekStart = getISOWeekInfo(values.start).weekStart;
 		const endWeekStart = getISOWeekInfo(values.end).weekStart;
@@ -124,8 +121,6 @@ export default function MultiShiftsAddForm() {
 				configuration: values.configuration,
 			},
 		});
-
-		// let mutation callbacks control UX; avoid duplicate toasts here
 	}
 
 	return (
@@ -204,7 +199,6 @@ export default function MultiShiftsAddForm() {
 									)}
 								/>
 
-								{/* New: configuration radio buttons spanning both columns */}
 								<FormField
 									control={shiftsForm.control}
 									name={"configuration"}

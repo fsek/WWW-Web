@@ -104,7 +104,6 @@ export default function CafeShiftFormFields<T extends ShiftFormCompatible>({
 		const userName = shiftsForm.getValues("user_name" as Path<T>);
 		if (userId !== null) {
 			setSelectedUserId(userId as number | null);
-			console.log(userName);
 			setNameFilter(userName as string);
 			setResultsOpen(false);
 		}
