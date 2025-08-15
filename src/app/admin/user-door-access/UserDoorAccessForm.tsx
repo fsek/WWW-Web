@@ -35,7 +35,7 @@ import { useTranslation } from "react-i18next";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { toast } from "sonner";
 import { door } from "@/api";
-import { AdminChooseUser } from "@/widgets/AdminChooseUser";
+import AdminChooseUser, { type Option } from "@/widgets/AdminChooseUser";
 
 export default function UserDoorAccessForm() {
 	const [open, setOpen] = useState(false);
@@ -122,8 +122,9 @@ export default function UserDoorAccessForm() {
 										<FormLabel>{t("door_access.user_id")}</FormLabel>
 										<FormControl>
 											<AdminChooseUser
-												value={field.value ?? 0}
-												onChange={(val) => field.onChange(val)}
+												onChange={(user) => {
+													field.onChange((user as Option)?.value);
+												}}
 											/>
 										</FormControl>
 										<FormMessage />

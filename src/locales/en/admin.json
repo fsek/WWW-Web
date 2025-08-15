@@ -686,8 +686,8 @@
 	},
 	"door_access": {
 		"self": "Door Access for Users",
-		"page_title": "Manage Door Access for Individual Users. To manage door access for posts, go to the post admin page and click to edit a post.",
-		"page_description": "Here you can manage user access to doors.",
+		"page_title": "Manage Door Access for Individual Users.",
+		"page_description": "Here you can manage user access to doors. To manage door access for posts, go to the post admin page and click to edit a post.",
 		"create_access": "Create Door Access",
 		"edit_access": "Edit Door Access for",
 		"user": "User",

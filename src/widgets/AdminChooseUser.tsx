@@ -85,13 +85,45 @@ export default function AdminChooseUser({
 					label: `${u.first_name} ${u.last_name}`,
 				})) ?? []
 			}
+			unstyled
 			value={value}
 			onChange={handleChange}
 			placeholder={placeholder}
 			noOptionsMessage={({ inputValue }) =>
 				isPending || isTyping ? t("searching") : t("user_not_found")
 			}
-			className={className}
+			classNames={{
+				container: () => `${className}`,
+				control: ({ isFocused }) =>
+					`min-h-[38px] rounded-md px-3 py-1 text-sm border 
+          bg-background text-foreground
+          ${
+						isFocused
+							? "border-ring ring-2 ring-ring/20 dark:border-ring dark:ring-ring/20"
+							: "border-border hover:border-ring dark:border-border dark:hover:border-ring"
+					}`,
+				multiValue: () =>
+					"bg-primary text-primary-foreground dark:bg-primary dark:text-primary-foreground rounded px-2 py-1 m-0.5 text-xs",
+				multiValueLabel: () =>
+					"text-primary-foreground dark:text-primary-foreground",
+				multiValueRemove: () =>
+					"text-primary-foreground hover:bg-destructive dark:text-foreground dark:hover:bg-destructive rounded-r px-1",
+				menu: () =>
+					"mt-1 border border-border dark:border-border rounded-md shadow-lg bg-popover dark:bg-popover z-50",
+				menuList: () => "py-1 max-h-60 overflow-auto",
+				option: ({ isFocused, isSelected }) =>
+					`px-3 py-2 text-sm cursor-pointer ${
+						isSelected
+							? "bg-primary text-primary-foreground dark:bg-primary dark:text-primary-foreground"
+							: isFocused
+								? "bg-muted text-foreground dark:bg-muted dark:text-foreground"
+								: "text-foreground hover:bg-muted dark:text-foreground dark:hover:bg-muted"
+					}`,
+				placeholder: () => "text-muted-foreground dark:text-muted-foreground",
+				input: () => "text-foreground dark:text-foreground",
+				noOptionsMessage: () =>
+					"text-muted-foreground dark:text-muted-foreground py-2 px-3 text-sm",
+			}}
 			isDisabled={isDisabled}
 			onInputChange={(input) => {
 				setQueryString(input);
