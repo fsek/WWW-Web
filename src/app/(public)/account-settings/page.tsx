@@ -41,14 +41,6 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import ChangeEmailPassForm from "@/components/ChangeEmailPassForm";
 
-const FOOD_PREFERENCES = [
-	"Vegetarian",
-	"Vegan",
-	"Pescetarian",
-	"Mjölkallergi",
-	"Gluten",
-];
-
 export default function AccountSettingsPage() {
 	const { t } = useTranslation("user-settings");
 	const [isEditing, setIsEditing] = useState(false);
@@ -59,6 +51,14 @@ export default function AccountSettingsPage() {
 		{ value: "Pi", label: "Pi" },
 		{ value: "N", label: "N" },
 		{ value: "Oklart", label: t("admin:unclear_program") },
+	];
+
+	const FOOD_PREFERENCES = [
+		{ value: "Vegetarian", label: "Vegetarian" },
+		{ value: "Vegan", label: "Vegan" },
+		{ value: "Pescetarian", label: "Pescetarian" },
+		{ value: "Milk", label: t("admin:milk_allergy") },
+		{ value: "Gluten", label: "Gluten" },
 	];
 
 	const accountSchema = z.object({
@@ -498,27 +498,30 @@ export default function AccountSettingsPage() {
 													<div className="mt-2 space-y-2">
 														{FOOD_PREFERENCES.map((pref) => (
 															<div
-																key={pref}
+																key={pref.value}
 																className="flex items-center space-x-2"
 															>
 																<Checkbox
-																	id={pref}
-																	checked={field.value?.includes(pref)}
+																	id={pref.value}
+																	checked={field.value?.includes(pref.value)}
 																	onCheckedChange={(checked) => {
 																		const current = field.value || [];
 																		if (checked) {
-																			field.onChange([...current, pref]);
+																			field.onChange([...current, pref.value]);
 																		} else {
 																			field.onChange(
 																				current.filter(
-																					(p: string) => p !== pref,
+																					(p: string) => p !== pref.value,
 																				),
 																			);
 																		}
 																	}}
 																/>
-																<Label htmlFor={pref} className="capitalize">
-																	{pref}
+																<Label
+																	htmlFor={pref.value}
+																	className="capitalize"
+																>
+																	{pref.label}
 																</Label>
 															</div>
 														))}
@@ -534,7 +537,11 @@ export default function AccountSettingsPage() {
 																		variant="outline"
 																		className="capitalize"
 																	>
-																		{pref}
+																		{
+																			FOOD_PREFERENCES.find(
+																				(p) => p.value === pref,
+																			)?.label
+																		}
 																	</Badge>
 																))}
 															</div>

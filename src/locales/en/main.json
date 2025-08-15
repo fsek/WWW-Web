@@ -45,12 +45,18 @@
 			"self": "Sections",
 			"about": {
 				"self": "About Us",
-				"desc": "Welcome to our community—discover our story and values.",
+				"desc": "Welcome to our community - discover our story and values.",
 				"href": "/about"
 			},
 			"news": {
 				"self": "News",
-				"desc": "Stay updated with the latest announcements and events."
+				"desc": "Stay updated with the latest announcements and events.",
+				"href": "/news"
+			},
+			"calendar": {
+				"self": "Calendar",
+				"desc": "Keep track of upcoming events and activities.",
+				"href": "/calendar"
 			},
 			"councils": {
 				"self": "Councils",
@@ -339,10 +345,12 @@
 		"created_at": "Created At",
 		"private_explanation": "Members only",
 		"author": "Author",
+		"category": "Category",
 		"view": "View",
 		"view_doc": "View Document",
 		"page_title": "Documents",
-		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members."
+		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members.",
+		"search_title": "Search by title or category"
 	},
 	"yes": "Yes",
 	"no": "No",

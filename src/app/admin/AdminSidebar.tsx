@@ -75,6 +75,23 @@ const groups: AdminGroup[] = [
 				icon: FileText,
 			},
 			{
+				title: "admin:member.self",
+				url: "/admin/members",
+				permissions: [[action.VIEW, target.USER]],
+				icon: User,
+			},
+			{
+				title: "admin:door_access.self",
+				url: "/admin/user-door-access",
+				permissions: [[action.MANAGE, target.USER_DOOR_ACCESS]],
+				icon: Users,
+			},
+		],
+	},
+	{
+		title: "admin:categories.bookings",
+		entries: [
+			{
 				title: "admin:car.self",
 				url: "/admin/car",
 				permissions: [[action.MANAGE, target.CAR]],
@@ -85,24 +102,6 @@ const groups: AdminGroup[] = [
 				url: "/admin/room-bookings",
 				permissions: [[action.MANAGE, target.ROOM_BOOKINGS]],
 				icon: House,
-			},
-			{
-				title: "admin:member.self",
-				url: "/admin/members",
-				permissions: [[action.VIEW, target.USER]],
-				icon: User,
-			},
-			{
-				title: "admin:nollning.self",
-				url: "/admin/nollning",
-				permissions: [[action.MANAGE, target.NOLLNING]],
-				icon: Gauge,
-			},
-			{
-				title: "admin:door_access.self",
-				url: "/admin/user-door-access",
-				permissions: [[action.MANAGE, target.USER_DOOR_ACCESS]],
-				icon: Users,
 			},
 		],
 	},
@@ -147,7 +146,7 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:nollning.self_mission",
 				url: "/admin/nollning/admin-nollning/adventure-missions?id=current",
-				permissions: [[action.MANAGE, target.NOLLNING]],
+				permissions: [[action.MANAGE, target.ADVENTURE_MISSIONS]],
 				icon: Award,
 			},
 		],

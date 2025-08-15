@@ -14,12 +14,14 @@
 	"select_posts": "Välj poster",
 	"no_posts": "Inga poster tilldelade",
 	"unclear_program": "Oklart",
+	"milk_allergy": "Mjölkproteinallergi",
 	"welcome": {
 		"title": "Välkommen till adminsidan",
-		"message": "Här kan du hantera en otrolig mängd saker (men inte allt ännu, vi ber om ursäkt). Använd menyn till vänster för att navigera mellan de olika skärmarna. Du borde bara ha tillgång till de skärmar du har behörighet till, om så inte är fallet, kontakta en superman."
+		"message": "Här kan du hantera en otrolig mängd saker (Saknas något? Kontakta en spindelman@fsektionen.se). Använd menyn till vänster för att navigera mellan de olika skärmarna. Du borde bara ha tillgång till de skärmar du har behörighet till, om så inte är fallet, kontakta en superman."
 	},
 	"categories": {
 		"general": "Allmänt",
+		"bookings": "Bokningar",
 		"councils": "Poster och utskott",
 		"spider": "Spindelsaker",
 		"nollning": "Nollning"
@@ -109,7 +111,7 @@
 		"alcohol": "Alkohol tillåten",
 		"alcohol_served": "Alkohol serveras",
 		"alcohol_not_allowed": "Alkohol ej tillåten",
-		"alcohol_none": "Ingen (visas ej)",
+		"alcohol_none": "Ingen (eller alkohol förbjuden under nollning)",
 		"costs_money": "Kostar pengar",
 		"dot_type": "Tidsprecision",
 		"dot_none": "Inga prickar",
@@ -134,7 +136,7 @@
 	"documents": {
 		"self": "Dokument",
 		"page_title": "Administrera dokument",
-		"description": "Här kan du hantera dokument som är tillgängliga för nedladdning.",
+		"description": "Här kan du hantera dokument som är tillgängliga för nedladdning. Kategorinamn är fritext, så sök efter kategorier innan så du inte skapar en kategori med liknande men olikt namn.",
 		"crate": "Skapa dokument",
 		"title": "Titel",
 		"file": "Fil",
@@ -167,12 +169,13 @@
 		"document_updated": "Dokumentet har uppdaterats!",
 		"document_update_error": "Misslyckades att uppdatera dokumentet.",
 		"document_removed": "Dokumentet har tagits bort!",
-		"document_remove_error": "Misslyckades att ta bort dokumentet."
+		"document_remove_error": "Misslyckades att ta bort dokumentet.",
+		"search_title": "Sök efter titel eller kategori"
 	},
 	"car": {
 		"self": "Bilbokningar",
 		"title": "Hantera bilbokningar",
-		"description": "Här kan du skapa och hantera bilbokningar.",
+		"description": "Här kan du skapa och hantera bilbokningar. Som bilförman vill du nog gå in här då och då för att godkänna eller neka (ta bort) bokningar från användare.",
 		"default_description": "Ange bokningstitel här (öppet synlig)",
 		"create_booking": "Skapa bokning",
 		"edit_booking": "Redigera bokning",
@@ -323,7 +326,7 @@
 	"permissions": {
 		"self": "Behörigheter",
 		"title": "Administrera permissions",
-		"description": "Här kan du skapa och redigera permissions, som sedan kan läggas till på poster. Permissions måste fortfarande stödjas av backenden.",
+		"description": "Här kan du skapa och redigera permissions, som sedan kan läggas till på poster. Permissions måste fortfarande stödjas av backenden. Det är lite cursed att vi ens har det här, och det borde inte behöva användas :( Egentligen borde detta ske automatiskt. Ingen icke-megaadmin/su-perman borde få tillgång hit.",
 		"submit": "Skapa permission",
 		"publish": "Publicera",
 		"edit": "Redigera permission",
@@ -340,15 +343,15 @@
 	"member": {
 		"self": "Medlemmar",
 		"list": "Medlemmar",
-		"list_description": "Denna lista visar alla användare. Du kan söka, filtrera på datum och hantera medlemskap.",
-		"search_placeholder": "Sök på namn, e-post eller STIL-ID",
+		"list_description": "Denna lista visar alla användare. Du kan söka, filtrera på datum och hantera medlemskap. Du kan söka efter flera medlemmar genom att lägga kommatecken emellan. Dina söktermer måste vara minst 3 tecken långa.",
+		"search_placeholder": "Sök på namn, e-post eller STIL-ID.",
 		"date_range_to": "till",
 		"actions": "Åtgärder",
 		"make_member": "Gör till medlem",
 		"remove_member": "Ta bort medlemskap",
 		"bulk_member": "Gör alla filtrerade användare till medlemmar",
 		"bulk_member_confirm_title": "Bekräfta massmedlemskap",
-		"bulk_member_confirm_desc": "Är du säker på att du vill göra följande antal användare till medlemmar",
+		"bulk_member_confirm_desc": "Läs igenom listan innan du gör detta! Är du säker på att du vill göra följande antal användare till medlemmar",
 		"bulk_member_confirm": "Bekräfta",
 		"bulk_member_loading": "Bearbetar...",
 		"bulk_member_success": "Alla användare blev medlemmar.",
@@ -578,7 +581,7 @@
 	"room_bookings": {
 		"self": "Rumsbokningar",
 		"title": "Hantera rumsbokningar",
-		"description": "Här kan du skapa och hantera rumsbokningar.",
+		"description": "Här kan du skapa och hantera rumsbokningar. Användare kan komma till dig med frågor om att boka rummen för personligt bruk, eftersom de inte kan boka rum själva. Du kan skapa flera bokningar samtidigt, upp till 50. Var försiktig! Du måste ta bort dem individuellt om något går fel!",
 		"create_booking": "Skapa bokning",
 		"edit_booking": "Redigera bokning",
 		"start_time": "Starttid",
@@ -656,7 +659,7 @@
 	"door_access": {
 		"self": "Dörrbehörigheter för användare",
 		"page_title": "Hantera dörrbehörigheter för individuella användare",
-		"page_description": "Här kan du hantera användarnas tillgång till dörrar.",
+		"page_description": "Här kan du hantera användarnas tillgång till dörrar. För att hantera posters access går du till adminsidan för poster och klickar för att redigera den post du vill hantera.",
 		"create_access": "Skapa dörrbehörighet",
 		"edit_access": "Redigera dörrbehörighet för",
 		"user": "Användare",

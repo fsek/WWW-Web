@@ -9,6 +9,8 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import AdminTable from "@/widgets/AdminTable";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
@@ -52,6 +54,9 @@ export default function MembersPage() {
 	// add search state
 	const [search, setSearch] = useState<string>("");
 
+	// checkbox state for filtering verified members only
+	const [showVerifiedOnly, setShowVerifiedOnly] = useState<boolean>(false);
+
 	// date range filter state
 	const [dateFrom, setDateFrom] = useState<Date | undefined>(undefined);
 	const [dateTo, setDateTo] = useState<Date | undefined>(undefined);
@@ -59,21 +64,38 @@ export default function MembersPage() {
 	// compute filtered users
 	const filteredUsers = useMemo(() => {
 		if (!userDetails) return [];
-		const lower = search.toLowerCase();
-		return userDetails.filter((u) => {
-			const matchesSearch =
-				u.first_name.toLowerCase().includes(lower) ||
-				u.last_name.toLowerCase().includes(lower) ||
-				`${u.first_name} ${u.last_name}`.toLowerCase().includes(lower) ||
-				u.email.toLowerCase().includes(lower) ||
-				String(u.stil_id).toLowerCase().includes(lower);
 
+		// Split search terms by comma and trim whitespace
+		const searchTerms = search
+			.split(",")
+			.map((term) => term.trim().toLowerCase())
+			.filter((term) => term.length > 2);
+
+		return userDetails.filter((u) => {
+			// Search filter - user must match AT LEAST ONE search term
+			const matchesSearch =
+				searchTerms.length === 0 ||
+				searchTerms.some((term) => {
+					return (
+						u.first_name.toLowerCase().includes(term) ||
+						u.last_name.toLowerCase().includes(term) ||
+						`${u.first_name} ${u.last_name}`.toLowerCase().includes(term) ||
+						u.email.toLowerCase().includes(term) ||
+						String(u.stil_id).toLowerCase().includes(term)
+					);
+				});
+
+			// Verification filter
+			const matchesVerification = !showVerifiedOnly || u.is_verified;
+
+			// Date range filter
 			const created = new Date(u.account_created);
 			const afterFrom = !dateFrom || created >= dateFrom;
 			const beforeTo = !dateTo || created <= dateTo;
-			return matchesSearch && afterFrom && beforeTo;
+
+			return matchesSearch && matchesVerification && afterFrom && beforeTo;
 		});
-	}, [userDetails, search, dateFrom, dateTo]);
+	}, [userDetails, search, showVerifiedOnly, dateFrom, dateTo]);
 
 	const handleMemberUser = useMutation({
 		...updateUserStatusMutation(),
@@ -250,10 +272,7 @@ export default function MembersPage() {
 				<div className="mt-4 mb-2 flex flex-row gap-2 items-center">
 					<div className="w-xs">
 						<Input
-							placeholder={
-								t("admin:member.search_placeholder") ||
-								"Search by name, email, or STIL ID"
-							}
+							placeholder={t("admin:member.search_placeholder")}
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}
 							autoFocus
@@ -267,6 +286,17 @@ export default function MembersPage() {
 						</span>
 						<AdminChooseDates value={dateTo} onChange={setDateTo} />
 					</div>
+				</div>
+				{/* Verification filter checkbox */}
+				<div className="flex items-center space-x-2 mb-4">
+					<Checkbox
+						id="verified-only"
+						checked={showVerifiedOnly}
+						onCheckedChange={() => setShowVerifiedOnly(!showVerifiedOnly)}
+					/>
+					<Label htmlFor="verified-only" className="text-sm">
+						{t("admin:member.show_verified_only")}
+					</Label>
 				</div>
 				<Separator className="mb-8" />
 				{/* Bulk member button */}
@@ -297,7 +327,7 @@ export default function MembersPage() {
 					<DialogFooter>
 						<DialogClose asChild>
 							<Button variant="outline" disabled={bulkLoading}>
-								{t("cancel")}
+								{t("admin:cancel")}
 							</Button>
 						</DialogClose>
 						<Button
