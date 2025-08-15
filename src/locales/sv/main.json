@@ -11,7 +11,9 @@
 	"newsTitle": "Nyheter",
 	"newsText": "Om du vill använda bilder eller mer avancerad formatering, använd Mattermost tills vi har lagt till ordentligt stöd.",
 	"cafeTitle": "Hilbert Café",
-	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang.",
+	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang. Cafét har även en egen sida att tillgå, och du kan nu skriva upp dig på cafépass på en annan sida.",
+	"cafe_shift_button": "Skriv upp dig på ett pass",
+	"cafe_page_button": "Huvudsidan för caféet",
 	"coolThing": "En cool grej som distraherar dig från att se att sidan inte är klar än",
 	"back": "Tillbaka",
 	"faq": {
