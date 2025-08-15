@@ -32,7 +32,7 @@
 		},
 		"q4": {
 			"question": "What do you still have left to move over?",
-			"answer": "Quite a lot (the website is terribly large!). To look at pictures, book rooms, find advanced contact info, read governing documents or old documents we haven't uploaded yet, sing songs from the songbook, use the motion machine and elections in general you can use the old website. We will soon add event signup as well, until then you'll have to wait."
+			"answer": "Quite a lot (the website is enormous!). To view images, read the governing documents in their entirety (though they are available in the document archive if you know their names), use the proposition machine, and elections and voting in general, you can use the old website. We are working as diligently as possible to ensure that everything is available on the new website. 🧡"
 		},
 		"q5": {
 			"question": "Help! I don't have any of my old admin rights!",
@@ -44,7 +44,7 @@
 	"page": "Page",
 	"navbar": {
 		"sektionen": {
-			"self": "Sections",
+			"self": "The Guild",
 			"about": {
 				"self": "About Us",
 				"desc": "Welcome to our community - discover our story and values.",
