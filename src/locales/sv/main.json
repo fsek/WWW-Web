@@ -141,6 +141,11 @@
 				"self": "Kalender",
 				"desc": "Håll koll på kommande evenemang och aktiviteter.",
 				"href": "/calendar"
+			},
+			"songs": {
+				"self": "Sångbok",
+				"desc": "Bläddra och sjung med i vår samling av sånger.",
+				"href": "/songs"
 			}
 		},
 		"companies": {
@@ -390,5 +395,14 @@
 		"standard_food_preferences": "Standardpreferenser:",
 		"other_food_preferences": "Övriga preferenser:",
 		"none": "Inga"
+	},
+	"songs": {
+		"by": "Av",
+		"melody": "Melodi",
+		"category": "Kategori",
+		"views": "Visningar",
+		"title": "Sånger",
+		"description_subtitle": "Bläddra och sjung med i vår samling av sånger.",
+		"search_placeholder": "Sök sånger..."
 	}
 }

@@ -7,14 +7,14 @@ import { createColumnHelper, type Row } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import type { SongRead } from "../../../api";
 import useCreateTable from "@/widgets/useCreateTable";
-import SongForm from "./SongForm";
-import SongEditForm from "./SongEditForm";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 export default function Songs() {
-	const { t } = useTranslation("admin");
+	const { t } = useTranslation("main");
+	const router = useRouter();
 
 	// Column setup
 	const columnHelper = createColumnHelper<SongRead>();
@@ -46,8 +46,6 @@ export default function Songs() {
 		refetchOnWindowFocus: false,
 	});
 
-	const [openEditDialog, setOpenEditDialog] = useState(false);
-	const [selectedSong, setSelectedSong] = useState<SongRead | null>(null);
 	const [search, setSearch] = useState<string>("");
 
 	// compute filtered songs
@@ -68,13 +66,8 @@ export default function Songs() {
 	const table = useCreateTable({ data: filteredSongs ?? [], columns });
 
 	function handleRowClick(row: Row<SongRead>) {
-		setSelectedSong(row.original);
-		setOpenEditDialog(true);
-	}
-
-	function handleClose() {
-		setOpenEditDialog(false);
-		setSelectedSong(null);
+		// Open the the details page for the song
+		router.push(`/songs/${row.original.id}`);
 	}
 
 	if (isPending) {
@@ -91,7 +84,6 @@ export default function Songs() {
 				{t("songs.title")}
 			</h3>
 			<p className="py-3">{t("songs.description_subtitle")}</p>
-			<SongForm />
 
 			<div className="mt-4 mb-2 flex flex-row gap-2 items-center">
 				<div className="w-xs">
@@ -105,14 +97,6 @@ export default function Songs() {
 			</div>
 
 			<AdminTable table={table} onRowClick={handleRowClick} />
-
-			{selectedSong && (
-				<SongEditForm
-					open={openEditDialog}
-					onClose={() => handleClose()}
-					selectedSong={selectedSong}
-				/>
-			)}
 		</div>
 	);
 }

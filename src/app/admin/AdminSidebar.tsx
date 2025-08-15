@@ -18,6 +18,8 @@ import {
 	House,
 	Mail,
 	Gauge,
+	ListMusic,
+	Music3,
 } from "lucide-react";
 
 import {
@@ -125,6 +127,23 @@ const groups: AdminGroup[] = [
 				url: "/admin/posts",
 				permissions: [[action.MANAGE, target.POST]],
 				icon: Briefcase,
+			},
+		],
+	},
+	{
+		title: "admin:categories.songs",
+		entries: [
+			{
+				title: "admin:song_categories.self",
+				url: "/admin/song-categories",
+				permissions: [[action.MANAGE, target.SONG]],
+				icon: ListMusic,
+			},
+			{
+				title: "admin:songs.self",
+				url: "/admin/songs",
+				permissions: [[action.MANAGE, target.SONG]],
+				icon: Music3,
 			},
 		],
 	},
