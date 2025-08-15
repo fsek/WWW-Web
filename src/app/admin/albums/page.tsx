@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import AlbumsForm from "./AlbumsForm";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
+import AlbumsEditForm from "./AlbumsEditForm";
 
 const columnHelper = createColumnHelper<AlbumRead>();
 
@@ -95,6 +96,16 @@ export default function AlbumsPage() {
 				<p className="text-destructive">{t("albums.warning")}</p>
 				<AlbumsForm />
 				<AdminTable table={table} onRowClick={handleRowClick} />
+				{selectedAlbum && (
+					<AlbumsEditForm
+						open={editFormOpen}
+						onClose={() => {
+							setEditFormOpen(false);
+							setSelectedAlbum(null);
+						}}
+						selectedAlbum={selectedAlbum}
+					/>
+				)}
 			</Suspense>
 		</div>
 	);

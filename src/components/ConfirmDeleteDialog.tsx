@@ -12,12 +12,13 @@ import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 
 interface ConfirmDeleteDialogProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 	onConfirm: () => void;
+	disabled?: boolean;
 	triggerText?: string;
 	title?: string;
 	description?: string;
@@ -33,6 +34,7 @@ export function ConfirmDeleteDialog({
 	open,
 	onOpenChange,
 	onConfirm,
+	disabled = false,
 	triggerText,
 	title,
 	description,
@@ -47,8 +49,7 @@ export function ConfirmDeleteDialog({
 	const [typedValue, setTypedValue] = useState("");
 
 	const isConfirmEnabled =
-		!confirmByTyping ||
-		typedValue.trim() === (confirmByTypingKey ?? "").trim();
+		!confirmByTyping || typedValue.trim() === (confirmByTypingKey ?? "").trim();
 
 	return (
 		<AlertDialog open={open} onOpenChange={onOpenChange}>
@@ -57,6 +58,7 @@ export function ConfirmDeleteDialog({
 					variant="destructive"
 					type="button"
 					className="w-32 min-w-fit"
+					disabled={disabled}
 					onClick={() => onOpenChange(true)}
 				>
 					<Trash2 />
