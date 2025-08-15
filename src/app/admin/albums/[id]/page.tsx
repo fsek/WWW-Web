@@ -139,8 +139,9 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 			<div className="px-8 space-x-4">
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
-						{t("album.page_title")} "
-						{i18n.language === "sv" ? album.title_sv : album.title_en}"
+						{t("album.page_title", {
+							album: i18n.language === "sv" ? album.title_sv : album.title_en,
+						})}
 					</h3>
 					<Button
 						variant="ghost"

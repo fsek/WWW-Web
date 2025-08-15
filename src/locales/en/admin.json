@@ -393,8 +393,8 @@
 		"page_description": "Here you can create and manage albums. After creating an album can you add photographers and photos.",
 		"warning": "Please note that the album date cannot be changed later!",
 		"only_empty": "Only empty albums can be deleted",
-		"view_album": "View Album",
-		"edit_album": "Edit Album",
+		"view_album": "View album",
+		"edit_album": "Edit album",
 		"create_album": "Create album",
 		"success_delete": "Removed album {{album}}",
 		"error_delete": "Failed to remove album",
@@ -420,7 +420,7 @@
 	"album": {
 		"dragndrop": "Drag images here or click to upload",
 		"dragndrop_hover": "Release to upload",
-		"page_title": "Administrating album",
+		"page_title": "Administrating album {{album}}",
 		"back": "Go back",
 		"add_photographer": "Add photographer",
 		"error_add_photographer": "Failed to add photographer."
