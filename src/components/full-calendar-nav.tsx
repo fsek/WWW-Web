@@ -65,6 +65,7 @@ interface CalendarNavProps {
 	isMobile?: boolean;
 	enableRoomBookingProperties?: boolean;
 	defaultRoom?: "LC" | "Alumni" | "SK";
+	enableCafeShiftProperties?: boolean;
 }
 
 export default function CalendarNav({
@@ -81,6 +82,7 @@ export default function CalendarNav({
 	isMobile = false,
 	enableRoomBookingProperties = false,
 	defaultRoom = "LC",
+	enableCafeShiftProperties = false,
 }: CalendarNavProps) {
 	const { t, i18n } = useTranslation("calendar");
 
@@ -147,56 +149,56 @@ export default function CalendarNav({
 					currentView === "dayGridDay" ||
 					currentView === "dayGridWeek" ||
 					currentView === "timeGridFourDay") && (
-						<Popover open={daySelectOpen} onOpenChange={setDaySelectOpen}>
-							<PopoverTrigger asChild>
-								<Button
-									variant="outline"
-									role="combobox"
-									className="w-20 justify-between text-xs font-semibold"
-								>
-									{selectedDay
-										? dayOptions.find((day) => day.value === String(selectedDay))
+					<Popover open={daySelectOpen} onOpenChange={setDaySelectOpen}>
+						<PopoverTrigger asChild>
+							<Button
+								variant="outline"
+								role="combobox"
+								className="w-20 justify-between text-xs font-semibold"
+							>
+								{selectedDay
+									? dayOptions.find((day) => day.value === String(selectedDay))
 											?.label
-										: t("nav.select_day")}
-									<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-								</Button>
-							</PopoverTrigger>
-							<PopoverContent className="w-[200px] p-0">
-								<Command>
-									<CommandInput placeholder={t("nav.search_day")} />
-									<CommandList>
-										<CommandEmpty>{t("nav.day_not_found")}</CommandEmpty>
-										<CommandGroup>
-											{dayOptions.map((day) => (
-												<CommandItem
-													key={day.value}
-													value={day.value}
-													onSelect={(currentValue) => {
-														handleDayChange(
-															calendarRef,
-															viewedDate,
-															currentValue,
-														);
-														setDaySelectOpen(false);
-													}}
-												>
-													<Check
-														className={cn(
-															"mr-2 h-4 w-4",
-															String(selectedDay) === day.value
-																? "opacity-100"
-																: "opacity-0",
-														)}
-													/>
-													{day.label}
-												</CommandItem>
-											))}
-										</CommandGroup>
-									</CommandList>
-								</Command>
-							</PopoverContent>
-						</Popover>
-					)}
+									: t("nav.select_day")}
+								<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+							</Button>
+						</PopoverTrigger>
+						<PopoverContent className="w-[200px] p-0">
+							<Command>
+								<CommandInput placeholder={t("nav.search_day")} />
+								<CommandList>
+									<CommandEmpty>{t("nav.day_not_found")}</CommandEmpty>
+									<CommandGroup>
+										{dayOptions.map((day) => (
+											<CommandItem
+												key={day.value}
+												value={day.value}
+												onSelect={(currentValue) => {
+													handleDayChange(
+														calendarRef,
+														viewedDate,
+														currentValue,
+													);
+													setDaySelectOpen(false);
+												}}
+											>
+												<Check
+													className={cn(
+														"mr-2 h-4 w-4",
+														String(selectedDay) === day.value
+															? "opacity-100"
+															: "opacity-0",
+													)}
+												/>
+												{day.label}
+											</CommandItem>
+										))}
+									</CommandGroup>
+								</CommandList>
+							</Command>
+						</PopoverContent>
+					</Popover>
+				)}
 
 				{/* Month Lookup */}
 				<div>
@@ -261,12 +263,13 @@ export default function CalendarNav({
 								onClick={() =>
 									setView(calendarRef, "timeGridDay", setCurrentView)
 								}
-								className={`space-x-1 ${currentView === "timeGridDay"
-									? "w-1/2"
-									: isMobile
-										? "w-1/3"
-										: "w-1/4"
-									}`}
+								className={`space-x-1 ${
+									currentView === "timeGridDay"
+										? "w-1/2"
+										: isMobile
+											? "w-1/3"
+											: "w-1/4"
+								}`}
 							>
 								<GalleryVertical className="h-5 w-5" />
 								{currentView === "timeGridDay" && (
@@ -342,6 +345,7 @@ export default function CalendarNav({
 						enableCarProperties={enableCarProperties}
 						enableRoomBookingProperties={enableRoomBookingProperties}
 						defaultRoom={defaultRoom}
+						enableCafeShiftProperties={enableCafeShiftProperties}
 					/>
 				)}
 			</div>

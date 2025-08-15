@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/select";
 import { Suspense, useRef, useState } from "react";
 import StartYearFilter from "./YearFilter";
-import SearchResults from "./searchResults";
-import { } from "@radix-ui/react-popover";
+import SearchResults from "@/components/userSearchResults";
+import {} from "@radix-ui/react-popover";
 import {
 	PopoverTrigger,
 	Popover,
@@ -37,7 +37,10 @@ function toGroupUserType(s: string): GroupUserTypes {
 	return "Default" as GroupUserTypes;
 }
 
-export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props) {
+export default function SearchBar({
+	excludedFromSearch = [],
+	onRowClick,
+}: Props) {
 	const { t } = useTranslation("admin");
 	const [nameFilter, setNameFilter] = useState("");
 	const [programFilter, setProgramFilter] = useState("");
@@ -65,11 +68,17 @@ export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props
 				value={groupUserType}
 			>
 				<SelectTrigger className="w-full bg-white max-w-sm">
-					<SelectValue placeholder={t("nollning.group_members.select_role_placeholder")} />
+					<SelectValue
+						placeholder={t("nollning.group_members.select_role_placeholder")}
+					/>
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="Mentee">{t("nollning.group_members.add_as_mentee")}</SelectItem>
-					<SelectItem value="Mentor">{t("nollning.group_members.add_as_mentor")}</SelectItem>
+					<SelectItem value="Mentee">
+						{t("nollning.group_members.add_as_mentee")}
+					</SelectItem>
+					<SelectItem value="Mentor">
+						{t("nollning.group_members.add_as_mentor")}
+					</SelectItem>
 				</SelectContent>
 			</Select>
 			<Select
@@ -83,10 +92,14 @@ export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props
 				}}
 			>
 				<SelectTrigger className="w-full bg-white max-w-sm">
-					<SelectValue placeholder={t("nollning.group_members.filter_by_program")} />
+					<SelectValue
+						placeholder={t("nollning.group_members.filter_by_program")}
+					/>
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="clear">{t("nollning.group_members.clear")}</SelectItem>
+					<SelectItem value="clear">
+						{t("nollning.group_members.clear")}
+					</SelectItem>
 					<SelectItem value="F">F</SelectItem>
 					<SelectItem value="Pi">Pi</SelectItem>
 					<SelectItem value="N">N</SelectItem>
@@ -104,7 +117,9 @@ export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props
 						<div>
 							<Input
 								className="bg-white"
-								placeholder={t("nollning.group_members.search_user_placeholder")}
+								placeholder={t(
+									"nollning.group_members.search_user_placeholder",
+								)}
 								value={nameFilter}
 								onChange={(e) => {
 									setNameFilter(e.target.value);
@@ -130,7 +145,11 @@ export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props
 						<Suspense
 							fallback={
 								<div className="p-4">
-									<Button variant="ghost" className="w-full justify-start" disabled>
+									<Button
+										variant="ghost"
+										className="w-full justify-start"
+										disabled
+									>
 										{t("nollning.group_members.searching")}
 									</Button>
 								</div>
@@ -151,4 +170,4 @@ export default function SearchBar({ excludedFromSearch = [], onRowClick }: Props
 			</div>
 		</div>
 	);
-};
+}

@@ -41,6 +41,7 @@ interface EventViewProps {
 	disableConfirmField?: boolean;
 	disableEditOfOthers?: boolean; // Optional prop to disable editing of others' events
 	enableRoomBookingProperties?: boolean;
+	enableCafeShiftProperties?: boolean;
 }
 
 export function EventView({
@@ -55,6 +56,7 @@ export function EventView({
 	disableConfirmField = false,
 	disableEditOfOthers = false,
 	enableRoomBookingProperties = false,
+	enableCafeShiftProperties = false,
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 	const { t, i18n } = useTranslation("calendar");
@@ -114,7 +116,9 @@ export function EventView({
 										<td>
 											{(() => {
 												const raw =
-													i18n.language === "en" && !enableCarProperties && !enableRoomBookingProperties
+													i18n.language === "en" &&
+													!enableCarProperties &&
+													!enableRoomBookingProperties
 														? event?.description_en
 														: event?.description_sv;
 												const desc = typeof raw === "string" ? raw : "";
@@ -281,7 +285,7 @@ export function EventView({
 										</tr>
 									</>
 								)}
-								{event && (enableCarProperties) && (
+								{event && enableCarProperties && (
 									<tr>
 										<th>{t("admin:events.council")}</th>
 										<td>
@@ -308,8 +312,8 @@ export function EventView({
 										<th>{t("admin:room_bookings.council")}</th>
 										<td>
 											{i18n.language === "en"
-												? event.council_name_en as string
-												: event.council_name_sv as string}
+												? (event.council_name_en as string)
+												: (event.council_name_sv as string)}
 										</td>
 									</tr>
 								)}
@@ -354,6 +358,7 @@ export function EventView({
 								enableCarProperties={enableCarProperties}
 								disableConfirmField={disableConfirmField}
 								enableRoomBookingProperties={enableRoomBookingProperties}
+								enableCafeShiftProperties={enableCafeShiftProperties}
 							/>
 						)}
 					</AlertDialogFooter>

@@ -18,6 +18,7 @@ import {
 	House,
 	Mail,
 	Gauge,
+	ChefHat,
 } from "lucide-react";
 
 import {
@@ -103,6 +104,12 @@ const groups: AdminGroup[] = [
 				url: "/admin/user-door-access",
 				permissions: [[action.MANAGE, target.USER_DOOR_ACCESS]],
 				icon: Users,
+			},
+			{
+				title: "admin:cafe_shifts.self",
+				url: "/admin/cafe-shifts",
+				permissions: [[action.MANAGE, target.CAFE]],
+				icon: ChefHat,
 			},
 		],
 	},
