@@ -173,7 +173,7 @@ export default function SongCategoryEditForm({
 								title={t("song_categories.confirm_remove")}
 								description={t("song_categories.confirm_remove_text")}
 								confirmText={t("song_categories.remove_song_category")}
-								cancelText={t("admin:cancel")}
+								cancelText={t("cancel")}
 							/>
 							<Button type="submit" className="w-32 min-w-fit">
 								<Save />

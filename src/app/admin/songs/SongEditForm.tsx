@@ -271,7 +271,7 @@ export default function SongEditForm({
 								title={t("songs.confirm_remove")}
 								description={t("songs.confirm_remove_text")}
 								confirmText={t("songs.remove_song")}
-								cancelText={t("admin:cancel")}
+								cancelText={t("cancel")}
 							/>
 							<Button type="submit" className="w-32 min-w-fit">
 								<Save />
@@ -282,7 +282,7 @@ export default function SongEditForm({
 								type="button"
 								onClick={() => router.push(`/songs/${selectedSong.id}`)}
 							>
-								{t("admin:songs.view_song")}
+								{t("songs.view_song")}
 							</Button>
 						</div>
 					</form>

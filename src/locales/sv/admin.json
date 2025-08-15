@@ -727,6 +727,7 @@
 		"remove_error": "Kunde inte ta bort sång",
 		"remove_song": "Ta bort Sång",
 		"confirm_remove": "Bekräfta borttagning av sång",
-		"confirm_remove_text": "Är du säker på att du vill ta bort denna sång?"
+		"confirm_remove_text": "Är du säker på att du vill ta bort denna sång?",
+		"view_song": "Visa sångdetaljer"
 	}
 }

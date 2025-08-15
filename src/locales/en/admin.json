@@ -726,6 +726,7 @@
 		"remove_error": "Could not remove song",
 		"remove_song": "Remove Song",
 		"confirm_remove": "Confirm removal of song",
-		"confirm_remove_text": "Are you sure you want to remove this song?"
+		"confirm_remove_text": "Are you sure you want to remove this song?",
+		"view_song": "View Song Details"
 	}
 }

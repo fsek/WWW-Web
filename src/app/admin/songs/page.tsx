@@ -96,7 +96,7 @@ export default function Songs() {
 			<div className="mt-4 mb-2 flex flex-row gap-2 items-center">
 				<div className="w-xs">
 					<Input
-						placeholder={t("admin:songs.search_placeholder")}
+						placeholder={t("songs.search_placeholder")}
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
 						autoFocus
