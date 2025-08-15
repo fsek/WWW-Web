@@ -176,6 +176,7 @@ export default function CafeShifts() {
 			description_en: shift.user
 				? `Cafe shift for ${shift.user.first_name}`
 				: "Available cafe shift",
+			backgroundColor: shift.user ? "#f6ad55" : "#72bcd4",
 		})) ?? [];
 
 	return (
@@ -186,7 +187,6 @@ export default function CafeShifts() {
 			<p className="py-3">{t("admin:cafe_shifts.description")}</p>
 			<EventsProvider
 				initialCalendarEvents={events}
-				eventColor="#f6ad55"
 				handleAdd={(event) =>
 					addShift.mutate(
 						{

@@ -57,7 +57,7 @@ export default function CafeShifts() {
 				? "#e68a00" // Orange for current user's shifts
 				: shift.user
 					? "#66cc00" // Green for taken shifts
-					: "#007bff"; // Blue for available shifts
+					: "#72bcd4"; // Blue for available shifts
 			return {
 				id: shift.id.toString(),
 				title_sv: shift.user
