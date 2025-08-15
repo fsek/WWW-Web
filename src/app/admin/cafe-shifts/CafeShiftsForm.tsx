@@ -14,6 +14,7 @@ import {
 
 import { useTranslation } from "react-i18next";
 import CafeShiftFormFields from "./CafeShiftsFormFields";
+import { toast } from "sonner";
 
 const shiftsSchema = z
 	.object({
@@ -72,10 +73,12 @@ export default function CafeShiftsForm() {
 			queryClient.invalidateQueries({ queryKey: viewAllShiftsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.success(t("admin:cafe_shifts.success_add"));
 		},
-		onError: () => {
+		onError: (err) => {
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.error(t("admin:cafe_shifts.error_add"));
 		},
 	});
 

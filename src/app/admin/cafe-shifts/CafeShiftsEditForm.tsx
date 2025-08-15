@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import CafeShiftFormFields from "./CafeShiftsFormFields";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
+import { toast } from "sonner";
 
 const shiftsEditSchema = z.object({
 	id: z.number(),
@@ -76,9 +77,11 @@ export default function CafeShiftsEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: viewAllShiftsQueryKey() });
+			toast.success(t("admin:cafe_shifts.success_edit"));
 		},
-		onError: () => {
+		onError: (err) => {
 			onClose();
+			toast.error(t("admin:cafe_shifts.error_edit"));
 		},
 	});
 
@@ -87,9 +90,11 @@ export default function CafeShiftsEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: viewAllShiftsQueryKey() });
+			toast.success(t("admin:cafe_shifts.success_delete"));
 		},
-		onError: () => {
+		onError: (err) => {
 			onClose();
+			toast.error(t("admin:cafe_shifts.error_delete"));
 		},
 	});
 

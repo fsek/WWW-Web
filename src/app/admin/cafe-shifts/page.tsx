@@ -14,7 +14,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 import AdminTable from "@/widgets/AdminTable";
 import formatTime from "@/help_functions/timeFormater";
-import type { CafeShiftCreate, CafeShiftRead } from "@/api";
+import type { CafeShiftRead } from "@/api";
 import useCreateTable from "@/widgets/useCreateTable";
 import { useTranslation } from "react-i18next";
 import type {
@@ -27,6 +27,8 @@ import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import MultiShiftsAddForm from "./MultiShiftAddForm";
+import { toast } from "sonner";
 
 // Column setup
 const columnHelper = createColumnHelper<CafeShiftRead>();
@@ -94,6 +96,10 @@ export default function CafeShifts() {
 		...createShiftMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: viewAllShiftsQueryKey() });
+			toast.success(t("admin:cafe_shifts.success_add"));
+		},
+		onError: (err) => {
+			toast.error(t("admin:cafe_shifts.error_add"));
 		},
 		throwOnError: false,
 	});
@@ -102,6 +108,10 @@ export default function CafeShifts() {
 		...deleteShiftMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: viewAllShiftsQueryKey() });
+			toast.success(t("admin:cafe_shifts.success_delete"));
+		},
+		onError: (err) => {
+			toast.error(t("admin:cafe_shifts.error_delete"));
 		},
 		throwOnError: false,
 	});
@@ -110,6 +120,10 @@ export default function CafeShifts() {
 		...updateShiftMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: viewAllShiftsQueryKey() });
+			toast.success(t("admin:cafe_shifts.success_edit"));
+		},
+		onError: (err) => {
+			toast.error(t("admin:cafe_shifts.error_edit"));
 		},
 		throwOnError: false,
 	});
@@ -169,8 +183,7 @@ export default function CafeShifts() {
 							},
 						},
 						{
-							onError: (err) =>
-								console.error(t("admin:cafe_shifts.error_add"), err),
+							onError: (err) => toast.error(t("admin:cafe_shifts.error_add")),
 						},
 					)
 				}
@@ -179,16 +192,13 @@ export default function CafeShifts() {
 						{ path: { shift_id: Number(id) } },
 						{
 							onError: (err) =>
-								console.error(
-									`${t("admin:cafe_shifts.error_delete")} ${id}`,
-									err,
-								),
+								toast.error(t("admin:cafe_shifts.error_delete")),
 						},
 					)
 				}
 				handleEdit={(event) => {
 					if (!event.id) {
-						console.error(t("admin:cafe_shifts.error_missing_id"), event);
+						toast.error(t("admin:cafe_shifts.error_missing_id"));
 						return;
 					}
 					editShift.mutate(
@@ -202,15 +212,12 @@ export default function CafeShifts() {
 							},
 						},
 						{
-							onError: (err) =>
-								console.error(
-									`${t("admin:cafe_shifts.error_edit")} ${event.id}`,
-									err,
-								),
+							onError: (err) => toast.error(t("admin:cafe_shifts.error_edit")),
 						},
 					);
 				}}
 			>
+				<MultiShiftsAddForm />
 				<div className="py-4">
 					<Tabs
 						value={tab}
