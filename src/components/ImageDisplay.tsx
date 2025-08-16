@@ -1,21 +1,16 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import {
+	getImageStreamOptions,
+	getImageOptions,
+	getNewsImageOptions,
+	getNewsImageStreamOptions,
+} from "@/api/@tanstack/react-query.gen";
 
 export type ImageKind = "image" | "news" | "event" | "user";
-
-export type ImgGetImageData = {
-	path: {
-		img_id: number;
-	};
-};
-
-export type NewsGetNewsImageData = {
-	path: {
-		news_id: number; 
-	};
-};
 
 export interface ImageDisplayProps
 	extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src"> {
@@ -23,13 +18,6 @@ export interface ImageDisplayProps
 	id: number;
 }
 
-/**
- * Base image display component.
- * - Chooses the correct backend route based on type, id and environment.
- * - Avoids stream endpoints in production for backend optimizations.
- * - For authorized images (non-news), fetches with credentials and renders a Blob URL.
- * - No styling; width/height and other <img> attributes are supported via props.
- */
 export default function ImageDisplay({
 	type,
 	id,
@@ -45,8 +33,7 @@ export default function ImageDisplay({
 	onError,
 	...imgProps
 }: ImageDisplayProps) {
-	const [hasError, setHasError] = useState(false);
-	const [blobUrl, setBlobUrl] = useState<string | undefined>(undefined);
+	const [src, setSrc] = useState<string | undefined>(undefined);
 	const lastBlobUrlRef = useRef<string | undefined>(undefined);
 
 	// Consider multiple env vars; default to non-production as "dev mode"
@@ -55,95 +42,104 @@ export default function ImageDisplay({
 			process.env.ENV ||
 			process.env.NODE_ENV) !== "production";
 
-	const baseUrl =
-		process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+	// Build query options using the generated helpers so auth & backend behavior are correct
 
-	// Build the canonical endpoint once (stream in dev, non-stream in prod)
-	const endpoint = useMemo(() => {
-		if (!id) return undefined;
-
-		if (devMode) {
-			switch (type) {
-				case "news":
-					return `${baseUrl}/news/${id}/image/stream`;
-				case "event":
-					return `${baseUrl}/events/${id}/image/stream`;
-				case "user":
-					return `${baseUrl}/users/${id}/image/stream`;
-				default:
-					return `${baseUrl}/img/stream/${id}`;
+	let queryOptions;
+	switch (type) {
+		case "news":
+			if (devMode) {
+				queryOptions = {
+					...getNewsImageStreamOptions({ path: { news_id: id } }),
+					enabled: !!id,
+				};
+			} else {
+				queryOptions = {
+					...getNewsImageOptions({ path: { news_id: id } }),
+					enabled: !!id,
+				};
 			}
-		} else {
-			switch (type) {
-				case "news":
-					return `${baseUrl}/news/${id}/image`;
-				case "event":
-					return `${baseUrl}/events/${id}/image`;
-				case "user":
-					return `${baseUrl}/users/${id}/image`;
-				default:
-					return `${baseUrl}/img/${id}`;
+			break;
+		// case "event":
+		// case "user":
+		default:
+			if (devMode) {
+				queryOptions = {
+					...getImageStreamOptions({ path: { img_id: id } }),
+					enabled: !!id,
+				};
+			} else {
+				queryOptions = {
+					...getImageOptions({ path: { img_id: id } }),
+					enabled: !!id,
+				};
 			}
-		}
-	}, [baseUrl, devMode, id, type]);
+			break;
+	}
 
-	// For protected resources (non-news), fetch as Blob with credentials
+	// Use unknown generic and cast options to any because generated helpers provide queryFn & keys
+	const query = useQuery<unknown>(queryOptions as any);
+
+	// Convert various possible response types to an image src (string or object URL)
 	useEffect(() => {
-		setHasError(false);
-
-		// Clean up any old object URL
+		// Cleanup previous object URL
 		if (lastBlobUrlRef.current) {
 			URL.revokeObjectURL(lastBlobUrlRef.current);
 			lastBlobUrlRef.current = undefined;
 		}
-		setBlobUrl(undefined);
+		setSrc(undefined);
 
-		if (!endpoint || !id) return;
+		if (!query.data) return;
 
-		// News images are public; use direct src
-		const needsAuth = type !== "news";
-		if (!needsAuth) return;
+		const data = query.data as unknown;
 
-		const ac = new AbortController();
-		(async () => {
+		// If backend returned a direct URL string, use it directly
+		if (typeof data === "string") {
+			setSrc(data);
+			return;
+		}
+
+		// If data is a Blob
+		if (typeof Blob !== "undefined" && data instanceof Blob) {
+			const url = URL.createObjectURL(data);
+			lastBlobUrlRef.current = url;
+			setSrc(url);
+			return;
+		}
+
+		// If data looks like ArrayBuffer / typed array, wrap into Blob
+		if (
+			data &&
+			(typeof (data as any).byteLength === "number" ||
+				ArrayBuffer.isView(data as any))
+		) {
 			try {
-				const res = await fetch(endpoint, {
-					method: "GET",
-					credentials: "include",
-					headers: {
-						Accept: "image/*",
-					},
-					signal: ac.signal,
-				});
-				if (!res.ok) {
-					throw new Error(`Image fetch failed: ${res.status}`);
-				}
-				const blob = await res.blob();
+				const blob = new Blob([data as any]);
 				const url = URL.createObjectURL(blob);
 				lastBlobUrlRef.current = url;
-				setBlobUrl(url);
-			} catch (_e) {
-				if (!ac.signal.aborted) {
-					setHasError(true);
-				}
+				setSrc(url);
+				return;
+			} catch {
+				// fallthrough to error handling below
 			}
-		})();
+		}
 
+		// Unknown data shape — mark no src
+		setSrc(undefined);
+	}, [query.data]);
+
+	// Cleanup on unmount
+	useEffect(() => {
 		return () => {
-			ac.abort();
 			if (lastBlobUrlRef.current) {
 				URL.revokeObjectURL(lastBlobUrlRef.current);
 				lastBlobUrlRef.current = undefined;
 			}
 		};
-	}, [endpoint, id, type]);
+	}, []);
 
-	if ((!endpoint && !blobUrl) || hasError) {
-		return null;
-	}
-
-	// Prefer fetched Blob URL for protected images; otherwise use endpoint directly
-	const src = blobUrl ?? endpoint;
+	// Show nothing while loading or if there is no usable src
+	if (query.isLoading || !src) return null;
+	if (query.isError) return null;
 
 	return (
 		<img
@@ -157,10 +153,7 @@ export default function ImageDisplay({
 			draggable={draggable}
 			onClick={onClick}
 			onLoad={onLoad}
-			onError={(e) => {
-				setHasError(true);
-				onError?.(e);
-			}}
+			onError={onError}
 			{...imgProps}
 		/>
 	);

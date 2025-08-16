@@ -8,7 +8,7 @@ export default function ImageTestPage() {
 		<main style={{ padding: 24 }}>
 			<h1>ImageDisplay Component Test</h1>
 			<section>
-				<h2>Small Image</h2>
+				<h2>Small Image (event)</h2>
 				<ImageDisplay
 					type="event"
 					id={1}
@@ -18,7 +18,7 @@ export default function ImageTestPage() {
 				/>
 			</section>
 			<section>
-				<h2>Medium Image</h2>
+				<h2>Medium Image (user)</h2>
 				<ImageDisplay
 					type="user"
 					id={1}
@@ -28,7 +28,7 @@ export default function ImageTestPage() {
 				/>
 			</section>
 			<section>
-				<h2>Large Image (Centered)</h2>
+				<h2>Large Image (Centered (news))</h2>
 				<div style={{ display: "flex", justifyContent: "center" }}>
 					<ImageDisplay
 						type="news"
@@ -54,7 +54,7 @@ export default function ImageTestPage() {
 					<h2>Right</h2>
 					<ImageDisplay
 						type="image"
-						id={2}
+						id={1}
 						alt="Sample 5"
 						width={120}
 						height={120}
