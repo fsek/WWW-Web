@@ -12,4 +12,4 @@ RUN apt update && apt install -y \
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs 
 
-ENV ENV=development
+ENV NEXT_PUBLIC_ENV=development

@@ -69,7 +69,7 @@ export default function MainPageNews({ mini = false }: MainPageNewsProps) {
 
 	const imageQueries = useQueries({
 		queries: paginatedNews.map((news) => ({
-			...getNewsImageOptions({ path: { news_id: news.id } }),
+			...getNewsImageOptions({ path: { news_id: news.id, size: "small" } }),
 			enabled: !!news.id,
 			refetchOnWindowFocus: false,
 		})),
