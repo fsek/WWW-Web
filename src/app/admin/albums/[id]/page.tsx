@@ -1,7 +1,6 @@
 "use client";
 
 import { Suspense, use, useState } from "react";
-import Image from "next/image";
 import {
 	useMutation,
 	useQueries,
@@ -10,8 +9,6 @@ import {
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import {
-	getImageOptions,
-	getImageStreamOptions,
 	getOneAlbumOptions,
 	uploadImageMutation,
 	deleteImageMutation,
@@ -59,22 +56,10 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 		data: album,
 		error,
 		refetch,
+		isPending: isAlbumLoading,
 	} = useSuspenseQuery({
 		...getOneAlbumOptions({ path: { album_id: albumId } }),
-	});
-
-	const imagesQueries = album.imgs.map((img) => ({
-		...getImageStreamOptions({ path: { img_id: img.id } }),
-		refreshOnWindowFocus: false,
-	}));
-	const result = useQueries({
-		queries: imagesQueries,
-		combine: (results) => {
-			return {
-				data: results.map((result) => result.data),
-				pending: results.some((result) => result.isPending),
-			};
-		},
+		refetchOnWindowFocus: false,
 	});
 
 	if (Number.isNaN(albumId)) {
@@ -199,13 +184,12 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 				</div>
 				<div className="w-full place-content-center ">
 					<div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-2 items-center place-items-center">
-						{result.pending ? (
+						{isAlbumLoading ? (
 							<div className="col-span-full">
 								<LoadingErrorCard isLoading={true} />
 							</div>
 						) : (
-							result.data.map((img, index) => {
-								const url = URL.createObjectURL(img as Blob);
+							album.imgs.map((img, index) => {
 								return (
 									<div
 										key={`${album.imgs[index].id}-${index}`}
