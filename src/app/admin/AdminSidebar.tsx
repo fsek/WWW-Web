@@ -20,6 +20,7 @@ import {
 	Gauge,
 	ListMusic,
 	Music3,
+	Images,
 } from "lucide-react";
 
 import {
@@ -75,6 +76,12 @@ const groups: AdminGroup[] = [
 				url: "/admin/documents",
 				permissions: [[action.MANAGE, target.DOCUMENT]],
 				icon: FileText,
+			},
+			{
+				title: "admin:albums.self",
+				url: "/admin/albums",
+				permissions: [[action.MANAGE, target.GALLERY]],
+				icon: Images,
 			},
 			{
 				title: "admin:member.self",
@@ -196,7 +203,7 @@ export function AdminSidebar() {
 	return (
 		<Sidebar className="text-foreground ">
 			<SidebarHeader className="px-6 py-4 decoration-3 items-center bg-[#fa7909]">
-				<h2 className="text-2xl mt-2">{t("admin:title")}</h2>
+				<h2 className="text-2xl mt-2 transition-colors">{t("admin:title")}</h2>
 			</SidebarHeader>
 			<SidebarContent className="px-2 gap-2 bg-[#fa7909]">
 				{groups.map(({ title, entries }, groupIndex) => (
@@ -231,8 +238,8 @@ export function AdminSidebar() {
 																	href={item.url}
 																	className="flex items-center gap-3"
 																>
-																	<item.icon className="h-4 w-4 shrink-0" />
-																	<span className="text-sm">
+																	<item.icon className="h-4 w-4 shrink-0 transition-colors" />
+																	<span className="text-sm transition-colors">
 																		{t(item.title)}
 																	</span>
 																</Link>
