@@ -735,7 +735,7 @@
 	},
 	"cafe_shifts": {
 		"title": "Cafépass",
-		"description": "Skapa och hantera cafépasser. Använd kalendern eller listan för att lägga till, redigera och tilldela pass. Knappen nedan använder du för att lägga till flera pass åt gången. Konfigurationen bestämmer om passen läggs till under hela dagen (Heldag), eller endast innan 13 eller efter 13 (Förmiddag och Eftermiddag). Oavsett läggs passen in mellan klockan 08-10, 10-13, 13-15, 15-17.",
+		"description": "Skapa och hantera cafépasser. Använd kalendern eller listan för att lägga till, redigera och tilldela pass. Knappen nedan använder du för att lägga till flera pass åt gången. Passen läggs in mellan klockan 08-10, 10-13 varje arbetsdag.",
 		"create_shift": "Skapa pass",
 		"edit_shift": "Redigera pass",
 		"assigned_user": "Tilldelad användare",
@@ -764,7 +764,6 @@
 			"description": "Skapa flera pass över flera veckor. Du kan välja en start- och slutvecka (inklusive) och max 4 veckor om gången.",
 			"start": "Startvecka",
 			"end": "Slutvecka",
-			"configuration": "Konfiguration, se sidbeskrivning för mer information.",
 			"full": "Heldag",
 			"morning": "Förmiddag",
 			"afternoon": "Eftermiddag"

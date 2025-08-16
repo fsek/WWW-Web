@@ -47,7 +47,6 @@ const shiftsSchema = z
 	.object({
 		start: z.date(),
 		end: z.date(), // this is inclusive
-		configuration: z.enum(["full", "morning", "afternoon"]).default("full"),
 	})
 	.refine(
 		(data) => {
@@ -87,7 +86,6 @@ export default function MultiShiftsAddForm() {
 		defaultValues: {
 			start: new Date(Date.now()),
 			end: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 1 week later
-			configuration: "full",
 		},
 	});
 
@@ -118,7 +116,6 @@ export default function MultiShiftsAddForm() {
 			body: {
 				startWeekStart: startWeekStart,
 				endWeekStart: endWeekStart,
-				configuration: values.configuration,
 			},
 		});
 	}
@@ -193,53 +190,6 @@ export default function MultiShiftsAddForm() {
 														? `V.${getISOWeekInfo(field.value).week}`
 														: ""}
 												</div>
-											</div>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-
-								<FormField
-									control={shiftsForm.control}
-									name={"configuration"}
-									render={({ field }) => (
-										<FormItem className="lg:col-span-2">
-											<FormLabel>
-												{t("admin:cafe_shifts.multi.configuration")}
-											</FormLabel>
-											<div className="flex gap-4 mt-2">
-												<label className="flex items-center gap-2">
-													<input
-														type="radio"
-														name={field.name}
-														value="full"
-														checked={field.value === "full"}
-														onChange={(e) => field.onChange(e.target.value)}
-													/>
-													<span>{t("admin:cafe_shifts.multi.full")}</span>
-												</label>
-
-												<label className="flex items-center gap-2">
-													<input
-														type="radio"
-														name={field.name}
-														value="morning"
-														checked={field.value === "morning"}
-														onChange={(e) => field.onChange(e.target.value)}
-													/>
-													<span>{t("admin:cafe_shifts.multi.morning")}</span>
-												</label>
-
-												<label className="flex items-center gap-2">
-													<input
-														type="radio"
-														name={field.name}
-														value="afternoon"
-														checked={field.value === "afternoon"}
-														onChange={(e) => field.onChange(e.target.value)}
-													/>
-													<span>{t("admin:cafe_shifts.multi.afternoon")}</span>
-												</label>
 											</div>
 											<FormMessage />
 										</FormItem>

@@ -734,7 +734,7 @@
 	},
 	"cafe_shifts": {
 		"title": "Cafe Shifts",
-		"description": "Create and manage cafe shift slots. Use the calendar or list to add, edit, and assign shifts. Use the button below to add multiple shifts at once. The configuration determines whether the shifts are added for the entire day (Full day) or only before 13:00 or after 13:00 (Morning and Afternoon). Regardless, the shifts are added between 08:00-10:00, 10:00-13:00, 13:00-15:00, and 15:00-17:00.",
+		"description": "Create and manage cafe shift slots. Use the calendar or list to add, edit, and assign shifts. Use the button below to add multiple shifts at once. The shifts are added between 08:00-10:00, 10:00-13:00 on each work day.",
 		"create_shift": "Create Shift",
 		"edit_shift": "Edit Shift",
 		"assigned_user": "Assigned User",
@@ -763,7 +763,6 @@
 			"description": "Create multiple shifts across weeks. You can select a start and end week (inclusive) and max 4 weeks at a time.",
 			"start": "Start Week",
 			"end": "End Week",
-			"configuration": "Configuration, see page description for what these mean.",
 			"full": "Full day",
 			"morning": "Morning",
 			"afternoon": "Afternoon"
