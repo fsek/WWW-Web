@@ -3,11 +3,11 @@
 import TitleBanner from "@/components/TitleBanner";
 import CustomTitle from "@/components/CustomTitle";
 import mh from "@/assets/mh.jpg";
-import { useTranslation } from 'react-i18next';
-import { Card } from '@/components/ui/card';
-import EmergencyCard from './EmergencyCard';
-import ContactCard from './ContactCard';
-import { useRouter } from 'next/navigation';
+import { useTranslation } from "react-i18next";
+import { Card } from "@/components/ui/card";
+import EmergencyCard from "./EmergencyCard";
+import ContactCard from "./ContactCard";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ContactPage() {
@@ -49,8 +49,13 @@ export default function ContactPage() {
 
 				<div className="flex-grow">
 					<div className="flex flex-col p-14 gap-4">
-						<CustomTitle text={t("board.self")} size={4} id="board" className="scroll-mt-20" />
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						<CustomTitle
+							text={t("board.self")}
+							size={4}
+							id="board"
+							className="scroll-mt-20"
+						/>
+						<div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
 							<ContactCard
 								id="ordf"
 								title={t("board.ordf")}
@@ -88,8 +93,13 @@ export default function ContactPage() {
 							/>
 						</div>
 
-						<CustomTitle text={t("other.self")} size={4} id="other" className="scroll-mt-20" />
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						<CustomTitle
+							text={t("other.self")}
+							size={4}
+							id="other"
+							className="scroll-mt-20"
+						/>
+						<div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
 							<ContactCard
 								id="facilities"
 								title={t("other.facilities")}
@@ -169,8 +179,13 @@ export default function ContactPage() {
 							/>
 						</div>
 
-						<CustomTitle text={t("corp.self")} size={4} id="foretag" className="scroll-mt-20" />
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						<CustomTitle
+							text={t("corp.self")}
+							size={4}
+							id="foretag"
+							className="scroll-mt-20"
+						/>
+						<div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
 							<ContactCard
 								id="naringslivsansvarig"
 								title={t("corp.naringslivsansvarig")}
@@ -194,8 +209,13 @@ export default function ContactPage() {
 							/>
 						</div>
 
-						<CustomTitle text={t("web.self")} size={4} id="web" className="scroll-mt-20" />
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+						<CustomTitle
+							text={t("web.self")}
+							size={4}
+							id="web"
+							className="scroll-mt-20"
+						/>
+						<div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
 							<ContactCard
 								id="spindelforman"
 								title={t("web.spider")}
@@ -214,6 +234,6 @@ export default function ContactPage() {
 					</div>
 				</div>
 			</div>
-		</div >
+		</div>
 	);
 }

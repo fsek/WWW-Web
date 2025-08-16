@@ -856,7 +856,16 @@ const DateTimePicker = React.forwardRef<
 						)}
 					</Button>
 				</PopoverTrigger>
-				<PopoverContent className="w-auto p-0">
+				<PopoverContent
+					className="w-auto p-0"
+					side={
+						// This is a workaround for radix-ui not allowing fallback side selection
+						// see: https://github.com/radix-ui/primitives/issues/3101
+						typeof window !== "undefined" && window.innerHeight > 700
+							? "top"
+							: "right"
+					}
+				>
 					<Calendar
 						mode="single"
 						selected={displayDate}
