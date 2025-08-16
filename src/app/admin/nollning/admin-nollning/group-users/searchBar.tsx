@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Suspense, useRef, useState } from "react";
 import StartYearFilter from "./YearFilter";
-import SearchResults from "./searchResults";
+import SearchResults from "@/components/userSearchResults";
 import {} from "@radix-ui/react-popover";
 import {
 	PopoverTrigger,

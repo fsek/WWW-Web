@@ -59,6 +59,7 @@ interface CalendarProps {
 	enableRoomBookingProperties?: boolean;
 	defaultRoom?: "LC" | "Alumni" | "SK";
 	onDateRangeChange?: (start: Date, end: Date) => void;
+	enableCafeShiftProperties?: boolean;
 }
 
 export default function Calendar({
@@ -77,6 +78,7 @@ export default function Calendar({
 	enableRoomBookingProperties = false,
 	defaultRoom = "LC",
 	onDateRangeChange,
+	enableCafeShiftProperties,
 }: CalendarProps) {
 	const { i18n, t } = useTranslation();
 	const {
@@ -127,45 +129,51 @@ export default function Calendar({
 			all_day: info.event.allDay,
 			...(enableTrueEventProperties
 				? {
-					council_id: info.event.extendedProps.council_id,
-					council_name_sv: info.event.extendedProps.council_name_sv,
-					council_name_en: info.event.extendedProps.council_name_en,
-					title_en: info.event.extendedProps.title_en,
-					description_en: info.event.extendedProps.description_en,
-					location: info.event.extendedProps.location,
-					max_event_users: info.event.extendedProps.max_event_users,
-					priorities: info.event.extendedProps.priorities,
-					signup_start: new Date(info.event.extendedProps.signup_start),
-					signup_end: new Date(info.event.extendedProps.signup_end),
-					recurring: info.event.extendedProps.recurring,
-					food: info.event.extendedProps.food,
-					closed: info.event.extendedProps.closed,
-					can_signup: info.event.extendedProps.can_signup,
-					drink_package: info.event.extendedProps.drink_package,
-					is_nollning_event: info.event.extendedProps.is_nollning_event,
-					alcohol_event_type: info.event.extendedProps.alcohol_event_type,
-					dress_code: info.event.extendedProps.dress_code,
-					price: info.event.extendedProps.price,
-					dot: info.event.extendedProps.dot,
-				}
+						council_id: info.event.extendedProps.council_id,
+						council_name_sv: info.event.extendedProps.council_name_sv,
+						council_name_en: info.event.extendedProps.council_name_en,
+						title_en: info.event.extendedProps.title_en,
+						description_en: info.event.extendedProps.description_en,
+						location: info.event.extendedProps.location,
+						max_event_users: info.event.extendedProps.max_event_users,
+						priorities: info.event.extendedProps.priorities,
+						signup_start: new Date(info.event.extendedProps.signup_start),
+						signup_end: new Date(info.event.extendedProps.signup_end),
+						recurring: info.event.extendedProps.recurring,
+						food: info.event.extendedProps.food,
+						closed: info.event.extendedProps.closed,
+						can_signup: info.event.extendedProps.can_signup,
+						drink_package: info.event.extendedProps.drink_package,
+						is_nollning_event: info.event.extendedProps.is_nollning_event,
+						alcohol_event_type: info.event.extendedProps.alcohol_event_type,
+						dress_code: info.event.extendedProps.dress_code,
+						price: info.event.extendedProps.price,
+						dot: info.event.extendedProps.dot,
+					}
 				: {}),
 			...(enableCarProperties
 				? {
-					personal: info.event.extendedProps.personal,
-					council_id: info.event.extendedProps.council_id,
-					confirmed: info.event.extendedProps.confirmed,
-					council_name_sv: info.event.extendedProps.council_name_sv,
-					council_name_en: info.event.extendedProps.council_name_en,
-					user_id: info.event.extendedProps.user_id,
-				}
+						personal: info.event.extendedProps.personal,
+						council_id: info.event.extendedProps.council_id,
+						confirmed: info.event.extendedProps.confirmed,
+						council_name_sv: info.event.extendedProps.council_name_sv,
+						council_name_en: info.event.extendedProps.council_name_en,
+						user_id: info.event.extendedProps.user_id,
+					}
 				: {}),
 			...(enableRoomBookingProperties
 				? {
-					room: info.event.extendedProps.room,
-					council_id: info.event.extendedProps.council_id,
-					council_name_sv: info.event.extendedProps.council_name_sv,
-					council_name_en: info.event.extendedProps.council_name_en,
-				}
+						room: info.event.extendedProps.room,
+						council_id: info.event.extendedProps.council_id,
+						council_name_sv: info.event.extendedProps.council_name_sv,
+						council_name_en: info.event.extendedProps.council_name_en,
+					}
+				: {}),
+			...(enableCafeShiftProperties
+				? {
+						user_id: info.event.extendedProps.user_id,
+						user_name: info.event.extendedProps.user_name,
+					}
 				: {}),
 		};
 
@@ -189,45 +197,51 @@ export default function Calendar({
 			all_day: info.event.allDay,
 			...(enableTrueEventProperties
 				? {
-					council_id: info.event.extendedProps.council_id,
-					council_name_sv: info.event.extendedProps.council_name_sv,
-					council_name_en: info.event.extendedProps.council_name_en,
-					title_en: info.event.extendedProps.title_en,
-					description_en: info.event.extendedProps.description_en,
-					location: info.event.extendedProps.location,
-					max_event_users: info.event.extendedProps.max_event_users,
-					priorities: info.event.extendedProps.priorities,
-					signup_start: new Date(info.event.extendedProps.signup_start),
-					signup_end: new Date(info.event.extendedProps.signup_end),
-					recurring: info.event.extendedProps.recurring,
-					food: info.event.extendedProps.food,
-					closed: info.event.extendedProps.closed,
-					can_signup: info.event.extendedProps.can_signup,
-					drink_package: info.event.extendedProps.drink_package,
-					is_nollning_event: info.event.extendedProps.is_nollning_event,
-					alcohol_event_type: info.event.extendedProps.alcohol_event_type,
-					dress_code: info.event.extendedProps.dress_code,
-					price: info.event.extendedProps.price,
-					dot: info.event.extendedProps.dot,
-				}
+						council_id: info.event.extendedProps.council_id,
+						council_name_sv: info.event.extendedProps.council_name_sv,
+						council_name_en: info.event.extendedProps.council_name_en,
+						title_en: info.event.extendedProps.title_en,
+						description_en: info.event.extendedProps.description_en,
+						location: info.event.extendedProps.location,
+						max_event_users: info.event.extendedProps.max_event_users,
+						priorities: info.event.extendedProps.priorities,
+						signup_start: new Date(info.event.extendedProps.signup_start),
+						signup_end: new Date(info.event.extendedProps.signup_end),
+						recurring: info.event.extendedProps.recurring,
+						food: info.event.extendedProps.food,
+						closed: info.event.extendedProps.closed,
+						can_signup: info.event.extendedProps.can_signup,
+						drink_package: info.event.extendedProps.drink_package,
+						is_nollning_event: info.event.extendedProps.is_nollning_event,
+						alcohol_event_type: info.event.extendedProps.alcohol_event_type,
+						dress_code: info.event.extendedProps.dress_code,
+						price: info.event.extendedProps.price,
+						dot: info.event.extendedProps.dot,
+					}
 				: {}),
 			...(enableCarProperties
 				? {
-					personal: info.event.extendedProps.personal,
-					council_id: info.event.extendedProps.council_id,
-					confirmed: info.event.extendedProps.confirmed,
-					council_name_sv: info.event.extendedProps.council_name_sv,
-					council_name_en: info.event.extendedProps.council_name_en,
-					user_id: info.event.extendedProps.user_id,
-				}
+						personal: info.event.extendedProps.personal,
+						council_id: info.event.extendedProps.council_id,
+						confirmed: info.event.extendedProps.confirmed,
+						council_name_sv: info.event.extendedProps.council_name_sv,
+						council_name_en: info.event.extendedProps.council_name_en,
+						user_id: info.event.extendedProps.user_id,
+					}
 				: {}),
 			...(enableRoomBookingProperties
 				? {
-					room: info.event.extendedProps.room,
-					council_id: info.event.extendedProps.council_id,
-					council_name_sv: info.event.extendedProps.council_name_sv,
-					council_name_en: info.event.extendedProps.council_name_en,
-				}
+						room: info.event.extendedProps.room,
+						council_id: info.event.extendedProps.council_id,
+						council_name_sv: info.event.extendedProps.council_name_sv,
+						council_name_en: info.event.extendedProps.council_name_en,
+					}
+				: {}),
+			...(enableCafeShiftProperties
+				? {
+						user_id: info.event.extendedProps.user_id,
+						user_name: info.event.extendedProps.user_name,
+					}
 				: {}),
 		};
 
@@ -245,45 +259,51 @@ export default function Calendar({
 			all_day: info.oldEvent.allDay,
 			...(enableTrueEventProperties
 				? {
-					council_id: info.oldEvent.extendedProps.council_id,
-					council_name_sv: info.oldEvent.extendedProps.council_name_sv,
-					council_name_en: info.oldEvent.extendedProps.council_name_en,
-					title_en: info.oldEvent.extendedProps.title_en,
-					description_en: info.oldEvent.extendedProps.description_en,
-					location: info.oldEvent.extendedProps.location,
-					max_event_users: info.oldEvent.extendedProps.max_event_users,
-					priorities: info.oldEvent.extendedProps.priorities,
-					signup_start: new Date(info.oldEvent.extendedProps.signup_start),
-					signup_end: new Date(info.oldEvent.extendedProps.signup_end),
-					recurring: info.oldEvent.extendedProps.recurring,
-					food: info.oldEvent.extendedProps.food,
-					closed: info.oldEvent.extendedProps.closed,
-					can_signup: info.oldEvent.extendedProps.can_signup,
-					drink_package: info.oldEvent.extendedProps.drink_package,
-					is_nollning_event: info.oldEvent.extendedProps.is_nollning_event,
-					alcohol_event_type: info.oldEvent.extendedProps.alcohol_event_type,
-					dress_code: info.oldEvent.extendedProps.dress_code,
-					price: info.oldEvent.extendedProps.price,
-					dot: info.oldEvent.extendedProps.dot,
-				}
+						council_id: info.oldEvent.extendedProps.council_id,
+						council_name_sv: info.oldEvent.extendedProps.council_name_sv,
+						council_name_en: info.oldEvent.extendedProps.council_name_en,
+						title_en: info.oldEvent.extendedProps.title_en,
+						description_en: info.oldEvent.extendedProps.description_en,
+						location: info.oldEvent.extendedProps.location,
+						max_event_users: info.oldEvent.extendedProps.max_event_users,
+						priorities: info.oldEvent.extendedProps.priorities,
+						signup_start: new Date(info.oldEvent.extendedProps.signup_start),
+						signup_end: new Date(info.oldEvent.extendedProps.signup_end),
+						recurring: info.oldEvent.extendedProps.recurring,
+						food: info.oldEvent.extendedProps.food,
+						closed: info.oldEvent.extendedProps.closed,
+						can_signup: info.oldEvent.extendedProps.can_signup,
+						drink_package: info.oldEvent.extendedProps.drink_package,
+						is_nollning_event: info.oldEvent.extendedProps.is_nollning_event,
+						alcohol_event_type: info.oldEvent.extendedProps.alcohol_event_type,
+						dress_code: info.oldEvent.extendedProps.dress_code,
+						price: info.oldEvent.extendedProps.price,
+						dot: info.oldEvent.extendedProps.dot,
+					}
 				: {}),
 			...(enableCarProperties
 				? {
-					personal: info.oldEvent.extendedProps.personal,
-					council_id: info.oldEvent.extendedProps.council_id,
-					confirmed: info.oldEvent.extendedProps.confirmed,
-					council_name_sv: info.oldEvent.extendedProps.council_name_sv,
-					council_name_en: info.oldEvent.extendedProps.council_name_en,
-					user_id: info.oldEvent.extendedProps.user_id,
-				}
+						personal: info.oldEvent.extendedProps.personal,
+						council_id: info.oldEvent.extendedProps.council_id,
+						confirmed: info.oldEvent.extendedProps.confirmed,
+						council_name_sv: info.oldEvent.extendedProps.council_name_sv,
+						council_name_en: info.oldEvent.extendedProps.council_name_en,
+						user_id: info.oldEvent.extendedProps.user_id,
+					}
 				: {}),
 			...(enableRoomBookingProperties
 				? {
-					room: info.oldEvent.extendedProps.room,
-					council_id: info.oldEvent.extendedProps.council_id,
-					council_name_sv: info.oldEvent.extendedProps.council_name_sv,
-					council_name_en: info.oldEvent.extendedProps.council_name_en,
-				}
+						room: info.oldEvent.extendedProps.room,
+						council_id: info.oldEvent.extendedProps.council_id,
+						council_name_sv: info.oldEvent.extendedProps.council_name_sv,
+						council_name_en: info.oldEvent.extendedProps.council_name_en,
+					}
+				: {}),
+			...(enableCafeShiftProperties
+				? {
+						user_id: info.oldEvent.extendedProps.user_id,
+						user_name: info.oldEvent.extendedProps.user_name,
+					}
 				: {}),
 		};
 
@@ -300,8 +320,8 @@ export default function Calendar({
 		return (
 			<div className="overflow-hidden w-full">
 				{info.view.type === "dayGridMonth" ||
-					info.view.type === "dayGridWeek" ||
-					info.view.type === "dayGridDay" ? (
+				info.view.type === "dayGridWeek" ||
+				info.view.type === "dayGridDay" ? (
 					<div
 						style={{ backgroundColor: info.backgroundColor }}
 						className={
@@ -428,6 +448,7 @@ export default function Calendar({
 				isMobile={isMobile}
 				enableRoomBookingProperties={enableRoomBookingProperties}
 				defaultRoom={defaultRoom}
+				enableCafeShiftProperties={enableCafeShiftProperties}
 			/>
 
 			<Card className={`${isMobile ? "p-1" : "p-3"} flex-1`}>
@@ -528,6 +549,7 @@ export default function Calendar({
 					enableCarProperties={enableCarProperties}
 					disableConfirmField={disableConfirmField}
 					enableRoomBookingProperties={enableRoomBookingProperties}
+					enableCafeShiftProperties={enableCafeShiftProperties}
 				/>
 			)}
 
@@ -543,6 +565,7 @@ export default function Calendar({
 				disableConfirmField={disableConfirmField}
 				disableEditOfOthers={disableEditOfOthers}
 				enableRoomBookingProperties={enableRoomBookingProperties}
+				enableCafeShiftProperties={enableCafeShiftProperties}
 			/>
 		</div>
 	);

@@ -1,0 +1,30 @@
+{
+	"cafe_shifts": {
+		"title": "Café shifts",
+		"description_title": "About café shifts",
+		"description_long_text": "Here you can view and sign up for café shifts. Click a shift in the calendar to see details and sign up if available.",
+		"faq": {
+			"title": "FAQ",
+			"q1": "What do the colors mean?",
+			"a1": "Orange: your shifts. Green: shifts taken by others. Blue: available shifts.",
+			"q2": "Who can work in the café?",
+			"a2": "All members of the F-guild are welcome to work in the café.",
+			"q3": "I have more questions!",
+			"a3": "Contact the Head of the Café or the Cardinal Beetle at cafe@fsektionen.se."
+		}
+	},
+	"no_shift_selected": "No shift selected.",
+	"back": "Back",
+	"shift_details": "Shift details",
+	"shift_information": "Shift information",
+	"assigned_to": "Assigned to",
+	"unassigned": "Unassigned",
+	"email": "Email",
+	"telephone_number": "Telephone number",
+	"stil_id": "Stil ID",
+	"signoff": "Sign off",
+	"signup": "Sign up",
+	"shift_timing": "Shift timing",
+	"start_time": "Start time",
+	"end_time": "End time"
+}

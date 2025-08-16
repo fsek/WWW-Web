@@ -11,7 +11,9 @@
 	"newsTitle": "Nyheter",
 	"newsText": "Om du vill använda bilder eller mer avancerad formatering, använd Mattermost tills vi har lagt till ordentligt stöd.",
 	"cafeTitle": "Hilbert Café",
-	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang.",
+	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang. Cafét har även en egen sida att tillgå, och du kan nu skriva upp dig på cafépass på en annan sida.",
+	"cafe_shift_button": "Skriv upp dig på ett pass",
+	"cafe_page_button": "Huvudsidan för caféet",
 	"coolThing": "En cool grej som distraherar dig från att se att sidan inte är klar än",
 	"back": "Tillbaka",
 	"faq": {
@@ -30,7 +32,7 @@
 		},
 		"q4": {
 			"question": "Vad har ni kvar att flytta över?",
-			"answer": "Hyfsat mycket (hemsidan är förfärligt stor!). För att titta på bilder, boka lokaler, hitta advancerad kontaktinfo, läsa styrdokumenten eller gamla dokument vi inte har laddat över än, sjunga sånger från sångboken, använda motionsmaskinen och val i allmänhet kan du använda gamla hemsidan. Vi kommer inom kort att lägga till event signup också, tills dess får du vänta."
+			"answer": "Hyfsat mycket (hemsidan är förfärligt stor!). För att titta på bilder, läsa styrdokumenten i samlad form (de finns tillgängliga genom dokumentarkivet om du vet deras namn), använda motionsmaskinen och val i allmänhet kan du använda gamla hemsidan. Vi jobbar så hårt vi kan och orkar på att allt ska finnas på nya hemsidan 🧡."
 		},
 		"q5": {
 			"question": "Hjälp! Jag har ingen av mina gamla adminrättigheter!",

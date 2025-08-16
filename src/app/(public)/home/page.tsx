@@ -128,6 +128,30 @@ export default function MainLanding() {
 						className="text-center text-2xl font-bold mt-4 mb-2"
 					/>
 					<div className="text-left text-lg mb-8">{t("main:cafeText")}</div>
+					<div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-3 justify-center">
+						<Button
+							variant="outline"
+							className="w-full md:w-auto text-xl py-3 px-6 rounded-lg flex items-center justify-center gap-2"
+						>
+							<Link
+								href="/cafe"
+								className=" w-full md:w-auto flex justify-center to-primary-light from-primary bg-gradient-to-t text-transparent bg-clip-text"
+							>
+								{t("main:cafe_page_button")}
+							</Link>
+						</Button>
+						<Button
+							variant="outline"
+							className="w-full md:w-auto text-xl py-3 px-6 rounded-lg flex items-center justify-center gap-2"
+						>
+							<Link
+								href="/cafe-shifts"
+								className=" w-full md:w-auto flex justify-center to-primary-light from-primary bg-gradient-to-t text-transparent bg-clip-text"
+							>
+								{t("main:cafe_shift_button")}
+							</Link>
+						</Button>
+					</div>
 
 					<CustomTitle
 						text={t("main:coolThing")}

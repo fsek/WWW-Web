@@ -1,0 +1,30 @@
+{
+	"cafe_shifts": {
+		"title": "Cafépass",
+		"description_title": "Om cafépassen",
+		"description_long_text": "Här kan du se och anmäla dig till cafépass. Klicka på ett pass i kalendern för att se detaljer och anmäla dig om det är ledigt.",
+		"faq": {
+			"title": "Vanliga frågor",
+			"q1": "Vad betyder färgerna?",
+			"a1": "Orange: dina pass. Grön: upptagna pass av andra. Blå: lediga pass.",
+			"q2": "Vem får arbeta i caféet?",
+			"a2": "Alla medlemmar i F-sektionen får arbeta i caféet.",
+			"q3": "Jag har fler frågor!",
+			"a3": "Kontakta Cafemästaren eller Kardinalbagge på cafe@fsektionen.se."
+		}
+	},
+	"no_shift_selected": "Inget pass valt.",
+	"back": "Tillbaka",
+	"shift_details": "Passdetaljer",
+	"shift_information": "Passinformation",
+	"assigned_to": "Tilldelad",
+	"unassigned": "Otildelat",
+	"email": "E-post",
+	"telephone_number": "Telefonnummer",
+	"stil_id": "Stil ID",
+	"signoff": "Avanmäl",
+	"signup": "Anmäl",
+	"shift_timing": "Passets tider",
+	"start_time": "Start",
+	"end_time": "Slut"
+}
