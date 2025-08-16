@@ -21,7 +21,14 @@ import { useTranslation } from "react-i18next";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { toast } from "sonner";
 
-// Returns week number, and the Monday (week start) for a given Date
+/**
+ * Calculates the ISO week number and the Monday (start of the ISO week) for a given date.
+ *
+ * @param {Date} date - The date for which to calculate the ISO week information.
+ * @returns {{ week: number, weekStart: Date }} An object containing:
+ *   - week: The ISO week number (1-based).
+ *   - weekStart: A Date object representing the Monday (start) of the ISO week in UTC, at midnight.
+ */
 function getISOWeekInfo(date: Date) {
 	// work in UTC to avoid timezone edge cases
 	const tmp = new Date(

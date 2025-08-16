@@ -33,39 +33,12 @@ import {
 	IdCard,
 } from "lucide-react";
 
+import viewingUserGotUserPerms from "@/utils/viewingUserGotUserPerms";
+
 interface CafeShiftPageProps {
 	params: Promise<{
 		id: string;
 	}>;
-}
-
-function viewingUserGotPerms(
-	userData: AdminUserRead | undefined,
-	userError: Error | null,
-	userIsFetching: boolean,
-): boolean {
-	if (userIsFetching) {
-		return false;
-	}
-	if (userError !== null || !userData) {
-		return false;
-	}
-
-	if (userData.posts) {
-		const hasPerm = userData.posts.some((post) => {
-			const found = post.permissions.some((permission) => {
-				const match =
-					(permission.action.toLowerCase() === "manage" &&
-						permission.target.toLowerCase() === "user") ||
-					(permission.action.toLowerCase() === "view" &&
-						permission.target.toLowerCase() === "user");
-				return match;
-			});
-			return found;
-		});
-		return hasPerm;
-	}
-	return false;
 }
 
 export default function CafeShiftPage({ params }: CafeShiftPageProps) {
@@ -96,7 +69,11 @@ export default function CafeShiftPage({ params }: CafeShiftPageProps) {
 	});
 
 	// 3. Check permissions based on user data
-	const userHasPerms = viewingUserGotPerms(userData, userError, userIsFetching);
+	const userHasPerms = viewingUserGotUserPerms(
+		userData,
+		userError,
+		userIsFetching,
+	);
 
 	// 4. Finally fetch user details - enabled if permissions and shift data exist
 	const { data: assignedUserDetails, error: userDetailsError } = useQuery({

@@ -66,7 +66,7 @@ export default function CafeShiftFormFields<T extends ShiftFormCompatible>({
 			popoverRef.current &&
 			!popoverRef.current.contains(event.relatedTarget)
 		) {
-			setTimeout(() => setResultsOpen(false), 10000);
+			setTimeout(() => setResultsOpen(false), 200);
 		}
 	};
 

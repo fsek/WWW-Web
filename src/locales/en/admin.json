@@ -774,6 +774,7 @@
 		"view_song": "View Song Details"
 	},
 	"cafe_shifts": {
+		"self": "Cafe Shifts",
 		"title": "Cafe Shifts",
 		"description": "Create and manage cafe shift slots. Use the calendar or list to add, edit, and assign shifts. Use the button below to add multiple shifts at once. The shifts are added between 08:00-10:00, 10:00-13:00 on each work day.",
 		"create_shift": "Create Shift",

@@ -775,6 +775,7 @@
 		"view_song": "Visa sångdetaljer"
 	},
 	"cafe_shifts": {
+		"self": "Cafépass",
 		"title": "Cafépass",
 		"description": "Skapa och hantera cafépasser. Använd kalendern eller listan för att lägga till, redigera och tilldela pass. Knappen nedan använder du för att lägga till flera pass åt gången. Passen läggs in mellan klockan 08-10, 10-13 varje arbetsdag.",
 		"create_shift": "Skapa pass",

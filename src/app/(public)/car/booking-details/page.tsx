@@ -28,35 +28,12 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import type { AdminUserRead } from "@/api/index";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import viewingUserGotUserPerms from "@/utils/viewingUserGotUserPerms";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
 	const num = Number(value);
 	return Number.isNaN(num) ? -1 : num;
-}
-
-function viewingUserGotPerms(
-	userData: AdminUserRead | undefined,
-	userError: Error | null,
-	userIsFetching: boolean,
-): boolean {
-	if (userIsFetching) return false;
-	if (userError !== null || !userData) {
-		return false;
-	}
-
-	if (userData.posts) {
-		return userData.posts.some((post) =>
-			post.permissions.some(
-				(permission) =>
-					(permission.action.toLowerCase() === "manage" &&
-						permission.target.toLowerCase() === "user") ||
-					(permission.action.toLowerCase() === "view" &&
-						permission.target.toLowerCase() === "user"),
-			),
-		);
-	}
-	return false;
 }
 
 export default function Page() {
@@ -90,7 +67,11 @@ export default function Page() {
 	});
 
 	// 3. Check permissions based on user data
-	const userHasPerms = viewingUserGotPerms(userData, userError, userIsFetching);
+	const userHasPerms = viewingUserGotUserPerms(
+		userData,
+		userError,
+		userIsFetching,
+	);
 
 	// 4. Finally fetch user details - enabled if permissions and bookingData exist
 	const { data: userDetails, error: userDetailsError } = useQuery({
