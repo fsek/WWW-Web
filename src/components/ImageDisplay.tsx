@@ -39,11 +39,7 @@ export default function ImageDisplay({
 	const [src, setSrc] = useState<string | undefined>(undefined);
 	const lastBlobUrlRef = useRef<string | undefined>(undefined);
 
-	// Consider multiple env vars; default to non-production as "dev mode"
-	const devMode =
-		(process.env.NEXT_PUBLIC_APP_ENV ||
-			process.env.ENV ||
-			process.env.NODE_ENV) !== "production";
+	const devMode = process.env.ENV === "development";
 
 	// Build query options using the generated helpers so auth & backend behavior are correct
 
@@ -145,8 +141,8 @@ export default function ImageDisplay({
 	}, []);
 
 	// Show nothing while loading or if there is no usable src
-	if (query.isLoading || !src) return null;
-	if (query.isError) return null;
+	if (query.isLoading || !src) return <p>{alt ?? `${type} ${imageId}`}</p>;
+	if (query.isError) return <p>{alt ?? `${type} ${imageId}`}</p>;
 
 	return (
 		<img
