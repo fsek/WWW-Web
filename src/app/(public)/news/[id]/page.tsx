@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { use, useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import ImageDisplay from "@/components/ImageDisplay";
 
 interface NewsPageProps {
 	params: Promise<{
@@ -42,7 +43,7 @@ export default function MainPageNews({ params }: NewsPageProps) {
 	const now = new Date();
 
 	const imageQuery = useQuery({
-		...getNewsImageOptions({ path: { news_id: newsId } }),
+		...getNewsImageOptions({ path: { news_id: newsId , size: "small"} }),
 		enabled: !!newsId,
 		refetchOnWindowFocus: false,
 	});
@@ -91,10 +92,12 @@ export default function MainPageNews({ params }: NewsPageProps) {
 					<CardContent className="flex-grow">
 						{imageExists && (
 							<div className="relative h-60 mb-2 mx-auto w-[50%]">
-								<img
-									src={`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000"}/news/${data.id}/image/stream`}
+								<ImageDisplay
+									type="news"
+									imageId={data.id}
 									alt={`News image for ${data.title_en}`}
 									className="object-cover rounded-lg w-full h-full"
+									size="large"
 								/>
 							</div>
 						)}

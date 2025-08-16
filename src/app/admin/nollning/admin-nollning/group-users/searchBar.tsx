@@ -141,6 +141,13 @@ export default function SearchBar({
 						ref={popoverRef}
 						onOpenAutoFocus={(e) => e.preventDefault()}
 						className="p-0"
+						side={
+							// This is a workaround for radix-ui not allowing fallback side selection
+							// see: https://github.com/radix-ui/primitives/issues/3101
+							typeof window !== "undefined" && window.innerHeight > 700
+								? "top"
+								: "right"
+						}
 					>
 						<Suspense
 							fallback={

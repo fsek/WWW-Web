@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -24,6 +24,7 @@ import {
 	getAllNewsQueryKey,
 	deleteNewsMutation,
 	getNewsImageOptions,
+	postNewsImageMutation,
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
@@ -58,6 +59,7 @@ export default function NewsEditForm({
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 	const [confirmOpen, setConfirmOpen] = useState(false);
 	const [usePinning, setUsePinning] = useState(false);
+	const lastFormValues = useRef<z.infer<typeof newsSchema> | null>(null);
 	const newsEditForm = useForm<z.infer<typeof newsSchema>>({
 		resolver: zodResolver(newsSchema),
 	});
@@ -66,11 +68,30 @@ export default function NewsEditForm({
 	const queryClient = useQueryClient();
 
 	const { data: newsImage } = useQuery({
-		...getNewsImageOptions({ path: { news_id: selectedNews.id } }),
+		...getNewsImageOptions({ path: { news_id: selectedNews.id, size: "small" } }),
 		retry: false,
 		throwOnError: false,
 	});
 	const router = useRouter();
+
+	const postNewsImage = useMutation({
+		...postNewsImageMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: getAllNewsQueryKey() });
+			onClose();
+			setSubmitEnabled(true);
+			toast.success(t("news.success_edit"));
+		},
+		onError: (error) => {
+			toast.error(
+				t("news.error_image_upload", {
+					error: error?.detail ?? "Unknown error",
+				}),
+			);
+			setSubmitEnabled(true);
+		},
+	});
 
 	// Initialize form with existing news data
 	useEffect(() => {
@@ -98,11 +119,20 @@ export default function NewsEditForm({
 	const updateNews = useMutation({
 		...updateNewsMutation(),
 		throwOnError: false,
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: getAllNewsQueryKey() });
-			onClose();
-			setSubmitEnabled(true);
-			toast.success(t("news.success_edit"));
+		onSuccess: (data) => {
+			// After updating news, check if a new image is selected and post it
+			const picture = lastFormValues.current?.picture;
+			if (picture) {
+				postNewsImage.mutate({
+					path: { news_id: selectedNews.id },
+					body: { image: picture },
+				});
+			} else {
+				queryClient.invalidateQueries({ queryKey: getAllNewsQueryKey() });
+				onClose();
+				setSubmitEnabled(true);
+				toast.success(t("news.success_edit"));
+			}
 		},
 		onError: () => {
 			toast.error(t("news.error_edit"));
@@ -125,6 +155,7 @@ export default function NewsEditForm({
 
 	function onSubmit(values: z.infer<typeof newsSchema>) {
 		setSubmitEnabled(false);
+		lastFormValues.current = values;
 		updateNews.mutate({
 			path: { news_id: selectedNews.id },
 			body: {
@@ -321,6 +352,7 @@ export default function NewsEditForm({
 						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid flex flex-row items-center">
 							<Button
 								variant="outline"
+								type="button"
 								onClick={() => router.push(`/news/${selectedNews.id}`)}
 							>
 								{t("admin:news.view_news")}
