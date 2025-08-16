@@ -9,15 +9,17 @@ import {
 	getNewsImageOptions,
 	getNewsImageStreamOptions,
 } from "@/api/@tanstack/react-query.gen";
+import Image from "next/image";
+import type { ImageProps as NextImageProps } from "next/image";
 
 export type ImageKind = "image" | "news" | "event" | "user";
 export type ImageSize = "small" | "medium" | "large" | "original";
 
 export interface ImageDisplayProps
-	extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src" | "id"> {
-	type: ImageKind;
-	imageId: number;
-	size?: ImageSize;
+  extends Omit<NextImageProps, "src" | "id"> {
+  type: ImageKind;
+  imageId: number;
+  size?: ImageSize;
 }
 
 export default function ImageDisplay({
@@ -145,11 +147,9 @@ export default function ImageDisplay({
 	if (query.isError) return <p>{alt ?? `${type} ${imageId}`}</p>;
 
 	return (
-		<img
+		<Image
 			src={src}
 			alt={alt ?? `${type} ${imageId}`}
-			width={width}
-			height={height}
 			className={className}
 			style={style}
 			loading={loading}

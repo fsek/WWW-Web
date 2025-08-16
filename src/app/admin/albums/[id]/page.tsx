@@ -31,6 +31,7 @@ import ImageDropzone from "./ImageDropzone";
 import { Spinner } from "@/components/Spinner";
 import { ArrowLeft, Check, CircleX, Trash2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import ImageDisplay from "@/components/ImageDisplay";
 
 interface AlbumPageProps {
 	params: Promise<{
@@ -210,12 +211,14 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 										key={`${album.imgs[index].id}-${index}`}
 										className="relative w-56 h-56"
 									>
-										<Image
-											fill
+										<ImageDisplay
+											type="image"
+											imageId={album.imgs[index].id}
+											size="small"
 											style={{ objectFit: "contain" }}
 											className=""
 											alt={`Album image number ${index}`}
-											src={url}
+											fill
 										/>
 										<Button
 											className="absolute top-1 right-1"
