@@ -43,7 +43,7 @@ export default function MainPageNews({ params }: NewsPageProps) {
 	const now = new Date();
 
 	const imageQuery = useQuery({
-		...getNewsImageOptions({ path: { news_id: newsId } }),
+		...getNewsImageOptions({ path: { news_id: newsId , size: "small"} }),
 		enabled: !!newsId,
 		refetchOnWindowFocus: false,
 	});
@@ -94,9 +94,10 @@ export default function MainPageNews({ params }: NewsPageProps) {
 							<div className="relative h-60 mb-2 mx-auto w-[50%]">
 								<ImageDisplay
 									type="news"
-									id={data.id}
+									imageId={data.id}
 									alt={`News image for ${data.title_en}`}
 									className="object-cover rounded-lg w-full h-full"
+									size="large"
 								/>
 							</div>
 						)}

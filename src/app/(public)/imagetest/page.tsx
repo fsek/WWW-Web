@@ -11,20 +11,22 @@ export default function ImageTestPage() {
 				<h2>Small Image (event)</h2>
 				<ImageDisplay
 					type="event"
-					id={1}
+					imageId={1}
 					alt="Sample 1"
 					width={100}
 					height={100}
+					size="small"
 				/>
 			</section>
 			<section>
 				<h2>Medium Image (user)</h2>
 				<ImageDisplay
 					type="user"
-					id={1}
+					imageId={1}
 					alt="Sample 2"
 					width={300}
 					height={200}
+					size="medium"
 				/>
 			</section>
 			<section>
@@ -32,10 +34,11 @@ export default function ImageTestPage() {
 				<div style={{ display: "flex", justifyContent: "center" }}>
 					<ImageDisplay
 						type="news"
-						id={99}
+						imageId={99}
 						alt="Sample 3"
 						width={600}
 						height={400}
+						size="large"
 					/>
 				</div>
 			</section>
@@ -44,20 +47,22 @@ export default function ImageTestPage() {
 					<h2>Left</h2>
 					<ImageDisplay
 						type="image"
-						id={1}
+						imageId={1}
 						alt="Sample 4"
 						width={120}
 						height={120}
+						size="small"
 					/>
 				</div>
 				<div>
 					<h2>Right</h2>
 					<ImageDisplay
 						type="image"
-						id={1}
+						imageId={1}
 						alt="Sample 5"
 						width={120}
 						height={120}
+						size="original"
 					/>
 				</div>
 			</section>

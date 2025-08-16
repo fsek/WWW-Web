@@ -11,16 +11,19 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 
 export type ImageKind = "image" | "news" | "event" | "user";
+export type ImageSize = "small" | "medium" | "large" | "original";
 
 export interface ImageDisplayProps
-	extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src"> {
+	extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src" | "id"> {
 	type: ImageKind;
-	id: number;
+	imageId: number;
+	size?: ImageSize;
 }
 
 export default function ImageDisplay({
 	type,
-	id,
+	imageId,
+	size = "original",
 	alt,
 	width,
 	height,
@@ -49,13 +52,15 @@ export default function ImageDisplay({
 		case "news":
 			if (devMode) {
 				queryOptions = {
-					...getNewsImageStreamOptions({ path: { news_id: id } }),
-					enabled: !!id,
+					...getNewsImageStreamOptions({ path: { news_id: imageId } }),
+					enabled: !!imageId,
 				};
 			} else {
 				queryOptions = {
-					...getNewsImageOptions({ path: { news_id: id } }),
-					enabled: !!id,
+					...getNewsImageOptions({
+						path: { news_id: imageId, size: size },
+					}),
+					enabled: !!imageId,
 				};
 			}
 			break;
@@ -64,13 +69,15 @@ export default function ImageDisplay({
 		default:
 			if (devMode) {
 				queryOptions = {
-					...getImageStreamOptions({ path: { img_id: id } }),
-					enabled: !!id,
+					...getImageStreamOptions({ path: { img_id: imageId } }),
+					enabled: !!imageId,
 				};
 			} else {
 				queryOptions = {
-					...getImageOptions({ path: { img_id: id } }),
-					enabled: !!id,
+					...getImageOptions({
+						path: { img_id: imageId, size: size },
+					}),
+					enabled: !!imageId,
 				};
 			}
 			break;
@@ -144,7 +151,7 @@ export default function ImageDisplay({
 	return (
 		<img
 			src={src}
-			alt={alt ?? `${type} ${id}`}
+			alt={alt ?? `${type} ${imageId}`}
 			width={width}
 			height={height}
 			className={className}
