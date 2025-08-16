@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import ImageDisplay from "./ImageDisplay";
 
 interface MainPageNewsProps {
 	mini?: boolean;
@@ -117,10 +118,13 @@ export default function MainPageNews({ mini = false }: MainPageNewsProps) {
 						<CardContent className="flex-grow">
 							{imageExists[news.id] && (
 								<div className="relative h-60 mb-2 mx-auto w-[50%]">
-									<img
-										src={`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000"}/news/${news.id}/image/stream`}
+									<ImageDisplay
+										type="news"
+										imageId={news.id}
 										alt={`News image for ${news.title_en}`}
 										className="object-cover rounded-lg w-full h-full"
+										size="large"
+										fill
 									/>
 								</div>
 							)}
