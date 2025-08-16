@@ -7,28 +7,14 @@ export default function ImageTestPage() {
 	return (
 		<main style={{ padding: 24 }}>
 			<h1>ImageDisplay Component Test</h1>
-			<section>
+			{/* <section>
 				<h2>Small Image (event)</h2>
-				<ImageDisplay
-					type="event"
-					imageId={1}
-					alt="Sample 1"
-					width={100}
-					height={100}
-					size="small"
-				/>
+				<ImageDisplay type="event" imageId={1} alt="Sample 1" size="small" width={128} height={128} />
 			</section>
 			<section>
 				<h2>Medium Image (user)</h2>
-				<ImageDisplay
-					type="user"
-					imageId={1}
-					alt="Sample 2"
-					width={300}
-					height={200}
-					size="medium"
-				/>
-			</section>
+				<ImageDisplay type="user" imageId={1} alt="Sample 2" size="medium" width={256} height={256} />
+			</section> */}
 			<section>
 				<h2>Large Image (Centered (news))</h2>
 				<div style={{ display: "flex", justifyContent: "center" }}>
@@ -36,9 +22,9 @@ export default function ImageTestPage() {
 						type="news"
 						imageId={99}
 						alt="Sample 3"
-						width={600}
-						height={400}
 						size="large"
+						width={256}
+						height={256}
 					/>
 				</div>
 			</section>
@@ -47,22 +33,22 @@ export default function ImageTestPage() {
 					<h2>Left</h2>
 					<ImageDisplay
 						type="image"
-						imageId={1}
+						imageId={3}
 						alt="Sample 4"
-						width={120}
-						height={120}
 						size="small"
+						width={128}
+						height={128}
 					/>
 				</div>
 				<div>
 					<h2>Right</h2>
 					<ImageDisplay
 						type="image"
-						imageId={1}
+						imageId={3}
 						alt="Sample 5"
-						width={120}
-						height={120}
 						size="original"
+						width={512}
+						height={512}
 					/>
 				</div>
 			</section>

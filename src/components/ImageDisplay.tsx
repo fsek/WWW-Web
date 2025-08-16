@@ -15,11 +15,10 @@ import type { ImageProps as NextImageProps } from "next/image";
 export type ImageKind = "image" | "news" | "event" | "user";
 export type ImageSize = "small" | "medium" | "large" | "original";
 
-export interface ImageDisplayProps
-  extends Omit<NextImageProps, "src" | "id"> {
-  type: ImageKind;
-  imageId: number;
-  size?: ImageSize;
+export interface ImageDisplayProps extends Omit<NextImageProps, "src" | "id"> {
+	type: ImageKind;
+	imageId: number;
+	size?: ImageSize;
 }
 
 export default function ImageDisplay({
@@ -27,8 +26,6 @@ export default function ImageDisplay({
 	imageId,
 	size = "original",
 	alt,
-	width,
-	height,
 	className,
 	style,
 	loading,
@@ -41,7 +38,7 @@ export default function ImageDisplay({
 	const [src, setSrc] = useState<string | undefined>(undefined);
 	const lastBlobUrlRef = useRef<string | undefined>(undefined);
 
-	const devMode = process.env.ENV === "development";
+	const devMode = process.env.NEXT_PUBLIC_ENV === "development";
 
 	// Build query options using the generated helpers so auth & backend behavior are correct
 
