@@ -416,7 +416,8 @@
 		"date": "Datum",
 		"photographer": "Fotograf",
 		"actions": "Åtgärder",
-		"manage": "Redigera album"
+		"manage": "Redigera album",
+		"view": "Visa album"
 	},
 	"album": {
 		"dragndrop": "Släpp filer här eller klicka för att ladda upp.",

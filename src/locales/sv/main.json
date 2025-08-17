@@ -135,7 +135,8 @@
 			},
 			"gallery": {
 				"self": "Galleri",
-				"desc": "Utforska vårt bildgalleri som visar evenemang och aktiviteter."
+				"desc": "Utforska vårt bildgalleri som visar evenemang och aktiviteter.",
+				"href": "/gallery"
 			},
 			"calendar": {
 				"self": "Kalender",
@@ -404,5 +405,10 @@
 		"title": "Sånger",
 		"description_subtitle": "Bläddra och sjung med i vår samling av sånger.",
 		"search_placeholder": "Sök sånger..."
+	},
+	"gallery": {
+		"title": "Galleri",
+		"select_year": "Välj år",
+		"photographers": "Fotografer"
 	}
 }

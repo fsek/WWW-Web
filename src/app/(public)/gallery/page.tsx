@@ -115,14 +115,20 @@ export default function GalleryIndexPage() {
 										/>
 									</div>
 								)}
-								<div className="absolute inset-0 flex items-end p-4 bg-transparent group-hover:bg-card/20 transition-colors">
+								<div className="absolute inset-0 flex items-end p-4 bg-black/5 group-hover:bg-black/20 transition-colors">
 									<div className="w-full h-fit bg-card/10 p-2 rounded-lg backdrop-blur-sm border-1 border-white/20">
 										<div className="text-primary font-semibold text-lg">
 											{i18n.language === "sv" ? album.title_sv : album.title_en}
 										</div>
-										<div className="text-sm text-white">
-											{album.year} • {album.location}
-										</div>
+										{bgImageId ? (
+											<div className="text-sm text-white">
+												{album.year} • {album.location}
+											</div>
+										) : (
+											<div className="text-sm text-card-foreground">
+												{album.year} • {album.location}
+											</div>
+										)}
 									</div>
 								</div>
 							</div>
