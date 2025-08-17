@@ -5,7 +5,7 @@ import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
-} from "@/components/ui/popover-no-portal";
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { add, format } from "date-fns";
 import { type Locale, enUS } from "date-fns/locale";
@@ -862,7 +862,7 @@ const DateTimePicker = React.forwardRef<
 						// This is a workaround for radix-ui not allowing fallback side selection
 						// see: https://github.com/radix-ui/primitives/issues/3101
 						typeof window !== "undefined" && window.innerHeight > 700
-							? "top"
+							? "bottom"
 							: "right"
 					}
 				>
