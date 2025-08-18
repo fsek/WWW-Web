@@ -34,9 +34,10 @@ import { toast } from "sonner";
 import type { EventSignupRead, EventSignupUpdate } from "@/api/types.gen";
 import { Input } from "@/components/ui/input";
 import { Save, X } from "lucide-react";
+import AdminChooseOnePriority from "@/widgets/AdminChooseOnePriority";
 
 const editSchema = z.object({
-	priority: z.string().optional(),
+	priority: z.string().optional().nullable(),
 	group_name: z.string().optional(),
 	drinkPackage: z.enum(["None", "AlcoholFree", "Alcohol"]),
 });
@@ -92,7 +93,7 @@ export default function SignupEditForm({
 			toast.error(
 				t("event_signup.error_update", {
 					error: error?.detail || t("event_signup.unknown_error"),
-				}) || "Failed to update signup"
+				}) || "Failed to update signup",
 			);
 			setSubmitEnabled(true);
 		},
@@ -122,8 +123,7 @@ export default function SignupEditForm({
 			<DialogContent className="min-w-fit lg:max-w-2xl">
 				<DialogHeader>
 					<DialogTitle>
-						{t("admin:edit") || "Edit"} –{" "}
-						{selectedSignup?.user?.first_name}{" "}
+						{t("admin:edit") || "Edit"} – {selectedSignup?.user?.first_name}{" "}
 						{selectedSignup?.user?.last_name}
 					</DialogTitle>
 				</DialogHeader>
@@ -142,9 +142,10 @@ export default function SignupEditForm({
 										{t("event_signup.priority") || "Priority"}
 									</FormLabel>
 									<FormControl>
-										<Input
-											placeholder="e.g. member, alum, guest"
-											{...field}
+										<AdminChooseOnePriority
+											value={field.value ?? ""}
+											onChange={(value) => field.onChange(value)}
+											className="text-sm"
 										/>
 									</FormControl>
 									<FormMessage />
@@ -163,8 +164,7 @@ export default function SignupEditForm({
 									<FormControl>
 										<Input
 											placeholder={
-												t("event_signup.group_name_placeholder") ||
-												"Group name"
+												t("event_signup.group_name_placeholder") || "Group name"
 											}
 											{...field}
 										/>
@@ -180,10 +180,7 @@ export default function SignupEditForm({
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>
-										{
-											t("event_signup.drink_package.title") ||
-											"Drink package"
-										}
+										{t("event_signup.drink_package.title") || "Drink package"}
 									</FormLabel>
 									<Select
 										onValueChange={field.onChange}
@@ -193,28 +190,21 @@ export default function SignupEditForm({
 											<SelectTrigger>
 												<SelectValue
 													placeholder={
-														t(
-															"event_signup.select_drink_package"
-														) || "Select"
+														t("event_signup.select_drink_package") || "Select"
 													}
 												/>
 											</SelectTrigger>
 										</FormControl>
 										<SelectContent>
 											<SelectItem value="None">
-												{t("event_signup.drink_package.none") ||
-													"None"}
+												{t("event_signup.drink_package.none") || "None"}
 											</SelectItem>
 											<SelectItem value="AlcoholFree">
-												{
-													t(
-														"event_signup.drink_package.alcohol_free"
-													) || "Alcohol-free"
-												}
+												{t("event_signup.drink_package.alcohol_free") ||
+													"Alcohol-free"}
 											</SelectItem>
 											<SelectItem value="Alcohol">
-												{t("event_signup.drink_package.alcohol") ||
-													"Alcohol"}
+												{t("event_signup.drink_package.alcohol") || "Alcohol"}
 											</SelectItem>
 										</SelectContent>
 									</Select>

@@ -14,6 +14,7 @@ interface StyledMultiSelectProps {
 	placeholder?: string;
 	className?: string;
 	isDisabled?: boolean;
+	isClearable?: boolean;
 }
 
 export default function StyledMultiSelect({
@@ -24,6 +25,7 @@ export default function StyledMultiSelect({
 	placeholder,
 	className = "",
 	isDisabled = false,
+	isClearable = false,
 }: StyledMultiSelectProps) {
 	const { t } = useTranslation("admin");
 
@@ -41,6 +43,7 @@ export default function StyledMultiSelect({
 			value={value}
 			onChange={handleChange}
 			isDisabled={isDisabled}
+			isClearable={isClearable}
 			classNames={{
 				container: () => `${className}`,
 				control: ({ isFocused }) =>

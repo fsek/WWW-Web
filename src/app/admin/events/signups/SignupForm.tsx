@@ -35,6 +35,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import AdminChooseUser, { type Option } from "@/widgets/AdminChooseUser";
 import type { EventSignupCreate } from "@/api/types.gen";
+import AdminChooseOnePriority from "@/widgets/AdminChooseOnePriority";
 
 const schema = z.object({
 	user_id: z.number({ required_error: "User is required" }),
@@ -85,7 +86,7 @@ export default function SignupForm({
 			toast.error(
 				t("event_signup.error_create", {
 					error: error?.detail || t("event_signup.unknown_error"),
-				}) || "Failed to create signup"
+				}) || "Failed to create signup",
 			);
 			setSubmitEnabled(true);
 		},
@@ -121,7 +122,7 @@ export default function SignupForm({
 				className="hidden"
 			>
 				<Plus />
-				{t("event_signup.button") || "Create signup"}
+				{t("event_signup.button")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={onOpenChange}>
@@ -160,13 +161,12 @@ export default function SignupForm({
 								name="priority"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>
-											{t("event_signup.priority") || "Priority"}
-										</FormLabel>
+										<FormLabel>{t("event_signup.priority")}</FormLabel>
 										<FormControl>
-											<Input
-												placeholder="e.g. member, alum, guest"
-												{...field}
+											<AdminChooseOnePriority
+												value={field.value ?? ""}
+												onChange={(value) => field.onChange(value)}
+												className="text-sm"
 											/>
 										</FormControl>
 										<FormMessage />
@@ -202,7 +202,7 @@ export default function SignupForm({
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>
-											{t("event_signup.drink_package.title") || "Drink package"}
+											{t("event_signup.drink_package.title")}
 										</FormLabel>
 										<Select
 											onValueChange={field.onChange}
@@ -211,26 +211,19 @@ export default function SignupForm({
 											<FormControl>
 												<SelectTrigger>
 													<SelectValue
-														placeholder={
-															t(
-																"event_signup.select_drink_package",
-															) || "Select"
-														}
+														placeholder={t("event_signup.select_drink_package")}
 													/>
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
 												<SelectItem value="None">
-													{t("event_signup.drink_package.none") ||
-														"None"}
+													{t("event_signup.drink_package.none")}
 												</SelectItem>
 												<SelectItem value="AlcoholFree">
-													{t("event_signup.drink_package.alcohol_free") ||
-														"Alcohol-free"}
+													{t("event_signup.drink_package.alcohol_free")}
 												</SelectItem>
 												<SelectItem value="Alcohol">
-													{t("event_signup.drink_package.alcohol") ||
-														"Alcohol"}
+													{t("event_signup.drink_package.alcohol")}
 												</SelectItem>
 											</SelectContent>
 										</Select>
@@ -246,7 +239,7 @@ export default function SignupForm({
 									className="w-32 min-w-fit"
 								>
 									<Save className="mr-2 h-4 w-4" />
-									{t("create") || "Create"}
+									{t("create")}
 								</Button>
 								<Button
 									type="button"
@@ -255,7 +248,7 @@ export default function SignupForm({
 									className="w-32 min-w-fit"
 								>
 									<X className="mr-2 h-4 w-4" />
-									{t("cancel") || "Cancel"}
+									{t("cancel")}
 								</Button>
 							</div>
 						</form>
