@@ -11,7 +11,7 @@ import {
 	createEventMutation,
 	getAllEventsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
-
+import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import type { EventCreate } from "@/api/types.gen";
 import EventFormFields from "./EventFormFields";
@@ -116,10 +116,12 @@ export default function EventsForm() {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.success(t("admin:events.success_add"));
 		},
 		onError: () => {
 			setOpen(false);
 			setSubmitEnabled(true);
+			toast.error(t("admin:events.error_add"));
 		},
 	});
 

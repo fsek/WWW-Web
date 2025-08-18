@@ -20,6 +20,7 @@ export function AdminChoosePriorities({
 
 	const { data, error, isFetching } = useQuery({
 		...getEventPrioritiesOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const availablePriorities = data ?? [];

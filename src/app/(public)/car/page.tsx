@@ -49,6 +49,7 @@ export default function Car() {
 		isLoading,
 	} = useQuery({
 		...getAllCarBookingsOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const {
@@ -91,6 +92,13 @@ export default function Car() {
 		},
 	});
 
+	// Keep the current calendar view while this page is mounted
+	const [calendarView, setCalendarView] = useState<string | undefined>(
+		undefined,
+	);
+	// Keep the currently viewed date while this page is mounted
+	const [calendarDate, setCalendarDate] = useState<Date | undefined>(undefined);
+
 	// only show full‐page loading on initial mount
 	if (isLoading || userIsLoading) {
 		return <LoadingErrorCard />;
@@ -121,7 +129,7 @@ export default function Car() {
 					? "#e68a00" // TODO: Use tailwind for this somehow
 					: "#ffd699"
 				: // Use a different color for the current user's bookings
-				car.confirmed
+					car.confirmed
 					? "#66cc00"
 					: "#e6e600"; // Green for confirmed, yellow for unconfirmed
 			return {
@@ -176,7 +184,7 @@ export default function Car() {
 												onError: (error) => {
 													toast.error(
 														t("admin:car.error_add") +
-														(error?.detail ? `: ${error.detail}` : ""),
+															(error?.detail ? `: ${error.detail}` : ""),
 													);
 												},
 												onSuccess: () => {
@@ -192,7 +200,7 @@ export default function Car() {
 												onError: (error) => {
 													toast.error(
 														t("admin:car.error_delete") +
-														(error?.detail ? `: ${error.detail}` : ""),
+															(error?.detail ? `: ${error.detail}` : ""),
 													);
 												},
 												onSuccess: () => {
@@ -231,7 +239,7 @@ export default function Car() {
 												onError: (error) => {
 													toast.error(
 														t("admin:car.error_edit") +
-														(error?.detail ? `: ${error.detail}` : ""),
+															(error?.detail ? `: ${error.detail}` : ""),
 													);
 												},
 												onSuccess: () => {
@@ -257,6 +265,12 @@ export default function Car() {
 											disableEditOfOthers={true} // Disable editing of other users' bookings
 											zoomWorkHours={true}
 											mini={false}
+											// Provide and persist the calendar view across tab switches
+											defaultView={calendarView}
+											onViewChange={setCalendarView}
+											// Provide and persist the viewed date across tab switches
+											defaultDate={calendarDate}
+											onDateChange={setCalendarDate}
 										/>
 									</div>
 								</EventsProvider>

@@ -145,7 +145,7 @@ export default function SearchBar({
 							// This is a workaround for radix-ui not allowing fallback side selection
 							// see: https://github.com/radix-ui/primitives/issues/3101
 							typeof window !== "undefined" && window.innerHeight > 700
-								? "top"
+								? "bottom"
 								: "right"
 						}
 					>

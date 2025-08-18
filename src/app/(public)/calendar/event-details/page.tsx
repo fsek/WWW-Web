@@ -179,7 +179,13 @@ export default function Page() {
 								<Users className="w-4 h-4 text-muted-foreground" />
 								<span>
 									{`${t("admin:events.max_event_users")}: `}
-									{data.max_event_users}
+									{data.max_event_users === 0 ? (
+										<span className="text-muted-foreground text-sm">
+											{t("admin:events.no_max_event_users")}
+										</span>
+									) : (
+										<>{data.max_event_users as number}</>
+									)}
 								</span>
 							</div>
 						</CardContent>
@@ -309,34 +315,40 @@ export default function Page() {
 						</CardHeader>
 						<CardContent className="space-y-3">
 							{data.can_signup === true && (
-								<div>
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("admin:events.signup_period")}
-									</p>
-									<p className="font-medium">
-										{formatDateShort(data.signup_start)}
-									</p>
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("admin:events.to")}
-									</p>
-									<p className="font-medium">
-										{formatDateShort(data.signup_end)}
-									</p>
-								</div>
+								<>
+									<div>
+										<p className="font-semibold text-sm text-muted-foreground">
+											{t("admin:events.signup_period")}
+										</p>
+										<p className="font-medium">
+											{formatDateShort(data.signup_start)}
+										</p>
+										<p className="font-semibold text-sm text-muted-foreground">
+											{t("admin:events.to")}
+										</p>
+										<p className="font-medium">
+											{formatDateShort(data.signup_end)}
+										</p>
+									</div>
+
+									<div className="flex items-center gap-2 mt-2">
+										<Users className="w-4 h-4 text-muted-foreground" />
+										<span>
+											{`${t("admin:events.signup_count")}: ${
+												data.signup_count
+											} / ${data.max_event_users}`}
+										</span>
+									</div>
+								</>
 							)}
 
-							<div className="flex items-center gap-2 mt-2">
-								<Users className="w-4 h-4 text-muted-foreground" />
-								<span>
-									{`${t("admin:events.signup_count")}: ${
-										data.signup_count
-									} / ${data.max_event_users}`}
-								</span>
-							</div>
+							{data.can_signup === false && (
+								<p className="text-sm text-muted-foreground">
+									{t("admin:events.signup_not_used")}
+								</p>
+							)}
 
-							{(data.can_signup === false ||
-								data.signup_start === null ||
-								data.signup_end === null) && (
+							{(data.signup_start === null || data.signup_end === null) && (
 								<p className="text-sm text-muted-foreground">
 									{t("admin:events.signup_not_available")}
 								</p>
@@ -391,6 +403,7 @@ export default function Page() {
 							isSignupAllowed={isSignupAllowed}
 							signupPeriodPassed={signupPeriodPassed}
 							useDrinkPackage={data.drink_package}
+							isSignupUsed={data.can_signup} // if event requires signup
 						/>
 					)}
 				</div>

@@ -44,6 +44,18 @@ interface EventViewProps {
 	enableCafeShiftProperties?: boolean;
 }
 
+function FormatTimeSpan(
+	start: Date | undefined,
+	end: Date | undefined,
+	language: string,
+) {
+	if (!start || !end) return "";
+	if (start.getDate() === end.getDate()) {
+		return `${start.toLocaleTimeString(language, { hour: "2-digit", minute: "2-digit" })} - ${end.toLocaleTimeString(language, { hour: "2-digit", minute: "2-digit" })}`;
+	}
+	return `${start.toLocaleDateString(language)} ${start.toLocaleTimeString(language, { hour: "2-digit", minute: "2-digit" })} - ${end.toLocaleDateString(language)} ${end.toLocaleTimeString(language, { hour: "2-digit", minute: "2-digit" })}`;
+}
+
 export function EventView({
 	event,
 	showDescription,
@@ -108,7 +120,9 @@ export function EventView({
 							<tbody>
 								<tr>
 									<th>{t("view.time")}</th>
-									<td>{`${event?.start.toLocaleTimeString()} - ${event?.end.toLocaleTimeString()}`}</td>
+									<td>
+										{FormatTimeSpan(event?.start, event?.end, i18n.language)}
+									</td>
 								</tr>
 								{showDescription && (
 									<tr>
@@ -253,7 +267,15 @@ export function EventView({
 										</tr>
 										<tr>
 											<th>{t("admin:events.max_event_users")}</th>
-											<td>{event.max_event_users as number}</td>
+											<td>
+												{event.max_event_users === 0 ? (
+													<span className="text-muted-foreground text-sm">
+														{t("admin:events.no_max_event_users")}
+													</span>
+												) : (
+													<>{event.max_event_users as number}</>
+												)}
+											</td>
 										</tr>
 										<tr>
 											<th>{t("admin:events.price")}</th>

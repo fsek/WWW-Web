@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import EventFormFields from "./EventFormFields";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
+import { toast } from "sonner";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
@@ -130,9 +131,11 @@ export default function EventsEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
+			toast.success(t("admin:events.success_edit"));
 		},
 		onError: () => {
 			onClose();
+			toast.error(t("admin:events.error_edit"));
 		},
 	});
 
@@ -141,9 +144,11 @@ export default function EventsEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
+			toast.success(t("admin:events.success_delete"));
 		},
 		onError: () => {
 			onClose();
+			toast.error(t("admin:events.error_delete"));
 		},
 	});
 

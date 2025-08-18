@@ -16,7 +16,7 @@ import listPlugin from "@fullcalendar/list";
 import multiMonthPlugin from "@fullcalendar/multimonth";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import CalendarNav from "./full-calendar-nav";
 import {
 	type CalendarEvent,
@@ -60,6 +60,12 @@ interface CalendarProps {
 	defaultRoom?: "LC" | "Alumni" | "SK";
 	onDateRangeChange?: (start: Date, end: Date) => void;
 	enableCafeShiftProperties?: boolean;
+	// Control the initial view and observe view changes
+	defaultView?: string;
+	onViewChange?: (viewType: string) => void;
+	// Control the initial date and observe date changes
+	defaultDate?: Date;
+	onDateChange?: (date: Date) => void;
 }
 
 export default function Calendar({
@@ -79,6 +85,10 @@ export default function Calendar({
 	defaultRoom = "LC",
 	onDateRangeChange,
 	enableCafeShiftProperties,
+	defaultView,
+	onViewChange,
+	defaultDate,
+	onDateChange,
 }: CalendarProps) {
 	const { i18n, t } = useTranslation();
 	const {
@@ -90,7 +100,7 @@ export default function Calendar({
 	} = useEvents();
 
 	const calendarRef = useRef<FullCalendar | null>(null);
-	const [viewedDate, setViewedDate] = useState(new Date());
+	const [viewedDate, setViewedDate] = useState(defaultDate ?? new Date());
 	const [selectedStart, setSelectedStart] = useState(new Date());
 	const [selectedEnd, setSelectedEnd] = useState(new Date());
 	const [selectedOldEvent, setSelectedOldEvent] = useState<
@@ -108,11 +118,16 @@ export default function Calendar({
 
 	// Determine initial view based on mobile and mini settings
 	const getInitialView = () => {
+		// Prefer parent-provided defaultView if present
+		if (defaultView) return defaultView;
 		if (isMobile) {
 			return mini ? "dayGridDay" : "timeGridFourDay";
 		}
 		return mini ? "dayGridWeek" : "timeGridWeek";
 	};
+
+	// Track current view to send to nav
+	const [currentView, setCurrentView] = useState<string>(getInitialView());
 
 	const handleEventClick = (info: EventClickArg) => {
 		if (!info.event.start || !info.event.end) {
@@ -432,6 +447,25 @@ export default function Calendar({
 	const calendarEarliestTime = `${earliestHour}:${earliestMin}`;
 	const calendarLatestTime = `${latestHour}:${latestMin}`;
 
+	// Normalize date based on view (month => first day of month)
+	const normalizeDateForView = (date: Date | undefined, viewType: string) => {
+		if (!date) return undefined;
+		return viewType === "dayGridMonth"
+			? new Date(date.getFullYear(), date.getMonth(), 1)
+			: date;
+	};
+
+	// When parent provides a defaultDate or it changes, move calendar to it (normalized)
+	useEffect(() => {
+		if (!defaultDate) return;
+		const target = normalizeDateForView(defaultDate, currentView);
+		if (!target) return;
+		if (viewedDate.getTime() === target.getTime()) return;
+		setViewedDate(target);
+		const api = calendarRef.current?.getApi();
+		api?.gotoDate(target);
+	}, [defaultDate, currentView, viewedDate]);
+
 	return (
 		<div className="space-y-5 flex-1 flex flex-col">
 			<CalendarNav // Nav contains the add button which is why there's so many props
@@ -449,6 +483,12 @@ export default function Calendar({
 				enableRoomBookingProperties={enableRoomBookingProperties}
 				defaultRoom={defaultRoom}
 				enableCafeShiftProperties={enableCafeShiftProperties}
+				// Keep nav in sync with calendar view
+				currentView={currentView}
+				onChangeView={(view) => {
+					setCurrentView(view);
+					onViewChange?.(view);
+				}}
 			/>
 
 			<Card className={`${isMobile ? "p-1" : "p-3"} flex-1`}>
@@ -464,6 +504,7 @@ export default function Calendar({
 						listPlugin,
 					]}
 					initialView={getInitialView()}
+					initialDate={normalizeDateForView(defaultDate, currentView)}
 					views={{
 						timeGridFourDay: {
 							type: "timeGrid",
@@ -512,12 +553,24 @@ export default function Calendar({
 					eventChange={(eventInfo) => handleEventChange(eventInfo)}
 					select={handleDateSelect}
 					datesSet={(dates) => {
-						setViewedDate(dates.start);
+						// Keep internal/parent date in sync with the view’s canonical range start
+						const newViewType = dates.view.type;
+						const newViewDate = dates.view.currentStart ?? dates.start;
+
+						setViewedDate(newViewDate);
 						setVisibleStart(dates.start);
 						setVisibleEnd(dates.end);
+
 						if (onDateRangeChange) {
 							onDateRangeChange(dates.start, dates.end);
 						}
+
+						// Update current view and notify parent
+						setCurrentView(newViewType);
+						onViewChange?.(newViewType);
+
+						// Notify parent with a stable date for the view
+						onDateChange?.(newViewDate);
 					}}
 					dateClick={isEditable ? () => setEventAddOpen(true) : undefined}
 					nowIndicator

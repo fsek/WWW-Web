@@ -12,6 +12,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
+import { toast } from "sonner";
 
 import AdminTable from "@/widgets/AdminTable";
 import formatTime from "@/help_functions/timeFormater";
@@ -31,37 +32,38 @@ import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
-const columns = [
-	// This might not be the best way to do this, see the car booking page for alternative
-	columnHelper.accessor("title_sv", {
-		header: "Svensk titel",
-		cell: (info) => info.getValue(),
-	}),
-	columnHelper.accessor("starts_at", {
-		header: "Starttid",
-		cell: (info) => formatTime(info.getValue()),
-	}),
-	columnHelper.accessor("ends_at", {
-		header: "Sluttid",
-		cell: (info) => formatTime(info.getValue()),
-	}),
-	columnHelper.accessor("signup_start", {
-		header: "Anmälningsöppning",
-		cell: (info) => formatTime(info.getValue()),
-	}),
-	columnHelper.accessor("signup_end", {
-		header: "Anmälningsavslut",
-		cell: (info) => formatTime(info.getValue()),
-	}),
-];
 
 export default function Events() {
 	const router = useRouter();
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 
+	const columns = [
+		columnHelper.accessor("title_sv", {
+			header: t("admin:title_sv"),
+			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor("starts_at", {
+			header: t("admin:starts_at"),
+			cell: (info) => formatTime(info.getValue()),
+		}),
+		columnHelper.accessor("ends_at", {
+			header: t("admin:ends_at"),
+			cell: (info) => formatTime(info.getValue()),
+		}),
+		columnHelper.accessor("signup_start", {
+			header: t("admin:signup_start"),
+			cell: (info) => formatTime(info.getValue()),
+		}),
+		columnHelper.accessor("signup_end", {
+			header: t("admin:signup_end"),
+			cell: (info) => formatTime(info.getValue()),
+		}),
+	];
+
 	const { data, error, isFetching } = useQuery({
 		...getAllEventsOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const [openEditDialog, setOpenEditDialog] = useState(false);
@@ -84,25 +86,44 @@ export default function Events() {
 		...createEventMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
+			toast.success(t("admin:events.success_add"));
 		},
 		throwOnError: false,
+		onError: () => {
+			toast.error(t("admin:events.error_add"));
+		},
 	});
 
 	const deleteBooking = useMutation({
 		...eventRemoveMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
+			toast.success(t("admin:events.success_delete"));
 		},
 		throwOnError: false,
+		onError: () => {
+			toast.error(t("admin:events.error_delete"));
+		},
 	});
 
 	const editBooking = useMutation({
 		...eventUpdateMutation(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllEventsQueryKey() });
+			toast.success(t("admin:events.success_edit"));
 		},
 		throwOnError: false,
+		onError: () => {
+			toast.error(t("admin:events.error_edit"));
+		},
 	});
+
+	// Keep the current calendar view while this page is mounted
+	const [calendarView, setCalendarView] = useState<string | undefined>(
+		undefined,
+	);
+	// Keep the currently viewed date while this page is mounted
+	const [calendarDate, setCalendarDate] = useState<Date | undefined>(undefined);
 
 	if (isFetching) {
 		return <LoadingErrorCard />;
@@ -178,11 +199,9 @@ export default function Events() {
 	return (
 		<div className="px-8 space-x-4">
 			<h3 className="text-3xl py-3 font-bold text-primary">
-				Administrera event
+				{t("admin:events.page_title")}
 			</h3>
-			<p className="py-3">
-				Här kan du skapa event & redigera existerande event på hemsidan.
-			</p>
+			<p className="py-3">{t("admin:events.page_description")}</p>
 			<EventsProvider
 				initialCalendarEvents={events}
 				eventColor="#f6ad55"
@@ -221,7 +240,7 @@ export default function Events() {
 							},
 						},
 						{
-							onError: (err) => console.error(t("admin:events.error_add"), err),
+							onError: () => toast.error(t("admin:events.error_add")),
 						},
 					)
 				}
@@ -229,14 +248,13 @@ export default function Events() {
 					deleteBooking.mutate(
 						{ path: { event_id: Number(id) } },
 						{
-							onError: (err) =>
-								console.error(`${t("admin:events.error_delete")} ${id}`, err),
+							onError: () => toast.error(t("admin:events.error_delete")),
 						},
 					)
 				}
 				handleEdit={(event) => {
 					if (!event.id) {
-						console.error(t("admin:events.error_missing_id"), event);
+						toast.error(t("admin:events.error_missing_id"));
 						return;
 					}
 					editBooking.mutate(
@@ -272,11 +290,7 @@ export default function Events() {
 							},
 						},
 						{
-							onError: (err) =>
-								console.error(
-									`${t("admin:events.error_edit")} ${event.id}`,
-									err,
-								),
+							onError: () => toast.error(t("admin:events.error_edit")),
 						},
 					);
 				}}
@@ -314,6 +328,12 @@ export default function Events() {
 								disableEdit={false} // Also disables delete, add and dragging
 								enableAllDay={true}
 								enableTrueEventProperties={true}
+								// Provide and persist the calendar view across tab switches
+								defaultView={calendarView}
+								onViewChange={setCalendarView}
+								// Provide and persist the viewed date across tab switches
+								defaultDate={calendarDate}
+								onDateChange={setCalendarDate}
 							/>
 						</TabsContent>
 						<TabsContent value="list" className="w-full px-5 space-y-5">

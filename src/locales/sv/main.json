@@ -9,7 +9,7 @@
 	"adminButton": "Admin sidan",
 	"registerButton": "Registrera nytt konto",
 	"newsTitle": "Nyheter",
-	"newsText": "Om du vill använda bilder eller mer avancerad formatering, använd Mattermost tills vi har lagt till ordentligt stöd.",
+	"newsText": "Om du vill använda mer avancerad formatering, använd Mattermost tills vi har lagt till ordentligt stöd. Nyhetssidan stöder dock bilder nu!",
 	"cafeTitle": "Hilbert Café",
 	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang. Cafét har även en egen sida att tillgå, och du kan nu skriva upp dig på cafépass på en annan sida.",
 	"cafe_shift_button": "Skriv upp dig på ett pass",
@@ -396,7 +396,8 @@
 		"food_preferences_explainer": "Detta är dina sparade matpreferenser. Om något inte ser rätt ut kan du uppdatera dem i dina kontoinställningar.",
 		"standard_food_preferences": "Standardpreferenser:",
 		"other_food_preferences": "Övriga preferenser:",
-		"none": "Inga"
+		"none": "Inga",
+		"signup_not_used": "Du kan inte anmäla dig till detta evenemang eftersom eventet inte använder systemet med anmälan för att delta."
 	},
 	"songs": {
 		"by": "Av",
