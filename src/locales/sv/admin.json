@@ -632,8 +632,9 @@
 	},
 	"room_bookings": {
 		"self": "Rumsbokningar",
-		"title": "Hantera rumsbokningar",
-		"description": "Här kan du skapa och hantera rumsbokningar. Användare kan komma till dig med frågor om att boka rummen för personligt bruk, eftersom de inte kan boka rum själva. Du kan skapa flera bokningar samtidigt, upp till 50. Var försiktig! Du måste ta bort dem individuellt om något går fel!",
+		"page_title": "Hantera rumsbokningar",
+		"page_description": "Här kan du skapa och hantera rumsbokningar. Användare kan komma till dig med frågor om att boka rummen för personligt bruk, eftersom de inte kan boka rum själva. Du kan skapa flera bokningar samtidigt, upp till 50. Var försiktig! Du måste ta bort dem individuellt om något går fel!",
+		"description": "Beskrivning",
 		"create_booking": "Skapa bokning",
 		"edit_booking": "Redigera bokning",
 		"start_time": "Starttid",

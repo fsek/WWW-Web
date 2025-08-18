@@ -631,8 +631,9 @@
 	},
 	"room_bookings": {
 		"self": "Room bookings",
-		"title": "Manage Room Bookings",
-		"description": "Here you can create and manage room bookings. Users without posts may come to you with questions about booking the rooms for personal use, since they cannot book rooms on their own. You can create multiple bookings at once, up to 50. Be careful! You have to remove them individually if something goes wrong!",
+		"page_title": "Manage Room Bookings",
+		"page_description": "Here you can create and manage room bookings. Users without posts may come to you with questions about booking the rooms for personal use, since they cannot book rooms on their own. You can create multiple bookings at once, up to 50. Be careful! You have to remove them individually if something goes wrong!",
+		"description": "Description",
 		"create_booking": "Create Booking",
 		"edit_booking": "Edit Booking",
 		"start_time": "Start Time",
