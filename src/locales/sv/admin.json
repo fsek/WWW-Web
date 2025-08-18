@@ -402,8 +402,8 @@
 	"albums": {
 		"self": "Album",
 		"page_title": "Hantera Album",
-		"page_description": "Här kan duskapa och redigera album. Du kan lägga till bilder och fotografer efter att albumet skapats.",
-		"warning": "Observera att datumet inte kan ändras efter skapelse!",
+		"page_description": "Här kan du skapa och redigera album. Du kan lägga till bilder och fotografer efter att albumet skapats.",
+		"warning": "Observera att datumet inte kan ändras efter albumet skapats!",
 		"only_empty": "Endast tomma album kan tas bort",
 		"view_album": "Visa album",
 		"edit_album": "Redigera album",
