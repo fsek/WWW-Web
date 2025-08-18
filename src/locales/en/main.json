@@ -394,7 +394,8 @@
 		"food_preferences_explainer": "These are your saved food preferences. If something doesn't look right, please update them in your account settings.",
 		"standard_food_preferences": "Standard preferences:",
 		"other_food_preferences": "Other preferences:",
-		"none": "None"
+		"none": "None",
+		"signup_not_used": "You cannot sign up for this event as it does not use the system for signing up to attend."
 	},
 	"songs": {
 		"by": "By",

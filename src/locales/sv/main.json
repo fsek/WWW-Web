@@ -394,7 +394,8 @@
 		"food_preferences_explainer": "Detta är dina sparade matpreferenser. Om något inte ser rätt ut kan du uppdatera dem i dina kontoinställningar.",
 		"standard_food_preferences": "Standardpreferenser:",
 		"other_food_preferences": "Övriga preferenser:",
-		"none": "Inga"
+		"none": "Inga",
+		"signup_not_used": "Du kan inte anmäla dig till detta evenemang eftersom eventet inte använder systemet med anmälan för att delta."
 	},
 	"songs": {
 		"by": "Av",

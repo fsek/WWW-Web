@@ -132,6 +132,7 @@
 		"select_alcohol_event_type": "Välj alkoholpolicy",
 		"free": "Gratis",
 		"signup_not_available": "Anmälan inte tillgänglig",
+		"signup_not_used": "Eventet kräver inte anmälan",
 		"signup_count": "Antal anmälda deltagare",
 		"personal": "Personlig bokning",
 		"confirmed": "Bekräftad",

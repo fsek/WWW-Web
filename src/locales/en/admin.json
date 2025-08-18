@@ -132,6 +132,7 @@
 		"select_alcohol_event_type": "Select alcohol policy",
 		"free": "Free",
 		"signup_not_available": "Signup not available",
+		"signup_not_used": "Event does not require signup",
 		"signup_count": "Number of signups",
 		"personal": "Personal booking",
 		"confirmed": "Confirmed",
