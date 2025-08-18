@@ -789,5 +789,42 @@
 		"confirm_remove": "Bekräfta borttagning av sång",
 		"confirm_remove_text": "Är du säker på att du vill ta bort denna sång?",
 		"view_song": "Visa sångdetaljer"
+	},
+	"cafe_shifts": {
+		"self": "Cafépass",
+		"title": "Cafépass",
+		"description": "Skapa och hantera cafépasser. Använd kalendern eller listan för att lägga till, redigera och tilldela pass. Knappen nedan använder du för att lägga till flera pass åt gången. Passen läggs in mellan klockan 08-10, 10-13 varje arbetsdag.",
+		"create_shift": "Skapa pass",
+		"edit_shift": "Redigera pass",
+		"assigned_user": "Tilldelad användare",
+		"start_time": "Starttid",
+		"end_time": "Sluttid",
+		"success_add": "Pass skapat!",
+		"error_add": "Misslyckades att skapa pass.",
+		"success_delete": "Pass borttaget!",
+		"error_delete": "Misslyckades att ta bort pass.",
+		"success_edit": "Pass uppdaterat!",
+		"error_edit": "Misslyckades att uppdatera pass.",
+		"error_missing_id": "Saknar pass-id.",
+		"calendar": "Kalender",
+		"calendar_description": "Denna kalender visar alla cafépass. Klicka på ett pass för att redigera det. Klicka eller dra för att välja ett tidsintervall och lägga till ett pass.",
+		"list": "Lista",
+		"list_description": "Denna lista visar alla cafépass. Klicka på en rad för att redigera den.",
+		"confirm_remove": "Bekräfta borttagning av pass",
+		"confirm_remove_text": "Är du säker på att du vill ta bort detta pass?",
+		"show_all_shifts": "Visa alla pass",
+		"hide_past_shifts": "Dölj gamla pass",
+		"multi": {
+			"success_create_shifts": "Pass skapade framgångsrikt!",
+			"error_create_shifts": "Misslyckades att skapa pass.",
+			"create_shifts": "Skapa flera pass",
+			"title": "Skapa flera pass",
+			"description": "Skapa flera pass över flera veckor. Du kan välja en start- och slutvecka (inklusive) och max 4 veckor om gången.",
+			"start": "Startvecka",
+			"end": "Slutvecka",
+			"full": "Heldag",
+			"morning": "Förmiddag",
+			"afternoon": "Eftermiddag"
+		}
 	}
 }

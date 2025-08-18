@@ -65,6 +65,7 @@ interface CalendarNavProps {
 	isMobile?: boolean;
 	enableRoomBookingProperties?: boolean;
 	defaultRoom?: "LC" | "Alumni" | "SK";
+	enableCafeShiftProperties?: boolean;
 	// Get/set current view from parent (Calendar)
 	currentView: string;
 	onChangeView: (view: string) => void;
@@ -84,6 +85,7 @@ export default function CalendarNav({
 	isMobile = false,
 	enableRoomBookingProperties = false,
 	defaultRoom = "LC",
+	enableCafeShiftProperties = false,
 	currentView,
 	onChangeView,
 }: CalendarNavProps) {
@@ -341,6 +343,7 @@ export default function CalendarNav({
 						enableCarProperties={enableCarProperties}
 						enableRoomBookingProperties={enableRoomBookingProperties}
 						defaultRoom={defaultRoom}
+						enableCafeShiftProperties={enableCafeShiftProperties}
 					/>
 				)}
 			</div>

@@ -788,5 +788,42 @@
 		"confirm_remove": "Confirm removal of song",
 		"confirm_remove_text": "Are you sure you want to remove this song?",
 		"view_song": "View Song Details"
+	},
+	"cafe_shifts": {
+		"self": "Cafe Shifts",
+		"title": "Cafe Shifts",
+		"description": "Create and manage cafe shift slots. Use the calendar or list to add, edit, and assign shifts. Use the button below to add multiple shifts at once. The shifts are added between 08:00-10:00, 10:00-13:00 on each work day.",
+		"create_shift": "Create Shift",
+		"edit_shift": "Edit Shift",
+		"assigned_user": "Assigned User",
+		"start_time": "Start Time",
+		"end_time": "End Time",
+		"success_add": "Shift created!",
+		"error_add": "Failed to create shift.",
+		"success_delete": "Shift deleted!",
+		"error_delete": "Failed to delete shift.",
+		"success_edit": "Shift updated!",
+		"error_edit": "Failed to update shift.",
+		"error_missing_id": "Missing shift id.",
+		"calendar": "Calendar",
+		"calendar_description": "This calendar shows all cafe shifts. Click on a shift to edit it. Click or drag to select a time range and add a shift.",
+		"list": "List",
+		"list_description": "This list shows all cafe shifts. Click a row to edit it.",
+		"confirm_remove": "Confirm removal of shift",
+		"confirm_remove_text": "Are you sure you want to remove this shift?",
+		"show_all_shifts": "Show all shifts",
+		"hide_past_shifts": "Hide past shifts",
+		"multi": {
+			"success_create_shifts": "Shifts created successfully!",
+			"error_create_shifts": "Failed to create shifts.",
+			"create_shifts": "Create Multiple Shifts",
+			"title": "Create Multiple Shifts",
+			"description": "Create multiple shifts across weeks. You can select a start and end week (inclusive) and max 4 weeks at a time.",
+			"start": "Start Week",
+			"end": "End Week",
+			"full": "Full day",
+			"morning": "Morning",
+			"afternoon": "Afternoon"
+		}
 	}
 }

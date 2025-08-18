@@ -8,9 +8,9 @@ import { useTranslation } from "react-i18next";
 
 interface Props {
 	nameFilter: string;
-	programFilter: string;
+	programFilter: string | null;
 	startYearFilter: number | null;
-	excludedFromSearch: GroupUserRead[];
+	excludedFromSearch: GroupUserRead[] | null;
 	onRowClick?: (user: UserRead) => void;
 }
 
@@ -26,10 +26,11 @@ const SearchResults = ({
 		...searchUsersOptions({
 			query: {
 				name: nameFilter.length > 0 ? nameFilter : null,
-				program: programFilter.length > 0 ? programFilter : null,
+				program:
+					programFilter && programFilter.length > 0 ? programFilter : null,
 				start_year: startYearFilter,
 				exclude_ids:
-					excludedFromSearch.length > 0
+					excludedFromSearch && excludedFromSearch.length > 0
 						? excludedFromSearch.map((group_user) => group_user.user.id)
 						: null,
 			},

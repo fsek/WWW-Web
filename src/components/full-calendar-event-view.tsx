@@ -41,6 +41,7 @@ interface EventViewProps {
 	disableConfirmField?: boolean;
 	disableEditOfOthers?: boolean; // Optional prop to disable editing of others' events
 	enableRoomBookingProperties?: boolean;
+	enableCafeShiftProperties?: boolean;
 }
 
 function FormatTimeSpan(
@@ -67,6 +68,7 @@ export function EventView({
 	disableConfirmField = false,
 	disableEditOfOthers = false,
 	enableRoomBookingProperties = false,
+	enableCafeShiftProperties = false,
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 	const { t, i18n } = useTranslation("calendar");
@@ -378,6 +380,7 @@ export function EventView({
 								enableCarProperties={enableCarProperties}
 								disableConfirmField={disableConfirmField}
 								enableRoomBookingProperties={enableRoomBookingProperties}
+								enableCafeShiftProperties={enableCafeShiftProperties}
 							/>
 						)}
 					</AlertDialogFooter>
