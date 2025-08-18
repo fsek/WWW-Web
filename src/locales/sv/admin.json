@@ -69,7 +69,7 @@
 	"events": {
 		"self": "Evenemang",
 		"page_title": "Administrera evenemang",
-		"page_description": "Här kan du skapa och hantera evenemang. Tips: Om du vill att ett evenemang inte ska ha något maxantal deltagare, sätt \"max event users\" till 0.",
+		"page_description": "Här kan du skapa och hantera evenemang. Tips: Om du vill att ett evenemang inte ska ha något maxantal deltagare, sätt \"max event users\" till 0. Du kan hantera anmälningar genom att redigera ett event från listsidan.",
 		"create_event": "Skapa event",
 		"edit_booking": "Redigera event",
 		"title_sv": "Titel (svenska)",
@@ -139,6 +139,7 @@
 		"confirmed": "Bekräftad",
 		"confirm_remove": "Bekräfta borttagning av event",
 		"confirm_remove_text": "Är du säker på att du vill ta bort detta event?",
+		"manage_signups": "Hantera anmälningar",
 		"basic_info": "Grundläggande information",
 		"date_time": "Datum & tid",
 		"settings": "Egenskaper",

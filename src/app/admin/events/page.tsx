@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import EventsForm from "./EventsForm";
 import EventsEditForm from "./EventsEditForm";
 import {
@@ -38,28 +38,31 @@ export default function Events() {
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 
-	const columns = [
-		columnHelper.accessor("title_sv", {
-			header: t("admin:title_sv"),
-			cell: (info) => info.getValue(),
-		}),
-		columnHelper.accessor("starts_at", {
-			header: t("admin:starts_at"),
-			cell: (info) => formatTime(info.getValue()),
-		}),
-		columnHelper.accessor("ends_at", {
-			header: t("admin:ends_at"),
-			cell: (info) => formatTime(info.getValue()),
-		}),
-		columnHelper.accessor("signup_start", {
-			header: t("admin:signup_start"),
-			cell: (info) => formatTime(info.getValue()),
-		}),
-		columnHelper.accessor("signup_end", {
-			header: t("admin:signup_end"),
-			cell: (info) => formatTime(info.getValue()),
-		}),
-	];
+	const columns = useMemo(
+		() => [
+			columnHelper.accessor("title_sv", {
+				header: t("admin:title_sv"),
+				cell: (info) => info.getValue(),
+			}),
+			columnHelper.accessor("starts_at", {
+				header: t("admin:starts_at"),
+				cell: (info) => formatTime(info.getValue()),
+			}),
+			columnHelper.accessor("ends_at", {
+				header: t("admin:ends_at"),
+				cell: (info) => formatTime(info.getValue()),
+			}),
+			columnHelper.accessor("signup_start", {
+				header: t("admin:signup_start"),
+				cell: (info) => formatTime(info.getValue()),
+			}),
+			columnHelper.accessor("signup_end", {
+				header: t("admin:signup_end"),
+				cell: (info) => formatTime(info.getValue()),
+			}),
+		],
+		[t],
+	);
 
 	const { data, error, isFetching } = useQuery({
 		...getAllEventsOptions(),
@@ -68,8 +71,25 @@ export default function Events() {
 
 	const [openEditDialog, setOpenEditDialog] = useState(false);
 	const [selectedEvent, setSelectedEvent] = useState<EventRead | null>(null);
+	const [searchTitle, setSearchTitle] = useState<string>("");
 
-	const table = useCreateTable({ data: data ?? [], columns });
+	// Filter data based on searchTitle (only for list tab) and memoize to keep table stable
+	const filteredData = useMemo(() => {
+		if (!data) return [];
+		const lower = (searchTitle ?? "").toLowerCase();
+		return data.filter(
+			(event) =>
+				event.title_sv.toLowerCase().includes(lower) ||
+				event.title_en?.toLowerCase().includes(lower),
+		);
+	}, [data, searchTitle]);
+
+	const table = useCreateTable({
+		data: filteredData,
+		columns,
+		// Avoid auto resets that can trigger setState during render in child components
+		autoResetPageIndex: false,
+	});
 
 	function handleRowClick(row: Row<EventRead>) {
 		setSelectedEvent(row.original);
@@ -344,6 +364,16 @@ export default function Events() {
 								<p className="text-xs md:text-sm font-medium">
 									{t("admin:events.list_description")}
 								</p>
+							</div>
+							{/* Search input for filtering by title/location */}
+							<div className="py-3">
+								<input
+									type="search"
+									placeholder={t("admin:events.search_title")}
+									value={searchTitle}
+									onChange={(e) => setSearchTitle(e.target.value)}
+									className="w-96 border rounded px-3 py-2"
+								/>
 							</div>
 							<EventsForm />
 							<Separator />

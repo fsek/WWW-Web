@@ -16,8 +16,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import EventFormFields from "./EventFormFields";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
-import { Save } from "lucide-react";
+import { List, Save } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
@@ -62,6 +63,7 @@ export default function EventsEditForm({
 	selectedEvent,
 }: EventsEditFormProps) {
 	const { t } = useTranslation();
+	const router = useRouter();
 
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
@@ -205,6 +207,19 @@ export default function EventsEditForm({
 						/>
 
 						<div className="space-x-2 mt-6 flex justify-end">
+							<Button
+								type="button"
+								variant="outline"
+								className="w-32 min-w-fit"
+								onClick={() => {
+									router.push(
+										`/admin/events/signups?id=${form.getValues("id")}`,
+									);
+								}}
+							>
+								<List />
+								{t("admin:events.manage_signups")}
+							</Button>
 							<ConfirmDeleteDialog
 								open={deleteDialogOpen}
 								onOpenChange={setDeleteDialogOpen}

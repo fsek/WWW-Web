@@ -69,7 +69,7 @@
 	"events": {
 		"self": "Events",
 		"page_title": "Manage Events",
-		"page_description": "Here you can create and manage events. Tip: If you want an event to have no max attendance, set the \"max event users\" to 0.",
+		"page_description": "Here you can create and manage events. Tip: If you want an event to have no max attendance, set the \"max event users\" to 0. You can manage event signups by editing it from the list view.",
 		"create_event": "Create Event",
 		"edit_booking": "Edit Event",
 		"title_sv": "Title (Swedish)",
@@ -139,6 +139,7 @@
 		"confirmed": "Confirmed",
 		"confirm_remove": "Confirm removal of this event",
 		"confirm_remove_text": "Are you sure you want to remove this event?",
+		"manage_signups": "Manage Signups",
 		"basic_info": "Basic Information",
 		"date_time": "Date & Time",
 		"settings": "Settings",
