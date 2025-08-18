@@ -69,7 +69,7 @@
 	"events": {
 		"self": "Events",
 		"page_title": "Manage Events",
-		"page_description": "Here you can create and manage events.",
+		"page_description": "Here you can create and manage events. Tip: If you want an event to have no max attendance, set the \"max event users\" to 6122.",
 		"create_event": "Create Event",
 		"edit_booking": "Edit Event",
 		"title_sv": "Title (Swedish)",

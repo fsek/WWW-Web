@@ -69,7 +69,7 @@
 	"events": {
 		"self": "Evenemang",
 		"page_title": "Administrera evenemang",
-		"page_description": "Här kan du skapa och hantera evenemang.",
+		"page_description": "Här kan du skapa och hantera evenemang. Tips: Om du vill att ett evenemang inte ska ha något maxantal deltagare, sätt \"max event users\" till 6122.",
 		"create_event": "Skapa event",
 		"edit_booking": "Redigera event",
 		"title_sv": "Titel (svenska)",
