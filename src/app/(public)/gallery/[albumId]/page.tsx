@@ -91,7 +91,7 @@ export default function AlbumPage({ params }: Props) {
 		setViewerIndex(idx);
 		try {
 			const url = new URL(window.location.href);
-			url.searchParams.set("img", String(images[idx].id));
+			url.searchParams.set("img", String(images[idx]));
 			router.replace(url.toString());
 		} catch {}
 	};
@@ -124,7 +124,7 @@ export default function AlbumPage({ params }: Props) {
 		try {
 			const p = new URL(window.location.href).searchParams.get("img");
 			if (p && images.length) {
-				const idx = images.findIndex((im) => String(im.id) === p);
+				const idx = images.findIndex((im) => String(im) === p);
 				if (idx >= 0) setViewerIndex(idx);
 			}
 		} catch {}
