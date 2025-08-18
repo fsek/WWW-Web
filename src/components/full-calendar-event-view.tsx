@@ -43,6 +43,18 @@ interface EventViewProps {
 	enableRoomBookingProperties?: boolean;
 }
 
+function FormatTimeSpan(
+	start: Date | undefined,
+	end: Date | undefined,
+	language: string,
+) {
+	if (!start || !end) return "";
+	if (start.getDate() === end.getDate()) {
+		return `${start.toLocaleTimeString(language, { hour: "2-digit", minute: "2-digit" })} - ${end.toLocaleTimeString(language, { hour: "2-digit", minute: "2-digit" })}`;
+	}
+	return `${start.toLocaleDateString(language)} ${start.toLocaleTimeString(language, { hour: "2-digit", minute: "2-digit" })} - ${end.toLocaleDateString(language)} ${end.toLocaleTimeString(language, { hour: "2-digit", minute: "2-digit" })}`;
+}
+
 export function EventView({
 	event,
 	showDescription,
@@ -106,7 +118,9 @@ export function EventView({
 							<tbody>
 								<tr>
 									<th>{t("view.time")}</th>
-									<td>{`${event?.start.toLocaleTimeString()} - ${event?.end.toLocaleTimeString()}`}</td>
+									<td>
+										{FormatTimeSpan(event?.start, event?.end, i18n.language)}
+									</td>
 								</tr>
 								{showDescription && (
 									<tr>
@@ -114,7 +128,9 @@ export function EventView({
 										<td>
 											{(() => {
 												const raw =
-													i18n.language === "en" && !enableCarProperties && !enableRoomBookingProperties
+													i18n.language === "en" &&
+													!enableCarProperties &&
+													!enableRoomBookingProperties
 														? event?.description_en
 														: event?.description_sv;
 												const desc = typeof raw === "string" ? raw : "";
@@ -249,7 +265,15 @@ export function EventView({
 										</tr>
 										<tr>
 											<th>{t("admin:events.max_event_users")}</th>
-											<td>{event.max_event_users as number}</td>
+											<td>
+												{event.max_event_users === 0 ? (
+													<span className="text-muted-foreground text-sm">
+														{t("admin:events.no_max_event_users")}
+													</span>
+												) : (
+													<>{event.max_event_users as number}</>
+												)}
+											</td>
 										</tr>
 										<tr>
 											<th>{t("admin:events.price")}</th>
@@ -281,7 +305,7 @@ export function EventView({
 										</tr>
 									</>
 								)}
-								{event && (enableCarProperties) && (
+								{event && enableCarProperties && (
 									<tr>
 										<th>{t("admin:events.council")}</th>
 										<td>
@@ -308,8 +332,8 @@ export function EventView({
 										<th>{t("admin:room_bookings.council")}</th>
 										<td>
 											{i18n.language === "en"
-												? event.council_name_en as string
-												: event.council_name_sv as string}
+												? (event.council_name_en as string)
+												: (event.council_name_sv as string)}
 										</td>
 									</tr>
 								)}

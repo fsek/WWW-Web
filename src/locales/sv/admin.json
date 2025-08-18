@@ -15,6 +15,12 @@
 	"no_posts": "Inga poster tilldelade",
 	"unclear_program": "Oklart",
 	"milk_allergy": "Mjölkproteinallergi",
+	"title_sv": "Titel (svenska)",
+	"title_en": "Titel (engelska)",
+	"ends_at": "Sluttid",
+	"starts_at": "Starttid",
+	"signup_start": "Anmälningsstart",
+	"signup_end": "Anmälningsslut",
 	"welcome": {
 		"title": "Välkommen till adminsidan",
 		"message": "Här kan du hantera en otrolig mängd saker (Saknas något? Kontakta en spindelman@fsektionen.se). Använd menyn till vänster för att navigera mellan de olika skärmarna. Du borde bara ha tillgång till de skärmar du har behörighet till, om så inte är fallet, kontakta en superman."
@@ -62,6 +68,8 @@
 	},
 	"events": {
 		"self": "Evenemang",
+		"page_title": "Administrera evenemang",
+		"page_description": "Här kan du skapa och hantera evenemang. Tips: Om du vill att ett evenemang inte ska ha något maxantal deltagare, sätt \"max event users\" till 0.",
 		"create_event": "Skapa event",
 		"edit_booking": "Redigera event",
 		"title_sv": "Titel (svenska)",
@@ -78,6 +86,7 @@
 		"location": "Plats",
 		"no_location": "Ingen plats att visa",
 		"max_event_users": "Max antal deltagare",
+		"no_max_event_users": "Ingen begränsning",
 		"all_day": "Heldag",
 		"recurring": "Återkommande event",
 		"food": "Mat serveras",
@@ -124,6 +133,7 @@
 		"select_alcohol_event_type": "Välj alkoholpolicy",
 		"free": "Gratis",
 		"signup_not_available": "Anmälan inte tillgänglig",
+		"signup_not_used": "Eventet kräver inte anmälan",
 		"signup_count": "Antal anmälda deltagare",
 		"personal": "Personlig bokning",
 		"confirmed": "Bekräftad",
@@ -132,7 +142,10 @@
 		"basic_info": "Grundläggande information",
 		"date_time": "Datum & tid",
 		"settings": "Egenskaper",
-		"additional": "Övrigt"
+		"additional": "Övrigt",
+		"success_add": "Event skapades!",
+		"success_edit": "Event uppdaterades!",
+		"success_delete": "Event togs bort!"
 	},
 	"documents": {
 		"self": "Dokument",
@@ -357,6 +370,7 @@
 		"bulk_member_loading": "Bearbetar...",
 		"bulk_member_success": "Alla användare blev medlemmar.",
 		"bulk_member_error": "Misslyckades att göra vissa användare till medlemmar:",
+		"show_verified_only": "Visa endast användare med verifierad e-post",
 		"processing": "Bearbetar",
 		"block": "Blockera",
 		"error_unblock": "Misslyckades att uppdatera medlemsstatus"
@@ -391,8 +405,8 @@
 	"albums": {
 		"self": "Album",
 		"page_title": "Hantera Album",
-		"page_description": "Här kan duskapa och redigera album. Du kan lägga till bilder och fotografer efter att albumet skapats.",
-		"warning": "Observera att datumet inte kan ändras efter skapelse!",
+		"page_description": "Här kan du skapa och redigera album. Du kan lägga till bilder och fotografer efter att albumet skapats.",
+		"warning": "Observera att datumet inte kan ändras efter albumet skapats!",
 		"only_empty": "Endast tomma album kan tas bort",
 		"view_album": "Visa album",
 		"edit_album": "Redigera album",
@@ -619,8 +633,9 @@
 	},
 	"room_bookings": {
 		"self": "Rumsbokningar",
-		"title": "Hantera rumsbokningar",
-		"description": "Här kan du skapa och hantera rumsbokningar. Användare kan komma till dig med frågor om att boka rummen för personligt bruk, eftersom de inte kan boka rum själva. Du kan skapa flera bokningar samtidigt, upp till 50. Var försiktig! Du måste ta bort dem individuellt om något går fel!",
+		"page_title": "Hantera rumsbokningar",
+		"page_description": "Här kan du skapa och hantera rumsbokningar. Användare kan komma till dig med frågor om att boka rummen för personligt bruk, eftersom de inte kan boka rum själva. Du kan skapa flera bokningar samtidigt, upp till 50. Var försiktig! Du måste ta bort dem individuellt om något går fel!",
+		"description": "Beskrivning",
 		"create_booking": "Skapa bokning",
 		"edit_booking": "Redigera bokning",
 		"start_time": "Starttid",

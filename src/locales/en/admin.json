@@ -15,6 +15,12 @@
 	"no_posts": "No posts assigned",
 	"unclear_program": "Unclear",
 	"milk_allergy": "Milk Protein Allergy",
+	"title_sv": "Title (Swedish)",
+	"title_en": "Title (English)",
+	"ends_at": "End Time",
+	"starts_at": "Start Time",
+	"signup_start": "Signup Start",
+	"signup_end": "Signup End",
 	"welcome": {
 		"title": "Welcome to the Admin Page",
 		"message": "Here you can manage a wide range of things (Is something missing? Contact spindelman@fsektionen.se). Use the menu on the left to navigate between the different sections. You should only have access to the sections you have permissions for; if this is not the case, please contact a webmaster."
@@ -62,6 +68,8 @@
 	},
 	"events": {
 		"self": "Events",
+		"page_title": "Manage Events",
+		"page_description": "Here you can create and manage events. Tip: If you want an event to have no max attendance, set the \"max event users\" to 0.",
 		"create_event": "Create Event",
 		"edit_booking": "Edit Event",
 		"title_sv": "Title (Swedish)",
@@ -78,6 +86,7 @@
 		"location": "Location",
 		"no_location": "No Location to Display",
 		"max_event_users": "Max Event Users",
+		"no_max_event_users": "No Limit",
 		"all_day": "All Day",
 		"recurring": "Recurring Event",
 		"food": "Food Served",
@@ -124,6 +133,7 @@
 		"select_alcohol_event_type": "Select alcohol policy",
 		"free": "Free",
 		"signup_not_available": "Signup not available",
+		"signup_not_used": "Event does not require signup",
 		"signup_count": "Number of signups",
 		"personal": "Personal booking",
 		"confirmed": "Confirmed",
@@ -132,7 +142,10 @@
 		"basic_info": "Basic Information",
 		"date_time": "Date & Time",
 		"settings": "Settings",
-		"additional": "Additional Information"
+		"additional": "Additional Information",
+		"success_add": "Event created!",
+		"success_edit": "Event updated!",
+		"success_delete": "Event deleted!"
 	},
 	"documents": {
 		"self": "Documents",
@@ -356,6 +369,7 @@
 		"bulk_member_loading": "Processing...",
 		"bulk_member_success": "All users were made members successfully.",
 		"bulk_member_error": "Failed to make some users members:",
+		"show_verified_only": "Show users with verified email only",
 		"processing": "Processing",
 		"block": "Block",
 		"error_unblock": "Failed to update membership status"
@@ -618,8 +632,9 @@
 	},
 	"room_bookings": {
 		"self": "Room bookings",
-		"title": "Manage Room Bookings",
-		"description": "Here you can create and manage room bookings. Users without posts may come to you with questions about booking the rooms for personal use, since they cannot book rooms on their own. You can create multiple bookings at once, up to 50. Be careful! You have to remove them individually if something goes wrong!",
+		"page_title": "Manage Room Bookings",
+		"page_description": "Here you can create and manage room bookings. Users without posts may come to you with questions about booking the rooms for personal use, since they cannot book rooms on their own. You can create multiple bookings at once, up to 50. Be careful! You have to remove them individually if something goes wrong!",
+		"description": "Description",
 		"create_booking": "Create Booking",
 		"edit_booking": "Edit Booking",
 		"start_time": "Start Time",

@@ -154,6 +154,7 @@ export default function Car() {
 
 	const { data, error, isFetching } = useQuery({
 		...getAllCarBookingsOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const {
@@ -163,6 +164,7 @@ export default function Car() {
 		isLoading: userDetailsIsLoading,
 	} = useQuery({
 		...adminGetAllUsersOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const tableData = useMemo(() => {
@@ -345,6 +347,13 @@ export default function Car() {
 		getPaginationRowModel: getPaginationRowModel(),
 	});
 
+	// Keep the current calendar view while this page is mounted
+	const [calendarView, setCalendarView] = useState<string | undefined>(
+		undefined,
+	);
+	// Keep the currently viewed date while this page is mounted
+	const [calendarDate, setCalendarDate] = useState<Date | undefined>(undefined);
+
 	if (error || userDetailsError || blockError) {
 		return (
 			<LoadingErrorCard
@@ -522,6 +531,12 @@ export default function Car() {
 									disableEdit={false} // Also disables delete, add and dragging
 									enableAllDay={false}
 									enableCarProperties={true}
+									// Provide and persist the calendar view across tab switches
+									defaultView={calendarView}
+									onViewChange={setCalendarView}
+									// Provide and persist the viewed date across tab switches
+									defaultDate={calendarDate}
+									onDateChange={setCalendarDate}
 								/>
 							</TabsContent>
 							<TabsContent value="list" className="w-full px-5 space-y-5">

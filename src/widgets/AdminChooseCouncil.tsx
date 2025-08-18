@@ -23,6 +23,7 @@ export function AdminChooseCouncil({
 	const { t, i18n } = useTranslation("admin");
 	const { data: councils, error } = useQuery({
 		...getAllCouncilsOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	if (error) {

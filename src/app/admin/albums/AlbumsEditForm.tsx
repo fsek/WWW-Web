@@ -217,7 +217,8 @@ export default function AlbumsEditForm({
 						<div className="space-x-2 lg:col-span-2 flex items-center">
 							<Button
 								variant="outline"
-								onClick={() => router.push(`/albums/${selectedAlbum.id}`)}
+								type="button"
+								onClick={() => router.push(`/gallery/${selectedAlbum.id}`)}
 							>
 								{t("albums.view_album")}
 							</Button>
