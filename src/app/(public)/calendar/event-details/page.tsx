@@ -179,7 +179,13 @@ export default function Page() {
 								<Users className="w-4 h-4 text-muted-foreground" />
 								<span>
 									{`${t("admin:events.max_event_users")}: `}
-									{data.max_event_users}
+									{data.max_event_users === 0 ? (
+										<span className="text-muted-foreground text-sm">
+											{t("admin:events.no_max_event_users")}
+										</span>
+									) : (
+										<>{data.max_event_users as number}</>
+									)}
 								</span>
 							</div>
 						</CardContent>

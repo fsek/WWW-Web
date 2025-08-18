@@ -265,7 +265,15 @@ export function EventView({
 										</tr>
 										<tr>
 											<th>{t("admin:events.max_event_users")}</th>
-											<td>{event.max_event_users as number}</td>
+											<td>
+												{event.max_event_users === 0 ? (
+													<span className="text-muted-foreground text-sm">
+														{t("admin:events.no_max_event_users")}
+													</span>
+												) : (
+													<>{event.max_event_users as number}</>
+												)}
+											</td>
 										</tr>
 										<tr>
 											<th>{t("admin:events.price")}</th>

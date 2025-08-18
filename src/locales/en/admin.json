@@ -69,7 +69,7 @@
 	"events": {
 		"self": "Events",
 		"page_title": "Manage Events",
-		"page_description": "Here you can create and manage events. Tip: If you want an event to have no max attendance, set the \"max event users\" to 6122.",
+		"page_description": "Here you can create and manage events. Tip: If you want an event to have no max attendance, set the \"max event users\" to 0.",
 		"create_event": "Create Event",
 		"edit_booking": "Edit Event",
 		"title_sv": "Title (Swedish)",
@@ -86,6 +86,7 @@
 		"location": "Location",
 		"no_location": "No Location to Display",
 		"max_event_users": "Max Event Users",
+		"no_max_event_users": "No Limit",
 		"all_day": "All Day",
 		"recurring": "Recurring Event",
 		"food": "Food Served",
