@@ -368,6 +368,7 @@
 		"bulk_member_loading": "Processing...",
 		"bulk_member_success": "All users were made members successfully.",
 		"bulk_member_error": "Failed to make some users members:",
+		"show_verified_only": "Show users with verified email only",
 		"processing": "Processing",
 		"block": "Block",
 		"error_unblock": "Failed to update membership status"

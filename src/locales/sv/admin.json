@@ -369,6 +369,7 @@
 		"bulk_member_loading": "Bearbetar...",
 		"bulk_member_success": "Alla användare blev medlemmar.",
 		"bulk_member_error": "Misslyckades att göra vissa användare till medlemmar:",
+		"show_verified_only": "Visa endast användare med verifierad e-post",
 		"processing": "Bearbetar",
 		"block": "Blockera",
 		"error_unblock": "Misslyckades att uppdatera medlemsstatus"
