@@ -1,8 +1,8 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	getImageStreamOptions,
 	getImageOptions,
@@ -19,6 +19,84 @@ export interface ImageDisplayProps extends Omit<NextImageProps, "src" | "id"> {
 	type: ImageKind;
 	imageId: number;
 	size?: ImageSize;
+}
+
+// Helpers to get original blob and actions using stream routes
+export function useImageBlobActions(type: ImageKind, imageId?: number | null) {
+	const queryClient = useQueryClient();
+
+	// Build the stream query options for the original image
+	const buildStreamOptions = useCallback(() => {
+		const devMode = process.env.NEXT_PUBLIC_ENV === "development";
+		if (!imageId) return null;
+		switch (type) {
+			case "news":
+				if (devMode) {
+					return getNewsImageStreamOptions({ path: { news_id: imageId } });
+				}
+				return getNewsImageOptions({
+					path: { news_id: imageId, size: "original" },
+				});
+			// case "event":
+			// case "user":
+			default:
+				if (devMode) {
+					return getImageStreamOptions({ path: { img_id: imageId } });
+				}
+				return getImageOptions({ path: { img_id: imageId, size: "original" } });
+		}
+	}, [type, imageId]);
+
+	// Fetch original as Blob and return a fresh object URL
+	const getOriginalAsBlobUrl = useCallback(async () => {
+		const opts = buildStreamOptions();
+		if (!opts) throw new Error("No imageId provided");
+		// Use the generated route queryFn to ensure auth and correct routing
+		const data = await (queryClient.fetchQuery as any)(opts);
+
+		let blob: Blob | null = null;
+		if (typeof Blob !== "undefined" && data instanceof Blob) {
+			blob = data;
+		} else if (
+			data &&
+			(typeof (data as any).byteLength === "number" ||
+				ArrayBuffer.isView(data as any))
+		) {
+			blob = new Blob([data as any]);
+		} else {
+			// Stream routes should return a Blob; if not, fail early (no direct fetch/URL allowed)
+			throw new Error("Unexpected image response type for stream route");
+		}
+
+		const url = URL.createObjectURL(blob);
+		return { blob, url };
+	}, [buildStreamOptions, queryClient]);
+
+	// Open original in a new tab
+	const openInNewTabOriginal = useCallback(async () => {
+		const { url } = await getOriginalAsBlobUrl();
+		window.open(url, "_blank", "noopener,noreferrer");
+		// Revoke after a short delay to avoid revoking before the browser reads it
+		// 10 seconds should be more than enough
+		setTimeout(() => URL.revokeObjectURL(url), 10_000);
+	}, [getOriginalAsBlobUrl]);
+
+	// Download original
+	const downloadOriginal = useCallback(
+		async (filename?: string) => {
+			const { url } = await getOriginalAsBlobUrl();
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = filename ?? `image-${imageId ?? "original"}.jpg`;
+			document.body.appendChild(a);
+			a.click();
+			a.remove();
+			setTimeout(() => URL.revokeObjectURL(url), 10_000);
+		},
+		[getOriginalAsBlobUrl, imageId],
+	);
+
+	return { getOriginalAsBlobUrl, openInNewTabOriginal, downloadOriginal };
 }
 
 export default function ImageDisplay({

@@ -429,7 +429,8 @@
 		"date": "Date",
 		"photographer": "Photographer",
 		"actions": "Actions",
-		"manage": "Manage album"
+		"manage": "Manage album",
+		"view": "View album"
 	},
 	"album": {
 		"dragndrop": "Drag images here or click to upload",
