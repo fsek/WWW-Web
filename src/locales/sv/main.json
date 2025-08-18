@@ -9,7 +9,7 @@
 	"adminButton": "Admin sidan",
 	"registerButton": "Registrera nytt konto",
 	"newsTitle": "Nyheter",
-	"newsText": "Om du vill använda bilder eller mer avancerad formatering, använd Mattermost tills vi har lagt till ordentligt stöd.",
+	"newsText": "Om du vill använda mer avancerad formatering, använd Mattermost tills vi har lagt till ordentligt stöd. Nyhetssidan stöder dock bilder nu!",
 	"cafeTitle": "Hilbert Café",
 	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang.",
 	"coolThing": "En cool grej som distraherar dig från att se att sidan inte är klar än",
