@@ -54,6 +54,7 @@ interface SignupCardProps {
 	isSignupAllowed?: boolean;
 	signupPeriodPassed?: boolean;
 	useDrinkPackage?: boolean;
+	isSignupUsed: boolean; // if signup is required to attend the event.
 }
 
 export default function SignupCard({
@@ -62,6 +63,7 @@ export default function SignupCard({
 	isSignupAllowed,
 	signupPeriodPassed,
 	useDrinkPackage,
+	isSignupUsed,
 }: SignupCardProps) {
 	const [isEditing, setIsEditing] = useState(false);
 	const { t } = useTranslation();
@@ -267,33 +269,41 @@ export default function SignupCard({
 					<span>{t("event_signup.title")}</span>
 
 					<div className="flex items-center gap-2 ml-auto">
-						{signupData && !isEditing && !signupPeriodPassed && (
-							<Button
-								variant="destructive"
-								size="sm"
-								onClick={handleSignoff()}
-								className="flex items-center gap-2"
-							>
-								<LogOut className="w-4 h-4" />
-								{t("event_signup.signoff_button")}
-							</Button>
-						)}
-						{signupData && !isEditing && !signupPeriodPassed && (
-							<Button
-								variant="outline"
-								size="sm"
-								onClick={() => setIsEditing(true)}
-								className="flex items-center gap-2"
-							>
-								<Edit className="w-4 h-4" />
-								{t("event_signup.edit_button")}
-							</Button>
-						)}
+						{signupData &&
+							!isEditing &&
+							!signupPeriodPassed &&
+							isSignupUsed && (
+								<Button
+									variant="destructive"
+									size="sm"
+									onClick={handleSignoff()}
+									className="flex items-center gap-2"
+								>
+									<LogOut className="w-4 h-4" />
+									{t("event_signup.signoff_button")}
+								</Button>
+							)}
+						{signupData &&
+							!isEditing &&
+							!signupPeriodPassed &&
+							isSignupUsed && (
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => setIsEditing(true)}
+									className="flex items-center gap-2"
+								>
+									<Edit className="w-4 h-4" />
+									{t("event_signup.edit_button")}
+								</Button>
+							)}
 					</div>
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				{isEditing && !signupPeriodPassed ? (
+				{!isSignupUsed ? (
+					<p>{t("event_signup.signup_not_used")}</p>
+				) : isEditing && !signupPeriodPassed ? (
 					<Form {...form}>
 						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 							{/* Only show priority select if availablePriorities is provided and non-empty, or if event priorities exist */}

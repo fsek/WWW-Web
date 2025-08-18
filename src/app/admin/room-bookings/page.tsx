@@ -152,6 +152,13 @@ export default function RoomBookings() {
 		throwOnError: false,
 	});
 
+	// Keep the current calendar view while this page is mounted
+	const [calendarView, setCalendarView] = useState<string | undefined>(
+		undefined,
+	);
+	// Keep the currently viewed date while this page is mounted
+	const [calendarDate, setCalendarDate] = useState<Date | undefined>(undefined);
+
 	if (isFetching) {
 		return <LoadingErrorCard />;
 	}
@@ -193,9 +200,9 @@ export default function RoomBookings() {
 	return (
 		<div className="px-8 space-x-4">
 			<h3 className="text-3xl py-3 font-bold text-primary">
-				{t("admin:room_bookings.title")}
+				{t("admin:room_bookings.page_title")}
 			</h3>
-			<p className="py-3">{t("admin:room_bookings.description")}</p>
+			<p className="py-3">{t("admin:room_bookings.page_description")}</p>
 			<div className="py-2 w-64">
 				<SelectFromOptions
 					placeholder={t("admin:room_bookings.select_room") || "Välj rum"}
@@ -323,6 +330,12 @@ export default function RoomBookings() {
 								enableRoomBookingProperties={true}
 								defaultRoom={selectedRoom === "All" ? undefined : selectedRoom}
 								onDateRangeChange={handleDateRangeChange}
+								// Provide and persist the calendar view across tab switches
+								defaultView={calendarView}
+								onViewChange={setCalendarView}
+								// Provide and persist the viewed date across tab switches
+								defaultDate={calendarDate}
+								onDateChange={setCalendarDate}
 							/>
 						</TabsContent>
 						<TabsContent value="list" className="w-full px-5 space-y-5">

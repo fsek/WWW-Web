@@ -9,7 +9,7 @@
 	"adminButton": "Admin Page",
 	"registerButton": "Register a new account",
 	"newsTitle": "News",
-	"newsText": "If you want to use images or more advanced formatting, use mattermost until we have added proper support.",
+	"newsText": "If you want to use more advanced formatting, use mattermost until we have added proper support. The news page now supports images though!",
 	"cafeTitle": "Hilbert Cafe",
 	"cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement.",
 	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
@@ -394,7 +394,8 @@
 		"food_preferences_explainer": "These are your saved food preferences. If something doesn't look right, please update them in your account settings.",
 		"standard_food_preferences": "Standard preferences:",
 		"other_food_preferences": "Other preferences:",
-		"none": "None"
+		"none": "None",
+		"signup_not_used": "You cannot sign up for this event as it does not use the system for signing up to attend."
 	},
 	"songs": {
 		"by": "By",

@@ -68,9 +68,33 @@ export function Combobox({
 		}
 	};
 
+	// Centralized clear handler
+	const handleClear = (e?: React.MouseEvent | React.KeyboardEvent) => {
+		e?.preventDefault?.();
+		e?.stopPropagation?.();
+		handleInputChange("");
+		onChange(null);
+		setOpen(false);
+	};
+
 	const selectedOption = value
 		? options.find((option) => option.value === value)
 		: null;
+
+	const matchesOption =
+		currentInput.trim().length > 0
+			? options.some(
+					(o) => o.value.toLowerCase() === currentInput.toLowerCase(),
+				)
+			: false;
+
+	const displayValue = selectedOption
+		? selectedOption.label
+		: value
+			? value
+			: currentInput
+				? currentInput
+				: placeholder;
 
 	const showClear = clearable && value;
 
@@ -84,12 +108,8 @@ export function Combobox({
 						aria-expanded={open}
 						className={cn("w-full justify-between", className)}
 					>
-						<span className={cn(!value && "text-gray-500")}>
-							{selectedOption
-								? selectedOption.label
-								: currentInput
-									? currentInput
-									: placeholder}
+						<span className={cn(!value && !selectedOption && "text-gray-500")}>
+							{displayValue}
 						</span>
 						<span className="flex items-center gap-1">
 							<ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -117,6 +137,33 @@ export function Combobox({
 							<CommandEmpty>
 								{noOptionsMessage ? noOptionsMessage() : "No options found."}
 							</CommandEmpty>
+
+							{/* Clear selection option when applicable */}
+							{showClear && (
+								<CommandItem
+									key="__clear__"
+									value="__clear__"
+									onSelect={() => handleClear()}
+								>
+									<XIcon className="mr-2 h-4 w-4" />
+									Clear selection
+								</CommandItem>
+							)}
+
+							{/* Free-text option appears first when typing and it doesn't match an option */}
+							{currentInput.trim().length > 0 && !matchesOption && (
+								<CommandItem
+									key="__free_text__"
+									value={currentInput}
+									onSelect={() => {
+										onChange(currentInput);
+										setOpen(false);
+									}}
+								>
+									{/* No check icon for free-text; it's not in the predefined options */}
+									Use "{currentInput}"
+								</CommandItem>
+							)}
 							<CommandGroup>
 								{options.map((option) => (
 									<CommandItem
@@ -151,13 +198,7 @@ export function Combobox({
 					tabIndex={-1}
 					aria-label="Clear"
 					className="absolute right-10 top-1/2 -translate-y-1/2 p-1 rounded hover:bg-destructive focus:bg-destructive hover:text-destructive-foreground focus:text-destructive-foreground"
-					onClick={(e) => {
-						e.preventDefault();
-						e.stopPropagation();
-						handleInputChange("");
-						onChange(null);
-						setOpen(false);
-					}}
+					onClick={(e) => handleClear(e)}
 				>
 					<XIcon className="h-4 w-4" />
 				</button>

@@ -1,76 +1,34 @@
-"use client";
-
-import { searchUsersOptions } from "@/api/@tanstack/react-query.gen";
-import Select, { type OnChangeValue } from "react-select";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import CreatableSelect from "react-select/creatable";
+import type { OnChangeValue } from "react-select";
 
 export type Option = {
 	value: string | number;
 	label: string;
 };
 
-interface AdminChooseUserProps {
+interface StyledCreatableSelectProps {
 	isMulti?: boolean;
+	options: Option[];
 	value?: Option | Option[] | null;
 	onChange?: (selected: readonly Option[] | Option | null) => void;
 	placeholder?: string;
 	className?: string;
 	isDisabled?: boolean;
-	additionalFilters?: {
-		exclude_ids?: Array<number>;
-		program?: string;
-		start_year?: number;
-	};
+	isClearable?: boolean;
 }
 
-export default function AdminChooseUser({
+export default function StyledCreatableSelect({
 	isMulti = false,
+	options,
 	value,
 	onChange,
 	placeholder,
 	className = "",
 	isDisabled = false,
-	additionalFilters = undefined,
-}: AdminChooseUserProps) {
-	const [queryString, setQueryString] = useState("");
-	const [isTyping, setIsTyping] = useState(false);
-	const queryClient = useQueryClient();
+	isClearable = true,
+}: StyledCreatableSelectProps) {
 	const { t } = useTranslation("admin");
-
-	const {
-		data: users,
-		refetch,
-		isPending,
-	} = useQuery({
-		...searchUsersOptions({
-			query: { name: queryString, limit: 5, ...additionalFilters },
-		}),
-		enabled: false,
-		refetchOnWindowFocus: false,
-	});
-
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	const debounce = <T extends (...args: any[]) => void>(
-		func: T,
-		timeout = 10000,
-	) => {
-		let timer: ReturnType<typeof setTimeout>;
-		return (...args: Parameters<T>) => {
-			clearTimeout(timer);
-			setIsTyping(true);
-			timer = setTimeout(() => {
-				setIsTyping(false);
-				func(...args);
-			}, timeout);
-		};
-	};
-
-	const processChange = debounce(() => {
-		// setQueryString(searchStr);
-		refetch();
-	}, 1000);
 
 	const handleChange = (selected: OnChangeValue<Option, boolean>) => {
 		if (!onChange) return;
@@ -78,21 +36,15 @@ export default function AdminChooseUser({
 	};
 
 	return (
-		<Select
+		<CreatableSelect
 			isMulti={isMulti}
-			options={
-				users?.map((u) => ({
-					value: u.id,
-					label: `${u.first_name} ${u.last_name}`,
-				})) ?? []
-			}
+			options={options}
 			unstyled
+			placeholder={placeholder || t("select")}
 			value={value}
 			onChange={handleChange}
-			placeholder={placeholder}
-			noOptionsMessage={({ inputValue }) =>
-				isPending || isTyping ? t("searching") : t("user_not_found")
-			}
+			isDisabled={isDisabled}
+			isClearable={isClearable}
 			classNames={{
 				container: () => `${className}`,
 				control: ({ isFocused }) =>
@@ -124,11 +76,6 @@ export default function AdminChooseUser({
 				input: () => "text-foreground dark:text-foreground",
 				noOptionsMessage: () =>
 					"text-muted-foreground dark:text-muted-foreground py-2 px-3 text-sm",
-			}}
-			isDisabled={isDisabled}
-			onInputChange={(input) => {
-				setQueryString(input);
-				processChange();
 			}}
 		/>
 	);

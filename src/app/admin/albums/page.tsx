@@ -77,7 +77,10 @@ export default function AlbumsPage() {
 		}),
 	];
 
-	const { data, error } = useSuspenseQuery({ ...getAlbumsOptions() });
+	const { data, error } = useSuspenseQuery({
+		...getAlbumsOptions(),
+		refetchOnWindowFocus: false,
+	});
 
 	const table = useCreateTable({ data: data ?? [], columns });
 

@@ -190,7 +190,12 @@ export default function AlbumsForm() {
 									<FormItem className="lg:col-span-1">
 										<FormLabel>{t("albums.location")}</FormLabel>
 										<FormControl>
-											<Input placeholder={t("albums.location")} {...field} />
+											<Input
+												placeholder={t("albums.location")}
+												{...field}
+												onChange={onChange}
+												value={value ?? ""}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
