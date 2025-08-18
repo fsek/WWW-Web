@@ -15,6 +15,12 @@
 	"no_posts": "Inga poster tilldelade",
 	"unclear_program": "Oklart",
 	"milk_allergy": "Mjölkproteinallergi",
+	"title_sv": "Titel (svenska)",
+	"title_en": "Titel (engelska)",
+	"ends_at": "Sluttid",
+	"starts_at": "Starttid",
+	"signup_start": "Anmälningsstart",
+	"signup_end": "Anmälningsslut",
 	"welcome": {
 		"title": "Välkommen till adminsidan",
 		"message": "Här kan du hantera en otrolig mängd saker (Saknas något? Kontakta en spindelman@fsektionen.se). Använd menyn till vänster för att navigera mellan de olika skärmarna. Du borde bara ha tillgång till de skärmar du har behörighet till, om så inte är fallet, kontakta en superman."
@@ -62,6 +68,8 @@
 	},
 	"events": {
 		"self": "Evenemang",
+		"page_title": "Administrera evenemang",
+		"page_description": "Här kan du skapa och hantera evenemang.",
 		"create_event": "Skapa event",
 		"edit_booking": "Redigera event",
 		"title_sv": "Titel (svenska)",
@@ -132,7 +140,10 @@
 		"basic_info": "Grundläggande information",
 		"date_time": "Datum & tid",
 		"settings": "Egenskaper",
-		"additional": "Övrigt"
+		"additional": "Övrigt",
+		"success_add": "Event skapades!",
+		"success_edit": "Event uppdaterades!",
+		"success_delete": "Event togs bort!"
 	},
 	"documents": {
 		"self": "Dokument",

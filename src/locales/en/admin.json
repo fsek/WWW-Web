@@ -15,6 +15,12 @@
 	"no_posts": "No posts assigned",
 	"unclear_program": "Unclear",
 	"milk_allergy": "Milk Protein Allergy",
+	"title_sv": "Title (Swedish)",
+	"title_en": "Title (English)",
+	"ends_at": "End Time",
+	"starts_at": "Start Time",
+	"signup_start": "Signup Start",
+	"signup_end": "Signup End",
 	"welcome": {
 		"title": "Welcome to the Admin Page",
 		"message": "Here you can manage a wide range of things (Is something missing? Contact spindelman@fsektionen.se). Use the menu on the left to navigate between the different sections. You should only have access to the sections you have permissions for; if this is not the case, please contact a webmaster."
@@ -62,6 +68,8 @@
 	},
 	"events": {
 		"self": "Events",
+		"page_title": "Manage Events",
+		"page_description": "Here you can create and manage events.",
 		"create_event": "Create Event",
 		"edit_booking": "Edit Event",
 		"title_sv": "Title (Swedish)",
@@ -132,7 +140,10 @@
 		"basic_info": "Basic Information",
 		"date_time": "Date & Time",
 		"settings": "Settings",
-		"additional": "Additional Information"
+		"additional": "Additional Information",
+		"success_add": "Event created!",
+		"success_edit": "Event updated!",
+		"success_delete": "Event deleted!"
 	},
 	"documents": {
 		"self": "Documents",
