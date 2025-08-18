@@ -154,6 +154,7 @@ export default function Car() {
 
 	const { data, error, isFetching } = useQuery({
 		...getAllCarBookingsOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const {
@@ -163,6 +164,7 @@ export default function Car() {
 		isLoading: userDetailsIsLoading,
 	} = useQuery({
 		...adminGetAllUsersOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const tableData = useMemo(() => {

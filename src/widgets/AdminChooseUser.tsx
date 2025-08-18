@@ -48,6 +48,7 @@ export default function AdminChooseUser({
 			query: { name: queryString, limit: 5, ...additionalFilters },
 		}),
 		enabled: false,
+		refetchOnWindowFocus: false,
 	});
 
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>

@@ -49,6 +49,7 @@ export default function Car() {
 		isLoading,
 	} = useQuery({
 		...getAllCarBookingsOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const {
@@ -121,7 +122,7 @@ export default function Car() {
 					? "#e68a00" // TODO: Use tailwind for this somehow
 					: "#ffd699"
 				: // Use a different color for the current user's bookings
-				car.confirmed
+					car.confirmed
 					? "#66cc00"
 					: "#e6e600"; // Green for confirmed, yellow for unconfirmed
 			return {
@@ -176,7 +177,7 @@ export default function Car() {
 												onError: (error) => {
 													toast.error(
 														t("admin:car.error_add") +
-														(error?.detail ? `: ${error.detail}` : ""),
+															(error?.detail ? `: ${error.detail}` : ""),
 													);
 												},
 												onSuccess: () => {
@@ -192,7 +193,7 @@ export default function Car() {
 												onError: (error) => {
 													toast.error(
 														t("admin:car.error_delete") +
-														(error?.detail ? `: ${error.detail}` : ""),
+															(error?.detail ? `: ${error.detail}` : ""),
 													);
 												},
 												onSuccess: () => {
@@ -231,7 +232,7 @@ export default function Car() {
 												onError: (error) => {
 													toast.error(
 														t("admin:car.error_edit") +
-														(error?.detail ? `: ${error.detail}` : ""),
+															(error?.detail ? `: ${error.detail}` : ""),
 													);
 												},
 												onSuccess: () => {

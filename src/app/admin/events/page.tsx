@@ -63,6 +63,7 @@ export default function Events() {
 
 	const { data, error, isFetching } = useQuery({
 		...getAllEventsOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const [openEditDialog, setOpenEditDialog] = useState(false);
