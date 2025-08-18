@@ -14,7 +14,7 @@ import {
 	handleYearChange,
 	setView,
 } from "@/utils/full-calendar-context";
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import {
 	Check,
 	ChevronLeft,
@@ -96,6 +96,15 @@ export default function CalendarNav({
 		return mini ? "dayGridWeek" : "timeGridWeek";
 	};
 	const view = currentView || getInitialView();
+
+	// Adapter: turn (view: string) => void into Dispatch<SetStateAction<string>>
+	const setViewDispatch: Dispatch<SetStateAction<string>> = (value) => {
+		const next =
+			typeof value === "function"
+				? (value as (prev: string) => string)(view)
+				: value;
+		onChangeView(next);
+	};
 
 	const selectedMonth = viewedDate.getMonth() + 1;
 	const selectedDay = viewedDate.getDate();
@@ -254,15 +263,9 @@ export default function CalendarNav({
 							<TabsTrigger
 								value="timeGridDay"
 								onClick={() =>
-									setView(calendarRef, "timeGridDay", onChangeView)
+									setView(calendarRef, "timeGridDay", setViewDispatch)
 								}
-								className={`space-x-1 ${
-									view === "timeGridDay"
-										? "w-1/2"
-										: isMobile
-											? "w-1/3"
-											: "w-1/4"
-								}`}
+								className={`space-x-1 ${view === "timeGridDay" ? "w-1/2" : isMobile ? "w-1/3" : "w-1/4"}`}
 							>
 								<GalleryVertical className="h-5 w-5" />
 								{view === "timeGridDay" && (
@@ -275,7 +278,7 @@ export default function CalendarNav({
 								<TabsTrigger
 									value="timeGridFourDay"
 									onClick={() =>
-										setView(calendarRef, "timeGridFourDay", onChangeView)
+										setView(calendarRef, "timeGridFourDay", setViewDispatch)
 									}
 									className={`space-x-1 ${view === "timeGridFourDay" ? "w-1/2" : "w-1/3"}`}
 								>
@@ -288,7 +291,7 @@ export default function CalendarNav({
 								<TabsTrigger
 									value="timeGridWeek"
 									onClick={() =>
-										setView(calendarRef, "timeGridWeek", onChangeView)
+										setView(calendarRef, "timeGridWeek", setViewDispatch)
 									}
 									className={`space-x-1 ${view === "timeGridWeek" ? "w-1/2" : "w-1/4"}`}
 								>
@@ -302,7 +305,7 @@ export default function CalendarNav({
 							<TabsTrigger
 								value="dayGridMonth"
 								onClick={() =>
-									setView(calendarRef, "dayGridMonth", onChangeView)
+									setView(calendarRef, "dayGridMonth", setViewDispatch)
 								}
 								className={`space-x-1 ${view === "dayGridMonth" ? "w-1/2" : isMobile ? "w-1/3" : "w-1/4"}`}
 							>
