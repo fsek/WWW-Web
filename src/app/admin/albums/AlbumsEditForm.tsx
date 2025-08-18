@@ -18,11 +18,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+	useMutation,
+	useQueryClient,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
 import {
 	patchAlbumMutation,
 	deleteOneAlbumMutation,
 	getAlbumsQueryKey,
+	getAlbumImagesOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
@@ -61,6 +66,16 @@ export default function AlbumsEditForm({
 	const { t, i18n } = useTranslation("admin");
 	const queryClient = useQueryClient();
 	const router = useRouter();
+
+	// Get the image ids to check if it's empty
+	const {
+		data: albumImages,
+		error: imagesError,
+		isPending: isAlbumImagesLoading,
+	} = useSuspenseQuery({
+		...getAlbumImagesOptions({ path: { album_id: selectedAlbum.id } }),
+		refetchOnWindowFocus: false,
+	});
 
 	// Initialize form with existing album data
 	useEffect(() => {
@@ -233,7 +248,7 @@ export default function AlbumsEditForm({
 								open={confirmOpen}
 								onOpenChange={setConfirmOpen}
 								onConfirm={handleRemoveAlbum}
-								disabled={selectedAlbum.imgs.length !== 0}
+								disabled={albumImages.length !== 0}
 								triggerText={t("remove")}
 								title={t("albums.confirm_remove")}
 								description={t("albums.confirm_remove_text")}
@@ -241,9 +256,7 @@ export default function AlbumsEditForm({
 								cancelText={t("cancel")}
 							/>
 							<p className="text-sm text-secondary-foreground select-none">
-								{selectedAlbum.imgs.length !== 0
-									? `(${t("albums.only_empty")})`
-									: ""}
+								{albumImages.length !== 0 ? `(${t("albums.only_empty")})` : ""}
 							</p>
 						</div>
 					</form>

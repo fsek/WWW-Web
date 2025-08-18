@@ -1,8 +1,11 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getAlbumsOptions } from "@/api/@tanstack/react-query.gen";
+import { useQueries, useQuery } from "@tanstack/react-query";
+import {
+	getAlbumsOptions,
+	getAlbumImagesOptions,
+} from "@/api/@tanstack/react-query.gen";
 import type { AlbumRead } from "@/api";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -66,6 +69,15 @@ export default function GalleryIndexPage() {
 		return albums.filter((a) => String(a.year) === selectedYear);
 	}, [albums, selectedYear]);
 
+	// Get the image ids for the filtered albums and use those
+	const albumImageQueries = useQueries({
+		queries: filtered.map((album) => ({
+			...getAlbumImagesOptions({ path: { album_id: album.id } }),
+			refetchOnWindowFocus: false,
+			enabled: !!selectedYear,
+		})),
+	});
+
 	// persist selection to URL
 	const onYearChange = (v: string | null) => {
 		const newYear = v || undefined;
@@ -93,8 +105,9 @@ export default function GalleryIndexPage() {
 			</div>
 
 			<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-				{filtered.map((album) => {
-					const bgImageId = album.imgs?.[0]?.id;
+				{filtered.map((album, idx) => {
+					const bgImageId = albumImageQueries[idx]?.data?.[0];
+
 					return (
 						<Link
 							key={album.id}

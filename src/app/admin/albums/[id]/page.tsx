@@ -15,6 +15,7 @@ import {
 	uploadImageOptions,
 	getOneAlbumQueryKey,
 	removeAlbumPhotographerMutation,
+	getAlbumImagesOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import type { AlbumRead } from "@/api";
@@ -62,6 +63,16 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 		refetchOnWindowFocus: false,
 	});
 
+	const {
+		data: albumImages,
+		error: imagesError,
+		refetch: imagesRefetch,
+		isPending: isAlbumImagesLoading,
+	} = useSuspenseQuery({
+		...getAlbumImagesOptions({ path: { album_id: albumId } }),
+		refetchOnWindowFocus: false,
+	});
+
 	if (Number.isNaN(albumId)) {
 		return <LoadingErrorCard error={new Error("Invalid album ID")} />;
 	}
@@ -85,6 +96,7 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 				);
 			}
 			refetch({ cancelRefetch: true });
+			imagesRefetch({ cancelRefetch: true });
 		},
 		onError: (_response, request) => {
 			setUploads(uploads.set((request.body.file as File).name, STATUS.ERROR));
@@ -184,20 +196,20 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 				</div>
 				<div className="w-full place-content-center ">
 					<div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-2 items-center place-items-center">
-						{isAlbumLoading ? (
+						{isAlbumLoading || isAlbumImagesLoading ? (
 							<div className="col-span-full">
 								<LoadingErrorCard isLoading={true} />
 							</div>
 						) : (
-							album.imgs.map((img, index) => {
+							albumImages.map((img, index) => {
 								return (
 									<div
-										key={`${album.imgs[index].id}-${index}`}
+										key={`${albumImages[index]}-${index}`}
 										className="relative w-56 h-56"
 									>
 										<ImageDisplay
 											type="image"
-											imageId={album.imgs[index].id}
+											imageId={albumImages[index]}
 											size="small"
 											style={{ objectFit: "contain" }}
 											className=""
@@ -209,7 +221,7 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 											variant={"destructive"}
 											onClick={() =>
 												imageDeleteMutation.mutate({
-													path: { id: album.imgs[index].id },
+													path: { id: albumImages[index] },
 												})
 											}
 										>

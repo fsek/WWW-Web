@@ -4,7 +4,10 @@ import { useState, use, useRef, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import ImageDisplay, { useImageBlobActions } from "@/components/ImageDisplay";
-import { getOneAlbumOptions } from "@/api/@tanstack/react-query.gen";
+import {
+	getAlbumImagesOptions,
+	getOneAlbumOptions,
+} from "@/api/@tanstack/react-query.gen";
 import type { AlbumRead } from "@/api";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, Download, Maximize2, X } from "lucide-react";
@@ -20,6 +23,11 @@ export default function AlbumPage({ params }: Props) {
 	const { t, i18n } = useTranslation();
 	const { data: album } = useQuery({
 		...getOneAlbumOptions({ path: { album_id: albumId } }),
+		refetchOnWindowFocus: false,
+	});
+
+	const { data: images = [] } = useQuery({
+		...getAlbumImagesOptions({ path: { album_id: albumId } }),
 		refetchOnWindowFocus: false,
 	});
 
@@ -42,9 +50,7 @@ export default function AlbumPage({ params }: Props) {
 		height: number;
 	} | null>(null);
 
-	const images = album?.imgs ?? [];
-
-	const currentImageId = viewerIndex != null ? images[viewerIndex]?.id : null;
+	const currentImageId = viewerIndex != null ? images[viewerIndex] : null;
 	const { downloadOriginal, openInNewTabOriginal } = useImageBlobActions(
 		"image",
 		currentImageId,
@@ -181,7 +187,7 @@ export default function AlbumPage({ params }: Props) {
 
 				{images.map((img, idx) => (
 					<button
-						key={img.id}
+						key={img}
 						type="button"
 						className="relative rounded overflow-hidden shadow cursor-pointer p-0 border border-opacity-30 focus:outline-none focus:ring-4 focus:ring-primary"
 						onClick={() => openViewer(idx)}
@@ -192,7 +198,7 @@ export default function AlbumPage({ params }: Props) {
 						<div className="relative w-full aspect-[4/3]">
 							<ImageDisplay
 								type="image"
-								imageId={img.id}
+								imageId={img}
 								size="small"
 								alt={`Image ${idx + 1} from album ${album?.title_en}`}
 								fill
@@ -221,7 +227,7 @@ export default function AlbumPage({ params }: Props) {
 							>
 								<ImageDisplay
 									type="image"
-									imageId={images[viewerIndex].id}
+									imageId={images[viewerIndex]}
 									size="large"
 									alt={`Image ${viewerIndex + 1} from album ${album?.title_en}`}
 									style={{ objectFit: "contain" }}
@@ -342,14 +348,14 @@ export default function AlbumPage({ params }: Props) {
 									for (let i = start; i < end; ++i) {
 										thumbs.push(
 											<button
-												key={images[i].id}
+												key={images[i]}
 												type="button"
 												onClick={() => setViewerIndex(i)}
 												className={`w-24 h-16 relative rounded overflow-hidden border-2 ${i === viewerIndex ? "border-primary" : "border-transparent"}`}
 											>
 												<ImageDisplay
 													type="image"
-													imageId={images[i].id}
+													imageId={images[i]}
 													size="small"
 													alt={`thumb ${i + 1}`}
 													fill
