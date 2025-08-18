@@ -17,6 +17,24 @@ import { TabsList } from "@/components/ui/tabs";
 import type { UseFormReturn, Path } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { useTranslation } from "react-i18next";
+import StyledCreatableSelect from "@/components/StyledCreatableSelect";
+
+const LOCATIONS = {
+	MH: "MH",
+	Victoriastadion: "Victoriastadion",
+	"Hilbert Café": "Hilbert Café",
+	Loftet: "Loftet",
+	Gasquesalen: "Gasquesalen",
+	Ledningscentralen: "Ledningscentralen",
+};
+
+const DRESS_CODES = {
+	Overall: "Overall",
+	Temaenligt: "Temanligt",
+	Kavaj: "Kavaj",
+	"Mörk kostym": "Mörk kostym",
+	"Frack/Högtidsklädsel M.A.O.": "Frack/Högtidsklädsel M.A.O.",
+};
 
 // Common base fields expected by the form component
 interface EventFormFieldsBase {
@@ -169,10 +187,35 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							<FormItem>
 								<FormLabel>{t("admin:events.location")}</FormLabel>
 								<FormControl>
-									<Input
+									<StyledCreatableSelect
+										isClearable
 										placeholder={t("admin:events.location")}
 										{...field}
-										value={(field.value as string) ?? ""}
+										value={
+											field.value
+												? {
+														label: String(field.value),
+														value: String(field.value),
+													}
+												: null
+										}
+										onChange={(options) => {
+											const vals = Array.isArray(options)
+												? options.map((o) => o.value)
+												: options && "value" in options
+													? options.value
+													: null;
+											field.onChange(vals);
+										}}
+										options={
+											Object.entries(LOCATIONS).map(([value, label]) => ({
+												value: value,
+												label: label,
+											})) as {
+												value: string;
+												label: string;
+											}[]
+										}
 									/>
 								</FormControl>
 							</FormItem>
@@ -434,7 +477,36 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							<FormItem>
 								<FormLabel>{t("admin:events.dress_code")}</FormLabel>
 								<FormControl>
-									<Input {...field} value={(field.value as string) ?? ""} />
+									<StyledCreatableSelect
+										isClearable
+										placeholder={t("admin:events.dress_code")}
+										{...field}
+										value={
+											field.value
+												? {
+														label: String(field.value),
+														value: String(field.value),
+													}
+												: null
+										}
+										onChange={(options) => {
+											const vals = Array.isArray(options)
+												? options.map((o) => o.value)
+												: options && "value" in options
+													? options.value
+													: null;
+											field.onChange(vals);
+										}}
+										options={
+											Object.entries(DRESS_CODES).map(([value, label]) => ({
+												value: value,
+												label: label,
+											})) as {
+												value: string;
+												label: string;
+											}[]
+										}
+									/>
 								</FormControl>
 							</FormItem>
 						)}
