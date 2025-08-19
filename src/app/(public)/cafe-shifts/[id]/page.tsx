@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
 	viewShiftOptions,
 	getMeOptions,
-	adminGetUserOptions,
+	cafeShiftGetUserOptions,
 	signupToShiftMutation,
 	signoffFromShiftMutation,
 	viewShiftQueryKey,
@@ -33,7 +33,7 @@ import {
 	IdCard,
 } from "lucide-react";
 
-import viewingUserGotUserPerms from "@/utils/viewingUserGotUserPerms";
+import viewingUserGotPerms from "@/utils/viewingUserGotPerms";
 
 interface CafeShiftPageProps {
 	params: Promise<{
@@ -69,15 +69,16 @@ export default function CafeShiftPage({ params }: CafeShiftPageProps) {
 	});
 
 	// 3. Check permissions based on user data
-	const userHasPerms = viewingUserGotUserPerms(
+	const userHasPerms = viewingUserGotPerms(
 		userData,
 		userError,
 		userIsFetching,
+		"cafe",
 	);
 
 	// 4. Finally fetch user details - enabled if permissions and shift data exist
 	const { data: assignedUserDetails, error: userDetailsError } = useQuery({
-		...adminGetUserOptions({
+		...cafeShiftGetUserOptions({
 			path: { user_id: data?.user?.id ?? -1 },
 		}),
 		enabled: userHasPerms && !!data?.user?.id,

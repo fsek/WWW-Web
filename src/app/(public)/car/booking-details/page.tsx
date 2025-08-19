@@ -3,7 +3,7 @@
 import {
 	getMeOptions,
 	getCarBookingOptions,
-	adminGetUserOptions,
+	carBookingGetUserOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
 import React from "react";
@@ -28,7 +28,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import type { AdminUserRead } from "@/api/index";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import viewingUserGotUserPerms from "@/utils/viewingUserGotUserPerms";
+import viewingUserGotPerms from "@/utils/viewingUserGotPerms";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
@@ -67,15 +67,16 @@ export default function Page() {
 	});
 
 	// 3. Check permissions based on user data
-	const userHasPerms = viewingUserGotUserPerms(
+	const userHasPerms = viewingUserGotPerms(
 		userData,
 		userError,
 		userIsFetching,
+		"car",
 	);
 
 	// 4. Finally fetch user details - enabled if permissions and bookingData exist
 	const { data: userDetails, error: userDetailsError } = useQuery({
-		...adminGetUserOptions({
+		...carBookingGetUserOptions({
 			path: { user_id: bookingData?.user.id ?? -1 },
 		}),
 		enabled: userHasPerms && !!bookingData?.user.id,

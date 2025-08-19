@@ -1,9 +1,10 @@
 import type { AdminUserRead } from "@/api";
 
-export default function viewingUserGotUserPerms(
+export default function viewingUserGotPerms(
 	userData: AdminUserRead | undefined,
 	userError: Error | null,
 	userIsFetching: boolean,
+	permissionTarget = "user",
 ): boolean {
 	if (userIsFetching) {
 		return false;
@@ -16,10 +17,8 @@ export default function viewingUserGotUserPerms(
 		const hasPerm = userData.posts.some((post) => {
 			const found = post.permissions.some((permission) => {
 				const match =
-					(permission.action.toLowerCase() === "manage" &&
-						permission.target.toLowerCase() === "user") ||
-					(permission.action.toLowerCase() === "view" &&
-						permission.target.toLowerCase() === "user");
+					permission.action.toLowerCase() === "manage" &&
+					permission.target.toLowerCase() === permissionTarget.toLowerCase();
 				return match;
 			});
 			return found;
