@@ -3,7 +3,7 @@
 import {
 	getMeOptions,
 	getCarBookingOptions,
-	carBookingGetUserOptions,
+	adminGetCarBookingOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
 import React from "react";
@@ -26,7 +26,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import type { AdminUserRead } from "@/api/index";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import viewingUserGotPerms from "@/utils/viewingUserGotPerms";
 
@@ -74,10 +73,10 @@ export default function Page() {
 		"car",
 	);
 
-	// 4. Finally fetch user details - enabled if permissions and bookingData exist
-	const { data: userDetails, error: userDetailsError } = useQuery({
-		...carBookingGetUserOptions({
-			path: { user_id: bookingData?.user.id ?? -1 },
+	// 4. Finally fetch the more detailed data
+	const { data: adminBookingData, error: adminBookingError } = useQuery({
+		...adminGetCarBookingOptions({
+			path: { booking_id: bookingID },
 		}),
 		enabled: userHasPerms && !!bookingData?.user.id,
 		staleTime: 30 * 60 * 1000,
@@ -106,8 +105,8 @@ export default function Page() {
 		);
 	}
 
-	if (userHasPerms && userDetailsError) {
-		return <LoadingErrorCard error={userDetailsError} isLoading={false} />;
+	if (userHasPerms && adminBookingError) {
+		return <LoadingErrorCard error={adminBookingError} isLoading={false} />;
 	}
 
 	const formatDateShort = (date: Date) => {
@@ -162,12 +161,12 @@ export default function Page() {
 									: `User ${bookingData.user.id}`}
 							</span>
 						</div>
-						{userHasPerms && userDetails && (
+						{userHasPerms && adminBookingData?.user && (
 							<>
 								<div className="flex items-center gap-2">
 									<Mail className="w-4 h-4 text-muted-foreground" />
 									<span>
-										{t("admin:car.email")}: {userDetails.email}
+										{t("admin:car.email")}: {adminBookingData.user.email}
 									</span>
 								</div>
 								<div className="flex items-center gap-2">
@@ -175,14 +174,15 @@ export default function Page() {
 									<span>
 										{t("admin:car.telephone_number")}:{" "}
 										{parsePhoneNumberWithError(
-											userDetails.telephone_number,
-										).formatNational() ?? userDetails.telephone_number}
+											adminBookingData.user.telephone_number,
+										).formatNational() ??
+											adminBookingData.user.telephone_number}
 									</span>
 								</div>
 								<div className="flex items-center gap-2">
 									<IdCard className="w-4 h-4 text-muted-foreground" />
 									<span>
-										{t("admin:car.stil_id")}:{userDetails.stil_id}
+										{t("admin:car.stil_id")}:{adminBookingData.user.stil_id}
 									</span>
 								</div>
 							</>
