@@ -41,10 +41,12 @@ import type {
 	EventSignupRead,
 	EventSignupUpdate,
 } from "@/api/types.gen";
+import StyledCreatableSelect from "@/components/StyledCreatableSelect";
+import { SelectMyPriorities } from "@/components/SelectMyPriorities";
 
 const signupSchema = z.object({
-	priority: z.string().optional(),
-	group_name: z.string().optional(),
+	priority: z.string().optional().nullable(),
+	group_name: z.string().optional().nullable(),
 	drinkPackage: z.enum(["None", "AlcoholFree", "Alcohol"]),
 });
 
@@ -196,8 +198,10 @@ export default function SignupCard({
 	}
 
 	const onSubmit = (values: z.infer<typeof signupSchema>) => {
+		if (!meData) return;
 		const submitData: EventSignupUpdate = {
-			priority: values.priority,
+			user_id: meData.id,
+			priority: values.priority || undefined,
 			group_name: values.group_name || null,
 			drinkPackage: values.drinkPackage,
 		};
@@ -317,11 +321,10 @@ export default function SignupCard({
 												{t("event_signup.priority")}
 											</FormLabel>
 											<FormControl>
-												<SelectFromOptions
-													options={priorityOptions}
-													placeholder={t("event_signup.select_priority")}
-													value={field.value}
+												<SelectMyPriorities
+													value={field.value || ""}
 													onChange={field.onChange}
+													filterList={availablePriorities}
 												/>
 											</FormControl>
 											<FormMessage />
@@ -339,10 +342,34 @@ export default function SignupCard({
 											{t("event_signup.group_name")}
 										</FormLabel>
 										<FormControl>
-											<Input
+											<StyledCreatableSelect
+												isClearable
 												placeholder={t("event_signup.group_name_placeholder")}
 												{...field}
-												value={field.value || ""}
+												value={
+													field.value
+														? {
+																label: String(field.value),
+																value: String(field.value),
+															}
+														: null
+												}
+												onChange={(options) => {
+													const vals = Array.isArray(options)
+														? options.map((o) => o.value)
+														: options && "value" in options
+															? options.value
+															: null;
+													field.onChange(vals);
+												}}
+												options={
+													Array.isArray(meData?.groups)
+														? meData.groups.map((group) => ({
+																value: group.name,
+																label: group.name,
+															}))
+														: []
+												}
 											/>
 										</FormControl>
 										<FormMessage />

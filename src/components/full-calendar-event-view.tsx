@@ -28,6 +28,7 @@ import { Badge } from "./ui/badge";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { getMeOptions } from "@/api/@tanstack/react-query.gen";
+import { useRouter } from "next/navigation";
 
 interface EventViewProps {
 	event?: CalendarEvent;
@@ -41,6 +42,7 @@ interface EventViewProps {
 	disableConfirmField?: boolean;
 	disableEditOfOthers?: boolean; // Optional prop to disable editing of others' events
 	enableRoomBookingProperties?: boolean;
+	showManageSignupsButton?: boolean;
 }
 
 function FormatTimeSpan(
@@ -67,9 +69,11 @@ export function EventView({
 	disableConfirmField = false,
 	disableEditOfOthers = false,
 	enableRoomBookingProperties = false,
+	showManageSignupsButton = false,
 }: EventViewProps) {
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 	const { t, i18n } = useTranslation("calendar");
+	const router = useRouter();
 
 	const featureDivClassName = "flex items-center gap-1";
 	const featureClassName = "h-3 w-3";
@@ -356,30 +360,42 @@ export function EventView({
 						)}
 					</AlertDialogHeader>
 					<AlertDialogFooter>
-						{handleOpenDetails != null && (
-							<Button
-								variant="outline"
-								onClick={() => handleOpenDetails(event)}
-							>
-								{t("details")}
-							</Button>
-						)}
-						{isEditable && (
-							<EventDeleteForm id={event?.id} title_sv={event?.title_sv} />
-						)}
-						{isEditable && (
-							<EventEditForm
-								oldEvent={event}
-								event={event}
-								isDrag={false}
-								editDescription={editDescription}
-								enableAllDay={enableAllDay}
-								enableTrueEventProperties={enableTrueEventProperties}
-								enableCarProperties={enableCarProperties}
-								disableConfirmField={disableConfirmField}
-								enableRoomBookingProperties={enableRoomBookingProperties}
-							/>
-						)}
+						<div className="flex flex-wrap gap-2">
+							{handleOpenDetails != null && (
+								<Button
+									variant="outline"
+									onClick={() => handleOpenDetails(event)}
+								>
+									{t("details")}
+								</Button>
+							)}
+							{showManageSignupsButton && event?.id && (
+								<Button
+									variant="outline"
+									onClick={() =>
+										router.push(`/admin/events/signups?id=${event.id}`)
+									}
+								>
+									{t("admin:events.manage_signups")}
+								</Button>
+							)}
+							{isEditable && (
+								<EventDeleteForm id={event?.id} title_sv={event?.title_sv} />
+							)}
+							{isEditable && (
+								<EventEditForm
+									oldEvent={event}
+									event={event}
+									isDrag={false}
+									editDescription={editDescription}
+									enableAllDay={enableAllDay}
+									enableTrueEventProperties={enableTrueEventProperties}
+									enableCarProperties={enableCarProperties}
+									disableConfirmField={disableConfirmField}
+									enableRoomBookingProperties={enableRoomBookingProperties}
+								/>
+							)}
+						</div>
 					</AlertDialogFooter>
 				</AlertDialogContent>
 			</AlertDialog>

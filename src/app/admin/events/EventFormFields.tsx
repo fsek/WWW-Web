@@ -189,7 +189,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								<FormControl>
 									<StyledCreatableSelect
 										isClearable
-										placeholder={t("admin:events.location")}
+										placeholder={t("admin:events.location_placeholder")}
 										{...field}
 										value={
 											field.value
@@ -479,7 +479,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								<FormControl>
 									<StyledCreatableSelect
 										isClearable
-										placeholder={t("admin:events.dress_code")}
+										placeholder={t("admin:events.dress_code_placeholder")}
 										{...field}
 										value={
 											field.value

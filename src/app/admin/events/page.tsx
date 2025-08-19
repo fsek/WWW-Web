@@ -354,6 +354,7 @@ export default function Events() {
 								// Provide and persist the viewed date across tab switches
 								defaultDate={calendarDate}
 								onDateChange={setCalendarDate}
+								showManageSignupsButton={true}
 							/>
 						</TabsContent>
 						<TabsContent value="list" className="w-full px-5 space-y-5">
