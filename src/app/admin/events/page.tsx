@@ -87,8 +87,6 @@ export default function Events() {
 	const table = useCreateTable({
 		data: filteredData,
 		columns,
-		// Avoid auto resets that can trigger setState during render in child components
-		autoResetPageIndex: false,
 	});
 
 	function handleRowClick(row: Row<EventRead>) {

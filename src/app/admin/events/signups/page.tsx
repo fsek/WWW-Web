@@ -203,23 +203,13 @@ export default function AdminEventSignupsPage() {
 
 				// Try to reuse generated queryFn via queryClient
 				let result: unknown;
-				try {
-					// queryClient.fetchQuery v4 expects the object signature and array queryKey.
-					const qk = opts.queryKey ?? [];
-					const queryKey = Array.isArray(qk) ? qk : [qk];
-					result = await queryClient.fetchQuery({
-						queryKey: queryKey as any[],
-						queryFn: opts.queryFn as any,
-					});
-				} catch {
-					// fallback to direct fetch if queryFn isn't suitable
-					const res = await fetch(`/get-event-csv/${eventId}`);
-					if (!res.ok) throw new Error("fetch failed");
-					// try to get blob and headers
-					const blob = await res.blob();
-					const disposition = res.headers.get("Content-Disposition") || "";
-					result = { blob, disposition };
-				}
+				// queryClient.fetchQuery v4 expects the object signature and array queryKey.
+				const qk = opts.queryKey ?? [];
+				const queryKey = Array.isArray(qk) ? qk : [qk];
+				result = await queryClient.fetchQuery({
+					queryKey: queryKey as any[],
+					queryFn: opts.queryFn as any,
+				});
 
 				// Normalize to blob + disposition
 				let blob: Blob | null = null;
@@ -231,16 +221,24 @@ export default function AdminEventSignupsPage() {
 				} else if (result && typeof result === "object") {
 					// generated queryFn or fallback may return an object
 					// attempt common shapes
-					// @ts-ignore
-					if (result.blob instanceof Blob) {
-						// @ts-ignore
-						blob = result.blob;
-						// @ts-ignore
-						disposition = result.disposition || "";
-						// @ts-ignore
-					} else if (result.data && typeof result.data === "string") {
-						// @ts-ignore
-						blob = new Blob([result.data], { type: "text/csv" });
+					if (
+						typeof result === "object" &&
+						result !== null &&
+						"blob" in result &&
+						result.blob instanceof Blob
+					) {
+						blob = (result as { blob: Blob }).blob;
+						disposition =
+							(result as { disposition?: string }).disposition || "";
+					} else if (
+						typeof result === "object" &&
+						result !== null &&
+						"data" in result &&
+						typeof (result as { data?: string }).data === "string"
+					) {
+						blob = new Blob([(result as { data: string }).data], {
+							type: "text/csv",
+						});
 					}
 				}
 

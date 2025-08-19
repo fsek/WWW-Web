@@ -71,7 +71,7 @@
 	"events": {
 		"self": "Evenemang",
 		"page_title": "Administrera evenemang",
-		"page_description": "Här kan du skapa och hantera evenemang. Tips: Om du vill att ett evenemang inte ska ha något maxantal deltagare, sätt \"max event users\" till 0. Du kan hantera anmälningar genom att redigera ett event från listsidan. Du måste välja platsdistribueringsmetod när du skapar eventet genom att checka eller inte checka \"Platser lottas ut\". Om platser inte lottas ut kommer först-till-kvarn principen att gälla. I båda fall får prioriterade grupper prioritet när platser delas ut.",
+		"page_description": "Här kan du skapa och hantera evenemang. Tips: Om du vill att ett evenemang inte ska ha något maxantal deltagare, sätt \"max event users\" till 0. Du måste välja platsdistribueringsmetod när du skapar eventet genom att checka eller inte checka \"Platser lottas ut\". Om platser inte lottas ut kommer först-till-kvarn principen att gälla. I båda fall får prioriterade grupper prioritet när platser delas ut.",
 		"create_event": "Skapa event",
 		"edit_booking": "Redigera event",
 		"title_sv": "Titel (svenska)",

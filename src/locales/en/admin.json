@@ -71,7 +71,7 @@
 	"events": {
 		"self": "Events",
 		"page_title": "Manage Events",
-		"page_description": "Here you can create and manage events. Tip: If you want an event to have no max attendance, set the \"max event users\" to 0. You can manage event signups by editing it from the list view. You must select the seat allocation method when creating the event by checking or unchecking \"Spots will be selected by lottery\". If seats are not allocated by lottery, the first-come, first-served principle will apply. In both cases, priority groups will be given priority when seats are allocated.",
+		"page_description": "Here you can create and manage events. Tip: If you want an event to have no max attendance, set the \"max event users\" to 0. You must select the seat allocation method when creating the event by checking or unchecking \"Spots will be selected by lottery\". If seats are not allocated by lottery, the first-come, first-served principle will apply. In both cases, priority groups will be given priority when seats are allocated.",
 		"create_event": "Create Event",
 		"edit_booking": "Edit Event",
 		"title_sv": "Title (Swedish)",

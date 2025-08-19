@@ -481,27 +481,6 @@ export default function SignupCard({
 									{t("event_signup.status")}
 								</p>
 								<div className="flex items-center gap-2">
-									{/* {signupData.confirmed_status ? (
-										<>
-											<UserCheck className="w-4 h-4 text-green-600" />
-											<Badge
-												variant="default"
-												className="bg-green-100 text-green-800"
-											>
-												{t("event_signup.confirmed")}
-											</Badge>
-										</>
-									) : (
-										<>
-											<UserX className="w-4 h-4 text-yellow-600" />
-											<Badge
-												variant="secondary"
-												className="bg-yellow-100 text-yellow-800"
-											>
-												{t("event_signup.pending")}
-											</Badge>
-										</>
-									)} */}
 									{!event.event_users_confirmed ? (
 										<>
 											<UserX className="w-4 h-4 text-yellow-600" />
