@@ -13,7 +13,7 @@ import { Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
 import AlbumsForm from "./AlbumsForm";
 import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
+import { Eye, Pencil } from "lucide-react";
 import AlbumsEditForm from "./AlbumsEditForm";
 
 const columnHelper = createColumnHelper<AlbumRead>();
@@ -63,16 +63,28 @@ export default function AlbumsPage() {
 			id: "actions",
 			header: t("albums.actions"),
 			cell: (info) => (
-				<Button
-					onClick={(e) => {
-						e.stopPropagation();
-						setSelectedAlbum(info.row.original);
-						setEditFormOpen(true);
-					}}
-				>
-					<Pencil />
-					{t("albums.manage")}
-				</Button>
+				<div className="flex gap-2">
+					<Button
+						onClick={(e) => {
+							e.stopPropagation();
+							setSelectedAlbum(info.row.original);
+							setEditFormOpen(true);
+						}}
+					>
+						<Pencil />
+						{t("albums.manage")}
+					</Button>
+					<Button
+						variant="outline"
+						onClick={(e) => {
+							e.stopPropagation();
+							router.push(`/gallery/${info.row.original.id}`);
+						}}
+					>
+						<Eye />
+						{t("albums.view")}
+					</Button>
+				</div>
 			),
 		}),
 	];

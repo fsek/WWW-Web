@@ -59,6 +59,7 @@ interface CalendarProps {
 	enableRoomBookingProperties?: boolean;
 	defaultRoom?: "LC" | "Alumni" | "SK";
 	onDateRangeChange?: (start: Date, end: Date) => void;
+	enableCafeShiftProperties?: boolean;
 	// Control the initial view and observe view changes
 	defaultView?: string;
 	onViewChange?: (viewType: string) => void;
@@ -84,6 +85,7 @@ export default function Calendar({
 	enableRoomBookingProperties = false,
 	defaultRoom = "LC",
 	onDateRangeChange,
+	enableCafeShiftProperties,
 	defaultView,
 	onViewChange,
 	defaultDate,
@@ -184,6 +186,12 @@ export default function Calendar({
 						council_name_en: info.event.extendedProps.council_name_en,
 					}
 				: {}),
+			...(enableCafeShiftProperties
+				? {
+						user_id: info.event.extendedProps.user_id,
+						user_name: info.event.extendedProps.user_name,
+					}
+				: {}),
 		};
 
 		setIsDrag(false);
@@ -246,6 +254,12 @@ export default function Calendar({
 						council_name_en: info.event.extendedProps.council_name_en,
 					}
 				: {}),
+			...(enableCafeShiftProperties
+				? {
+						user_id: info.event.extendedProps.user_id,
+						user_name: info.event.extendedProps.user_name,
+					}
+				: {}),
 		};
 
 		if (!info.oldEvent.start || !info.oldEvent.end) {
@@ -300,6 +314,12 @@ export default function Calendar({
 						council_id: info.oldEvent.extendedProps.council_id,
 						council_name_sv: info.oldEvent.extendedProps.council_name_sv,
 						council_name_en: info.oldEvent.extendedProps.council_name_en,
+					}
+				: {}),
+			...(enableCafeShiftProperties
+				? {
+						user_id: info.oldEvent.extendedProps.user_id,
+						user_name: info.oldEvent.extendedProps.user_name,
 					}
 				: {}),
 		};
@@ -464,6 +484,7 @@ export default function Calendar({
 				isMobile={isMobile}
 				enableRoomBookingProperties={enableRoomBookingProperties}
 				defaultRoom={defaultRoom}
+				enableCafeShiftProperties={enableCafeShiftProperties}
 				// Keep nav in sync with calendar view
 				currentView={currentView}
 				onChangeView={(view) => {
@@ -583,6 +604,7 @@ export default function Calendar({
 					enableCarProperties={enableCarProperties}
 					disableConfirmField={disableConfirmField}
 					enableRoomBookingProperties={enableRoomBookingProperties}
+					enableCafeShiftProperties={enableCafeShiftProperties}
 				/>
 			)}
 
@@ -599,6 +621,7 @@ export default function Calendar({
 				disableEditOfOthers={disableEditOfOthers}
 				enableRoomBookingProperties={enableRoomBookingProperties}
 				showManageSignupsButton={showManageSignupsButton}
+				enableCafeShiftProperties={enableCafeShiftProperties}
 			/>
 		</div>
 	);
