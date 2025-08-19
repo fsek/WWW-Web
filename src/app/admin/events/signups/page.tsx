@@ -51,7 +51,7 @@ import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 const columnHelper = createColumnHelper<EventSignupRead>();
 
 export default function AdminEventSignupsPage() {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const searchParams = useSearchParams();
 	const queryClient = useQueryClient();
 
@@ -417,6 +417,8 @@ export default function AdminEventSignupsPage() {
 			<div className="space-y-0">
 				<h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
 					{t("admin:event_signup.title")}
+					{" - "}
+					{i18n.language === "en" ? event?.title_en : event?.title_sv}
 				</h3>
 				<p className="text-xs md:text-sm font-medium">
 					{t("admin:event_signup.description")}
@@ -477,7 +479,7 @@ export default function AdminEventSignupsPage() {
 								</AlertDialogDescription>
 							</AlertDialogHeader>
 							<AlertDialogFooter>
-								<AlertDialogCancel>{t("common:cancel")}</AlertDialogCancel>
+								<AlertDialogCancel>{t("admin:cancel")}</AlertDialogCancel>
 								<AlertDialogAction
 									onClick={() => {
 										handleHandOutSpots();
