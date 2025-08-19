@@ -48,15 +48,17 @@ interface SignupFormProps {
 	eventId: number;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
+	event_users_confirmed?: boolean;
 }
 
 export default function SignupForm({
 	eventId,
 	open,
 	onOpenChange,
+	event_users_confirmed,
 }: SignupFormProps) {
 	const [submitEnabled, setSubmitEnabled] = useState(true);
-	const { t } = useTranslation();
+	const { t } = useTranslation("admin");
 
 	const form = useForm<z.infer<typeof schema>>({
 		resolver: zodResolver(schema),
@@ -128,9 +130,7 @@ export default function SignupForm({
 			<Dialog open={open} onOpenChange={onOpenChange}>
 				<DialogContent className="min-w-fit lg:max-w-2xl">
 					<DialogHeader>
-						<DialogTitle>
-							{t("admin:event-signups.add") || "Add signup"}
-						</DialogTitle>
+						<DialogTitle>{t("admin:event_signup.add")}</DialogTitle>
 					</DialogHeader>
 					<hr />
 					<Form {...form}>
@@ -143,7 +143,7 @@ export default function SignupForm({
 								name="user_id"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
-										<FormLabel>{t("admin:user") || "User"}</FormLabel>
+										<FormLabel>{t("admin:user")}</FormLabel>
 										<FormControl>
 											<AdminChooseUser
 												onChange={(user) => {
@@ -235,11 +235,11 @@ export default function SignupForm({
 							<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid">
 								<Button
 									type="submit"
-									disabled={!submitEnabled}
+									disabled={!submitEnabled || event_users_confirmed}
 									className="w-32 min-w-fit"
 								>
 									<Save className="mr-2 h-4 w-4" />
-									{t("create")}
+									{t("admin:create")}
 								</Button>
 								<Button
 									type="button"
@@ -248,7 +248,7 @@ export default function SignupForm({
 									className="w-32 min-w-fit"
 								>
 									<X className="mr-2 h-4 w-4" />
-									{t("cancel")}
+									{t("admin:cancel")}
 								</Button>
 							</div>
 						</form>

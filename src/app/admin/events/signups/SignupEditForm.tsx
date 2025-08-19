@@ -47,6 +47,7 @@ interface SignupEditFormProps {
 	onClose: () => void;
 	eventId: number;
 	selectedSignup: EventSignupRead;
+	event_users_confirmed?: boolean;
 }
 
 export default function SignupEditForm({
@@ -54,9 +55,10 @@ export default function SignupEditForm({
 	onClose,
 	eventId,
 	selectedSignup,
+	event_users_confirmed,
 }: SignupEditFormProps) {
 	const [submitEnabled, setSubmitEnabled] = useState(true);
-	const { t } = useTranslation();
+	const { t } = useTranslation("admin");
 	const form = useForm<z.infer<typeof editSchema>>({
 		resolver: zodResolver(editSchema),
 		defaultValues: {
@@ -81,7 +83,7 @@ export default function SignupEditForm({
 	const updateSignup = useMutation({
 		...updateEventSignupRouteMutation(),
 		onSuccess: () => {
-			toast.success(t("event_signup.success_update") || "Signup updated");
+			toast.success(t("event_signup.success_update"));
 			queryClient.invalidateQueries({
 				queryKey: getAllEventSignupsOptions({ path: { event_id: eventId } })
 					.queryKey,
@@ -90,11 +92,7 @@ export default function SignupEditForm({
 			setSubmitEnabled(true);
 		},
 		onError: (error: any) => {
-			toast.error(
-				t("event_signup.error_update", {
-					error: error?.detail || t("event_signup.unknown_error"),
-				}) || "Failed to update signup",
-			);
+			toast.error(t("event_signup.error_update"));
 			setSubmitEnabled(true);
 		},
 	});
@@ -216,7 +214,7 @@ export default function SignupEditForm({
 						<div className="space-x-2 lg:col-span-2 lg:grid-cols-subgrid flex flex-row items-center">
 							<Button
 								type="submit"
-								disabled={!submitEnabled}
+								disabled={!submitEnabled || event_users_confirmed}
 								className="w-32 min-w-fit"
 							>
 								<Save className="mr-2 h-4 w-4" />

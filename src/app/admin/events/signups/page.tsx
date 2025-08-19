@@ -1,11 +1,20 @@
 "use client";
 
-import { getAllEventSignupsOptions } from "@/api/@tanstack/react-query.gen";
+import {
+	createEventSignupListMutation,
+	confirmEventUsersMutation,
+	getAllEventSignupsOptions,
+	getAllEventSignupsQueryKey,
+	getSingleEventOptions,
+	unconfirmEventUsersMutation,
+	confirmPlacesMutation,
+	getEventCsvOptions,
+} from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import AdminTable from "@/widgets/AdminTable";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createColumnHelper,
 	getCoreRowModel,
@@ -24,6 +33,20 @@ import { useSearchParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Edit } from "lucide-react";
 import type { EventSignupRead } from "@/api/types.gen";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogDescription,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 
 const columnHelper = createColumnHelper<EventSignupRead>();
 
@@ -44,8 +67,18 @@ export default function AdminEventSignupsPage() {
 		enabled: Number.isFinite(eventId),
 	});
 
+	const {
+		data: event,
+		error: eventError,
+		isLoading: eventLoading,
+	} = useQuery({
+		...getSingleEventOptions({ path: { eventId: Number(eventId) } }),
+		enabled: Number.isFinite(eventId),
+	});
+
 	// search state
 	const [search, setSearch] = useState<string>("");
+	const [showUnconfirmed, setShowUnconfirmed] = useState<boolean>(true);
 
 	// edit form state
 	const [editFormOpen, setEditFormOpen] = useState(false);
@@ -53,6 +86,11 @@ export default function AdminEventSignupsPage() {
 
 	// create form state
 	const [createOpen, setCreateOpen] = useState(false);
+
+	// confirmation dialog state
+	const [confirmHandOutOpen, setConfirmHandOutOpen] = useState(false);
+	const [confirmConfirmPlacesOpen, setConfirmConfirmPlacesOpen] =
+		useState(false);
 
 	// compute filtered rows
 	const filteredRows = useMemo(() => {
@@ -66,26 +104,177 @@ export default function AdminEventSignupsPage() {
 			const idStr = String(user.id);
 			const group = r.group_name ?? "";
 			const priority = r.priority ?? "";
+			const email = user.email ?? "";
 			const matchesSearch =
 				first.toLowerCase().includes(lower) ||
 				last.toLowerCase().includes(lower) ||
 				`${first} ${last}`.toLowerCase().includes(lower) ||
 				idStr.includes(lower) ||
 				group.toLowerCase().includes(lower) ||
-				priority.toLowerCase().includes(lower);
-			return matchesSearch;
+				priority.toLowerCase().includes(lower) ||
+				email.toLowerCase().includes(lower);
+			const matchesUnconfirmed = showUnconfirmed || r.confirmed_status;
+			return matchesSearch && matchesUnconfirmed;
 		});
-	}, [signups, search]);
+	}, [signups, search, showUnconfirmed]);
 
 	const handleRowClick = (row: Row<EventSignupRead>) => {
 		setSelectedRow(row.original);
 		setEditFormOpen(true);
 	};
 
+	const createEventSignup = useMutation({
+		...createEventSignupListMutation(),
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: getAllEventSignupsQueryKey({ path: { event_id: eventId } }),
+			});
+			toast.success(t("admin:event_signup.created"));
+		},
+		onError: (error) => {
+			toast.error(t("admin:event_signup.error"));
+		},
+	});
+
+	const confirmSignup = useMutation({
+		...confirmEventUsersMutation(),
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: getAllEventSignupsQueryKey({ path: { event_id: eventId } }),
+			});
+			toast.success(t("admin:event_signup.success_confirmed"));
+		},
+		onError: (error) => {
+			toast.error(t("admin:event_signup.error_confirm"));
+		},
+	});
+
+	const unconfirmSignup = useMutation({
+		...unconfirmEventUsersMutation(),
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: getAllEventSignupsQueryKey({ path: { event_id: eventId } }),
+			});
+			toast.success(t("admin:event_signup.unconfirmed"));
+		},
+		onError: (error) => {
+			toast.error(t("admin:event_signup.error_unconfirm"));
+		},
+	});
+
+	const confirmPlaces = useMutation({
+		...confirmPlacesMutation(),
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: getAllEventSignupsQueryKey({ path: { event_id: eventId } }),
+			});
+			toast.success(t("admin:event_signup.confirm_places_success"));
+		},
+		onError: (error) => {
+			toast.error(t("admin:event_signup.error_confirm_places"));
+		},
+	});
+
+	function handleHandOutSpots() {
+		// Logic to hand out spots
+		createEventSignup.mutate({ path: { event_id: eventId } });
+	}
+
+	function handleConfirmPlaces() {
+		// Logic to confirm places
+		confirmPlaces.mutate({
+			path: { event_id: eventId },
+			body: [selectedRow?.user.id],
+		});
+	}
+
+	function handleDownloadCsv() {
+		// Download CSV for current event using generated options (with fallback)
+		// This was created by a bot and it just works. It should be put into its
+		// own file but I couldn't get that to work properly
+		(async () => {
+			if (!Number.isFinite(eventId)) {
+				toast.error(t("admin:event_signup.missing_id"));
+				return;
+			}
+
+			try {
+				const opts = getEventCsvOptions({ path: { event_id: eventId } });
+
+				// Try to reuse generated queryFn via queryClient
+				let result: unknown;
+				try {
+					// queryClient.fetchQuery v4 expects the object signature and array queryKey.
+					const qk = opts.queryKey ?? [];
+					const queryKey = Array.isArray(qk) ? qk : [qk];
+					result = await queryClient.fetchQuery({
+						queryKey: queryKey as any[],
+						queryFn: opts.queryFn as any,
+					});
+				} catch {
+					// fallback to direct fetch if queryFn isn't suitable
+					const res = await fetch(`/get-event-csv/${eventId}`);
+					if (!res.ok) throw new Error("fetch failed");
+					// try to get blob and headers
+					const blob = await res.blob();
+					const disposition = res.headers.get("Content-Disposition") || "";
+					result = { blob, disposition };
+				}
+
+				// Normalize to blob + disposition
+				let blob: Blob | null = null;
+				let disposition = "";
+				if (result instanceof Blob) {
+					blob = result;
+				} else if (typeof result === "string") {
+					blob = new Blob([result], { type: "text/csv" });
+				} else if (result && typeof result === "object") {
+					// generated queryFn or fallback may return an object
+					// attempt common shapes
+					// @ts-ignore
+					if (result.blob instanceof Blob) {
+						// @ts-ignore
+						blob = result.blob;
+						// @ts-ignore
+						disposition = result.disposition || "";
+						// @ts-ignore
+					} else if (result.data && typeof result.data === "string") {
+						// @ts-ignore
+						blob = new Blob([result.data], { type: "text/csv" });
+					}
+				}
+
+				if (!blob) throw new Error("No CSV data received");
+
+				// extract filename from disposition if present
+				let filename = "event.csv";
+				const match =
+					disposition.match(/filename\*?=(?:UTF-8'')?["']?([^;"']+)["']?/i) ||
+					"";
+				if (match && (match as any)[1]) {
+					filename = decodeURIComponent((match as any)[1]);
+				}
+
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement("a");
+				a.href = url;
+				a.download = filename;
+				document.body.appendChild(a);
+				a.click();
+				a.remove();
+				URL.revokeObjectURL(url);
+
+				toast.success(t("admin:event_signup.download_csv_success"));
+			} catch (err) {
+				toast.error(t("admin:event_signup.download_csv_error"));
+			}
+		})();
+	}
+
 	const columns = [
 		columnHelper.accessor((row) => row.user.id, {
 			id: "user_id",
-			header: t("admin:user-id") || "User ID",
+			header: t("admin:user-id"),
 			cell: (info) => info.getValue(),
 			size: 60,
 		}),
@@ -93,7 +282,7 @@ export default function AdminEventSignupsPage() {
 			id: "first_name",
 			header: t("admin:first_name"),
 			cell: (info) => info.getValue() ?? "-",
-			size: 140,
+			size: 100,
 		}),
 		columnHelper.accessor((row) => row.user.last_name, {
 			id: "last_name",
@@ -101,9 +290,15 @@ export default function AdminEventSignupsPage() {
 			cell: (info) => info.getValue() ?? "-",
 			size: 140,
 		}),
+		columnHelper.accessor((row) => row.user.email, {
+			id: "email",
+			header: t("admin:email"),
+			cell: (info) => info.getValue(),
+			size: 140,
+		}),
 		columnHelper.accessor((row) => row.priority, {
 			id: "priority",
-			header: t("event_signup.priority") || "Priority",
+			header: t("event_signup.priority"),
 			cell: (info) => {
 				const v = info.getValue();
 				return v ? v.charAt(0).toUpperCase() + v.slice(1) : "-";
@@ -112,19 +307,19 @@ export default function AdminEventSignupsPage() {
 		}),
 		columnHelper.accessor((row) => row.group_name ?? "", {
 			id: "group_name",
-			header: t("event_signup.group_name") || "Group",
+			header: t("event_signup.group_name"),
 			cell: (info) => info.getValue() || "-",
 			size: 160,
 		}),
 		columnHelper.accessor((row) => row.drinkPackage, {
 			id: "drinkPackage",
-			header: t("event_signup.drink_package.title") || "Drink",
+			header: t("event_signup.drink_package.title"),
 			cell: (info) => info.getValue(),
 			size: 120,
 		}),
 		columnHelper.accessor((row) => row.confirmed_status, {
 			id: "status",
-			header: t("event_signup.status") || "Status",
+			header: t("event_signup.status"),
 			cell: (info) =>
 				info.getValue() ? (
 					<Badge variant="default">{t("event_signup.confirmed")}</Badge>
@@ -135,25 +330,39 @@ export default function AdminEventSignupsPage() {
 		}),
 		{
 			id: "actions",
-			header: t("admin:actions") || "Actions",
+			header: t("admin:actions"),
 			cell: ({ row }: { row: Row<EventSignupRead> }) => (
 				<Button
-					variant="outline"
+					variant={row.original.confirmed_status ? "destructive" : "default"}
+					disabled={event?.event_users_confirmed}
 					size="sm"
 					onClick={(e) => {
 						e.stopPropagation();
-						setSelectedRow(row.original);
-						setEditFormOpen(true);
+						const userId = row.original.user.id;
+						if (row.original.confirmed_status) {
+							unconfirmSignup.mutate({
+								path: { event_id: eventId },
+								body: [userId],
+							});
+						} else {
+							confirmSignup.mutate({
+								path: { event_id: eventId },
+								body: [userId],
+							});
+						}
 					}}
 				>
-					<Edit className="mr-2 h-4 w-4" />
-					{t("admin:edit") || "Edit"}
+					{row.original.confirmed_status
+						? t("admin:event_signup.unconfirm")
+						: t("admin:event_signup.confirm")}
 				</Button>
 			),
 		},
 	];
 
-	const [sorting, setSorting] = useState<SortingState>([]);
+	const [sorting, setSorting] = useState<SortingState>([
+		{ id: "user_id", desc: false },
+	]);
 
 	const table = useReactTable({
 		columns,
@@ -180,9 +389,9 @@ export default function AdminEventSignupsPage() {
 		return (
 			<div className="px-8">
 				<h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
-					{t("admin:event-signups.title") || "Event signups"}
+					{t("admin:event_signup.title")}
 				</h3>
-				<p className="text-red-600">{t("admin:event-signups.missing_id")}</p>
+				<p className="text-red-600">{t("admin:event_signup.missing_id")}</p>
 			</div>
 		);
 	}
@@ -195,28 +404,110 @@ export default function AdminEventSignupsPage() {
 		return <LoadingErrorCard error={signupsError as any} />;
 	}
 
+	// Disable handout until signup_end has passed (or while loading/no date)
+	// or if event users have been given confirmed statuses
+	const disableHandOut =
+		eventLoading ||
+		!event?.signup_end ||
+		new Date(event.signup_end) > new Date() ||
+		event?.event_users_confirmed;
+
 	return (
 		<div className="px-8 space-x-4">
 			<div className="space-y-0">
 				<h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
-					{t("admin:event-signups.title") || "Event signups"}
+					{t("admin:event_signup.title")}
 				</h3>
 				<p className="text-xs md:text-sm font-medium">
-					{t("admin:event-signups.description") ||
-						"Manage signups for a specific event. Use search to filter."}
+					{t("admin:event_signup.description")}
 				</p>
 
-				<div className="mt-4 mb-2 flex flex-row gap-2 items-center flex-wrap">
-					<div className="w-xs">
-						<Input
-							placeholder={t("admin:search_placeholder")}
-							value={search}
-							onChange={(e) => setSearch(e.target.value)}
-							autoFocus
+				<div className="mt-4 mb-2 grid grid-cols-1 gap-2 items-center md:grid-cols-2 xl:grid-cols-3">
+					<Input
+						placeholder={t("admin:event_signup.search_placeholder")}
+						value={search}
+						onChange={(e) => setSearch(e.target.value)}
+						autoFocus
+					/>
+					<label
+						htmlFor="show-unconfirmed"
+						className="flex items-center space-x-3 rounded-md border p-3 hover:bg-accent/50 transition-colors cursor-pointer ml-4"
+					>
+						<Checkbox
+							id="show-unconfirmed"
+							checked={showUnconfirmed}
+							onCheckedChange={(checked) => {
+								setShowUnconfirmed(checked as boolean);
+							}}
+							className="h-5 w-5"
 						/>
-					</div>
+						<span className="text-sm font-medium">
+							{t("admin:event_signup.show_unconfirmed")}
+						</span>
+					</label>
 					<Button variant="default" onClick={() => setCreateOpen(true)}>
-						{t("admin:event-signups.add") || "Add signup"}
+						{t("admin:event_signup.add")}
+					</Button>
+					<AlertDialog
+						open={confirmHandOutOpen}
+						onOpenChange={(open) => {
+							if (disableHandOut) return; // prevent opening when disabled
+							setConfirmHandOutOpen(open);
+						}}
+					>
+						<div className="flex items-center gap-2">
+							<AlertDialogTrigger asChild>
+								<Button variant="default" disabled={disableHandOut}>
+									{t("admin:event_signup.hand_out_spots")}
+								</Button>
+							</AlertDialogTrigger>
+							{disableHandOut && (
+								<span className="text-xs text-muted-foreground">
+									{t("admin:event_signup.hand_out_spots_closed")}
+								</span>
+							)}
+						</div>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>
+									{t("admin:event_signup.hand_out_spots_confirm_title")}
+								</AlertDialogTitle>
+								<AlertDialogDescription>
+									{t("admin:event_signup.hand_out_spots_confirm_desc")}
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel>{t("common:cancel")}</AlertDialogCancel>
+								<AlertDialogAction
+									onClick={() => {
+										handleHandOutSpots();
+										setConfirmHandOutOpen(false);
+									}}
+								>
+									{t("admin:event_signup.hand_out_spots")}
+								</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
+					<ConfirmDeleteDialog
+						open={confirmConfirmPlacesOpen}
+						onOpenChange={setConfirmConfirmPlacesOpen}
+						onConfirm={handleConfirmPlaces}
+						disabled={disableHandOut}
+						triggerText={t("admin:event_signup.confirm_places")}
+						title={t("admin:event_signup.confirm_places_title")}
+						description={t("admin:event_signup.confirm_places_desc")}
+						confirmText={t("admin:event_signup.confirm")}
+						confirmByTyping={true}
+						confirmByTypingText={t("admin:event_signup.confirm_places_input")}
+						confirmByTypingKey={t(
+							"admin:event_signup.confirm_places_input_key",
+						)}
+						cancelText={t("admin:cancel")}
+						showIcon={false}
+					/>
+					<Button variant="outline" onClick={handleDownloadCsv}>
+						{t("admin:event_signup.download_csv")}
 					</Button>
 				</div>
 
@@ -234,6 +525,7 @@ export default function AdminEventSignupsPage() {
 					}}
 					eventId={Number(eventId)}
 					selectedSignup={selectedRow}
+					event_users_confirmed={event?.event_users_confirmed}
 				/>
 			)}
 
@@ -241,6 +533,7 @@ export default function AdminEventSignupsPage() {
 				open={createOpen}
 				onOpenChange={setCreateOpen}
 				eventId={Number(eventId)}
+				event_users_confirmed={event?.event_users_confirmed}
 			/>
 		</div>
 	);
