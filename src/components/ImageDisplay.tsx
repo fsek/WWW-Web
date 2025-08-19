@@ -11,6 +11,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import Image from "next/image";
 import type { ImageProps as NextImageProps } from "next/image";
+import { Skeleton } from "./ui/skeleton";
 
 export type ImageKind = "image" | "news" | "event" | "user";
 export type ImageSize = "small" | "medium" | "large" | "original";
@@ -218,7 +219,7 @@ export default function ImageDisplay({
 	}, []);
 
 	// Show nothing while loading or if there is no usable src
-	if (query.isLoading || !src) return <p>{alt ?? `${type} ${imageId}`}</p>;
+	if (query.isLoading || !src) return <Skeleton />;
 	if (query.isError) return <p>{alt ?? `${type} ${imageId}`}</p>;
 
 	return (
