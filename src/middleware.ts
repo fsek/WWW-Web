@@ -1,7 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
+import i18nConfig from "@/i18nConfig";
 
 function handleLanguageHeader(response: NextResponse, request: NextRequest) {
-	const language = request.cookies.get("i18next")?.value || "en";
+	const language =
+		request.cookies.get("i18next")?.value || i18nConfig.defaultLocale;
+
 	response.headers.set("x-initial-language", language);
 }
 
