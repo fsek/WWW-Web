@@ -66,6 +66,7 @@ interface CalendarProps {
 	// Control the initial date and observe date changes
 	defaultDate?: Date;
 	onDateChange?: (date: Date) => void;
+	showManageSignupsButton?: boolean;
 }
 
 export default function Calendar({
@@ -89,6 +90,7 @@ export default function Calendar({
 	onViewChange,
 	defaultDate,
 	onDateChange,
+	showManageSignupsButton,
 }: CalendarProps) {
 	const { i18n, t } = useTranslation();
 	const {
@@ -618,6 +620,7 @@ export default function Calendar({
 				disableConfirmField={disableConfirmField}
 				disableEditOfOthers={disableEditOfOthers}
 				enableRoomBookingProperties={enableRoomBookingProperties}
+				showManageSignupsButton={showManageSignupsButton}
 				enableCafeShiftProperties={enableCafeShiftProperties}
 			/>
 		</div>

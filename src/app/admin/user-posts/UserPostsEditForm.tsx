@@ -12,9 +12,8 @@ import { useTranslation } from "react-i18next";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { toast } from "sonner";
 import { AdminChooseMultPosts } from "@/widgets/AdminChooseMultPosts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { parsePhoneNumberWithError } from "libphonenumber-js";
 import { Save } from "lucide-react";
+import UserDetailsCard from "@/components/UserDetailsCard";
 
 interface UserPostsEditFormProps {
 	open: boolean;
@@ -100,94 +99,7 @@ export default function UserPostsEditForm({
 				</DialogHeader>
 				<hr />
 				<div className="py-4">
-					<Card className="mb-4">
-						<CardHeader>
-							<CardTitle>
-								{t("user-posts.user_info", "User Information")}
-							</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-								<div className="space-y-1">
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("first_name")}:
-									</p>
-									<p className="text-base">{selectedUser.first_name}</p>
-								</div>
-								<div className="space-y-1">
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("last_name")}:
-									</p>
-									<p className="text-base">{selectedUser.last_name}</p>
-								</div>
-								<div className="space-y-1">
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("email")}:
-									</p>
-									<p className="text-base">{selectedUser.email}</p>
-								</div>
-								<div className="space-y-1">
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("stil_id")}:
-									</p>
-									<p className="text-base">
-										{selectedUser.stil_id || t("not_provided", "Not provided")}
-									</p>
-								</div>
-								<div className="space-y-1">
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("program")}:
-									</p>
-									<p className="text-base">{selectedUser.program}</p>
-								</div>
-								<div className="space-y-1">
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("start_year")}:
-									</p>
-									<p className="text-base">{selectedUser.start_year}</p>
-								</div>
-								<div className="space-y-1">
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("telephone_number")}:
-									</p>
-									<p className="text-base">
-										{selectedUser.telephone_number
-											? (() => {
-													try {
-														return parsePhoneNumberWithError(
-															selectedUser.telephone_number,
-														).formatNational();
-													} catch {
-														return selectedUser.telephone_number;
-													}
-												})()
-											: t("not_provided", "Not provided")}
-									</p>
-								</div>
-								<div className="space-y-1">
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("account_created")}:
-									</p>
-									<p className="text-base">
-										{selectedUser.account_created
-											? new Date(
-													selectedUser.account_created,
-												).toLocaleDateString("sv")
-											: ""}
-									</p>
-								</div>
-								<div className="space-y-1">
-									<p className="font-semibold text-sm text-muted-foreground">
-										{t("is_member")}:
-									</p>
-									<p className="text-base">
-										{selectedUser.is_member ? t("yes", "Yes") : t("no", "No")}
-									</p>
-								</div>
-							</div>
-						</CardContent>
-					</Card>
-
+					<UserDetailsCard user={selectedUser} />
 					<div className="my-4">
 						<h3 className="font-semibold mb-2">
 							{t("user-posts.manage_positions", "Manage User Positions")}

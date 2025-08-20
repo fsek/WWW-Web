@@ -28,6 +28,7 @@ interface ConfirmDeleteDialogProps {
 	confirmByTyping?: boolean;
 	confirmByTypingText?: string;
 	confirmByTypingKey?: string;
+	showIcon?: boolean;
 }
 
 export function ConfirmDeleteDialog({
@@ -44,6 +45,7 @@ export function ConfirmDeleteDialog({
 	confirmByTyping = false,
 	confirmByTypingText,
 	confirmByTypingKey = "confirm",
+	showIcon = true,
 }: ConfirmDeleteDialogProps) {
 	const { t } = useTranslation();
 	const [typedValue, setTypedValue] = useState("");
@@ -61,7 +63,7 @@ export function ConfirmDeleteDialog({
 					disabled={disabled}
 					onClick={() => onOpenChange(true)}
 				>
-					<Trash2 />
+					{showIcon && <Trash2 />}
 					{triggerText ?? t("admin:remove")}
 				</Button>
 			</AlertDialogTrigger>
@@ -109,7 +111,7 @@ export function ConfirmDeleteDialog({
 						}}
 						disabled={!isConfirmEnabled}
 					>
-						<Trash2 />
+						{showIcon && <Trash2 />}
 						{confirmText ?? t("admin:remove")}
 					</Button>
 				</AlertDialogFooter>

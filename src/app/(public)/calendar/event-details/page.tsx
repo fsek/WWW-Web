@@ -336,7 +336,7 @@ export default function Page() {
 										<span>
 											{`${t("admin:events.signup_count")}: ${
 												data.signup_count
-											} / ${data.max_event_users}`}
+											} / ${data.max_event_users === 0 ? "∞" : data.max_event_users}`}
 										</span>
 									</div>
 								</>
