@@ -199,7 +199,7 @@ export default function AlbumPage({ params }: Props) {
 							<ImageDisplay
 								type="image"
 								imageId={img}
-								size="small"
+								size="medium"
 								alt={`Image ${idx + 1} from album ${album?.title_en}`}
 								fill
 								style={{ objectFit: "cover" }}

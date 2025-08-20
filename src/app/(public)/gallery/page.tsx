@@ -120,7 +120,7 @@ export default function GalleryIndexPage() {
 										<ImageDisplay
 											type="image"
 											imageId={bgImageId}
-											size="small"
+											size="medium"
 											alt={album.title_en}
 											className="w-full h-full object-cover"
 											style={{ objectFit: "cover" }}
