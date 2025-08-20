@@ -512,6 +512,8 @@
 			"members_btn": "Medlemmar",
 			"fadder": "Fadder",
 			"uppdrag": "Uppdrag",
+			"standard": "Standard",
+			"utskott": "Utskott",
 			"unknown_type": "Okänd typ"
 		},
 		"groups": {
@@ -527,6 +529,8 @@
 			"cancel": "Avbryt",
 			"fadder": "Fadder",
 			"uppdrag": "Uppdrag",
+			"standard": "Standard",
+			"utskott": "Utskott",
 			"create_success": "Grupp skapad!",
 			"create_error": "Kunde inte skapa grupp.",
 			"add_success": "Grupp tillagd i nollning!",
@@ -624,6 +628,7 @@
 			"select_role_placeholder": "Välj roll",
 			"add_as_mentee": "Lägg till som nolla",
 			"add_as_mentor": "Lägg till som fadder",
+			"add_as_standard": "Lägg till som standardmedlem",
 			"filter_by_program": "Filtrera efter program",
 			"clear": "Rensa",
 			"search_user_placeholder": "Sök användare",
@@ -634,6 +639,7 @@
 			"no_years_found": "Inga år hittades",
 			"fadder": "Fadder",
 			"nolla": "Nolla",
+			"standard": "Standardmedlem",
 			"unclear": "Oklart"
 		}
 	},

@@ -34,7 +34,7 @@ import { useTranslation } from "react-i18next";
 
 const GroupSchema = z.object({
 	name: z.string().min(2),
-	group_type: z.enum(["Mentor", "Mission"]),
+	group_type: z.enum(["Mentor", "Mission", "Default", "Committee"]),
 	mentor_group_number: z.coerce.number().min(1).optional(),
 });
 
@@ -45,9 +45,9 @@ interface Props {
 
 const CreateAdventureMission = ({ nollningID, className }: Props) => {
 	const [open, setOpen] = useState(false);
-	const [pendingGroupNumber, setPendingGroupNumber] = useState<number | undefined>(
-		undefined
-	);
+	const [pendingGroupNumber, setPendingGroupNumber] = useState<
+		number | undefined
+	>(undefined);
 
 	const groupForm = useForm<z.infer<typeof GroupSchema>>({
 		resolver: zodResolver(GroupSchema),
@@ -146,7 +146,10 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 										<FormItem>
 											<FormLabel>{t("nollning.groups.title")}</FormLabel>
 											<FormControl>
-												<Input placeholder={t("nollning.groups.title")} {...field} />
+												<Input
+													placeholder={t("nollning.groups.title")}
+													{...field}
+												/>
 											</FormControl>
 										</FormItem>
 									)}
@@ -175,9 +178,11 @@ const CreateAdventureMission = ({ nollningID, className }: Props) => {
 													type="number"
 													placeholder={t("nollning.groups.group_number")}
 													value={field.value === undefined ? "" : field.value}
-													onChange={e => {
+													onChange={(e) => {
 														const val = e.target.value;
-														field.onChange(val === "" ? undefined : Number(val));
+														field.onChange(
+															val === "" ? undefined : Number(val),
+														);
 													}}
 												/>
 											</FormControl>

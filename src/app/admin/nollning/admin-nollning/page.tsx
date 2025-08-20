@@ -1,6 +1,9 @@
 "use client";
 
-import { getNollningByYearOptions, getNollningOptions } from "@/api/@tanstack/react-query.gen";
+import {
+	getNollningByYearOptions,
+	getNollningOptions,
+} from "@/api/@tanstack/react-query.gen";
 import React, { Suspense, useMemo, useState } from "react";
 import type { GroupRead, NollningGroupRead } from "@/api";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -29,12 +32,16 @@ export default function Page() {
 
 	const { data } =
 		idParam === null || idParam === "current"
-			? useSuspenseQuery(getNollningByYearOptions({
-				path: { year: new Date().getFullYear() },
-			}))
-			: useSuspenseQuery(getNollningOptions({
-				path: { nollning_id: nollningID },
-			}));
+			? useSuspenseQuery(
+					getNollningByYearOptions({
+						path: { year: new Date().getFullYear() },
+					}),
+				)
+			: useSuspenseQuery(
+					getNollningOptions({
+						path: { nollning_id: nollningID },
+					}),
+				);
 
 	// After getting the data, switch the parameter to nollningID, to make it easier to pass down
 	if (idParam === null || idParam === "current") {
@@ -47,11 +54,14 @@ export default function Page() {
 		// Filter by search term if provided
 		if (searchTerm.trim() !== "") {
 			const term = searchTerm.toLowerCase();
-			groups = groups.filter((group) =>
-			(group.group.name?.toLowerCase().includes(term) ||
-				group.group.group_users.some((user) =>
-					(`${user.user.first_name} ${user.user.last_name}`).toLowerCase().includes(term)
-				))
+			groups = groups.filter(
+				(group) =>
+					group.group.name?.toLowerCase().includes(term) ||
+					group.group.group_users.some((user) =>
+						`${user.user.first_name} ${user.user.last_name}`
+							.toLowerCase()
+							.includes(term),
+					),
 			);
 		}
 		return groups;
@@ -82,6 +92,10 @@ export default function Page() {
 						return t("nollning.group_admin.fadder");
 					case "Mission":
 						return t("nollning.group_admin.uppdrag");
+					case "Default":
+						return t("nollning.group_admin.standard");
+					case "Committee":
+						return t("nollning.group_admin.utskott");
 					default:
 						return t("nollning.group_admin.unknown_type");
 				}
@@ -103,7 +117,9 @@ export default function Page() {
 						size="sm"
 						onClick={(e) => {
 							e.stopPropagation();
-							router.push(`/admin/nollning/admin-nollning/completed-missions?id=${nollningID}&group=${row.original.group.id}`);
+							router.push(
+								`/admin/nollning/admin-nollning/completed-missions?id=${nollningID}&group=${row.original.group.id}`,
+							);
 						}}
 					>
 						{t("nollning.group_admin.to_missions")}
@@ -114,7 +130,9 @@ export default function Page() {
 						className="text-foreground"
 						onClick={(e) => {
 							e.stopPropagation();
-							router.push(`/admin/nollning/admin-nollning/group-users?id=${nollningID}&group=${row.original.group.id}`);
+							router.push(
+								`/admin/nollning/admin-nollning/group-users?id=${nollningID}&group=${row.original.group.id}`,
+							);
 						}}
 					>
 						{t("nollning.group_admin.to_members")}
@@ -148,7 +166,9 @@ export default function Page() {
 	};
 
 	return (
-		<Suspense fallback={<div>{t("nollning.group_admin.no_nollning_selected")}</div>}>
+		<Suspense
+			fallback={<div>{t("nollning.group_admin.no_nollning_selected")}</div>}
+		>
 			<div className="px-12 py-4 space-x-4 space-y-4">
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
@@ -163,9 +183,7 @@ export default function Page() {
 						{t("nollning.group_admin.back")}
 					</Button>
 				</div>
-				<p className="">
-					{t("nollning.group_admin.intro")}
-				</p>
+				<p className="">{t("nollning.group_admin.intro")}</p>
 				<div className="space-x-2 lg:col-span-2 flex">
 					<Button className="w-32 min-w-fit" onClick={adminAdventureMissions}>
 						{t("nollning.group_admin.admin_missions")}
@@ -173,9 +191,7 @@ export default function Page() {
 					<CreateGroup className="w-32 min-w-fit" nollningID={nollningID} />
 				</div>
 				<div className="flex flex-row gap-3 items-center">
-					<span>
-						{t("nollning.group_admin.filter_label")}
-					</span>
+					<span>{t("nollning.group_admin.filter_label")}</span>
 					<Input
 						type="text"
 						placeholder={t("nollning.group_admin.search_placeholder")}

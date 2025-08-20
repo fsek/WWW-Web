@@ -511,6 +511,8 @@
 			"members_btn": "Members",
 			"fadder": "Mentor",
 			"uppdrag": "Mission",
+			"standard": "Default",
+			"utskott": "Council",
 			"unknown_type": "Unknown Type"
 		},
 		"groups": {
@@ -526,6 +528,8 @@
 			"cancel": "Cancel",
 			"fadder": "Mentor",
 			"uppdrag": "Mission",
+			"standard": "Default",
+			"utskott": "Council",
 			"create_success": "Group created!",
 			"create_error": "Could not create group.",
 			"add_success": "Group added to introduction!",
@@ -623,6 +627,7 @@
 			"select_role_placeholder": "Select role",
 			"add_as_mentee": "Add as mentee",
 			"add_as_mentor": "Add as mentor",
+			"add_as_standard": "Add as default member",
 			"filter_by_program": "Filter by program",
 			"clear": "Clear",
 			"search_user_placeholder": "Search user",
@@ -633,6 +638,7 @@
 			"no_years_found": "No years found",
 			"fadder": "Mentor",
 			"nolla": "Mentee",
+			"standard": "Default member",
 			"unclear": "Unclear"
 		}
 	},
