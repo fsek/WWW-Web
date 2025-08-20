@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 import type {
 	EventRead,
+	EventSignupCreate,
 	EventSignupRead,
 	EventSignupUpdate,
 } from "@/api/types.gen";
@@ -199,7 +200,14 @@ export default function SignupCard({
 
 	const onSubmit = (values: z.infer<typeof signupSchema>) => {
 		if (!meData) return;
-		const submitData: EventSignupUpdate = {
+		const updateSubmitData: EventSignupUpdate = {
+			user_id: meData.id,
+			priority: values.priority || undefined,
+			group_name: values.group_name || null,
+			drinkPackage: values.drinkPackage,
+		};
+
+		const createSubmitData: EventSignupCreate = {
 			user_id: meData.id,
 			priority: values.priority || undefined,
 			group_name: values.group_name || null,
@@ -210,13 +218,13 @@ export default function SignupCard({
 			// Update existing signup
 			updateSignupMutation.mutate({
 				path: { event_id: event.id },
-				body: submitData,
+				body: updateSubmitData,
 			});
 		} else {
 			// Create new signup
 			createSignupMutation.mutate({
 				path: { event_id: event.id },
-				body: submitData,
+				body: createSubmitData,
 			});
 		}
 	};
