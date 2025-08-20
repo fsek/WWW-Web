@@ -31,7 +31,7 @@ export default async function RootLayout({
 
 	const headersList = await headers();
 	const initialLanguage =
-		(headersList.get("x-initial-language") as Locale) || "en";
+		(headersList.get("x-initial-language") as Locale) || defaultLocale;
 
 	const { i18n, resources } = await initTranslations(
 		initialLanguage,
