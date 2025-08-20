@@ -81,6 +81,9 @@ export default function GroupUsersPage() {
 				if (groupUserType === "Mentee") {
 					return t("nollning.group_members.nolla");
 				}
+				if (groupUserType === "Default") {
+					return t("nollning.group_members.standard");
+				}
 				return groupUserType;
 			},
 		}),
@@ -155,16 +158,16 @@ export default function GroupUsersPage() {
 		<Suspense
 			fallback={
 				<div>
-					<h3>
-						{t("nollning.group_members.no_group_selected")}
-					</h3>
+					<h3>{t("nollning.group_members.no_group_selected")}</h3>
 				</div>
 			}
 		>
 			<div className="px-12 py-4  space-y-4 ">
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
-						{t("nollning.group_members.header_group_members", { group: group.data.name })}
+						{t("nollning.group_members.header_group_members", {
+							group: group.data.name,
+						})}
 					</h3>
 					<Button
 						variant="ghost"
@@ -194,9 +197,13 @@ export default function GroupUsersPage() {
 							</div>
 							<div className="border border-card-foreground/20 rounded-lg bg-card mb-5 mx-5 w-sm">
 								<div className="space-x-4 space-y-4 flex-2 p-4">
-									<h3 className="text-xl">{t("nollning.group_members.info_header")}</h3>
+									<h3 className="text-xl">
+										{t("nollning.group_members.info_header")}
+									</h3>
 									<p className="text-sm text-muted-foreground">
-										{t("nollning.group_members.info_text", { group: group.data.name })}
+										{t("nollning.group_members.info_text", {
+											group: group.data.name,
+										})}
 									</p>
 								</div>
 							</div>
@@ -234,7 +241,9 @@ export default function GroupUsersPage() {
 										<Button variant="destructive" onClick={handleRemoveUser}>
 											{t("nollning.group_members.remove")}
 										</Button>
-										<DialogClose>{t("nollning.group_members.cancel")}</DialogClose>
+										<DialogClose>
+											{t("nollning.group_members.cancel")}
+										</DialogClose>
 									</div>
 								</DialogFooter>
 							</DialogContent>
@@ -244,4 +253,4 @@ export default function GroupUsersPage() {
 			</div>
 		</Suspense>
 	);
-};
+}

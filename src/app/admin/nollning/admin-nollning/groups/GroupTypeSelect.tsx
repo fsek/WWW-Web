@@ -19,8 +19,12 @@ const GroupTypeSelect = ({ value, onChange }: Props) => {
 	const groupTypes: { [key: string]: string } = {
 		Fadder: "Mentor",
 		Uppdrag: "Mission",
+		Standard: "Default",
+		Utskott: "Committee",
 		Mentor: "Mentor",
 		Mission: "Mission",
+		Default: "Default",
+		Committee: "Committee",
 	};
 
 	return (
@@ -30,7 +34,12 @@ const GroupTypeSelect = ({ value, onChange }: Props) => {
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
-					{[t("nollning.groups.fadder"), t("nollning.groups.uppdrag")]?.map((item) => (
+					{[
+						t("nollning.groups.fadder"),
+						t("nollning.groups.uppdrag"),
+						t("nollning.groups.standard"),
+						t("nollning.groups.utskott"),
+					]?.map((item) => (
 						<SelectItem key={item} value={groupTypes[item]}>
 							{item || t("unnamed_council")}
 						</SelectItem>

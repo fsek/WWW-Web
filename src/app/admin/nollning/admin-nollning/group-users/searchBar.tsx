@@ -79,6 +79,9 @@ export default function SearchBar({
 					<SelectItem value="Mentor">
 						{t("nollning.group_members.add_as_mentor")}
 					</SelectItem>
+					<SelectItem value="Default">
+						{t("nollning.group_members.add_as_standard")}
+					</SelectItem>
 				</SelectContent>
 			</Select>
 			<Select
