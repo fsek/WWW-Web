@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
 	viewShiftOptions,
 	getMeOptions,
-	adminGetUserOptions,
+	adminViewShiftOptions,
 	signupToShiftMutation,
 	signoffFromShiftMutation,
 	viewShiftQueryKey,
@@ -33,7 +33,7 @@ import {
 	IdCard,
 } from "lucide-react";
 
-import viewingUserGotUserPerms from "@/utils/viewingUserGotUserPerms";
+import viewingUserGotPerms from "@/utils/viewingUserGotPerms";
 
 interface CafeShiftPageProps {
 	params: Promise<{
@@ -69,18 +69,19 @@ export default function CafeShiftPage({ params }: CafeShiftPageProps) {
 	});
 
 	// 3. Check permissions based on user data
-	const userHasPerms = viewingUserGotUserPerms(
+	const userHasPerms = viewingUserGotPerms(
 		userData,
 		userError,
 		userIsFetching,
+		"cafe",
 	);
 
 	// 4. Finally fetch user details - enabled if permissions and shift data exist
-	const { data: assignedUserDetails, error: userDetailsError } = useQuery({
-		...adminGetUserOptions({
-			path: { user_id: data?.user?.id ?? -1 },
+	const { data: adminData, error: adminDataError } = useQuery({
+		...adminViewShiftOptions({
+			path: { shift_id: shiftId },
 		}),
-		enabled: userHasPerms && !!data?.user?.id,
+		enabled: userHasPerms && !!data?.user && !!data?.user?.id,
 		staleTime: 30 * 60 * 1000,
 	});
 
@@ -121,8 +122,8 @@ export default function CafeShiftPage({ params }: CafeShiftPageProps) {
 		return <LoadingErrorCard error={error || undefined} />;
 	}
 
-	if (userHasPerms && userDetailsError) {
-		return <LoadingErrorCard error={userDetailsError} isLoading={false} />;
+	if (userHasPerms && adminDataError) {
+		return <LoadingErrorCard error={adminDataError} isLoading={false} />;
 	}
 
 	const formatDateShort = (date: Date) => {
@@ -168,30 +169,29 @@ export default function CafeShiftPage({ params }: CafeShiftPageProps) {
 										: t("unassigned")}
 								</span>
 							</div>
-							{userHasPerms && assignedUserDetails && (
+							{userHasPerms && adminData?.user && (
 								<>
 									<div className="flex items-center gap-2">
 										<Mail className="w-4 h-4 text-muted-foreground" />
 										<span>
-											{t("email")}: {assignedUserDetails.email}
+											{t("email")}: {adminData.user.email}
 										</span>
 									</div>
-									{assignedUserDetails.telephone_number && (
+									{adminData.user.telephone_number && (
 										<div className="flex items-center gap-2">
 											<Phone className="w-4 h-4 text-muted-foreground" />
 											<span>
 												{t("telephone_number")}:{" "}
 												{parsePhoneNumberWithError(
-													assignedUserDetails.telephone_number,
-												).formatNational() ??
-													assignedUserDetails.telephone_number}
+													adminData.user.telephone_number,
+												).formatNational() ?? adminData.user.telephone_number}
 											</span>
 										</div>
 									)}
 									<div className="flex items-center gap-2">
 										<IdCard className="w-4 h-4 text-muted-foreground" />
 										<span>
-											{t("stil_id")}: {assignedUserDetails.stil_id}
+											{t("stil_id")}: {adminData.user.stil_id}
 										</span>
 									</div>
 								</>

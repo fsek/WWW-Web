@@ -7,7 +7,6 @@ import type { AdminUserRead, CarBookingRead } from "@/api/index";
 import CarForm from "./CarForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-	adminGetAllUsersOptions,
 	createCarBookingMutation,
 	getAllCarBookingsOptions,
 } from "@/api/@tanstack/react-query.gen";
@@ -39,17 +38,10 @@ import CarEditForm from "./CarEditForm";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import BlockForm from "./BlockForm";
-import type { CarBlockRead } from "@/api/index";
-import {
-	unblockUserFromCarBookingMutation,
-	getAllCarBookingBlocksOptions,
-	getAllCarBookingBlocksQueryKey,
-} from "@/api/@tanstack/react-query.gen";
+import CarBlockingTab from "./CarBlockingTab";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 const columnHelper = createColumnHelper<CarBookingRead>();
-const blockColumnHelper = createColumnHelper<CarBlockRead>();
 
 export default function Car() {
 	const router = useRouter();
@@ -157,16 +149,6 @@ export default function Car() {
 		refetchOnWindowFocus: false,
 	});
 
-	const {
-		data: userDetails,
-		error: userDetailsError,
-		isFetching: userDetailsIsFetching,
-		isLoading: userDetailsIsLoading,
-	} = useQuery({
-		...adminGetAllUsersOptions(),
-		refetchOnWindowFocus: false,
-	});
-
 	const tableData = useMemo(() => {
 		if (!data) {
 			return [];
@@ -243,110 +225,6 @@ export default function Car() {
 		},
 	});
 
-	// Blocked users state and query
-	const {
-		data: blockData,
-		error: blockError,
-		isLoading: isBlockLoading,
-	} = useQuery({
-		...getAllCarBookingBlocksOptions(),
-	});
-
-	const handleUnblockUser = useMutation({
-		...unblockUserFromCarBookingMutation(),
-		throwOnError: false,
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: getAllCarBookingBlocksQueryKey(),
-			});
-		},
-	});
-
-	function getUserFullName(user_id: number): string {
-		if (userDetailsError || userDetailsIsFetching || !userDetails) {
-			return "Unknown User";
-		}
-		const user = (userDetails as AdminUserRead[]).find(
-			(user: AdminUserRead) => user.id === user_id,
-		);
-		if (!user) {
-			return "Unknown User";
-		}
-		return `${user.first_name} ${user.last_name}`;
-	}
-
-	const blockColumns = useMemo(
-		() => [
-			blockColumnHelper.accessor("user_id", {
-				header: t("admin:block.blocked_user"),
-				cell: (info) => {
-					const userId = info.getValue();
-					const userName = getUserFullName(userId);
-					return userName;
-				},
-			}),
-			blockColumnHelper.accessor("reason", {
-				header: t("admin:block.reason"),
-				cell: (info) => info.getValue(),
-			}),
-			blockColumnHelper.accessor("blocked_by", {
-				header: t("admin:block.blocked_by"),
-				cell: (info) => {
-					const userId = info.getValue();
-					const userName = getUserFullName(userId);
-					return userName;
-				},
-			}),
-			blockColumnHelper.accessor("created_at", {
-				header: t("admin:block.blocked_at"),
-				cell: (info) =>
-					info.getValue()
-						? new Date(info.getValue()).toLocaleString("sv-SE")
-						: "",
-			}),
-			blockColumnHelper.display({
-				id: "actions",
-				header: t("admin:block.actions"),
-				cell: ({ row }: { row: Row<CarBlockRead> }) => (
-					<Button
-						variant="destructive"
-						size="sm"
-						onClick={(e) => {
-							e.stopPropagation();
-							handleUnblockUser.mutate(
-								{ path: { user_id: row.original.user_id } },
-								{
-									onError: (error) => {
-										toast.error(
-											t("admin:block.error_unblock") +
-												(error?.detail ? `: ${error.detail}` : ""),
-										);
-									},
-									onSuccess: () => {
-										toast.success(t("admin:block.success_unblock"));
-										queryClient.invalidateQueries({
-											queryKey: getAllCarBookingBlocksQueryKey(),
-										});
-									},
-								},
-							);
-						}}
-					>
-						{t("admin:block.unblock")}
-					</Button>
-				),
-			}),
-		],
-		[t, handleUnblockUser, queryClient.invalidateQueries],
-	);
-
-	const blockTable = useReactTable({
-		columns: blockColumns,
-		data: (blockData as CarBlockRead[]) ?? [],
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-	});
-
 	// Keep the current calendar view while this page is mounted
 	const [calendarView, setCalendarView] = useState<string | undefined>(
 		undefined,
@@ -354,12 +232,8 @@ export default function Car() {
 	// Keep the currently viewed date while this page is mounted
 	const [calendarDate, setCalendarDate] = useState<Date | undefined>(undefined);
 
-	if (error || userDetailsError || blockError) {
-		return (
-			<LoadingErrorCard
-				error={error || userDetailsError || blockError || undefined}
-			/>
-		);
+	if (error) {
+		return <LoadingErrorCard error={error} />;
 	}
 
 	interface CustomEventData_ extends CustomEventData {
@@ -401,12 +275,8 @@ export default function Car() {
 			</h3>
 			<p className="py-3">{t("admin:car.description")}</p>
 			<Separator />
-			{isFetching || userDetailsIsLoading || isBlockLoading ? (
+			{isFetching ? (
 				<LoadingErrorCard />
-			) : error || userDetailsError || blockError ? (
-				<LoadingErrorCard
-					error={error || userDetailsError || blockError || undefined}
-				/>
 			) : (
 				<EventsProvider
 					initialCalendarEvents={events}
@@ -569,17 +439,7 @@ export default function Car() {
 								/>
 							</TabsContent>
 							<TabsContent value="blockings" className="w-full px-5 space-y-5">
-								<div className="space-y-0">
-									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl text-primary">
-										{t("admin:car.blockings")}
-									</h2>
-									<p className="text-xs md:text-sm font-medium">
-										{t("admin:car.blockings_description")}
-									</p>
-								</div>
-								<BlockForm />
-								<Separator />
-								<AdminTable table={blockTable} />
+								<CarBlockingTab />
 							</TabsContent>
 						</Tabs>
 					</div>

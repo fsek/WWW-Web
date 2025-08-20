@@ -141,6 +141,13 @@ export default function CafeShifts() {
 		throwOnError: false,
 	});
 
+	// Keep the current calendar view while this page is mounted
+	const [calendarView, setCalendarView] = useState<string | undefined>(
+		undefined,
+	);
+	// Keep the currently viewed date while this page is mounted
+	const [calendarDate, setCalendarDate] = useState<Date | undefined>(undefined);
+
 	if (isFetching) {
 		return <LoadingErrorCard />;
 	}
@@ -274,6 +281,12 @@ export default function CafeShifts() {
 								disableEdit={false}
 								enableAllDay={false}
 								enableCafeShiftProperties={true}
+								// Provide and persist the calendar view across tab switches
+								defaultView={calendarView}
+								onViewChange={setCalendarView}
+								// Provide and persist the viewed date across tab switches
+								defaultDate={calendarDate}
+								onDateChange={setCalendarDate}
 							/>
 						</TabsContent>
 						<TabsContent value="list" className="w-full px-5 space-y-5">
