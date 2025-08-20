@@ -127,6 +127,7 @@ export default function ImageDisplay({
 				queryOptions = {
 					...getNewsImageStreamOptions({ path: { news_id: imageId } }),
 					enabled: !!imageId,
+					refetchOnWindowFocus: false,
 				};
 			} else {
 				queryOptions = {
@@ -134,6 +135,7 @@ export default function ImageDisplay({
 						path: { news_id: imageId, size: size },
 					}),
 					enabled: !!imageId,
+					refetchOnWindowFocus: false,
 				};
 			}
 			break;
@@ -144,6 +146,7 @@ export default function ImageDisplay({
 				queryOptions = {
 					...getImageStreamOptions({ path: { img_id: imageId } }),
 					enabled: !!imageId,
+					refetchOnWindowFocus: false,
 				};
 			} else {
 				queryOptions = {
@@ -151,6 +154,7 @@ export default function ImageDisplay({
 						path: { img_id: imageId, size: size },
 					}),
 					enabled: !!imageId,
+					refetchOnWindowFocus: false,
 				};
 			}
 			break;
