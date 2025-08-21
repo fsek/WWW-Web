@@ -39,7 +39,7 @@ import AdminChooseOnePriority from "@/widgets/AdminChooseOnePriority";
 
 const schema = z.object({
 	user_id: z.number({ required_error: "User is required" }),
-	priority: z.string().optional(),
+	priority: z.string().optional().nullable(),
 	group_name: z.string().optional(),
 	drinkPackage: z.enum(["None", "AlcoholFree", "Alcohol"]),
 });
@@ -185,7 +185,7 @@ export default function SignupForm({
 										<FormControl>
 											<Input
 												placeholder={
-													t("event_signup.group_name_placeholder") ||
+													t("event_signup.group_name_placeholder_free") ||
 													"Group name"
 												}
 												{...field}
@@ -239,7 +239,7 @@ export default function SignupForm({
 									className="w-32 min-w-fit"
 								>
 									<Save className="mr-2 h-4 w-4" />
-									{t("admin:create")}
+									{t("admin:submit")}
 								</Button>
 								<Button
 									type="button"

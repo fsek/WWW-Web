@@ -22,6 +22,8 @@
 	"signup_start": "Anmälningsstart",
 	"signup_end": "Anmälningsslut",
 	"user-id": "ID",
+	"user": "Användare",
+	"edit": "Redigera",
 	"actions": "Åtgärder",
 	"welcome": {
 		"title": "Välkommen till adminsidan",
@@ -812,6 +814,8 @@
 		"priority": "Prioritet",
 		"group_name": "Gruppnamn",
 		"group_name_placeholder": "Sök eller skriv fritt.",
+		"group_name_placeholder_free": "Ange gruppnamn",
+		"created_at": "Anmälan skapad",
 		"drink_package": {
 			"title": "Dryckespaket",
 			"none": "Inget",
@@ -838,7 +842,7 @@
 		"hand_out_spots_confirm_title": "Dela ut platser",
 		"hand_out_spots_confirm_desc": "Är du säker på att du vill dela ut platser? Du måste avbekräfta användares platser individuellt om du vill ändra något.",
 		"missing_id": "Event-ID saknas.",
-		"download_csv": "Ladda ner CSV (endast bekräftade)",
+		"download_csv": "Ladda ner CSV (endast de med platser)",
 		"download_csv_success": "CSV nedladdad!",
 		"download_csv_error": "Misslyckades att ladda ner CSV.",
 		"confirm_places": "Bekräfta platser",
@@ -846,11 +850,16 @@
 		"confirm_places_desc": "Detta slutför tilldelningen av platser till användarna. Du kan inte ångra denna åtgärd, den låser eventet och du kommer inte att kunna ändra några utdelade platser efteråt. Se till att du har kontrollerat listan över anmälningar och att allt är korrekt innan du bekräftar.",
 		"confirm": "Bekräfta",
 		"unconfirm": "Avbekräfta",
+		"give_spot": "Ge plats",
+		"take_away_spot": "Ta bort plats",
+		"will_have_spot": "Får plats",
+		"will_not_have_spot": "Ingen plats",
 		"confirm_places_success": "Platser bekräftade!",
 		"error_confirm_places": "Misslyckades att bekräfta platser.",
 		"confirm_places_input": "Skriv BEKRÄFTA för att bekräfta att du är färdig med hanteringen av utdelade platser.",
 		"confirm_places_input_key": "BEKRÄFTA",
-		"search_placeholder": "Sök anmälningar efter namn, grupp, prioritet, e-post"
+		"search_placeholder": "Sök anmälningar efter namn, grupp, prioritet, e-post",
+		"event_users_confirmed_description": "Platserna har bekräftats, ingen redigering är möjlig."
 	},
 	"cafe_shifts": {
 		"self": "Cafépass",

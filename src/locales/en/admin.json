@@ -22,6 +22,8 @@
 	"signup_start": "Signup Start",
 	"signup_end": "Signup End",
 	"user-id": "User ID",
+	"user": "User",
+	"edit": "Edit",
 	"actions": "Actions",
 	"welcome": {
 		"title": "Welcome to the Admin Page",
@@ -811,6 +813,8 @@
 		"priority": "Priority",
 		"group_name": "Group Name",
 		"group_name_placeholder": "Search or input free text.",
+		"group_name_placeholder_free": "Enter group name",
+		"created_at": "Signed up at",
 		"drink_package": {
 			"title": "Drink Package",
 			"none": "None",
@@ -837,7 +841,7 @@
 		"hand_out_spots_confirm_title": "Hand Out Spots",
 		"hand_out_spots_confirm_desc": "Are you sure you want to hand out spots? You have to unconfirm users' spots individually if you want to change anything.",
 		"missing_id": "Missing event ID.",
-		"download_csv": "Download CSV (confirmed only)",
+		"download_csv": "Download CSV (users with spots only)",
 		"download_csv_success": "CSV downloaded!",
 		"download_csv_error": "Failed to download CSV.",
 		"confirm_places": "Confirm Places",
@@ -845,11 +849,16 @@
 		"confirm_places_desc": "This will finalize the allocation of spots to users. You can not undo this action, it locks the event and you will not be able to change any allocated spots afterwards. Make sure you have checked the list of signups and that everything is correct before confirming.",
 		"confirm": "Confirm",
 		"unconfirm": "Unconfirm",
+		"give_spot": "Give Spot",
+		"take_away_spot": "Take Away Spot",
+		"will_have_spot": "Will Get Spot",
+		"will_not_have_spot": "Will Not Get Spot",
 		"confirm_places_success": "Places confirmed!",
 		"error_confirm_places": "Failed to confirm places.",
 		"confirm_places_input": "Type CONFIRM to confirm you are completely done with managing handed out spots.",
 		"confirm_places_input_key": "CONFIRM",
-		"search_placeholder": "Search signups by name, group, priority, email"
+		"search_placeholder": "Search signups by name, group, priority, email",
+		"event_users_confirmed_description": "The spots have been confirmed, no editing!"
 	},
 	"cafe_shifts": {
 		"self": "Cafe Shifts",
