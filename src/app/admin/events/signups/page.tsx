@@ -181,9 +181,6 @@ export default function AdminEventSignupsPage() {
 	function handleHandOutSpots() {
 		// Logic to hand out spots
 		createEventSignup.mutate({ path: { event_id: eventId } });
-		queryClient.invalidateQueries({
-			queryKey: getAllEventSignupsQueryKey({ path: { event_id: eventId } }),
-		});
 	}
 
 	function handleConfirmPlaces() {
