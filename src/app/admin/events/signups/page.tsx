@@ -9,6 +9,7 @@ import {
 	unconfirmEventUsersMutation,
 	confirmPlacesMutation,
 	getEventCsvOptions,
+	getSingleEventQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,7 +32,6 @@ import SignupEditForm from "./SignupEditForm";
 import SignupForm from "./SignupForm";
 import { useSearchParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { Edit } from "lucide-react";
 import type { EventSignupRead } from "@/api/types.gen";
 import {
 	AlertDialog,
@@ -51,7 +51,7 @@ import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 const columnHelper = createColumnHelper<EventSignupRead>();
 
 export default function AdminEventSignupsPage() {
-	const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation("admin");
 	const searchParams = useSearchParams();
 	const queryClient = useQueryClient();
 
@@ -168,6 +168,9 @@ export default function AdminEventSignupsPage() {
 			queryClient.invalidateQueries({
 				queryKey: getAllEventSignupsQueryKey({ path: { event_id: eventId } }),
 			});
+			queryClient.invalidateQueries({
+				queryKey: getSingleEventQueryKey({ path: { eventId: eventId } }),
+			});
 			toast.success(t("admin:event_signup.confirm_places_success"));
 		},
 		onError: (error) => {
@@ -270,17 +273,20 @@ export default function AdminEventSignupsPage() {
 	}
 
 	const columns = [
-		columnHelper.accessor((row) => row.user.id, {
-			id: "user_id",
-			header: t("admin:user-id"),
-			cell: (info) => info.getValue(),
-			size: 60,
+		columnHelper.accessor((row) => row.created_at, {
+			id: "created_at",
+			header: t("admin:event_signup.created_at"),
+			cell: (info) => {
+				const date = new Date(info.getValue());
+				return date.toLocaleString();
+			},
+			size: 160,
 		}),
 		columnHelper.accessor((row) => row.user.first_name, {
 			id: "first_name",
 			header: t("admin:first_name"),
 			cell: (info) => info.getValue() ?? "-",
-			size: 100,
+			size: 80,
 		}),
 		columnHelper.accessor((row) => row.user.last_name, {
 			id: "last_name",
@@ -307,22 +313,20 @@ export default function AdminEventSignupsPage() {
 			id: "group_name",
 			header: t("event_signup.group_name"),
 			cell: (info) => info.getValue() || "-",
-			size: 160,
-		}),
-		columnHelper.accessor((row) => row.drinkPackage, {
-			id: "drinkPackage",
-			header: t("event_signup.drink_package.title"),
-			cell: (info) => info.getValue(),
-			size: 120,
+			size: 100,
 		}),
 		columnHelper.accessor((row) => row.confirmed_status, {
 			id: "status",
 			header: t("event_signup.status"),
 			cell: (info) =>
 				info.getValue() ? (
-					<Badge variant="default">{t("event_signup.confirmed")}</Badge>
+					<Badge variant="default">
+						{t("admin:event_signup.will_have_spot")}
+					</Badge>
 				) : (
-					<Badge variant="secondary">{t("event_signup.pending")}</Badge>
+					<Badge variant="secondary">
+						{t("admin:event_signup.will_not_have_spot")}
+					</Badge>
 				),
 			size: 120,
 		}),
@@ -351,15 +355,15 @@ export default function AdminEventSignupsPage() {
 					}}
 				>
 					{row.original.confirmed_status
-						? t("admin:event_signup.unconfirm")
-						: t("admin:event_signup.confirm")}
+						? t("admin:event_signup.take_away_spot")
+						: t("admin:event_signup.give_spot")}
 				</Button>
 			),
 		},
 	];
 
 	const [sorting, setSorting] = useState<SortingState>([
-		{ id: "user_id", desc: false },
+		{ id: "created_at", desc: false },
 	]);
 
 	const table = useReactTable({
@@ -489,23 +493,30 @@ export default function AdminEventSignupsPage() {
 							</AlertDialogFooter>
 						</AlertDialogContent>
 					</AlertDialog>
-					<ConfirmDeleteDialog
-						open={confirmConfirmPlacesOpen}
-						onOpenChange={setConfirmConfirmPlacesOpen}
-						onConfirm={handleConfirmPlaces}
-						disabled={disableHandOut}
-						triggerText={t("admin:event_signup.confirm_places")}
-						title={t("admin:event_signup.confirm_places_title")}
-						description={t("admin:event_signup.confirm_places_desc")}
-						confirmText={t("admin:event_signup.confirm")}
-						confirmByTyping={true}
-						confirmByTypingText={t("admin:event_signup.confirm_places_input")}
-						confirmByTypingKey={t(
-							"admin:event_signup.confirm_places_input_key",
+					<div className="flex items-center gap-2">
+						<ConfirmDeleteDialog
+							open={confirmConfirmPlacesOpen}
+							onOpenChange={setConfirmConfirmPlacesOpen}
+							onConfirm={handleConfirmPlaces}
+							disabled={disableHandOut}
+							triggerText={t("admin:event_signup.confirm_places")}
+							title={t("admin:event_signup.confirm_places_title")}
+							description={t("admin:event_signup.confirm_places_desc")}
+							confirmText={t("admin:event_signup.confirm")}
+							confirmByTyping={true}
+							confirmByTypingText={t("admin:event_signup.confirm_places_input")}
+							confirmByTypingKey={t(
+								"admin:event_signup.confirm_places_input_key",
+							)}
+							cancelText={t("admin:cancel")}
+							showIcon={false}
+						/>
+						{event?.event_users_confirmed && (
+							<span className="text-xs text-muted-foreground">
+								{t("admin:event_signup.event_users_confirmed_description")}
+							</span>
 						)}
-						cancelText={t("admin:cancel")}
-						showIcon={false}
-					/>
+					</div>
 					<Button variant="outline" onClick={handleDownloadCsv}>
 						{t("admin:event_signup.download_csv")}
 					</Button>
