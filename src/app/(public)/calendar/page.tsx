@@ -4,6 +4,7 @@ import mh from "@/assets/mh.jpg";
 import TitleBanner from "@/components/TitleBanner";
 import { useTranslation } from "react-i18next";
 import MainPageCalendar from "@/components/main-page-calendar";
+import SubscribeInfo from "./subscribeInfo";
 
 export default function BigCalendar() {
 	const { t } = useTranslation();
@@ -23,6 +24,7 @@ export default function BigCalendar() {
 			<div className="md:hidden my-10 overflow-hidden h-[85vh]">
 				<MainPageCalendar mini={false} zoomWorkHours={true} isMobile={true} />
 			</div>
+			<SubscribeInfo />
 		</>
 	);
 }

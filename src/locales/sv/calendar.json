@@ -81,5 +81,31 @@
 			"title": "Picknick på månen",
 			"description": "Ta med filt! Smörgåsarna kommer sväva fritt och samtalet lär nå nya höjder."
 		}
+	},
+	"subscribe": {
+		"subscribe_title": "Prenumerera på kalendern",
+		"subscribe_description": "Lägg till F-sektionens event i din favoritkalender för att hålla dig uppdaterad!",
+		"subscription_url": "Prenumerationslänk",
+		"copy": "Kopiera länk",
+		"copy_webcal": "Kopiera Webcal-länk",
+		"copied": "Länk kopierad till urklipp!",
+		"copied_webcal": "Webcal-länk kopierad till urklipp!",
+		"copy_failed": "Kunde inte kopiera länken.",
+		"add_google": "Lägg till i Google Kalender",
+		"add_outlook": "Lägg till i Outlook",
+		"verify": "Verifiera flöde",
+		"verifying": "Verifierar...",
+		"verify_help": "Kontrollera om kalenderflödet är tillgängligt.",
+		"feed_ok": "Flödet är tillgängligt",
+		"feed_error": "Kunde inte nå flödet",
+		"last_checked": "Senast kontrollerad",
+		"how_to_add": "Så här lägger du till i din kalender",
+		"instruction_google": "Klicka på 'Lägg till i Google Kalender' och följ instruktionerna.",
+		"instruction_outlook": "Klicka på 'Lägg till i Outlook' och följ instruktionerna.",
+		"instruction_apple": "Kopiera Webcal-länken och lägg till den i din Apple Kalender.",
+		"troubleshoot_title": "Felsökning",
+		"troubleshoot_verify": "Klicka på verifieringsknappen för att kontrollera om flödet är tillgängligt. Om det fungerar, försök lägga till länken i din kalenderapp igen.",
+		"troubleshoot_click": "Om knappen för att kopiera länken eller lägga till kalendern automatiskt inte fungerar, försök kopiera länken manuellt.",
+		"troubleshoot_contact": "Kontakta spindelman@fsektionen.se om du fortfarande har problem eller om någon av snabblänkarna inte fungerar."
 	}
 }

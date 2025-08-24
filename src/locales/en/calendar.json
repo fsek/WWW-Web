@@ -81,5 +81,31 @@
 			"title": "Picnic on the moon",
 			"description": "The Moon – where the food is light (gravity, too!) and the company is truly out of this world."
 		}
+	},
+	"subscribe": {
+		"subscribe_title": "Subscribe to Calendar",
+		"subscribe_description": "Add the F-guild events to your favorite calendar app to stay up to date! The events are only available in Swedish for now.",
+		"subscription_url": "Subscription URL",
+		"copy": "Copy URL",
+		"copy_webcal": "Copy Webcal URL",
+		"copied": "URL copied to clipboard!",
+		"copied_webcal": "Webcal URL copied to clipboard!",
+		"copy_failed": "Failed to copy URL.",
+		"add_google": "Add to Google Calendar",
+		"add_outlook": "Add to Outlook",
+		"verify": "Verify Feed",
+		"verifying": "Verifying...",
+		"verify_help": "Check if the calendar feed is accessible.",
+		"feed_ok": "Feed is accessible",
+		"feed_error": "Could not access feed",
+		"last_checked": "Last checked",
+		"how_to_add": "How to add to your calendar",
+		"instruction_google": "Click 'Add to Google Calendar' and follow the instructions.",
+		"instruction_outlook": "Click 'Add to Outlook' and follow the instructions.",
+		"instruction_apple": "Copy the Webcal URL and add it to your Apple Calendar.",
+		"troubleshoot_title": "Troubleshooting",
+		"troubleshoot_verify": "Click the verify button to check if the feed is accessible. If it works, try adding the link to your calendar app again.",
+		"troubleshoot_click": "If clicking the buttons to copy the URL or adding the calendar automatically does not work, try copying the URL manually.",
+		"troubleshoot_contact": "Contact spindelman@fsektionen.se if you continue to have issues or if any of the quick links do not work."
 	}
 }
