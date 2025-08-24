@@ -55,7 +55,7 @@ function generateICS(events: CalendarEvent[]) {
 		"CALSCALE:GREGORIAN",
 		"METHOD:PUBLISH",
 		`X-WR-CALNAME:${calendarName}`,
-		"X-WR-CALDESC:Automatiskt uppdaterande ström av event (Swedish)",
+		"X-WR-CALDESC:(Swedish) Alla framtida event inom F-sektionen",
 		"X-WR-TIMEZONE:UTC",
 		"REFRESH-INTERVAL;VALUE=DURATION:PT1H", // Refresh every hour
 		"X-PUBLISHED-TTL:PT1H",
@@ -104,11 +104,16 @@ function formatDateOnly(date: string | Date) {
 
 function escapeICSText(text: string) {
 	if (!text) return "";
-	return text
-		.replace(/\\/g, "\\\\")
-		.replace(/;/g, "\\;")
-		.replace(/,/g, "\\,")
-		.replace(/\n/g, "\\n");
+	return (
+		text
+			// normalize all line breaks to \n first
+			.replace(/\r\n|\r|\n/g, "\n")
+			// then escape specials per RFC 5545 TEXT
+			.replace(/\\/g, "\\\\")
+			.replace(/;/g, "\\;")
+			.replace(/,/g, "\\,")
+			.replace(/\n/g, "\\n")
+	);
 }
 
 async function fetchLatestEvents() {
