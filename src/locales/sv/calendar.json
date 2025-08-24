@@ -84,7 +84,7 @@
 	},
 	"subscribe": {
 		"subscribe_title": "Prenumerera på kalendern",
-		"subscribe_description": "Lägg till denna kalender i din favoritkalender för att hålla dig uppdaterad om alla evenemang.",
+		"subscribe_description": "Lägg till F-sektionens event i din favoritkalender för att hålla dig uppdaterad!",
 		"subscription_url": "Prenumerationslänk",
 		"copy": "Kopiera länk",
 		"copy_webcal": "Kopiera Webcal-länk",
@@ -105,7 +105,7 @@
 		"instruction_apple": "Kopiera Webcal-länken och lägg till den i din Apple Kalender.",
 		"troubleshoot_title": "Felsökning",
 		"troubleshoot_verify": "Klicka på verifieringsknappen för att kontrollera om flödet är tillgängligt. Om det fungerar, försök lägga till länken i din kalenderapp igen.",
-		"troubleshoot_click": "Om knappen inte fungerar, försök kopiera länken manuellt.",
+		"troubleshoot_click": "Om knappen för att kopiera länken eller lägga till kalendern automatiskt inte fungerar, försök kopiera länken manuellt.",
 		"troubleshoot_contact": "Kontakta spindelman@fsektionen.se om du fortfarande har problem eller om någon av snabblänkarna inte fungerar."
 	}
 }

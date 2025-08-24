@@ -84,7 +84,7 @@
 	},
 	"subscribe": {
 		"subscribe_title": "Subscribe to Calendar",
-		"subscribe_description": "Add this calendar to your favorite calendar app to stay up to date with all events.",
+		"subscribe_description": "Add the F-guild events to your favorite calendar app to stay up to date! The events are only available in Swedish for now.",
 		"subscription_url": "Subscription URL",
 		"copy": "Copy URL",
 		"copy_webcal": "Copy Webcal URL",
@@ -105,7 +105,7 @@
 		"instruction_apple": "Copy the Webcal URL and add it to your Apple Calendar.",
 		"troubleshoot_title": "Troubleshooting",
 		"troubleshoot_verify": "Click the verify button to check if the feed is accessible. If it works, try adding the link to your calendar app again.",
-		"troubleshoot_click": "If clicking the button does not work, try copying the URL manually.",
+		"troubleshoot_click": "If clicking the buttons to copy the URL or adding the calendar automatically does not work, try copying the URL manually.",
 		"troubleshoot_contact": "Contact spindelman@fsektionen.se if you continue to have issues or if any of the quick links do not work."
 	}
 }
