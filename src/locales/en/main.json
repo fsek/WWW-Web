@@ -3,7 +3,7 @@
 	"title": "Main Page",
 	"calendar": "Calendar",
 	"welcome": "Welcome to the new F-Guild website!",
-	"welcomeText": "We are currently in a transition period to our new website. During the summer we will continuously improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the backend, the new and old systems are separated: if you have old car bookings, room bookings, settings, accounts, etc. they will not be available through the new web and you will have to make new ones. Some things e.g. the image gallery, are transferred but may not have the GUI available yet. NOTE! We plan to get rid of the old website in the near future (preferably before the introduction period), so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
+	"welcomeText": "We are currently in a transition period to our new website. We are working to continuously improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the database, the new and old systems are separated: if you have old accounts, room bookings, settings, car bookings, etc. they will not be available through the new web and you will have to make new ones. NOTE! We plan to get rid of the old website in the near future, so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
 	"oldWebsiteButton": "Take me back to the old site...",
 	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the head of your council (council boss).",
 	"adminButton": "Admin Page",
@@ -20,23 +20,19 @@
 		"self": "Questions answered",
 		"q1": {
 			"question": "Can I log in with my old account?",
-			"answer": "No, since we switched to a new backend you need to create a new account. You can do that at fsektionen.se/register. There are many things you won't have access to until you create an account, verify your email, and become verified as a member."
+			"answer": "No, since we switched to a new database you need to create a new account. You can do that at fsektionen.se/register. There are many things you won't have access to until you create an account, verify your email, and become verified as a member."
 		},
 		"q2": {
 			"question": "How do I become verified as a member?",
-			"answer": "Create an account, verify your email, and add your Stil-ID (hi6122al-s) in the user settings (check the top right corner). After this, you will have to wait for the webmasters to check if you are a member or a bot (like a certain Anna I know). Membership verification is therefore automatic for you, but if you feel it takes too long you can contact your council boss."
+			"answer": "Create an account, verify your email, and add your Stil-ID (hi6122al-s) in the user settings (check the top right corner). After this, you must wait for us to verify that you are indeed a member. At the start of the semester, this may take longer than usual. If you feel that it is taking too long, you can contact your council boss or a mentor/föset during the introduction period."
 		},
 		"q3": {
-			"question": "Noooo the app doesn't work anymore!!! What am I supposed to do with my life if I can't play moose game!??!?",
-			"answer": "We will try to work on a new release of the app as soon as we can. Pretty much everything you can do there you can do on the new or old website. If you have problems, contact the webmasters."
+			"question": "What do you still have left to move over?",
+			"answer": "Most things are now available. To read the governing documents in their entirety (though they are available in the document archive if you know their names), use the proposition machine, and elections and voting in general, you can use the old website (but we will try to finish the election pages before the elections close). We are working as diligently as possible to ensure that everything is available on the new website. 🧡"
 		},
 		"q4": {
-			"question": "What do you still have left to move over?",
-			"answer": "Quite a lot (the website is enormous!). To view images, read the governing documents in their entirety (though they are available in the document archive if you know their names), use the proposition machine, and elections and voting in general, you can use the old website. We are working as diligently as possible to ensure that everything is available on the new website. 🧡"
-		},
-		"q5": {
 			"question": "Help! I don't have any of my old admin rights!",
-			"answer": "Please wait or contact your council boss. Not all admin pages are ready, but we will be able to give you access to the ones that are as soon as possible."
+			"answer": "Please wait or contact your council boss and ask them to give you the appropriate permissions."
 		}
 	},
 	"next": "Next",
