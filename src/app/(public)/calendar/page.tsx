@@ -16,7 +16,7 @@ export default function BigCalendar() {
 				className="relative h-[30vh] bg-cover bg-center mt-4"
 			/>
 			{/* Desktop */}
-			<div className="max-md:hidden mx-20 my-10 h-[85vh]">
+			<div className="max-md:hidden lg:mx-30 my-10 h-screen">
 				<MainPageCalendar mini={false} zoomWorkHours={true} />
 			</div>
 			{/* Mobile */}
