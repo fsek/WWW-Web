@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import stripHtmlLinebreaks from "@/help_functions/stripHtmlLinebreaks";
 
 interface EventExtendedProps {
 	description?: string;
@@ -185,7 +186,7 @@ async function fetchLatestEvents() {
 					end: event.ends_at,
 					allDay: event.all_day,
 					extendedProps: {
-						description: event.description_sv,
+						description: stripHtmlLinebreaks(event.description_sv),
 						location: event.location,
 						dress_code: event.dress_code,
 						dot: event.dot,
