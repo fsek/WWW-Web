@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import type { EventCreate } from "@/api/types.gen";
 import EventFormFields from "./EventFormFields";
+import addHtmlLinebreaks from "@/help_functions/addHtmlLinebreaks";
 
 const eventsSchema = z
 	.object({
@@ -136,8 +137,8 @@ export default function EventsForm() {
 				ends_at: values.ends_at,
 				signup_start: values.signup_start,
 				signup_end: values.signup_end,
-				description_sv: values.description_sv,
-				description_en: values.description_en,
+				description_sv: addHtmlLinebreaks(values.description_sv),
+				description_en: addHtmlLinebreaks(values.description_en),
 				location: values.location,
 				max_event_users: values.max_event_users,
 				priorities: values.priorities as EventCreate["priorities"],
