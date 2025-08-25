@@ -381,15 +381,47 @@ export default function Page() {
 										{t("admin:events.priorities")}
 									</p>
 									<div className="space-y-1">
-										{data.priorities.map((priority) => (
-											<div
-												key={`${priority.priority}-${priority.event_id}`}
-												className="text-sm"
-											>
-												{priority.priority.charAt(0).toUpperCase() +
-													priority.priority.slice(1)}
-											</div>
-										))}
+										{(() => {
+											return (
+												<div className="flex flex-wrap items-center gap-2">
+													{data.priorities.map((p, idx) => {
+														const raw = p.priority;
+														let label = raw;
+														let isSpecial = false;
+														if (i18n.language === "en") {
+															switch (raw) {
+																case "Nolla":
+																	label = "Mentee (new student)";
+																	isSpecial = true;
+																	break;
+																case "Gruppfadder":
+																	label = "Mentor (group)";
+																	isSpecial = true;
+																	break;
+																case "Uppdragsfadder":
+																	label = "Mentor (mission)";
+																	isSpecial = true;
+																	break;
+																case "Fotograf":
+																	label = "Photographer";
+																	isSpecial = true;
+																	break;
+																default:
+																	break;
+															}
+														}
+														return (
+															<span
+																key={raw}
+																className={isSpecial ? "font-semibold" : ""}
+															>
+																{`${label}${idx < data.priorities.length - 1 ? ", " : ""}`}
+															</span>
+														);
+													})}
+												</div>
+											);
+										})()}
 									</div>
 								</div>
 							)}
