@@ -3,6 +3,11 @@ import { type NextRequest, NextResponse } from "next/server";
 interface EventExtendedProps {
 	description?: string;
 	location?: string;
+	dress_code?: string;
+	dot?: string;
+	alcohol_event_type?: string;
+	is_nollning_event?: boolean;
+	can_signup?: boolean;
 }
 
 interface CalendarEvent {
@@ -76,13 +81,53 @@ function generateICS(events: CalendarEvent[]) {
 			dtEnd = `DTEND:${formatICSDate(endDate)}`;
 		}
 
+		const descriptionParts: string[] = [];
+		if (event.extendedProps?.description) {
+			descriptionParts.push(event.extendedProps.description);
+			descriptionParts.push("---");
+		}
+		if (event.extendedProps?.dot) {
+			const translated_dot = (
+				{
+					None: "Inga",
+					Single: "En",
+					Double: "Två",
+				} as Record<string, string>
+			)[event.extendedProps.dot];
+			descriptionParts.push(`Antal prickar: ${translated_dot}`);
+		}
+		if (event.extendedProps?.alcohol_event_type) {
+			let translated_alcohol: string;
+			if (
+				event.extendedProps?.alcohol_event_type === "None" &&
+				event.extendedProps?.is_nollning_event
+			) {
+				translated_alcohol = "Alkohol förbjudet!";
+			} else {
+				const alcoholMap: Record<string, string> = {
+					Alcohol: "Alkohol tillåten",
+					"Alcohol-Served": "Alkohol serveras",
+					None: "Ingen",
+				};
+				translated_alcohol =
+					alcoholMap[event.extendedProps?.alcohol_event_type ?? "None"] ?? "";
+			}
+			descriptionParts.push(`Alkoholpolicy: ${translated_alcohol}`);
+		}
+		if (event.extendedProps?.can_signup) {
+			descriptionParts.push("Anmälan krävs.");
+		}
+		const description = descriptionParts.join("\n");
+
 		icsContent.push(
 			"BEGIN:VEVENT",
-			`UID:event-${event.id}-sv@fsektionen.se`,
+			`UID:event-${event.id}@fsektionen.se`,
 			dtStart,
 			dtEnd,
+			`URL:${escapeICSText(`https://fsektionen.se/calendar/event-details?id=${event.id}`)}`,
+			`X-MICROSOFT-CDO-ALLDAYEVENT:${event.allDay ? "TRUE" : "FALSE"}`, // Outlook wants to be different :)
 			`SUMMARY:${escapeICSText(event.title)}`,
-			`DESCRIPTION:${escapeICSText(event.extendedProps?.description || "")}`,
+			`DESCRIPTION:${escapeICSText(description)}`,
 			`LOCATION:${escapeICSText(event.extendedProps?.location || "")}`,
 			`DTSTAMP:${formatICSDate(now)}`,
 		);
@@ -142,6 +187,11 @@ async function fetchLatestEvents() {
 					extendedProps: {
 						description: event.description_sv,
 						location: event.location,
+						dress_code: event.dress_code,
+						dot: event.dot,
+						alcohol_event_type: event.alcohol_event_type,
+						is_nollning_event: event.is_nollning_event,
+						can_signup: event.can_signup,
 					},
 				}))
 		: [];
