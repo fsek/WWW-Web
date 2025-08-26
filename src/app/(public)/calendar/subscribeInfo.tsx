@@ -61,7 +61,7 @@ const SubscribeInfo = () => {
 		return {
 			google: `https://calendar.google.com/calendar/r?cid=${webcal_enc}`,
 			outlook: `https://outlook.live.com/calendar/0/addcalendar?url=${webcal_enc}`,
-			appleWebcal: webcal_enc,
+			appleWebcal: url.replace(/^https?:\/\//, "webcal://"),
 		};
 	};
 
