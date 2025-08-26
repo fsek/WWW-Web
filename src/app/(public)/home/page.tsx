@@ -114,6 +114,7 @@ export default function MainLanding() {
 						text={t("main:calendar")}
 						className="text-center text-2xl font-bold mt-4 mb-2"
 					/>
+					<div className="text-left text-lg mb-8">{t("main:calendarText")}</div>
 					{/* Desktop version */}
 					<div className="max-md:hidden my-10 mx-[10%] overflow-hidden h-[35vh]">
 						<MainPageCalendar mini={true} />

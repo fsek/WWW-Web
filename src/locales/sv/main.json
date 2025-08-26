@@ -2,6 +2,7 @@
 	"fsek": "F-sektionen",
 	"title": "Huvudsida",
 	"calendar": "Kalender",
+	"calendarText": "Här kan du se sektionens kalender med kommande evenemang. Klicka för att gå till stora kalendersidan och scrolla sedan ner för information om hur du lägger till detta i din egen kalenderapp.",
 	"welcome": "Välkommen till nya hemsidan för F-sektionen!",
 	"welcomeText": "Just nu är vi i en övergångsperiod till vår nya hemsida. Vi jobbar med att kontinuerligt förbättra design och funktionalitet, och lägga till saker som just nu saknas gentemot den gamla hemsidan. Den går förresten fortfarande att använda på old.fsektionen.se. Eftersom vi dessutom har bytt ut servern och databasen är det nya och gamla systemet separerade: om du har gamla konton, lokalbokningar, inställningar, bilbokningar etc. så kommer de inte vara tillgängliga genom den nya webben och du kommer att behöva göra nya. OBS! Vi planerar att göra oss av med den gamla hemsidan helt inom en snar framtid, så försök att i största mån använda den nya. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
 	"oldWebsiteButton": "Det var bättre förr...",
