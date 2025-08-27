@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import type { EventRead } from "@/api/types.gen";
 import SignupCard from "./SignupCard";
+import stripHtmlLinebreaks from "@/help_functions/stripHtmlLinebreaks";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
@@ -119,9 +120,11 @@ export default function Page() {
 									{t("admin:description")}
 								</p>
 								<p className="text-muted-foreground whitespace-pre-wrap">
-									{i18n.language === "en"
-										? data.description_en
-										: data.description_sv}
+									{stripHtmlLinebreaks(
+										i18n.language === "en"
+											? data.description_en
+											: data.description_sv,
+									)}
 								</p>
 							</div>
 
