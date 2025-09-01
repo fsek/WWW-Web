@@ -88,7 +88,7 @@ export default function MainLanding() {
 									<AccordionTrigger>
 										{(value as { question: string }).question}
 									</AccordionTrigger>
-									<AccordionContent>
+									<AccordionContent className="whitespace-pre-wrap">
 										{(value as { answer: string }).answer}
 									</AccordionContent>
 								</AccordionItem>
