@@ -22,6 +22,7 @@ import {
 	ListMusic,
 	Music3,
 	Images,
+	Gavel,
 } from "lucide-react";
 
 import {
@@ -101,6 +102,12 @@ const groups: AdminGroup[] = [
 				url: "/admin/cafe-shifts",
 				permissions: [[action.MANAGE, target.CAFE]],
 				icon: ChefHat,
+			},
+			{
+				title: "admin:elections.self",
+				url: "/admin/elections",
+				permissions: [[action.MANAGE, target.ELECTION]],
+				icon: Gavel,
 			},
 		],
 	},
