@@ -16,10 +16,18 @@ import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 export default function GalleryIndexPage() {
 	const { i18n, t } = useTranslation();
-	const { data: albums, isLoading } = useQuery({
+	const { data: unsortedAlbums, isLoading } = useQuery({
 		...getAlbumsOptions(),
 		refetchOnWindowFocus: false,
 	});
+
+	const albums = useMemo(() => {
+		return unsortedAlbums?.sort((a, b) =>
+			String(b.date).localeCompare(String(a.date)),
+		);
+	}, [unsortedAlbums]);
+
+	console.log(unsortedAlbums);
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const pathname = usePathname();
@@ -135,11 +143,11 @@ export default function GalleryIndexPage() {
 										</div>
 										{bgImageId ? (
 											<div className="text-sm text-white">
-												{album.year} • {album.location}
+												{String(album.date).substring(0, 10)} • {album.location}
 											</div>
 										) : (
 											<div className="text-sm text-card-foreground">
-												{album.year} • {album.location}
+												{String(album.date).substring(0, 10)} • {album.location}
 											</div>
 										)}
 									</div>
