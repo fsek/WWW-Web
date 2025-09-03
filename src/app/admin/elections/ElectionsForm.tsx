@@ -23,13 +23,23 @@ import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
 import type { ElectionCreate } from "@/api";
+import AdminChooseMultPosts from "@/widgets/AdminChooseMultPosts";
+import { AdminChooseDates } from "@/widgets/AdminChooseDates";
+import { ClearableAdminChooseDates } from "@/widgets/ClearableAdminChooseDates";
 
 const electionSchema = z.object({
-	title: z.string().min(2),
-	start_time: z.string().min(1), // datetime-local string
-	end_time: z.string().min(1),
-	description: z.string().nullable().optional(),
+	title_sv: z.string().min(1),
+	title_en: z.string().min(1),
+	start_time: z.date(), // datetime-local string
+	end_time_guild_meeting: z.date().optional(),
+	end_time_middle_meeting: z.date().optional(),
+	end_time_all: z.date(),
+	description_sv: z.string().nullable().optional(),
+	description_en: z.string().nullable().optional(),
+	post_ids: z.array(z.number()).optional(),
 });
+
+const MS_ONE_DAY = 86400000;
 
 export default function ElectionsForm() {
 	const [open, setOpen] = useState(false);
@@ -39,10 +49,15 @@ export default function ElectionsForm() {
 	const electionForm = useForm<z.infer<typeof electionSchema>>({
 		resolver: zodResolver(electionSchema),
 		defaultValues: {
-			title: "",
-			start_time: "",
-			end_time: "",
-			description: "",
+			title_sv: "",
+			title_en: "",
+			start_time: new Date(),
+			end_time_guild_meeting: new Date(Date.now() + MS_ONE_DAY * 7),
+			end_time_middle_meeting: new Date(Date.now() + MS_ONE_DAY * 8),
+			end_time_all: new Date(Date.now() + MS_ONE_DAY * 10),
+			description_sv: "",
+			description_en: "",
+			post_ids: [],
 		},
 	});
 
@@ -70,10 +85,15 @@ export default function ElectionsForm() {
 	function onSubmit(values: z.infer<typeof electionSchema>) {
 		setSubmitEnabled(false);
 		const body: ElectionCreate = {
-			title: values.title,
+			title_sv: values.title_sv,
+			title_en: values.title_en,
 			start_time: new Date(values.start_time),
-			end_time: new Date(values.end_time),
-			description: values.description ?? "",
+			end_time_guild_meeting: values.end_time_guild_meeting ? new Date(values.end_time_guild_meeting) : null,
+			end_time_middle_meeting: values.end_time_middle_meeting ? new Date(values.end_time_middle_meeting) : null,
+			end_time_all: new Date(values.end_time_all),
+			description_sv: values.description_sv ?? "",
+			description_en: values.description_en ?? "",
+			post_ids: values.post_ids ?? [],
 		};
 		createElection.mutate({ body });
 	}
@@ -104,10 +124,10 @@ export default function ElectionsForm() {
 						>
 							<FormField
 								control={electionForm.control}
-								name="title"
+								name="title_sv"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("elections.title")}</FormLabel>
+										<FormLabel>{t("elections.title_sv")}</FormLabel>
 										<FormControl>
 											<Input
 												placeholder={t("elections.title_placeholder")}
@@ -117,6 +137,23 @@ export default function ElectionsForm() {
 									</FormItem>
 								)}
 							/>
+
+							<FormField
+								control={electionForm.control}
+								name="title_en"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("elections.title_en")}</FormLabel>
+										<FormControl>
+											<Input
+												placeholder={t("elections.title_placeholder")}
+												{...field}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
 							<FormField
 								control={electionForm.control}
 								name="start_time"
@@ -124,10 +161,9 @@ export default function ElectionsForm() {
 									<FormItem>
 										<FormLabel>{t("elections.start_time")}</FormLabel>
 										<FormControl>
-											<input
-												type="datetime-local"
-												{...field}
-												className="w-full rounded border px-2 py-1"
+											<AdminChooseDates
+												value={field.value as Date}
+												onChange={field.onChange}
 											/>
 										</FormControl>
 									</FormItem>
@@ -135,15 +171,14 @@ export default function ElectionsForm() {
 							/>
 							<FormField
 								control={electionForm.control}
-								name="end_time"
+								name="end_time_guild_meeting"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("elections.end_time")}</FormLabel>
+										<FormLabel>{t("elections.end_time_guild_meeting")}</FormLabel>
 										<FormControl>
-											<input
-												type="datetime-local"
-												{...field}
-												className="w-full rounded border px-2 py-1"
+											<ClearableAdminChooseDates
+												value={field.value as Date | undefined}
+												onChange={field.onChange}
 											/>
 										</FormControl>
 									</FormItem>
@@ -151,16 +186,77 @@ export default function ElectionsForm() {
 							/>
 							<FormField
 								control={electionForm.control}
-								name="description"
+								name="end_time_middle_meeting"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("elections.description")}</FormLabel>
+										<FormLabel>{t("elections.end_time_middle_meeting")}</FormLabel>
+										<FormControl>
+											<ClearableAdminChooseDates
+												value={field.value as Date | undefined}
+												onChange={field.onChange}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={electionForm.control}
+								name="end_time_all"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("elections.end_time_all")}</FormLabel>
+										<FormControl>
+											<AdminChooseDates
+												value={field.value as Date}
+												onChange={field.onChange}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={electionForm.control}
+								name="description_sv"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("elections.description_sv")}</FormLabel>
 										<FormControl>
 											<Textarea
-												placeholder={t("elections.description", "Description")}
+												placeholder={t("elections.description")}
 												{...field}
 												value={field.value ?? ""}
 											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={electionForm.control}
+								name="description_en"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("elections.description_en")}</FormLabel>
+										<FormControl>
+											<Textarea
+												placeholder={t("elections.description")}
+												{...field}
+												value={field.value ?? ""}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={electionForm.control}
+								name="post_ids"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("elections.post_ids")}</FormLabel>
+										<FormControl>
+								<AdminChooseMultPosts
+									value={field.value ?? []}
+									onChange={field.onChange}
+								/>
 										</FormControl>
 									</FormItem>
 								)}

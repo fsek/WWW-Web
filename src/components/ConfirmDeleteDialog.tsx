@@ -78,7 +78,7 @@ export function ConfirmDeleteDialog({
 					{children ?? description ?? t("admin:remove_confirm_text")}
 					{confirmByTyping && (
 						<div className="mt-4 flex flex-col gap-2">
-							<span>
+							<span className="select-none">
 								{confirmByTypingText ??
 									t("admin:remove_confirm_by_typing", {
 										key: confirmByTypingKey,
