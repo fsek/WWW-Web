@@ -18,7 +18,7 @@ import {
 	getAllElectionsQueryKey,
 	updateElectionMutation,
 } from "@/api/@tanstack/react-query.gen";
-import type { ElectionRead, ElectionCreate } from "@/api";
+import type { ElectionRead, ElectionUpdate } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -28,18 +28,18 @@ import { Save } from "lucide-react";
 import AdminChooseMultPosts from "@/widgets/AdminChooseMultPosts";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { ClearableAdminChooseDates } from "@/widgets/ClearableAdminChooseDates";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import getErrorMessage from "@/help_functions/getErrorMessage";
 
 const electionEditSchema = z.object({
 	id: z.number(),
 	title_sv: z.string().min(1),
 	title_en: z.string().min(1),
 	start_time: z.date(),
-	end_time_guild_meeting: z.date().optional(),
-	end_time_middle_meeting: z.date().optional(),
-	end_time_all: z.date(),
 	description_sv: z.string().nullable().optional(),
 	description_en: z.string().nullable().optional(),
-	post_ids: z.array(z.number()).optional(),
+	visible: z.boolean().optional(),
 });
 
 type ElectionEditFormType = z.infer<typeof electionEditSchema>;
@@ -55,8 +55,6 @@ function toDateOrUndefined(d?: string | Date | null) {
 	return typeof d === "string" ? new Date(d) : d;
 }
 
-const MS_ONE_DAY = 86400000;
-
 export default function ElectionsEditForm({
 	open,
 	onClose,
@@ -70,12 +68,9 @@ export default function ElectionsEditForm({
 			title_sv: "",
 			title_en: "",
 			start_time: new Date(),
-			end_time_guild_meeting: undefined,
-			end_time_middle_meeting: undefined,
-			end_time_all: new Date(Date.now() + MS_ONE_DAY * 10), // 10 days
 			description_sv: "",
 			description_en: "",
-			post_ids: [],
+			visible: true,
 		},
 	});
 
@@ -85,13 +80,11 @@ export default function ElectionsEditForm({
 				id: selectedElection.election_id,
 				title_sv: selectedElection.title_sv ?? "",
 				title_en: selectedElection.title_en ?? "",
-				start_time: toDateOrUndefined(selectedElection.start_time) ?? new Date(),
-				end_time_guild_meeting: toDateOrUndefined(selectedElection.end_time_guild_meeting),
-				end_time_middle_meeting: toDateOrUndefined(selectedElection.end_time_middle_meeting),
-				end_time_all: toDateOrUndefined(selectedElection.end_time_all),
+				start_time:
+					toDateOrUndefined(selectedElection.start_time) ?? new Date(),
 				description_sv: selectedElection.description_sv ?? "",
 				description_en: selectedElection.description_en ?? "",
-				post_ids: selectedElection.posts.map((post) => post.id) ?? [],
+				visible: selectedElection.visible ?? false,
 			});
 		}
 	}, [selectedElection, form, open]);
@@ -106,11 +99,7 @@ export default function ElectionsEditForm({
 			toast.success(t("elections.edit_success"));
 		},
 		onError: (error) => {
-			toast.error(
-				typeof error?.detail === "string"
-					? error.detail
-					: t("elections.edit_error"),
-			);
+			toast.error(`${t("elections.edit_error")} ${getErrorMessage(error, t)}`);
 			onClose();
 		},
 	});
@@ -124,25 +113,20 @@ export default function ElectionsEditForm({
 		},
 		onError: (error) => {
 			toast.error(
-				typeof error?.detail === "string"
-					? error.detail
-					: t("elections.remove_error"),
+				`${t("elections.remove_error")} ${getErrorMessage(error, t)}`,
 			);
 			onClose();
 		},
 	});
 
 	function handleFormSubmit(values: ElectionEditFormType) {
-		const updatedElection: ElectionCreate = {
+		const updatedElection: ElectionUpdate = {
 			title_sv: values.title_sv,
 			title_en: values.title_en,
 			start_time: new Date(values.start_time),
-			end_time_guild_meeting: values.end_time_guild_meeting ? new Date(values.end_time_guild_meeting) : null,
-			end_time_middle_meeting: values.end_time_middle_meeting ? new Date(values.end_time_middle_meeting) : null,
-			end_time_all: new Date(values.end_time_all),
 			description_sv: values.description_sv ?? "",
 			description_en: values.description_en ?? "",
-			post_ids: values.post_ids ?? [],
+			visible: values.visible ?? false,
 		};
 
 		updateElection.mutate(
@@ -238,51 +222,24 @@ export default function ElectionsEditForm({
 								</FormItem>
 							)}
 						/>
-						{/* end_time_guild_meeting */}
+						{/* visible */}
 						<FormField
 							control={form.control}
-							name="end_time_guild_meeting"
+							name="visible"
 							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("elections.end_time_guild_meeting")}</FormLabel>
-									<FormControl>
-										<ClearableAdminChooseDates
-											value={field.value as Date | undefined}
-											onChange={field.onChange}
+								<FormItem className="text-center justify-center">
+									<Label className="hover:bg-accent/50 flex gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
+										<Checkbox
+											checked={field.value}
+											onCheckedChange={field.onChange}
+											className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
 										/>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-						{/* end_time_middle_meeting */}
-						<FormField
-							control={form.control}
-							name="end_time_middle_meeting"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("elections.end_time_middle_meeting")}</FormLabel>
-									<FormControl>
-										<ClearableAdminChooseDates
-											value={field.value as Date | undefined}
-											onChange={field.onChange}
-										/>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-						{/* end_time_all */}
-						<FormField
-							control={form.control}
-							name="end_time_all"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("elections.end_time_all")}</FormLabel>
-									<FormControl>
-										<AdminChooseDates
-											value={field.value as Date}
-											onChange={field.onChange}
-										/>
-									</FormControl>
+										<div className="grid gap-1.5 font-normal">
+											<p className="text-sm leading-none font-medium">
+												{t("admin:elections.visible_explanation")}
+											</p>
+										</div>
+									</Label>
 								</FormItem>
 							)}
 						/>
@@ -315,22 +272,6 @@ export default function ElectionsEditForm({
 											placeholder={t("elections.description")}
 											{...field}
 											value={field.value ?? ""}
-										/>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-						{/* post_ids */}
-						<FormField
-							control={form.control}
-							name="post_ids"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("elections.post_ids")}</FormLabel>
-									<FormControl>
-										<AdminChooseMultPosts
-											value={field.value ?? []}
-											onChange={field.onChange}
 										/>
 									</FormControl>
 								</FormItem>

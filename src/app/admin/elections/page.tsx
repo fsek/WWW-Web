@@ -14,7 +14,7 @@ import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import formatTime from "@/help_functions/timeFormater";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { List } from "lucide-react";
+import { List, Eye, EyeOff } from "lucide-react";
 
 export default function Elections() {
 	const { t } = useTranslation("admin");
@@ -29,6 +29,21 @@ export default function Elections() {
 			header: t("elections.title_sv"),
 			cell: (info) => info.getValue() ?? "",
 		}),
+		columnHelper.accessor("visible", {
+			header: t("elections.visible"),
+			cell: (info) =>
+				info.getValue() ? (
+					<span className="flex items-center gap-1">
+						<Eye className="w-4 h-4 text-green-600" />
+						{t("yes")}
+					</span>
+				) : (
+					<span className="flex items-center gap-1">
+						<EyeOff className="w-4 h-4 text-red-600" />
+						{t("no")}
+					</span>
+				),
+		}),
 		columnHelper.accessor("start_time", {
 			header: t("elections.start_time"),
 			cell: (info) => {
@@ -36,37 +51,67 @@ export default function Elections() {
 				return value ? formatTime(value) : "-";
 			},
 		}),
-		columnHelper.accessor("end_time_guild_meeting", {
-			header: t("elections.end_guild_meeting"),
-			cell: (info) => {
-				const value = info.getValue();
-				return value ? formatTime(value) : "-";
+		columnHelper.accessor(
+			(row) => {
+				if (row.sub_elections) {
+					const min_time = Math.min(
+						...row.sub_elections.map((sub) =>
+							sub.end_time
+								? new Date(sub.end_time).getTime()
+								: Number.POSITIVE_INFINITY,
+						),
+					);
+					if (min_time !== Number.POSITIVE_INFINITY) {
+						return formatTime(new Date(min_time).toISOString());
+					}
+					return "-";
+				}
+				return 0;
 			},
-		}),
-		columnHelper.accessor("end_time_middle_meeting", {
-			header: t("elections.end_middle_meeting"),
-			cell: (info) => {
-				const value = info.getValue();
-				return value ? formatTime(value) : "-";
+			{
+				id: "earliest_end_time",
+				header: t("elections.earliest_end_time"),
+				cell: (info) => info.getValue(),
 			},
+		),
+		columnHelper.accessor("sub_elections", {
+			header: t("elections.sub_elections"),
+			cell: (info) => info.getValue()?.length ?? 0,
 		}),
-		columnHelper.accessor("end_time_all", {
-			header: t("elections.end_all"),
-			cell: (info) => {
-				const value = info.getValue();
-				return value ? formatTime(value) : "-";
+		columnHelper.accessor(
+			(row) => {
+				if (row.sub_elections) {
+					const num_posts = row.sub_elections.reduce(
+						(acc, sub) => acc + (sub.posts ? sub.posts.length : 0),
+						0,
+					);
+					return num_posts;
+				}
+				return 0;
 			},
-		}),
-		columnHelper.accessor((row) => row.posts?.length ?? 0, {
-			id: "posts_count",
-			header: t("elections.posts_count"),
-			cell: (info) => info.getValue(),
-		}),
-		columnHelper.accessor((row) => row.candidates?.length ?? 0, {
-			id: "candidates_count",
-			header: t("elections.candidates_count"),
-			cell: (info) => info.getValue(),
-		}),
+			{
+				id: "posts_count",
+				header: t("elections.sub_posts_count"),
+				cell: (info) => info.getValue(),
+			},
+		),
+		columnHelper.accessor(
+			(row) => {
+				if (row.sub_elections) {
+					const num_candidates = row.sub_elections.reduce(
+						(acc, sub) => acc + (sub.candidates ? sub.candidates.length : 0),
+						0,
+					);
+					return num_candidates;
+				}
+				return 0;
+			},
+			{
+				id: "candidates_count",
+				header: t("elections.sub_candidates_count"),
+				cell: (info) => info.getValue(),
+			},
+		),
 		columnHelper.display({
 			id: "actions",
 			header: t("elections.actions"),
@@ -76,7 +121,7 @@ export default function Elections() {
 						variant="outline"
 						onClick={(e) => {
 							e.stopPropagation();
-							router.push(`/elections/${info.row.original.election_id}`);
+							router.push(`/admin/elections/${info.row.original.election_id}`);
 						}}
 					>
 						<List />

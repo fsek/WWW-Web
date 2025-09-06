@@ -23,23 +23,19 @@ import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
 import type { ElectionCreate } from "@/api";
-import AdminChooseMultPosts from "@/widgets/AdminChooseMultPosts";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
-import { ClearableAdminChooseDates } from "@/widgets/ClearableAdminChooseDates";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import getErrorMessage from "@/help_functions/getErrorMessage";
 
 const electionSchema = z.object({
 	title_sv: z.string().min(1),
 	title_en: z.string().min(1),
-	start_time: z.date(), // datetime-local string
-	end_time_guild_meeting: z.date().optional(),
-	end_time_middle_meeting: z.date().optional(),
-	end_time_all: z.date(),
+	start_time: z.date(),
 	description_sv: z.string().nullable().optional(),
 	description_en: z.string().nullable().optional(),
-	post_ids: z.array(z.number()).optional(),
+	visible: z.boolean().optional(),
 });
-
-const MS_ONE_DAY = 86400000;
 
 export default function ElectionsForm() {
 	const [open, setOpen] = useState(false);
@@ -52,12 +48,9 @@ export default function ElectionsForm() {
 			title_sv: "",
 			title_en: "",
 			start_time: new Date(),
-			end_time_guild_meeting: new Date(Date.now() + MS_ONE_DAY * 7),
-			end_time_middle_meeting: new Date(Date.now() + MS_ONE_DAY * 8),
-			end_time_all: new Date(Date.now() + MS_ONE_DAY * 10),
 			description_sv: "",
 			description_en: "",
-			post_ids: [],
+			visible: true,
 		},
 	});
 
@@ -73,9 +66,7 @@ export default function ElectionsForm() {
 		},
 		onError: (error) => {
 			toast.error(
-				typeof error?.detail === "string"
-					? error.detail
-					: t("elections.create_error"),
+				`${t("elections.create_error")} ${getErrorMessage(error, t)}`,
 			);
 			setOpen(false);
 			setSubmitEnabled(true);
@@ -88,12 +79,9 @@ export default function ElectionsForm() {
 			title_sv: values.title_sv,
 			title_en: values.title_en,
 			start_time: new Date(values.start_time),
-			end_time_guild_meeting: values.end_time_guild_meeting ? new Date(values.end_time_guild_meeting) : null,
-			end_time_middle_meeting: values.end_time_middle_meeting ? new Date(values.end_time_middle_meeting) : null,
-			end_time_all: new Date(values.end_time_all),
 			description_sv: values.description_sv ?? "",
 			description_en: values.description_en ?? "",
-			post_ids: values.post_ids ?? [],
+			visible: values.visible ?? false,
 		};
 		createElection.mutate({ body });
 	}
@@ -122,6 +110,7 @@ export default function ElectionsForm() {
 							onSubmit={electionForm.handleSubmit(onSubmit)}
 							className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
 						>
+							{/* title_sv */}
 							<FormField
 								control={electionForm.control}
 								name="title_sv"
@@ -137,7 +126,7 @@ export default function ElectionsForm() {
 									</FormItem>
 								)}
 							/>
-
+							{/* title_en */}
 							<FormField
 								control={electionForm.control}
 								name="title_en"
@@ -153,7 +142,7 @@ export default function ElectionsForm() {
 									</FormItem>
 								)}
 							/>
-
+							{/* start_time */}
 							<FormField
 								control={electionForm.control}
 								name="start_time"
@@ -169,51 +158,28 @@ export default function ElectionsForm() {
 									</FormItem>
 								)}
 							/>
+							{/* visible */}
 							<FormField
 								control={electionForm.control}
-								name="end_time_guild_meeting"
+								name="visible"
 								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("elections.end_time_guild_meeting")}</FormLabel>
-										<FormControl>
-											<ClearableAdminChooseDates
-												value={field.value as Date | undefined}
-												onChange={field.onChange}
+									<FormItem className="text-center justify-center">
+										<Label className="hover:bg-accent/50 flex gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
+											<Checkbox
+												checked={field.value}
+												onCheckedChange={field.onChange}
+												className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
 											/>
-										</FormControl>
+											<div className="grid gap-1.5 font-normal">
+												<p className="text-sm leading-none font-medium">
+													{t("admin:elections.visible_explanation")}
+												</p>
+											</div>
+										</Label>
 									</FormItem>
 								)}
 							/>
-							<FormField
-								control={electionForm.control}
-								name="end_time_middle_meeting"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("elections.end_time_middle_meeting")}</FormLabel>
-										<FormControl>
-											<ClearableAdminChooseDates
-												value={field.value as Date | undefined}
-												onChange={field.onChange}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={electionForm.control}
-								name="end_time_all"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("elections.end_time_all")}</FormLabel>
-										<FormControl>
-											<AdminChooseDates
-												value={field.value as Date}
-												onChange={field.onChange}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
+							{/* description_sv */}
 							<FormField
 								control={electionForm.control}
 								name="description_sv"
@@ -230,6 +196,7 @@ export default function ElectionsForm() {
 									</FormItem>
 								)}
 							/>
+							{/* description_en */}
 							<FormField
 								control={electionForm.control}
 								name="description_en"
@@ -242,21 +209,6 @@ export default function ElectionsForm() {
 												{...field}
 												value={field.value ?? ""}
 											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={electionForm.control}
-								name="post_ids"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("elections.post_ids")}</FormLabel>
-										<FormControl>
-								<AdminChooseMultPosts
-									value={field.value ?? []}
-									onChange={field.onChange}
-								/>
 										</FormControl>
 									</FormItem>
 								)}
