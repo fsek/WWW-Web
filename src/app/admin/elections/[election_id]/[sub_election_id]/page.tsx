@@ -46,6 +46,7 @@ export default function AdminElectionCandidatesPage() {
 			path: { sub_election_id: subElectionId },
 		}),
 		enabled: Number.isFinite(subElectionId),
+		refetchOnWindowFocus: false,
 	});
 
 	const deleteCandidate = useMutation({

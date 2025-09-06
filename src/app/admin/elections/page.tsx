@@ -134,6 +134,7 @@ export default function Elections() {
 
 	const { data, error, isPending } = useQuery({
 		...getAllElectionsOptions(),
+		refetchOnWindowFocus: false,
 	});
 
 	const [openEditDialog, setOpenEditDialog] = useState(false);

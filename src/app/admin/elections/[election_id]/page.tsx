@@ -81,6 +81,7 @@ export default function SubElections() {
 		isPending,
 	} = useQuery({
 		...getElectionOptions({ path: { election_id: electionId } }),
+		refetchOnWindowFocus: false,
 	});
 
 	const [openEditDialog, setOpenEditDialog] = useState(false);
