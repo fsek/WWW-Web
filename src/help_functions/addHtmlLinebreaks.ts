@@ -1,4 +1,5 @@
 // Helper to add HTML linebreaks to descriptions
+// No longer used, this was a temporary fix
 export default function addHtmlLinebreaks(
 	value: string | null | undefined,
 ): string {
