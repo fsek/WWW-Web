@@ -17,7 +17,6 @@ import {
 	Award,
 	House,
 	Mail,
-	Gauge,
 	ChefHat,
 	ListMusic,
 	Music3,
@@ -103,12 +102,6 @@ const groups: AdminGroup[] = [
 				permissions: [[action.MANAGE, target.CAFE]],
 				icon: ChefHat,
 			},
-			{
-				title: "admin:elections.self",
-				url: "/admin/elections",
-				permissions: [[action.MANAGE, target.ELECTION]],
-				icon: Gavel,
-			},
 		],
 	},
 	{
@@ -188,6 +181,23 @@ const groups: AdminGroup[] = [
 				url: "/admin/nollning/admin-nollning/adventure-missions?id=current",
 				permissions: [[action.MANAGE, target.ADVENTURE_MISSIONS]],
 				icon: Award,
+			},
+		],
+	},
+	{
+		title: "admin:categories.elections",
+		entries: [
+			{
+				title: "admin:visible_election.self",
+				url: "/admin/elections/visible",
+				permissions: [[action.MANAGE, target.ELECTION]],
+				icon: Gavel,
+			},
+			{
+				title: "admin:elections.self",
+				url: "/admin/elections",
+				permissions: [[action.MANAGE, target.ELECTION]],
+				icon: Gavel,
 			},
 		],
 	},

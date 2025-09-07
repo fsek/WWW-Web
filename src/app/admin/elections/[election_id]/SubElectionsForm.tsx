@@ -64,13 +64,13 @@ export default function SubElectionsForm({
 			queryClient.invalidateQueries({
 				queryKey: getElectionQueryKey({ path: { election_id: electionId } }),
 			});
-			toast.success(t("election.sub_election.create_success"));
+			toast.success(t("elections.sub_election.create_success"));
 			setOpen(false);
 			setSubmitEnabled(true);
 		},
 		onError: (error) => {
 			toast.error(
-				`${t("election.sub_election.create_error")} ${getErrorMessage(error, t)}`,
+				`${t("elections.sub_election.create_error")} ${getErrorMessage(error, t)}`,
 			);
 			setOpen(false);
 			setSubmitEnabled(true);
@@ -99,14 +99,14 @@ export default function SubElectionsForm({
 				}}
 			>
 				<Plus />
-				{t("election.sub_election.create_sub_election")}
+				{t("elections.sub_election.create_sub_election")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 					<DialogHeader>
 						<DialogTitle>
-							{t("election.sub_election.create_sub_election")}
+							{t("elections.sub_election.create_sub_election")}
 						</DialogTitle>
 					</DialogHeader>
 					<hr />
@@ -120,7 +120,9 @@ export default function SubElectionsForm({
 								name="title_sv"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("election.sub_election.title_sv")}</FormLabel>
+										<FormLabel>
+											{t("elections.sub_election.title_sv")}
+										</FormLabel>
 										<FormControl>
 											<Input
 												placeholder={t(
@@ -138,7 +140,9 @@ export default function SubElectionsForm({
 								name="title_en"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("election.sub_election.title_en")}</FormLabel>
+										<FormLabel>
+											{t("elections.sub_election.title_en")}
+										</FormLabel>
 										<FormControl>
 											<Input
 												placeholder={t(
@@ -156,7 +160,9 @@ export default function SubElectionsForm({
 								name="end_time"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("election.sub_election.end_time")}</FormLabel>
+										<FormLabel>
+											{t("elections.sub_election.end_time")}
+										</FormLabel>
 										<FormControl>
 											<AdminChooseDates
 												value={field.value as Date}
@@ -172,7 +178,9 @@ export default function SubElectionsForm({
 								name="post_ids"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("election.sub_election.post_ids")}</FormLabel>
+										<FormLabel>
+											{t("elections.sub_election.post_ids")}
+										</FormLabel>
 										<FormControl>
 											<AdminChooseMultPosts
 												value={field.value ?? []}
@@ -188,7 +196,7 @@ export default function SubElectionsForm({
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									{t("election.sub_election.create")}
+									{t("elections.sub_election.create")}
 								</Button>
 							</div>
 						</form>

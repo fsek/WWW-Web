@@ -9,17 +9,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import AdminTable from "@/widgets/AdminTable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-	createColumnHelper,
-	getCoreRowModel,
-	getPaginationRowModel,
-	getSortedRowModel,
-	type Row,
-	type SortingState,
-	useReactTable,
-} from "@tanstack/react-table";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
@@ -28,8 +18,7 @@ import type { CandidatePostRead } from "@/api/types.gen";
 import { toast } from "sonner";
 import getErrorMessage from "@/help_functions/getErrorMessage";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
-
-const candidationColumnHelper = createColumnHelper<CandidatePostRead>();
+import { CandidationTable } from "@/app/admin/elections/CandidationTable";
 
 export default function AdminElectionCandidatePage() {
 	const { t, i18n } = useTranslation("admin");
@@ -112,55 +101,6 @@ export default function AdminElectionCandidatePage() {
 		if (!post) return "-";
 		return i18n.language === "en" ? post.name_en : post.name_sv;
 	};
-
-	const candidationColumns = [
-		candidationColumnHelper.accessor("post_id", {
-			id: "post_name",
-			header: t("elections.election_candidations.post_name"),
-			cell: (info) => getPostName(info.getValue()),
-			size: 120,
-		}),
-		candidationColumnHelper.accessor("created_at", {
-			id: "created_at",
-			header: t("elections.election_candidations.created_at"),
-			cell: (info) => new Date(info.getValue()).toLocaleString(),
-			size: 120,
-		}),
-		{
-			id: "actions",
-			header: t("elections.election_candidations.actions"),
-			cell: ({ row }: { row: Row<CandidatePostRead> }) => (
-				<Button
-					variant="destructive"
-					size="sm"
-					onClick={() => {
-						deleteCandidation.mutate({
-							query: {
-								candidate_id: candidateId,
-								election_post_id: row.original.election_post_id,
-							},
-						});
-					}}
-				>
-					{t("elections.election_candidations.remove_candidation")}
-				</Button>
-			),
-		},
-	];
-
-	const [sorting, setSorting] = useState<SortingState>([
-		{ id: "created_at", desc: false },
-	]);
-
-	const candidationTable = useReactTable({
-		columns: candidationColumns,
-		data: candidate?.candidations ?? [],
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		onSortingChange: setSorting,
-		state: { sorting },
-	});
 
 	if (!Number.isFinite(subElectionId) || !Number.isFinite(candidateId)) {
 		return (
@@ -282,7 +222,18 @@ export default function AdminElectionCandidatePage() {
 				<h4 className="text-xl font-semibold">
 					{t("elections.election_candidations.candidations_title")}
 				</h4>
-				<AdminTable table={candidationTable} />
+				<CandidationTable
+					candidations={candidate?.candidations ?? []}
+					getPostName={getPostName}
+					onDeleteCandidation={(c: CandidatePostRead) =>
+						deleteCandidation.mutate({
+							query: {
+								candidate_id: candidateId,
+								election_post_id: c.election_post_id,
+							},
+						})
+					}
+				/>
 			</div>
 		</div>
 	);

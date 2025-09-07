@@ -89,11 +89,11 @@ export default function SubElectionsEditForm({
 			queryClient.invalidateQueries({
 				queryKey: getElectionQueryKey({ path: { election_id: electionId } }),
 			});
-			toast.success(t("election.sub_election.edit_success"));
+			toast.success(t("elections.sub_election.edit_success"));
 		},
 		onError: (error) => {
 			toast.error(
-				`${t("election.sub_election.edit_error")} ${getErrorMessage(error, t)}`,
+				`${t("elections.sub_election.edit_error")} ${getErrorMessage(error, t)}`,
 			);
 			onClose();
 		},
@@ -106,11 +106,11 @@ export default function SubElectionsEditForm({
 			queryClient.invalidateQueries({
 				queryKey: getElectionQueryKey({ path: { election_id: electionId } }),
 			});
-			toast.success(t("election.sub_election.remove_success"));
+			toast.success(t("elections.sub_election.remove_success"));
 		},
 		onError: (error) => {
 			toast.error(
-				`${t("election.sub_election.remove_error")} ${getErrorMessage(error, t)}`,
+				`${t("elections.sub_election.remove_error")} ${getErrorMessage(error, t)}`,
 			);
 			onClose();
 		},
@@ -162,7 +162,7 @@ export default function SubElectionsEditForm({
 			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>
-						{t("election.sub_election.edit_sub_election")}
+						{t("elections.sub_election.edit_sub_election")}
 					</DialogTitle>
 				</DialogHeader>
 				<hr />
@@ -177,10 +177,12 @@ export default function SubElectionsEditForm({
 							name="title_sv"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("election.sub_election.title_sv")}</FormLabel>
+									<FormLabel>{t("elections.sub_election.title_sv")}</FormLabel>
 									<FormControl>
 										<Input
-											placeholder={t("election.sub_election.title_placeholder")}
+											placeholder={t(
+												"elections.sub_election.title_placeholder",
+											)}
 											{...field}
 										/>
 									</FormControl>
@@ -193,10 +195,12 @@ export default function SubElectionsEditForm({
 							name="title_en"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("election.sub_election.title_en")}</FormLabel>
+									<FormLabel>{t("elections.sub_election.title_en")}</FormLabel>
 									<FormControl>
 										<Input
-											placeholder={t("election.sub_election.title_placeholder")}
+											placeholder={t(
+												"elections.sub_election.title_placeholder",
+											)}
 											{...field}
 										/>
 									</FormControl>
@@ -209,7 +213,7 @@ export default function SubElectionsEditForm({
 							name="end_time"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("election.sub_election.end_time")}</FormLabel>
+									<FormLabel>{t("elections.sub_election.end_time")}</FormLabel>
 									<FormControl>
 										<AdminChooseDates
 											value={field.value as Date}
@@ -225,7 +229,7 @@ export default function SubElectionsEditForm({
 							name="post_ids"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("election.sub_election.post_ids")}</FormLabel>
+									<FormLabel>{t("elections.sub_election.post_ids")}</FormLabel>
 									<FormControl>
 										<AdminChooseMultPosts
 											value={field.value ?? []}
@@ -241,12 +245,12 @@ export default function SubElectionsEditForm({
 								onOpenChange={setDeleteDialogOpen}
 								onConfirm={handleRemoveSubmit}
 								confirmByTyping
-								confirmByTypingText={t("election.sub_election.type_remove")}
+								confirmByTypingText={t("elections.sub_election.type_remove")}
 								confirmByTypingKey={selectedSubElection?.title_sv ?? "Error"}
-								triggerText={t("election.sub_election.remove_sub_election")}
-								title={t("election.sub_election.confirm_remove")}
-								description={t("election.sub_election.confirm_remove_text")}
-								confirmText={t("election.sub_election.remove_sub_election")}
+								triggerText={t("elections.sub_election.remove_sub_election")}
+								title={t("elections.sub_election.confirm_remove")}
+								description={t("elections.sub_election.confirm_remove_text")}
+								confirmText={t("elections.sub_election.remove_sub_election")}
 								cancelText={t("admin:cancel")}
 							/>
 							<Button type="submit" className="w-32 min-w-fit">

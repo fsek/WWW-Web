@@ -17,16 +17,19 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
 	createElectionMutation,
 	getAllElectionsQueryKey,
+	populateElectionMutation,
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
-import type { ElectionCreate } from "@/api";
+import type { ElectionCreate, ElectionPopulate } from "@/api";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import getErrorMessage from "@/help_functions/getErrorMessage";
+import { semester } from "@/api";
+import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 
 const electionSchema = z.object({
 	title_sv: z.string().min(1),
@@ -35,6 +38,11 @@ const electionSchema = z.object({
 	description_sv: z.string().nullable().optional(),
 	description_en: z.string().nullable().optional(),
 	visible: z.boolean().optional(),
+	semester: z.nativeEnum(semester).optional(),
+	end_time_guild: z.date().optional(),
+	end_time_board: z.date().optional(),
+	end_time_board_intermediate: z.date().optional(),
+	end_time_educational_council: z.date().optional(),
 });
 
 export default function ElectionsForm() {
@@ -51,16 +59,61 @@ export default function ElectionsForm() {
 			description_sv: "",
 			description_en: "",
 			visible: true,
+			semester: undefined,
 		},
 	});
 
+	const selectedSemester = electionForm.watch("semester");
+	const shouldShowPopulateFields =
+		selectedSemester && selectedSemester !== "Other";
+
 	const queryClient = useQueryClient();
+
+	const populateElection = useMutation({
+		...populateElectionMutation(),
+		onSuccess: () => {
+			toast.success(t("elections.populate_success"));
+			queryClient.invalidateQueries({ queryKey: getAllElectionsQueryKey() });
+		},
+		onError: (error) => {
+			toast.error(
+				`${t("elections.populate_error")} ${getErrorMessage(error, t)}`,
+			);
+		},
+	});
 
 	const createElection = useMutation({
 		...createElectionMutation(),
-		onSuccess: () => {
+		onSuccess: (data) => {
 			queryClient.invalidateQueries({ queryKey: getAllElectionsQueryKey() });
 			toast.success(t("elections.create_success"));
+
+			// If semester is selected and not "Other", populate the election
+			if (shouldShowPopulateFields && data?.election_id) {
+				const now = new Date();
+				const MS_IN_A_DAY = 24 * 60 * 60 * 1000;
+				const populateData: ElectionPopulate = {
+					semester: selectedSemester as "HT" | "VT",
+					end_time_guild:
+						electionForm.getValues("end_time_guild") ??
+						new Date(now.getTime() + 7 * MS_IN_A_DAY),
+					end_time_board:
+						electionForm.getValues("end_time_board") ??
+						new Date(now.getTime() + 14 * MS_IN_A_DAY),
+					end_time_board_intermediate:
+						electionForm.getValues("end_time_board_intermediate") ??
+						new Date(now.getTime() + 21 * MS_IN_A_DAY),
+					end_time_educational_council:
+						electionForm.getValues("end_time_educational_council") ??
+						new Date(now.getTime() + 28 * MS_IN_A_DAY),
+				};
+
+				populateElection.mutate({
+					body: populateData,
+					path: { election_id: data.election_id },
+				});
+			}
+
 			setOpen(false);
 			setSubmitEnabled(true);
 		},
@@ -85,6 +138,11 @@ export default function ElectionsForm() {
 		};
 		createElection.mutate({ body });
 	}
+
+	const semesterOptions = Object.values(semester).map((value) => ({
+		value: String(value),
+		label: t(`enums.semester.${value}`),
+	}));
 
 	return (
 		<div className="p-3">
@@ -213,6 +271,109 @@ export default function ElectionsForm() {
 									</FormItem>
 								)}
 							/>
+
+							{/* semester selection */}
+							<FormField
+								control={electionForm.control}
+								name="semester"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("elections.semester")}</FormLabel>
+										<FormControl>
+											<SelectFromOptions
+												options={semesterOptions}
+												value={field.value}
+												onChange={field.onChange}
+												placeholder={t("elections.semester_placeholder")}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Conditional populate fields */}
+							{shouldShowPopulateFields && (
+								<>
+									<FormField
+										control={electionForm.control}
+										name="end_time_guild"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>{t("elections.end_time_guild")}</FormLabel>
+												<FormControl>
+													<AdminChooseDates
+														value={field.value as Date}
+														onChange={field.onChange}
+													/>
+												</FormControl>
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={electionForm.control}
+										name="end_time_board"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>{t("elections.end_time_board")}</FormLabel>
+												<FormControl>
+													<AdminChooseDates
+														value={field.value as Date}
+														onChange={field.onChange}
+													/>
+												</FormControl>
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={electionForm.control}
+										name="end_time_board_intermediate"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>
+													{t("elections.end_time_board_intermediate")}
+												</FormLabel>
+												<FormControl>
+													<AdminChooseDates
+														value={field.value as Date}
+														onChange={field.onChange}
+													/>
+												</FormControl>
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={electionForm.control}
+										name="end_time_educational_council"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>
+													{t("elections.end_time_educational_council")}
+												</FormLabel>
+												<FormControl>
+													<AdminChooseDates
+														value={field.value as Date}
+														onChange={field.onChange}
+													/>
+												</FormControl>
+											</FormItem>
+										)}
+									/>
+								</>
+							)}
+
+							{/* Info message */}
+							{shouldShowPopulateFields && (
+								<div className="lg:col-span-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+									<p className="text-sm text-blue-800">
+										{t("elections.populate_info", {
+											semester: t(
+												`elections.semester_${selectedSemester?.toLowerCase()}`,
+											),
+										})}
+									</p>
+								</div>
+							)}
+
 							<div className="space-x-2 lg:col-span-4 lg:grid-cols-subgrid">
 								<Button
 									type="submit"

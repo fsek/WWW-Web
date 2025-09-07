@@ -61,7 +61,10 @@ export function ConfirmDeleteDialog({
 					type="button"
 					className="w-32 min-w-fit"
 					disabled={disabled}
-					onClick={() => onOpenChange(true)}
+					onClick={(e) => {
+						e.stopPropagation();
+						onOpenChange(true);
+					}}
 				>
 					{showIcon && <Trash2 />}
 					{triggerText ?? t("admin:remove")}
@@ -95,7 +98,8 @@ export function ConfirmDeleteDialog({
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel
-						onClick={() => {
+						onClick={(e) => {
+							e.stopPropagation();
 							onOpenChange(false);
 							setTypedValue("");
 						}}
@@ -104,7 +108,8 @@ export function ConfirmDeleteDialog({
 					</AlertDialogCancel>
 					<Button
 						variant="destructive"
-						onClick={() => {
+						onClick={(e) => {
+							e.stopPropagation();
 							onConfirm();
 							onOpenChange(false);
 							setTypedValue("");

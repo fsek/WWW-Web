@@ -28,16 +28,16 @@ export default function SubElections() {
 	const columns = [
 		columnHelper.accessor("title_sv", {
 			id: "title_sv",
-			header: t("election.sub_election.title_sv"),
+			header: t("elections.sub_election.title_sv"),
 			cell: (info) => info.getValue() ?? "",
 		}),
 		columnHelper.accessor("title_en", {
 			id: "title_en",
-			header: t("election.sub_election.title_en"),
+			header: t("elections.sub_election.title_en"),
 			cell: (info) => info.getValue() ?? "",
 		}),
 		columnHelper.accessor("end_time", {
-			header: t("election.sub_election.end_time"),
+			header: t("elections.sub_election.end_time"),
 			cell: (info) => {
 				const value = info.getValue();
 				return value ? formatTime(value) : "-";
@@ -45,17 +45,17 @@ export default function SubElections() {
 		}),
 		columnHelper.accessor((row) => row.posts?.length ?? 0, {
 			id: "posts_count",
-			header: t("election.sub_election.posts_count"),
+			header: t("elections.sub_election.posts_count"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor((row) => row.candidates?.length ?? 0, {
 			id: "candidates_count",
-			header: t("election.sub_election.candidates_count"),
+			header: t("elections.sub_election.candidates_count"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.display({
 			id: "actions",
-			header: t("election.sub_election.actions"),
+			header: t("elections.sub_election.actions"),
 			cell: (info) => (
 				<div className="flex gap-2">
 					<Button
@@ -68,7 +68,7 @@ export default function SubElections() {
 						}}
 					>
 						<List />
-						{t("election.sub_election.edit_candidates")}
+						{t("elections.sub_election.edit_candidates")}
 					</Button>
 				</div>
 			),
@@ -126,13 +126,13 @@ export default function SubElections() {
 					onClick={() => router.push("/admin/elections")}
 				>
 					<ArrowLeft />
-					{t("election.back_to_elections")}
+					{t("elections.back_to_elections")}
 				</Button>
 				<h3 className="text-3xl font-bold text-primary">
-					{t("election.sub_election.title")} - {election?.title_sv}
+					{t("elections.election.page_title")} - {election?.title_sv}
 				</h3>
 			</div>
-			<p className="py-3">{t("election.sub_election.description")}</p>
+			<p className="py-3">{t("elections.election.page_description")}</p>
 			<SubElectionsForm electionId={electionId} />
 
 			<AdminTable table={table} onRowClick={handleRowClick} />
