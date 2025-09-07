@@ -37,16 +37,32 @@ export default function Posts() {
 	const columnHelper = createColumnHelper<PostRead>();
 	const columns = [
 		columnHelper.accessor(i18n.language === "en" ? "name_en" : "name_sv", {
-			header: t("posts.name", "Post"),
+			header: t("posts.name"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("council_id", {
-			header: t("posts.council", "Council name"),
+			header: t("posts.council"),
 			cell: (info) => <CouncilName councilId={info.getValue()} />,
 		}),
 		columnHelper.accessor("email", {
-			header: t("posts.email", "Email"),
+			header: t("posts.email"),
 			cell: (info) => info.getValue(),
+		}),
+		columnHelper.accessor("elected_at_semester", {
+			header: t("posts.elected_at_semester"),
+			cell: (info) => {
+				const val = info.getValue();
+				if (!val) return "-";
+				return t(`enums.elected_at_semester.${val}`);
+			},
+		}),
+		columnHelper.accessor("elected_by", {
+			header: t("posts.elected_by"),
+			cell: (info) => {
+				const val = info.getValue();
+				if (!val) return "-";
+				return t(`enums.elected_by.${val}`);
+			},
 		}),
 	];
 
