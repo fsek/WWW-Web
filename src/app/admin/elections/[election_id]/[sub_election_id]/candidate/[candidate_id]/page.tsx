@@ -6,6 +6,7 @@ import {
 	electionsGetSubElectionOptions,
 	deleteCandidationMutation,
 	electionsGetSubElectionQueryKey,
+	getCandidateQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -19,6 +20,7 @@ import { toast } from "sonner";
 import getErrorMessage from "@/help_functions/getErrorMessage";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
 import { CandidationTable } from "@/app/admin/elections/CandidationTable";
+import { ArrowLeft } from "lucide-react";
 
 export default function AdminElectionCandidatePage() {
 	const { t, i18n } = useTranslation("admin");
@@ -87,6 +89,11 @@ export default function AdminElectionCandidatePage() {
 					},
 				}),
 			});
+			queryClient.invalidateQueries({
+				queryKey: getCandidateQueryKey({
+					path: { sub_election_id: subElectionId, candidate_id: candidateId },
+				}),
+			});
 		},
 		onError: (error) => {
 			toast.error(
@@ -143,13 +150,28 @@ export default function AdminElectionCandidatePage() {
 
 	return (
 		<div className="px-8 space-y-4">
-			<div>
-				<h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
-					{t("elections.election_candidations.title")}
-				</h3>
-				<p className="text-xs md:text-sm font-medium">
-					{t("elections.election_candidations.description")}
-				</p>
+			<div className="flex items-start justify-between gap-4 py-3">
+				<div>
+					<h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
+						{t("elections.election_candidations.title")}
+					</h3>
+					<p className="text-xs md:text-sm font-medium">
+						{t("elections.election_candidations.description")}
+					</p>
+				</div>
+				<div className="flex items-start">
+					<Button
+						variant="outline"
+						onClick={() =>
+							router.push(
+								`/admin/elections/${params?.election_id}/${subElectionId}`,
+							)
+						}
+					>
+						<ArrowLeft />
+						{t("elections.back_to_elections")}
+					</Button>
+				</div>
 			</div>
 			<Separator className="mb-4" />
 			<div className="mb-4">

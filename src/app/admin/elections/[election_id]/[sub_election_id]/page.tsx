@@ -31,6 +31,7 @@ import { toast } from "sonner";
 import getErrorMessage from "@/help_functions/getErrorMessage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
+import { ArrowLeft } from "lucide-react";
 
 const columnHelper = createColumnHelper<CandidateRead>();
 
@@ -347,26 +348,39 @@ export default function AdminElectionCandidatesPage() {
 
 	return (
 		<div className="px-8 space-y-4">
-			<div>
-				<h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
-					{t("elections.sub_election.page_title")}
-					{" - "}
-					{i18n.language === "en"
-						? subElection?.title_en
-						: subElection?.title_sv}
-				</h3>
-				<p className="text-xs md:text-sm font-medium">
-					{t("elections.sub_election.page_description")}
-				</p>
-				<Button variant="default" onClick={() => setCandidationFormOpen(true)}>
-					{t("elections.election_candidates.add")}
-				</Button>
-				<CandidationForm
-					subElectionId={subElectionId}
-					open={candidationFormOpen}
-					onOpenChange={setCandidationFormOpen}
-				/>
+			<div className="flex items-start justify-between gap-4">
+				<div>
+					<h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
+						{t("elections.sub_election.page_title")}
+						{" - "}
+						{i18n.language === "en"
+							? subElection?.title_en
+							: subElection?.title_sv}
+					</h3>
+					<p className="text-xs md:text-sm font-medium">
+						{t("elections.sub_election.page_description")}
+					</p>
+				</div>
+				<div className="flex items-start">
+					<Button
+						variant="outline"
+						onClick={() =>
+							router.push(`/admin/elections/${params?.election_id}`)
+						}
+					>
+						<ArrowLeft />
+						{t("elections.back_to_elections")}
+					</Button>
+				</div>
 			</div>
+			<Button variant="default" onClick={() => setCandidationFormOpen(true)}>
+				{t("elections.election_candidates.add")}
+			</Button>
+			<CandidationForm
+				subElectionId={subElectionId}
+				open={candidationFormOpen}
+				onOpenChange={setCandidationFormOpen}
+			/>
 
 			<Tabs defaultValue="candidates" className="w-full">
 				<TabsList className="grid w-full grid-cols-3">

@@ -22,6 +22,7 @@ import {
 	Music3,
 	Images,
 	Gavel,
+	Vote,
 } from "lucide-react";
 
 import {
@@ -191,7 +192,7 @@ const groups: AdminGroup[] = [
 				title: "admin:visible_election.self",
 				url: "/admin/elections/visible",
 				permissions: [[action.MANAGE, target.ELECTION]],
-				icon: Gavel,
+				icon: Vote,
 			},
 			{
 				title: "admin:elections.self",

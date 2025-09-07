@@ -120,23 +120,25 @@ export default function SubElections() {
 
 	return (
 		<div className="px-8 space-x-4">
-			<div className="flex items-center gap-4 py-3">
-				<Button
-					variant="outline"
-					onClick={() => router.push("/admin/elections")}
-				>
-					<ArrowLeft />
-					{t("elections.back_to_elections")}
-				</Button>
-				<h3 className="text-3xl font-bold text-primary">
-					{t("elections.election.page_title")} - {election?.title_sv}
-				</h3>
+			<div className="flex items-start justify-between gap-4 py-3">
+				<div>
+					<h3 className="text-3xl font-bold text-primary">
+						{t("elections.election.page_title")} - {election?.title_sv}
+					</h3>
+					<p className="py-3">{t("elections.election.page_description")}</p>
+				</div>
+				<div className="flex items-start">
+					<Button
+						variant="outline"
+						onClick={() => router.push("/admin/elections")}
+					>
+						<ArrowLeft />
+						{t("elections.back_to_elections")}
+					</Button>
+				</div>
 			</div>
-			<p className="py-3">{t("elections.election.page_description")}</p>
 			<SubElectionsForm electionId={electionId} />
-
 			<AdminTable table={table} onRowClick={handleRowClick} />
-
 			{selectedSubElection && (
 				<SubElectionsEditForm
 					open={openEditDialog}

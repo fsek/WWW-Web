@@ -126,7 +126,7 @@ export default function SubElectionsForm({
 										<FormControl>
 											<Input
 												placeholder={t(
-													"election.sub_election.title_placeholder",
+													"elections.sub_election.title_placeholder",
 												)}
 												{...field}
 											/>
@@ -146,7 +146,7 @@ export default function SubElectionsForm({
 										<FormControl>
 											<Input
 												placeholder={t(
-													"election.sub_election.title_placeholder",
+													"elections.sub_election.title_placeholder",
 												)}
 												{...field}
 											/>
