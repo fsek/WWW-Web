@@ -983,10 +983,11 @@
 			"candidates_count": "Candidates",
 			"actions": "Actions",
 			"page_title": "Sub-election",
-			"page_description": "Manage candidates, candidations and posts in the sub-election.",
+			"page_description": "Manage candidates, candidations and posts in the sub-election. NOTE: If you want to lengthen the end time for an individual post: 1. Create a new sub-election with the desired end time. 2. Go to the posts tab and click the 'Move post' button.",
 			"candidates_tab": "Candidates",
 			"candidations_tab": "Candidations",
-			"posts_tab": "Posts"
+			"posts_tab": "Posts",
+			"manage_sub_election": "Manage sub-election"
 		},
 		"election_candidates": {
 			"title": "Candidates",
@@ -1040,7 +1041,29 @@
 			"name_sv": "Name (Swedish)",
 			"name_en": "Name (English)",
 			"candidations_count": "Candidation count"
-		}
+		},
+		"election_nominations": {
+			"tab_title": "Nominations",
+			"tab_description": "List of all nominations submitted for this sub-election.",
+			"nominee_name": "Nominee",
+			"nominee_email": "Nominee Email",
+			"post_name": "Post",
+			"motivation": "Motivation",
+			"created_at": "Created",
+			"remove_nomination": "Remove nomination",
+			"remove_confirm": "Are you sure you want to remove this nomination?",
+			"delete_success": "Nomination removed!",
+			"error_delete": "Failed to remove nomination.",
+			"delete_success_short": "Removed!"
+		},
+		"move_post": "Move post",
+		"move_post_success": "Post moved successfully!",
+		"move_post_error": "Failed to move post.",
+		"post_to_move": "Post to move",
+		"target_sub_election": "Target sub-election",
+		"select_post": "Select post",
+		"select_sub_election": "Select sub-election",
+		"move_post_hint": "Select a post and a target sub-election to move it."
 	},
 	"enums": {
 		"elected_at_semester": {

@@ -5,6 +5,9 @@ import {
 	deleteCandidateMutation,
 	electionsGetSubElectionQueryKey,
 	deleteCandidationMutation,
+	getAllSubElectionNominationsOptions,
+	deleteNominationMutation,
+	getElectionOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,23 +28,27 @@ import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { useRouter, useParams } from "next/navigation";
-import type { CandidateRead, ElectionPostRead } from "@/api/types.gen";
+import type { CandidateRead, ElectionPostRead, NominationRead } from "@/api/types.gen";
 import CandidationForm from "./CandidationForm";
 import { toast } from "sonner";
 import getErrorMessage from "@/help_functions/getErrorMessage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { ArrowLeft } from "lucide-react";
+import MovePostForm from "./MovePostForm";
 
 const columnHelper = createColumnHelper<CandidateRead>();
 
 const postColumnHelper = createColumnHelper<ElectionPostRead>();
+
+const nominationColumnHelper = createColumnHelper<NominationRead>();
 
 export default function AdminElectionCandidatesPage() {
 	const { t, i18n } = useTranslation("admin");
 	const router = useRouter();
 	const params = useParams();
 	const subElectionId = Number(params?.sub_election_id);
+	const electionId = Number(params?.election_id);
 	const queryClient = useQueryClient();
 
 	const {
@@ -50,6 +57,30 @@ export default function AdminElectionCandidatesPage() {
 		isLoading: subElectionLoading,
 	} = useQuery({
 		...electionsGetSubElectionOptions({
+			path: { sub_election_id: subElectionId },
+		}),
+		enabled: Number.isFinite(subElectionId),
+		refetchOnWindowFocus: false,
+	});
+
+	const {
+		data: election,
+		error: electionError,
+		isLoading: electionLoading,
+	} = useQuery({
+		...getElectionOptions({
+			path: { election_id: electionId },
+		}),
+		enabled: Number.isFinite(electionId),
+		refetchOnWindowFocus: false,
+	});
+
+	const {
+		data: nominations,
+		isLoading: nominationsLoading,
+		error: nominationsError,
+	} = useQuery({
+		...getAllSubElectionNominationsOptions({
 			path: { sub_election_id: subElectionId },
 		}),
 		enabled: Number.isFinite(subElectionId),
@@ -94,6 +125,24 @@ export default function AdminElectionCandidatesPage() {
 		onError: (error) => {
 			toast.error(
 				`${t("elections.election_candidations.error_delete_candidation")} ${getErrorMessage(error, t)}`,
+			);
+		},
+	});
+
+	const deleteNomination = useMutation({
+		...deleteNominationMutation(),
+		throwOnError: false,
+		onSuccess: () => {
+			toast.success(t("elections.election_nominations.delete_success"));
+			queryClient.invalidateQueries({
+				queryKey: getAllSubElectionNominationsOptions({
+					path: { sub_election_id: subElectionId },
+				}).queryKey,
+			});
+		},
+		onError: (error) => {
+			toast.error(
+				`${t("elections.election_nominations.error_delete")} ${getErrorMessage(error, t)}`,
 			);
 		},
 	});
@@ -227,6 +276,25 @@ export default function AdminElectionCandidatesPage() {
 		);
 	}
 
+	function DeleteNominationDialog({ nomination }: { nomination: NominationRead }) {
+		const [open, setOpen] = useState(false);
+		return (
+			<ConfirmDeleteDialog
+				open={open}
+				onOpenChange={setOpen}
+				onConfirm={() =>
+					deleteNomination.mutate({
+						path: { nomination_id: nomination.nomination_id },
+					})
+				}
+				triggerText={t("elections.election_nominations.remove_nomination")}
+				title={t("elections.election_nominations.remove_nomination")}
+				description={t("elections.election_nominations.remove_confirm")}
+				showIcon={true}
+			/>
+		);
+	}
+
 	const columns = [
 		columnHelper.accessor((row) => row.user.first_name, {
 			id: "first_name",
@@ -291,6 +359,50 @@ export default function AdminElectionCandidatesPage() {
 		),
 	];
 
+	const nominationColumns = [
+		nominationColumnHelper.accessor("nominee_name", {
+			id: "nominee_name",
+			header: t("elections.election_nominations.nominee_name"),
+			cell: (info) => info.getValue() ?? "-",
+			size: 120,
+		}),
+		nominationColumnHelper.accessor("nominee_email", {
+			id: "nominee_email",
+			header: t("admin:email"),
+			cell: (info) => info.getValue() ?? "-",
+			size: 160,
+		}),
+		nominationColumnHelper.accessor((row) => getPostName(row.post_id ?? row.election_post_id), {
+			id: "post",
+			header: t("elections.election_nominations.post_name"),
+			cell: (info) => info.getValue() ?? "-",
+			size: 120,
+		}),
+		nominationColumnHelper.accessor((row) => row.motivation, {
+			id: "motivation",
+			header: t("elections.election_nominations.motivation"),
+			cell: (info) => {
+				const v = info.getValue() as string | undefined;
+				if (!v) return "-";
+				return v.length > 80 ? v.slice(0, 77) + "..." : v;
+			},
+			size: 250,
+		}),
+		nominationColumnHelper.accessor((row) => new Date(row.created_at).toLocaleString(), {
+			id: "created_at",
+			header: t("elections.election_nominations.created_at"),
+			cell: (info) => info.getValue(),
+			size: 160,
+		}),
+		{
+			id: "actions",
+			header: t("admin:elections.election_candidates.actions"),
+			cell: ({ row }: { row: Row<NominationRead> }) => (
+				<DeleteNominationDialog nomination={row.original} />
+			),
+		},
+	];
+
 	const [sorting, setSorting] = useState<SortingState>([
 		{ id: "first_name", desc: false },
 	]);
@@ -300,6 +412,7 @@ export default function AdminElectionCandidatesPage() {
 	]);
 
 	const [candidationFormOpen, setCandidationFormOpen] = useState(false);
+	const [movePostOpen, setMovePostOpen] = useState(false);
 
 	const table = useReactTable({
 		columns,
@@ -319,6 +432,14 @@ export default function AdminElectionCandidatesPage() {
 		getSortedRowModel: getSortedRowModel(),
 		onSortingChange: setPostSorting,
 		state: { sorting: postSorting },
+	});
+
+	const nominationTable = useReactTable({
+		columns: nominationColumns,
+		data: nominations ?? [],
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		getSortedRowModel: getSortedRowModel(),
 	});
 
 	// Flat map all candidations from all candidates
@@ -388,7 +509,7 @@ export default function AdminElectionCandidatesPage() {
 			/>
 
 			<Tabs defaultValue="candidates" className="w-full">
-				<TabsList className="grid w-full grid-cols-3">
+				<TabsList className="grid w-full grid-cols-4">
 					<TabsTrigger value="candidates">
 						{t("elections.sub_election.candidates_tab")}
 					</TabsTrigger>
@@ -398,6 +519,7 @@ export default function AdminElectionCandidatesPage() {
 					<TabsTrigger value="posts">
 						{t("elections.sub_election.posts_tab")}
 					</TabsTrigger>
+					<TabsTrigger value="nominations">{t("elections.election_nominations.tab_title")}</TabsTrigger>
 				</TabsList>
 
 				<TabsContent value="candidates" className="space-y-4">
@@ -463,15 +585,42 @@ export default function AdminElectionCandidatesPage() {
 					<p className="text-xs md:text-sm font-medium">
 						{t("elections.posts.tab_description")}
 					</p>
-					<div className="mt-4 mb-2 grid grid-cols-1 gap-2 items-center md:grid-cols-2 xl:grid-cols-3">
-						<Input
-							placeholder={t("elections.posts.search_placeholder")}
-							value={postSearch}
-							onChange={(e) => setPostSearch(e.target.value)}
-						/>
+					<div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+						<div className="mt-4 mb-2 grid grid-cols-1 gap-2 items-center md:grid-cols-2 xl:grid-cols-3">
+							<Input
+								placeholder={t("elections.posts.search_placeholder")}
+								value={postSearch}
+								onChange={(e) => setPostSearch(e.target.value)}
+							/>
+						</div>
+						<Button variant="outline" onClick={() => setMovePostOpen(true)} disabled={!subElection?.election_posts?.length}>
+							{t("elections.move_post", { defaultValue: "Move post" })}
+						</Button>
 					</div>
 					<Separator className="mb-4" />
 					<AdminTable table={postTable} />
+					{subElection && election && (
+						<MovePostForm
+							subElectionId={subElection.sub_election_id}
+							open={movePostOpen}
+							onOpenChange={setMovePostOpen}
+							posts={subElection.election_posts ?? []}
+							otherSubElections={(election.sub_elections || []).filter((s) => s.sub_election_id !== subElection.sub_election_id)}
+						/>
+					)}
+				</TabsContent>
+
+				<TabsContent value="nominations" className="space-y-4">
+					<h4 className="text-xl font-semibold">{t("elections.election_nominations.tab_title")}</h4>
+					<p className="text-xs md:text-sm font-medium">
+						{t("elections.election_nominations.tab_description")}
+					</p>
+					<Separator className="mb-4" />
+					{nominationsLoading && <LoadingErrorCard />}
+					{nominationsError && <LoadingErrorCard error={nominationsError} />}
+					{!nominationsLoading && !nominationsError && (
+						<AdminTable table={nominationTable} />
+					)}
 				</TabsContent>
 			</Tabs>
 		</div>

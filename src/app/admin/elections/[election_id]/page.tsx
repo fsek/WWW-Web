@@ -68,7 +68,7 @@ export default function SubElections() {
 						}}
 					>
 						<List />
-						{t("elections.sub_election.edit_candidates")}
+						{t("elections.sub_election.manage_sub_election")}
 					</Button>
 				</div>
 			),

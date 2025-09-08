@@ -820,7 +820,7 @@
 	},
 	"event_signup": {
 		"title": "Eventanmälningar",
-		"description": "Hantera anmälningar till detta event. Du kan söka, filtrera, bekräfta och redigera anmälningar nedan. \"Dela ut platser\" kommer att automatiskt välja ut användare som ska få plats, med lottning eller först till kvarn, och prioriteringar. Ni kan sedan kolla över listan, ändra saker som inte ser rätt ut och ta er tid. Änvändare kommer bara se om de fått en plats när ni markerar platserna som slutgiltliga med \"Bekräfta Platser\". När ni väl har gjort detta kan ni inte ändra något, så se till att ni gjort allt rätt innan dess!",
+		"description": "Hantera anmälningar till detta event. Du kan söka, filtrera, bekräfta och redigera anmälningar nedan. \"Dela ut platser\" kommer att automatiskt välja ut användare som ska få plats, med lottning eller först till kvarn, och prioriteringar. Ni kan sedan kolla över listan, ändra saker som inte ser rätt ut och ta er tid. Änvändare kommer bara se om de fått en plats när ni markerar platserna som slutgiltiga med \"Bekräfta Platser\". När ni väl har gjort detta kan ni inte ändra något, så se till att ni gjort allt rätt innan dess!",
 		"add": "Lägg till anmälan",
 		"button": "Lägg till anmälan",
 		"success_create": "Anmälan skapad!",
@@ -984,10 +984,11 @@
 			"candidates_count": "Kandidater",
 			"actions": "Åtgärder",
 			"page_title": "Delval",
-			"page_description": "Hantera kandidater, kandidaturer och poster i delvalet.",
+			"page_description": "Hantera kandidater, kandidaturer och poster i delvalet. OBS: Om du vill förlänga sluttiden för en individuell post: 1. Skapa ett nytt delval. 2. Gå till poster-tabben och klicka på 'Flytta post'.",
 			"candidates_tab": "Kandidater",
 			"candidations_tab": "Kandidaturer",
-			"posts_tab": "Poster"
+			"posts_tab": "Poster",
+			"manage_sub_election": "Hantera delval"
 		},
 		"election_candidates": {
 			"title": "Kandidater",
@@ -1041,7 +1042,29 @@
 			"name_sv": "Namn (svenska)",
 			"name_en": "Namn (engelska)",
 			"candidations_count": "Kandidaturer"
-		}
+		},
+		"election_nominations": {
+			"tab_title": "Nomineringar",
+			"tab_description": "Lista över alla nomineringar för detta delval.",
+			"nominee_name": "Nominerad",
+			"nominee_email": "Nominerads e-post",
+			"post_name": "Post",
+			"motivation": "Motivering",
+			"created_at": "Skapad",
+			"remove_nomination": "Ta bort nominering",
+			"remove_confirm": "Är du säker på att du vill ta bort denna nominering?",
+			"delete_success": "Nominering borttagen!",
+			"error_delete": "Misslyckades att ta bort nominering.",
+			"delete_success_short": "Borttagen!"
+		},
+		"move_post": "Flytta post",
+		"move_post_success": "Post flyttad framgångsrikt!",
+		"move_post_error": "Misslyckades att flytta post.",
+		"post_to_move": "Post att flytta",
+		"target_sub_election": "Mål-delval",
+		"select_post": "Välj post",
+		"select_sub_election": "Välj delval",
+		"move_post_hint": "Välj en post och ett mål-delval för att flytta den."
 	},
 	"enums": {
 		"elected_at_semester": {
