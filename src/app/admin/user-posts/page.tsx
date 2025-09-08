@@ -10,13 +10,14 @@ import { AdminChooseMultPosts } from "@/widgets/AdminChooseMultPosts";
 import { useQuery } from "@tanstack/react-query";
 import {
   ColumnDef,
+  ColumnFiltersState,
   createColumnHelper,
   getFilteredRowModel,
   type Row,
   type SortingState,
 } from "@tanstack/react-table";
 import useCreateTable from "@/widgets/useCreateTable";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import UserPostsEditForm from "./UserPostsEditForm";
@@ -37,8 +38,7 @@ export default function UserPostsPage() {
 
   const [globalFilter, setGlobalFilter] = useState("");
 
-  // post filter state
-  const [selectedPosts, setSelectedPosts] = useState<number[]>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   // edit form state
   const [editFormOpen, setEditFormOpen] = useState(false);
@@ -103,6 +103,15 @@ export default function UserPostsPage() {
           )
           .join(", ");
       },
+      filterFn: (row, id, filter) => {
+        if (!filter.length) return true; // no filter, show all
+
+        // O(n^2). Let the browser suffer
+        return (filter as number[]).some(
+          (postId) =>
+            row.original.posts.findIndex((p) => p.id === postId) !== -1,
+        );
+      },
       size: 200,
     }),
     {
@@ -136,11 +145,13 @@ export default function UserPostsPage() {
     state: {
       sorting,
       globalFilter,
+      columnFilters,
       columnVisibility: {
         full_name_client_side_generated_for_fuzzy_searching_only_do_not_display: false,
       },
     },
     onGlobalFilterChange: setGlobalFilter,
+    onColumnFiltersChange: setColumnFilters,
   });
 
   // only bail out on the very first load
@@ -178,8 +189,19 @@ export default function UserPostsPage() {
             {t("admin:user-posts.filter_by_position")}
           </span>
           <AdminChooseMultPosts
-            value={selectedPosts}
-            onChange={setSelectedPosts}
+            value={
+              (columnFilters?.find((f) => f.id === "posts")
+                ?.value as number[]) || []
+            }
+            onChange={(value) => {
+              setColumnFilters((old) => {
+                const otherFilters = old.filter((f) => f.id !== "posts");
+                if (value.length === 0) {
+                  return otherFilters;
+                }
+                return [...otherFilters, { id: "posts", value }];
+              });
+            }}
             className="w-full"
           />
         </div>
