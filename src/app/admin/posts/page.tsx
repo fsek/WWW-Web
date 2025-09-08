@@ -7,7 +7,6 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
 import {
-  ColumnFilter,
   createColumnHelper,
   getFilteredRowModel,
   type Row,
@@ -20,12 +19,8 @@ import PostForm from "./PostForm";
 import PostEditForm from "./PostEditForm";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import {
-  RankingInfo,
-  rankItem,
-  compareItems,
-} from "@tanstack/match-sorter-utils";
 import { Input } from "@/components/ui/input";
+import { fuzzyFilter } from "@/lib/utils";
 
 export default function Posts() {
   const { t, i18n } = useTranslation("admin");
@@ -75,18 +70,7 @@ export default function Posts() {
     data: data ?? [],
     columns,
     getFilteredRowModel: getFilteredRowModel(),
-    globalFilterFn: (row, columnId, value, addMeta) => {
-      // Rank the item
-      const itemRank = rankItem(row.getValue(columnId), value);
-
-      // Store the itemRank info
-      addMeta({
-        itemRank,
-      });
-
-      // Return if the item should be filtered in/out
-      return itemRank.passed;
-    },
+    globalFilterFn: fuzzyFilter,
     state: {
       globalFilter,
     },
