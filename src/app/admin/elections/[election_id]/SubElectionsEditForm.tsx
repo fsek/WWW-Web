@@ -77,7 +77,7 @@ export default function SubElectionsEditForm({
 				end_time: toDateOrUndefined(selectedSubElection.end_time) ?? new Date(),
 				post_ids:
 					selectedSubElection.election_posts.map(
-						(election_post) => election_post.election_post_id,
+						(election_post) => election_post.post_id,
 					) ?? [],
 			});
 		}
