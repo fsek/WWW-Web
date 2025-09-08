@@ -39,6 +39,7 @@ import { toast } from "sonner";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { useAuthState, type RequiredPermission } from "@/lib/auth";
 import { action, target } from "@/api";
+import MemberEditForm from "./MemberEditForm";
 
 const columnHelper = createColumnHelper<AdminUserRead>();
 
@@ -59,6 +60,9 @@ export default function MembersPage() {
 
 	// add search state
 	const [search, setSearch] = useState<string>("");
+
+	const [editFormOpen, setEditFormOpen] = useState(false);
+	const [selectedUser, setSelectedUser] = useState<AdminUserRead | null>(null);
 
 	// checkbox state for filtering verified members only
 	const [showVerifiedOnly, setShowVerifiedOnly] = useState<boolean>(false);
@@ -357,7 +361,23 @@ export default function MembersPage() {
 			</Dialog>
 			<Separator />
 			{/* <AdminTable table={table} onRowClick={handleRowClick} /> */}
-			<AdminTable table={table} onRowClick={() => {}} />
+			<AdminTable
+				table={table}
+				onRowClick={(row) => {
+					setSelectedUser(row.original);
+					setEditFormOpen(true);
+				}}
+			/>
+			{selectedUser && (
+				<MemberEditForm
+					open={editFormOpen}
+					onClose={() => {
+						setEditFormOpen(false);
+						setSelectedUser(null);
+					}}
+					selectedUser={selectedUser}
+				/>
+			)}
 		</div>
 	);
 }
