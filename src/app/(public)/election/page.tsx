@@ -25,6 +25,10 @@ import { Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import formatTime from "@/help_functions/timeFormater";
+import Countdown from "react-countdown";
+import type { CountdownRenderProps } from "react-countdown";
+import CustomTitle from "@/components/CustomTitle";
 
 export interface JoinedElectionPost {
 	election_post_id: number;
@@ -150,15 +154,16 @@ export default function PublicElectionPage() {
 				cell: (info) => info.getValue() || "-",
 			},
 		),
-		columnHelper.accessor("elected_user_recommended_limit", {
-			id: "recommended_limit",
-			header: t("elections.recommended_limit"),
-			cell: (info) => info.getValue(),
-		}),
-		columnHelper.accessor("elected_user_max_limit", {
-			id: "max_limit",
-			header: t("elections.max_limit"),
-			cell: (info) => info.getValue(),
+		// Merged limits column
+		columnHelper.display({
+			id: "limits",
+			header: t("elections.limits") || t("elections.max_limit"),
+			cell: ({ row }) => {
+				const rec = row.original.elected_user_recommended_limit;
+				const max = row.original.elected_user_max_limit;
+				if (rec === 0 && max === 0) return t("elections.no_limit");
+				return `${rec}/${max}`;
+			},
 		}),
 		columnHelper.accessor("candidation_count", {
 			id: "candidation_count",
@@ -239,6 +244,53 @@ export default function PublicElectionPage() {
 		return { className: bg };
 	}
 
+	// Small presentational card for each sub-election showing end time and countdown
+	function SubElectionCard({ sub }: { sub: any }) {
+		const { i18n, t } = useTranslation();
+		const end = sub?.end_time ? new Date(sub.end_time) : undefined;
+		const title =
+			i18n.language === "en"
+				? sub?.title_en
+				: sub?.title_sv;
+
+		const renderer = (props: CountdownRenderProps) => {
+			const { days, hours, minutes, seconds, completed } = props;
+			if (completed) return <span className="text-red-600 dark:text-red-400">{t("elections.ended")}</span>;
+			const parts: string[] = [];
+			if (days && days > 0) parts.push(`${days}d`);
+			const hh = String(hours).padStart(2, "0");
+			const mm = String(minutes).padStart(2, "0");
+			const ss = String(seconds).padStart(2, "0");
+			parts.push(`${hh}:${mm}:${ss}`);
+			return (
+				<span className="font-mono text-xl md:text-2xl font-semibold tracking-tight leading-none">
+					{parts.join(" ")}
+				</span>
+			);
+		};
+
+		return (
+			<div className="rounded-xl border bg-gradient-to-br from-card/70 to-card p-4 shadow-sm hover:shadow-md transition-shadow">
+				<div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">{t("elections.sub_election")}</div>
+				<div className="text-sm font-semibold leading-snug line-clamp-2" title={title}>{title}</div>
+				{end ? (
+					<div className="mt-3 space-y-1">
+						<div className="text-[10px] font-medium text-muted-foreground/80">
+							{formatTime(end)}
+						</div>
+						<div>
+							<Countdown date={end} renderer={renderer} />
+						</div>
+					</div>
+				) : (
+					<div className="text-sm text-muted-foreground mt-2">
+						{t("elections.no_end_time")}
+					</div>
+				)}
+			</div>
+		);
+	}
+
 	if (electionPending || councilsPending) return <LoadingErrorCard />;
 	if (electionError) return <LoadingErrorCard error={electionError} />;
 	if (councilsError) return <LoadingErrorCard error={councilsError} />;
@@ -256,79 +308,95 @@ export default function PublicElectionPage() {
 		i18n.language === "en" ? election.description_en : election.description_sv;
 
 	return (
-		<div className="px-8 space-y-6 py-6">
-			<header className="space-y-2">
-				<h1 className="text-3xl font-bold text-primary">{title}</h1>
-				<div className="prose dark:prose-invert mx-auto max-w-none">
-					<Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>
-				</div>
-			</header>
+		<div className="w-full">
+			<div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-12 py-8 space-y-8">
+				<header className="space-y-4">
+					<div className="grid md:grid-cols-[300px_1fr] gap-8 items-start">
+						<div className="hidden md:block">
+							<div className="space-y-4 sticky top-24">
+								{election?.sub_elections?.map((sub: any) => (
+									<SubElectionCard key={sub.sub_election_id} sub={sub} />
+								))}
+							</div>
+						</div>
+						<div className="relative bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/70 rounded-xl ring-1 ring-border p-6 md:p-8 lg:p-10 space-y-4 shadow-sm">
+							<CustomTitle text={title} size={3} className="!mt-0" />
+							<div className="prose dark:prose-invert max-w-none">
+								<Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>
+							</div>
+						</div>
+					</div>
+				</header>
 
-			<div className="flex flex-wrap gap-3">
-				<Button
-					onClick={() => {
-						router.push("/election/candidations");
-					}}
-					variant="outline"
-				>
-					<Eye />
-					{t("elections.view_my_candidations")}
-				</Button>
-				<CandidationForm
-					electionPosts={joined.map((j) => ({
-						election_post_id: j.election_post_id,
-						post_id: j.post_id,
-						sub_election_id: j.sub_election_id ?? 0,
-						name_sv: j.name_sv,
-						name_en: j.name_en,
-					}))}
-					open={candidationOpen}
-					onOpenChange={setCandidationOpen}
-					electionId={election.election_id}
-				/>
-				<NominationForm
-					electionPosts={joined.map((j) => ({
-						election_post_id: j.election_post_id,
-						post_id: j.post_id,
-						sub_election_id: j.sub_election_id ?? 0,
-						name_sv: j.name_sv,
-						name_en: j.name_en,
-					}))}
-					open={nominationOpen}
-					onOpenChange={setNominationOpen}
+				<div className="flex flex-wrap gap-3">
+					<Button
+						onClick={() => {
+							router.push("/election/candidations");
+						}}
+						variant="outline"
+					>
+						<Eye />
+						{t("elections.view_my_candidations")}
+					</Button>
+					<CandidationForm
+						electionPosts={joined.map((j) => ({
+							election_post_id: j.election_post_id,
+							post_id: j.post_id,
+							sub_election_id: j.sub_election_id ?? 0,
+							name_sv: j.name_sv,
+							name_en: j.name_en,
+						}))}
+						open={candidationOpen}
+						onOpenChange={setCandidationOpen}
+						electionId={election.election_id}
+					/>
+					<NominationForm
+						electionPosts={joined.map((j) => ({
+							election_post_id: j.election_post_id,
+							post_id: j.post_id,
+							sub_election_id: j.sub_election_id ?? 0,
+							name_sv: j.name_sv,
+							name_en: j.name_en,
+						}))}
+						open={nominationOpen}
+						onOpenChange={setNominationOpen}
+						electionId={election.election_id}
+					/>
+				</div>
+
+				<section className="space-y-4">
+					<div className="flex flex-col gap-2 md:flex-row md:items-center">
+						<Input
+							placeholder={t("elections.search_posts_placeholder")}
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							className="max-w-xs"
+						/>
+					</div>
+					<p className="text-sm text-muted-foreground">
+						{t("elections.election_table_description")}
+					</p>
+					<Separator />
+					<AdminTable
+						table={table}
+						onRowClick={handleRowClick}
+						getRowProps={getRowProps}
+					/>
+					{filtered.length === 0 && (
+						<p className="text-sm text-muted-foreground">
+							{t("elections.no_posts_match")}
+						</p>
+					)}
+				</section>
+				<ElectionPostDetails
+					open={detailsOpen}
+					onOpenChange={setDetailsOpen}
+					joinedPost={selectedJoinedPost}
+					className={undefined}
+					myCandidations={myCandidations}
 					electionId={election.election_id}
 				/>
 			</div>
-
-			<section className="space-y-4">
-				<div className="flex flex-col gap-2 md:flex-row md:items-center">
-					<Input
-						placeholder={t("elections.search_posts_placeholder")}
-						value={search}
-						onChange={(e) => setSearch(e.target.value)}
-						className="max-w-xs"
-					/>
-				</div>
-				<Separator />
-				<AdminTable
-					table={table}
-					onRowClick={handleRowClick}
-					getRowProps={getRowProps}
-				/>
-				{filtered.length === 0 && (
-					<p className="text-sm text-muted-foreground">
-						{t("elections.no_posts_match")}
-					</p>
-				)}
-			</section>
-			<ElectionPostDetails
-				open={detailsOpen}
-				onOpenChange={setDetailsOpen}
-				joinedPost={selectedJoinedPost}
-				className={undefined}
-				myCandidations={myCandidations}
-				electionId={election.election_id}
-			/>
 		</div>
 	);
 }
