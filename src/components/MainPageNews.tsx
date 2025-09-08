@@ -19,6 +19,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import ImageDisplay from "./ImageDisplay";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface MainPageNewsProps {
 	mini?: boolean;
@@ -137,7 +139,9 @@ export default function MainPageNews({ mini = false }: MainPageNewsProps) {
 									: content;
 								return (
 									<>
-										<p className="whitespace-pre-wrap">{shortContent}</p>
+										<div className="prose dark:prose-invert mx-auto max-w-none">
+											<Markdown remarkPlugins={[remarkGfm]}>{shortContent}</Markdown>
+										</div>
 										{content.length > contentLimit && (
 											<div className="mt-2">
 												<Button
