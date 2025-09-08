@@ -92,7 +92,8 @@
 			},
 			"elections": {
 				"self": "Val",
-				"desc": "Delta i vårt demokratiska val och påverka vår framtid."
+				"desc": "Sök till sektionens poster!",
+				"href": "/election"
 			},
 			"projects": {
 				"self": "Projekt",
@@ -410,5 +411,12 @@
 		"title": "Galleri",
 		"select_year": "Välj år",
 		"photographers": "Fotografer"
+	},
+	"elections": {
+		"ended": "Avslutad",
+		"left": "kvar",
+		"day": "{{count}} dag(ar)",
+		"hour": "{{count}} h",
+		"min": "{{count}} min"
 	}
 }

@@ -92,7 +92,8 @@
 			},
 			"elections": {
 				"self": "Elections",
-				"desc": "Participate in shaping our future through a transparent process."
+				"desc": "Apply for positions within the guild!",
+				"href": "/election"
 			},
 			"projects": {
 				"self": "Projects",
@@ -410,5 +411,12 @@
 		"title": "Gallery",
 		"select_year": "Select year",
 		"photographers": "Photographers"
+	},
+	"elections": {
+		"ended": "Ended",
+		"left": "left",
+		"day": "{{count}} day(s)",
+		"hour": "{{count}} hour(s)",
+		"min": "{{count}} min(s)"
 	}
 }

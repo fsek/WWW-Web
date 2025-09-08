@@ -103,8 +103,10 @@ export default function AdminElectionCandidatePage() {
 	});
 
 	const getPostName = (post_id: number) => {
-		if (!subElection?.posts) return "-";
-		const post = subElection.posts.find((p) => p.id === post_id);
+		if (!subElection?.election_posts) return "-";
+		const post = subElection.election_posts.find(
+			(p) => p.election_post_id === post_id,
+		);
 		if (!post) return "-";
 		return i18n.language === "en" ? post.name_en : post.name_sv;
 	};

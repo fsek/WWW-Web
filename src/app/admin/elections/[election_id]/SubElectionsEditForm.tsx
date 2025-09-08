@@ -75,7 +75,10 @@ export default function SubElectionsEditForm({
 				title_sv: selectedSubElection.title_sv ?? "",
 				title_en: selectedSubElection.title_en ?? "",
 				end_time: toDateOrUndefined(selectedSubElection.end_time) ?? new Date(),
-				post_ids: selectedSubElection.posts.map((post) => post.id) ?? [],
+				post_ids:
+					selectedSubElection.election_posts.map(
+						(election_post) => election_post.election_post_id,
+					) ?? [],
 			});
 		}
 	}, [selectedSubElection, form, open]);

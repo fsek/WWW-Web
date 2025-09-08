@@ -43,7 +43,7 @@ export default function SubElections() {
 				return value ? formatTime(value) : "-";
 			},
 		}),
-		columnHelper.accessor((row) => row.posts?.length ?? 0, {
+		columnHelper.accessor((row) => row.election_posts?.length ?? 0, {
 			id: "posts_count",
 			header: t("elections.sub_election.posts_count"),
 			cell: (info) => info.getValue(),

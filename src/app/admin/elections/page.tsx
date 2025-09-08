@@ -82,7 +82,8 @@ export default function Elections() {
 			(row) => {
 				if (row.sub_elections) {
 					const num_posts = row.sub_elections.reduce(
-						(acc, sub) => acc + (sub.posts ? sub.posts.length : 0),
+						(acc, sub) =>
+							acc + (sub.election_posts ? sub.election_posts.length : 0),
 						0,
 					);
 					return num_posts;

@@ -99,8 +99,10 @@ export default function AdminElectionCandidatesPage() {
 	});
 
 	const getPostName = (post_id: number) => {
-		if (!subElection?.posts) return "-";
-		const post = subElection.posts.find((p) => p.id === post_id);
+		if (!subElection?.election_posts) return "-";
+		const post = subElection.election_posts.find(
+			(p) => p.election_post_id === post_id,
+		);
 		if (!post) return "-";
 		return i18n.language === "en" ? post.name_en : post.name_sv;
 	};
@@ -165,9 +167,9 @@ export default function AdminElectionCandidatesPage() {
 
 	// compute filtered posts
 	const filteredPosts = useMemo(() => {
-		if (!subElection?.posts) return [];
+		if (!subElection?.election_posts) return [];
 		const lower = (postSearch || "").toLowerCase();
-		return subElection.posts.filter(
+		return subElection.election_posts.filter(
 			(p) =>
 				(p.name_sv ?? "").toLowerCase().includes(lower) ||
 				(p.name_en ?? "").toLowerCase().includes(lower),
@@ -278,12 +280,15 @@ export default function AdminElectionCandidatesPage() {
 			cell: (info) => info.getValue() ?? "-",
 			size: 100,
 		}),
-		postColumnHelper.accessor((row) => postCandidationCount[row.id] ?? 0, {
-			id: "candidations_count",
-			header: t("admin:elections.posts.candidations_count"),
-			cell: (info) => info.getValue(),
-			size: 80,
-		}),
+		postColumnHelper.accessor(
+			(row) => postCandidationCount[row.election_post_id] ?? 0,
+			{
+				id: "candidations_count",
+				header: t("admin:elections.posts.candidations_count"),
+				cell: (info) => info.getValue(),
+				size: 80,
+			},
+		),
 	];
 
 	const [sorting, setSorting] = useState<SortingState>([
