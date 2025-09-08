@@ -83,36 +83,23 @@ export default function VerifyPage() {
 						<Card className="w-md mx-auto mt-16">
 							<CardHeader className="flex flex-col items-center">
 								<CheckCircle2 className="h-8 w-8 text-success mb-2" />
-								<span>
-									{t(
-										"verifyMail.requestSuccess",
-										"A verification email has been sent to your address!",
-									)}
-								</span>
+								<span>{t("verifyMail.requestSuccess")}</span>
 							</CardHeader>
 							<CardContent className="flex justify-center">
 								<Button onClick={() => router.push("/home")} className="w-full">
-									{t("verifyMail.goHome", "Go to Home")}
+									{t("verifyMail.goHome")}
 								</Button>
 							</CardContent>
 						</Card>
 					) : (
 						<Card className="w-md mx-auto mt-16">
 							<CardHeader className="flex flex-col items-center">
-								<span className="text-xl">
-									{t(
-										"verifyMail.noToken",
-										"No verification token provided, assuming you want to get a new email.",
-									)}
-								</span>
+								<span className="text-xl">{t("verifyMail.noToken")}</span>
 							</CardHeader>
 							<CardContent className="flex flex-col items-center space-y-4">
 								<input
 									type="email"
-									placeholder={t(
-										"verifyMail.emailPlaceholder",
-										"Enter your email",
-									)}
+									placeholder={t("verifyMail.emailPlaceholder")}
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
 									disabled={requestDisabled}
@@ -127,7 +114,7 @@ export default function VerifyPage() {
 									className="w-full max-w-md"
 									disabled={requestDisabled || !email}
 								>
-									{t("verifyMail.requestNew", "Request New Verification Email")}
+									{t("verifyMail.requestNew")}
 								</Button>
 							</CardContent>
 						</Card>
@@ -135,38 +122,24 @@ export default function VerifyPage() {
 				) : status === "loading" ? (
 					<LoadingErrorCard
 						isLoading={true}
-						loadingMessage={t("verifyMail.loading", "Verifying your email...")}
+						loadingMessage={t("verifyMail.loading")}
 					/>
 				) : status === "verify-error" ? (
-					<LoadingErrorCard
-						error={t(
-							"verifyMail.error",
-							"Verification failed. The link may be invalid or expired.",
-						)}
-						isLoading={false}
-					/>
+					<LoadingErrorCard error={t("verifyMail.error")} isLoading={false} />
 				) : status === "request-error" ? (
 					<LoadingErrorCard
-						error={t(
-							"verifyMail.requestError",
-							"Failed to send verification email. Please check your email address and try again.",
-						)}
+						error={t("verifyMail.requestError")}
 						isLoading={false}
 					/>
 				) : status === "verify-success" ? (
 					<Card className="w-md mx-auto mt-16">
 						<CardHeader className="flex flex-col items-center">
 							<CheckCircle2 className="h-8 w-8 text-success mb-2" />
-							<span>
-								{t(
-									"verifyMail.success",
-									"Your email has been verified successfully!",
-								)}
-							</span>
+							<span>{t("verifyMail.success")}</span>
 						</CardHeader>
 						<CardContent className="flex justify-center">
 							<Button onClick={() => router.push("/home")} className="w-full">
-								{t("verifyMail.goHome", "Go to Home")}
+								{t("verifyMail.goHome")}
 							</Button>
 						</CardContent>
 					</Card>

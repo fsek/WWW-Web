@@ -8,6 +8,7 @@
 	"error_past_event": "The start time must be in the future.",
 	"error_missing_council": "Please select a council.",
 	"all_day": "All-Day",
+	"verify_user": "Psst! If you are having trouble with signing up, try clicking here and verifying your account.",
 	"view": {
 		"time": "Time",
 		"description": "Description",

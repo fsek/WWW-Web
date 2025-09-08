@@ -11,6 +11,8 @@ import type { EventCreate, EventRead } from "@/api";
 import { useRouter } from "next/navigation";
 import { LoadingErrorCard } from "./LoadingErrorCard";
 import stripHtmlLinebreaks from "@/help_functions/stripHtmlLinebreaks";
+import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 interface MainPageCalendarProps {
 	mini?: boolean;
@@ -24,6 +26,7 @@ export default function MainPageCalendar({
 	isMobile = false,
 }: MainPageCalendarProps) {
 	const router = useRouter();
+	const { t } = useTranslation();
 
 	// Fetch booking data
 	const { data, error, isFetching } = useQuery({
@@ -108,6 +111,12 @@ export default function MainPageCalendar({
 		<div
 			className={`${containerPadding} ${mini || zoomWorkHours ? "h-full flex flex-col" : ""}`}
 		>
+			<Link
+				href="/verify"
+				className="text-center underline text-muted-foreground"
+			>
+				{t("calendar:verify_user")}
+			</Link>
 			<EventsProvider
 				initialCalendarEvents={events}
 				eventColor="#f6ad55"

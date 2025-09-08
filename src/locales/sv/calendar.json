@@ -8,6 +8,7 @@
 	"error_past_event": "Starttiden måste vara i framtiden.",
 	"error_missing_council": "Vänligen välj ett utskott.",
 	"all_day": "Heldag",
+	"verify_user": "Psst! Om du har problem med att anmäla dig, testa att klicka här och verifiera ditt konto.",
 	"view": {
 		"time": "Tid",
 		"description": "Beskrivning",
