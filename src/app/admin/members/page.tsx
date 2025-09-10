@@ -199,7 +199,6 @@ export default function MembersPage() {
 											},
 										},
 									);
-									console.log("user clicked", row.original.id);
 								}}
 							>
 								{row.original.is_member

@@ -22,6 +22,7 @@ import {
 	updatePostMutation,
 } from "@/api/@tanstack/react-query.gen";
 import type { PostRead, PostUpdate, PostDoorAccessRead } from "@/api";
+import { elected_by, elected_at_semester } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
@@ -31,6 +32,7 @@ import { toast } from "sonner";
 import { Save } from "lucide-react";
 import { door } from "@/api";
 import StyledMultiSelect from "@/components/StyledMultiSelect";
+import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 
 const postEditSchema = z.object({
 	id: z.number(),
@@ -41,6 +43,10 @@ const postEditSchema = z.object({
 	email: z.string().email(),
 	council_id: z.number().int(),
 	doors: z.array(z.string()).optional(),
+	elected_at_semester: z.nativeEnum(elected_at_semester),
+	elected_by: z.nativeEnum(elected_by),
+	elected_user_recommended_limit: z.coerce.number().int().min(0),
+	elected_user_max_limit: z.coerce.number().int().min(0),
 });
 
 type PostEditFormType = z.infer<typeof postEditSchema>;
@@ -66,6 +72,10 @@ export default function PostEditForm({
 			description_en: "",
 			email: "",
 			doors: [],
+			elected_at_semester: elected_at_semester.OTHER,
+			elected_by: elected_by.OTHER,
+			elected_user_recommended_limit: 0,
+			elected_user_max_limit: 0,
 		},
 	});
 
@@ -78,6 +88,12 @@ export default function PostEditForm({
 				doors: selectedPost.post_door_accesses.map(
 					(doorAccess) => doorAccess.door,
 				),
+				elected_at_semester: (selectedPost.elected_at_semester ??
+					elected_at_semester.OTHER) as elected_at_semester,
+				elected_by: (selectedPost.elected_by ?? elected_by.OTHER) as elected_by,
+				elected_user_recommended_limit:
+					selectedPost.elected_user_recommended_limit ?? 0,
+				elected_user_max_limit: selectedPost.elected_user_max_limit ?? 0,
 			});
 		}
 	}, [selectedPost, form, open]);
@@ -89,13 +105,12 @@ export default function PostEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllPostsQueryKey() });
-			toast.success(t("posts.edit_success", "Post uppdaterad!"));
+			toast.success(t("posts.edit_success"));
 		},
 		onError: (error) => {
 			onClose();
 			toast.error(
-				t("posts.edit_error", "Kunde inte uppdatera post.") +
-					(error?.detail ? ` (${error.detail})` : ""),
+				t("posts.edit_error") + (error?.detail ? ` (${error.detail})` : ""),
 			);
 		},
 	});
@@ -105,13 +120,12 @@ export default function PostEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: getAllPostsQueryKey() });
-			toast.success(t("posts.delete_success", "Post borttagen!"));
+			toast.success(t("posts.delete_success"));
 		},
 		onError: (error) => {
 			onClose();
 			toast.error(
-				t("posts.delete_error", "Kunde inte ta bort post.") +
-					(error?.detail ? ` (${error.detail})` : ""),
+				t("posts.delete_error") + (error?.detail ? ` (${error.detail})` : ""),
 			);
 		},
 	});
@@ -127,6 +141,10 @@ export default function PostEditForm({
 			email: values.email,
 			council_id: values.council_id,
 			doors: values.doors as PostDoorAccessRead["door"][],
+			elected_at_semester: values.elected_at_semester,
+			elected_by: values.elected_by,
+			elected_user_recommended_limit: values.elected_user_recommended_limit,
+			elected_user_max_limit: values.elected_user_max_limit,
 		};
 
 		updatePost.mutate(
@@ -182,7 +200,7 @@ export default function PostEditForm({
 		>
 			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
-					<DialogTitle>{t("posts.edit", "Redigera post")}</DialogTitle>
+					<DialogTitle>{t("posts.edit")}</DialogTitle>
 				</DialogHeader>
 				<hr />
 				<Form {...form}>
@@ -196,10 +214,10 @@ export default function PostEditForm({
 							name="name_sv"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("posts.name", "Name")}</FormLabel>
+									<FormLabel>{t("posts.name")}</FormLabel>
 									<FormControl>
 										<Input
-											placeholder={t("posts.name_placeholder", "Namn")}
+											placeholder={t("posts.name_placeholder")}
 											{...field}
 										/>
 									</FormControl>
@@ -213,13 +231,10 @@ export default function PostEditForm({
 							name="name_en"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("posts.name_en", "Name (English)")}</FormLabel>
+									<FormLabel>{t("posts.name_en")}</FormLabel>
 									<FormControl>
 										<Input
-											placeholder={t(
-												"posts.name_en_placeholder",
-												"Name (English)",
-											)}
+											placeholder={t("posts.name_en_placeholder")}
 											{...field}
 										/>
 									</FormControl>
@@ -233,15 +248,10 @@ export default function PostEditForm({
 							name="description_sv"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
-									<FormLabel>
-										{t("posts.description_sv", "Description (Swedish)")}
-									</FormLabel>
+									<FormLabel>{t("posts.description_sv")}</FormLabel>
 									<FormControl>
 										<Textarea
-											placeholder={t(
-												"posts.description_placeholder_sv",
-												"Beskrivning (Svenska)",
-											)}
+											placeholder={t("posts.description_placeholder_sv")}
 											{...field}
 										/>
 									</FormControl>
@@ -255,15 +265,10 @@ export default function PostEditForm({
 							name="description_en"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
-									<FormLabel>
-										{t("posts.description_en", "Description (English)")}
-									</FormLabel>
+									<FormLabel>{t("posts.description_en")}</FormLabel>
 									<FormControl>
 										<Textarea
-											placeholder={t(
-												"posts.description_placeholder_en",
-												"Description (English)",
-											)}
+											placeholder={t("posts.description_placeholder_en")}
 											{...field}
 										/>
 									</FormControl>
@@ -277,10 +282,10 @@ export default function PostEditForm({
 							name="email"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("posts.email", "Email")}</FormLabel>
+									<FormLabel>{t("posts.email")}</FormLabel>
 									<FormControl>
 										<Input
-											placeholder={t("posts.email_placeholder", "Email")}
+											placeholder={t("posts.email_placeholder")}
 											{...field}
 										/>
 									</FormControl>
@@ -294,7 +299,7 @@ export default function PostEditForm({
 							name="council_id"
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
-									<FormLabel>{t("posts.council", "Council")}</FormLabel>
+									<FormLabel>{t("posts.council")}</FormLabel>
 									<AdminChooseCouncil
 										value={field.value}
 										onChange={field.onChange}
@@ -313,8 +318,6 @@ export default function PostEditForm({
 									<FormControl>
 										<StyledMultiSelect
 											isMulti
-											// Simplifying these seems straightforward,
-											// but I could not do it without creating type errors
 											options={Object.values(door).map((d) => ({
 												value: d,
 												label: d,
@@ -338,19 +341,108 @@ export default function PostEditForm({
 							)}
 						/>
 
+						{/* Elected at semester */}
+						<FormField
+							control={form.control}
+							name="elected_at_semester"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("posts.elected_at_semester")}</FormLabel>
+									<FormControl>
+										<SelectFromOptions
+											options={Object.values(elected_at_semester).map(
+												(value) => ({
+													value,
+													label: t(`enums.elected_at_semester.${value}`),
+												}),
+											)}
+											value={field.value}
+											onChange={field.onChange}
+											placeholder={t("posts.elected_at_semester_placeholder")}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Elected by */}
+						<FormField
+							control={form.control}
+							name="elected_by"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("posts.elected_by")}</FormLabel>
+									<FormControl>
+										<SelectFromOptions
+											options={Object.values(elected_by).map((value) => ({
+												value,
+												label: t(`enums.elected_by.${value}`),
+											}))}
+											value={field.value}
+											onChange={field.onChange}
+											placeholder={t("posts.elected_by_placeholder")}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Elected user recommended limit */}
+						<FormField
+							control={form.control}
+							name="elected_user_recommended_limit"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										{t("posts.elected_user_recommended_limit")}
+									</FormLabel>
+									<FormControl>
+										<Input
+											type="number"
+											min={0}
+											placeholder={t(
+												"posts.elected_user_recommended_limit_placeholder",
+											)}
+											{...field}
+											value={(field.value as number) ?? 0}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
+						{/* Elected user max limit */}
+						<FormField
+							control={form.control}
+							name="elected_user_max_limit"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>{t("posts.elected_user_max_limit")}</FormLabel>
+									<FormControl>
+										<Input
+											type="number"
+											min={0}
+											placeholder={t(
+												"posts.elected_user_max_limit_placeholder",
+											)}
+											{...field}
+											value={(field.value as number) ?? 0}
+										/>
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+
 						<div className="space-x-2 lg:col-span-4 lg:grid-cols-subgrid">
 							<ConfirmDeleteDialog
 								open={showDeleteDialog}
 								onOpenChange={setShowDeleteDialog}
 								onConfirm={handleRemoveSubmit}
-								triggerText={t("posts.remove", "Remove post")}
-								title={t("posts.confirm_remove", "Confirm removal")}
-								description={t(
-									"posts.confirm_remove_text",
-									"Are you sure you want to remove this post?",
-								)}
-								confirmText={t("posts.remove", "Remove post")}
-								cancelText={t("cancel", "Cancel")}
+								triggerText={t("posts.remove")}
+								title={t("posts.confirm_remove")}
+								description={t("posts.confirm_remove_text")}
+								confirmText={t("posts.remove")}
+								cancelText={t("cancel")}
 							/>
 
 							<Button
@@ -359,12 +451,12 @@ export default function PostEditForm({
 								className="w-32 min-w-fit"
 								onClick={viewPermissions}
 							>
-								{t("posts.update_permissions", "Updatera permissions")}
+								{t("posts.update_permissions")}
 							</Button>
 
 							<Button type="submit" className="w-32 min-w-fit">
 								<Save />
-								{t("save", "Spara")}
+								{t("save")}
 							</Button>
 						</div>
 					</form>
