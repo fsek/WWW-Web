@@ -34,6 +34,10 @@
 		"q4": {
 			"question": "Help! I don't have any of my old admin rights!",
 			"answer": "Please wait or contact your council boss and ask them to give you the appropriate permissions."
+		},
+		"q5": {
+			"question": "I am having problems signing up to events, viewing the gallery, or other things!??",
+			"answer": "We prevent non-members and users without verified email addresses from using many of our services. Check the following: \n\nThat you really have verified your account (try fsektionen.se/verify). \nThat you are registered as a member. (look in account settings to check for both of these!) \nThat you are logged in to the correct account and have not created multiple accounts, for example one with your student email and another with your personal email. If you have more than one account and want to get rid of the bad one, contact spindelman@fsektionen.se via the email of the account you want to delete."
 		}
 	},
 	"next": "Next",
@@ -239,9 +243,13 @@
 	"verifyMail": {
 		"loading": "Verifying your email...",
 		"success": "Email verification succeeded!",
-		"error": "Email verification failed. The link may have expired or been invalid, or you may have already verified your email.",
+		"error": "Email verification failed. The link may have expired or been invalid, or you may have already verified your email. You can go to fsektionen.se/verify with no token to get a new link.",
 		"goHome": "Go to the homepage",
-		"noToken": "No verification link provided. Please check the link you clicked on."
+		"noToken": "No verification link provided. Please check the link you clicked on or request a new email.",
+		"requestSuccess": "A verification link has been sent to your email address if it is registered.",
+		"requestError": "Failed to send verification email. Please try again later.",
+		"emailPlaceholder": "Enter your email",
+		"requestNew": "Request New Verification Email"
 	},
 	"reset-password": {
 		"title": "Reset Password",

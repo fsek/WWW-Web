@@ -37,6 +37,8 @@ import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import { useAuthState, type RequiredPermission } from "@/lib/auth";
+import { action, target } from "@/api";
 
 const columnHelper = createColumnHelper<AdminUserRead>();
 
@@ -50,6 +52,10 @@ export default function MembersPage() {
 	} = useQuery({
 		...adminGetAllUsersOptions(),
 	});
+	const permissions = useAuthState().getPermissions();
+	const hasManageUserPerms = permissions.hasRequiredPermissions([
+		[action.MANAGE, target.USER],
+	] as RequiredPermission[]);
 
 	// add search state
 	const [search, setSearch] = useState<string>("");
@@ -165,40 +171,44 @@ export default function MembersPage() {
 			cell: (info) => (info.getValue() ? t("admin:yes") : t("admin:no")),
 			size: 75,
 		}),
-		{
-			id: "actions",
-			header: t("admin:member.actions"),
-			cell: ({ row }: { row: Row<AdminUserRead> }) => (
-				<Button
-					variant={row.original.is_member ? "destructive" : "default"}
-					size="sm"
-					onClick={(e) => {
-						e.stopPropagation();
-						const updateUser: UpdateUserMember = {
-							is_member: !row.original.is_member,
-						};
-						handleMemberUser.mutate(
-							{
-								body: updateUser,
-								path: { user_id: row.original.id },
-							},
-							{
-								onError: (error) => {
-									toast.error(
-										t("admin:block.error_unblock") +
-											(error?.detail ? `: ${error.detail}` : ""),
+		...(hasManageUserPerms
+			? [
+					{
+						id: "actions",
+						header: t("admin:member.actions"),
+						cell: ({ row }: { row: Row<AdminUserRead> }) => (
+							<Button
+								variant={row.original.is_member ? "destructive" : "default"}
+								size="sm"
+								onClick={(e) => {
+									e.stopPropagation();
+									const updateUser: UpdateUserMember = {
+										is_member: !row.original.is_member,
+									};
+									handleMemberUser.mutate(
+										{
+											body: updateUser,
+											path: { user_id: row.original.id },
+										},
+										{
+											onError: (error) => {
+												toast.error(
+													t("admin:block.error_unblock") +
+														(error?.detail ? `: ${error.detail}` : ""),
+												);
+											},
+										},
 									);
-								},
-							},
-						);
-					}}
-				>
-					{row.original.is_member
-						? t("admin:member.remove_member")
-						: t("admin:member.make_member")}
-				</Button>
-			),
-		},
+								}}
+							>
+								{row.original.is_member
+									? t("admin:member.remove_member")
+									: t("admin:member.make_member")}
+							</Button>
+						),
+					},
+				]
+			: []),
 	];
 
 	const [sorting, setSorting] = useState<SortingState>([]);
@@ -299,19 +309,21 @@ export default function MembersPage() {
 				</div>
 				<Separator className="mb-8" />
 				{/* Bulk member button */}
-				<Button
-					className="my-2"
-					variant="default"
-					disabled={
-						filteredUsers.filter((u) => !u.is_member).length === 0 ||
-						bulkLoading
-					}
-					onClick={() => setDialogOpen(true)}
-				>
-					{bulkLoading
-						? `${t("admin:member.processing")}...`
-						: t("admin:member.bulk_member")}
-				</Button>
+				{hasManageUserPerms && (
+					<Button
+						className="my-2"
+						variant="default"
+						disabled={
+							filteredUsers.filter((u) => !u.is_member).length === 0 ||
+							bulkLoading
+						}
+						onClick={() => setDialogOpen(true)}
+					>
+						{bulkLoading
+							? `${t("admin:member.processing")}...`
+							: t("admin:member.bulk_member")}
+					</Button>
+				)}
 			</div>
 			<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
 				<DialogContent>
@@ -329,15 +341,17 @@ export default function MembersPage() {
 								{t("admin:cancel")}
 							</Button>
 						</DialogClose>
-						<Button
-							variant="default"
-							onClick={handleBulkMember}
-							disabled={bulkLoading}
-						>
-							{bulkLoading
-								? t("admin:member.bulk_member_loading")
-								: t("admin:member.bulk_member_confirm")}
-						</Button>
+						{hasManageUserPerms && (
+							<Button
+								variant="default"
+								onClick={handleBulkMember}
+								disabled={bulkLoading}
+							>
+								{bulkLoading
+									? t("admin:member.bulk_member_loading")
+									: t("admin:member.bulk_member_confirm")}
+							</Button>
+						)}
 					</DialogFooter>
 				</DialogContent>
 			</Dialog>
