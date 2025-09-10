@@ -1,5 +1,5 @@
 name: Deploy Frontend
-run-name: Deploy Frontend to ${{ github.event.inputs.target || 'stage' }}
+run-name: Deploy Frontend to ${{ github.event.inputs.target || 'unknown' }}
 
 on:
   workflow_dispatch:
