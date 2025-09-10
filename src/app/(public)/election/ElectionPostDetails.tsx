@@ -162,13 +162,17 @@ export default function ElectionPostDetails({
 											<span className="font-medium">
 												{t("elections.recommended_limit")}:
 											</span>{" "}
-											{joinedPost.elected_user_recommended_limit}
+											{joinedPost.elected_user_recommended_limit === 0
+												? "∞"
+												: joinedPost.elected_user_recommended_limit}
 										</li>
 										<li>
 											<span className="font-medium">
 												{t("elections.max_limit")}:
 											</span>{" "}
-											{joinedPost.elected_user_max_limit}
+											{joinedPost.elected_user_max_limit === 0
+												? "∞"
+												: joinedPost.elected_user_max_limit}
 										</li>
 									</ul>
 								</Section>
