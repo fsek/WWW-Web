@@ -919,7 +919,7 @@
 	"elections": {
 		"self": "Val",
 		"title": "Hantera val",
-		"description_subtitle": "Här kan du skapa och administrera val.",
+		"description_subtitle": "Här kan du skapa och administrera val. Ett val innehåller delval, som i sig innehåller poster och kandidater. På denna sida hanterar du alltså en form av meta-val. \n\nFör att skapa ett nytt val: 1. Klicka på 'Skapa val'. 2. Fyll i detaljerna, om du väljer termin kommer standardposter att läggas till automatiskt. 3. Klicka på 'Skapa'. 4. Klicka på 'Redigera' knappen för att redigera valet, dess delval och delvalens poster och kandidater.",
 		"create_election": "Skapa val",
 		"edit_election": "Redigera val",
 		"title_sv": "Titel (svenska)",
@@ -959,7 +959,7 @@
 		"back_to_elections": "Tillbaka",
 		"election": {
 			"page_title": "Delval",
-			"page_description": "Administrera delval som tillhör detta val."
+			"page_description": "Administrera delval som tillhör detta val. För att lägga till poster, klicka på ett delval i listan nedan. För att hantera kandidater, kandidaturer och nomineringar, klicka på 'Hantera delval' knappen. Dessa saker ligger under varje delval, inte under själva valet. Om du vill ändra valet till att visas måste du gå tillbaka till val-listan och klicka på 'Redigera' knappen för det val du vill ändra. För att förlänga sluttiden för en post, skapa ett nytt delval och flytta posten dit."
 		},
 		"sub_election": {
 			"create_sub_election": "Skapa delval",

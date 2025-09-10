@@ -918,7 +918,7 @@
 	"elections": {
 		"self": "Elections",
 		"title": "Manage Elections",
-		"description_subtitle": "Here you can create and administer elections.",
+		"description_subtitle": "Here you can create and administer elections. An election can contain multiple sub-elections, each with their own end time and posts. On this page you therefore manage only the 'meta-elections'. \n\nTo create a new election: 1. Click on “Create election”. 2. Fill in the details; if you select a term, default entries will be added automatically. 3. Click on “Create”. 4. Click on the 'Edit' button to edit the election, its sub-elections and the entries and candidates for the sub-elections.",
 		"create_election": "Create election",
 		"edit_election": "Edit election",
 		"title_sv": "Title (Swedish)",
@@ -958,7 +958,7 @@
 		"back_to_elections": "Back",
 		"election": {
 			"page_title": "Sub-elections",
-			"page_description": "Administer sub-elections belonging to this election."
+			"page_description": "Administer sub-elections belonging to this election. To add posts, click on a sub-election in the list. To manage candidates, candidacies and nominations, click on the 'Edit sub-election' button. These items are located under each sub-election, not under the election itself. If you want to change the election to be displayed, you must return to the election list and click the “Edit” button for the election you want to change. To extend the end time for a post, create a new sub-election and move the post there."
 		},
 		"sub_election": {
 			"create_sub_election": "Create sub-election",

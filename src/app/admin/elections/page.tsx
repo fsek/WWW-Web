@@ -175,7 +175,9 @@ export default function Elections() {
 			<h3 className="text-3xl py-3 font-bold text-primary">
 				{t("elections.title")}
 			</h3>
-			<p className="py-3">{t("elections.description_subtitle")}</p>
+			<p className="py-3 whitespace-pre-line">
+				{t("elections.description_subtitle")}
+			</p>
 			<ElectionsForm />
 
 			<AdminTable table={table} onRowClick={handleRowClick} />
