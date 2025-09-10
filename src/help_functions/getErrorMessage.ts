@@ -17,9 +17,6 @@ export default function getErrorMessage(
 		if (error.detail === "Unauthorized") {
 			return t("main:loading.unauthorized");
 		}
-	}
-
-	if (typeof error === "object" && "detail" in error) {
 		return (error as { detail: string }).detail;
 	}
 

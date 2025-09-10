@@ -17,7 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { createColumnHelper, type Row } from "@tanstack/react-table";
 import useCreateTable from "@/widgets/useCreateTable";
 import AdminTable from "@/widgets/AdminTable";
-import type { ElectionPostRead, CouncilRead, PostRead } from "@/api";
+import type { CouncilRead, PostRead, SubElectionMemberRead } from "@/api";
 import CandidationForm from "./CandidationForm";
 import NominationForm from "./NominationForm";
 import ElectionPostDetails from "./ElectionPostDetails";
@@ -101,7 +101,7 @@ export default function PublicElectionPage() {
 		const result: JoinedElectionPost[] = [];
 		for (const sub of election.sub_elections) {
 			if (!sub.election_posts) continue;
-			for (const ep of sub.election_posts as ElectionPostRead[]) {
+			for (const ep of sub.election_posts) {
 				// Find council info if available
 				const council = allCouncils.find(
 					(c) => c.id === ep.council_id,
@@ -245,17 +245,19 @@ export default function PublicElectionPage() {
 	}
 
 	// Small presentational card for each sub-election showing end time and countdown
-	function SubElectionCard({ sub }: { sub: any }) {
+	function SubElectionCard({ sub }: { sub: SubElectionMemberRead }) {
 		const { i18n, t } = useTranslation();
 		const end = sub?.end_time ? new Date(sub.end_time) : undefined;
-		const title =
-			i18n.language === "en"
-				? sub?.title_en
-				: sub?.title_sv;
+		const title = i18n.language === "en" ? sub?.title_en : sub?.title_sv;
 
 		const renderer = (props: CountdownRenderProps) => {
 			const { days, hours, minutes, seconds, completed } = props;
-			if (completed) return <span className="text-red-600 dark:text-red-400">{t("elections.ended")}</span>;
+			if (completed)
+				return (
+					<span className="text-red-600 dark:text-red-400">
+						{t("elections.ended")}
+					</span>
+				);
 			const parts: string[] = [];
 			if (days && days > 0) parts.push(`${days}d`);
 			const hh = String(hours).padStart(2, "0");
@@ -271,8 +273,15 @@ export default function PublicElectionPage() {
 
 		return (
 			<div className="rounded-xl border bg-gradient-to-br from-card/70 to-card p-4 shadow-sm hover:shadow-md transition-shadow">
-				<div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">{t("elections.sub_election")}</div>
-				<div className="text-sm font-semibold leading-snug line-clamp-2" title={title}>{title}</div>
+				<div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+					{t("elections.sub_election")}
+				</div>
+				<div
+					className="text-sm font-semibold leading-snug line-clamp-2"
+					title={title}
+				>
+					{title}
+				</div>
 				{end ? (
 					<div className="mt-3 space-y-1">
 						<div className="text-[10px] font-medium text-muted-foreground/80">
@@ -314,7 +323,7 @@ export default function PublicElectionPage() {
 					<div className="grid md:grid-cols-[300px_1fr] gap-8 items-start">
 						<div className="hidden md:block">
 							<div className="space-y-4 sticky top-24">
-								{election?.sub_elections?.map((sub: any) => (
+								{election?.sub_elections?.map((sub) => (
 									<SubElectionCard key={sub.sub_election_id} sub={sub} />
 								))}
 							</div>

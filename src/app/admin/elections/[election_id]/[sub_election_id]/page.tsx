@@ -28,7 +28,11 @@ import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { useRouter, useParams } from "next/navigation";
-import type { CandidateRead, ElectionPostRead, NominationRead } from "@/api/types.gen";
+import type {
+	CandidateRead,
+	ElectionPostRead,
+	NominationRead,
+} from "@/api/types.gen";
 import CandidationForm from "./CandidationForm";
 import { toast } from "sonner";
 import getErrorMessage from "@/help_functions/getErrorMessage";
@@ -276,7 +280,9 @@ export default function AdminElectionCandidatesPage() {
 		);
 	}
 
-	function DeleteNominationDialog({ nomination }: { nomination: NominationRead }) {
+	function DeleteNominationDialog({
+		nomination,
+	}: { nomination: NominationRead }) {
 		const [open, setOpen] = useState(false);
 		return (
 			<ConfirmDeleteDialog
@@ -372,12 +378,15 @@ export default function AdminElectionCandidatesPage() {
 			cell: (info) => info.getValue() ?? "-",
 			size: 160,
 		}),
-		nominationColumnHelper.accessor((row) => getPostName(row.post_id ?? row.election_post_id), {
-			id: "post",
-			header: t("elections.election_nominations.post_name"),
-			cell: (info) => info.getValue() ?? "-",
-			size: 120,
-		}),
+		nominationColumnHelper.accessor(
+			(row) => getPostName(row.post_id ?? row.election_post_id),
+			{
+				id: "post",
+				header: t("elections.election_nominations.post_name"),
+				cell: (info) => info.getValue() ?? "-",
+				size: 120,
+			},
+		),
 		nominationColumnHelper.accessor((row) => row.motivation, {
 			id: "motivation",
 			header: t("elections.election_nominations.motivation"),
@@ -388,12 +397,15 @@ export default function AdminElectionCandidatesPage() {
 			},
 			size: 250,
 		}),
-		nominationColumnHelper.accessor((row) => new Date(row.created_at).toLocaleString(), {
-			id: "created_at",
-			header: t("elections.election_nominations.created_at"),
-			cell: (info) => info.getValue(),
-			size: 160,
-		}),
+		nominationColumnHelper.accessor(
+			(row) => new Date(row.created_at).toLocaleString(),
+			{
+				id: "created_at",
+				header: t("elections.election_nominations.created_at"),
+				cell: (info) => info.getValue(),
+				size: 160,
+			},
+		),
 		{
 			id: "actions",
 			header: t("admin:elections.election_candidates.actions"),
@@ -519,7 +531,9 @@ export default function AdminElectionCandidatesPage() {
 					<TabsTrigger value="posts">
 						{t("elections.sub_election.posts_tab")}
 					</TabsTrigger>
-					<TabsTrigger value="nominations">{t("elections.election_nominations.tab_title")}</TabsTrigger>
+					<TabsTrigger value="nominations">
+						{t("elections.election_nominations.tab_title")}
+					</TabsTrigger>
 				</TabsList>
 
 				<TabsContent value="candidates" className="space-y-4">
@@ -593,7 +607,11 @@ export default function AdminElectionCandidatesPage() {
 								onChange={(e) => setPostSearch(e.target.value)}
 							/>
 						</div>
-						<Button variant="outline" onClick={() => setMovePostOpen(true)} disabled={!subElection?.election_posts?.length}>
+						<Button
+							variant="outline"
+							onClick={() => setMovePostOpen(true)}
+							disabled={!subElection?.election_posts?.length}
+						>
 							{t("elections.move_post", { defaultValue: "Move post" })}
 						</Button>
 					</div>
@@ -605,13 +623,17 @@ export default function AdminElectionCandidatesPage() {
 							open={movePostOpen}
 							onOpenChange={setMovePostOpen}
 							posts={subElection.election_posts ?? []}
-							otherSubElections={(election.sub_elections || []).filter((s) => s.sub_election_id !== subElection.sub_election_id)}
+							otherSubElections={(election.sub_elections || []).filter(
+								(s) => s.sub_election_id !== subElection.sub_election_id,
+							)}
 						/>
 					)}
 				</TabsContent>
 
 				<TabsContent value="nominations" className="space-y-4">
-					<h4 className="text-xl font-semibold">{t("elections.election_nominations.tab_title")}</h4>
+					<h4 className="text-xl font-semibold">
+						{t("elections.election_nominations.tab_title")}
+					</h4>
 					<p className="text-xs md:text-sm font-medium">
 						{t("elections.election_nominations.tab_description")}
 					</p>

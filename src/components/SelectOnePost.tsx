@@ -43,27 +43,6 @@ export default function SelectOnePost({
 				}
 			: null;
 
-	const handleChange = (selected: Option | readonly Option[] | null) => {
-		if (Array.isArray(selected)) {
-			if (selected.length > 0 && typeof selected[0].value === "string") {
-				const numValue = Number(selected[0].value);
-				onChange(Number.isNaN(numValue) ? null : numValue);
-			} else {
-				onChange(null);
-			}
-		} else if (selected && !Array.isArray(selected)) {
-			const selectedValue = (selected as Option).value;
-			if (typeof selectedValue === "string") {
-				const numValue = Number(selectedValue);
-				onChange(Number.isNaN(numValue) ? null : numValue);
-			} else {
-				onChange(null);
-			}
-		} else {
-			onChange(null);
-		}
-	};
-
 	if (error || isFetching) {
 		return (
 			<SelectFromOptions isDisabled={true} options={[]} onChange={() => {}} />
