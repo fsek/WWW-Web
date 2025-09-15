@@ -107,7 +107,7 @@ export default function PostForm() {
 	}));
 
 	return (
-		<div className="p-3">
+		<>
 			<Button
 				onClick={() => {
 					postForm.reset();
@@ -327,6 +327,6 @@ export default function PostForm() {
 					</Form>
 				</DialogContent>
 			</Dialog>
-		</div>
+		</>
 	);
 }

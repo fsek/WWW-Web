@@ -25,6 +25,7 @@
 	"user": "Användare",
 	"edit": "Redigera",
 	"actions": "Åtgärder",
+	"search_placeholder": "Sök ...",
 	"welcome": {
 		"title": "Välkommen till adminsidan",
 		"message": "Här kan du hantera en otrolig mängd saker (Saknas något? Kontakta en spindelman@fsektionen.se). Använd menyn till vänster för att navigera mellan de olika skärmarna. Du borde bara ha tillgång till de skärmar du har behörighet till, om så inte är fallet, kontakta en superman."
@@ -325,7 +326,7 @@
 		},
 		"door_access": "Dörraccess",
 		"select_doors": "Välj dörrar att ge access till",
-		"search_placeholder": "Sök på postnamn..."
+		"search_placeholder": "Sök på postnamn...",
 		"name_en_placeholder": "Titel (engelska)",
 		"description_sv": "Beskrivning (svenska)",
 		"description_en": "Beskrivning (engelska)",

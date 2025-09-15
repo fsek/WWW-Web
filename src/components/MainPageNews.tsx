@@ -134,13 +134,16 @@ export default function MainPageNews({ mini = false }: MainPageNewsProps) {
 								const content =
 									i18n.language === "sv" ? news.content_sv : news.content_en;
 								let contentLimit = mini ? 300 : 500;
-								const shortContent = content.length > contentLimit
-									? content.slice(0, contentLimit) + "…"
-									: content;
+								const shortContent =
+									content.length > contentLimit
+										? content.slice(0, contentLimit) + "…"
+										: content;
 								return (
 									<>
 										<div className="prose dark:prose-invert mx-auto max-w-none">
-											<Markdown remarkPlugins={[remarkGfm]}>{shortContent}</Markdown>
+											<Markdown remarkPlugins={[remarkGfm]}>
+												{shortContent}
+											</Markdown>
 										</div>
 										{content.length > contentLimit && (
 											<div className="mt-2">

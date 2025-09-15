@@ -25,6 +25,7 @@
 	"user": "User",
 	"edit": "Edit",
 	"actions": "Actions",
+	"search_placeholder": "Search ...",
 	"welcome": {
 		"title": "Welcome to the Admin Page",
 		"message": "Here you can manage a wide range of things (Is something missing? Contact spindelman@fsektionen.se). Use the menu on the left to navigate between the different sections. You should only have access to the sections you have permissions for; if this is not the case, please contact a webmaster."
@@ -324,7 +325,7 @@
 		},
 		"door_access": "Door Access",
 		"select_doors": "Select doors to grant access to",
-		"search_placeholder": "Search by post name..."
+		"search_placeholder": "Search by post name...",
 		"name_en_placeholder": "Title (English)",
 		"description_sv": "Description (Swedish)",
 		"description_en": "Description (English)",

@@ -2,224 +2,121 @@
 
 import type { AdminUserRead } from "@/api";
 import { adminGetAllUsersOptions } from "@/api/@tanstack/react-query.gen";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import AdminTable from "@/widgets/AdminTable";
 import { AdminChooseMultPosts } from "@/widgets/AdminChooseMultPosts";
 import { useQuery } from "@tanstack/react-query";
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  createColumnHelper,
-  getFilteredRowModel,
-  type Row,
-  type SortingState,
+	type ColumnDef,
+	type ColumnFiltersState,
+	createColumnHelper,
 } from "@tanstack/react-table";
-import useCreateTable from "@/widgets/useCreateTable";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import UserPostsEditForm from "./UserPostsEditForm";
-import { UserPen } from "lucide-react";
-import { fuzzyFilter } from "@/lib/utils";
+import AdminPage from "@/widgets/AdminPage";
+import { useState } from "react";
 
 const columnHelper = createColumnHelper<AdminUserRead>();
 
 export default function UserPostsPage() {
-  const { t, i18n } = useTranslation();
-  const {
-    data: userDetails,
-    error,
-    isLoading,
-  } = useQuery({
-    ...adminGetAllUsersOptions(),
-  });
+	const { t, i18n } = useTranslation();
 
-  const [globalFilter, setGlobalFilter] = useState("");
+	const columns: ColumnDef<AdminUserRead, any>[] = [
+		columnHelper.accessor("id", {
+			header: t("admin:id"),
+			size: 50,
+		}),
+		columnHelper.accessor("first_name", {
+			header: t("admin:first_name"),
+			size: 150,
+		}),
+		columnHelper.accessor("last_name", {
+			header: t("admin:last_name"),
+		}),
+		{
+			id: "hidden_column", // see tableOptions below
+			accessorFn: (row) => `${row.first_name} ${row.last_name}`,
+		},
+		columnHelper.accessor("email", {
+			header: t("admin:email"),
+		}),
+		columnHelper.accessor("stil_id", {
+			header: t("admin:stil_id"),
+			size: 100,
+		}),
+		columnHelper.accessor("program", {
+			header: t("admin:program"),
+			size: 75,
+		}),
+		columnHelper.accessor("start_year", {
+			header: t("admin:start_year"),
+			size: 75,
+		}),
+		columnHelper.accessor("posts", {
+			header: t("admin:user-posts.table_header"),
+			cell: (info) => {
+				const posts = info.getValue() as
+					| { name_sv?: string; name_en?: string }[]
+					| undefined;
+				if (!posts || posts.length === 0) return t("admin:no_posts");
+				const lang = i18n.language;
+				return posts
+					.map((post) =>
+						lang === "sv"
+							? post.name_sv || post.name_en || "-"
+							: post.name_en || post.name_sv || "-",
+					)
+					.join(", ");
+			},
+			filterFn: (row, id, filter) => {
+				if (!filter.length) return true; // no filter, show all
 
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+				// O(n^2). Let the browser suffer
+				return (filter as number[]).some(
+					(postId) =>
+						row.original.posts.findIndex((p) => p.id === postId) !== -1,
+				);
+			},
+			size: 200,
+		}),
+	];
 
-  // edit form state
-  const [editFormOpen, setEditFormOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<AdminUserRead | null>(null);
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const handleRowClick = (row: Row<AdminUserRead>) => {
-    setSelectedUser(row.original);
-    setEditFormOpen(true);
-  };
-
-  const columns: ColumnDef<AdminUserRead, any>[] = [
-    columnHelper.accessor("id", {
-      header: t("admin:id"),
-      cell: (info) => info.getValue(),
-      size: 50,
-    }),
-    columnHelper.accessor("first_name", {
-      header: t("admin:first_name"),
-      cell: (info) => info.getValue(),
-      size: 150,
-    }),
-    columnHelper.accessor("last_name", {
-      header: t("admin:last_name"),
-      cell: (info) => info.getValue(),
-    }),
-    {
-      id: "full_name_client_side_generated_for_fuzzy_searching_only_do_not_display",
-      accessorFn: (row) => `${row.first_name} ${row.last_name}`,
-    },
-    columnHelper.accessor("email", {
-      header: t("admin:email"),
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("stil_id", {
-      header: t("admin:stil_id"),
-      cell: (info) => info.getValue(),
-      size: 100,
-    }),
-    columnHelper.accessor("program", {
-      header: t("admin:program"),
-      cell: (info) => info.getValue(),
-      size: 75,
-    }),
-    columnHelper.accessor("start_year", {
-      header: t("admin:start_year"),
-      cell: (info) => info.getValue(),
-      size: 75,
-    }),
-    columnHelper.accessor("posts", {
-      header: t("admin:user-posts.table_header"),
-      cell: (info) => {
-        const posts = info.getValue() as
-          | { name_sv?: string; name_en?: string }[]
-          | undefined;
-        if (!posts || posts.length === 0) return t("admin:no_posts");
-        const lang = i18n.language;
-        return posts
-          .map((post) =>
-            lang === "sv"
-              ? post.name_sv || post.name_en || "-"
-              : post.name_en || post.name_sv || "-",
-          )
-          .join(", ");
-      },
-      filterFn: (row, id, filter) => {
-        if (!filter.length) return true; // no filter, show all
-
-        // O(n^2). Let the browser suffer
-        return (filter as number[]).some(
-          (postId) =>
-            row.original.posts.findIndex((p) => p.id === postId) !== -1,
-        );
-      },
-      size: 200,
-    }),
-    {
-      id: "actions",
-      header: t("admin:user-posts.actions"),
-      cell: ({ row }: { row: Row<AdminUserRead> }) => (
-        <Button
-          variant="default"
-          size="sm"
-          onClick={(e) => {
-            e.stopPropagation();
-            setSelectedUser(row.original);
-            setEditFormOpen(true);
-          }}
-        >
-          <UserPen />
-          {t("admin:user-posts.manage")}
-        </Button>
-      ),
-    },
-  ];
-
-  const [sorting, setSorting] = useState<SortingState>([]);
-
-  const table = useCreateTable({
-    columns: columns,
-    data: userDetails || [],
-    getFilteredRowModel: getFilteredRowModel(),
-    onSortingChange: setSorting,
-    globalFilterFn: fuzzyFilter,
-    state: {
-      sorting,
-      globalFilter,
-      columnFilters,
-      columnVisibility: {
-        full_name_client_side_generated_for_fuzzy_searching_only_do_not_display: false,
-      },
-    },
-    onGlobalFilterChange: setGlobalFilter,
-    onColumnFiltersChange: setColumnFilters,
-  });
-
-  // only bail out on the very first load
-  if (isLoading) {
-    return <LoadingErrorCard />;
-  }
-
-  if (error) {
-    return <LoadingErrorCard error={error} />;
-  }
-  return (
-    <div className="px-8 space-x-4">
-      <div className="space-y-0">
-        <h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
-          {t("admin:user-posts.list")}
-        </h3>
-        <p className="text-xs md:text-sm font-medium">
-          {t("admin:user-posts.list_description")}
-        </p>
-        <div className="mt-4 mb-2 flex flex-row gap-2 items-center flex-wrap">
-          <div className="w-xs">
-            <Input
-              placeholder={
-                t("admin:user-posts.search_placeholder") ||
-                "Search by name, email, or STIL ID"
-              }
-              value={globalFilter}
-              onChange={(e) => setGlobalFilter(e.target.value)}
-              autoFocus
-            />
-          </div>
-        </div>
-        <div className="my-2 w-full max-w-md">
-          <span className="block text-sm font-medium mb-1">
-            {t("admin:user-posts.filter_by_position")}
-          </span>
-          <AdminChooseMultPosts
-            value={
-              (columnFilters?.find((f) => f.id === "posts")
-                ?.value as number[]) || []
-            }
-            onChange={(value) => {
-              setColumnFilters((old) => {
-                const otherFilters = old.filter((f) => f.id !== "posts");
-                if (value.length === 0) {
-                  return otherFilters;
-                }
-                return [...otherFilters, { id: "posts", value }];
-              });
-            }}
-            className="w-full"
-          />
-        </div>
-        <Separator className="mb-8" />
-      </div>
-
-      <Separator />
-      <AdminTable table={table} onRowClick={handleRowClick} />
-      {selectedUser && (
-        <UserPostsEditForm
-          open={editFormOpen}
-          onClose={() => {
-            setEditFormOpen(false);
-            setSelectedUser(null);
-          }}
-          selectedUser={selectedUser}
-        />
-      )}
-    </div>
-  );
+	return (
+		<AdminPage
+			title={t("admin:user-posts.list")}
+			description={t("admin:user-posts.list_description")}
+			queryResult={useQuery({
+				...adminGetAllUsersOptions(),
+			})}
+			columns={columns}
+			searchPlaceholder={t("admin:user-posts.search_placeholder")}
+			editComponent={UserPostsEditForm}
+			headerButtons={
+				<AdminChooseMultPosts
+					value={
+						(columnFilters.find((f) => f.id === "posts")?.value as number[]) ||
+						[]
+					}
+					onChange={(postIds) => {
+						setColumnFilters((old) => {
+							const withoutPosts = old.filter((f) => f.id !== "posts");
+							if (postIds.length === 0) return withoutPosts;
+							return [...withoutPosts, { id: "posts", value: postIds }];
+						});
+					}}
+				/>
+			}
+			tableOptions={{
+				initialState: {
+					columnVisibility: {
+						hidden_column: false,
+					},
+				},
+				state: {
+					columnFilters,
+				},
+				onColumnFiltersChange: setColumnFilters,
+			}}
+		/>
+	);
 }
