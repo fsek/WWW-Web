@@ -143,11 +143,13 @@ export default function GalleryIndexPage() {
 										</div>
 										{bgImageId ? (
 											<div className="text-sm text-white">
-												{String(album.date).substring(0, 10)} • {album.location}
+												{new Date(album.date).toLocaleDateString()} •{" "}
+												{album.location}
 											</div>
 										) : (
 											<div className="text-sm text-card-foreground">
-												{String(album.date).substring(0, 10)} • {album.location}
+												{new Date(album.date).toLocaleDateString()} •{" "}
+												{album.location}
 											</div>
 										)}
 									</div>
