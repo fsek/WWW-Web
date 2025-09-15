@@ -12,10 +12,12 @@ export default function AdminTable<T>({
 	table,
 	onRowClick,
 	rowClassName,
+	getRowProps,
 }: {
 	table: Table<T>;
 	onRowClick?: (row: Row<T>) => void;
 	rowClassName?: (row: Row<T>) => string;
+	getRowProps?: (row: Row<T>) => React.HTMLProps<HTMLTableRowElement>;
 }) {
 	const { pageIndex } = table.getState().pagination;
 	const pageCount = table.getPageCount();
@@ -86,27 +88,35 @@ export default function AdminTable<T>({
 						))}
 					</thead>
 					<tbody>
-						{table.getRowModel().rows.map((row) => (
-							// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-							<tr
-								key={row.id}
-								onClick={() => onRowClick?.(row)}
-								className={cn(
-									"border-t hover:bg-gray-50 dark:hover:bg-gray-800",
-									rowClassName?.(row),
-								)}
-							>
-								{row.getVisibleCells().map((cell) => (
-									<td
-										key={cell.id}
-										className="px-4 py-2 border-r border-table-border last:border-r-0 truncate"
-										style={{ width: cell.column.getSize() }}
-									>
-										{flexRender(cell.column.columnDef.cell, cell.getContext())}
-									</td>
-								))}
-							</tr>
-						))}
+						{table.getRowModel().rows.map((row) => {
+							const extraProps = getRowProps?.(row) ?? {};
+							return (
+								// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+								<tr
+									key={row.id}
+									onClick={() => onRowClick?.(row)}
+									className={cn(
+										"border-t hover:bg-gray-50 dark:hover:bg-gray-800",
+										rowClassName?.(row),
+										extraProps.className,
+									)}
+									{...extraProps}
+								>
+									{row.getVisibleCells().map((cell) => (
+										<td
+											key={cell.id}
+											className="px-4 py-2 border-r border-table-border last:border-r-0 truncate"
+											style={{ width: cell.column.getSize() }}
+										>
+											{flexRender(
+												cell.column.columnDef.cell,
+												cell.getContext(),
+											)}
+										</td>
+									))}
+								</tr>
+							);
+						})}
 					</tbody>
 					<tfoot>
 						{table.getFooterGroups().map((footerGroup) => (

@@ -30,7 +30,6 @@ import Calendar from "@/components/full-calendar";
 import { useRouter } from "next/navigation";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import stripHtmlLinebreaks from "@/help_functions/stripHtmlLinebreaks";
-import addHtmlLinebreaks from "@/help_functions/addHtmlLinebreaks";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
@@ -243,10 +242,8 @@ export default function Events() {
 								signup_end: event.signup_end as Date,
 								title_sv: event.title_sv,
 								title_en: event.title_en as string,
-								description_sv: addHtmlLinebreaks(event.description_sv),
-								description_en: addHtmlLinebreaks(
-									event.description_en as string,
-								),
+								description_sv: event.description_sv,
+								description_en: event.description_en as string,
 								location: event.location as string,
 								max_event_users: event.max_event_users as number,
 								priorities: event.priorities as EventCreate["priorities"], // This might just work
@@ -296,10 +293,8 @@ export default function Events() {
 								signup_end: event.signup_end as Date,
 								title_sv: event.title_sv,
 								title_en: event.title_en as string,
-								description_sv: addHtmlLinebreaks(event.description_sv),
-								description_en: addHtmlLinebreaks(
-									event.description_en as string,
-								),
+								description_sv: event.description_sv,
+								description_en: event.description_en as string,
 								location: event.location as string,
 								max_event_users: event.max_event_users as number,
 								all_day: event.all_day as boolean,

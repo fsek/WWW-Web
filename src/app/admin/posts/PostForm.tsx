@@ -24,6 +24,8 @@ import { useTranslation } from "react-i18next";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
+import { SelectFromOptions } from "@/widgets/SelectFromOptions";
+import { elected_by, elected_at_semester } from "@/api";
 
 const postSchema = z.object({
 	name_sv: z.string().min(2),
@@ -32,6 +34,10 @@ const postSchema = z.object({
 	description_en: z.string().min(2),
 	email: z.string().email(),
 	council_id: z.number().int(),
+	elected_at_semester: z.nativeEnum(elected_at_semester),
+	elected_by: z.nativeEnum(elected_by),
+	elected_user_recommended_limit: z.coerce.number().int().min(0),
+	elected_user_max_limit: z.coerce.number().int().min(0),
 });
 
 export default function PostForm() {
@@ -48,6 +54,10 @@ export default function PostForm() {
 			description_en: "",
 			council_id: 0,
 			email: "",
+			elected_at_semester: "HT" as elected_at_semester,
+			elected_by: "Guild" as elected_by,
+			elected_user_recommended_limit: 0,
+			elected_user_max_limit: 0,
 		},
 	});
 
@@ -59,14 +69,13 @@ export default function PostForm() {
 			queryClient.invalidateQueries({ queryKey: getAllPostsQueryKey() });
 			setOpen(false);
 			setSubmitEnabled(true);
-			toast.success(t("posts.create_success", "Post skapad!"));
+			toast.success(t("posts.create_success"));
 		},
 		onError: (error) => {
 			setOpen(false);
 			setSubmitEnabled(true);
 			toast.error(
-				t("posts.create_error", "Kunde inte skapa post.") +
-					(error?.detail ? ` (${error.detail})` : ""),
+				t("posts.create_error") + (error?.detail ? ` (${error.detail})` : ""),
 			);
 		},
 	});
@@ -81,9 +90,21 @@ export default function PostForm() {
 				description_en: values.description_en,
 				email: values.email,
 				council_id: values.council_id,
+				elected_at_semester: values.elected_at_semester,
+				elected_by: values.elected_by,
+				elected_user_recommended_limit: values.elected_user_recommended_limit,
+				elected_user_max_limit: values.elected_user_max_limit,
 			},
 		});
 	}
+
+	const electedAtSemesterOptions = Object.values(elected_at_semester).map(
+		(value) => ({ value, label: t(`posts.elected_at_semester.${value}`) }),
+	);
+	const electedByOptions = Object.values(elected_by).map((value) => ({
+		value,
+		label: t(`posts.elected_by.${value}`),
+	}));
 
 	return (
 		<div className="p-3">
@@ -95,13 +116,13 @@ export default function PostForm() {
 				}}
 			>
 				<Plus />
-				{t("posts.submit", "Skapa post")}
+				{t("posts.submit")}
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 					<DialogHeader>
-						<DialogTitle>{t("posts.title", "Skapa post")}</DialogTitle>
+						<DialogTitle>{t("posts.title")}</DialogTitle>
 					</DialogHeader>
 					<hr />
 					<Form {...postForm}>
@@ -115,10 +136,10 @@ export default function PostForm() {
 								name="name_sv"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("posts.name", "Name")}</FormLabel>
+										<FormLabel>{t("posts.name")}</FormLabel>
 										<FormControl>
 											<Input
-												placeholder={t("posts.name_placeholder", "Namn")}
+												placeholder={t("posts.name_placeholder")}
 												{...field}
 											/>
 										</FormControl>
@@ -132,15 +153,10 @@ export default function PostForm() {
 								name="name_en"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>
-											{t("posts.name_en", "Name (English)")}
-										</FormLabel>
+										<FormLabel>{t("posts.name_en")}</FormLabel>
 										<FormControl>
 											<Input
-												placeholder={t(
-													"posts.name_en_placeholder",
-													"Name (English)",
-												)}
+												placeholder={t("posts.name_en_placeholder")}
 												{...field}
 											/>
 										</FormControl>
@@ -154,15 +170,10 @@ export default function PostForm() {
 								name="description_sv"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
-										<FormLabel>
-											{t("posts.description_sv", "Description (Swedish)")}
-										</FormLabel>
+										<FormLabel>{t("posts.description_sv")}</FormLabel>
 										<FormControl>
 											<Textarea
-												placeholder={t(
-													"posts.description_placeholder_sv",
-													"Beskrivning (Svenska)",
-												)}
+												placeholder={t("posts.description_placeholder_sv")}
 												{...field}
 											/>
 										</FormControl>
@@ -176,15 +187,10 @@ export default function PostForm() {
 								name="description_en"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
-										<FormLabel>
-											{t("posts.description_en", "Description (English)")}
-										</FormLabel>
+										<FormLabel>{t("posts.description_en")}</FormLabel>
 										<FormControl>
 											<Textarea
-												placeholder={t(
-													"posts.description_placeholder_en",
-													"Description (English)",
-												)}
+												placeholder={t("posts.description_placeholder_en")}
 												{...field}
 											/>
 										</FormControl>
@@ -198,11 +204,11 @@ export default function PostForm() {
 								name="email"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("posts.email", "Email")}</FormLabel>
+										<FormLabel>{t("posts.email")}</FormLabel>
 										<FormControl>
 											<Input
 												type="email"
-												placeholder={t("posts.email_placeholder", "Email")}
+												placeholder={t("posts.email_placeholder")}
 												{...field}
 											/>
 										</FormControl>
@@ -215,11 +221,95 @@ export default function PostForm() {
 								name="council_id"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
-										<FormLabel>{t("posts.council", "Council name")}</FormLabel>
+										<FormLabel>{t("posts.council")}</FormLabel>
 										<AdminChooseCouncil
 											value={field.value}
 											onChange={field.onChange}
 										/>
+									</FormItem>
+								)}
+							/>
+
+							{/* Elected at semester */}
+							<FormField
+								control={postForm.control}
+								name="elected_at_semester"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("posts.elected_at_semester")}</FormLabel>
+										<FormControl>
+											<SelectFromOptions
+												options={electedAtSemesterOptions}
+												value={field.value}
+												onChange={field.onChange}
+												placeholder={t("posts.elected_at_semester_placeholder")}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Elected by */}
+							<FormField
+								control={postForm.control}
+								name="elected_by"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("posts.elected_by")}</FormLabel>
+										<FormControl>
+											<SelectFromOptions
+												options={electedByOptions}
+												value={field.value}
+												onChange={field.onChange}
+												placeholder={t("posts.elected_by_placeholder")}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Elected user recommended limit */}
+							<FormField
+								control={postForm.control}
+								name="elected_user_recommended_limit"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>
+											{t("posts.elected_user_recommended_limit")}
+										</FormLabel>
+										<FormControl>
+											<Input
+												type="number"
+												min={0}
+												placeholder={t(
+													"posts.elected_user_recommended_limit_placeholder",
+												)}
+												{...field}
+												value={(field.value as number) ?? 0}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							{/* Elected user max limit */}
+							<FormField
+								control={postForm.control}
+								name="elected_user_max_limit"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>{t("posts.elected_user_max_limit")}</FormLabel>
+										<FormControl>
+											<Input
+												type="number"
+												min={0}
+												placeholder={t(
+													"posts.elected_user_max_limit_placeholder",
+												)}
+												{...field}
+												value={(field.value as number) ?? 0}
+											/>
+										</FormControl>
 									</FormItem>
 								)}
 							/>
@@ -230,7 +320,7 @@ export default function PostForm() {
 									disabled={!submitEnabled}
 									className="w-32 min-w-fit"
 								>
-									{t("posts.publish", "Publicera")}
+									{t("posts.publish")}
 								</Button>
 							</div>
 						</form>

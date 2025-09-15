@@ -34,6 +34,10 @@
 		"q4": {
 			"question": "Help! I don't have any of my old admin rights!",
 			"answer": "Please wait or contact your council boss and ask them to give you the appropriate permissions."
+		},
+		"q5": {
+			"question": "I am having problems signing up to events, viewing the gallery, or other things!??",
+			"answer": "We prevent non-members and users without verified email addresses from using many of our services. Check the following: \n\nThat you really have verified your account (try fsektionen.se/verify). \nThat you are registered as a member. (look in account settings to check for both of these!) \nThat you are logged in to the correct account and have not created multiple accounts, for example one with your student email and another with your personal email. If you have more than one account and want to get rid of the bad one, contact spindelman@fsektionen.se via the email of the account you want to delete."
 		}
 	},
 	"next": "Next",
@@ -92,7 +96,8 @@
 			},
 			"elections": {
 				"self": "Elections",
-				"desc": "Participate in shaping our future through a transparent process."
+				"desc": "Apply for positions within the guild!",
+				"href": "/election"
 			},
 			"projects": {
 				"self": "Projects",
@@ -238,9 +243,13 @@
 	"verifyMail": {
 		"loading": "Verifying your email...",
 		"success": "Email verification succeeded!",
-		"error": "Email verification failed. The link may have expired or been invalid, or you may have already verified your email.",
+		"error": "Email verification failed. The link may have expired or been invalid, or you may have already verified your email. You can go to fsektionen.se/verify with no token to get a new link.",
 		"goHome": "Go to the homepage",
-		"noToken": "No verification link provided. Please check the link you clicked on."
+		"noToken": "No verification link provided. Please check the link you clicked on or request a new email.",
+		"requestSuccess": "A verification link has been sent to your email address if it is registered.",
+		"requestError": "Failed to send verification email. Please try again later.",
+		"emailPlaceholder": "Enter your email",
+		"requestNew": "Request New Verification Email"
 	},
 	"reset-password": {
 		"title": "Reset Password",
@@ -359,6 +368,8 @@
 	},
 	"yes": "Yes",
 	"no": "No",
+	"not_found": "Not found",
+	"description": "Description",
 	"event_signup": {
 		"title": "Event Signup",
 		"priority": "Priority",
@@ -410,5 +421,56 @@
 		"title": "Gallery",
 		"select_year": "Select year",
 		"photographers": "Photographers"
+	},
+	"post": "Council Post",
+	"elections": {
+		"ended": "Ended",
+		"left": "left",
+		"day": "{{count}} day(s)",
+		"hour": "{{count}} hour(s)",
+		"min": "{{count}} min(s)",
+		"no_visible_election": "No visible election available",
+		"post_name": "Post Name",
+		"recommended_limit": "Recommended Limit",
+		"max_limit": "Max Limit",
+		"candidation_count": "Candidations",
+		"elected_by": "Elected By",
+		"council": "Council",
+		"end_time": "End Time",
+		"search_posts_placeholder": "Search posts...",
+		"no_posts_match": "No posts match your search",
+		"view_my_candidations": "View My Candidations",
+		"add_candidation": "Add Candidation",
+		"add_nomination": "Add Nomination",
+		"select_post": "Select post",
+		"candidation_error": "Failed to submit candidation",
+		"candidation_success": "Candidation submitted successfully!",
+		"nomination_error": "Failed to submit nomination",
+		"nomination_success": "Nomination submitted successfully!",
+		"nominee_name": "Nominee Name",
+		"nominee_email": "Nominee Email",
+		"motivation": "Motivation",
+		"election_limits": "Election Limits",
+		"ends_in": "Ends In",
+		"actions": "Actions",
+		"candidated_status": "Candidation Status",
+		"you_have_candidated": "You have candidated for this post",
+		"candidated_at": "Candidated at",
+		"remove_candidation": "Remove Candidation",
+		"elected_at_semester": "Elected At Semester",
+		"no_description": "No description available",
+		"my_candidations": {
+			"page_title": "My Candidations",
+			"page_description": "Here you can view and manage your election candidations"
+		},
+		"back_to_elections": "Back to Elections",
+		"no_candidations": "You have no candidations",
+		"delete_candidation_success": "Candidation deleted successfully",
+		"error_delete_candidation": "Failed to delete candidation",
+		"limits": "Limits",
+		"no_limit": "No limit",
+		"no_end_time": "No end time",
+		"election_table_description": "Here is a list of all posts open for nominations and candidations. The limits for how many people can be elected to each post are ordered by recommended limit first, followed by the max limit.",
+		"sub_election": "Election category"
 	}
 }

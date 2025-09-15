@@ -17,11 +17,12 @@ import {
 	Award,
 	House,
 	Mail,
-	Gauge,
 	ChefHat,
 	ListMusic,
 	Music3,
 	Images,
+	Gavel,
+	Vote,
 } from "lucide-react";
 
 import {
@@ -181,6 +182,23 @@ const groups: AdminGroup[] = [
 				url: "/admin/nollning/admin-nollning/adventure-missions?id=current",
 				permissions: [[action.MANAGE, target.ADVENTURE_MISSIONS]],
 				icon: Award,
+			},
+		],
+	},
+	{
+		title: "admin:categories.elections",
+		entries: [
+			{
+				title: "admin:visible_election.self",
+				url: "/admin/elections/visible",
+				permissions: [[action.MANAGE, target.ELECTION]],
+				icon: Vote,
+			},
+			{
+				title: "admin:elections.self",
+				url: "/admin/elections",
+				permissions: [[action.MANAGE, target.ELECTION]],
+				icon: Gavel,
 			},
 		],
 	},

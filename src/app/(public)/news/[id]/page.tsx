@@ -20,6 +20,8 @@ import { Button } from "@/components/ui/button";
 import { use, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import ImageDisplay from "@/components/ImageDisplay";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface NewsPageProps {
 	params: Promise<{
@@ -98,12 +100,15 @@ export default function MainPageNews({ params }: NewsPageProps) {
 									alt={`News image for ${data.title_en}`}
 									className="object-cover rounded-lg w-full h-full"
 									size="large"
+									fill
 								/>
 							</div>
 						)}
-						<p className="whitespace-pre-wrap">
-							{i18n.language === "sv" ? data.content_sv : data.content_en}
-						</p>
+							<div className="prose dark:prose-invert mx-auto max-w-none">
+								<Markdown remarkPlugins={[remarkGfm]}>
+									{i18n.language === "sv" ? data.content_sv : data.content_en}
+								</Markdown>
+							</div>
 					</CardContent>
 				</Card>
 			</div>

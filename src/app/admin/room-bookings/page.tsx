@@ -76,9 +76,13 @@ export default function RoomBookings() {
 	const [visibleDateRange, setVisibleDateRange] = useState<{
 		start: Date;
 		end: Date;
-	}>({
-		start: new Date(),
-		end: new Date(),
+	}>(() => {
+		const start = new Date();
+		start.setSeconds(0, 0);
+		const end = new Date();
+		end.setSeconds(0, 0);
+
+		return { start, end };
 	});
 
 	// Getting all bookings at once is not efficient, but even testing with around 20 000 bookings (3 a day for 18 years) and

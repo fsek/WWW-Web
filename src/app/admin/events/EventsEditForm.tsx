@@ -19,7 +19,6 @@ import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { List, Save } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import addHtmlLinebreaks from "@/help_functions/addHtmlLinebreaks";
 
 const eventsEditSchema = z.object({
 	id: z.number(),
@@ -158,9 +157,8 @@ export default function EventsEditForm({
 	function handleFormSubmit(values: EventsEditFormValues) {
 		const updatedEvent: EventUpdate = {
 			...values,
-			// add html line breaks in descriptions before sending
-			description_sv: addHtmlLinebreaks(values.description_sv),
-			description_en: addHtmlLinebreaks(values.description_en),
+			description_sv: values.description_sv,
+			description_en: values.description_en,
 			priorities: values.priorities as EventUpdate["priorities"],
 		};
 

@@ -34,6 +34,10 @@
 		"q4": {
 			"question": "Hjälp! Jag har ingen av mina gamla adminrättigheter!",
 			"answer": "pls vänta eller kontakta ditt utskottsordförande och be dem att återställa dina rättigheter."
+		},
+		"q5": {
+			"question": "Jag har problem med att anmäla mig till evenemang, visa galleriet eller andra saker!??",
+			"answer": "Vi hindrar icke-medlemmar och användare utan verifierade email adresser från att använda många av våra tjänster. Kontrollera följande: \n\nAtt du verkligen har verifierat ditt konto (prova fsektionen.se/verify). \nAtt du är registrerad som medlem. (kolla i kontoinställningar för att kontrollera båda dessa!) \nAtt du är inloggad på rätt konto och inte har skapat flera konton, till exempel ett med din studentmail och ett annat med din privata mail. Om du har mer än ett konto och vill bli av med det dåliga, kontakta spindelman@fsektionen.se via mailet för det konto du vill ta bort."
 		}
 	},
 	"next": "Nästa",
@@ -92,7 +96,8 @@
 			},
 			"elections": {
 				"self": "Val",
-				"desc": "Delta i vårt demokratiska val och påverka vår framtid."
+				"desc": "Sök till sektionens poster!",
+				"href": "/election"
 			},
 			"projects": {
 				"self": "Projekt",
@@ -238,9 +243,13 @@
 	"verifyMail": {
 		"loading": "Verifierar din e-post...",
 		"success": "E-postverifiering lyckades!",
-		"error": "E-postverifiering misslyckades. Länken kan ha gått ut eller varit ogiltig, eller så har du redan verifierat din e-post.",
+		"error": "E-postverifiering misslyckades. Länken kan ha gått ut eller varit ogiltig, eller så har du redan verifierat din e-post. Du kan gå till fsektionen.se/verify utan token för att få en ny länk.",
 		"goHome": "Gå till startsidan",
-		"noToken": "Ingen verifieringslänk angiven. Vänligen kontrollera länken du klickade på."
+		"noToken": "Ingen verifieringslänk angiven. Vänligen kontrollera länken du klickade på eller begär ett nytt e-post meddelande.",
+		"requestSuccess": "En verifieringslänk har skickats till din e-postadress om den finns registrerad.",
+		"requestError": "Det gick inte att skicka verifieringsmejlet. Försök igen senare.",
+		"emailPlaceholder": "Ange din e-post",
+		"requestNew": "Begär ny verifieringslänk"
 	},
 	"reset-password": {
 		"title": "Återställ lösenord",
@@ -359,6 +368,8 @@
 	},
 	"yes": "Ja",
 	"no": "Nej",
+	"not_found": "Hittades inte",
+	"description": "Beskrivning",
 	"event_signup": {
 		"title": "Eventanmälan",
 		"priority": "Prioritet",
@@ -410,5 +421,56 @@
 		"title": "Galleri",
 		"select_year": "Välj år",
 		"photographers": "Fotografer"
+	},
+	"post": "Post",
+	"elections": {
+		"ended": "Avslutad",
+		"left": "kvar",
+		"day": "{{count}} dag(ar)",
+		"hour": "{{count}} h",
+		"min": "{{count}} min",
+		"no_visible_election": "Inget synligt val tillgängligt",
+		"post_name": "Postnamn",
+		"recommended_limit": "Rekommenderad gräns",
+		"max_limit": "Max gräns",
+		"candidation_count": "Kandidaturer",
+		"elected_by": "Vald av",
+		"council": "Utskott",
+		"end_time": "Sluttid",
+		"search_posts_placeholder": "Sök poster...",
+		"no_posts_match": "Inga poster matchar din sökning",
+		"view_my_candidations": "Visa mina kandidaturer",
+		"add_candidation": "Lägg till kandidatur",
+		"add_nomination": "Lägg till nominering",
+		"select_post": "Välj post",
+		"candidation_error": "Misslyckades att skicka kandidatur",
+		"candidation_success": "Kandidatur skickad framgångsrikt!",
+		"nomination_error": "Misslyckades att skicka nominering",
+		"nomination_success": "Nominering skickad framgångsrikt!",
+		"nominee_name": "Nominerade personens namn",
+		"nominee_email": "Nominerade personens e-post",
+		"motivation": "Motivering",
+		"election_limits": "Valgränser",
+		"ends_in": "Slutar om",
+		"actions": "Åtgärder",
+		"candidated_status": "Kandidaturstatus",
+		"you_have_candidated": "Du har kandiderat för denna post",
+		"candidated_at": "Kandiderade",
+		"remove_candidation": "Ta bort kandidatur",
+		"elected_at_semester": "Vald under termin",
+		"no_description": "Ingen beskrivning tillgänglig",
+		"my_candidations": {
+			"page_title": "Mina kandidaturer",
+			"page_description": "Här kan du se och hantera dina valkandidaturer"
+		},
+		"back_to_elections": "Tillbaka till val",
+		"no_candidations": "Du har inga kandidaturer",
+		"delete_candidation_success": "Kandidatur borttagen framgångsrikt",
+		"error_delete_candidation": "Misslyckades att ta bort kandidatur",
+		"limits": "Gränser",
+		"no_limit": "Ingen gräns",
+		"no_end_time": "Ingen sluttid",
+		"election_table_description": "Här är en lista över alla poster som är öppna för nomineringar och kandidaturer. Gränserna för hur många som kan bli valda till varje post är ordade enligt rekommenderad gräns först, följt av maxgränsen.",
+		"sub_election": "Valkategori"
 	}
 }

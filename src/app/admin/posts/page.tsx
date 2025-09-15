@@ -57,6 +57,22 @@ export default function Posts() {
       header: t("posts.email", "Email"),
       cell: (info) => info.getValue(),
     }),
+		columnHelper.accessor("elected_at_semester", {
+			header: t("posts.elected_at_semester"),
+			cell: (info) => {
+				const val = info.getValue();
+				if (!val) return "-";
+				return t(`enums.elected_at_semester.${val}`);
+			},
+		}),
+		columnHelper.accessor("elected_by", {
+			header: t("posts.elected_by"),
+			cell: (info) => {
+				const val = info.getValue();
+				if (!val) return "-";
+				return t(`enums.elected_by.${val}`);
+			},
+		}),
   ];
 
   const { data, error, isPending } = useQuery({
