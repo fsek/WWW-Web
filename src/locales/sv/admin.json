@@ -296,7 +296,7 @@
 		"self": "Poster",
 		"council_not_found": "Utskottet hittades inte.",
 		"title": "Hantera poster",
-		"description": "Här kan du skapa och hantera utskottsposter. E-postadressen behöver inte vara unik och kommer att visas offentligt (för medlemmar) på utskottsidan. Du kan också tilldela dörraccess till poster. Om du inte väljer 'Övrigt' för 'Vald under termin', kommer posten automatiskt att läggas till vid nya val.",
+		"description": "Här kan du skapa och hantera utskottsposter. E-postadressen behöver inte vara unik och kommer att visas offentligt (för medlemmar) på utskottsidan. Du kan också tilldela dörraccess till poster. Om du inte väljer 'Övrigt' för 'Vald under termin', kommer posten automatiskt att läggas till vid nya val. Välj användargränser som 0 för att markera att det inte finns någon gräns.",
 		"submit": "Skapa post",
 		"edit": "Redigera post",
 		"name": "Namn",
