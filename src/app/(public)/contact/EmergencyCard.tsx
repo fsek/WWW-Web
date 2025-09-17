@@ -61,7 +61,7 @@ export default function EmergencyCard() {
             />
             <br />
             <Obfuscate
-              tel="+46 076-020 82 17"
+              tel="+46 073-803 48 11"
               style={{ textDecoration: "underline" }}
             />
             <br />
@@ -72,7 +72,7 @@ export default function EmergencyCard() {
             />
             <br />
             <Obfuscate
-              tel="+46 070-794 98 92"
+              tel="+46 076-027 21 07"
               style={{ textDecoration: "underline" }}
             />
             <br />
