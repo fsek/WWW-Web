@@ -100,24 +100,16 @@ export default function UserPostsPage() {
           }
           onChange={(postIds) => {
             setColumnFilters((old) => {
-              const withoutPosts = old.filter((f) => f.id !== "posts");
-              if (postIds.length === 0) return withoutPosts;
-              return [...withoutPosts, { id: "posts", value: postIds }];
+              const otherFilters = old.filter((f) => f.id !== "posts");
+              if (postIds.length === 0) return otherFilters;
+              return [...otherFilters, { id: "posts", value: postIds }];
             });
           }}
         />
       }
-      tableOptions={{
-        initialState: {
-          columnVisibility: {
-            hidden_column: false,
-          },
-        },
-        state: {
-          columnFilters,
-        },
-        onColumnFiltersChange: setColumnFilters,
-      }}
+      columnFilters={columnFilters}
+      onColumnFiltersChange={setColumnFilters}
+      columnVisibility={{ hidden_column: false }}
     />
   );
 }
