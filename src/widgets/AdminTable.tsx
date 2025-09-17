@@ -91,7 +91,6 @@ export default function AdminTable<T>({
 						{table.getRowModel().rows.map((row) => {
 							const extraProps = getRowProps?.(row) ?? {};
 							return (
-								// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
 								<tr
 									key={row.id}
 									onClick={() => onRowClick?.(row)}

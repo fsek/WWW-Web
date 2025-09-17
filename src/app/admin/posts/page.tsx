@@ -37,6 +37,7 @@ export default function Posts() {
 
 	// Column setup
 	const columnHelper = createColumnHelper<PostRead>();
+	// biome-ignore lint/suspicious: <explanation>
 	const columns: ColumnDef<PostRead, any>[] = [
 		columnHelper.accessor(i18n.language === "en" ? "name_en" : "name_sv", {
 			header: t("posts.name", "Post"),

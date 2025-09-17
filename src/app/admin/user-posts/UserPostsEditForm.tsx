@@ -55,9 +55,11 @@ export default function UserPostsEditForm({
   });
 
   function handleUpdatePosts() {
+    if (!item) return;
+    
     updateUserPosts.mutate(
       {
-        path: { user_id: item!.id },
+        path: { user_id: item.id },
         body: { post_ids: selectedPosts },
       },
       {
@@ -69,9 +71,11 @@ export default function UserPostsEditForm({
   }
 
   function handleRemoveAllPosts() {
+    if (!item) return;
+
     updateUserPosts.mutate(
       {
-        path: { user_id: item!.id },
+        path: { user_id: item.id },
         body: { post_ids: [] },
       },
       {

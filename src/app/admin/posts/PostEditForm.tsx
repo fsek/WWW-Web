@@ -165,8 +165,13 @@ export default function PostEditForm({ item, onClose }: PostEditFormProps) {
 	}
 
 	function viewPermissions() {
+		if (!item) {
+			console.warn("No item to view permissions for");
+			return;
+		}
+
 		// Save the complete object in session storage
-		queryClient.setQueryData<PostRead>(["item"], item!);
+		queryClient.setQueryData<PostRead>(["item"], item);
 		router.push("/admin/posts/post-permissions");
 	}
 
