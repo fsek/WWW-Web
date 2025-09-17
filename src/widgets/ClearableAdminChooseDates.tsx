@@ -17,13 +17,13 @@ export function ClearableAdminChooseDates({
 	const [isCleared, setIsCleared] = useState(false);
 	const [lastValue, setLastValue] = useState<Date | undefined>(value);
 
-  useEffect(() => {
-    if (value === undefined) {
-      setIsCleared(true);
-    } else {
-      setIsCleared(false);
-    }
-  }, [value]);
+	useEffect(() => {
+		if (value === undefined) {
+			setIsCleared(true);
+		} else {
+			setIsCleared(false);
+		}
+	}, [value]);
 
 	const handleChange = (date: Date) => {
 		setIsCleared(false);

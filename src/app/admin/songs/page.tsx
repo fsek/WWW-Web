@@ -1,24 +1,24 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import { getAllSongsOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
-import { createColumnHelper, type Row } from "@tanstack/react-table";
-import AdminTable from "@/widgets/AdminTable";
+import {
+	type ColumnDef,
+	createColumnHelper,
+	type Row,
+} from "@tanstack/react-table";
 import type { SongRead } from "../../../api";
-import useCreateTable from "@/widgets/useCreateTable";
-import SongForm from "./SongForm";
 import SongEditForm from "./SongEditForm";
 import { useTranslation } from "react-i18next";
-import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import { Input } from "@/components/ui/input";
+import AdminPage from "@/widgets/AdminPage";
 
 export default function Songs() {
 	const { t } = useTranslation("admin");
 
 	// Column setup
 	const columnHelper = createColumnHelper<SongRead>();
-	const columns = [
+	// biome-ignore lint/suspicious/noExplicitAny: any is kind of needed here
+	const columns: ColumnDef<SongRead, any>[] = [
 		columnHelper.accessor("title", {
 			header: t("songs.title"),
 			cell: (info) => info.getValue(),
@@ -41,78 +41,16 @@ export default function Songs() {
 		}),
 	];
 
-	const { data, error, isPending } = useQuery({
-		...getAllSongsOptions(),
-		refetchOnWindowFocus: false,
-	});
-
-	const [openEditDialog, setOpenEditDialog] = useState(false);
-	const [selectedSong, setSelectedSong] = useState<SongRead | null>(null);
-	const [search, setSearch] = useState<string>("");
-
-	// compute filtered songs
-	const filteredSongs = useMemo(() => {
-		if (!data) return [];
-		const lower = search.toLowerCase();
-		return data.filter((s) => {
-			const matchesSearch =
-				s.title.toLowerCase().includes(lower) ||
-				s.melody?.toLowerCase().includes(lower) ||
-				s.author?.toLowerCase().includes(lower) ||
-				s.category?.name.toLowerCase().includes(lower);
-
-			return matchesSearch;
-		});
-	}, [data, search]);
-
-	const table = useCreateTable({ data: filteredSongs ?? [], columns });
-
-	function handleRowClick(row: Row<SongRead>) {
-		setSelectedSong(row.original);
-		setOpenEditDialog(true);
-	}
-
-	function handleClose() {
-		setOpenEditDialog(false);
-		setSelectedSong(null);
-	}
-
-	if (isPending) {
-		return <LoadingErrorCard />;
-	}
-
-	if (error) {
-		return <LoadingErrorCard error={error} />;
-	}
-
 	return (
-		<div className="px-8 space-x-4">
-			<h3 className="text-3xl py-3 font-bold text-primary">
-				{t("songs.title")}
-			</h3>
-			<p className="py-3">{t("songs.description_subtitle")}</p>
-			<SongForm />
-
-			<div className="mt-4 mb-2 flex flex-row gap-2 items-center">
-				<div className="w-xs">
-					<Input
-						placeholder={t("songs.search_placeholder")}
-						value={search}
-						onChange={(e) => setSearch(e.target.value)}
-						autoFocus
-					/>
-				</div>
-			</div>
-
-			<AdminTable table={table} onRowClick={handleRowClick} />
-
-			{selectedSong && (
-				<SongEditForm
-					open={openEditDialog}
-					onClose={() => handleClose()}
-					selectedSong={selectedSong}
-				/>
-			)}
-		</div>
+		<AdminPage
+			title={t("songs.title")}
+			description={t("songs.description_subtitle")}
+			queryResult={useQuery({
+				...getAllSongsOptions(),
+				refetchOnWindowFocus: false,
+			})}
+			columns={columns}
+			editComponent={SongEditForm}
+		/>
 	);
 }

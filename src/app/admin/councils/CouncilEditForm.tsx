@@ -37,15 +37,13 @@ const councilEditSchema = z.object({
 type CouncilEditFormType = z.infer<typeof councilEditSchema>;
 
 interface CouncilEditFormProps {
-	open: boolean;
+	item: CouncilRead | null;
 	onClose: () => void;
-	selectedCouncil: CouncilRead;
 }
 
 export default function CouncilEditForm({
-	open,
+	item,
 	onClose,
-	selectedCouncil,
 }: CouncilEditFormProps) {
 	const { t } = useTranslation("admin");
 	const form = useForm<CouncilEditFormType>({
@@ -59,12 +57,12 @@ export default function CouncilEditForm({
 	});
 
 	useEffect(() => {
-		if (open && selectedCouncil) {
+		if (item) {
 			form.reset({
-				...selectedCouncil,
+				...item,
 			});
 		}
-	}, [selectedCouncil, form, open]);
+	}, [item, form]);
 
 	const queryClient = useQueryClient();
 
@@ -138,7 +136,7 @@ export default function CouncilEditForm({
 
 	return (
 		<Dialog
-			open={open}
+			open={!!item}
 			onOpenChange={(isOpen) => {
 				if (!isOpen) {
 					onClose();

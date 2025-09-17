@@ -42,16 +42,11 @@ const songEditSchema = z.object({
 type SongEditFormType = z.infer<typeof songEditSchema>;
 
 interface SongEditFormProps {
-	open: boolean;
+	item: SongRead | null;
 	onClose: () => void;
-	selectedSong: SongRead;
 }
 
-export default function SongEditForm({
-	open,
-	onClose,
-	selectedSong,
-}: SongEditFormProps) {
+export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 	const { t } = useTranslation("admin");
 	const router = useRouter();
 	const form = useForm<SongEditFormType>({
@@ -67,22 +62,22 @@ export default function SongEditForm({
 
 	const { data: categories } = useQuery({
 		...getAllSongCategoriesOptions(),
-		enabled: open,
+		enabled: !!item,
 		refetchOnWindowFocus: false,
 	});
 
 	useEffect(() => {
-		if (open && selectedSong) {
+		if (item) {
 			form.reset({
-				id: selectedSong.id,
-				title: selectedSong.title,
-				author: selectedSong.author || "",
-				melody: selectedSong.melody || "",
-				content: selectedSong.content,
-				category_id: selectedSong.category?.id?.toString() || "",
+				id: item.id,
+				title: item.title,
+				author: item.author || "",
+				melody: item.melody || "",
+				content: item.content,
+				category_id: item.category?.id?.toString() || "",
 			});
 		}
-	}, [selectedSong, form, open]);
+	}, [item, form]);
 
 	const queryClient = useQueryClient();
 
@@ -167,7 +162,7 @@ export default function SongEditForm({
 
 	return (
 		<Dialog
-			open={open}
+			open={!!item}
 			onOpenChange={(isOpen) => {
 				if (!isOpen) {
 					onClose();
@@ -280,7 +275,7 @@ export default function SongEditForm({
 							<Button
 								variant="outline"
 								type="button"
-								onClick={() => router.push(`/songs/${selectedSong.id}`)}
+								onClick={() => router.push(`/songs/${item?.id}`)}
 							>
 								{t("songs.view_song")}
 							</Button>
