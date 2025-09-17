@@ -6,8 +6,23 @@ import { create } from "zustand";
 
 export type RequiredPermission = [action, target];
 class PermissionMap extends Map<target, Set<action>> {
-	hasRequiredPermissions(required: RequiredPermission[]): boolean {
-		for (const [action, target] of required) {
+	/**
+	 * Checks a users permission against a list of required permissions.
+	 *
+	 * @param requiredPermissions - list of [{@link action | action}, {@link target | target}] from `@/api`
+	 *
+	 * @example
+	 * Checking that a user has `view` permission for `CAR` and `manage` permission for `USER`
+	 * ```ts
+	 * import type { action, target } from "@/api";
+	 * import { useAuthState } from "@/lib/auth";
+	 * const auth = useAuthState();
+	 * const permissions = auth.getPermissions();
+	 * const isAllowed = permissions.hasRequiredPermissions([[action.view, target.CAR], [action.manage, target.USER]]);
+	 * ```
+	 */
+	hasRequiredPermissions(requiredPermissions: RequiredPermission[]): boolean {
+		for (const [action, target] of requiredPermissions) {
 			const actions = this.get(target);
 			if (!actions || !actions.has(action)) {
 				return false;
