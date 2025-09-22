@@ -32,6 +32,7 @@ import {
 import {
 	getMeOptions,
 	authCookieLogoutMutation,
+	getGuildMeetingOptions,
 } from "@/api/@tanstack/react-query.gen";
 import {
 	DropdownMenu,
@@ -58,7 +59,7 @@ type NavItem = {
 };
 
 type NavSection = {
-	self: string;
+	self: string | NavItem;
 } & Record<string, NavItem>;
 
 export function NavBar() {
@@ -298,54 +299,69 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 			typeof value === "object" && value !== null && !Array.isArray(value),
 	);
 
-	function onNavChange() {
-		// Skip positioning logic for mobile since we don't use dropdowns
-		if (isMobile) return;
+	const { data: guildMeetingData } = useQuery({
+		...getGuildMeetingOptions(),
+		refetchOnWindowFocus: false,
+	});
 
-		setTimeout(() => {
-			const triggers = document.querySelectorAll(
-				'[data-slot="navigation-menu-trigger"][data-state="open"]',
-			);
-			const dropdowns = document.querySelectorAll(
-				'[data-slot="navigation-menu-viewport"][data-state="open"]',
-			);
-
-			if (!triggers.length || !dropdowns.length) return;
-
-			const padding = 16;
-			const { x, width } = (triggers[0] as HTMLElement).getBoundingClientRect();
-			const dropdown = dropdowns[0] as HTMLElement;
-			const menuWidth = dropdown.children[0].clientWidth;
-			const parentLeft =
-				dropdown.offsetParent?.getBoundingClientRect().left || 0;
-
-			let viewportLeft = x + width / 2 - menuWidth / 2;
-			if (viewportLeft < padding) {
-				viewportLeft = padding;
-			} else if (viewportLeft + menuWidth > window.innerWidth - padding) {
-				viewportLeft = window.innerWidth - menuWidth - padding;
-			}
-
-			document.documentElement.style.setProperty(
-				"--menu-left-position",
-				`${viewportLeft - parentLeft}px`,
-			);
-		});
+	if (guildMeetingData?.is_active) {
+		sections.push([
+			"guildMeeting",
+			{
+				self: {
+					self: t("navbar.guild-meeting"),
+					desc: "",
+					href: "/guild-meeting",
+				},
+			},
+		]);
 	}
+
+	const isStandaloneItem = (
+		section: NavSection,
+	): section is { self: NavItem } => {
+		return typeof section.self !== "string";
+	};
 
 	if (isMobile) {
 		// Mobile vertical layout
 		return (
 			<div className="space-y-4">
 				{sections.map(([sectionKey, section]) => {
+					// Standalone item
+					if (isStandaloneItem(section)) {
+						const item = section.self;
+						return (
+							<div key={sectionKey} className="space-y-2">
+								<SheetClose asChild>
+									<Link
+										href={item.href || "#"}
+										className={cn(
+											"flex items-center gap-2 px-2 py-2 text-sm rounded-md transition-colors hover:bg-accent font-medium",
+											(!item.href || item.href === "#") &&
+												"opacity-50 cursor-not-allowed pointer-events-none",
+										)}
+									>
+										<span>{item.self}</span>
+										{item.href?.startsWith("https://") && (
+											<ExternalLink className="w-4 h-4" />
+										)}
+									</Link>
+								</SheetClose>
+							</div>
+						);
+					}
+
+					// Dropdown menu items
 					const items = Object.entries(section).filter(
 						([key]) => key !== "self",
 					) as [string, NavItem][];
+
 					return (
 						<div key={sectionKey} className="space-y-2">
 							<div>
 								<h3 className="font-medium text-sm text-muted-foreground px-2">
-									{section.self}
+									{typeof section.self === "string" ? section.self : ""}
 								</h3>
 								<div className="border-b border-border my-2" />
 							</div>
@@ -375,20 +391,52 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 		);
 	}
 
-	// Desktop horizontal layout with dropdowns
+	// Desktop horizontal layout with dropdowns or standalone
 	return (
 		<div className="flex items-center bg-transparent rounded-md px-2 py-1">
 			<NavigationMenu
-				onValueChange={onNavChange}
 				className="
                   w-full max-w-full flex items-center
                   custom-navmenu
                 "
 			>
 				{sections.map(([sectionKey, section]) => {
+					// Standalone item support for desktop
+					if (isStandaloneItem(section)) {
+						const item = section.self;
+						return (
+							<NavigationMenuList
+								key={sectionKey}
+								className="flex items-center bg-transparent"
+							>
+								<NavigationMenuItem className="bg-transparent hover:bg-transparent">
+									<NavigationMenuLink asChild>
+										<Link
+											href={item.href || "#"}
+											className={cn(
+												"submenu-trigger !bg-transparent !hover:bg-transparent border-2 border-transparent hover:border-foreground/30 font-medium px-4 py-2",
+												(!item.href || item.href === "#") &&
+													"opacity-50 cursor-not-allowed pointer-events-none",
+											)}
+										>
+											{item.self}
+											{item.href?.startsWith("https://") && (
+												<ExternalLink
+													className="inline w-6 h-6 ml-1"
+													aria-label="External link"
+												/>
+											)}
+										</Link>
+									</NavigationMenuLink>
+								</NavigationMenuItem>
+							</NavigationMenuList>
+						);
+					}
+
 					const items = Object.entries(section).filter(
 						([key]) => key !== "self",
 					) as [string, NavItem][];
+
 					return (
 						<NavigationMenuList
 							key={sectionKey}
@@ -396,7 +444,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 						>
 							<NavigationMenuItem className="bg-transparent hover:bg-transparent">
 								<NavigationMenuTrigger className="submenu-trigger !bg-transparent !hover:bg-transparent border-2 border-transparent hover:border-foreground/30">
-									{section.self}
+									{typeof section.self === "string" ? section.self : ""}
 								</NavigationMenuTrigger>
 								<NavigationMenuContent>
 									<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
