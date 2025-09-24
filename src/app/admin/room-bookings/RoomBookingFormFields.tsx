@@ -15,11 +15,12 @@ import { TabsList } from "@/components/ui/tabs";
 import type { UseFormReturn, Path, PathValue } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { TriangleAlert } from "lucide-react";
+import { room } from "@/api";
 
 
 // Common base fields expected by the form component
 interface RoomBookingFormFieldsBase {
-	room?: "LC" | "Alumni" | "SK";
+	room?: `${room}`;
 	description_sv?: string;
 	council_id?: number;
 	recur_interval_days?: number; // 0 for no recurrence, 7 for weekly, etc.
@@ -117,6 +118,7 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 									{ value: "LC", label: "Ledningscentralen" },
 									{ value: "Alumni", label: "Alumni" },
 									{ value: "SK", label: "Syster Kents" },
+									{ value: "Hilbert Cafe", label: "Hilbert Cafe"},
 								];
 								const selectedOption =
 									options.find((opt) => opt.value === field.value) ?? options[0];

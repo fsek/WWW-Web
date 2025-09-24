@@ -28,6 +28,7 @@ import { Card } from "./ui/card";
 import { EventEditForm } from "./full-calendar-edit-form";
 import { EventView } from "./full-calendar-event-view";
 import { useTranslation } from "react-i18next";
+import type {room} from "@/api/types.gen"
 
 // From: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
@@ -57,7 +58,7 @@ interface CalendarProps {
 	disableEditOfOthers?: boolean; // Disable editing of other users' bookings
 	isMobile?: boolean;
 	enableRoomBookingProperties?: boolean;
-	defaultRoom?: "LC" | "Alumni" | "SK";
+	defaultRoom?: `${room}`;
 	onDateRangeChange?: (start: Date, end: Date) => void;
 	enableCafeShiftProperties?: boolean;
 	// Control the initial view and observe view changes
