@@ -116,6 +116,7 @@ export default function RoomBookings() {
 										{ value: "LC", label: "LC" },
 										{ value: "Alumni", label: "Alumni" },
 										{ value: "SK", label: "SK" },
+										{ value: "Hilbert Cafe", label: "Hilbert Cafe"},
 										{ value: "All", label: t("admin:room_bookings.all_rooms") },
 									]}
 									value={selectedRoom}

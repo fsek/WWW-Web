@@ -49,7 +49,7 @@ interface EventAddFormProps {
 	enableTrueEventProperties?: boolean;
 	enableCarProperties?: boolean;
 	enableRoomBookingProperties?: boolean;
-	defaultRoom?: "LC" | "Alumni" | "SK";
+	defaultRoom?: `${room}`;
 	enableCafeShiftProperties?: boolean;
 }
 

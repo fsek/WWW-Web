@@ -96,7 +96,7 @@ export default function RoomBookings() {
 	});
 	const roomBookingsByRoomQuery = useQuery({
 		...getBookingsByRoomOptions({
-			query: { room: selectedRoom as "LC" | "Alumni" | "SK" },
+			query: { room: selectedRoom as `${room}` },
 		}),
 		refetchOnWindowFocus: false,
 		enabled: selectedRoom !== "All",
@@ -214,6 +214,7 @@ export default function RoomBookings() {
 						{ value: "LC", label: "LC" },
 						{ value: "Alumni", label: "Alumni" },
 						{ value: "SK", label: "SK" },
+						{ value: "Hilbert Cafe", label: "Hilbert Cafe"},
 						{ value: "All", label: t("admin:room_bookings.all_rooms") },
 					]}
 					value={selectedRoom}
