@@ -16,15 +16,13 @@ import { Save } from "lucide-react";
 import UserDetailsCard from "@/components/UserDetailsCard";
 
 interface UserPostsEditFormProps {
-	open: boolean;
 	onClose: () => void;
-	selectedUser: AdminUserRead;
+	item: AdminUserRead | null;
 }
 
 export default function UserPostsEditForm({
-	open,
 	onClose,
-	selectedUser,
+	item,
 }: UserPostsEditFormProps) {
 	const { t } = useTranslation("admin");
 	const [confirmOpen, setConfirmOpen] = useState(false);
@@ -34,12 +32,12 @@ export default function UserPostsEditForm({
 
 	// Initialize selected posts when user is loaded
 	useEffect(() => {
-		if (selectedUser?.posts) {
-			setSelectedPosts(selectedUser.posts.map((post) => post.id));
+		if (item?.posts) {
+			setSelectedPosts(item.posts.map((post) => post.id));
 		} else {
 			setSelectedPosts([]);
 		}
-	}, [selectedUser]);
+	}, [item]);
 
 	const updateUserPosts = useMutation({
 		...updateUserPostsMutation(),
@@ -57,9 +55,11 @@ export default function UserPostsEditForm({
 	});
 
 	function handleUpdatePosts() {
+		if (!item) return;
+
 		updateUserPosts.mutate(
 			{
-				path: { user_id: selectedUser.id },
+				path: { user_id: item.id },
 				body: { post_ids: selectedPosts },
 			},
 			{
@@ -71,9 +71,11 @@ export default function UserPostsEditForm({
 	}
 
 	function handleRemoveAllPosts() {
+		if (!item) return;
+
 		updateUserPosts.mutate(
 			{
-				path: { user_id: selectedUser.id },
+				path: { user_id: item.id },
 				body: { post_ids: [] },
 			},
 			{
@@ -86,7 +88,7 @@ export default function UserPostsEditForm({
 
 	return (
 		<Dialog
-			open={open}
+			open={!!item}
 			onOpenChange={(isOpen) => {
 				if (!isOpen) {
 					onClose();
@@ -99,7 +101,7 @@ export default function UserPostsEditForm({
 				</DialogHeader>
 				<hr />
 				<div className="py-4">
-					<UserDetailsCard user={selectedUser} />
+					{item && <UserDetailsCard user={item} />}
 					<div className="my-4">
 						<h3 className="font-semibold mb-2">
 							{t("user-posts.manage_positions", "Manage User Positions")}

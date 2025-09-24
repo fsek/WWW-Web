@@ -45,7 +45,7 @@ export default function MainPageNews({ params }: NewsPageProps) {
 	const now = new Date();
 
 	const imageQuery = useQuery({
-		...getNewsImageOptions({ path: { news_id: newsId , size: "small"} }),
+		...getNewsImageOptions({ path: { news_id: newsId, size: "small" } }),
 		enabled: !!newsId,
 		refetchOnWindowFocus: false,
 	});
@@ -104,11 +104,11 @@ export default function MainPageNews({ params }: NewsPageProps) {
 								/>
 							</div>
 						)}
-							<div className="prose dark:prose-invert mx-auto max-w-none">
-								<Markdown remarkPlugins={[remarkGfm]}>
-									{i18n.language === "sv" ? data.content_sv : data.content_en}
-								</Markdown>
-							</div>
+						<div className="prose dark:prose-invert mx-auto max-w-none">
+							<Markdown remarkPlugins={[remarkGfm]}>
+								{i18n.language === "sv" ? data.content_sv : data.content_en}
+							</Markdown>
+						</div>
 					</CardContent>
 				</Card>
 			</div>

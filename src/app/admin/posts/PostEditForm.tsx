@@ -52,16 +52,11 @@ const postEditSchema = z.object({
 type PostEditFormType = z.infer<typeof postEditSchema>;
 
 interface PostEditFormProps {
-	open: boolean;
+	item: PostRead | null;
 	onClose: () => void;
-	selectedPost: PostRead;
 }
 
-export default function PostEditForm({
-	open,
-	onClose,
-	selectedPost,
-}: PostEditFormProps) {
+export default function PostEditForm({ item, onClose }: PostEditFormProps) {
 	const { t } = useTranslation("admin");
 	const form = useForm<PostEditFormType>({
 		resolver: zodResolver(postEditSchema),
@@ -82,21 +77,19 @@ export default function PostEditForm({
 	const router = useRouter();
 
 	useEffect(() => {
-		if (open && selectedPost) {
+		if (item) {
 			form.reset({
-				...selectedPost,
-				doors: selectedPost.post_door_accesses.map(
-					(doorAccess) => doorAccess.door,
-				),
-				elected_at_semester: (selectedPost.elected_at_semester ??
+				...item,
+				doors: item.post_door_accesses.map((doorAccess) => doorAccess.door),
+				elected_at_semester: (item.elected_at_semester ??
 					elected_at_semester.OTHER) as elected_at_semester,
-				elected_by: (selectedPost.elected_by ?? elected_by.OTHER) as elected_by,
+				elected_by: (item.elected_by ?? elected_by.OTHER) as elected_by,
 				elected_user_recommended_limit:
-					selectedPost.elected_user_recommended_limit ?? 0,
-				elected_user_max_limit: selectedPost.elected_user_max_limit ?? 0,
+					item.elected_user_recommended_limit ?? 0,
+				elected_user_max_limit: item.elected_user_max_limit ?? 0,
 			});
 		}
-	}, [selectedPost, form, open]);
+	}, [item, form]);
 
 	const queryClient = useQueryClient();
 
@@ -172,8 +165,13 @@ export default function PostEditForm({
 	}
 
 	function viewPermissions() {
+		if (!item) {
+			console.warn("No item to view permissions for");
+			return;
+		}
+
 		// Save the complete object in session storage
-		queryClient.setQueryData<PostRead>(["selectedPost"], selectedPost);
+		queryClient.setQueryData<PostRead>(["item"], item);
 		router.push("/admin/posts/post-permissions");
 	}
 
@@ -191,7 +189,7 @@ export default function PostEditForm({
 
 	return (
 		<Dialog
-			open={open}
+			open={!!item}
 			onOpenChange={(isOpen) => {
 				if (!isOpen) {
 					onClose();
@@ -214,7 +212,7 @@ export default function PostEditForm({
 							name="name_sv"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("posts.name")}</FormLabel>
+									<FormLabel>{t("posts.name")} (sv)</FormLabel>
 									<FormControl>
 										<Input
 											placeholder={t("posts.name_placeholder")}
@@ -231,7 +229,7 @@ export default function PostEditForm({
 							name="name_en"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("posts.name_en")}</FormLabel>
+									<FormLabel>{t("posts.name")} (en)</FormLabel>
 									<FormControl>
 										<Input
 											placeholder={t("posts.name_en_placeholder")}
