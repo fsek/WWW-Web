@@ -396,7 +396,10 @@
 		"show_verified_only": "Show users with verified email only",
 		"processing": "Processing",
 		"block": "Block",
-		"error_unblock": "Failed to update membership status"
+		"error_unblock": "Failed to update membership status",
+		"food_preference": "Food preferences",
+		"moose_game_name": "Moose game name",
+		"moose_game_score": "Moose game highscore"
 	},
 	"mail_aliases": {
 		"self": "Mail Aliases",

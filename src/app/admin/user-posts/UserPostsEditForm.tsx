@@ -43,7 +43,7 @@ export default function UserPostsEditForm({
 		...updateUserPostsMutation(),
 		throwOnError: false,
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: adminGetAllUsersQueryKey() });
+			// queryClient.invalidateQueries({ queryKey: adminGetAllUsersQueryKey() }); TODO: Only change affected row
 			onClose();
 			toast.success(
 				t("user-posts.update_success", "User posts updated successfully!"),

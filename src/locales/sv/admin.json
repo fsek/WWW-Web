@@ -397,7 +397,10 @@
 		"show_verified_only": "Visa endast användare med verifierad e-post",
 		"processing": "Bearbetar",
 		"block": "Blockera",
-		"error_unblock": "Misslyckades att uppdatera medlemsstatus"
+		"error_unblock": "Misslyckades att uppdatera medlemsstatus",
+		"food_preference": "Matpreferenser",
+		"moose_game_name": "Moose game namn",
+		"moose_game_score": "Moose game poäng"
 	},
 	"mail_aliases": {
 		"self": "Mailalias",
