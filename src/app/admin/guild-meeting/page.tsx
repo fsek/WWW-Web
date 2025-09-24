@@ -86,7 +86,7 @@ export default function GuildMeetingAdminPage() {
 			toast.success(t("guild_meeting.update_success"));
 		},
 		onError: () => {
-			toast.error(t("guild_meeting.update_failed"));
+			toast.error(t("guild_meeting.update_error"));
 		},
 	});
 
@@ -272,6 +272,7 @@ export default function GuildMeetingAdminPage() {
 									date_description_en: data?.date_description_en ?? "",
 									description_sv: data?.description_sv ?? "",
 									description_en: data?.description_en ?? "",
+									is_active: data?.is_active ?? false,
 								})
 							}
 						>

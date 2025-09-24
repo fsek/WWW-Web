@@ -17,7 +17,7 @@ export default function GuildMeetingPage() {
 
 	if (isPending) return <LoadingErrorCard />;
 	if (error) return <LoadingErrorCard error={error} />;
-	if (!data) return <div className="p-8">{t("guild_meeting.not_found")}</div>;
+	if (!data) return <div className="p-8">{t("not_found")}</div>;
 
 	const title = i18n.language === "en" ? data.title_en : data.title_sv;
 	const description =
