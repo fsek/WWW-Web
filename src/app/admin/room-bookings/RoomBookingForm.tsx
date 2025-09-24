@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { useForm } from "react-hook-form";
-import {
-	Form,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { z } from "zod";
@@ -15,7 +13,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
 import RoomBookingFormFields from "./RoomBookingFormFields";
-import { room, room as RoomEnum } from "@/api";
+import { type room, room as RoomEnum } from "@/api";
 
 const roomBookingSchema = z
 	.object({
