@@ -55,7 +55,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 				imageUrl={mh.src}
 				className="relative h-[30vh] bg-cover bg-center"
 			/>
-			<div className="flex-grow bg-white dark:bg-black p-14 gap-12 ">
+			<div className="flex-grow p-14 gap-12 ">
 				<TwoColumnLayout
 					leftColumnContent={
 						<>
@@ -97,15 +97,12 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 							const { isLoading: usersLoading, data: users = [] } =
 								postsUsersQueries[idx];
 							return (
-								<div
-									key={post.id}
-									className="border rounded-lg p-6 bg-gray-50 dark:bg-gray-900"
-								>
+								<div key={post.id} className="border rounded-lg p-6 bg-card">
 									<CustomTitle
 										size={2}
 										text={i18n.language === "en" ? post.name_en : post.name_sv}
 									/>
-									<p className="mt-2 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
+									<p className="mt-2 text-sm whitespace-pre-wrap">
 										{i18n.language === "en"
 											? post.description_en
 											: post.description_sv}
@@ -122,9 +119,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 									<p className="mt-4 font-semibold">
 										{t("utskott:vemhar")}:{" "}
 										{usersLoading ? (
-											<span className="italic text-gray-400">
-												{t("loading")}
-											</span>
+											<span className="italic">{t("loading")}</span>
 										) : users.length > 0 ? (
 											users.map((u) => (
 												<span
