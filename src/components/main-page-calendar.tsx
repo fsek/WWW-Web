@@ -10,7 +10,6 @@ import type {
 import type { EventCreate, EventRead } from "@/api";
 import { useRouter } from "next/navigation";
 import { LoadingErrorCard } from "./LoadingErrorCard";
-import stripHtmlLinebreaks from "@/help_functions/stripHtmlLinebreaks";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
@@ -83,8 +82,8 @@ export default function MainPageCalendar({
 			signup_start: event.signup_start,
 			signup_end: event.signup_end,
 			all_day: event.all_day,
-			description_sv: stripHtmlLinebreaks(event.description_sv),
-			description_en: stripHtmlLinebreaks(event.description_en),
+			description_sv: event.description_sv,
+			description_en: event.description_en,
 			location: event.location,
 			max_event_users: event.max_event_users,
 			priorities: event.priorities.map(

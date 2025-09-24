@@ -29,7 +29,6 @@ import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
 import { useRouter } from "next/navigation";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import stripHtmlLinebreaks from "@/help_functions/stripHtmlLinebreaks";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
@@ -94,8 +93,8 @@ export default function Events() {
 		// Ensure descriptions are provided as plain text to the edit form
 		const processed = {
 			...row.original,
-			description_sv: stripHtmlLinebreaks(row.original.description_sv ?? ""),
-			description_en: stripHtmlLinebreaks(row.original.description_en ?? ""),
+			description_sv: row.original.description_sv ?? "",
+			description_en: row.original.description_en ?? "",
 		};
 		setSelectedEvent(processed);
 		setOpenEditDialog(true);
@@ -199,8 +198,8 @@ export default function Events() {
 			signup_start: event.signup_start,
 			signup_end: event.signup_end,
 			all_day: event.all_day,
-			description_sv: stripHtmlLinebreaks(event.description_sv),
-			description_en: stripHtmlLinebreaks(event.description_en),
+			description_sv: event.description_sv,
+			description_en: event.description_en,
 			location: event.location,
 			max_event_users: event.max_event_users,
 			priorities: event.priorities.map(
