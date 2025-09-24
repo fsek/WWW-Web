@@ -29,7 +29,6 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import type { EventRead } from "@/api/types.gen";
 import SignupCard from "./SignupCard";
-import stripHtmlLinebreaks from "@/help_functions/stripHtmlLinebreaks";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -124,11 +123,9 @@ export default function Page() {
 								<div className="text-muted-foreground whitespace-pre-wrap">
 									<div className="prose dark:prose-invert mx-auto max-w-none">
 										<Markdown remarkPlugins={[remarkGfm]}>
-											{stripHtmlLinebreaks(
-												i18n.language === "en"
-													? data.description_en
-													: data.description_sv,
-											)}
+											{i18n.language === "en"
+												? data.description_en
+												: data.description_sv}
 										</Markdown>
 									</div>
 								</div>
