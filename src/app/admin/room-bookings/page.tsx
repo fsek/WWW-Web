@@ -233,7 +233,7 @@ export default function RoomBookings() {
 						{
 							body: {
 								// Having to define this sux, having to type "as number" also does. Basically TODO: fix this
-								room: event.room as "LC" | "Alumni" | "SK",
+								room: event.room as `${room}`,
 								start_time: event.start,
 								end_time: event.end,
 								description: event.description_sv,
