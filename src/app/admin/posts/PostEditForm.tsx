@@ -171,7 +171,7 @@ export default function PostEditForm({ item, onClose }: PostEditFormProps) {
 		}
 
 		// Save the complete object in session storage
-		queryClient.setQueryData<PostRead>(["item"], item);
+		queryClient.setQueryData<PostRead>(["selectedPost"], item);
 		router.push("/admin/posts/post-permissions");
 	}
 
