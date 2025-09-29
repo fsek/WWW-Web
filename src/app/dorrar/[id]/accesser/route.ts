@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { renderAccesserHtml } from "./template";
+import { API_BASE_URL } from "@/constants";
 
 // The reason we have this file is that the access stil-ids are fetched by LU by scraping a very specific URL.
 // This file serves that URL. TODO: Talk to LU about this and switch to them actually using a private API
@@ -41,11 +42,8 @@ export async function GET(
 		}
 
 		// Fetch from your backend, now including the id if needed
-		const baseUrl =
-			process.env.NEXT_PUBLIC_API_BASE_URL ||
-			"http://host.docker.internal:8000";
 		const backendRes = await fetch(
-			`${baseUrl}/access-serve/${encodeURIComponent(doorNameMap[id])}`,
+			`${API_BASE_URL}/access-serve/${encodeURIComponent(doorNameMap[id])}`,
 		);
 		const items = await backendRes.json();
 

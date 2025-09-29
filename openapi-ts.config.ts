@@ -1,8 +1,10 @@
 import { defineConfig } from "@hey-api/openapi-ts";
+import { API_BASE_URL } from "./src/constants";
 
 export default defineConfig({
 	client: "@hey-api/client-fetch",
-	input: "http://host.docker.internal:8000/openapi.json",
+	input: `${API_BASE_URL}/openapi.json`,
+	// input: "http://host.docker.internal:8000/openapi.json",
 	//input: "http://127.0.0.1:8000",
 	//input: "http://localhost:8000/openapi.json",
 	output: { path: "src/api", lint: "biome", format: "biome" },

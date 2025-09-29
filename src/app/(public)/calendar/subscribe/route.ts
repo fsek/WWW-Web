@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import stripHtmlLinebreaks from "@/help_functions/stripHtmlLinebreaks";
+import { API_BASE_URL } from "@/constants";
 
 interface EventExtendedProps {
 	description?: string;
@@ -165,9 +166,7 @@ function escapeICSText(text: string) {
 async function fetchLatestEvents() {
 	// TODO: Since we discard all old events anyway, we eventually want to create a backend route which
 	// only gives us the old events to avoid the frontend server getting too much data
-	const baseUrl =
-		process.env.NEXT_PUBLIC_API_BASE_URL || "http://host.docker.internal:8000";
-	const backendRes = await fetch(`${baseUrl}/events/`);
+	const backendRes = await fetch(`${API_BASE_URL}/events/`);
 	const data = await backendRes.json();
 
 	// Transform the data to the correct format
