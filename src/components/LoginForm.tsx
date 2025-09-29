@@ -50,19 +50,19 @@ export default function LoginForm() {
 			setSubmitEnabled(true);
 		},
 		onError: (error) => {
+			let message;
 			switch (error.detail) {
 				case "LOGIN_BAD_CREDENTIALS":
-					form.setError("root", {
-						type: "value",
-						message: t("login.invalid-email-or-password"),
-					});
+					message = t("login.invalid-email-or-password");
+					break;
+				case undefined:
+					message = "Network error, please try again later.";
 					break;
 				default:
-					form.setError("root", {
-						type: "value",
-						message: `An error occurred: ${error.detail}`,
-					});
+					message = `An error occurred: ${error.detail}`;
 			}
+
+			form.setError("root", { type: "value", message });
 		},
 		onSuccess: (data) => {
 			auth.setAccessToken(data);
@@ -165,7 +165,7 @@ export default function LoginForm() {
 							)}
 						/>
 						{form.formState.errors.root && (
-							<div className="text-red-500">
+							<div className="text-red-600">
 								{form.formState.errors.root.message}
 							</div>
 						)}
