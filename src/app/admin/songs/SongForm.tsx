@@ -126,12 +126,9 @@ export default function SongForm() {
 								name="title"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("songs.title")}</FormLabel>
+										<FormLabel>{t("songs.title_placeholder")}</FormLabel>
 										<FormControl>
-											<Input
-												placeholder={t("songs.title_placeholder")}
-												{...field}
-											/>
+											<Input placeholder="Never Gonna Give You Up" {...field} />
 										</FormControl>
 									</FormItem>
 								)}
@@ -143,10 +140,7 @@ export default function SongForm() {
 									<FormItem>
 										<FormLabel>{t("songs.author")}</FormLabel>
 										<FormControl>
-											<Input
-												placeholder={t("songs.author_placeholder")}
-												{...field}
-											/>
+											<Input placeholder="Rick Astley" {...field} />
 										</FormControl>
 									</FormItem>
 								)}
