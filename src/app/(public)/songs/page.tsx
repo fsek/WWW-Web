@@ -23,22 +23,6 @@ export default function Songs() {
 			header: t("songs.title"),
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.accessor("author", {
-			header: t("songs.author"),
-			cell: (info) => info.getValue() || "-",
-		}),
-		columnHelper.accessor("melody", {
-			header: t("songs.melody"),
-			cell: (info) => info.getValue() || "-",
-		}),
-		columnHelper.accessor("category", {
-			header: t("songs.category"),
-			cell: (info) => info.getValue()?.name || "-",
-		}),
-		columnHelper.accessor("views", {
-			header: t("songs.views"),
-			cell: (info) => info.getValue(),
-		}),
 	];
 
 	const { data, error, isPending } = useQuery({
