@@ -1,20 +1,64 @@
 "use client";
 
-import { useState, use, useRef, useEffect, useCallback } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import ImageDisplay, { useImageBlobActions } from "@/components/ImageDisplay";
+import type { AlbumRead } from "@/api";
 import {
 	getAlbumImagesOptions,
 	getOneAlbumOptions,
 } from "@/api/@tanstack/react-query.gen";
-import type { AlbumRead } from "@/api";
+import ImageDisplay, { useImageBlobActions } from "@/components/ImageDisplay";
 import { Button } from "@/components/ui/button";
+import { useInViewport } from "@/hooks/useInViewport";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, Download, Maximize2, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface Props {
 	params: Promise<{ albumId: string }>;
+}
+
+// Lazy loaded image component for the gallery grid
+function LazyImageCard({
+	img,
+	idx,
+	album,
+	onOpen,
+}: {
+	img: number;
+	idx: number;
+	album?: AlbumRead;
+	onOpen: () => void;
+}) {
+	const [ref, isInView] = useInViewport<HTMLButtonElement>("200px");
+
+	return (
+		<button
+			ref={ref}
+			type="button"
+			className="relative rounded overflow-hidden shadow cursor-pointer p-0 border border-opacity-30 focus:outline-none focus:ring-4 focus:ring-primary"
+			onClick={onOpen}
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") onOpen();
+			}}
+		>
+			<div className="relative w-full aspect-[4/3]">
+				{isInView ? (
+					<ImageDisplay
+						type="image"
+						imageId={img}
+						size="medium"
+						alt={`Image ${idx + 1} from album ${album?.title_en}`}
+						fill
+						style={{ objectFit: "cover" }}
+					/>
+				) : (
+					// Placeholder while image is not in view
+					<div className="w-full h-full bg-muted" />
+				)}
+			</div>
+		</button>
+	);
 }
 
 export default function AlbumPage({ params }: Props) {
@@ -85,7 +129,7 @@ export default function AlbumPage({ params }: Props) {
 
 	useEffect(() => {
 		updateBox();
-	}, [imgNatural, updateBox]);
+	}, [updateBox]);
 
 	const openViewer = (idx: number) => {
 		setViewerIndex(idx);
@@ -96,21 +140,29 @@ export default function AlbumPage({ params }: Props) {
 		} catch {}
 	};
 
-	const closeViewer = () => {
+	const closeViewer = useCallback(() => {
 		setViewerIndex(null);
 		try {
 			const url = new URL(window.location.href);
 			url.searchParams.delete("img");
 			router.replace(url.toString());
 		} catch {}
-	};
+	}, [router]);
 
 	// Move to the next image in the viewer, unless already at the last image
-	const next = () =>
-		setViewerIndex((i) => (i == null ? 0 : i < images.length - 1 ? i + 1 : i));
+	const next = useCallback(
+		() =>
+			setViewerIndex((i) =>
+				i == null ? 0 : i < images.length - 1 ? i + 1 : i,
+			),
+		[images.length],
+	);
 
 	// Move to the previous image in the viewer, unless already at the first image
-	const prev = () => setViewerIndex((i) => (i == null ? 0 : i > 0 ? i - 1 : i));
+	const prev = useCallback(
+		() => setViewerIndex((i) => (i == null ? 0 : i > 0 ? i - 1 : i)),
+		[],
+	);
 
 	const handleDownload = () => {
 		// Download using blob URL using a method we get from ImageDisplay
@@ -140,7 +192,7 @@ export default function AlbumPage({ params }: Props) {
 		};
 		window.addEventListener("keydown", handler);
 		return () => window.removeEventListener("keydown", handler);
-	}, [viewerIndex]);
+	}, [viewerIndex, prev, next, closeViewer]);
 
 	return (
 		<div className="px-6 py-6 xl:mx-[4%]">
@@ -186,26 +238,13 @@ export default function AlbumPage({ params }: Props) {
 				</div>
 
 				{images.map((img, idx) => (
-					<button
+					<LazyImageCard
 						key={img}
-						type="button"
-						className="relative rounded overflow-hidden shadow cursor-pointer p-0 border border-opacity-30 focus:outline-none focus:ring-4 focus:ring-primary"
-						onClick={() => openViewer(idx)}
-						onKeyDown={(e) => {
-							if (e.key === "Enter" || e.key === " ") openViewer(idx);
-						}}
-					>
-						<div className="relative w-full aspect-[4/3]">
-							<ImageDisplay
-								type="image"
-								imageId={img}
-								size="medium"
-								alt={`Image ${idx + 1} from album ${album?.title_en}`}
-								fill
-								style={{ objectFit: "cover" }}
-							/>
-						</div>
-					</button>
+						img={img}
+						idx={idx}
+						album={album}
+						onOpen={() => openViewer(idx)}
+					/>
 				))}
 			</div>
 
@@ -326,7 +365,7 @@ export default function AlbumPage({ params }: Props) {
 								{(() => {
 									const maxThumbs = 3;
 									const total = images.length;
-									const idx = viewerIndex!;
+									const idx = viewerIndex ?? 0;
 									const start = Math.max(0, idx - maxThumbs);
 									const end = Math.min(total, idx + maxThumbs + 1);
 									const leftHidden = start;
