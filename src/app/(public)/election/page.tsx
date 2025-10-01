@@ -390,6 +390,7 @@ export default function PublicElectionPage() {
 						table={table}
 						onRowClick={handleRowClick}
 						getRowProps={getRowProps}
+						defaultPageSize={50}
 					/>
 					{filtered.length === 0 && (
 						<p className="text-sm text-muted-foreground">
