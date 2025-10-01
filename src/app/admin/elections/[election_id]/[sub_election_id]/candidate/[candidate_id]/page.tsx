@@ -104,9 +104,7 @@ export default function AdminElectionCandidatePage() {
 
 	const getPostName = (post_id: number) => {
 		if (!subElection?.election_posts) return "-";
-		const post = subElection.election_posts.find(
-			(p) => p.election_post_id === post_id,
-		);
+		const post = subElection.election_posts.find((p) => p.post_id === post_id);
 		if (!post) return "-";
 		return i18n.language === "en" ? post.name_en : post.name_sv;
 	};
