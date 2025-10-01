@@ -106,7 +106,13 @@ export default function MainPageCalendar({
 		})) ?? [];
 
 	// Adjust padding for mobile view and full mode
-	const containerPadding = fullMode ? "" : isMobile ? "px-2" : "px-8";
+	const containerPadding = fullMode
+		? isMobile
+			? "px-2 py-2"
+			: "px-4 py-2"
+		: isMobile
+			? "px-2"
+			: "px-8";
 
 	return (
 		<div

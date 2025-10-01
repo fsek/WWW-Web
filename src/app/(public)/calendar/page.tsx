@@ -7,7 +7,7 @@ export default function BigCalendar() {
 	const { t } = useTranslation();
 
 	return (
-		<div className="flex flex-col h-[calc(100vh-5rem)] overflow-hidden">
+		<div className="fixed inset-0 top-20 flex flex-col overflow-hidden">
 			{/* Desktop */}
 			<div className="max-md:hidden h-full">
 				<MainPageCalendar mini={false} zoomWorkHours={true} fullMode={true} />
