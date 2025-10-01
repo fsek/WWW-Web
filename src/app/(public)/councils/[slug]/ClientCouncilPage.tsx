@@ -140,6 +140,20 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 											</span>
 										)}
 									</p>
+									<p className="mt-4 font-semibold">
+										{t("utskott:elected_at_semester")}:{" "}
+										<span className="italic text-muted-foreground">
+											{t(
+												`admin:enums.elected_at_semester.${post.elected_at_semester}`,
+											)}
+										</span>
+									</p>
+									<p className="mt-4 font-semibold">
+										{t("utskott:user_limits")}:{" "}
+										<span className="italic text-muted-foreground">
+											{`${post.elected_user_recommended_limit !== 0 ? post.elected_user_recommended_limit : "N/A"} ${t("utskott:recommended")} (${post.elected_user_max_limit !== 0 ? post.elected_user_max_limit : "N/A"} max)`}
+										</span>
+									</p>
 								</div>
 							);
 						})
