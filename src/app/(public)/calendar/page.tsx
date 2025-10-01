@@ -1,30 +1,26 @@
 "use client";
 
-import mh from "@/assets/mh.jpg";
-import TitleBanner from "@/components/TitleBanner";
-import { useTranslation } from "react-i18next";
 import MainPageCalendar from "@/components/main-page-calendar";
-import SubscribeInfo from "./subscribeInfo";
+import { useTranslation } from "react-i18next";
 
 export default function BigCalendar() {
 	const { t } = useTranslation();
 
 	return (
-		<>
-			<TitleBanner
-				title={t("main:calendar")}
-				imageUrl={mh.src}
-				className="relative h-[30vh] bg-cover bg-center mt-4"
-			/>
+		<div className="flex flex-col h-[calc(100vh-5rem)] overflow-hidden">
 			{/* Desktop */}
-			<div className="max-md:hidden lg:mx-30 my-10 h-screen">
-				<MainPageCalendar mini={false} zoomWorkHours={true} />
+			<div className="max-md:hidden h-full">
+				<MainPageCalendar mini={false} zoomWorkHours={true} fullMode={true} />
 			</div>
 			{/* Mobile */}
-			<div className="md:hidden my-10 overflow-hidden h-[85vh]">
-				<MainPageCalendar mini={false} zoomWorkHours={true} isMobile={true} />
+			<div className="md:hidden h-full">
+				<MainPageCalendar
+					mini={false}
+					zoomWorkHours={true}
+					isMobile={true}
+					fullMode={true}
+				/>
 			</div>
-			<SubscribeInfo />
-		</>
+		</div>
 	);
 }

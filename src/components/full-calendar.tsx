@@ -1,6 +1,13 @@
 "use client";
 
+import type { room } from "@/api/types.gen";
+import { getDateFromMinutes } from "@/lib/utils";
 import { useEvents } from "@/utils/full-calendar-event-context";
+import {
+	type CalendarEvent,
+	earliestTime,
+	latestTime,
+} from "@/utils/full-calendar-seed";
 // import "@/styles/calendar.css";
 import type {
 	DateSelectArg,
@@ -16,19 +23,12 @@ import listPlugin from "@fullcalendar/list";
 import multiMonthPlugin from "@fullcalendar/multimonth";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { useRef, useState, useEffect } from "react";
-import CalendarNav from "./full-calendar-nav";
-import {
-	type CalendarEvent,
-	earliestTime,
-	latestTime,
-} from "@/utils/full-calendar-seed";
-import { getDateFromMinutes } from "@/lib/utils";
-import { Card } from "./ui/card";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { EventEditForm } from "./full-calendar-edit-form";
 import { EventView } from "./full-calendar-event-view";
-import { useTranslation } from "react-i18next";
-import type {room} from "@/api/types.gen"
+import CalendarNav from "./full-calendar-nav";
+import { Card } from "./ui/card";
 
 // From: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
@@ -68,6 +68,7 @@ interface CalendarProps {
 	defaultDate?: Date;
 	onDateChange?: (date: Date) => void;
 	showManageSignupsButton?: boolean;
+	fullMode?: boolean;
 }
 
 export default function Calendar({
@@ -92,6 +93,7 @@ export default function Calendar({
 	defaultDate,
 	onDateChange,
 	showManageSignupsButton,
+	fullMode = false,
 }: CalendarProps) {
 	const { i18n, t } = useTranslation();
 	const {
@@ -470,7 +472,9 @@ export default function Calendar({
 	}, [defaultDate, currentView, viewedDate]);
 
 	return (
-		<div className="space-y-5 flex-1 flex flex-col">
+		<div
+			className={`${fullMode ? "space-y-2 flex-1 flex flex-col" : "space-y-5 flex-1 flex flex-col"}`}
+		>
 			<CalendarNav // Nav contains the add button which is why there's so many props
 				calendarRef={calendarRef}
 				start={selectedStart}
@@ -494,7 +498,7 @@ export default function Calendar({
 				}}
 			/>
 
-			<Card className={`${isMobile ? "p-1" : "p-3"} flex-1`}>
+			<Card className={`${isMobile ? "p-1" : fullMode ? "p-2" : "p-3"} flex-1`}>
 				<FullCalendar
 					ref={calendarRef}
 					timeZone="local"
@@ -528,8 +532,14 @@ export default function Calendar({
 					forceEventDuration={true}
 					scrollTime={zoomWorkHours ? "08:00" : undefined}
 					firstDay={1}
-					height={mini || zoomWorkHours ? "100%" : isMobile ? "40vh" : "32vh"}
-					contentHeight={mini || zoomWorkHours ? "100%" : "auto"}
+					height={
+						mini || zoomWorkHours || fullMode
+							? "100%"
+							: isMobile
+								? "40vh"
+								: "32vh"
+					}
+					contentHeight={mini || zoomWorkHours || fullMode ? "100%" : "auto"}
 					dayHeaderFormat={{
 						weekday: isMobile ? "short" : "long",
 					}}

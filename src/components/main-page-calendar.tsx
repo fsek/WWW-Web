@@ -1,5 +1,5 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
+import type { EventCreate, EventRead } from "@/api";
 import { getAllEventsOptions } from "@/api/@tanstack/react-query.gen";
 import Calendar from "@/components/full-calendar";
 import { EventsProvider } from "@/utils/full-calendar-event-context";
@@ -7,22 +7,24 @@ import type {
 	CalendarEvent,
 	CustomEventData,
 } from "@/utils/full-calendar-seed";
-import type { EventCreate, EventRead } from "@/api";
-import { useRouter } from "next/navigation";
-import { LoadingErrorCard } from "./LoadingErrorCard";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { LoadingErrorCard } from "./LoadingErrorCard";
 
 interface MainPageCalendarProps {
 	mini?: boolean;
 	zoomWorkHours?: boolean;
 	isMobile?: boolean;
+	fullMode?: boolean;
 }
 
 export default function MainPageCalendar({
 	mini = false,
 	zoomWorkHours = false,
 	isMobile = false,
+	fullMode = false,
 }: MainPageCalendarProps) {
 	const router = useRouter();
 	const { t } = useTranslation();
@@ -103,19 +105,21 @@ export default function MainPageCalendar({
 			lottery: event.lottery,
 		})) ?? [];
 
-	// Adjust padding for mobile view
-	const containerPadding = isMobile ? "px-2" : "px-8";
+	// Adjust padding for mobile view and full mode
+	const containerPadding = fullMode ? "" : isMobile ? "px-2" : "px-8";
 
 	return (
 		<div
-			className={`${containerPadding} ${mini || zoomWorkHours ? "h-full flex flex-col" : ""}`}
+			className={`${containerPadding} ${mini || zoomWorkHours || fullMode ? "h-full flex flex-col" : ""}`}
 		>
-			<Link
-				href="/verify"
-				className="text-center underline text-muted-foreground"
-			>
-				{t("calendar:verify_user")}
-			</Link>
+			{!fullMode && (
+				<Link
+					href="/verify"
+					className="text-center underline text-muted-foreground"
+				>
+					{t("calendar:verify_user")}
+				</Link>
+			)}
 			<EventsProvider
 				initialCalendarEvents={events}
 				eventColor="#f6ad55"
@@ -133,7 +137,7 @@ export default function MainPageCalendar({
 				}}
 			>
 				<div
-					className={`py-4 ${mini || zoomWorkHours ? "flex-1 flex flex-col h-full" : ""}`}
+					className={`${fullMode ? "flex-1 flex flex-col h-full" : `py-4 ${mini || zoomWorkHours ? "flex-1 flex flex-col h-full" : ""}`}`}
 				>
 					<Calendar
 						showDescription={true}
@@ -149,6 +153,7 @@ export default function MainPageCalendar({
 						mini={mini}
 						zoomWorkHours={zoomWorkHours}
 						isMobile={isMobile}
+						fullMode={fullMode}
 					/>
 				</div>
 			</EventsProvider>
