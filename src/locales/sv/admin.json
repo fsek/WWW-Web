@@ -1076,19 +1076,22 @@
 			"HT": "Hösttermin (HT)",
 			"VT": "Vårtermin (VT)",
 			"HT and VT": "Höst- och vårtermin",
-			"Other": "Annat"
+			"Other": "Annat",
+			"null": "Ej angivet"
 		},
 		"elected_by": {
 			"Guild": "Sektionsmöte",
 			"Board": "Styrelsemöte",
 			"Board Intermediate": "Styrelsen - Mellanliggande valmöte",
 			"Educational Council": "Studierådet",
-			"Other": "Annat"
+			"Other": "Annat",
+			"null": "Ej angivet"
 		},
 		"semester": {
 			"HT": "Hösttermin (HT)",
 			"VT": "Vårtermin (VT)",
-			"Other": "Annat"
+			"Other": "Annat",
+			"null": "Ej angivet"
 		}
 	}
 }

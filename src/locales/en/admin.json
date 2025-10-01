@@ -1075,19 +1075,22 @@
 			"HT": "Autumn semester (HT)",
 			"VT": "Spring semester (VT)",
 			"HT and VT": "Autumn and Spring semester",
-			"Other": "Other"
+			"Other": "Other",
+			"null": "Not specified"
 		},
 		"elected_by": {
 			"Guild": "Guild Meeting",
 			"Board": "Board Election Meeting",
 			"Board Intermediate": "Board Intermediate Election Meeting",
 			"Educational Council": "Educational Council",
-			"Other": "Other"
+			"Other": "Other",
+			"null": "Not specified"
 		},
 		"semester": {
 			"HT": "Autumn semester (HT)",
 			"VT": "Spring semester (VT)",
-			"Other": "Other"
+			"Other": "Other",
+			"null": "Not specified"
 		}
 	}
 }
