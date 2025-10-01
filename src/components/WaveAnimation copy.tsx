@@ -23,14 +23,12 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 
 			ctx.lineWidth = 1;
 
-			const wave_number = 0.15;
+			const wave_number = 0.015;
 			const start = 100;
-			const packet_speed = 1;
-			const packet_interval = 100;
-			const packet_scale = 0.1; // lower is wider
-			const num_points = 500;
+			const speed_scale = 1.5;
+			const num_points = 100;
 			const num_points_inv = 1.0 / num_points;
-			const phase_speed = 0;
+			const phasing_rate = -0.0;
 
 			let phase = 0;
 
@@ -73,56 +71,50 @@ const SimpleCanvasExample: React.FC<{}> = () => {
 				// Wave
 				ctx.moveTo(start + padding, canvas.height * 0.5);
 				for (let i = 0; i < num_points + 1; i++) {
-					const relative_x = num_points_inv * (i - (phase - Math.floor(phase)));
-					const point = scaled_point(relative_x, 1);
-					const wave = Math.sin(point * wave_number + phase);
-
-					const packet = gaussian(
-						(point * wave_number + phase) % packet_interval,
-						packet_scale,
-					);
+					const relative_x =
+						num_points_inv *
+						(i - (phase * phasing_rate - Math.floor(phase * phasing_rate)));
+					const point = scaled_point(relative_x, 4);
+					const wave1 =
+						Math.sin(scaled_point(relative_x, 2) * wave_number + phase) *
+						(1 -
+							Math.exp(
+								(start + padding - scaled_point(relative_x, 2)) * wave_number,
+							));
 
 					ctx.lineTo(
 						point,
-						canvas.height * 0.5 +
-							packet * wave * (canvas.height - padding * 2) * 0.5,
+						canvas.height * 0.5 + wave1 * (canvas.height - padding * 2) * 0.5,
 					);
-
 					ctx.stroke();
-					// if (relative_x > 0.1) {
-					// 	ctx.setLineDash([relative_x ** 4 * 10, relative_x ** 4 * 10]);
-					// 	ctx.lineDashOffset = -Math.abs(
-					// 		packet *
-					// 			wave *
-					// 			relative_x ** 4 *
-					// 			(canvas.height - padding * 2) *
-					// 			0.25,
-					// 	);
-					// }
-					// ctx.strokeStyle = `rgba(0, 0, 0, ${1 - relative_x ** 4})`;
+					if (relative_x > 0.1) {
+						ctx.setLineDash([relative_x ** 4 * 10, relative_x ** 4 * 10]);
+						ctx.lineDashOffset = -Math.abs(
+							wave1 * relative_x ** 4 * (canvas.height - padding * 2) * 0.25,
+						);
+					}
+					ctx.strokeStyle = `rgba(0, 0, 0, ${1 - relative_x ** 4})`;
 
-					// //ctx.strokeStyle = "red";
-					// ctx.beginPath();
-					// ctx.moveTo(
-					// 	point,
-					// 	canvas.height * 0.5 +
-					// 		packet * wave * (canvas.height - padding * 2) * 0.5,
-					// );
-					// ctx.lineTo(point, canvas.height * 0.5);
-					// ctx.stroke();
-					// ctx.setLineDash([]);
-					// //ctx.strokeStyle = "black";
-					// ctx.beginPath();
-					// ctx.moveTo(
-					// 	point,
-					// 	canvas.height * 0.5 +
-					// 		packet * wave * (canvas.height - padding * 2) * 0.5,
-					// );
+					//ctx.strokeStyle = "red";
+					ctx.beginPath();
+					ctx.moveTo(
+						point,
+						canvas.height * 0.5 + wave1 * (canvas.height - padding * 2) * 0.5,
+					);
+					ctx.lineTo(point, canvas.height * 0.5);
+					ctx.stroke();
+					ctx.setLineDash([]);
+					//ctx.strokeStyle = "black";
+					ctx.beginPath();
+					ctx.moveTo(
+						point,
+						canvas.height * 0.5 + wave1 * (canvas.height - padding * 2) * 0.5,
+					);
 				}
 				ctx.strokeStyle = "rgba(0, 0, 0, 1)";
 
 				ctx.stroke();
-				phase -= packet_speed;
+				phase -= wave_number * speed_scale;
 				requestAnimationFrame(render);
 			};
 
