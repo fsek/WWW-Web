@@ -433,7 +433,7 @@
 		"post_name": "Postnamn",
 		"recommended_limit": "Rekommenderad gräns",
 		"max_limit": "Max gräns",
-		"candidation_count": "Kandidaturer",
+		"candidation_count": "Kandidater",
 		"elected_by": "Vald av",
 		"council": "Utskott",
 		"end_time": "Sluttid",
@@ -470,7 +470,7 @@
 		"limits": "Gränser",
 		"no_limit": "Ingen gräns",
 		"no_end_time": "Ingen sluttid",
-		"election_table_description": "Här är en lista över alla poster som är öppna för nomineringar och kandidaturer. Gränserna för hur många som kan bli valda till varje post är ordade enligt rekommenderad gräns först, följt av maxgränsen.",
+		"election_table_description": "Här är en lista över alla poster som är öppna för nomineringar och kandidaturer. Gränserna för hur många som kan bli valda till varje post är ordnade enligt rekommenderad gräns först, följt av maxgränsen.",
 		"sub_election": "Valkategori"
 	}
 }

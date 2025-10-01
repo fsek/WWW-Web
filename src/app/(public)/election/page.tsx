@@ -162,7 +162,7 @@ export default function PublicElectionPage() {
 				const rec = row.original.elected_user_recommended_limit;
 				const max = row.original.elected_user_max_limit;
 				if (rec === 0 && max === 0) return t("elections.no_limit");
-				return `${rec}/${max}`;
+				return `Rek: ${rec}, max: ${max}`;
 			},
 		}),
 		columnHelper.accessor("candidation_count", {
@@ -390,6 +390,7 @@ export default function PublicElectionPage() {
 						table={table}
 						onRowClick={handleRowClick}
 						getRowProps={getRowProps}
+						defaultPageSize={50}
 					/>
 					{filtered.length === 0 && (
 						<p className="text-sm text-muted-foreground">

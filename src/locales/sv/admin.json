@@ -1046,7 +1046,7 @@
 			"search_placeholder": "Sök poster...",
 			"name_sv": "Namn (svenska)",
 			"name_en": "Namn (engelska)",
-			"candidations_count": "Kandidaturer"
+			"candidations_count": "Antal kandidaturer"
 		},
 		"election_nominations": {
 			"tab_title": "Nomineringar",
@@ -1076,19 +1076,22 @@
 			"HT": "Hösttermin (HT)",
 			"VT": "Vårtermin (VT)",
 			"HT and VT": "Höst- och vårtermin",
-			"Other": "Annat"
+			"Other": "Annat",
+			"null": "Ej angivet"
 		},
 		"elected_by": {
 			"Guild": "Sektionsmöte",
 			"Board": "Styrelsemöte",
 			"Board Intermediate": "Styrelsen - Mellanliggande valmöte",
 			"Educational Council": "Studierådet",
-			"Other": "Annat"
+			"Other": "Annat",
+			"null": "Ej angivet"
 		},
 		"semester": {
 			"HT": "Hösttermin (HT)",
 			"VT": "Vårtermin (VT)",
-			"Other": "Annat"
+			"Other": "Annat",
+			"null": "Ej angivet"
 		}
 	}
 }
