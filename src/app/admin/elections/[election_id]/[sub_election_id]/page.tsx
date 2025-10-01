@@ -232,7 +232,7 @@ export default function AdminElectionCandidatesPage() {
 		if (subElection?.candidates) {
 			for (const c of subElection.candidates) {
 				for (const cand of c.candidations) {
-					map[cand.post_id] = (map[cand.post_id] ?? 0) + 1;
+					map[cand.election_post_id] = (map[cand.election_post_id] ?? 0) + 1;
 				}
 			}
 		}
