@@ -131,6 +131,26 @@ export default function PublicElectionPage() {
 		return result;
 	}, [election, allCouncils]);
 
+	// Sort joined by date (soonest first), unless the date has passed, then at the end
+	joined.sort((a, b) => {
+		if (a.end_time !== undefined && b.end_time !== undefined) {
+			const now = new Date().getTime();
+			const aEnded = new Date(a.end_time).getTime() < now;
+			const bEnded = new Date(b.end_time).getTime() < now;
+			if (aEnded && bEnded) {
+				// Both ended, sort by end_time descending
+				return new Date(b.end_time).getTime() - new Date(a.end_time).getTime();
+			}
+			if (aEnded) return 1; // a ended, b not ended -> b first
+			if (bEnded) return -1; // b ended, a not ended -> a first
+			// Both not ended, sort by end_time ascending
+			return new Date(a.end_time).getTime() - new Date(b.end_time).getTime();
+		}
+		if (a.end_time !== undefined) return -1; // a has end_time, b doesn't -> a first
+		if (b.end_time !== undefined) return 1; // b has end_time, a doesn't -> b first
+		return 0; // Neither has end_time, keep original order
+	});
+
 	// Filter
 	const filtered = useMemo(() => {
 		const q = search.toLowerCase();
