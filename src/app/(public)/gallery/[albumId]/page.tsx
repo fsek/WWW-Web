@@ -7,6 +7,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import ImageDisplay, { useImageBlobActions } from "@/components/ImageDisplay";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useInViewport } from "@/hooks/useInViewport";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, Download, Maximize2, X } from "lucide-react";
@@ -54,7 +55,7 @@ function LazyImageCard({
 					/>
 				) : (
 					// Placeholder while image is not in view
-					<div className="w-full h-full bg-muted" />
+					<Skeleton className="w-full h-full" />
 				)}
 			</div>
 		</button>
