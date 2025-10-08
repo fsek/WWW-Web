@@ -30,7 +30,7 @@ import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
-import type { room } from "@/api";
+import type { RoomEnum } from "@/api";
 import { toast } from "sonner";
 
 // Column setup
@@ -67,7 +67,7 @@ export default function RoomBookings() {
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 
-	const [selectedRoom, setSelectedRoom] = useState<room | "All">("All");
+	const [selectedRoom, setSelectedRoom] = useState<RoomEnum | "All">("All");
 
 	// Tab state from query string, default to "calendar"
 	const initialTab = searchParams.get("tab") || "calendar";
@@ -96,7 +96,7 @@ export default function RoomBookings() {
 	});
 	const roomBookingsByRoomQuery = useQuery({
 		...getBookingsByRoomOptions({
-			query: { room: selectedRoom as `${room}` },
+			query: { room: selectedRoom as `${RoomEnum}` },
 		}),
 		refetchOnWindowFocus: false,
 		enabled: selectedRoom !== "All",
@@ -214,11 +214,11 @@ export default function RoomBookings() {
 						{ value: "LC", label: "LC" },
 						{ value: "Alumni", label: "Alumni" },
 						{ value: "SK", label: "SK" },
-						{ value: "Hilbert Cafe", label: "Hilbert Cafe"},
+						{ value: "Hilbert Cafe", label: "Hilbert Cafe" },
 						{ value: "All", label: t("admin:room_bookings.all_rooms") },
 					]}
 					value={selectedRoom}
-					onChange={(value) => setSelectedRoom(value as room | "All")}
+					onChange={(value) => setSelectedRoom(value as RoomEnum | "All")}
 				/>
 			</div>
 			{/* Debug info to show current visible range */}
@@ -233,7 +233,7 @@ export default function RoomBookings() {
 						{
 							body: {
 								// Having to define this sux, having to type "as number" also does. Basically TODO: fix this
-								room: event.room as `${room}`,
+								room: event.room as `${RoomEnum}`,
 								start_time: event.start,
 								end_time: event.end,
 								description: event.description_sv,

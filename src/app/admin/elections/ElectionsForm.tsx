@@ -28,7 +28,7 @@ import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import getErrorMessage from "@/help_functions/getErrorMessage";
-import { semester } from "@/api";
+import { SemesterEnum } from "@/api";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 
 const electionSchema = z.object({
@@ -38,7 +38,7 @@ const electionSchema = z.object({
 	description_sv: z.string().nullable().optional(),
 	description_en: z.string().nullable().optional(),
 	visible: z.boolean().optional(),
-	semester: z.nativeEnum(semester).optional(),
+	semester: z.nativeEnum(SemesterEnum).optional(),
 	end_time_guild: z.date().optional(),
 	end_time_board: z.date().optional(),
 	end_time_board_intermediate: z.date().optional(),
@@ -139,7 +139,7 @@ export default function ElectionsForm() {
 		createElection.mutate({ body });
 	}
 
-	const semesterOptions = Object.values(semester).map((value) => ({
+	const semesterOptions = Object.values(SemesterEnum).map((value) => ({
 		value: String(value),
 		label: t(`enums.semester.${value}`),
 	}));

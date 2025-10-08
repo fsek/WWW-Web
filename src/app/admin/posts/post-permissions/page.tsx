@@ -6,12 +6,12 @@ import { createColumnHelper, type Row } from "@tanstack/react-table";
 
 import AdminTable from "@/widgets/AdminTable";
 import useCreateTable from "@/widgets/useCreateTable";
-import type { _PostPermissionRead, PostRead } from "@/api";
+import type { PostPermissionRead, PostRead } from "@/api";
 import PostPermissionForm from "./PostPermissionForm";
 import { useTranslation } from "react-i18next";
 
 // Column setup
-const columnHelper = createColumnHelper<_PostPermissionRead>();
+const columnHelper = createColumnHelper<PostPermissionRead>();
 const columns = [
 	columnHelper.accessor("target", {
 		header: "Target",
@@ -69,7 +69,7 @@ export default function PostPermissions() {
 	}
 
 	// 4) And finally render the UI that uses all those hooks
-	function handleRowClick(_row: Row<_PostPermissionRead>) {
+	function handleRowClick(_row: Row<PostPermissionRead>) {
 		// …
 	}
 

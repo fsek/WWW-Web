@@ -38,7 +38,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { useAuthState, type RequiredPermission } from "@/lib/auth";
-import { action, target } from "@/api";
+import { ActionEnum, TargetEnum } from "@/api";
 import MemberEditForm from "./MemberEditForm";
 
 const columnHelper = createColumnHelper<AdminUserRead>();
@@ -55,7 +55,7 @@ export default function MembersPage() {
 	});
 	const permissions = useAuthState().getPermissions();
 	const hasManageUserPerms = permissions.hasRequiredPermissions([
-		[action.MANAGE, target.USER],
+		[ActionEnum.MANAGE, TargetEnum.USER],
 	] as RequiredPermission[]);
 
 	// add search state

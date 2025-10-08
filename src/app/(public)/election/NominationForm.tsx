@@ -24,6 +24,7 @@ import {
 	createNominationMutation,
 	getVisibleElectionQueryKey,
 	getMeOptions,
+	electionsGetSubElectionQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Plus, Save, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -32,7 +33,7 @@ import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import getErrorMessage from "@/help_functions/getErrorMessage";
 
 const schema = z.object({
-	election_post_id: z.number({ required_error: "Post is required" }),
+	election_post_id: z.number({ error: "Post is required" }),
 	nominee_name: z.string().min(1, { message: "Name is required" }),
 	nominee_email: z.string().email({ message: "Invalid email" }),
 	motivation: z.string().optional(),
@@ -146,7 +147,7 @@ export default function NominationForm({
 				onSuccess: () => {
 					toast.success(t("elections.nomination_success"));
 					queryClient.invalidateQueries({
-						queryKey: getVisibleElectionQueryKey({
+						queryKey: electionsGetSubElectionQueryKey({
 							path: { sub_election_id: subElectionId },
 						}),
 					});

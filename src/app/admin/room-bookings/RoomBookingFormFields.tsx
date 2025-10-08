@@ -15,12 +15,11 @@ import { TabsList } from "@/components/ui/tabs";
 import type { UseFormReturn, Path, PathValue } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { TriangleAlert } from "lucide-react";
-import { room } from "@/api";
-
+import { RoomEnum } from "@/api";
 
 // Common base fields expected by the form component
 interface RoomBookingFormFieldsBase {
-	room?: `${room}`;
+	room?: `${RoomEnum}`;
 	description_sv?: string;
 	council_id?: number;
 	recur_interval_days?: number; // 0 for no recurrence, 7 for weekly, etc.
@@ -40,7 +39,10 @@ interface AdminRoomBookingFields extends RoomBookingFormFieldsBase {
 }
 
 // Combined type that works for both form patterns
-type RoomBookingFormCompatible = (CalendarRoomBookingFields | AdminRoomBookingFields) &
+type RoomBookingFormCompatible = (
+	| CalendarRoomBookingFields
+	| AdminRoomBookingFields
+) &
 	Record<string, unknown>;
 
 interface RoomBookingFormFieldsProps<T extends RoomBookingFormCompatible> {
@@ -49,7 +51,9 @@ interface RoomBookingFormFieldsProps<T extends RoomBookingFormCompatible> {
 	disabled_fields?: string[];
 }
 
-export default function RoomBookingFormFields<T extends RoomBookingFormCompatible>({
+export default function RoomBookingFormFields<
+	T extends RoomBookingFormCompatible,
+>({
 	roomBookingForm,
 	checkboxFields,
 	disabled_fields = [],
@@ -68,7 +72,7 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 
 	const recurInterval = roomBookingForm.watch("recur_interval_days" as Path<T>);
 	const [useRecurrence, setUseRecurrence] = useState(
-		!!recurInterval && recurInterval !== 0
+		!!recurInterval && recurInterval !== 0,
 	);
 
 	// Keep local state in sync with form value
@@ -79,17 +83,25 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 			const recurUntil = roomBookingForm.getValues("recur_until" as Path<T>);
 			if (!recurUntil) {
 				const start =
-					roomBookingForm.getValues(startFieldName as Path<T>) ||
-					new Date();
+					roomBookingForm.getValues(startFieldName as Path<T>) || new Date();
 				const defaultUntil = new Date(
-					(start instanceof Date ? start : new Date(start as string)).getTime() +
-					30 * 24 * 60 * 60 * 1000 // 30 days
+					(start instanceof Date
+						? start
+						: new Date(start as string)
+					).getTime() +
+						30 * 24 * 60 * 60 * 1000, // 30 days
 				);
-				roomBookingForm.setValue("recur_until" as Path<T>, defaultUntil as PathValue<T, Path<T>>);
+				roomBookingForm.setValue(
+					"recur_until" as Path<T>,
+					defaultUntil as PathValue<T, Path<T>>,
+				);
 			}
 		} else {
 			setUseRecurrence(false);
-			roomBookingForm.setValue("recur_until" as Path<T>, undefined as PathValue<T, Path<T>>);
+			roomBookingForm.setValue(
+				"recur_until" as Path<T>,
+				undefined as PathValue<T, Path<T>>,
+			);
 		}
 	}, [recurInterval, roomBookingForm, startFieldName]);
 
@@ -118,10 +130,11 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 									{ value: "LC", label: "Ledningscentralen" },
 									{ value: "Alumni", label: "Alumni" },
 									{ value: "SK", label: "Syster Kents" },
-									{ value: "Hilbert Cafe", label: "Hilbert Cafe"},
+									{ value: "Hilbert Cafe", label: "Hilbert Cafe" },
 								];
 								const selectedOption =
-									options.find((opt) => opt.value === field.value) ?? options[0];
+									options.find((opt) => opt.value === field.value) ??
+									options[0];
 								return (
 									<FormItem>
 										<FormLabel>{t("admin:room_bookings.room")}</FormLabel>
@@ -193,7 +206,7 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 											((endValue instanceof Date
 												? endValue
 												: typeof endValue === "string" ||
-													typeof endValue === "number"
+														typeof endValue === "number"
 													? new Date(endValue)
 													: null
 											)?.getTime() ?? 0) < newStart.getTime()
@@ -243,10 +256,22 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 											<FormLabel className="flex items-center gap-2">
 												<SelectFromOptions
 													options={[
-														{ value: "0", label: t("admin:room_bookings.no_recurrence") },
-														{ value: "7", label: t("admin:room_bookings.every_week") },
-														{ value: "14", label: t("admin:room_bookings.every_two_weeks") },
-														{ value: "30", label: t("admin:room_bookings.every_month") },
+														{
+															value: "0",
+															label: t("admin:room_bookings.no_recurrence"),
+														},
+														{
+															value: "7",
+															label: t("admin:room_bookings.every_week"),
+														},
+														{
+															value: "14",
+															label: t("admin:room_bookings.every_two_weeks"),
+														},
+														{
+															value: "30",
+															label: t("admin:room_bookings.every_month"),
+														},
 													]}
 													value={field.value?.toString() ?? "0"}
 													onChange={(value) => field.onChange(Number(value))}
@@ -272,7 +297,8 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 							render={({ field }) => (
 								<FormItem className="lg:col-span-2">
 									<FormControl>
-										<FormLabel>{t("admin:room_bookings.recurrence_end")}
+										<FormLabel>
+											{t("admin:room_bookings.recurrence_end")}
 											<AdminChooseDates
 												value={field.value as Date}
 												onChange={field.onChange}
@@ -284,7 +310,6 @@ export default function RoomBookingFormFields<T extends RoomBookingFormCompatibl
 							)}
 						/>
 					)}
-
 				</TabsContent>
 			</Tabs>
 		</>

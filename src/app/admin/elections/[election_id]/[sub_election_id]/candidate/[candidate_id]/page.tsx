@@ -36,7 +36,7 @@ export default function AdminElectionCandidatePage() {
 		isLoading: candidateLoading,
 	} = useQuery({
 		...getCandidateOptions({
-			path: { sub_election_id: subElectionId, candidate_id: candidateId },
+			path: { candidate_id: candidateId },
 		}),
 		enabled: Number.isFinite(subElectionId) && Number.isFinite(candidateId),
 		refetchOnWindowFocus: false,
@@ -91,7 +91,7 @@ export default function AdminElectionCandidatePage() {
 			});
 			queryClient.invalidateQueries({
 				queryKey: getCandidateQueryKey({
-					path: { sub_election_id: subElectionId, candidate_id: candidateId },
+					path: { candidate_id: candidateId },
 				}),
 			});
 		},

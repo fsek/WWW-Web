@@ -187,7 +187,6 @@ export default function AdminEventSignupsPage() {
 		// Logic to confirm places
 		confirmPlaces.mutate({
 			path: { event_id: eventId },
-			body: [selectedRow?.user.id],
 		});
 	}
 

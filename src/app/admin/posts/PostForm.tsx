@@ -25,7 +25,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
-import { elected_by, elected_at_semester } from "@/api";
+import { ElectedByEnum, ElectedAtSemesterEnum } from "@/api";
 
 const postSchema = z.object({
 	name_sv: z.string().min(2),
@@ -34,8 +34,8 @@ const postSchema = z.object({
 	description_en: z.string().min(2),
 	email: z.string().email(),
 	council_id: z.number().int(),
-	elected_at_semester: z.nativeEnum(elected_at_semester),
-	elected_by: z.nativeEnum(elected_by),
+	elected_at_semester: z.nativeEnum(ElectedAtSemesterEnum),
+	elected_by: z.nativeEnum(ElectedByEnum),
 	elected_user_recommended_limit: z.coerce.number().int().min(0),
 	elected_user_max_limit: z.coerce.number().int().min(0),
 });
@@ -54,8 +54,8 @@ export default function PostForm() {
 			description_en: "",
 			council_id: 0,
 			email: "",
-			elected_at_semester: "HT" as elected_at_semester,
-			elected_by: "Guild" as elected_by,
+			elected_at_semester: "HT" as ElectedAtSemesterEnum,
+			elected_by: "Guild" as ElectedByEnum,
 			elected_user_recommended_limit: 0,
 			elected_user_max_limit: 0,
 		},
@@ -98,10 +98,10 @@ export default function PostForm() {
 		});
 	}
 
-	const electedAtSemesterOptions = Object.values(elected_at_semester).map(
+	const electedAtSemesterOptions = Object.values(ElectedAtSemesterEnum).map(
 		(value) => ({ value, label: t(`posts.elected_at_semester.${value}`) }),
 	);
-	const electedByOptions = Object.values(elected_by).map((value) => ({
+	const electedByOptions = Object.values(ElectedByEnum).map((value) => ({
 		value,
 		label: t(`posts.elected_by.${value}`),
 	}));

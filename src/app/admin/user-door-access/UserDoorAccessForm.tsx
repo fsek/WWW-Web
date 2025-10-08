@@ -34,7 +34,7 @@ import { Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { toast } from "sonner";
-import { door } from "@/api";
+import { DoorEnum } from "@/api";
 import AdminChooseUser, { type Option } from "@/widgets/AdminChooseUser";
 
 export default function UserDoorAccessForm() {
@@ -43,7 +43,7 @@ export default function UserDoorAccessForm() {
 	const { t } = useTranslation("admin");
 	const doorAccessSchema = z.object({
 		user_id: z.number().min(1, t("door_access.user_id_required")),
-		door: z.nativeEnum(door),
+		door: z.nativeEnum(DoorEnum),
 		starttime: z.date(),
 		endtime: z.date(),
 	});
@@ -149,7 +149,7 @@ export default function UserDoorAccessForm() {
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
-												{Object.values(door).map((doorValue) => (
+												{Object.values(DoorEnum).map((doorValue) => (
 													<SelectItem key={doorValue} value={doorValue}>
 														{doorValue}
 													</SelectItem>

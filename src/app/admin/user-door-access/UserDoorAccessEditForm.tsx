@@ -36,10 +36,10 @@ import { toast } from "sonner";
 import type { UserAccessRead } from "@/api";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
-import { door } from "@/api";
+import { DoorEnum } from "@/api";
 
 const doorAccessSchema = z.object({
-	door: z.nativeEnum(door),
+	door: z.nativeEnum(DoorEnum),
 	starttime: z.date().nullable(),
 	endtime: z.date().nullable(),
 });
@@ -68,7 +68,7 @@ export default function UserDoorAccessEditForm({
 	useEffect(() => {
 		if (selectedAccess) {
 			doorAccessEditForm.reset({
-				door: selectedAccess.door as door,
+				door: selectedAccess.door as DoorEnum,
 				starttime: selectedAccess.starttime
 					? new Date(selectedAccess.starttime)
 					: null,
@@ -169,7 +169,7 @@ export default function UserDoorAccessEditForm({
 											</SelectTrigger>
 										</FormControl>
 										<SelectContent>
-											{Object.values(door).map((doorValue) => (
+											{Object.values(DoorEnum).map((doorValue) => (
 												<SelectItem key={doorValue} value={doorValue}>
 													{doorValue}
 												</SelectItem>

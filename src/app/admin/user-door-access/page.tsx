@@ -1,6 +1,6 @@
 "use client";
 
-import { action, target, type UserAccessRead } from "../../../api";
+import { ActionEnum, TargetEnum, type UserAccessRead } from "../../../api";
 import DoorAccessForm from "./UserDoorAccessForm";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getAllUserAccessesOptions } from "@/api/@tanstack/react-query.gen";
@@ -100,7 +100,7 @@ export default function UserDoorAccess() {
 
 	return (
 		<PermissionWall
-			requiredPermissions={[[action.MANAGE, target.USER_DOOR_ACCESS]]}
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.USER_DOOR_ACCESS]]}
 		>
 			<Suspense fallback={<LoadingErrorCard isLoading={true} />}>
 				<div className="px-8 space-x-4">

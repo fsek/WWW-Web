@@ -22,7 +22,7 @@ import {
 	updatePostMutation,
 } from "@/api/@tanstack/react-query.gen";
 import type { PostRead, PostUpdate, PostDoorAccessRead } from "@/api";
-import { elected_by, elected_at_semester } from "@/api";
+import { ElectedByEnum, ElectedAtSemesterEnum } from "@/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
@@ -30,7 +30,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
-import { door } from "@/api";
+import { DoorEnum } from "@/api";
 import StyledMultiSelect from "@/components/StyledMultiSelect";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 
@@ -43,8 +43,8 @@ const postEditSchema = z.object({
 	email: z.string().email(),
 	council_id: z.number().int(),
 	doors: z.array(z.string()).optional(),
-	elected_at_semester: z.nativeEnum(elected_at_semester),
-	elected_by: z.nativeEnum(elected_by),
+	elected_at_semester: z.nativeEnum(ElectedAtSemesterEnum),
+	elected_by: z.nativeEnum(ElectedByEnum),
 	elected_user_recommended_limit: z.coerce.number().int().min(0),
 	elected_user_max_limit: z.coerce.number().int().min(0),
 });
@@ -67,8 +67,8 @@ export default function PostEditForm({ item, onClose }: PostEditFormProps) {
 			description_en: "",
 			email: "",
 			doors: [],
-			elected_at_semester: elected_at_semester.OTHER,
-			elected_by: elected_by.OTHER,
+			elected_at_semester: ElectedAtSemesterEnum.OTHER,
+			elected_by: ElectedByEnum.OTHER,
 			elected_user_recommended_limit: 0,
 			elected_user_max_limit: 0,
 		},
@@ -82,8 +82,8 @@ export default function PostEditForm({ item, onClose }: PostEditFormProps) {
 				...item,
 				doors: item.post_door_accesses.map((doorAccess) => doorAccess.door),
 				elected_at_semester: (item.elected_at_semester ??
-					elected_at_semester.OTHER) as elected_at_semester,
-				elected_by: (item.elected_by ?? elected_by.OTHER) as elected_by,
+					ElectedAtSemesterEnum.OTHER) as ElectedAtSemesterEnum,
+				elected_by: (item.elected_by ?? ElectedByEnum.OTHER) as ElectedByEnum,
 				elected_user_recommended_limit:
 					item.elected_user_recommended_limit ?? 0,
 				elected_user_max_limit: item.elected_user_max_limit ?? 0,
@@ -316,7 +316,7 @@ export default function PostEditForm({ item, onClose }: PostEditFormProps) {
 									<FormControl>
 										<StyledMultiSelect
 											isMulti
-											options={Object.values(door).map((d) => ({
+											options={Object.values(DoorEnum).map((d) => ({
 												value: d,
 												label: d,
 											}))}
@@ -348,7 +348,7 @@ export default function PostEditForm({ item, onClose }: PostEditFormProps) {
 									<FormLabel>{t("posts.elected_at_semester")}</FormLabel>
 									<FormControl>
 										<SelectFromOptions
-											options={Object.values(elected_at_semester).map(
+											options={Object.values(ElectedAtSemesterEnum).map(
 												(value) => ({
 													value,
 													label: t(`enums.elected_at_semester.${value}`),
@@ -372,7 +372,7 @@ export default function PostEditForm({ item, onClose }: PostEditFormProps) {
 									<FormLabel>{t("posts.elected_by")}</FormLabel>
 									<FormControl>
 										<SelectFromOptions
-											options={Object.values(elected_by).map((value) => ({
+											options={Object.values(ElectedByEnum).map((value) => ({
 												value,
 												label: t(`enums.elected_by.${value}`),
 											}))}

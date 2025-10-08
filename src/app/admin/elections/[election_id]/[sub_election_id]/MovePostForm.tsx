@@ -47,9 +47,9 @@ interface MovePostFormProps {
 }
 
 const schema = z.object({
-	election_post_id: z.number({ required_error: "Post is required" }),
+	election_post_id: z.number({ error: "Post is required" }),
 	new_sub_election_id: z.number({
-		required_error: "Target sub election is required",
+		error: "Target sub election is required",
 	}),
 });
 

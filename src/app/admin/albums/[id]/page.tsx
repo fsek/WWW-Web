@@ -12,7 +12,6 @@ import {
 	getOneAlbumOptions,
 	uploadImageMutation,
 	deleteImageMutation,
-	uploadImageOptions,
 	getOneAlbumQueryKey,
 	removeAlbumPhotographerMutation,
 	getAlbumImagesOptions,

@@ -38,7 +38,7 @@ import type { EventSignupCreate } from "@/api/types.gen";
 import AdminChooseOnePriority from "@/widgets/AdminChooseOnePriority";
 
 const schema = z.object({
-	user_id: z.number({ required_error: "User is required" }),
+	user_id: z.number({ error: "User is required" }),
 	priority: z.string().optional().nullable(),
 	group_name: z.string().optional(),
 	drinkPackage: z.enum(["None", "AlcoholFree", "Alcohol"]),

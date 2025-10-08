@@ -54,7 +54,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Generate API client
-        run: bun run openapi-ts --input ./api-repo/openapi.json
+        run: bun run generate-api ./api-repo/openapi.json
 
       - name: Check types
         run: bun run build

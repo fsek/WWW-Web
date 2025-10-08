@@ -31,8 +31,8 @@ import SelectOnePost from "@/components/SelectOnePost";
 import getErrorMessage from "@/help_functions/getErrorMessage";
 
 const schema = z.object({
-	user_id: z.number({ required_error: "User is required" }),
-	post_id: z.number({ required_error: "Post is required" }),
+	user_id: z.number({ error: "User is required" }),
+	post_id: z.number({ error: "Post is required" }),
 });
 
 interface CandidationFormProps {

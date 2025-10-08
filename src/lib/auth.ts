@@ -1,11 +1,11 @@
 "use client";
 
 import type { BearerResponse } from "@/api";
-import type { action, target } from "@/api";
+import type { ActionEnum, TargetEnum } from "@/api";
 import { create } from "zustand";
 
-export type RequiredPermission = [action, target];
-class PermissionMap extends Map<target, Set<action>> {
+export type RequiredPermission = [ActionEnum, TargetEnum];
+class PermissionMap extends Map<TargetEnum, Set<ActionEnum>> {
 	/**
 	 * Checks a users permission against a list of required permissions.
 	 *
@@ -14,11 +14,11 @@ class PermissionMap extends Map<target, Set<action>> {
 	 * @example
 	 * Checking that a user has `view` permission for `CAR` and `manage` permission for `USER`
 	 * ```ts
-	 * import type { action, target } from "@/api";
+	 * import type { ActionEnum, TargetEnum } from "@/api";
 	 * import { useAuthState } from "@/lib/auth";
 	 * const auth = useAuthState();
 	 * const permissions = auth.getPermissions();
-	 * const isAllowed = permissions.hasRequiredPermissions([[action.view, target.CAR], [action.manage, target.USER]]);
+	 * const isAllowed = permissions.hasRequiredPermissions([[ActionEnum.VIEW, TargetEnum.CAR], [ActionEnum.MANAGE, TargetEnum.USER]]);
 	 * ```
 	 */
 	hasRequiredPermissions(requiredPermissions: RequiredPermission[]): boolean {
@@ -57,13 +57,13 @@ export const useAuthState = create<AuthState>((set, get) => {
 
 				const [actionStr, targetStr] = parts;
 
-				const actionEnum = actionStr as action;
-				const targetEnum = targetStr as target;
+				const actionEnum = actionStr as ActionEnum;
+				const targetEnum = targetStr as TargetEnum;
 
 				if (!actionEnum || !targetEnum) continue;
 
 				if (!map.has(targetEnum)) {
-					map.set(targetEnum, new Set<action>());
+					map.set(targetEnum, new Set<ActionEnum>());
 				}
 				// biome-ignore lint/style/noNonNullAssertion: Just checked that it exists
 				map.get(targetEnum)!.add(actionEnum);

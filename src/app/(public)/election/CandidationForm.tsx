@@ -23,6 +23,7 @@ import {
 	getVisibleElectionQueryKey,
 	getMeOptions,
 	getMyCandidationsQueryKey,
+	electionsGetSubElectionQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Plus, Save, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -31,7 +32,7 @@ import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import getErrorMessage from "@/help_functions/getErrorMessage";
 
 const schema = z.object({
-	election_post_id: z.number({ required_error: "Post is required" }),
+	election_post_id: z.number({ error: "Post is required" }),
 });
 
 interface BaseElectionPost {
@@ -149,7 +150,7 @@ export default function CandidationForm({
 				onSuccess: () => {
 					toast.success(t("elections.candidation_success"));
 					queryClient.invalidateQueries({
-						queryKey: getVisibleElectionQueryKey({
+						queryKey: electionsGetSubElectionQueryKey({
 							path: { sub_election_id: subElectionId },
 						}),
 					});
