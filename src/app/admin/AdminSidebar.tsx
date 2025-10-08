@@ -200,6 +200,12 @@ const groups: AdminGroup[] = [
 				permissions: [[action.MANAGE, target.ELECTION]],
 				icon: Gavel,
 			},
+			{
+				title: "admin:guild_meeting.self",
+				url: "/admin/guild-meeting",
+				permissions: [[action.MANAGE, target.GUILD_MEETING]],
+				icon: Users,
+			},
 		],
 	},
 	{
