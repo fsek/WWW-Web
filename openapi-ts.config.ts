@@ -38,5 +38,6 @@ export default defineConfig({
 			name: "@tanstack/react-query",
 		},
 		"zod",
+		{ name: "@hey-api/client-fetch", exportFromIndex: true },
 	],
 });
