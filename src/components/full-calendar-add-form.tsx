@@ -76,12 +76,10 @@ export function EventAddForm({
 						.max(1000)
 				: z.string().optional().default(""),
 			start: z.date({
-				error: t("add.error_start_time"),
-				invalid_type_error: t("add.error_not_date"),
+				message: t("add.error_start_time"),
 			}),
 			end: z.date({
-				error: t("add.error_end_time"),
-				invalid_type_error: t("add.error_not_date"),
+				message: t("add.error_end_time"),
 			}),
 			all_day: z.boolean().default(false),
 			color: z
@@ -547,11 +545,11 @@ export function EventAddForm({
 									<FormField
 										key={fieldName}
 										control={form.control}
-										name={fieldName as string}
+										name={fieldName as any}
 										render={({ field }) => (
 											<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
 												<Checkbox
-													checked={field.value}
+													checked={field.value as boolean}
 													onCheckedChange={field.onChange}
 													className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
 												/>

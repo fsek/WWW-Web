@@ -81,12 +81,10 @@ export function EventEditForm({
 				.min(1, { message: t("edit.error_description") })
 				.max(1000),
 			start: z.date({
-				error: t("edit.error_start_time"),
-				invalid_type_error: t("edit.error_not_date"),
+				message: t("edit.error_start_time"),
 			}),
 			end: z.date({
-				error: t("edit.error_end_time"),
-				invalid_type_error: t("edit.error_not_date"),
+				message: t("edit.error_end_time"),
 			}),
 			all_day: z.boolean().default(false),
 			color: z

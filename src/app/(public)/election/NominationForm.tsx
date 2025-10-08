@@ -24,6 +24,7 @@ import {
 	createNominationMutation,
 	getVisibleElectionQueryKey,
 	getMeOptions,
+	electionsGetSubElectionQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Plus, Save, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -146,7 +147,7 @@ export default function NominationForm({
 				onSuccess: () => {
 					toast.success(t("elections.nomination_success"));
 					queryClient.invalidateQueries({
-						queryKey: getVisibleElectionQueryKey({
+						queryKey: electionsGetSubElectionQueryKey({
 							path: { sub_election_id: subElectionId },
 						}),
 					});
