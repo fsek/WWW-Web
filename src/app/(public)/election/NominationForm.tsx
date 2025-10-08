@@ -32,7 +32,7 @@ import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import getErrorMessage from "@/help_functions/getErrorMessage";
 
 const schema = z.object({
-	election_post_id: z.number({ required_error: "Post is required" }),
+	election_post_id: z.number({ error: "Post is required" }),
 	nominee_name: z.string().min(1, { message: "Name is required" }),
 	nominee_email: z.string().email({ message: "Invalid email" }),
 	motivation: z.string().optional(),

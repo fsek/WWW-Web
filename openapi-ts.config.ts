@@ -32,7 +32,7 @@ export default defineConfig({
 		},
 		{
 			name: "@hey-api/typescript",
-			enums: "typescript-const",
+			enums: "javascript",
 		},
 		{
 			name: "@tanstack/react-query",

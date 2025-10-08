@@ -38,7 +38,7 @@ import { Label } from "./ui/label";
 import EventFormFields from "@/app/admin/events/EventFormFields";
 import { Save } from "lucide-react";
 import RoomBookingFormFields from "@/app/admin/room-bookings/RoomBookingFormFields";
-import { room } from "@/api";
+import { RoomEnum } from "@/api";
 import CafeShiftFormFields from "@/app/admin/cafe-shifts/CafeShiftsFormFields";
 
 interface EventEditFormProps {
@@ -74,23 +74,23 @@ export function EventEditForm({
 		.object({
 			id: z.string(),
 			title_sv: z
-				.string({ required_error: t("edit.error_title") })
+				.string({ error: t("edit.error_title") })
 				.min(1, { message: t("edit.error_title") }),
 			description_sv: z
-				.string({ required_error: t("edit.error_description") })
+				.string({ error: t("edit.error_description") })
 				.min(1, { message: t("edit.error_description") })
 				.max(1000),
 			start: z.date({
-				required_error: t("edit.error_start_time"),
+				error: t("edit.error_start_time"),
 				invalid_type_error: t("edit.error_not_date"),
 			}),
 			end: z.date({
-				required_error: t("edit.error_end_time"),
+				error: t("edit.error_end_time"),
 				invalid_type_error: t("edit.error_not_date"),
 			}),
 			all_day: z.boolean().default(false),
 			color: z
-				.string({ required_error: "Please select an event color." })
+				.string({ error: "Please select an event color." })
 				.min(1, { message: "Must provide a title for this event." }),
 			...(enableTrueEventProperties
 				? {
@@ -100,7 +100,7 @@ export function EventEditForm({
 						title_en: z.string().min(1),
 						description_en: editDescription
 							? z
-									.string({ required_error: t("add.error_description") })
+									.string({ error: t("add.error_description") })
 									.min(1, { message: t("add.error_description") })
 									.max(1000)
 							: z.string().optional().default(""),
@@ -130,7 +130,7 @@ export function EventEditForm({
 				: {}),
 			...(enableRoomBookingProperties
 				? {
-						room: z.enum(Object.values(room) as [string, ...string[]]),
+						room: z.enum(Object.values(RoomEnum) as [string, ...string[]]),
 						council_id: z.number().int().positive(),
 					}
 				: {}),
@@ -228,7 +228,7 @@ export function EventEditForm({
 			dot: "None",
 			personal: true,
 			confirmed: false,
-			room: room.LC,
+			room: RoomEnum.LC,
 			user_id: null,
 			user_name: null,
 		},
@@ -345,7 +345,7 @@ export function EventEditForm({
 				: {}),
 			...(enableRoomBookingProperties
 				? {
-						room: event?.room || room.LC,
+						room: event?.room || RoomEnum.LC,
 						council_id: event?.council_id || 1,
 					}
 				: {}),

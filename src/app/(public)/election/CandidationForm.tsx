@@ -31,7 +31,7 @@ import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import getErrorMessage from "@/help_functions/getErrorMessage";
 
 const schema = z.object({
-	election_post_id: z.number({ required_error: "Post is required" }),
+	election_post_id: z.number({ error: "Post is required" }),
 });
 
 interface BaseElectionPost {
