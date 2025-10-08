@@ -18,10 +18,10 @@ function stripPrefixFromOperationIds(doc: any) {
 			if (
 				operation &&
 				typeof operation.operationId === "string" &&
-				operation.operationId.lastIndexOf("-") !== -1
+				operation.operationId.indexOf("-") !== -1
 			) {
 				operation.operationId = operation.operationId.slice(
-					operation.operationId.lastIndexOf("-") + 1,
+					operation.operationId.indexOf("-") + 1,
 				);
 			}
 		}
