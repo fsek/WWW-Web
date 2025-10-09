@@ -5,7 +5,7 @@ import { Contact } from "@/components/landing/Contact";
 import { Hero } from "@/components/landing/Hero";
 import { Utskott } from "@/components/landing/Utskott";
 import { Companies } from "@/components/landing/Companies";
-import { Footer } from "@/components/landing/Footer";
+import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/landing/Navbar";
 import { WhatWeDo } from "@/components/landing/WhatWeDo";
 import { Nollning } from "@/components/landing/Nollning";
