@@ -166,7 +166,7 @@
 		"name": "Namn",
 		"public": "Offentlig",
 		"file_type_error": "Ogiltig filtyp. Tillåtna filtyper är: .pdf, .jpg, .png, .txt",
-		"file_size_error": "Filstorleken får inte överstiga 5 MB",
+		"file_size_error": "Filstorleken får inte överstiga {{size}} MB",
 		"create": "Skapa dokument",
 		"remove_document": "Ta bort dokument",
 		"edit_document": "Redigera dokument",

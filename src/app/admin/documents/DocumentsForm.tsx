@@ -23,6 +23,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { MAX_DOC_FILE_SIZE_MB } from "@/constants";
 
 export default function DocumentsForm() {
 	const { t } = useTranslation();
@@ -34,8 +35,8 @@ export default function DocumentsForm() {
 		file: z
 			.instanceof(File)
 			.refine(
-				(file) => file.size <= 5 * 1024 * 1024,
-				t("admin:documents.file_size_error"),
+				(file) => file.size <= MAX_DOC_FILE_SIZE_MB * 1024 * 1024,
+				t("admin:documents.file_size_error", { size: MAX_DOC_FILE_SIZE_MB }),
 			)
 			.refine(
 				(file) =>
