@@ -6,3 +6,5 @@ export const ACCEPT_ENUM = {
 
 // Create a type from the enum values
 export type AcceptEnum = (typeof ACCEPT_ENUM)[keyof typeof ACCEPT_ENUM];
+
+export const MAX_DOC_FILE_SIZE_MB = 25;
