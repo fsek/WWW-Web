@@ -75,6 +75,11 @@
 				"self": "Privacy Policy",
 				"desc": "Learn more about how we handle your personal data.",
 				"href": "/privacy"
+			},
+			"nollning": {
+				"self": "The Introduction",
+				"desc": "Welcome to the F-guild and congratulations on your spot on the engineering program in engineering physics, engineering mathematics, or engineering nanoscience!",
+				"href": "/nollning"
 			}
 		},
 		"engage": {
@@ -216,7 +221,8 @@
 		"emergencycontact": "Emergency Contact",
 		"companies": "For Companies",
 		"webansvar": "Webmaster",
-		"ansvar": "Publisher"
+		"ansvar": "Publisher",
+		"copyright": "F-Guild. All rights reserved in superposition in an impenetrable box."
 	},
 	"login": {
 		"login": "Log in",
