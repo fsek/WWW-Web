@@ -1092,5 +1092,26 @@
 			"Other": "Other",
 			"null": "Not specified"
 		}
+	},
+	"guild_meeting": {
+		"self": "Guild Meeting",
+		"edit_title": "Edit Guild Meeting",
+		"title_sv_label": "Title (Swedish)",
+		"title_en_label": "Title (English)",
+		"title_sv_placeholder": "Swedish title",
+		"title_en_placeholder": "English title",
+		"date_description_sv_label": "Date Description (Swedish)",
+		"date_description_en_label": "Date Description (English)",
+		"date_description_sv_placeholder": "e.g. Motionsstopp: 12 okt, 18:00...",
+		"date_description_en_placeholder": "e.g. Motion deadline: Oct 12, 6 PM...",
+		"description_sv_label": "Description (Swedish)",
+		"description_en_label": "Description (English)",
+		"description_sv_placeholder": "Swedish description",
+		"description_en_placeholder": "English description",
+		"reset": "Reset",
+		"save": "Save",
+		"update_success": "Guild meeting updated!",
+		"update_error": "Could not update guild meeting.",
+		"is_active_label": "Is Active (is visible to users)"
 	}
 }

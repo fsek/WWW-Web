@@ -1093,5 +1093,26 @@
 			"Other": "Annat",
 			"null": "Ej angivet"
 		}
+	},
+	"guild_meeting": {
+		"self": "Sektionsmötet",
+		"edit_title": "Redigera sektionsmöte",
+		"title_sv_label": "Titel (svenska)",
+		"title_en_label": "Titel (engelska)",
+		"title_sv_placeholder": "Svensk titel",
+		"title_en_placeholder": "Engelsk titel",
+		"date_description_sv_label": "Datumtext (svenska)",
+		"date_description_en_label": "Datumtext (engelska)",
+		"date_description_sv_placeholder": "t.ex. Motionsstopp: 16 mars...",
+		"date_description_en_placeholder": "t.ex. Motion deadline: March 16...",
+		"description_sv_label": "Beskrivning (svenska)",
+		"description_en_label": "Beskrivning (engelska)",
+		"description_sv_placeholder": "Svensk beskrivning",
+		"description_en_placeholder": "Engelsk beskrivning",
+		"reset": "Återställ",
+		"save": "Spara",
+		"update_success": "Sektionsmöte uppdaterat!",
+		"update_error": "Kunde inte uppdatera sektionsmöte.",
+		"is_active_label": "Är aktivt (är synligt för användare)"
 	}
 }
