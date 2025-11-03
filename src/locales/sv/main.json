@@ -75,6 +75,11 @@
 				"self": "Sekretesspolicy",
 				"desc": "Läs mer om hur vi hanterar dina personuppgifter.",
 				"href": "/privacy"
+			},
+			"nollning": {
+				"self": "Nollning",
+				"desc": "Varmt välkommen till F-sektionen och grattis till din plats på civilingenjörsprogrammet i teknisk fysik, teknisk matematik eller teknisk nanovetenskap!",
+				"href": "/nollning"
 			}
 		},
 		"engage": {
@@ -217,7 +222,8 @@
 		"emergencycontact": "Nödkontakt",
 		"companies": "För företag",
 		"webansvar": "Webbansvarig",
-		"ansvar": "Ansvarig utgivare"
+		"ansvar": "Ansvarig utgivare",
+		"copyright": "F-sektionen. Alla rättigheter förvarade i superposition i ogenomtränglig låda."
 	},
 	"login": {
 		"login": "Logga in",
