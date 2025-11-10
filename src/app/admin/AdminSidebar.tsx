@@ -203,7 +203,7 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:guild_meeting.self",
 				url: "/admin/guild-meeting",
-				permissions: [[action.MANAGE, target.GUILD_MEETING]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.GUILD_MEETING]],
 				icon: Users,
 			},
 		],
