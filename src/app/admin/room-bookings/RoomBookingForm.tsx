@@ -13,7 +13,7 @@ import {
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
 import RoomBookingFormFields from "./RoomBookingFormFields";
-import { type room, room as RoomEnum } from "@/api";
+import { RoomEnum } from "@/api";
 
 const roomBookingSchema = z
 	.object({
@@ -58,7 +58,7 @@ export type RoomBookingFormValues = z.infer<typeof roomBookingSchema>;
 export default function RoomBookingForm({
 	defaultRoom,
 }: {
-	defaultRoom: `${room}`;
+	defaultRoom: `${RoomEnum}`;
 }) {
 	const { t } = useTranslation();
 	const [open, setOpen] = useState(false);

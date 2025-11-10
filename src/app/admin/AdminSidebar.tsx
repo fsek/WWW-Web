@@ -45,7 +45,7 @@ import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
 import { useAuthState, type RequiredPermission } from "@/lib/auth";
-import { action, target } from "@/api";
+import { ActionEnum, TargetEnum } from "@/api";
 
 type AdminSidebarEntry = {
 	title: string;
@@ -64,43 +64,43 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:news.self",
 				url: "/admin/news",
-				permissions: [[action.MANAGE, target.NEWS]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.NEWS]],
 				icon: Newspaper,
 			},
 			{
 				title: "admin:events.self",
 				url: "/admin/events",
-				permissions: [[action.MANAGE, target.EVENT]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.EVENT]],
 				icon: Calendar,
 			},
 			{
 				title: "admin:documents.self",
 				url: "/admin/documents",
-				permissions: [[action.MANAGE, target.DOCUMENT]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.DOCUMENT]],
 				icon: FileText,
 			},
 			{
 				title: "admin:albums.self",
 				url: "/admin/albums",
-				permissions: [[action.MANAGE, target.GALLERY]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.GALLERY]],
 				icon: Images,
 			},
 			{
 				title: "admin:member.self",
 				url: "/admin/members",
-				permissions: [[action.VIEW, target.USER]],
+				permissions: [[ActionEnum.VIEW, TargetEnum.USER]],
 				icon: User,
 			},
 			{
 				title: "admin:door_access.self",
 				url: "/admin/user-door-access",
-				permissions: [[action.MANAGE, target.USER_DOOR_ACCESS]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.USER_DOOR_ACCESS]],
 				icon: Users,
 			},
 			{
 				title: "admin:cafe_shifts.self",
 				url: "/admin/cafe-shifts",
-				permissions: [[action.MANAGE, target.CAFE]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.CAFE]],
 				icon: ChefHat,
 			},
 		],
@@ -111,13 +111,13 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:car.self",
 				url: "/admin/car",
-				permissions: [[action.MANAGE, target.CAR]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.CAR]],
 				icon: Car,
 			},
 			{
 				title: "admin:room_bookings.self",
 				url: "/admin/room-bookings",
-				permissions: [[action.MANAGE, target.ROOM_BOOKINGS]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.ROOM_BOOKINGS]],
 				icon: House,
 			},
 		],
@@ -128,19 +128,19 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:councils.self",
 				url: "/admin/councils",
-				permissions: [[action.MANAGE, target.COUNCIL]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.COUNCIL]],
 				icon: Users,
 			},
 			{
 				title: "admin:user-posts.self",
 				url: "/admin/user-posts",
-				permissions: [[action.MANAGE, target.POST]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.POST]],
 				icon: UserPen,
 			},
 			{
 				title: "admin:posts.self",
 				url: "/admin/posts",
-				permissions: [[action.MANAGE, target.POST]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.POST]],
 				icon: Briefcase,
 			},
 		],
@@ -151,13 +151,13 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:song_categories.self",
 				url: "/admin/song-categories",
-				permissions: [[action.MANAGE, target.SONG]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.SONG]],
 				icon: ListMusic,
 			},
 			{
 				title: "admin:songs.self",
 				url: "/admin/songs",
-				permissions: [[action.MANAGE, target.SONG]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.SONG]],
 				icon: Music3,
 			},
 		],
@@ -168,19 +168,19 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:nollning.self_all",
 				url: "/admin/nollning",
-				permissions: [[action.MANAGE, target.NOLLNING]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.NOLLNING]],
 				icon: List,
 			},
 			{
 				title: "admin:nollning.self_current",
 				url: "/admin/nollning/admin-nollning?id=current",
-				permissions: [[action.MANAGE, target.NOLLNING]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.NOLLNING]],
 				icon: Apple,
 			},
 			{
 				title: "admin:nollning.self_mission",
 				url: "/admin/nollning/admin-nollning/adventure-missions?id=current",
-				permissions: [[action.MANAGE, target.ADVENTURE_MISSIONS]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.ADVENTURE_MISSIONS]],
 				icon: Award,
 			},
 		],
@@ -191,13 +191,13 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:visible_election.self",
 				url: "/admin/elections/visible",
-				permissions: [[action.MANAGE, target.ELECTION]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.ELECTION]],
 				icon: Vote,
 			},
 			{
 				title: "admin:elections.self",
 				url: "/admin/elections",
-				permissions: [[action.MANAGE, target.ELECTION]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.ELECTION]],
 				icon: Gavel,
 			},
 			{
@@ -214,13 +214,13 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:permissions.self",
 				url: "/admin/permissions",
-				permissions: [[action.MANAGE, target.PERMISSION]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.PERMISSION]],
 				icon: FolderLock,
 			},
 			{
 				title: "admin:mail_aliases.self",
 				url: "/admin/mail-aliases",
-				permissions: [[action.MANAGE, target.MAIL_ALIAS]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.MAIL_ALIAS]],
 				icon: Mail,
 			},
 		],

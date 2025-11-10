@@ -1,9 +1,9 @@
 "use client";
 
 import {
-	action,
-	type NewsBumpNewsData,
-	target,
+	ActionEnum,
+	type BumpNewsData,
+	TargetEnum,
 	type NewsRead,
 } from "../../../api";
 import NewsForm from "./NewsForm";
@@ -88,17 +88,18 @@ export default function News() {
 					size="sm"
 					onClick={(e) => {
 						e.stopPropagation();
-						const newsBump: NewsBumpNewsData = {
-							path: { news_id: row.original.id },
-						};
-						handleBumpNews.mutate(newsBump, {
-							onError: (error) => {
-								toast.error(
-									t("news.bump_error") +
-										(error?.detail ? `: ${error.detail}` : ""),
-								);
+						const newsBump: BumpNewsData["path"] = { news_id: row.original.id };
+						handleBumpNews.mutate(
+							{ path: newsBump },
+							{
+								onError: (error) => {
+									toast.error(
+										t("news.bump_error") +
+											(error?.detail ? `: ${error.detail}` : ""),
+									);
+								},
 							},
-						});
+						);
 					}}
 				>
 					{getBumpDate(row.original) ? (
@@ -143,7 +144,9 @@ export default function News() {
 	}
 
 	return (
-		<PermissionWall requiredPermissions={[[action.MANAGE, target.NEWS]]}>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.NEWS]]}
+		>
 			<Suspense fallback={<LoadingErrorCard isLoading={true} />}>
 				<div className="px-8 space-x-4">
 					<h3 className="text-3xl py-3 font-bold text-primary">
