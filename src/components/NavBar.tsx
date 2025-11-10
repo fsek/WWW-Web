@@ -188,10 +188,6 @@ export function NavBar() {
 									aria-labelledby="mobile-nav-title"
 								>
 									<div className="px-2">
-										<NavBarMenu isMobile />
-									</div>
-
-									<div className="px-2 pt-4 border-t">
 										{user ? (
 											<div className="space-y-4">
 												<div className="flex items-center gap-2">
@@ -260,12 +256,17 @@ export function NavBar() {
 											</div>
 										) : (
 											<SheetClose asChild>
-												<Button className="w-full" onClick={loginHandler}>
-													<LogInIcon className="mr-2" />
-													{t("login.login")}
-												</Button>
+												<div className="pt-5">
+													<Button className="w-full" onClick={loginHandler}>
+														<LogInIcon className="mr-2" />
+														{t("login.login")}
+													</Button>
+												</div>
 											</SheetClose>
 										)}
+									</div>
+									<div className="px-2 pb-15">
+										<NavBarMenu isMobile />
 									</div>
 								</div>
 							</SheetContent>
