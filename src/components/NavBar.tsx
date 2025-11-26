@@ -51,6 +51,8 @@ import {
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import VerificationReminder from "./VerificationReminder";
+import MemberBanner from "./MemberBanner";
 
 type NavItem = {
 	self: string;
@@ -93,185 +95,189 @@ export function NavBar() {
 
 	return (
 		<header className="sticky top-0 z-50 w-full border-transparent  bg-white/50 dark:bg-background/40  backdrop-blur-md">
-			<div className="xl:container flex items-center justify-between h-20 px-4 mx-auto">
-				<div className="flex items-center gap-4">
-					<Link href="/home" className="flex items-center">
-						<FLogga className="size-14 mr-3" />
-					</Link>
-					<div className="hidden lg:flex">
-						<NavBarMenu />
+			<div className="flex flex-col">
+				<div className="xl:container flex items-center justify-between h-20 px-4 mx-auto">
+					<div className="flex items-center gap-4">
+						<Link href="/home" className="flex items-center">
+							<FLogga className="size-14 mr-3" />
+						</Link>
+						<div className="hidden lg:flex">
+							<NavBarMenu />
+						</div>
 					</div>
-				</div>
-				<div className="flex items-center gap-2">
-					<LanguageSwitcher />
-					<ThemeToggle />
+					<div className="flex items-center gap-2">
+						<LanguageSwitcher />
+						<ThemeToggle />
 
-					{/* Desktop user menu */}
-					<div className="hidden lg:flex">
-						{user ? (
-							<>
-								{showAdmin && (
-									<Button
-										variant="outline"
-										className="ml-2 flex items-center gap-2"
-										asChild
-									>
-										<Link href="/admin">
-											<ShieldIcon className="w-5 h-5" />
-											<span>{t("navbar.admin", "Admin")}</span>
-										</Link>
-									</Button>
-								)}
-								<DropdownMenu>
-									<DropdownMenuTrigger asChild>
+						{/* Desktop user menu */}
+						<div className="hidden lg:flex">
+							{user ? (
+								<>
+									{showAdmin && (
 										<Button
 											variant="outline"
 											className="ml-2 flex items-center gap-2"
+											asChild
 										>
-											<UserIcon className="w-5 h-5" />
-											<span>
-												{`${user.first_name} ${user.last_name}`.trim() ||
-													user.email ||
-													"User"}
-											</span>
-										</Button>
-									</DropdownMenuTrigger>
-									<DropdownMenuContent
-										align="end"
-										className="py-2 px-2 min-w-[180px]"
-									>
-										<DropdownMenuItem asChild>
-											<Link href="/account-settings">
-												{t("navbar.account-settings")}
+											<Link href="/admin">
+												<ShieldIcon className="w-5 h-5" />
+												<span>{t("navbar.admin", "Admin")}</span>
 											</Link>
-										</DropdownMenuItem>
-										{user.is_verified === false && (
+										</Button>
+									)}
+									<DropdownMenu>
+										<DropdownMenuTrigger asChild>
+											<Button
+												variant="outline"
+												className="ml-2 flex items-center gap-2"
+											>
+												<UserIcon className="w-5 h-5" />
+												<span>
+													{`${user.first_name} ${user.last_name}`.trim() ||
+														user.email ||
+														"User"}
+												</span>
+											</Button>
+										</DropdownMenuTrigger>
+										<DropdownMenuContent
+											align="end"
+											className="py-2 px-2 min-w-[180px]"
+										>
 											<DropdownMenuItem asChild>
-												<Link href="/verify">{t("navbar.verify")}</Link>
+												<Link href="/account-settings">
+													{t("navbar.account-settings")}
+												</Link>
 											</DropdownMenuItem>
-										)}
-										<DropdownMenuSeparator />
-										<DropdownMenuItem onClick={handleLogout}>
-											{t("navbar.logout", "Logout")}
-										</DropdownMenuItem>
-									</DropdownMenuContent>
-								</DropdownMenu>
-							</>
-						) : (
-							<Button className="ml-2" onClick={loginHandler}>
-								<LogInIcon className="mr-1" />
-								<span>{t("login.login")}</span>
-							</Button>
-						)}
-					</div>
-
-					{/* Mobile hamburger menu */}
-					<div className="lg:hidden">
-						<Sheet>
-							<SheetTrigger asChild>
-								<Button variant="ghost" size="icon">
-									<Menu className="h-5 w-5" />
-									<span className="sr-only">Toggle menu</span>
+											{user.is_verified === false && (
+												<DropdownMenuItem asChild>
+													<Link href="/verify">{t("navbar.verify")}</Link>
+												</DropdownMenuItem>
+											)}
+											<DropdownMenuSeparator />
+											<DropdownMenuItem onClick={handleLogout}>
+												{t("navbar.logout", "Logout")}
+											</DropdownMenuItem>
+										</DropdownMenuContent>
+									</DropdownMenu>
+								</>
+							) : (
+								<Button className="ml-2" onClick={loginHandler}>
+									<LogInIcon className="mr-1" />
+									<span>{t("login.login")}</span>
 								</Button>
-							</SheetTrigger>
-							<SheetContent
-								side="right"
-								className="w-[300px] sm:w-[400px] overflow-auto"
-							>
-								<VisuallyHidden>
-									<SheetTitle className="text-xl font-semibold mx-auto mt-3">
-										Mobile Navigation
-									</SheetTitle>
-								</VisuallyHidden>
-								<div
-									className="flex flex-col gap-6 py-4"
-									aria-labelledby="mobile-nav-title"
-								>
-									<div className="px-2">
-										<NavBarMenu isMobile />
-									</div>
+							)}
+						</div>
 
-									<div className="px-2 pt-4 border-t">
-										{user ? (
-											<div className="space-y-4">
-												<div className="flex items-center gap-2">
-													<UserIcon className="w-5 h-5" />
-													<span className="font-medium">
-														{`${user.first_name} ${user.last_name}`.trim() ||
-															user.email ||
-															"User"}
-													</span>
-												</div>
-												<div className="space-y-2">
-													<SheetClose asChild>
-														<Link
-															href="/account-settings"
-															className="block w-full"
-														>
-															<Button
-																variant="outline"
-																className="w-full justify-start"
-															>
-																{t("navbar.account-settings")}
-															</Button>
-														</Link>
-													</SheetClose>
-													{user.is_verified === false && (
+						{/* Mobile hamburger menu */}
+						<div className="lg:hidden">
+							<Sheet>
+								<SheetTrigger asChild>
+									<Button variant="ghost" size="icon">
+										<Menu className="h-5 w-5" />
+										<span className="sr-only">Toggle menu</span>
+									</Button>
+								</SheetTrigger>
+								<SheetContent
+									side="right"
+									className="w-[300px] sm:w-[400px] overflow-auto"
+								>
+									<VisuallyHidden>
+										<SheetTitle className="text-xl font-semibold mx-auto mt-3">
+											Mobile Navigation
+										</SheetTitle>
+									</VisuallyHidden>
+									<div
+										className="flex flex-col gap-6 py-4"
+										aria-labelledby="mobile-nav-title"
+									>
+										<div className="px-2">
+											<NavBarMenu isMobile />
+										</div>
+
+										<div className="px-2 pt-4 border-t">
+											{user ? (
+												<div className="space-y-4">
+													<div className="flex items-center gap-2">
+														<UserIcon className="w-5 h-5" />
+														<span className="font-medium">
+															{`${user.first_name} ${user.last_name}`.trim() ||
+																user.email ||
+																"User"}
+														</span>
+													</div>
+													<div className="space-y-2">
 														<SheetClose asChild>
-															<Link href="/verify" className="block w-full">
+															<Link
+																href="/account-settings"
+																className="block w-full"
+															>
 																<Button
 																	variant="outline"
 																	className="w-full justify-start"
 																>
-																	{t("navbar.verify")}
+																	{t("navbar.account-settings")}
 																</Button>
 															</Link>
 														</SheetClose>
-													)}
-													{showAdmin && (
-														<SheetClose asChild>
-															<Link href="/admin" className="block w-full">
-																<Button
-																	variant="outline"
-																	className="w-full justify-start flex items-center gap-2"
-																>
-																	<ShieldIcon className="w-4 h-4" />
-																	<span>{t("navbar.admin", "Admin")}</span>
-																</Button>
-															</Link>
-														</SheetClose>
-													)}
-													<Button
-														onClick={() => {
-															handleLogout();
-															// Find and click the SheetClose trigger to close the sheet
-															const closeButton = document.querySelector(
-																"[data-radix-collection-item]",
-															);
-															if (closeButton instanceof HTMLElement)
-																closeButton.click();
-														}}
-														variant="outline"
-														className="w-full justify-start"
-													>
-														{t("navbar.logout", "Logout")}
-													</Button>
+														{user.is_verified === false && (
+															<SheetClose asChild>
+																<Link href="/verify" className="block w-full">
+																	<Button
+																		variant="outline"
+																		className="w-full justify-start"
+																	>
+																		{t("navbar.verify")}
+																	</Button>
+																</Link>
+															</SheetClose>
+														)}
+														{showAdmin && (
+															<SheetClose asChild>
+																<Link href="/admin" className="block w-full">
+																	<Button
+																		variant="outline"
+																		className="w-full justify-start flex items-center gap-2"
+																	>
+																		<ShieldIcon className="w-4 h-4" />
+																		<span>{t("navbar.admin", "Admin")}</span>
+																	</Button>
+																</Link>
+															</SheetClose>
+														)}
+														<Button
+															onClick={() => {
+																handleLogout();
+																// Find and click the SheetClose trigger to close the sheet
+																const closeButton = document.querySelector(
+																	"[data-radix-collection-item]",
+																);
+																if (closeButton instanceof HTMLElement)
+																	closeButton.click();
+															}}
+															variant="outline"
+															className="w-full justify-start"
+														>
+															{t("navbar.logout", "Logout")}
+														</Button>
+													</div>
 												</div>
-											</div>
-										) : (
-											<SheetClose asChild>
-												<Button className="w-full" onClick={loginHandler}>
-													<LogInIcon className="mr-2" />
-													{t("login.login")}
-												</Button>
-											</SheetClose>
-										)}
+											) : (
+												<SheetClose asChild>
+													<Button className="w-full" onClick={loginHandler}>
+														<LogInIcon className="mr-2" />
+														{t("login.login")}
+													</Button>
+												</SheetClose>
+											)}
+										</div>
 									</div>
-								</div>
-							</SheetContent>
-						</Sheet>
+								</SheetContent>
+							</Sheet>
+						</div>
 					</div>
 				</div>
+				<VerificationReminder showBanner={user?.is_verified === false} />
+				<MemberBanner showBanner={user?.is_member === false} />
 			</div>
 			<Toaster position="top-center" richColors />
 		</header>
