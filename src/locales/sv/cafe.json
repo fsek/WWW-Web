@@ -2,7 +2,7 @@
 	"cafe_shifts": {
 		"title": "Cafépass",
 		"description_title": "Om cafépassen",
-		"description_long_text": "Här kan du se och anmäla dig till cafépass. Klicka på ett pass i kalendern för att se detaljer och anmäla dig om det är ledigt.",
+		"description_long_text": "Här kan du se arbetspassen i Hilbert Café och anmäla dig till dem. Klicka på ett pass i kalendern för att se detaljer och anmäla dig om det är ledigt.",
 		"faq": {
 			"title": "Vanliga frågor",
 			"q1": "Vad betyder färgerna?",
@@ -21,7 +21,7 @@
 	"unassigned": "Otildelat",
 	"email": "E-post",
 	"telephone_number": "Telefonnummer",
-	"stil_id": "Stil ID",
+	"stil_id": "Stil-ID",
 	"signoff": "Avanmäl",
 	"signup": "Anmäl",
 	"shift_timing": "Passets tider",

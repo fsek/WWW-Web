@@ -4,24 +4,24 @@
 	"calendar": "Kalender",
 	"calendarText": "Här kan du se sektionens kalender med kommande evenemang. Klicka för att gå till stora kalendersidan och scrolla sedan ner för information om hur du lägger till detta i din egen kalenderapp.",
 	"welcome": "Välkommen till nya hemsidan för F-sektionen!",
-	"welcomeText": "Just nu är vi i en övergångsperiod till vår nya hemsida. Vi jobbar med att kontinuerligt förbättra design och funktionalitet, och lägga till saker som just nu saknas gentemot den gamla hemsidan. Den går förresten fortfarande att använda på old.fsektionen.se. Eftersom vi dessutom har bytt ut servern och databasen är det nya och gamla systemet separerade: om du har gamla konton, lokalbokningar, inställningar, bilbokningar etc. så kommer de inte vara tillgängliga genom den nya webben och du kommer att behöva göra nya. OBS! Vi planerar att göra oss av med den gamla hemsidan helt inom en snar framtid, så försök att i största mån använda den nya. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
+	"welcomeText": "Just nu är vi i en övergångsperiod till vår nya hemsida. Vi jobbar med att kontinuerligt förbättra design och funktionalitet, och lägga till saker som just nu saknas gentemot den gamla hemsidan. Den går fortfarande att använda på old.fsektionen.se. Eftersom vi dessutom har bytt ut servern och databasen är det nya och gamla systemet separerade: om du har gamla konton, lokalbokningar, inställningar, bilbokningar etc. så kommer de inte vara tillgängliga genom den nya webben och du kommer att behöva göra nya. OBS! Vi planerar att göra oss av med den gamla hemsidan helt inom en snar framtid, så försök att i största mån att använda den nya. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
 	"oldWebsiteButton": "Det var bättre förr...",
-	"welcomeAdmin": "Om du tycker att du borde ha någon form av admin-åtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, kontakta utskottsordförande.",
-	"adminButton": "Admin sidan",
+	"welcomeAdmin": "Om du anser att du borde ha någon form av admin-åtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, kontakta utskottsordförande.",
+	"adminButton": "Administrationssidan",
 	"registerButton": "Registrera nytt konto",
 	"newsTitle": "Nyheter",
-	"newsText": "Om du vill använda mer avancerad formatering, använd Mattermost tills vi har lagt till ordentligt stöd. Nyhetssidan stöder dock bilder nu!",
+	"newsText": "Om du vill använda mer avancerad formattering, använd Mattermost som nyhetskanal tills vi har lagt till mer funktionalitet. Nyhetssidan stöder dock bilder nu!",
 	"cafeTitle": "Hilbert Café",
-	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang. Cafét har även en egen sida att tillgå, och du kan nu skriva upp dig på cafépass på en annan sida.",
-	"cafe_shift_button": "Skriv upp dig på ett pass",
+	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang. Caféet har även en egen sida att tillgå, och du kan nu skriva upp dig på caféets arbetspass på en annan sida.",
+	"cafe_shift_button": "Skriv upp dig på ett arbetspass",
 	"cafe_page_button": "Huvudsidan för caféet",
-	"coolThing": "En cool grej som distraherar dig från att se att sidan inte är klar än",
+	"coolThing": "En häftig sak som distraherar dig från att se att sidan inte är klar än",
 	"back": "Tillbaka",
 	"faq": {
 		"self": "Frågor besvarade",
 		"q1": {
 			"question": "Kan jag logga in med mitt gamla konto?",
-			"answer": "Nej, eftersom vi bytt till ny databas måste du skapa ett nytt konto. Det kan du göra på fsektionen.se/register. Det finns många saker du inte har tillgång till innan du skapat konto, verifierat din mail och blivit verifierad som medlem."
+			"answer": "Nej, eftersom vi bytt till en ny databas måste du skapa ett nytt konto, vilket du kan göra på fsektionen.se/register. Det finns många saker du inte har tillgång till innan du skapat ett konto, verifierat din mail och blivit verifierad som medlem."
 		},
 		"q2": {
 			"question": "Hur blir jag verifierad som medlem?",
@@ -29,15 +29,15 @@
 		},
 		"q3": {
 			"question": "Vad har ni kvar att flytta över?",
-			"answer": "Det mesta finns redan överflyttat. För att läsa styrdokumenten i samlad form (de finns tillgängliga genom dokumentarkivet om du vet deras namn), använda motionsmaskinen och val i allmänhet kan du använda gamla hemsidan (men vi kommer försöka bli klara med val innan valen stänger). Vi jobbar så hårt vi kan för att allt ska finnas på nya hemsidan 🧡."
+			"answer": "Det mesta är redan flyttat. För att läsa styrdokumenten i samlad form (de finns tillgängliga genom dokumentarkivet om du vet deras namn), använda motionsmaskinen och val i allmänhet kan du använda gamla hemsidan (men vi kommer försöka bli klara med val innan valen stänger). Vi jobbar så hårt vi kan för att allt ska finnas på nya hemsidan 🧡."
 		},
 		"q4": {
 			"question": "Hjälp! Jag har ingen av mina gamla adminrättigheter!",
-			"answer": "pls vänta eller kontakta ditt utskottsordförande och be dem att återställa dina rättigheter."
+			"answer": "Vänta eller kontakta ditt utskottsordförande och be dem att återställa dina rättigheter."
 		},
 		"q5": {
 			"question": "Jag har problem med att anmäla mig till evenemang, visa galleriet eller andra saker!??",
-			"answer": "Vi hindrar icke-medlemmar och användare utan verifierade email adresser från att använda många av våra tjänster. Kontrollera följande: \n\nAtt du verkligen har verifierat ditt konto (prova fsektionen.se/verify). \nAtt du är registrerad som medlem. (kolla i kontoinställningar för att kontrollera båda dessa!) \nAtt du är inloggad på rätt konto och inte har skapat flera konton, till exempel ett med din studentmail och ett annat med din privata mail. Om du har mer än ett konto och vill bli av med det dåliga, kontakta spindelman@fsektionen.se via mailet för det konto du vill ta bort."
+			"answer": "Vi hindrar icke-medlemmar och användare utan verifierade mailadresser från att använda många av våra tjänster. Kontrollera följande: \n\nAtt du verkligen har verifierat ditt konto (prova fsektionen.se/verify). \nAtt du är registrerad som medlem. (kolla i kontoinställningar för att kontrollera båda dessa!) \nAtt du är inloggad på rätt konto och inte har skapat flera konton, till exempel ett med din studentmail och ett annat med din privata mail. Om du har mer än ett konto och vill bli av med det dåliga, kontakta spindelman@fsektionen.se via mailet för det konto du vill ta bort."
 		}
 	},
 	"next": "Nästa",
@@ -53,7 +53,7 @@
 			},
 			"news": {
 				"self": "Nyheter",
-				"desc": "Håll dig uppdaterad med de senaste nyheterna och evenemangen.",
+				"desc": "Håll dig uppdaterad med de senaste nyheterna från sektionen.",
 				"href": "/news"
 			},
 			"calendar": {
@@ -63,12 +63,12 @@
 			},
 			"councils": {
 				"self": "Utskott",
-				"desc": "Utforska våra utskotts dedikerade arbete och engagemang.",
+				"desc": "Utforska våra utskotts arbete och engagemang.",
 				"href": "/councils"
 			},
 			"documents": {
 				"self": "Dokument",
-				"desc": "Här kan du hitta alla de fina dokument som producerats.",
+				"desc": "Bläddra bland dokument som producerats av sektionen.",
 				"href": "/documents"
 			},
 			"privacy": {
@@ -81,12 +81,12 @@
 			"self": "Engagera dig",
 			"cafe": {
 				"self": "Hilbert Café",
-				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär.",
+				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär (och gratis lunch!).",
 				"href": "/cafe"
 			},
 			"positions": {
-				"self": "Poster",
-				"desc": "Engagera dig som funktionär inom sektionen!",
+				"self": "Bli funktionär",
+				"desc": "Vill du engagera dig i något utskott? Se hit!",
 				"href": "/positions"
 			},
 			"nollningsvol": {
@@ -119,18 +119,13 @@
 			},
 			"rooms": {
 				"self": "Lokalbokning",
-				"desc": "Boka sektionens tre rum i mattehuset för personliga evenemang eller utskottsmöten.",
+				"desc": "Boka sektionens tre rum i Matematikhuset för personliga evenemang eller utskottsmöten.",
 				"href": "/room-bookings"
 			},
 			"tools": {
 				"self": "Verktygsutlåning",
-				"desc": "Låna högkvalitativa verktyg för dina projekt.",
+				"desc": "Låna sektionens verktyg för dina projekt.",
 				"href": "/tools"
-			},
-			"equipment": {
-				"self": "Utrustningsuthyrning",
-				"desc": "Hyra modern utrustning för att effektivisera ditt arbete.",
-				"href": "https://forms.gle/YQTxawJfexSXVbqH6"
 			},
 			"specialrooms": {
 				"self": "Stillarum/Bönerum",
@@ -139,7 +134,7 @@
 			},
 			"gallery": {
 				"self": "Galleri",
-				"desc": "Utforska vårt bildgalleri som visar evenemang och aktiviteter.",
+				"desc": "Utforska vårt bildgalleri och få en inblick i sektionens historia.",
 				"href": "/gallery"
 			},
 			"calendar": {

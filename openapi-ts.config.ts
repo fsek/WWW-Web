@@ -3,7 +3,7 @@ import { defineConfig } from "@hey-api/openapi-ts";
 export default defineConfig({
 	input: "openapi.cleaned.json",
 	//input: "http://127.0.0.1:8000",
-	//input: "http://localhost:8000/openapi.json",
+	input: "http://127.0.0.1:8000/openapi.json",
 	output: { path: "src/api", lint: "biome", format: "biome" },
 	parser: {
 		transforms: {
