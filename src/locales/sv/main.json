@@ -6,11 +6,11 @@
 	"welcome": "Välkommen till nya hemsidan för F-sektionen!",
 	"welcomeText": "Just nu är vi i en övergångsperiod till vår nya hemsida. Vi jobbar med att kontinuerligt förbättra design och funktionalitet, och lägga till saker som just nu saknas gentemot den gamla hemsidan. Den går fortfarande att använda på old.fsektionen.se. Eftersom vi dessutom har bytt ut servern och databasen är det nya och gamla systemet separerade: om du har gamla konton, lokalbokningar, inställningar, bilbokningar etc. så kommer de inte vara tillgängliga genom den nya webben och du kommer att behöva göra nya. OBS! Vi planerar att göra oss av med den gamla hemsidan helt inom en snar framtid, så försök att i största mån att använda den nya. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
 	"oldWebsiteButton": "Det var bättre förr...",
-	"welcomeAdmin": "Om du anser att du borde ha någon form av admin-åtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, kontakta utskottsordförande.",
+	"welcomeAdmin": "Om du anser att du borde ha någon form av administratörsåtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, kontakta utskottsordförande.",
 	"adminButton": "Administrationssidan",
 	"registerButton": "Registrera nytt konto",
 	"newsTitle": "Nyheter",
-	"newsText": "Om du vill använda mer avancerad formattering, använd Mattermost som nyhetskanal tills vi har lagt till mer funktionalitet. Nyhetssidan stöder dock bilder nu!",
+	"newsText": "Om du vill använda mer avancerad formattering, använd Mattermost som nyhetskanal tills vi har lagt till mer funktionalitet. Nyhetssidan stöder nu bilder!",
 	"cafeTitle": "Hilbert Café",
 	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang. Caféet har även en egen sida att tillgå, och du kan nu skriva upp dig på caféets arbetspass på en annan sida.",
 	"cafe_shift_button": "Skriv upp dig på ett arbetspass",
@@ -32,7 +32,7 @@
 			"answer": "Det mesta är redan flyttat. För att läsa styrdokumenten i samlad form (de finns tillgängliga genom dokumentarkivet om du vet deras namn), använda motionsmaskinen och val i allmänhet kan du använda gamla hemsidan (men vi kommer försöka bli klara med val innan valen stänger). Vi jobbar så hårt vi kan för att allt ska finnas på nya hemsidan 🧡."
 		},
 		"q4": {
-			"question": "Hjälp! Jag har ingen av mina gamla adminrättigheter!",
+			"question": "Hjälp! Jag har inga av mina gamla adminrättigheter!",
 			"answer": "Vänta eller kontakta ditt utskottsordförande och be dem att återställa dina rättigheter."
 		},
 		"q5": {
@@ -144,7 +144,7 @@
 			},
 			"songs": {
 				"self": "Sångbok",
-				"desc": "Bläddra och sjung med i vår samling av sånger.",
+				"desc": "Bläddra bland sångerna som sjungs på sektionens evenemang.",
 				"href": "/songs"
 			}
 		},
@@ -225,7 +225,7 @@
 		"forgotEmailLabel": "Ange din e-post för att återställa lösenord",
 		"forgotSubmit": "Skicka återställningslänk",
 		"forgotLoading": "Skickar...",
-		"forgotSuccess": "Om din e-post finns, har en återställningslänk skickats.",
+		"forgotSuccess": "Om din e-post finns så har en återställningslänk skickats till den.",
 		"backToLogin": "Tillbaka till inloggning",
 		"invalidEmailFormat": "Ogiltigt e-postformat"
 	},
@@ -251,7 +251,7 @@
 		"title": "Återställ lösenord",
 		"password": "Nytt lösenord",
 		"retype-password": "Upprepa lösenord",
-		"passwords-do-not-match": "Lösenorden matchar inte",
+		"passwords-do-not-match": "Lösenorden är olika",
 		"reset-password": "Återställ lösenord",
 		"resetting": "Återställer ditt lösenord...",
 		"reset-success": "Ditt lösenord har återställts!",
@@ -305,19 +305,19 @@
 			"q5": "Vad kostar det att hyra bilen?",
 			"a5": "Medlemmar i F-sektionen betalar en startavgift på 150 kr. Startavgiften inkluderar 20 kilometer, därefter kostar det 5 kr per påbörjad kilometer.",
 			"q6": "Vad betyder färgerna?",
-			"a6": "Olika färger visar status och ägarskap för varje bokning. En admin (bilförmannen) måste bekräfta bokningar utanför ordinarie tider. Färgerna har följande mening: \n- Ljusorange färg innebär att det är din bokning, men den är inte bekräftad.\n- Mörkorange färg innebär att det är din bokning och den är bekräftad. \n- Grön färg markerar någon annans bekräftade bokning.\n- Gul färg visar någon annans obekräftade bokning.\n- Ljusblå färg används för bokningar som lagts till lokalt men inte hämtats från servern än. Ser du blått kan något ha gått fel, ladda om sidan manuellt.",
+			"a6": "Olika färger visar status och ägarskap för varje bokning. En administratör (bilförmannen) måste bekräfta bokningar utanför ordinarie tider. Färgerna har följande mening: \n- Ljusorange färg innebär att det är din bokning, men den är inte bekräftad.\n- Mörkorange färg innebär att det är din bokning och den är bekräftad. \n- Grön färg markerar någon annans bekräftade bokning.\n- Gul färg visar någon annans obekräftade bokning.\n- Ljusblå färg används för bokningar som lagts till lokalt men inte hämtats från servern än. Ser du blått kan något ha gått fel, ladda då om sidan.",
 			"q7": "Jag har fler frågor!",
-			"a7": "Du kan kontakta bilförmannen bland annat genom <0>kontaktsidan</0>. Be gärna bilförmannen eller någon spindelman att lägga till frågan med svar här."
+			"a7": "Du kan kontakta bilförmannen bland annat genom <0>kontaktsidan</0>. Be gärna bilförmannen eller spindelmännen att lägga till frågan med svar här."
 		}
 	},
 	"room-booking": {
 		"title": "Lokalbokning",
 		"description-title": "FAQ och regler",
-		"description": "Som medlem måste du kontakta en admin om du vill boka ett rum, men du kan se alla rumsbokningar här. Om du är admin kan du boka rum <0>här</0> istället.",
+		"description": "Som medlem måste du kontakta en administratör om du vill boka ett rum, men du kan se alla rumsbokningar här. Om du är administratör kan du boka rum <0>här</0> istället.",
 		"faq": {
 			"title": "Vanliga frågor",
 			"q1": "Vem kan boka lokalerna?",
-			"a1": "Endast admins kan boka lokalerna. Om du är medlem kan du kontakta en admin från nämnden eller ditt utskottsordförande för att be dem boka ett rum.",
+			"a1": "Endast administratörer kan boka lokalerna. Om du är medlem kan du kontakta en person från nämnden eller ditt utskottsordförande för att be dem boka ett rum.",
 			"q2": "Jag har fler frågor!",
 			"a2": "Det finns ingen huvudansvarig för lokalbokning, kontakta prylmästaren eller styrelsen om du undrar något. Du kan också be dem att lägga till frågan med svar här."
 		}
@@ -332,6 +332,14 @@
 		"flavor_6": "Polerar pixlar...",
 		"flavor_7": "Räknar till oändligheten...",
 		"flavor_8": "Skapar ännu en gandalftenta...",
+		"flavor_9": "Bevisar Riemannhypotesen...",
+		"flavor_10": "Byter koordinatsystem...",
+		"flavor_11": "Preppar Hilbertmackor...",
+		"flavor_12": "Väntar på Ladokavisering...",
+		"flavor_13": "Väntar tills impulssvaret dör ut...",
+		"flavor_14": "Skriver motionssvar...",
+		"flavor_15": "Kompilerar LaTeX...",
+		"flavor_16": "Homogeniserar randvillkor...",
 		"error_occurred": "Ett fel uppstod:",
 		"no_error_message": "Inget felmeddelande tillgängligt.",
 		"network_error": "Ett nätverksfel uppstod. Kontrollera din anslutning.",
@@ -347,7 +355,7 @@
 		"message": "Du har inte behörighet att se denna sida. Om du tror att något är fel, ",
 		"contact": "kontakta din lokala spindelman.",
 		"quote": "Här har vi begått lite småillegala saker längs vägen.",
-		"quote_author": "Micke P",
+		"quote_author": "Mikael \"Micke P\" Persson Sundqvist",
 		"button": "Tillbaka till hemsidan"
 	},
 	"documents": {
@@ -359,7 +367,7 @@
 		"view": "Visa",
 		"view_doc": "Visa dokumentet",
 		"page_title": "Dokument",
-		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara markerade för att endast vara synliga för medlemmar.",
+		"description": "Här kan du hitta och läsa dokument som delas inom sektionen. Vissa dokument är markerade för att endast vara synliga för medlemmar.",
 		"search_title": "Sök efter titel eller kategori"
 	},
 	"guild_meeting": {
@@ -442,10 +450,10 @@
 		"add_candidation": "Lägg till kandidatur",
 		"add_nomination": "Lägg till nominering",
 		"select_post": "Välj post",
-		"candidation_error": "Misslyckades att skicka kandidatur",
-		"candidation_success": "Kandidatur skickad framgångsrikt!",
+		"candidation_error": "Misslyckades att skapa kandidatur",
+		"candidation_success": "Kandidatur skapades!",
 		"nomination_error": "Misslyckades att skicka nominering",
-		"nomination_success": "Nominering skickad framgångsrikt!",
+		"nomination_success": "Nominering skickad!",
 		"nominee_name": "Nominerade personens namn",
 		"nominee_email": "Nominerade personens e-post",
 		"motivation": "Motivering",
