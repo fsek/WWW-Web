@@ -10,3 +10,26 @@ updates:
    directory: "/"
    schedule:
      interval: weekly
+  # Keep JS dependencies updated (Bun lockfile + package.json)
+ - package-ecosystem: "bun"
+   directory: "/"
+   schedule:
+     interval: "weekly"
+    # Tell Dependabot to update the bun.lockb file too
+   open-pull-requests-limit: 3
+   groups:
+     nextjs:
+       patterns:
+         - "next"
+         - "@next/*"
+     react:
+       patterns:
+         - "react"
+         - "react-dom"
+
+  # Keep GitHub Actions fresh
+ - package-ecosystem: "github-actions"
+   directory: "/"
+   schedule:
+     interval: "weekly"
+   open-pull-requests-limit: 2
