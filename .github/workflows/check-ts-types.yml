@@ -71,4 +71,3 @@ jobs:
 
       - name: Check types
         run: bun run build
-
