@@ -20,12 +20,12 @@ import {
 	SelectItem,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { action, target, type PermissionCreate } from "@/api";
+import { ActionEnum, TargetEnum, type PermissionCreate } from "@/api";
 import { Plus } from "lucide-react";
 
 const permissionSchema = z.object({
-	action: z.enum(Object.values(action) as [PermissionCreate["action"]]),
-	target: z.enum(Object.values(target) as [PermissionCreate["target"]]),
+	action: z.enum(Object.values(ActionEnum) as [PermissionCreate["action"]]),
+	target: z.enum(Object.values(TargetEnum) as [PermissionCreate["target"]]),
 });
 
 export default function PermissionForm() {

@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import RoomBookingFormFields from "./RoomBookingFormFields";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { Save } from "lucide-react";
-import { room as RoomEnum } from "@/api";
+import { RoomEnum } from "@/api";
 
 const roomBookingEditSchema = z.object({
 	id: z.number(),

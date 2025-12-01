@@ -5,9 +5,7 @@
 import { useState } from "react";
 import type { RoomBookingRead } from "@/api/index";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-	getAllRoomBookingsOptions,
-} from "@/api/@tanstack/react-query.gen";
+import { getAllRoomBookingsOptions } from "@/api/@tanstack/react-query.gen";
 import Calendar from "@/components/full-calendar";
 import { EventsProvider } from "@/utils/full-calendar-event-context";
 import type {
@@ -28,13 +26,13 @@ import {
 } from "@/components/ui/accordion";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
-import type { room } from "@/api";
+import type { RoomEnum } from "@/api";
 
 export default function RoomBookings() {
 	const router = useRouter();
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
-	const [selectedRoom, setSelectedRoom] = useState<room | "All">("All");
+	const [selectedRoom, setSelectedRoom] = useState<RoomEnum | "All">("All");
 
 	const {
 		data: bookingData,
@@ -75,28 +73,30 @@ export default function RoomBookings() {
 
 	// Transform the fetched data into CalendarEvent type
 	const events: CalendarEvent<CustomRoomEventData>[] =
-		(bookingData as RoomBookingRead[])?.filter((booking) =>
-			selectedRoom === "All" ? true : booking.room === selectedRoom
-		).map((booking) => {
-			const userName =
-				booking.user.first_name && booking.user.last_name
-					? `${booking.user.first_name} ${booking.user.last_name}`
-					: `User ${booking.user.id}`;
-			return {
-				id: booking.id.toString(),
-				title_sv: `${booking.room} - ${userName}`,
-				title_en: `${booking.room} - ${userName}`,
-				start: booking.start_time,
-				end: booking.end_time,
-				all_day: false,
-				description_sv: booking.description,
-				room: booking.room,
-				council_name_sv: booking.council?.name_sv ?? undefined,
-				council_name_en: booking.council?.name_en ?? undefined,
-				council_id: booking.council?.id ?? undefined,
-				user_id: booking.user.id,
-			};
-		}) ?? [];
+		(bookingData as RoomBookingRead[])
+			?.filter((booking) =>
+				selectedRoom === "All" ? true : booking.room === selectedRoom,
+			)
+			.map((booking) => {
+				const userName =
+					booking.user.first_name && booking.user.last_name
+						? `${booking.user.first_name} ${booking.user.last_name}`
+						: `User ${booking.user.id}`;
+				return {
+					id: booking.id.toString(),
+					title_sv: `${booking.room} - ${userName}`,
+					title_en: `${booking.room} - ${userName}`,
+					start: booking.start_time,
+					end: booking.end_time,
+					all_day: false,
+					description_sv: booking.description,
+					room: booking.room,
+					council_name_sv: booking.council?.name_sv ?? undefined,
+					council_name_en: booking.council?.name_en ?? undefined,
+					council_id: booking.council?.id ?? undefined,
+					user_id: booking.user.id,
+				};
+			}) ?? [];
 
 	return (
 		<div className="px-8 space-x-4 py-10 h-full flex flex-col">
@@ -111,16 +111,20 @@ export default function RoomBookings() {
 							/>
 							<div className="py-2 w-64">
 								<SelectFromOptions
-									placeholder={t("admin:room_bookings.select_room") || "Välj rum"}
+									placeholder={
+										t("admin:room_bookings.select_room") || "Välj rum"
+									}
 									options={[
 										{ value: "LC", label: "LC" },
 										{ value: "Alumni", label: "Alumni" },
 										{ value: "SK", label: "SK" },
-										{ value: "Hilbert Cafe", label: "Hilbert Cafe"},
+										{ value: "Hilbert Cafe", label: "Hilbert Cafe" },
 										{ value: "All", label: t("admin:room_bookings.all_rooms") },
 									]}
 									value={selectedRoom}
-									onChange={(value) => setSelectedRoom(value as room | "All")}
+									onChange={(value) =>
+										setSelectedRoom(value as RoomEnum | "All")
+									}
 								/>
 							</div>
 							{!isFetching && !userIsFetching ? (
@@ -129,9 +133,9 @@ export default function RoomBookings() {
 									initialCalendarEvents={events}
 									eventColor="#f6ad55"
 									carEvents={false}
-									handleAdd={() => { }}
-									handleDelete={() => { }}
-									handleEdit={() => { }}
+									handleAdd={() => {}}
+									handleDelete={() => {}}
+									handleEdit={() => {}}
 								>
 									<div className="flex-1 flex flex-col h-full">
 										<Calendar

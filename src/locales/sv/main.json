@@ -214,7 +214,8 @@
 		"account-settings": "Kontoinställningar",
 		"logout": "Logga ut",
 		"logoutError": "Utloggning misslyckades. Försök igen senare.",
-		"verify": "Verifiera e-post"
+		"verify": "Verifiera e-post",
+		"guild-meeting": "Sektionsmöte"
 	},
 	"footer": {
 		"contact": "Kontakt",
@@ -371,6 +372,9 @@
 		"page_title": "Dokument",
 		"description": "Här kan du hitta och visa dokument som delas inom sektionen. Vissa dokument kan vara markerade för att endast vara synliga för medlemmar.",
 		"search_title": "Sök efter titel eller kategori"
+	},
+	"guild_meeting": {
+		"important_dates": "Viktiga datum"
 	},
 	"yes": "Ja",
 	"no": "Nej",

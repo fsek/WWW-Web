@@ -214,7 +214,8 @@
 		"account-settings": "Account Settings",
 		"logout": "Log out",
 		"logoutError": "Logout failed. Please try again later.",
-		"verify": "Verify Email"
+		"verify": "Verify Email",
+		"guild-meeting": "Guild Meeting"
 	},
 	"footer": {
 		"contact": "Contact",
@@ -371,6 +372,9 @@
 		"page_title": "Documents",
 		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members.",
 		"search_title": "Search by title or category"
+	},
+	"guild_meeting": {
+		"important_dates": "Important Dates"
 	},
 	"yes": "Yes",
 	"no": "No",
