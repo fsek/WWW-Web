@@ -83,7 +83,16 @@ async function main(input: string | URL) {
 	}
 }
 
-const arg = process.argv[2] ?? "openapi.json";
+let arg: string;
+if (!process.argv[2]) {
+	console.log("ℹ️ No input argument provided, defaulting to 'openapi.json'");
+	arg = "openapi.json";
+} else if (process.argv[2] === "--local") {
+	console.log("ℹ️ using host.docker.internal for local backend");
+	arg = "http://host.docker.internal:8000/openapi.json";
+} else {
+	arg = process.argv[2];
+}
 const input = (() => {
 	try {
 		return new URL(arg);
