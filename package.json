@@ -7,7 +7,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"generate-api": "bun run scripts/generate-api.ts",
+		"generate-api": "bun run scripts/generate-api.ts http://host.docker.internal:8000/openapi.json",
 		"deploy-generate-api": "bun run scripts/generate-api.ts https://stage.backend.fsektionen.se/openapi.json"
 	},
 	"dependencies": {
