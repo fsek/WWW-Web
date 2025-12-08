@@ -252,11 +252,18 @@
 		"success": "E-postverifiering lyckades!",
 		"error": "E-postverifiering misslyckades. Länken kan ha gått ut eller varit ogiltig, eller så har du redan verifierat din e-post. Du kan gå till fsektionen.se/verify utan token för att få en ny länk.",
 		"goHome": "Gå till startsidan",
-		"noToken": "Ingen verifieringslänk angiven. Vänligen kontrollera länken du klickade på eller begär ett nytt e-post meddelande.",
+		"noToken": "Du kan begära en ny verifieringslänk genom att ange din e-post nedan. (om du kom hit från ett mejl, kontrollera att du kopierade hela länken.)",
 		"requestSuccess": "En verifieringslänk har skickats till din e-postadress om den finns registrerad.",
 		"requestError": "Det gick inte att skicka verifieringsmejlet. Försök igen senare.",
 		"emailPlaceholder": "Ange din e-post",
 		"requestNew": "Begär ny verifieringslänk"
+	},
+	"verifyReminder": {
+		"message": "Ditt konto har inte en verifierad e-post. Du MÅSTE verifiera din e-post innan hemsidan kommer att fungera korrekt.",
+		"go": "Verifiera nu"
+	},
+	"memberBanner": {
+		"message": "Ditt konto är inte registrerat som medlem i F-sektionen. Du kan inte göra något åt detta själv. Kontakta din utskottsordförande eller annan ansvarig person inom sektionen för att bli registrerad som medlem. Innan detta kommer du inte kunna använda många av sektionens tjänster."
 	},
 	"reset-password": {
 		"title": "Återställ lösenord",
