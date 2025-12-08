@@ -7,7 +7,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"generate-api": "bun run scripts/generate-api.ts --local",
+		"generate-api": "bun run scripts/generate-api.ts",
 		"deploy-generate-api": "bun run scripts/generate-api.ts https://stage.backend.fsektionen.se/openapi.json"
 	},
 	"dependencies": {
