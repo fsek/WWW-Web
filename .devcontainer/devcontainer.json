@@ -7,8 +7,9 @@
 			"extensions": [
 				"biomejs.biome",
 				"ms-vscode.vscode-typescript-next",
-				"bradlc.vscode-tailwindcss", // Tailwind CSS IntelliSense extension
-				"oven.bun-vscode" // Bun extension
+				"bradlc.vscode-tailwindcss",
+				"oven.bun-vscode",
+				"lokalise.i18n-ally"
 			],
 			"settings": {
 				"editor.tabSize": 2,
@@ -25,7 +26,13 @@
 				"editor.defaultFormatter": "biomejs.biome",
 				"editor.codeActionsOnSave": {
 					"quickfix.biome": "explicit"
-				}
+				},
+				"i18n-ally.enabledFrameworks": ["react-i18next"],
+				"i18n-ally.keystyle": "nested",
+				"i18n-ally.localesPaths": "src/locales",
+				"i18n-ally.namespace": true,
+				"i18n-ally.pathMatcher": "{locale}/{namespaces}.json",
+				"i18n-ally.localeCountryMap": { "sv": "se" }
 			}
 		}
 	},
