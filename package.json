@@ -88,7 +88,7 @@
 		"react-markdown": "^10.1.0",
 		"react-obfuscate": "^3.7.0",
 		"react-pdf": "^10.0.1",
-		"react-resizable-panels": "^2.1.7",
+		"react-resizable-panels": "^3.0.6",
 		"react-select": "^5.10.1",
 		"recharts": "^2.15.1",
 		"rehype-mathjax": "^7.1.0",
