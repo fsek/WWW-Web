@@ -37,28 +37,28 @@
 		"title_dynamic_1": "Fysik",
 		"title_dynamic_2": "Matematik",
 		"title_dynamic_3": "Nanovetenskap",
-		"description": "Vi hjälper till att välkomna studenter till Lunds universitet och erbjuder en gemenskap och ett rikt studentliv för våra medlemmar.",
+		"description": "Vi bidrar till att välkomna studenter till Lunds universitet genom att erbjuda gemenskap och ett rikt studentliv för våra medlemmar.",
 		"new-student": "Jag är ny student",
 		"companies": "Jag representerar ett företag",
 		"login": "Jag är medlem i F-sektionen"
 	},
 	"about": {
 		"title": "Om F-sektionen",
-		"description": "F-sektionen inom TLTH är en ideell förening för studenter som läser något av civilingenjörsprogrammen Teknisk Fysik, Teknisk Matematik eller Teknisk Nanovetenskap. Sedan vi grundades på 1960-talet har vi arbetat för att främja kamratskap bland våra medlemmar och tillvarata deras gemensamma intressen. Vi håller till i Mattehuset i Lund och anordnar event för att göra studietiden roligare, representerar programmen gentemot universitetet och näringslivet och mycket mer!"
+		"description": "F-sektionen inom TLTH är en ideell förening för studenter som läser något av civilingenjörsprogrammen Teknisk Fysik, Teknisk Matematik eller Teknisk Nanovetenskap. Sedan vi grundades på 1960-talet har vi arbetat för att främja kamratskap bland våra medlemmar och tillvarata deras gemensamma intressen. Vi håller till i Matematikhuset i Lund och anordnar event för att göra studietiden roligare, representerar programmen gentemot universitetet och näringslivet och mycket mer!"
 	},
 	"sponsors": "Huvudsamarbetspartner",
 	"whatwedo": {
 		"title_1": "En sektion med ",
 		"title_2": "allt ",
 		"title_3": "för dina studier",
-		"subtitle": "F-sektionen arbetar med allt som rör dina studier, från lugna pluggkvällar i Mattehuset till Ölresor över sundet. Vi är alla här för att göra studietiden så bra som möjligt.",
+		"subtitle": "F-sektionen arbetar med allt som rör dina studier, från lugna pluggkvällar i Matematikhuset till kulinariska ölresor över sundet. Vi är alla här för att göra studietiden så bra som möjligt.",
 		"event": {
 			"title": "Event och Fest",
-			"description": "Under hela året, med särskilt fokus på nollningen, anordnar vi fester och evenemang för att skapa en gemenskap bland studenterna."
+			"description": "Under hela året och särskilt under nollningen anordnar vi fester och evenemang för att skapa en gemenskap bland studenterna."
 		},
 		"study": {
 			"title": "Studier",
-			"description": "Vi erbjuder stöd och resurser för studier genom våra pluggkvällar, där man kan få stöd från kunskapsrika studenter eller bara ha en lugn plats att studera med andra på."
+			"description": "Vi erbjuder stöd och resurser för studier exempelvis genom våra pluggkvällar, där man kan få vägledning av erfarna studenter eller bara ha en lugn plats att studera med andra på."
 		},
 		"representation": {
 			"title": "Representation",
@@ -66,30 +66,30 @@
 		},
 		"career": {
 			"title": "Karriär",
-			"description": "Vi hjälper studenter inom våra program att skapa kontakt med företag och industrin samt få en bild av arbetsmöjligheterna genom lunchföreläsningar, workshops och vår arbetsmarknadsmässa FARAD."
+			"description": "Vi hjälper studenter inom våra program att skapa kontakt med näringslivet samt få en bild av arbetsmöjligheter genom lunchföreläsningar, workshops och vår arbetsmarknadsmässa FARAD."
 		}
 	},
 	"councils": {
 		"title": "Utskotten som gör F-sektionen till det den är",
-		"subtitle": "F-sektionen består av flera utskott, var och en med sitt eget fokus och sina egna aktiviteter. Klicka på ett utskott för att lära dig mer om det på vår huvudsida."
+		"subtitle": "F-sektionen består av flera utskott som fokuserar på olika aspekter av organisationen och studentlivet. Klicka på ett utskott för att lära dig mer om det på dess huvudsida."
 	},
 	"nollning": {
 		"title": "Nollningen - Introduktion för nyantagna",
-		"description": "Nollningen är en introduktionsperiod för nya studenter där de får möjlighet att lära känna andra studenter och delta i många roliga event och aktiviteter. Det är ett fantastisk sätt att börja sin studietid på.",
+		"description": "Nollningen är en introduktionsperiod för nya studenter där de får möjlighet att delta i många roliga evenemang och aktiviteter tillsammans med andra studenter. För många ger nollningen både vänner och minnen för livet.",
 		"button": "Läs mer om nollningen"
 	},
 	"companies": {
 		"title_1": "Nå ut ",
 		"title_2": "till nästa generation",
-		"description": "F-sektionen fungerar som en länk mellan studenter och näringsliv. Vi skapar mötesplatser där företag kan knyta kontakter med studenter, och vi välkomnar alltid nya samarbeten!",
+		"description": "F-sektionen binder samman studenter och näringsliv, och välkomnar alltid nya samarbeten. Vi skapar mötesplatser där företag kan knyta kontakter med studenter.",
 		"lunch": "Lunchföreläsningar",
 		"lunch_description": "Lunchföreläsningar lockar studenter från alla årskurser och erbjuder en perfekt möjlighet för er att ge dem en inblick i er verksamhet.",
-		"marketing": "Sociala medier-marknadsföring",
+		"marketing": "Marknadsföring via sociala medier",
 		"marketing_description": "Vi erbjuder digital marknadsföring genom både e-post och inlägg på F-sektionens sociala mediekanaler.",
 		"events": "Kvällsevenemang",
-		"events_description": "Flexibiliteten i våra kvällsevenemang gör det möjligt att ge studenter en allmän förståelse för ert företag samtidigt som ni skapar en personlig kontakt med dem.",
+		"events_description": "Kvällsevenemang erbjuder stor flexibilitet i sitt utförande och gör det lätt att skapa personlig kontakt med sektionens studenter.",
 		"more": "Fler möjligheter",
-		"more_description": "Vi är alltid öppna för nya idéer och samarbeten. Om ni har en unik idé eller koncept skulle vi gärna vilja höra den!",
+		"more_description": "Vi är alltid öppna för nya idéer och samarbeten. Om ni har ett nytt koncept skulle vi gärna vilja höra det!",
 		"cta_title": "Upptäck våra erbjudanden"
 	},
 	"contact": {
