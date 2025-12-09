@@ -2,17 +2,17 @@
 	"fsek": "F-Guild",
 	"title": "Main Page",
 	"calendar": "Calendar",
-	"calendarText": "Here you can see the guild's calendar with upcoming events. Click to go to the full calendar page and then scroll down for information on how to add this to your own calendar app.",
+	"calendarText": "Here you can see the guild's calendar with upcoming events. Click to go to the full calendar page and then scroll down for information on how to add our events to your own calendar app.",
 	"welcome": "Welcome to the new F-Guild website!",
-	"welcomeText": "We are currently in a transition period to our new website. We are working to continuously improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the database, the new and old systems are separated: if you have old accounts, room bookings, settings, car bookings, etc. they will not be available through the new web and you will have to make new ones. NOTE! We plan to get rid of the old website in the near future, so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
+	"welcomeText": "We are currently in a transition period to our new website. We are continuously working to improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the database, the new and old systems are separated: if you have old accounts, room bookings, settings, car bookings, etc. they will not be available through the new web and you will have to make new ones. NOTE! We plan to get rid of the old website in the near future, so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
 	"oldWebsiteButton": "Take me back to the old site...",
 	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the head of your council (council boss).",
 	"adminButton": "Admin Page",
 	"registerButton": "Register a new account",
 	"newsTitle": "News",
-	"newsText": "If you want to use more advanced formatting, use mattermost until we have added proper support. The news page now supports images though!",
+	"newsText": "If you want to use more advanced formatting, use Mattermost until we have added more options. The news page now supports images!",
 	"cafeTitle": "Hilbert Cafe",
-	"cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement. The café also has its own page, and you can now sign up for café shifts on a separate page.",
+	"cafeText": "Hilbert Cafe is a place for students to meet, study and socialize. Here you will eventually find more interactive information about the cafe, its opening hours and staff. The café also has its own page, and you can now sign up for café shifts on a separate page.",
 	"cafe_shift_button": "Sign up for a shift",
 	"cafe_page_button": "Main cafe page",
 	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
@@ -25,7 +25,7 @@
 		},
 		"q2": {
 			"question": "How do I become verified as a member?",
-			"answer": "Create an account, verify your email, and add your Stil-ID (hi6122al-s) in the user settings (check the top right corner). After this, you must wait for us to verify that you are indeed a member. At the start of the semester, this may take longer than usual. If you feel that it is taking too long, you can contact your council boss or a mentor/föset during the introduction period."
+			"answer": "Create an account, verify your email, and add your Stil-ID (hi6122mo-s) in the user settings (check the top right corner). After this, you must wait for us to verify that you are indeed a member. At the start of the semester, this may take longer than usual. If you feel that it is taking too long, you can contact your council boss or a mentor/föset during the introduction period."
 		},
 		"q3": {
 			"question": "What do you still have left to move over?",
@@ -53,7 +53,7 @@
 			},
 			"news": {
 				"self": "News",
-				"desc": "Stay updated with the latest announcements and events.",
+				"desc": "Stay up-to-date with the latest announcements.",
 				"href": "/news"
 			},
 			"calendar": {
@@ -63,7 +63,7 @@
 			},
 			"councils": {
 				"self": "Councils",
-				"desc": "Explore the dedicated teams that drive our initiatives.",
+				"desc": "Get to know the teams that together form the F-Guild.",
 				"href": "/councils"
 			},
 			"documents": {
@@ -86,22 +86,22 @@
 			"self": "Get Involved",
 			"cafe": {
 				"self": "Hilbert Cafe",
-				"desc": "Join us for a friendly chat and connect with others.",
+				"desc": "Meet like-minded people and enjoy the relaxing atmosphere at the café (and free lunch!).",
 				"href": "/cafe"
 			},
 			"positions": {
-				"self": "Positions",
-				"desc": "Get involved as a volunteer within the guild!",
+				"self": "Become a Volunteer!",
+				"desc": "Want to get involved? Look here!",
 				"href": "/positions"
 			},
 			"nollningsvol": {
-				"self": "Orientation Volunteers",
+				"self": "Intro-week Volunteering",
 				"desc": "Help us welcome new students and give them a great start to their studies!",
 				"href": "/nollningsvolontar"
 			},
 			"elections": {
 				"self": "Elections",
-				"desc": "Apply for positions within the guild!",
+				"desc": "Apply for the guild's positions.",
 				"href": "/election"
 			},
 			"projects": {
@@ -119,23 +119,18 @@
 			"self": "Services",
 			"car": {
 				"self": "Car Rentals",
-				"desc": "Easily book the guild vehicle for your travel and daily needs.",
+				"desc": "Book the guild vehicle for your travel and daily needs.",
 				"href": "/car"
 			},
 			"rooms": {
 				"self": "Room Bookings",
-				"desc": "Book the three rooms in mattehuset for personal events or guild meetings.",
+				"desc": "Book the three rooms in the Mathematics building for personal events or guild meetings.",
 				"href": "/room-bookings"
 			},
 			"tools": {
 				"self": "Tool Library",
-				"desc": "Borrow high-quality tools to help bring your projects to life.",
+				"desc": "Borrow the guild's high-quality tools to help bring your projects to life.",
 				"href": "/tools"
-			},
-			"equipment": {
-				"self": "Equipment Hire",
-				"desc": "Rent state-of-the-art equipment to get the job done efficiently.",
-				"href": "https://forms.gle/YQTxawJfexSXVbqH6"
 			},
 			"specialrooms": {
 				"self": "Quiet/Prayer Rooms",
@@ -144,7 +139,7 @@
 			},
 			"gallery": {
 				"self": "Gallery",
-				"desc": "Explore our photo gallery showcasing events and activities.",
+				"desc": "Explore our photo gallery and get a glimpse into the guild's history.",
 				"href": "/gallery"
 			},
 			"calendar": {
@@ -154,7 +149,7 @@
 			},
 			"songs": {
 				"self": "Songs",
-				"desc": "Browse and sing along with our collection of songs.",
+				"desc": "Browse the songs heard and sung at the guild's events.",
 				"href": "/songs"
 			}
 		},
@@ -338,7 +333,7 @@
 			"q1": "Who can book the rooms?",
 			"a1": "Only admins can book the rooms. If you are a member, you can contact an admin from nämnden to ask them to book a room.",
 			"q2": "I have more questions!",
-			"a2": "There is no main responsible person for room bookings, contact the equipment master or the board if you have any questions. You can also ask them to add the question with an answer here."
+			"a2": "There is no guild executive who is solely responsible for the room bookings. Contact the equipment master or the board if you have any questions. You can also ask them to add the question with an answer here."
 		}
 	},
 	"loading": {
@@ -351,6 +346,14 @@
 		"flavor_6": "Polishing pixels...",
 		"flavor_7": "Counting to infinity...",
 		"flavor_8": "Creating yet another Gandalf-exam...",
+		"flavor_9": "Proving the Riemann hypothesis...",
+		"flavor_10": "Changing coordinate systems...",
+		"flavor_11": "Preparing Hilbert sandwiches...",
+		"flavor_12": "Waiting for Ladok notification...",
+		"flavor_13": "Waiting for the impulse response to fade out...",
+		"flavor_14": "Responding to motion...",
+		"flavor_15": "Compiling LaTeX...",
+		"flavor_16": "Making boundary conditions homogeneous...",
 		"error_occurred": "Some error occurred:",
 		"no_error_message": "No error message available.",
 		"network_error": "Network error occurred. Please check your connection.",
