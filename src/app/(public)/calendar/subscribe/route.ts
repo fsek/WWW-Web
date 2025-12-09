@@ -114,6 +114,9 @@ function generateICS(events: CalendarEvent[]) {
 			}
 			descriptionParts.push(`Alkoholpolicy: ${translated_alcohol}`);
 		}
+		if (event.extendedProps?.dress_code) {
+			descriptionParts.push(`Klädkod: ${event.extendedProps.dress_code}`);
+		}
 		if (event.extendedProps?.can_signup) {
 			descriptionParts.push("Anmälan krävs.");
 		}

@@ -29,7 +29,7 @@
 		},
 		"q3": {
 			"question": "What do you still have left to move over?",
-			"answer": "Most things are now available. To read the governing documents in their entirety (though they are available in the document archive if you know their names), use the proposition machine, and elections and voting in general, you can use the old website (but we will try to finish the election pages before the elections close). We are working as diligently as possible to ensure that everything is available on the new website. 🧡"
+			"answer": "Most things are now available. To read the governing documents in their entirety (though they are available in the document archive if you know their names) or use the proposition machine (RIP), you can use the old website. We are working as diligently as possible to ensure that everything is available on the new website. 🧡"
 		},
 		"q4": {
 			"question": "Help! I don't have any of my old admin rights!",
@@ -75,6 +75,11 @@
 				"self": "Privacy Policy",
 				"desc": "Learn more about how we handle your personal data.",
 				"href": "/privacy"
+			},
+			"nollning": {
+				"self": "The Introduction",
+				"desc": "Welcome to the F-guild and congratulations on your spot on the engineering program in engineering physics, engineering mathematics, or engineering nanoscience!",
+				"href": "/nollning"
 			}
 		},
 		"engage": {
@@ -212,7 +217,8 @@
 		"emergencycontact": "Emergency Contact",
 		"companies": "For Companies",
 		"webansvar": "Webmaster",
-		"ansvar": "Publisher"
+		"ansvar": "Publisher",
+		"copyright": "F-Guild. All rights reserved in superposition in an impenetrable box."
 	},
 	"login": {
 		"login": "Log in",
@@ -241,11 +247,18 @@
 		"success": "Email verification succeeded!",
 		"error": "Email verification failed. The link may have expired or been invalid, or you may have already verified your email. You can go to fsektionen.se/verify with no token to get a new link.",
 		"goHome": "Go to the homepage",
-		"noToken": "No verification link provided. Please check the link you clicked on or request a new email.",
+		"noToken": "You can request a new verification link by entering your email below. (if you came here from an email, check that you copied the entire link.)",
 		"requestSuccess": "A verification link has been sent to your email address if it is registered.",
 		"requestError": "Failed to send verification email. Please try again later.",
 		"emailPlaceholder": "Enter your email",
 		"requestNew": "Request New Verification Email"
+	},
+	"verifyReminder": {
+		"message": "Your account does not have a verified email. You MUST verify your email before the website will function properly.",
+		"go": "Verify Now"
+	},
+	"memberBanner": {
+		"message": "Your account is not registered as a member of the F-guild. You cannot do anything about this yourself. Contact your council chairperson or another admin within the guild to be registered as a member. Until then, you will not be able to use many of the guild's services."
 	},
 	"reset-password": {
 		"title": "Reset Password",

@@ -29,7 +29,7 @@
 		},
 		"q3": {
 			"question": "Vad har ni kvar att flytta över?",
-			"answer": "Det mesta är redan flyttat. För att läsa styrdokumenten i samlad form (de finns tillgängliga genom dokumentarkivet om du vet deras namn), använda motionsmaskinen och val i allmänhet kan du använda gamla hemsidan (men vi kommer försöka bli klara med val innan valen stänger). Vi jobbar så hårt vi kan för att allt ska finnas på nya hemsidan 🧡."
+			"answer": "Det mesta finns redan överflyttat. För att läsa styrdokumenten i samlad form (de finns tillgängliga genom dokumentarkivet om du vet deras namn) eller använda motionsmaskinen kan du använda gamla hemsidan. Vi jobbar så hårt vi kan för att allt ska finnas på nya hemsidan 🧡."
 		},
 		"q4": {
 			"question": "Hjälp! Jag har inga av mina gamla adminrättigheter!",
@@ -75,6 +75,11 @@
 				"self": "Sekretesspolicy",
 				"desc": "Läs mer om hur vi hanterar dina personuppgifter.",
 				"href": "/privacy"
+			},
+			"nollning": {
+				"self": "Nollning",
+				"desc": "Varmt välkommen till F-sektionen och grattis till din plats på civilingenjörsprogrammet i teknisk fysik, teknisk matematik eller teknisk nanovetenskap!",
+				"href": "/nollning"
 			}
 		},
 		"engage": {
@@ -212,7 +217,8 @@
 		"emergencycontact": "Nödkontakt",
 		"companies": "För företag",
 		"webansvar": "Webbansvarig",
-		"ansvar": "Ansvarig utgivare"
+		"ansvar": "Ansvarig utgivare",
+		"copyright": "F-sektionen. Alla rättigheter förvarade i superposition i ogenomtränglig låda."
 	},
 	"login": {
 		"login": "Logga in",
@@ -241,11 +247,18 @@
 		"success": "E-postverifiering lyckades!",
 		"error": "E-postverifiering misslyckades. Länken kan ha gått ut eller varit ogiltig, eller så har du redan verifierat din e-post. Du kan gå till fsektionen.se/verify utan token för att få en ny länk.",
 		"goHome": "Gå till startsidan",
-		"noToken": "Ingen verifieringslänk angiven. Vänligen kontrollera länken du klickade på eller begär ett nytt e-post meddelande.",
+		"noToken": "Du kan begära en ny verifieringslänk genom att ange din e-post nedan. (om du kom hit från ett mejl, kontrollera att du kopierade hela länken.)",
 		"requestSuccess": "En verifieringslänk har skickats till din e-postadress om den finns registrerad.",
 		"requestError": "Det gick inte att skicka verifieringsmejlet. Försök igen senare.",
 		"emailPlaceholder": "Ange din e-post",
 		"requestNew": "Begär ny verifieringslänk"
+	},
+	"verifyReminder": {
+		"message": "Ditt konto har inte en verifierad e-post. Du MÅSTE verifiera din e-post innan hemsidan kommer att fungera korrekt.",
+		"go": "Verifiera nu"
+	},
+	"memberBanner": {
+		"message": "Ditt konto är inte registrerat som medlem i F-sektionen. Du kan inte göra något åt detta själv. Kontakta din utskottsordförande eller annan ansvarig person inom sektionen för att bli registrerad som medlem. Innan detta kommer du inte kunna använda många av sektionens tjänster."
 	},
 	"reset-password": {
 		"title": "Återställ lösenord",
