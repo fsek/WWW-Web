@@ -9,7 +9,7 @@ import Markdown from "react-markdown";
 import CustomTitle from "@/components/CustomTitle";
 
 export default function GuildMeetingPage() {
-	const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation("main");
 	const { data, error, isPending } = useQuery({
 		...getGuildMeetingOptions(),
 		refetchOnWindowFocus: false,

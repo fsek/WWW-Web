@@ -210,7 +210,8 @@
 		"logout": "Log out",
 		"logoutError": "Logout failed. Please try again later.",
 		"verify": "Verify Email",
-		"guild-meeting": "Guild Meeting"
+		"guild-meeting": "Guild Meeting",
+		"admin": "Admin"
 	},
 	"footer": {
 		"contact": "Contact",
@@ -403,30 +404,30 @@
 			"alcohol": "Alcohol"
 		},
 		"select_drink_package": "Select drink package",
-		"button": "Sign up",
-		"update_button": "Update signup",
+		"button": "Register",
+		"update_button": "Update registration",
 		"edit_button": "Edit",
-		"signoff_button": "Sign off",
-		"success_create": "Signup successful!",
-		"success_update": "Signup updated!",
-		"success_signoff": "You have signed off from the event.",
-		"error_create": "Failed to sign up: {{error}}",
-		"error_update": "Failed to update signup: {{error}}",
-		"error_signoff": "Failed to sign off: {{error}}",
+		"signoff_button": "Unregister",
+		"success_create": "Registration successful!",
+		"success_update": "Registration updated!",
+		"success_signoff": "You have unregistered from the event.",
+		"error_create": "Failed to register: {{error}}",
+		"error_update": "Failed to update registration: {{error}}",
+		"error_signoff": "Failed to unregister: {{error}}",
 		"unknown_error": "Unknown error.",
-		"not_found": "You are not signed up for this event.",
+		"not_found": "You are not registered for this event.",
 		"user": "User",
 		"status": "Status",
 		"confirmed": "Confirmed",
 		"pending": "Pending",
-		"period_passed_signed_up": "Signup period has ended. If you want to change or withdraw your signup, please contact the event organizer.",
-		"period_passed_not_signed_up": "Signup period has ended. You can no longer sign up. If you have any questions, please contact the event organizer.",
+		"period_passed_signed_up": "Registration period has ended. If you want to change or withdraw your registration, please contact the event organizer.",
+		"period_passed_not_signed_up": "Registration period has ended. You can no longer register. If you have any questions, please contact the event organizer.",
 		"food_preferences_title": "Food Preferences",
 		"food_preferences_explainer": "These are your saved food preferences. If something doesn't look right, please update them in your account settings.",
 		"standard_food_preferences": "Standard preferences:",
 		"other_food_preferences": "Other preferences:",
 		"none": "None",
-		"signup_not_used": "You cannot sign up for this event as it does not use the system for signing up to attend."
+		"signup_not_used": "You cannot register for this event as it does not use this page for registration."
 	},
 	"songs": {
 		"by": "By",
@@ -492,5 +493,9 @@
 		"no_end_time": "No end time",
 		"election_table_description": "Here is a list of all posts open for nominations and candidations. The limits for how many people can be elected to each post are ordered by recommended limit first, followed by the max limit.",
 		"sub_election": "Election category"
+	},
+	"sort": {
+		"sort_by": "Sort by",
+		"newest": "Newest"
 	}
 }

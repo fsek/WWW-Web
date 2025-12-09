@@ -1113,5 +1113,7 @@
 		"update_success": "Sektionsmöte uppdaterat!",
 		"update_error": "Kunde inte uppdatera sektionsmöte.",
 		"is_active_label": "Är aktivt (är synligt för användare)"
-	}
+	},
+	"description_sv": "Beskrivning (sv)",
+	"description_en": "Beskrivning (en)"
 }

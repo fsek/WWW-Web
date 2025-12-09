@@ -47,7 +47,7 @@ export default function ElectionPostDetails({
 	myCandidations,
 	electionId,
 }: ElectionPostDetailsProps) {
-	const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation("main");
 	const queryClient = useQueryClient();
 	const [candidationOpen, setCandidationOpen] = useState(false);
 	const [nominationOpen, setNominationOpen] = useState(false);

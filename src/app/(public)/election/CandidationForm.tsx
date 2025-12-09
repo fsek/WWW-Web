@@ -207,7 +207,7 @@ export default function CandidationForm({
 								name="election_post_id"
 								render={({ field }) => (
 									<FormItem className="lg:col-span-2">
-										<FormLabel>{t("admin:post")}</FormLabel>
+										<FormLabel>{t("post")}</FormLabel>
 										<FormControl>
 											<SelectFromOptions
 												isDisabled={singleMode || disabled}

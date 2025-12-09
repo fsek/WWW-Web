@@ -65,7 +65,7 @@ type NavSection = {
 } & Record<string, NavItem>;
 
 export function NavBar() {
-	const { t } = useTranslation();
+	const { t } = useTranslation("main");
 	const router = useRouter();
 	const { data: user } = useQuery({
 		...getMeOptions(),
