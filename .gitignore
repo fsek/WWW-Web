@@ -47,3 +47,5 @@ src/api/types.gen.ts
 
 # Ignore TypeScript build artifacts
 tsconfig.tsbuildinfo
+
+.env
