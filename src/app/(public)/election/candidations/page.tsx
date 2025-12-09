@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import type { CandidatePostRead } from "@/api";
 
 export default function CandidationsPage() {
-	const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation("main");
 	const queryClient = useQueryClient();
 	const router = useRouter();
 

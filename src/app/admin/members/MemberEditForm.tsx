@@ -116,7 +116,7 @@ export default function UserPostsEditForm({
 		},
 		onError: (e) => {
 			toast.error(
-				t("member.delete_error", "Failed to delete selectedUser: {details}", {
+				t("member.delete_error", "Failed to delete selected user: {details}", {
 					details: e.detail,
 				}),
 			);
@@ -177,7 +177,7 @@ export default function UserPostsEditForm({
 							<div className="grid gap-6">
 								<Card>
 									<CardHeader>
-										<CardTitle>{t("personal-info")}</CardTitle>
+										<CardTitle>{t("user-settings:personal-info")}</CardTitle>
 									</CardHeader>
 									<CardContent className="space-y-4">
 										<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -186,7 +186,7 @@ export default function UserPostsEditForm({
 												name="first_name"
 												render={({ field }) => (
 													<FormItem>
-														<FormLabel>{t("first-name")}</FormLabel>
+														<FormLabel>{t("user-settings:first-name")}</FormLabel>
 														{isEditing ? (
 															<FormControl>
 																<Input
@@ -213,7 +213,7 @@ export default function UserPostsEditForm({
 												name="last_name"
 												render={({ field }) => (
 													<FormItem>
-														<FormLabel>{t("last-name")}</FormLabel>
+														<FormLabel>{t("user-settings:last-name")}</FormLabel>
 														{isEditing ? (
 															<FormControl>
 																<Input
@@ -239,14 +239,14 @@ export default function UserPostsEditForm({
 												name="telephone_number"
 												render={({ field }) => (
 													<FormItem>
-														<FormLabel>{t("phone")}</FormLabel>
+														<FormLabel>{t("user-settings:phone")}</FormLabel>
 														{isEditing ? (
 															<FormControl>
 																<Input
 																	type="tel"
 																	{...field}
 																	value={field.value ?? ""}
-																	placeholder={t("phone")}
+																	placeholder={t("user-settings:phone")}
 																	className={
 																		errors.telephone_number
 																			? "border-destructive"
@@ -269,7 +269,7 @@ export default function UserPostsEditForm({
 																	} catch {
 																		return (
 																			selectedUser.telephone_number ||
-																			t("not-provided")
+																			t("user-settings:not-provided")
 																		);
 																	}
 																})()}
@@ -287,7 +287,7 @@ export default function UserPostsEditForm({
 												name="start_year"
 												render={({ field }) => (
 													<FormItem>
-														<FormLabel>{t("start-year")}</FormLabel>
+														<FormLabel>{t("user-settings:start-year")}</FormLabel>
 														{isEditing ? (
 															<FormControl>
 																<Input
@@ -329,7 +329,7 @@ export default function UserPostsEditForm({
 															>
 																<SelectTrigger>
 																	<SelectValue
-																		placeholder={t("select-program")}
+																		placeholder={t("user-settings:select-program")}
 																	/>
 																</SelectTrigger>
 																<SelectContent>
@@ -345,7 +345,7 @@ export default function UserPostsEditForm({
 															</Select>
 														) : (
 															<p className="text-sm font-medium mt-1">
-																{selectedUser.program || t("not-specified")}
+																{selectedUser.program || t("user-settings:not-specified")}
 															</p>
 														)}
 														<FormMessage />
@@ -359,23 +359,23 @@ export default function UserPostsEditForm({
 											name="stil_id"
 											render={({ field }) => (
 												<FormItem>
-													<FormLabel>{t("stil-id")}</FormLabel>
+													<FormLabel>{t("user-settings:stil-id")}</FormLabel>
 													{isEditing ? (
 														<>
 															<FormControl>
 																<Input
 																	{...field}
 																	value={field.value ?? ""}
-																	placeholder={t("optional")}
+																	placeholder={t("user-settings:optional")}
 																/>
 															</FormControl>
 															<span className="text-sm text-muted-foreground">
-																{t("stil-id_subtitle")}
+																{t("user-settings:stil-id_subtitle")}
 															</span>
 														</>
 													) : (
 														<p className="text-sm font-medium mt-1">
-															{selectedUser.stil_id || t("not-provided")}
+															{selectedUser.stil_id || t("user-settings:not-provided")}
 														</p>
 													)}
 													<FormMessage />
@@ -420,7 +420,7 @@ export default function UserPostsEditForm({
 										onOpenChange={setConfirmOpen}
 										onConfirm={handleDeleteUser}
 										triggerText={t("member.remove")}
-										title={t("member.confirm_remove")}
+										title={t("member.confirm_remove", {user: `${selectedUser.first_name} ${selectedUser.last_name}`})}
 										description={t("member.confirm_remove_text")}
 										confirmText={t("member.remove")}
 										cancelText={t("cancel", "Cancel")}

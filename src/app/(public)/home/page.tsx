@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/accordion";
 
 export default function MainLanding() {
-	const { t } = useTranslation();
+	const { t } = useTranslation("main");
 
 	type FaqItem = { question: string; answer: string };
 	type FaqTranslation = { self?: string } & Record<string, FaqItem>;

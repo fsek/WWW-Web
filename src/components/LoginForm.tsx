@@ -30,7 +30,7 @@ const emailPasswordSchema = z.object({
 });
 
 export default function LoginForm() {
-	const { t } = useTranslation();
+	const { t } = useTranslation("main");
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const [submitEnabled, setSubmitEnabled] = useState(true);

@@ -136,7 +136,7 @@ export default function CafeShiftFormFields<T extends ShiftFormCompatible>({
 												<Input
 													className="bg-white"
 													placeholder={t(
-														"nollning.group_members.search_user_placeholder",
+														"admin:nollning.group_members.search_user_placeholder",
 													)}
 													value={nameFilter}
 													onChange={(e) => {
@@ -189,7 +189,7 @@ export default function CafeShiftFormFields<T extends ShiftFormCompatible>({
 															className="w-full justify-start"
 															disabled
 														>
-															{t("nollning.group_members.searching")}
+															{t("admin:nollning.group_members.searching")}
 														</Button>
 													</div>
 												}

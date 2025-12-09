@@ -249,10 +249,10 @@ export default function ElectionsEditForm({
 							name="description_sv"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("elections.description_sv")}</FormLabel>
+									<FormLabel>{t("description_sv")}</FormLabel>
 									<FormControl>
 										<Textarea
-											placeholder={t("elections.description")}
+											placeholder={t("description")}
 											{...field}
 											value={field.value ?? ""}
 										/>
@@ -266,10 +266,10 @@ export default function ElectionsEditForm({
 							name="description_en"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{t("elections.description_en")}</FormLabel>
+									<FormLabel>{t("description_en")}</FormLabel>
 									<FormControl>
 										<Textarea
-											placeholder={t("elections.description")}
+											placeholder={t("description")}
 											{...field}
 											value={field.value ?? ""}
 										/>
