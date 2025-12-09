@@ -1,485 +1,498 @@
 {
-  "fsek": "F-Guild",
-  "title": "Main Page",
-  "calendar": "Calendar",
-  "calendarText": "Here you can see the guild's calendar with upcoming events. Click to go to the full calendar page and then scroll down for information on how to add this to your own calendar app.",
-  "welcome": "Welcome to the new F-Guild website!",
-  "welcomeText": "We are currently in a transition period to our new website. We are working to continuously improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the database, the new and old systems are separated: if you have old accounts, room bookings, settings, car bookings, etc. they will not be available through the new web and you will have to make new ones. NOTE! We plan to get rid of the old website in the near future, so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
-  "oldWebsiteButton": "Take me back to the old site...",
-  "welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the head of your council (council boss).",
-  "adminButton": "Admin Page",
-  "registerButton": "Register a new account",
-  "newsTitle": "News",
-  "newsText": "If you want to use more advanced formatting, use mattermost until we have added proper support. The news page now supports images though!",
-  "cafeTitle": "Hilbert Cafe",
-  "cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement. The café also has its own page, and you can now sign up for café shifts on a separate page.",
-  "cafe_shift_button": "Sign up for a shift",
-  "cafe_page_button": "Main cafe page",
-  "coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
-  "back": "Back",
-  "faq": {
-    "self": "Questions answered",
-    "q1": {
-      "question": "Can I log in with my old account?",
-      "answer": "No, since we switched to a new database you need to create a new account. You can do that at fsektionen.se/register. There are many things you won't have access to until you create an account, verify your email, and become verified as a member."
-    },
-    "q2": {
-      "question": "How do I become verified as a member?",
-      "answer": "Create an account, verify your email, and add your Stil-ID (hi6122al-s) in the user settings (check the top right corner). After this, you must wait for us to verify that you are indeed a member. At the start of the semester, this may take longer than usual. If you feel that it is taking too long, you can contact your council boss or a mentor/föset during the introduction period."
-    },
-    "q3": {
-      "question": "What do you still have left to move over?",
-      "answer": "Most things are now available. To read the governing documents in their entirety (though they are available in the document archive if you know their names), use the proposition machine, and elections and voting in general, you can use the old website (but we will try to finish the election pages before the elections close). We are working as diligently as possible to ensure that everything is available on the new website. 🧡"
-    },
-    "q4": {
-      "question": "Help! I don't have any of my old admin rights!",
-      "answer": "Please wait or contact your council boss and ask them to give you the appropriate permissions."
-    },
-    "q5": {
-      "question": "I am having problems signing up to events, viewing the gallery, or other things!??",
-      "answer": "We prevent non-members and users without verified email addresses from using many of our services. Check the following: \n\nThat you really have verified your account (try fsektionen.se/verify). \nThat you are registered as a member. (look in account settings to check for both of these!) \nThat you are logged in to the correct account and have not created multiple accounts, for example one with your student email and another with your personal email. If you have more than one account and want to get rid of the bad one, contact spindelman@fsektionen.se via the email of the account you want to delete."
-    }
-  },
-  "next": "Next",
-  "previous": "Previous",
-  "page": "Page",
-  "navbar": {
-    "sektionen": {
-      "self": "The Guild",
-      "about": {
-        "self": "About Us",
-        "desc": "Welcome to our community - discover our story and values.",
-        "href": "/about"
-      },
-      "news": {
-        "self": "News",
-        "desc": "Stay updated with the latest announcements and events.",
-        "href": "/news"
-      },
-      "calendar": {
-        "self": "Calendar",
-        "desc": "Keep track of upcoming events and activities.",
-        "href": "/calendar"
-      },
-      "councils": {
-        "self": "Councils",
-        "desc": "Explore the dedicated teams that drive our initiatives.",
-        "href": "/councils"
-      },
-      "documents": {
-        "self": "Documents",
-        "desc": "Here you can find all the fine documents that have been produced.",
-        "href": "/documents"
-      },
-      "privacy": {
-        "self": "Privacy Policy",
-        "desc": "Learn more about how we handle your personal data.",
-        "href": "/privacy"
-      }
-    },
-    "engage": {
-      "self": "Get Involved",
-      "cafe": {
-        "self": "Hilbert Cafe",
-        "desc": "Join us for a friendly chat and connect with others.",
-        "href": "/cafe"
-      },
-      "positions": {
-        "self": "Positions",
-        "desc": "Get involved as a volunteer within the guild!",
-        "href": "/positions"
-      },
-      "nollningsvol": {
-        "self": "Orientation Volunteers",
-        "desc": "Help us welcome new students and give them a great start to their studies!",
-        "href": "/nollningsvolontar"
-      },
-      "elections": {
-        "self": "Elections",
-        "desc": "Apply for positions within the guild!",
-        "href": "/election"
-      },
-      "projects": {
-        "self": "Projects",
-        "desc": "Discover innovative initiatives and collaborative efforts.",
-        "href": "/projects"
-      },
-      "freja": {
-        "self": "FREJA",
-        "desc": "FREJA is an independent organization for women or non-binary students.",
-        "href": "https://www.frejalth.se/"
-      }
-    },
-    "services": {
-      "self": "Services",
-      "car": {
-        "self": "Car Rentals",
-        "desc": "Easily book the guild vehicle for your travel and daily needs.",
-        "href": "/car"
-      },
-      "rooms": {
-        "self": "Room Bookings",
-        "desc": "Book the three rooms in mattehuset for personal events or guild meetings.",
-        "href": "/room-bookings"
-      },
-      "tools": {
-        "self": "Tool Library",
-        "desc": "Borrow high-quality tools to help bring your projects to life.",
-        "href": "/tools"
-      },
-      "equipment": {
-        "self": "Equipment Hire",
-        "desc": "Rent state-of-the-art equipment to get the job done efficiently.",
-        "href": "https://forms.gle/YQTxawJfexSXVbqH6"
-      },
-      "specialrooms": {
-        "self": "Quiet/Prayer Rooms",
-        "desc": "Find a peaceful space for reflection or private prayer.",
-        "href": "/stillarum"
-      },
-      "gallery": {
-        "self": "Gallery",
-        "desc": "Explore our photo gallery showcasing events and activities.",
-        "href": "/gallery"
-      },
-      "calendar": {
-        "self": "Calendar",
-        "desc": "Keep track of upcoming events and activities.",
-        "href": "/calendar"
-      },
-      "songs": {
-        "self": "Songs",
-        "desc": "Browse and sing along with our collection of songs.",
-        "href": "/songs"
-      }
-    },
-    "companies": {
-      "self": "Companies",
-      "aboutCompany": {
-        "self": "About Us",
-        "desc": "Discover who we are and what programs we represent.",
-        "href": "/foretag/om"
-      },
-      "offerings": {
-        "self": "Our Offerings",
-        "desc": "Explore proposals for ways to cooperate to reach our members.",
-        "href": "/foretag/vi-erbjuder"
-      },
-      "farad": {
-        "self": "Farad",
-        "desc": "Read about the job fair for the F-Guild.",
-        "href": "https://farad.nu"
-      },
-      "contact": {
-        "self": "Business Contact",
-        "desc": "Reach out to us for partnership and business inquiries.",
-        "href": "/contact#naringslivsutskottet"
-      }
-    },
-    "contact": {
-      "self": "Contact",
-      "contactPage": {
-        "self": "Contact Page",
-        "desc": "Find all the information you need to get in touch with us.",
-        "href": "/contact"
-      },
-      "ordf": {
-        "self": "President",
-        "desc": "For questions about the organisation.",
-        "href": "/contact#ordf"
-      },
-      "web": {
-        "self": "Webmaster",
-        "desc": "For questions about the website or app.",
-        "href": "/contact#webmaster"
-      },
-      "anonymousForm": {
-        "self": "Anonymous Contact",
-        "desc": "Share your feedback or concerns confidentially.",
-        "href": "https://docs.google.com/forms/d/e/1FAIpQLSdZdPl14DkdlZCKS3jzO59-FvVi2ug9nYer1jhYgERanbwHoQ/viewform"
-      },
-      "klaga": {
-        "self": "Complaint",
-        "desc": "Send an anonymous complaint, opinion or report to TLTH.",
-        "href": "https://www.tlth.se/klaga"
-      }
-    },
-    "booking": "Bookings",
-    "documents": "Documents",
-    "account-settings": "Account Settings",
-    "logout": "Log out",
-    "logoutError": "Logout failed. Please try again later.",
-    "verify": "Verify Email",
-    "guild-meeting": "Guild Meeting",
-    "admin": "Admin"
-  },
-  "footer": {
-    "contact": "Contact",
-    "emergencycontact": "Emergency Contact",
-    "companies": "For Companies",
-    "webansvar": "Webmaster",
-    "ansvar": "Publisher"
-  },
-  "login": {
-    "login": "Log in",
-    "invalid-email-or-password": "Invalid email address or password",
-    "email": "Email",
-    "password": "Password",
-    "title": "Log in",
-    "registerPrompt": "Don't have an account? Register here.",
-    "forgotPassword": "Forgot password?",
-    "forgotEmailLabel": "Enter your email to reset password",
-    "forgotSubmit": "Send reset link",
-    "forgotLoading": "Sending...",
-    "forgotSuccess": "If your email exists, a reset link has been sent.",
-    "backToLogin": "Back to login",
-    "invalidEmailFormat": "Invalid email format"
-  },
-  "news": {
-    "self": "News",
-    "by": "Written by: ",
-    "pinned": "Pinned",
-    "see_all": "See all news",
-    "read_more": "Read more"
-  },
-  "verifyMail": {
-    "loading": "Verifying your email...",
-    "success": "Email verification succeeded!",
-    "error": "Email verification failed. The link may have expired or been invalid, or you may have already verified your email. You can go to fsektionen.se/verify with no token to get a new link.",
-    "goHome": "Go to the homepage",
-    "noToken": "No verification link provided. Please check the link you clicked on or request a new email.",
-    "requestSuccess": "A verification link has been sent to your email address if it is registered.",
-    "requestError": "Failed to send verification email. Please try again later.",
-    "emailPlaceholder": "Enter your email",
-    "requestNew": "Request New Verification Email"
-  },
-  "reset-password": {
-    "title": "Reset Password",
-    "password": "New Password",
-    "retype-password": "Retype password",
-    "passwords-do-not-match": "Passwords do not match",
-    "reset-password": "Reset Password",
-    "resetting": "Resetting your password...",
-    "reset-success": "Your password has been reset successfully!",
-    "goHome": "Go to Home",
-    "reset-error": "Password reset failed.",
-    "invalid-reset-token": "Invalid or missing reset token."
-  },
-  "register": {
-    "title": "Register for an Account",
-    "email": "Email",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "telephone": "Telephone Number with country code (+46)",
-    "startYear": "Start Year (optional)",
-    "submit": "Register",
-    "loginPrompt": "Already have an account? Login here.",
-    "loading": "Registering...",
-    "error": "Registration failed. Please check your details and try again.",
-    "verifyError": "Registered user, but failed to send verification email. Please try again later.",
-    "success": "Registration successful! Please check your email to verify your account.",
-    "goLogin": "Go to Login",
-    "passwordMismatch": "Passwords do not match. Please try again.",
-    "passwordNoNumber": "Password must contain at least one number.",
-    "passwordNoLetter": "Password must contain at least one english letter.",
-    "startYearInvalid": "Start year must be between 1960 and the current year.",
-    "emailInvalid": "Invalid email address",
-    "passwordShort": "Password must be at least 8 characters",
-    "firstNameRequired": "First name required",
-    "lastNameRequired": "Last name required",
-    "telephoneNumberRequired": "Telephone number required",
-    "gdprLabel": "I have read and agree to the",
-    "privacyPolicy": "privacy policy.",
-    "gdprRequired": "You must agree to the privacy policy to register."
-  },
-  "car-booking": {
-    "title": "Car Booking",
-    "description-title": "FAQ and rules",
-    "description": "As a member, you can book the guild car for your personal and guild-related needs. If you are an admin, you can manage bookings <0>here</0> instead. By booking the car, you agree to follow the rules found <1>here</1>.",
-    "faq": {
-      "title": "Frequently Asked Questions",
-      "q1": "Who can book the car?",
-      "a1": "Any member of the guild can book the car.",
-      "q2": "Car renting during the summer?",
-      "a2": "As activities are suspended during the summer, it is not easy to rent the guild's car. Contact the board (at) fsektionen.se to ask if it can be solved.",
-      "q3": "How many people can fit in the car?",
-      "a3": "The car can accommodate up to 7 people, including the driver.",
-      "q4": "What is the cargo capacity of the car?",
-      "a4": "The trunk (with the rear seats folded) is approximately (with the reservation that it is not a perfect rectangle) 190 cm deep, 130 cm wide and 80 cm high.",
-      "q5": "How much does it cost to rent the car?",
-      "a5": "Members of the F-guild pay a starting fee of SEK 150. The starting fee includes 20 kilometers, after that it costs SEK 5 per kilometer started.",
-      "q6": "What do the colors mean?",
-      "a6": "Different colors show status and ownership for each booking. An admin (the car foreman) must confirm bookings outside regular hours. The colors have the following meaning:\n- Light orange color means it's your booking, but it's not confirmed.\n- Dark orange color means it's your booking and it's confirmed.\n- Green color marks someone else's confirmed booking.\n- Yellow color shows someone else's unconfirmed booking.\n- Light blue color is used for bookings that have been added locally but haven't been retrieved from the server yet. If you see blue, something may have gone wrong, reload the page manually.",
-      "q7": "I have more questions!",
-      "a7": "You can contact the car foreman through, among other ways, the <0>contact page</0>. Please ask the car foreman or a webmaster to add the question with an answer here."
-    }
-  },
-  "room-booking": {
-    "title": "Room Bookings",
-    "description-title": "FAQ and rules",
-    "description": "As a member, you must ask an admin if you want to book a room, but you can view all room bookings here. If you are an admin, you can book rooms <0>here</0> instead.",
-    "faq": {
-      "title": "Frequently Asked Questions",
-      "q1": "Who can book the rooms?",
-      "a1": "Only admins can book the rooms. If you are a member, you can contact an admin from nämnden to ask them to book a room.",
-      "q2": "I have more questions!",
-      "a2": "There is no main responsible person for room bookings, contact the equipment master or the board if you have any questions. You can also ask them to add the question with an answer here."
-    }
-  },
-  "loading": {
-    "basic": "Loading content...",
-    "flavor_1": "Checking into Hilbert's hotel...",
-    "flavor_2": "Finding the determinant...",
-    "flavor_3": "Playing moose game...",
-    "flavor_4": "Calculating the last digit of π...",
-    "flavor_5": "Fermenting more Hilbeaux...",
-    "flavor_6": "Polishing pixels...",
-    "flavor_7": "Counting to infinity...",
-    "flavor_8": "Creating yet another Gandalf-exam...",
-    "error_occurred": "Some error occurred:",
-    "no_error_message": "No error message available.",
-    "network_error": "Network error occurred. Please check your connection.",
-    "unauthorized": "You are not authorized to view this information. Please log in."
-  },
-  "cookieConsent": {
-    "message": "We use cookies to enhance your experience on our website (authentication, language and more). By continuing to use the site, you agree to our use of cookies.",
-    "accept": "Okay"
-  },
-  "permission-wall": {
-    "stop": "Stop",
-    "subtitle": "Slow down there!",
-    "message": "You do not have permission to view this page. If you believe this is an error, ",
-    "contact": "please contact your local webmaster.",
-    "quote": "You are not a subset of the set of all users with access to this page.",
-    "quote_author": "The wise Debianne server",
-    "button": "Back to homepage"
-  },
-  "documents": {
-    "title": "Title",
-    "created_at": "Created At",
-    "private_explanation": "Members only",
-    "author": "Author",
-    "category": "Category",
-    "view": "View",
-    "view_doc": "View Document",
-    "page_title": "Documents",
-    "description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members.",
-    "search_title": "Search by title or category"
-  },
-  "guild_meeting": {
-    "important_dates": "Important Dates"
-  },
-  "yes": "Yes",
-  "no": "No",
-  "not_found": "Not found",
-  "description": "Description",
-  "event_signup": {
-    "title": "Event Signup",
-    "priority": "Priority",
-    "select_priority": "Select priority group to sign up as",
-    "group_name": "Group Name",
-    "group_name_placeholder": "Enter group name (optional)",
-    "drink_package": {
-      "title": "Drink Package",
-      "none": "None",
-      "alcohol_free": "Alcohol Free",
-      "alcohol": "Alcohol"
-    },
-    "select_drink_package": "Select drink package",
-    "button": "Register",
-    "update_button": "Update registration",
-    "edit_button": "Edit",
-    "signoff_button": "Unregister",
-    "success_create": "Registration successful!",
-    "success_update": "Registration updated!",
-    "success_signoff": "You have unregistered from the event.",
-    "error_create": "Failed to register: {{error}}",
-    "error_update": "Failed to update registration: {{error}}",
-    "error_signoff": "Failed to unregister: {{error}}",
-    "unknown_error": "Unknown error.",
-    "not_found": "You are not registered for this event.",
-    "user": "User",
-    "status": "Status",
-    "confirmed": "Confirmed",
-    "pending": "Pending",
-    "period_passed_signed_up": "Registration period has ended. If you want to change or withdraw your registration, please contact the event organizer.",
-    "period_passed_not_signed_up": "Registration period has ended. You can no longer register. If you have any questions, please contact the event organizer.",
-    "food_preferences_title": "Food Preferences",
-    "food_preferences_explainer": "These are your saved food preferences. If something doesn't look right, please update them in your account settings.",
-    "standard_food_preferences": "Standard preferences:",
-    "other_food_preferences": "Other preferences:",
-    "none": "None",
-    "signup_not_used": "You cannot register for this event as it does not use this page for registration."
-  },
-  "songs": {
-    "by": "By",
-    "melody": "Melody",
-    "category": "Category",
-    "views": "Views",
-    "title": "Songs",
-    "description_subtitle": "Browse and sing along with our collection of songs.",
-    "search_placeholder": "Search songs..."
-  },
-  "gallery": {
-    "title": "Gallery",
-    "select_year": "Select year",
-    "photographers": "Photographers"
-  },
-  "post": "Council Post",
-  "elections": {
-    "ended": "Ended",
-    "left": "left",
-    "day": "{{count}} day(s)",
-    "hour": "{{count}} hour(s)",
-    "min": "{{count}} min(s)",
-    "no_visible_election": "No visible election available",
-    "post_name": "Post Name",
-    "recommended_limit": "Recommended Limit",
-    "max_limit": "Max Limit",
-    "candidation_count": "Candidates",
-    "elected_by": "Elected By",
-    "council": "Council",
-    "end_time": "End Time",
-    "search_posts_placeholder": "Search posts...",
-    "no_posts_match": "No posts match your search",
-    "view_my_candidations": "View My Candidations",
-    "add_candidation": "Add Candidation",
-    "add_nomination": "Add Nomination",
-    "select_post": "Select post",
-    "candidation_error": "Failed to submit candidation",
-    "candidation_success": "Candidation submitted successfully!",
-    "nomination_error": "Failed to submit nomination",
-    "nomination_success": "Nomination submitted successfully!",
-    "nominee_name": "Nominee Name",
-    "nominee_email": "Nominee Email",
-    "motivation": "Motivation",
-    "election_limits": "Election Limits",
-    "ends_in": "Ends In",
-    "actions": "Actions",
-    "candidated_status": "Candidation Status",
-    "you_have_candidated": "You have candidated for this post",
-    "candidated_at": "Candidated at",
-    "remove_candidation": "Remove Candidation",
-    "elected_at_semester": "Elected At Semester",
-    "no_description": "No description available",
-    "my_candidations": {
-      "page_title": "My Candidations",
-      "page_description": "Here you can view and manage your election candidations"
-    },
-    "back_to_elections": "Back to Elections",
-    "no_candidations": "You have no candidations",
-    "delete_candidation_success": "Candidation deleted successfully",
-    "error_delete_candidation": "Failed to delete candidation",
-    "limits": "Limits",
-    "no_limit": "No limit",
-    "no_end_time": "No end time",
-    "election_table_description": "Here is a list of all posts open for nominations and candidations. The limits for how many people can be elected to each post are ordered by recommended limit first, followed by the max limit.",
-    "sub_election": "Election category"
-  },
-  "sort": {
-    "sort_by": "Sort by",
-    "newest": "Newest"
-  }
+	"fsek": "F-Guild",
+	"title": "Main Page",
+	"calendar": "Calendar",
+	"calendarText": "Here you can see the guild's calendar with upcoming events. Click to go to the full calendar page and then scroll down for information on how to add this to your own calendar app.",
+	"welcome": "Welcome to the new F-Guild website!",
+	"welcomeText": "We are currently in a transition period to our new website. We are working to continuously improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the database, the new and old systems are separated: if you have old accounts, room bookings, settings, car bookings, etc. they will not be available through the new web and you will have to make new ones. NOTE! We plan to get rid of the old website in the near future, so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
+	"oldWebsiteButton": "Take me back to the old site...",
+	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the head of your council (council boss).",
+	"adminButton": "Admin Page",
+	"registerButton": "Register a new account",
+	"newsTitle": "News",
+	"newsText": "If you want to use more advanced formatting, use mattermost until we have added proper support. The news page now supports images though!",
+	"cafeTitle": "Hilbert Cafe",
+	"cafeText": "Hilbert Cafe is a place for students to meet, study, and socialize. Here you will eventually find more interactive information about the cafe, its opening hours, and engagement. The café also has its own page, and you can now sign up for café shifts on a separate page.",
+	"cafe_shift_button": "Sign up for a shift",
+	"cafe_page_button": "Main cafe page",
+	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
+	"back": "Back",
+	"faq": {
+		"self": "Questions answered",
+		"q1": {
+			"question": "Can I log in with my old account?",
+			"answer": "No, since we switched to a new database you need to create a new account. You can do that at fsektionen.se/register. There are many things you won't have access to until you create an account, verify your email, and become verified as a member."
+		},
+		"q2": {
+			"question": "How do I become verified as a member?",
+			"answer": "Create an account, verify your email, and add your Stil-ID (hi6122al-s) in the user settings (check the top right corner). After this, you must wait for us to verify that you are indeed a member. At the start of the semester, this may take longer than usual. If you feel that it is taking too long, you can contact your council boss or a mentor/föset during the introduction period."
+		},
+		"q3": {
+			"question": "What do you still have left to move over?",
+			"answer": "Most things are now available. To read the governing documents in their entirety (though they are available in the document archive if you know their names) or use the proposition machine (RIP), you can use the old website. We are working as diligently as possible to ensure that everything is available on the new website. 🧡"
+		},
+		"q4": {
+			"question": "Help! I don't have any of my old admin rights!",
+			"answer": "Please wait or contact your council boss and ask them to give you the appropriate permissions."
+		},
+		"q5": {
+			"question": "I am having problems signing up to events, viewing the gallery, or other things!??",
+			"answer": "We prevent non-members and users without verified email addresses from using many of our services. Check the following: \n\nThat you really have verified your account (try fsektionen.se/verify). \nThat you are registered as a member. (look in account settings to check for both of these!) \nThat you are logged in to the correct account and have not created multiple accounts, for example one with your student email and another with your personal email. If you have more than one account and want to get rid of the bad one, contact spindelman@fsektionen.se via the email of the account you want to delete."
+		}
+	},
+	"next": "Next",
+	"previous": "Previous",
+	"page": "Page",
+	"navbar": {
+		"sektionen": {
+			"self": "The Guild",
+			"about": {
+				"self": "About Us",
+				"desc": "Welcome to our community - discover our story and values.",
+				"href": "/about"
+			},
+			"news": {
+				"self": "News",
+				"desc": "Stay updated with the latest announcements and events.",
+				"href": "/news"
+			},
+			"calendar": {
+				"self": "Calendar",
+				"desc": "Keep track of upcoming events and activities.",
+				"href": "/calendar"
+			},
+			"councils": {
+				"self": "Councils",
+				"desc": "Explore the dedicated teams that drive our initiatives.",
+				"href": "/councils"
+			},
+			"documents": {
+				"self": "Documents",
+				"desc": "Here you can find all the fine documents that have been produced.",
+				"href": "/documents"
+			},
+			"privacy": {
+				"self": "Privacy Policy",
+				"desc": "Learn more about how we handle your personal data.",
+				"href": "/privacy"
+			},
+			"nollning": {
+				"self": "The Introduction",
+				"desc": "Welcome to the F-guild and congratulations on your spot on the engineering program in engineering physics, engineering mathematics, or engineering nanoscience!",
+				"href": "/nollning"
+			}
+		},
+		"engage": {
+			"self": "Get Involved",
+			"cafe": {
+				"self": "Hilbert Cafe",
+				"desc": "Join us for a friendly chat and connect with others.",
+				"href": "/cafe"
+			},
+			"positions": {
+				"self": "Positions",
+				"desc": "Get involved as a volunteer within the guild!",
+				"href": "/positions"
+			},
+			"nollningsvol": {
+				"self": "Orientation Volunteers",
+				"desc": "Help us welcome new students and give them a great start to their studies!",
+				"href": "/nollningsvolontar"
+			},
+			"elections": {
+				"self": "Elections",
+				"desc": "Apply for positions within the guild!",
+				"href": "/election"
+			},
+			"projects": {
+				"self": "Projects",
+				"desc": "Discover innovative initiatives and collaborative efforts.",
+				"href": "/projects"
+			},
+			"freja": {
+				"self": "FREJA",
+				"desc": "FREJA is an independent organization for women or non-binary students.",
+				"href": "https://www.frejalth.se/"
+			}
+		},
+		"services": {
+			"self": "Services",
+			"car": {
+				"self": "Car Rentals",
+				"desc": "Easily book the guild vehicle for your travel and daily needs.",
+				"href": "/car"
+			},
+			"rooms": {
+				"self": "Room Bookings",
+				"desc": "Book the three rooms in mattehuset for personal events or guild meetings.",
+				"href": "/room-bookings"
+			},
+			"tools": {
+				"self": "Tool Library",
+				"desc": "Borrow high-quality tools to help bring your projects to life.",
+				"href": "/tools"
+			},
+			"equipment": {
+				"self": "Equipment Hire",
+				"desc": "Rent state-of-the-art equipment to get the job done efficiently.",
+				"href": "https://forms.gle/YQTxawJfexSXVbqH6"
+			},
+			"specialrooms": {
+				"self": "Quiet/Prayer Rooms",
+				"desc": "Find a peaceful space for reflection or private prayer.",
+				"href": "/stillarum"
+			},
+			"gallery": {
+				"self": "Gallery",
+				"desc": "Explore our photo gallery showcasing events and activities.",
+				"href": "/gallery"
+			},
+			"calendar": {
+				"self": "Calendar",
+				"desc": "Keep track of upcoming events and activities.",
+				"href": "/calendar"
+			},
+			"songs": {
+				"self": "Songs",
+				"desc": "Browse and sing along with our collection of songs.",
+				"href": "/songs"
+			}
+		},
+		"companies": {
+			"self": "Companies",
+			"aboutCompany": {
+				"self": "About Us",
+				"desc": "Discover who we are and what programs we represent.",
+				"href": "/foretag/om"
+			},
+			"offerings": {
+				"self": "Our Offerings",
+				"desc": "Explore proposals for ways to cooperate to reach our members.",
+				"href": "/foretag/vi-erbjuder"
+			},
+			"farad": {
+				"self": "Farad",
+				"desc": "Read about the job fair for the F-Guild.",
+				"href": "https://farad.nu"
+			},
+			"contact": {
+				"self": "Business Contact",
+				"desc": "Reach out to us for partnership and business inquiries.",
+				"href": "/contact#naringslivsutskottet"
+			}
+		},
+		"contact": {
+			"self": "Contact",
+			"contactPage": {
+				"self": "Contact Page",
+				"desc": "Find all the information you need to get in touch with us.",
+				"href": "/contact"
+			},
+			"ordf": {
+				"self": "President",
+				"desc": "For questions about the organisation.",
+				"href": "/contact#ordf"
+			},
+			"web": {
+				"self": "Webmaster",
+				"desc": "For questions about the website or app.",
+				"href": "/contact#webmaster"
+			},
+			"anonymousForm": {
+				"self": "Anonymous Contact",
+				"desc": "Share your feedback or concerns confidentially.",
+				"href": "https://docs.google.com/forms/d/e/1FAIpQLSdZdPl14DkdlZCKS3jzO59-FvVi2ug9nYer1jhYgERanbwHoQ/viewform"
+			},
+			"klaga": {
+				"self": "Complaint",
+				"desc": "Send an anonymous complaint, opinion or report to TLTH.",
+				"href": "https://www.tlth.se/klaga"
+			}
+		},
+		"booking": "Bookings",
+		"documents": "Documents",
+		"account-settings": "Account Settings",
+		"logout": "Log out",
+		"logoutError": "Logout failed. Please try again later.",
+		"verify": "Verify Email",
+		"guild-meeting": "Guild Meeting",
+		"admin": "Admin"
+	},
+	"footer": {
+		"contact": "Contact",
+		"emergencycontact": "Emergency Contact",
+		"companies": "For Companies",
+		"webansvar": "Webmaster",
+		"ansvar": "Publisher",
+		"copyright": "F-Guild. All rights reserved in superposition in an impenetrable box."
+	},
+	"login": {
+		"login": "Log in",
+		"invalid-email-or-password": "Invalid email address or password",
+		"email": "Email",
+		"password": "Password",
+		"title": "Log in",
+		"registerPrompt": "Don't have an account? Register here.",
+		"forgotPassword": "Forgot password?",
+		"forgotEmailLabel": "Enter your email to reset password",
+		"forgotSubmit": "Send reset link",
+		"forgotLoading": "Sending...",
+		"forgotSuccess": "If your email exists, a reset link has been sent.",
+		"backToLogin": "Back to login",
+		"invalidEmailFormat": "Invalid email format"
+	},
+	"news": {
+		"self": "News",
+		"by": "Written by: ",
+		"pinned": "Pinned",
+		"see_all": "See all news",
+		"read_more": "Read more"
+	},
+	"verifyMail": {
+		"loading": "Verifying your email...",
+		"success": "Email verification succeeded!",
+		"error": "Email verification failed. The link may have expired or been invalid, or you may have already verified your email. You can go to fsektionen.se/verify with no token to get a new link.",
+		"goHome": "Go to the homepage",
+		"noToken": "You can request a new verification link by entering your email below. (if you came here from an email, check that you copied the entire link.)",
+		"requestSuccess": "A verification link has been sent to your email address if it is registered.",
+		"requestError": "Failed to send verification email. Please try again later.",
+		"emailPlaceholder": "Enter your email",
+		"requestNew": "Request New Verification Email"
+	},
+	"verifyReminder": {
+		"message": "Your account does not have a verified email. You MUST verify your email before the website will function properly.",
+		"go": "Verify Now"
+	},
+	"memberBanner": {
+		"message": "Your account is not registered as a member of the F-guild. You cannot do anything about this yourself. Contact your council chairperson or another admin within the guild to be registered as a member. Until then, you will not be able to use many of the guild's services."
+	},
+	"reset-password": {
+		"title": "Reset Password",
+		"password": "New Password",
+		"retype-password": "Retype password",
+		"passwords-do-not-match": "Passwords do not match",
+		"reset-password": "Reset Password",
+		"resetting": "Resetting your password...",
+		"reset-success": "Your password has been reset successfully!",
+		"goHome": "Go to Home",
+		"reset-error": "Password reset failed.",
+		"invalid-reset-token": "Invalid or missing reset token."
+	},
+	"register": {
+		"title": "Register for an Account",
+		"email": "Email",
+		"password": "Password",
+		"confirmPassword": "Confirm Password",
+		"firstName": "First Name",
+		"lastName": "Last Name",
+		"telephone": "Telephone Number with country code (+46)",
+		"startYear": "Start Year (optional)",
+		"submit": "Register",
+		"loginPrompt": "Already have an account? Login here.",
+		"loading": "Registering...",
+		"error": "Registration failed. Please check your details and try again.",
+		"verifyError": "Registered user, but failed to send verification email. Please try again later.",
+		"success": "Registration successful! Please check your email to verify your account.",
+		"goLogin": "Go to Login",
+		"passwordMismatch": "Passwords do not match. Please try again.",
+		"passwordNoNumber": "Password must contain at least one number.",
+		"passwordNoLetter": "Password must contain at least one english letter.",
+		"startYearInvalid": "Start year must be between 1960 and the current year.",
+		"emailInvalid": "Invalid email address",
+		"passwordShort": "Password must be at least 8 characters",
+		"firstNameRequired": "First name required",
+		"lastNameRequired": "Last name required",
+		"telephoneNumberRequired": "Telephone number required",
+		"gdprLabel": "I have read and agree to the",
+		"privacyPolicy": "privacy policy.",
+		"gdprRequired": "You must agree to the privacy policy to register."
+	},
+	"car-booking": {
+		"title": "Car Booking",
+		"description-title": "FAQ and rules",
+		"description": "As a member, you can book the guild car for your personal and guild-related needs. If you are an admin, you can manage bookings <0>here</0> instead. By booking the car, you agree to follow the rules found <1>here</1>.",
+		"faq": {
+			"title": "Frequently Asked Questions",
+			"q1": "Who can book the car?",
+			"a1": "Any member of the guild can book the car.",
+			"q2": "Car renting during the summer?",
+			"a2": "As activities are suspended during the summer, it is not easy to rent the guild's car. Contact the board (at) fsektionen.se to ask if it can be solved.",
+			"q3": "How many people can fit in the car?",
+			"a3": "The car can accommodate up to 7 people, including the driver.",
+			"q4": "What is the cargo capacity of the car?",
+			"a4": "The trunk (with the rear seats folded) is approximately (with the reservation that it is not a perfect rectangle) 190 cm deep, 130 cm wide and 80 cm high.",
+			"q5": "How much does it cost to rent the car?",
+			"a5": "Members of the F-guild pay a starting fee of SEK 150. The starting fee includes 20 kilometers, after that it costs SEK 5 per kilometer started.",
+			"q6": "What do the colors mean?",
+			"a6": "Different colors show status and ownership for each booking. An admin (the car foreman) must confirm bookings outside regular hours. The colors have the following meaning:\n- Light orange color means it's your booking, but it's not confirmed.\n- Dark orange color means it's your booking and it's confirmed.\n- Green color marks someone else's confirmed booking.\n- Yellow color shows someone else's unconfirmed booking.\n- Light blue color is used for bookings that have been added locally but haven't been retrieved from the server yet. If you see blue, something may have gone wrong, reload the page manually.",
+			"q7": "I have more questions!",
+			"a7": "You can contact the car foreman through, among other ways, the <0>contact page</0>. Please ask the car foreman or a webmaster to add the question with an answer here."
+		}
+	},
+	"room-booking": {
+		"title": "Room Bookings",
+		"description-title": "FAQ and rules",
+		"description": "As a member, you must ask an admin if you want to book a room, but you can view all room bookings here. If you are an admin, you can book rooms <0>here</0> instead.",
+		"faq": {
+			"title": "Frequently Asked Questions",
+			"q1": "Who can book the rooms?",
+			"a1": "Only admins can book the rooms. If you are a member, you can contact an admin from nämnden to ask them to book a room.",
+			"q2": "I have more questions!",
+			"a2": "There is no main responsible person for room bookings, contact the equipment master or the board if you have any questions. You can also ask them to add the question with an answer here."
+		}
+	},
+	"loading": {
+		"basic": "Loading content...",
+		"flavor_1": "Checking into Hilbert's hotel...",
+		"flavor_2": "Finding the determinant...",
+		"flavor_3": "Playing moose game...",
+		"flavor_4": "Calculating the last digit of π...",
+		"flavor_5": "Fermenting more Hilbeaux...",
+		"flavor_6": "Polishing pixels...",
+		"flavor_7": "Counting to infinity...",
+		"flavor_8": "Creating yet another Gandalf-exam...",
+		"error_occurred": "Some error occurred:",
+		"no_error_message": "No error message available.",
+		"network_error": "Network error occurred. Please check your connection.",
+		"unauthorized": "You are not authorized to view this information. Please log in."
+	},
+	"cookieConsent": {
+		"message": "We use cookies to enhance your experience on our website (authentication, language and more). By continuing to use the site, you agree to our use of cookies.",
+		"accept": "Okay"
+	},
+	"permission-wall": {
+		"stop": "Stop",
+		"subtitle": "Slow down there!",
+		"message": "You do not have permission to view this page. If you believe this is an error, ",
+		"contact": "please contact your local webmaster.",
+		"quote": "You are not a subset of the set of all users with access to this page.",
+		"quote_author": "The wise Debianne server",
+		"button": "Back to homepage"
+	},
+	"documents": {
+		"title": "Title",
+		"created_at": "Created At",
+		"private_explanation": "Members only",
+		"author": "Author",
+		"category": "Category",
+		"view": "View",
+		"view_doc": "View Document",
+		"page_title": "Documents",
+		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members.",
+		"search_title": "Search by title or category"
+	},
+	"guild_meeting": {
+		"important_dates": "Important Dates"
+	},
+	"yes": "Yes",
+	"no": "No",
+	"not_found": "Not found",
+	"description": "Description",
+	"event_signup": {
+		"title": "Event Signup",
+		"priority": "Priority",
+		"select_priority": "Select priority group to sign up as",
+		"group_name": "Group Name",
+		"group_name_placeholder": "Enter group name (optional)",
+		"drink_package": {
+			"title": "Drink Package",
+			"none": "None",
+			"alcohol_free": "Alcohol Free",
+			"alcohol": "Alcohol"
+		},
+		"select_drink_package": "Select drink package",
+		"button": "Register",
+		"update_button": "Update registration",
+		"edit_button": "Edit",
+		"signoff_button": "Unregister",
+		"success_create": "Registration successful!",
+		"success_update": "Registration updated!",
+		"success_signoff": "You have unregistered from the event.",
+		"error_create": "Failed to register: {{error}}",
+		"error_update": "Failed to update registration: {{error}}",
+		"error_signoff": "Failed to unregister: {{error}}",
+		"unknown_error": "Unknown error.",
+		"not_found": "You are not registered for this event.",
+		"user": "User",
+		"status": "Status",
+		"confirmed": "Confirmed",
+		"pending": "Pending",
+		"period_passed_signed_up": "Registration period has ended. If you want to change or withdraw your registration, please contact the event organizer.",
+		"period_passed_not_signed_up": "Registration period has ended. You can no longer register. If you have any questions, please contact the event organizer.",
+		"food_preferences_title": "Food Preferences",
+		"food_preferences_explainer": "These are your saved food preferences. If something doesn't look right, please update them in your account settings.",
+		"standard_food_preferences": "Standard preferences:",
+		"other_food_preferences": "Other preferences:",
+		"none": "None",
+		"signup_not_used": "You cannot register for this event as it does not use this page for registration."
+	},
+	"songs": {
+		"by": "By",
+		"melody": "Melody",
+		"category": "Category",
+		"views": "Views",
+		"title": "Songs",
+		"description_subtitle": "Browse and sing along with our collection of songs.",
+		"search_placeholder": "Search songs..."
+	},
+	"gallery": {
+		"title": "Gallery",
+		"select_year": "Select year",
+		"photographers": "Photographers"
+	},
+	"post": "Council Post",
+	"elections": {
+		"ended": "Ended",
+		"left": "left",
+		"day": "{{count}} day(s)",
+		"hour": "{{count}} hour(s)",
+		"min": "{{count}} min(s)",
+		"no_visible_election": "No visible election available",
+		"post_name": "Post Name",
+		"recommended_limit": "Recommended Limit",
+		"max_limit": "Max Limit",
+		"candidation_count": "Candidates",
+		"elected_by": "Elected By",
+		"council": "Council",
+		"end_time": "End Time",
+		"search_posts_placeholder": "Search posts...",
+		"no_posts_match": "No posts match your search",
+		"view_my_candidations": "View My Candidations",
+		"add_candidation": "Add Candidation",
+		"add_nomination": "Add Nomination",
+		"select_post": "Select post",
+		"candidation_error": "Failed to submit candidation",
+		"candidation_success": "Candidation submitted successfully!",
+		"nomination_error": "Failed to submit nomination",
+		"nomination_success": "Nomination submitted successfully!",
+		"nominee_name": "Nominee Name",
+		"nominee_email": "Nominee Email",
+		"motivation": "Motivation",
+		"election_limits": "Election Limits",
+		"ends_in": "Ends In",
+		"actions": "Actions",
+		"candidated_status": "Candidation Status",
+		"you_have_candidated": "You have candidated for this post",
+		"candidated_at": "Candidated at",
+		"remove_candidation": "Remove Candidation",
+		"elected_at_semester": "Elected At Semester",
+		"no_description": "No description available",
+		"my_candidations": {
+			"page_title": "My Candidations",
+			"page_description": "Here you can view and manage your election candidations"
+		},
+		"back_to_elections": "Back to Elections",
+		"no_candidations": "You have no candidations",
+		"delete_candidation_success": "Candidation deleted successfully",
+		"error_delete_candidation": "Failed to delete candidation",
+		"limits": "Limits",
+		"no_limit": "No limit",
+		"no_end_time": "No end time",
+		"election_table_description": "Here is a list of all posts open for nominations and candidations. The limits for how many people can be elected to each post are ordered by recommended limit first, followed by the max limit.",
+		"sub_election": "Election category"
+	},
+	"sort": {
+		"sort_by": "Sort by",
+		"newest": "Newest"
+	}
 }
