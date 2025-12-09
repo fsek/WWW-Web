@@ -27,15 +27,15 @@
 	"actions": "Åtgärder",
 	"search_placeholder": "Sök ...",
 	"welcome": {
-		"title": "Välkommen till adminsidan",
-		"message": "Här kan du hantera en otrolig mängd saker (Saknas något? Kontakta en spindelman@fsektionen.se). Använd menyn till vänster för att navigera mellan de olika skärmarna. Du borde bara ha tillgång till de skärmar du har behörighet till, om så inte är fallet, kontakta en superman."
+		"title": "Välkommen till administrationssidan",
+		"message": "Här kan du hantera en stor del av sektionens data (Saknas något? Kontakta spindelman@fsektionen.se). Använd menyn till vänster för att navigera mellan de olika skärmarna. Du borde bara ha tillgång till de skärmar du har behörighet till, om så inte är fallet, kontakta spindelman@fsektionen.se."
 	},
 	"categories": {
 		"general": "Allmänt",
 		"bookings": "Bokningar",
 		"councils": "Poster och utskott",
 		"songs": "Sånger",
-		"spider": "Spindelsaker",
+		"spider": "Spindel",
 		"nollning": "Nollning",
 		"elections": "Val"
 	},
@@ -61,7 +61,7 @@
 		"no_news": "Inga nyheter tillgängliga.",
 		"confirm_remove": "Bekräfta borttagning",
 		"confirm_remove_text": "Är du säker på att du vill ta bort denna nyhet?",
-		"page_description": "Här kan du skapa nyheter och redigera existerande nyheter på hemsidan. Nyheterna kommer sorteras efter fastnålningsdatum, sedan bumpdatum och sist publiceringsdatum. Du kan alltså använda bump-funktionen för att flytta nyheter till toppen av listan, och fastnålning för att hålla en nyhet högst upp i listan under en viss tid.",
+		"page_description": "Här kan du skapa och redigera existerande nyheter på hemsidan. Nyheterna kommer sorteras efter fastnålningsdatum, sedan bumpdatum och sist publiceringsdatum. Du kan alltså använda bump-funktionen för att flytta nyheter till toppen av listan, och fastnålning för att hålla en nyhet högst upp i listan under en viss tid.",
 		"use_pinning": "Fastnåla nyhetsinlägget högst upp i nyhetslistan",
 		"image_uploaded": "En bild har laddats upp",
 		"no_pin": "Ingen fastnålning",
@@ -103,7 +103,7 @@
 		"is_nollning_event": "Nollningsevent",
 		"priorities": "Prioriterade grupper",
 		"calendar": "Kalender",
-		"calendar_description": "Denna kalender visar alla event. Klicka på ett event för att redigera det. Klicka eller dra på kalendern för att välja ett tidsintervall, klicka sedan på 'Lägg till event'. Blåa event kanske inte har kommit till backenden än. Ladda om sidan om du får ett felmeddelande för att säkerställa att du har den senaste informationen.",
+		"calendar_description": "Denna kalender visar alla event. Klicka på ett event för att redigera det. Klicka eller dra på kalendern för att välja ett tidsintervall, klicka sedan på 'Lägg till event'. Blåa event kanske inte har kommit till backenden än. Ladda om sidan om du får ett felmeddelande för att säkerställa att du har kommit åt den senaste informationen.",
 		"list": "Lista",
 		"list_description": "Denna lista visar alla event. Klicka på ett event för att redigera det.",
 		"error_add": "Misslyckades att lägga till event.",
@@ -152,21 +152,20 @@
 		"date_time": "Datum & tid",
 		"settings": "Egenskaper",
 		"additional": "Övrigt",
-		"success_add": "Event skapades!",
-		"success_edit": "Event uppdaterades!",
-		"success_delete": "Event togs bort!"
+		"success_add": "Event skapades 💰",
+		"success_edit": "Event uppdaterades 🤪",
+		"success_delete": "Event togs bort 🤯"
 	},
 	"documents": {
 		"self": "Dokument",
 		"page_title": "Administrera dokument",
-		"description": "Här kan du hantera dokument som är tillgängliga för nedladdning. Kategorinamn är fritext, så sök efter kategorier innan så du inte skapar en kategori med liknande men olikt namn.",
-		"crate": "Skapa dokument",
+		"description": "Här kan du hantera dokument som är tillgängliga för nedladdning. Kategorinamn är fritext, så sök efter kategorier innan så att du inte råka skapa en ny kategori med liknande namn.",
 		"title": "Titel",
 		"file": "Fil",
 		"name": "Namn",
 		"public": "Offentlig",
 		"file_type_error": "Ogiltig filtyp. Tillåtna filtyper är: .pdf, .jpg, .png, .txt",
-		"file_size_error": "Filstorleken får inte överstiga 5 MB",
+		"file_size_error": "Filstorleken får inte överstiga {{size}} MB",
 		"create": "Skapa dokument",
 		"remove_document": "Ta bort dokument",
 		"edit_document": "Redigera dokument",
@@ -174,12 +173,12 @@
 		"edited_by": "Senast redigerad av",
 		"confirm_remove": "Bekräfta borttagning av dokument",
 		"confirm_remove_text": "Är du säker på att du vill ta bort detta dokument?",
-		"success_add": "Dokumentet skapades!",
-		"success_edit": "Dokumentet uppdaterades!",
-		"success_delete": "Dokumentet togs bort!",
-		"error_add": "Misslyckades att skapa dokument.",
-		"error_edit": "Misslyckades att uppdatera dokument.",
-		"error_delete": "Misslyckades att ta bort dokument.",
+		"success_add": "Dokumentet skapades 📝",
+		"success_edit": "Dokumentet uppdaterades 🤔",
+		"success_delete": "Dokumentet togs bort 😈",
+		"error_add": "Misslyckades att skapa dokument",
+		"error_edit": "Misslyckades att uppdatera dokument",
+		"error_delete": "Misslyckades att ta bort dokument",
 		"is_private": "Privat",
 		"author": "Skapad av",
 		"category": "Kategori",
@@ -188,11 +187,11 @@
 		"read": "Öppna",
 		"title_required": "Titel krävs",
 		"upload_success": "Dokumentet har laddats upp!",
-		"upload_error": "Misslyckades att ladda upp dokument.",
+		"upload_error": "Misslyckades att ladda upp dokument",
 		"document_updated": "Dokumentet har uppdaterats!",
-		"document_update_error": "Misslyckades att uppdatera dokumentet.",
+		"document_update_error": "Misslyckades att uppdatera dokumentet",
 		"document_removed": "Dokumentet har tagits bort!",
-		"document_remove_error": "Misslyckades att ta bort dokumentet.",
+		"document_remove_error": "Misslyckades att ta bort dokumentet",
 		"search_title": "Sök efter titel eller kategori"
 	},
 	"car": {
@@ -212,17 +211,17 @@
 		"no_council": "Inget utskott",
 		"no_council_needed": "Inget utskott krävs för personliga bokningar",
 		"personal_or_council": "Utskott",
-		"error_add": "Misslyckades att lägga till bokning",
-		"error_delete": "Misslyckades att ta bort bokning",
+		"error_add": "Misslyckades med att lägga till bokning",
+		"error_delete": "Misslyckades med att ta bort bokning",
 		"error_missing_id": "Boknings-id saknas.",
-		"error_edit": "Misslyckades att redigera bokning",
+		"error_edit": "Misslyckades med att redigera bokning",
 		"error_start_end": "Sluttiden måste vara efter starttiden.",
 		"error_past_event": "Starttiden måste vara i framtiden.",
 		"calendar": "Kalender",
 		"calendar_description": "Denna kalender visar alla bokningar. Klicka på en bokning för att redigera den. Klicka eller dra på kalendern för att välja ett tidsintervall, klicka sedan på 'Lägg till event'. Blåa bokningar kanske inte har kommit till backenden än. Ladda om sidan om du får ett felmeddelande för att säkerställa att du har den senaste informationen.",
 		"booking_information": "Bokningsinformation",
 		"booking_timing": "Bokningstider",
-		"user": "Bokare",
+		"user": "Innehavare av bokning",
 		"email": "E-post",
 		"telephone_number": "Telefonnummer",
 		"stil_id": "StiL-ID",
@@ -1046,7 +1045,7 @@
 			"search_placeholder": "Sök poster...",
 			"name_sv": "Namn (svenska)",
 			"name_en": "Namn (engelska)",
-			"candidations_count": "Kandidaturer"
+			"candidations_count": "Antal kandidaturer"
 		},
 		"election_nominations": {
 			"tab_title": "Nomineringar",
@@ -1076,19 +1075,43 @@
 			"HT": "Hösttermin (HT)",
 			"VT": "Vårtermin (VT)",
 			"HT and VT": "Höst- och vårtermin",
-			"Other": "Annat"
+			"Other": "Annat",
+			"null": "Ej angivet"
 		},
 		"elected_by": {
 			"Guild": "Sektionsmöte",
 			"Board": "Styrelsemöte",
 			"Board Intermediate": "Styrelsen - Mellanliggande valmöte",
 			"Educational Council": "Studierådet",
-			"Other": "Annat"
+			"Other": "Annat",
+			"null": "Ej angivet"
 		},
 		"semester": {
 			"HT": "Hösttermin (HT)",
 			"VT": "Vårtermin (VT)",
-			"Other": "Annat"
+			"Other": "Annat",
+			"null": "Ej angivet"
 		}
+	},
+	"guild_meeting": {
+		"self": "Sektionsmötet",
+		"edit_title": "Redigera sektionsmöte",
+		"title_sv_label": "Titel (svenska)",
+		"title_en_label": "Titel (engelska)",
+		"title_sv_placeholder": "Svensk titel",
+		"title_en_placeholder": "Engelsk titel",
+		"date_description_sv_label": "Datumtext (svenska)",
+		"date_description_en_label": "Datumtext (engelska)",
+		"date_description_sv_placeholder": "t.ex. Motionsstopp: 16 mars...",
+		"date_description_en_placeholder": "t.ex. Motion deadline: March 16...",
+		"description_sv_label": "Beskrivning (svenska)",
+		"description_en_label": "Beskrivning (engelska)",
+		"description_sv_placeholder": "Svensk beskrivning",
+		"description_en_placeholder": "Engelsk beskrivning",
+		"reset": "Återställ",
+		"save": "Spara",
+		"update_success": "Sektionsmöte uppdaterat!",
+		"update_error": "Kunde inte uppdatera sektionsmöte.",
+		"is_active_label": "Är aktivt (är synligt för användare)"
 	}
 }

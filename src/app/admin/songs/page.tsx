@@ -11,6 +11,7 @@ import type { SongRead } from "../../../api";
 import SongEditForm from "./SongEditForm";
 import { useTranslation } from "react-i18next";
 import AdminPage from "@/widgets/AdminPage";
+import SongForm from "./SongForm";
 
 export default function Songs() {
 	const { t } = useTranslation("admin");
@@ -51,6 +52,7 @@ export default function Songs() {
 			})}
 			columns={columns}
 			editComponent={SongEditForm}
+			headerButtons={<SongForm />}
 		/>
 	);
 }

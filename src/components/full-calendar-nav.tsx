@@ -50,7 +50,7 @@ import {
 	SelectValue,
 	SelectContent,
 } from "@/components/ui/select";
-import { room } from "@/api";
+import { RoomEnum } from "@/api";
 
 interface CalendarNavProps {
 	calendarRef: calendarRef;
@@ -65,7 +65,7 @@ interface CalendarNavProps {
 	enableCarProperties?: boolean;
 	isMobile?: boolean;
 	enableRoomBookingProperties?: boolean;
-	defaultRoom?: `${room}`;
+	defaultRoom?: `${RoomEnum}`;
 	enableCafeShiftProperties?: boolean;
 	// Get/set current view from parent (Calendar)
 	currentView: string;

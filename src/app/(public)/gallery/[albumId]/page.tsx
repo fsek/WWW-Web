@@ -92,7 +92,7 @@ export default function AlbumPage({ params }: Props) {
 		try {
 			const url = new URL(window.location.href);
 			url.searchParams.set("img", String(images[idx]));
-			router.replace(url.toString());
+			router.replace(url.toString(), { scroll: false });
 		} catch {}
 	};
 
@@ -101,7 +101,7 @@ export default function AlbumPage({ params }: Props) {
 		try {
 			const url = new URL(window.location.href);
 			url.searchParams.delete("img");
-			router.replace(url.toString());
+			router.replace(url.toString(), { scroll: false });
 		} catch {}
 	};
 

@@ -68,7 +68,7 @@ export function Footer() {
 							</a>
 						</div>
 					</div>
-					<div className="columns-[18ch] gap-4 space-y-4 flex-1">
+					<div className="columns-[18ch] gap-4 space-y-8 flex-1">
 						{sections.map(([sectionKey, section]) => {
 							const items = Object.entries(section).filter(
 								([key]) => key !== "self",
@@ -124,6 +124,10 @@ export function Footer() {
 						</div>
 					</div> */}
 					</div>
+				</div>
+
+				<div className="text-center">
+					&copy; {new Date().getFullYear()} F-sektionen. {t("footer.copyright")}
 				</div>
 			</div>
 		</footer>

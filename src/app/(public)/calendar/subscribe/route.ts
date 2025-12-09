@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server";
-import stripHtmlLinebreaks from "@/help_functions/stripHtmlLinebreaks";
 import { API_BASE_URL } from "@/constants";
 
 interface EventExtendedProps {
@@ -116,6 +115,9 @@ function generateICS(events: CalendarEvent[]) {
 			}
 			descriptionParts.push(`Alkoholpolicy: ${translated_alcohol}`);
 		}
+		if (event.extendedProps?.dress_code) {
+			descriptionParts.push(`Klädkod: ${event.extendedProps.dress_code}`);
+		}
 		if (event.extendedProps?.can_signup) {
 			descriptionParts.push("Anmälan krävs.");
 		}
@@ -185,7 +187,7 @@ async function fetchLatestEvents() {
 					end: event.ends_at,
 					allDay: event.all_day,
 					extendedProps: {
-						description: stripHtmlLinebreaks(event.description_sv),
+						description: event.description_sv,
 						location: event.location,
 						dress_code: event.dress_code,
 						dot: event.dot,

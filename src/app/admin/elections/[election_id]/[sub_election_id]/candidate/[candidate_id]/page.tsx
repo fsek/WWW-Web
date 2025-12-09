@@ -36,7 +36,7 @@ export default function AdminElectionCandidatePage() {
 		isLoading: candidateLoading,
 	} = useQuery({
 		...getCandidateOptions({
-			path: { sub_election_id: subElectionId, candidate_id: candidateId },
+			path: { candidate_id: candidateId },
 		}),
 		enabled: Number.isFinite(subElectionId) && Number.isFinite(candidateId),
 		refetchOnWindowFocus: false,
@@ -91,7 +91,7 @@ export default function AdminElectionCandidatePage() {
 			});
 			queryClient.invalidateQueries({
 				queryKey: getCandidateQueryKey({
-					path: { sub_election_id: subElectionId, candidate_id: candidateId },
+					path: { candidate_id: candidateId },
 				}),
 			});
 		},
@@ -104,9 +104,7 @@ export default function AdminElectionCandidatePage() {
 
 	const getPostName = (post_id: number) => {
 		if (!subElection?.election_posts) return "-";
-		const post = subElection.election_posts.find(
-			(p) => p.election_post_id === post_id,
-		);
+		const post = subElection.election_posts.find((p) => p.post_id === post_id);
 		if (!post) return "-";
 		return i18n.language === "en" ? post.name_en : post.name_sv;
 	};

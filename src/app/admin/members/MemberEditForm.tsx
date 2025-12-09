@@ -9,7 +9,12 @@ import {
 	adminUpdateUserMutation,
 	updateUserPostsMutation,
 } from "@/api/@tanstack/react-query.gen";
-import { action, target, type UserUpdate, type AdminUserRead } from "@/api";
+import {
+	ActionEnum,
+	TargetEnum,
+	type UserUpdate,
+	type AdminUserRead,
+} from "@/api";
 import { useTranslation } from "react-i18next";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { toast } from "sonner";
@@ -408,7 +413,7 @@ export default function UserPostsEditForm({
 									{t("edit")}
 								</Button>
 								{permissions.hasRequiredPermissions([
-									[action.SUPER, target.USER],
+									[ActionEnum.SUPER, TargetEnum.USER],
 								]) ? (
 									<ConfirmDeleteDialog
 										open={confirmOpen}
