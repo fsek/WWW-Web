@@ -1,6 +1,18 @@
 "use client";
 
-import { Suspense, use, useState } from "react";
+import type { AlbumRead } from "@/api";
+import {
+	deleteImageMutation,
+	getAlbumImagesOptions,
+	getOneAlbumOptions,
+	getOneAlbumQueryKey,
+	removeAlbumPhotographerMutation,
+	uploadImageMutation,
+} from "@/api/@tanstack/react-query.gen";
+import ImageDisplay from "@/components/ImageDisplay";
+import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import { Spinner } from "@/components/Spinner";
+import { Button } from "@/components/ui/button";
 import {
 	useMutation,
 	useQueries,
@@ -8,27 +20,16 @@ import {
 	useSuspenseQueries,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
-import {
-	getOneAlbumOptions,
-	uploadImageMutation,
-	deleteImageMutation,
-	getOneAlbumQueryKey,
-	removeAlbumPhotographerMutation,
-	getAlbumImagesOptions,
-} from "@/api/@tanstack/react-query.gen";
-import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import type { AlbumRead } from "@/api";
 import { createColumnHelper } from "@tanstack/react-table";
-import { useTranslation } from "react-i18next";
-import { Button } from "@/components/ui/button";
-import PhotographerForm from "./PhotographerForm";
-import { map } from "zod";
-import type { StaticImport } from "next/dist/shared/lib/get-img-props";
-import ImageDropzone from "./ImageDropzone";
-import { Spinner } from "@/components/Spinner";
+import exifr from "exifr";
 import { ArrowLeft, Check, CircleX, Trash2, X } from "lucide-react";
+import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { useRouter } from "next/navigation";
-import ImageDisplay from "@/components/ImageDisplay";
+import { Suspense, use, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { map } from "zod";
+import ImageDropzone from "./ImageDropzone";
+import PhotographerForm from "./PhotographerForm";
 
 interface AlbumPageProps {
 	params: Promise<{
@@ -118,16 +119,41 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 			}),
 	});
 
-	function handleFileUpload(acceptedFiles: File[]) {
-		for (const file of acceptedFiles) {
-			//if (file.type === "image/jpeg") {
+	async function handleFileUpload(acceptedFiles: File[]) {
+		// Extract EXIF data from all files
+		const filesWithDates = await Promise.all(
+			acceptedFiles.map(async (file) => {
+				try {
+					const exifData = await exifr.parse(file, {
+						pick: ["DateTimeOriginal", "CreateDate", "ModifyDate"],
+					});
+					// Use DateTimeOriginal (when photo was taken) or fall back to CreateDate or file's lastModified
+					const date =
+						exifData?.DateTimeOriginal ||
+						exifData?.CreateDate ||
+						exifData?.ModifyDate ||
+						new Date(file.lastModified);
+					return { file, date: new Date(date) };
+				} catch (error) {
+					// If EXIF extraction fails, use file's last modified date
+					return { file, date: new Date(file.lastModified) };
+				}
+			}),
+		);
+
+		// Sort files by date (oldest first)
+		const sortedFiles = filesWithDates
+			.sort((a, b) => a.date.getTime() - b.date.getTime())
+			.map((item) => item.file);
+
+		// Upload files in sorted order
+		for (const file of sortedFiles) {
 			imageUploadMutation.mutate({
 				body: {
 					file: file,
 				},
 				query: { album_id: albumId },
 			});
-			//}
 		}
 	}
 
