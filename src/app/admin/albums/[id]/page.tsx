@@ -27,7 +27,6 @@ import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { useRouter } from "next/navigation";
 import { Suspense, use, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { map } from "zod";
 import ImageDropzone from "./ImageDropzone";
 import PhotographerForm from "./PhotographerForm";
 
@@ -128,12 +127,14 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 						pick: ["DateTimeOriginal", "CreateDate", "ModifyDate"],
 					});
 					// Use DateTimeOriginal (when photo was taken) or fall back to CreateDate or file's lastModified
-					const date =
+					const rawDate =
 						exifData?.DateTimeOriginal ||
 						exifData?.CreateDate ||
 						exifData?.ModifyDate ||
 						new Date(file.lastModified);
-					return { file, date: new Date(date) };
+					// Ensure we have a Date object
+					const date = rawDate instanceof Date ? rawDate : new Date(rawDate);
+					return { file, date };
 				} catch (error) {
 					// If EXIF extraction fails, use file's last modified date
 					return { file, date: new Date(file.lastModified) };
