@@ -91,6 +91,8 @@ const defaultInput = fs.existsSync("openapi.json")
 
 const arg = process.argv[2] ?? defaultInput;
 
+console.log("ℹ️ Using OpenAPI source:", arg);
+
 const input = (() => {
 	try {
 		return new URL(arg);
