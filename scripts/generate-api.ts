@@ -83,7 +83,16 @@ async function main(input: string | URL) {
 	}
 }
 
-const arg = process.argv[2] ?? "openapi.json";
+// Prefer local openapi.json if present. This is used in the github actions test runner.
+// Otherwise use the local server URL.
+const defaultInput = fs.existsSync("openapi.json")
+	? "openapi.json"
+	: "http://host.docker.internal:8000/openapi.json";
+
+const arg = process.argv[2] ?? defaultInput;
+
+console.log("ℹ️ Using OpenAPI source:", arg);
+
 const input = (() => {
 	try {
 		return new URL(arg);
