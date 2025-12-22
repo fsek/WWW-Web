@@ -5,7 +5,9 @@ import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-const pageSizeOptions = [5, 10, 20, 50];
+//https://tanstack.com/table/v8/docs/guide/pagination - Pagination tutorial
+
+const pageSizeOptions = [5, 10, 20, 50, 100, 6122];
 
 export default function AdminTable<T>({
 	table,
@@ -24,6 +26,8 @@ export default function AdminTable<T>({
 	const pageCount = table.getPageCount();
 	const { t } = useTranslation("admin");
 
+	// Set default page size if provided and not already set
+	// biome-ignore lint/correctness/useExhaustiveDependencies: we don't want to run this on every table state change
 	useEffect(() => {
 		if (
 			defaultPageSize &&
@@ -31,12 +35,12 @@ export default function AdminTable<T>({
 		) {
 			table.setPageSize(defaultPageSize);
 		}
+		// Only run on mount or when defaultPageSize changes
 	}, [defaultPageSize]);
 
 	return (
-		<div className="flex flex-col w-full cursor-pointer">
+		<div className="flex flex-col w-full">
 			<div className="overflow-x-auto">
-				{/* table-auto is essential for the 1% trick to work */}
 				<table className="table-auto border border-table-border w-full border-collapse">
 					<thead>
 						{table.getHeaderGroups().map((headerGroup) => (
@@ -90,6 +94,7 @@ export default function AdminTable<T>({
 										"border-t hover:bg-gray-50 dark:hover:bg-gray-800",
 										rowClassName?.(row),
 										extraProps.className,
+										onRowClick && "cursor-pointer",
 									)}
 									{...extraProps}
 								>

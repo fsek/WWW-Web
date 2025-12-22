@@ -12,14 +12,16 @@ import { useState } from "react";
 export default function createTable<T>({
 	data,
 	columns,
+	initialSorting,
 	...reactTableOptions
 }: {
 	data: T[];
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	columns: ColumnDef<T, any>[];
 	//Array<AccessorKeyColumnDefBase<T, any> & Partial<IdIdentifier<T, any>>>;
+	initialSorting?: SortingState;
 } & Partial<TableOptions<T>>) {
-	const [sorting, setSorting] = useState<SortingState>([]);
+	const [sorting, setSorting] = useState<SortingState>(initialSorting ?? []);
 
 	const table = useReactTable({
 		data: data,

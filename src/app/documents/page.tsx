@@ -49,7 +49,7 @@ export default function Documents() {
 		}),
 		{
 			id: "view",
-			header: "",
+			enableSorting: false,
 			size: 0,
 			cell: (row: { row: Row<DocumentRead> }) => {
 				return (
@@ -82,7 +82,11 @@ export default function Documents() {
 		});
 	}, [data, searchTitle]);
 
-	const table = useCreateTable({ data: filteredData, columns });
+	const table = useCreateTable({
+		data: filteredData,
+		columns,
+		initialSorting: [{ id: "created_at", desc: true }],
+	});
 
 	return (
 		<div className="flex flex-col min-h-screen">
@@ -107,7 +111,13 @@ export default function Documents() {
 									className="w-96 border rounded px-3 py-2"
 								/>
 							</div>
-							<AdminTable table={table} />
+							<AdminTable
+								table={table}
+								onRowClick={(row) => {
+									const url = `/documents/${row.original.id}`;
+									window.open(url, "_blank", "noopener,noreferrer");
+								}}
+							/>
 						</>
 					)}
 				</div>
