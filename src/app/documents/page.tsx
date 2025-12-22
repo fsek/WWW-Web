@@ -12,6 +12,7 @@ import { getAllDocumentsOptions } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
+import { Info } from "lucide-react";
 
 export default function Documents() {
 	// TODO: Fix this page lmao
@@ -28,47 +29,40 @@ export default function Documents() {
 			header: t("main:documents.title"),
 			cell: (info) => info.getValue(),
 		}),
+
+		columnHelper.accessor("category", {
+			maxSize: 64,
+			size: 0,
+			minSize: 32,
+			header: t("main:documents.category"),
+			cell: (info) => info.getValue(),
+		}),
 		columnHelper.accessor("created_at", {
 			header: t("main:documents.created_at"),
+			size: 0,
 			cell: (info) =>
-				new Date(info.getValue()).toLocaleString("sv-SE", {
-					hour: "2-digit",
-					minute: "2-digit",
+				new Date(info.getValue()).toLocaleDateString("sv-SE", {
 					year: "numeric",
 					month: "2-digit",
 					day: "2-digit",
 				}),
 		}),
-		columnHelper.accessor("is_private", {
-			header: t("main:documents.private_explanation"),
-			cell: (info) => (info.getValue() ? t("main:yes") : t("main:no")),
-		}),
-		columnHelper.accessor("category", {
-			header: t("main:documents.category"),
-			cell: (info) => info.getValue(),
-		}),
-		columnHelper.accessor("author", {
-			header: t("main:documents.author"),
-			cell: (info) => {
-				const author = info.getValue();
-				return `${author.first_name} ${author.last_name}`;
-			},
-		}),
 		{
 			id: "view",
-			header: t("main:documents.view"),
+			header: "",
+			size: 0,
 			cell: (row: { row: Row<DocumentRead> }) => {
 				return (
 					<Button
+						size="icon-sm"
 						variant="outline"
-						className={"px-2 py-1 border"}
 						onClick={(e) => {
 							e.stopPropagation();
 							const url = `/documents/${row.row.original.id}`;
 							window.open(url, "_blank", "noopener,noreferrer");
 						}}
 					>
-						{t("main:documents.view")}
+						<Info />
 					</Button>
 				);
 			},
