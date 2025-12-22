@@ -5,8 +5,6 @@ import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-//https://tanstack.com/table/v8/docs/guide/pagination - Pagination tutorial
-
 const pageSizeOptions = [5, 10, 20, 50];
 
 export default function AdminTable<T>({
@@ -26,8 +24,6 @@ export default function AdminTable<T>({
 	const pageCount = table.getPageCount();
 	const { t } = useTranslation("admin");
 
-	// Set default page size if provided and not already set
-	// biome-ignore lint/correctness/useExhaustiveDependencies: we don't want to run this on every table state change
 	useEffect(() => {
 		if (
 			defaultPageSize &&
@@ -35,70 +31,51 @@ export default function AdminTable<T>({
 		) {
 			table.setPageSize(defaultPageSize);
 		}
-		// Only run on mount or when defaultPageSize changes
 	}, [defaultPageSize]);
 
 	return (
 		<div className="flex flex-col w-full cursor-pointer">
 			<div className="overflow-x-auto">
-				<table className="table-fixed border border-table-border w-full border-collapse">
+				{/* table-auto is essential for the 1% trick to work */}
+				<table className="table-auto border border-table-border w-full border-collapse">
 					<thead>
 						{table.getHeaderGroups().map((headerGroup) => (
 							<tr key={headerGroup.id}>
-								{headerGroup.headers.map((header) => (
-									<th
-										key={header.id}
-										className="px-4 py-2 text-left border-r border-table-border last:border-r-0 truncate"
-										colSpan={header.colSpan}
-										style={{ width: header.column.getSize() }}
-										aria-sort={
-											header.column.getIsSorted()
-												? header.column.getIsSorted() === "asc"
-													? "ascending"
-													: "descending"
-												: "none"
-										}
-									>
-										{header.isPlaceholder ? null : (
-											// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-											<div
-												className={
-													header.column.getCanSort()
-														? "cursor-pointer select-none flex items-center"
-														: "flex items-center"
-												}
-												onClick={header.column.getToggleSortingHandler()}
-												title={
-													header.column.getCanSort()
-														? header.column.getNextSortingOrder() === "asc"
-															? "Sort ascending"
-															: header.column.getNextSortingOrder() === "desc"
-																? "Sort descending"
-																: "Clear sort"
-														: undefined
-												}
-											>
-												{flexRender(
-													header.column.columnDef.header,
-													header.getContext(),
-												)}
-												{header.column.getIsSorted() ? (
-													header.column.getIsSorted() === "asc" ? (
-														<ArrowDown
-															className="ml-1 w-4 h-4"
-															aria-label="Sorted ascending"
-														/>
-													) : (
-														<ArrowUp
-															className="ml-1 w-4 h-4"
-															aria-label="Sorted descending"
-														/>
-													)
-												) : null}
-											</div>
-										)}
-									</th>
-								))}
+								{headerGroup.headers.map((header) => {
+									const size = header.column.columnDef.size;
+									const isShrink = size === 0;
+
+									return (
+										<th
+											key={header.id}
+											className="px-2.5 py-2 text-left border-r border-table-border last:border-r-0"
+											colSpan={header.colSpan}
+											style={{ width: isShrink ? "1%" : "auto" }}
+										>
+											{header.isPlaceholder ? null : (
+												<div
+													className={cn(
+														"flex items-center",
+														header.column.getCanSort() &&
+															"cursor-pointer select-none",
+													)}
+													onClick={header.column.getToggleSortingHandler()}
+												>
+													{flexRender(
+														header.column.columnDef.header,
+														header.getContext(),
+													)}
+													{header.column.getIsSorted() &&
+														(header.column.getIsSorted() === "asc" ? (
+															<ArrowDown className="ml-1 w-4 h-4" />
+														) : (
+															<ArrowUp className="ml-1 w-4 h-4" />
+														))}
+												</div>
+											)}
+										</th>
+									);
+								})}
 							</tr>
 						))}
 					</thead>
@@ -116,18 +93,69 @@ export default function AdminTable<T>({
 									)}
 									{...extraProps}
 								>
-									{row.getVisibleCells().map((cell) => (
-										<td
-											key={cell.id}
-											className="px-4 py-2 border-r border-table-border last:border-r-0 truncate"
-											style={{ width: cell.column.getSize() }}
-										>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
-										</td>
-									))}
+									{row.getVisibleCells().map((cell) => {
+										const { column } = cell;
+										const { size, minSize, maxSize } = column.columnDef;
+
+										// 0 is our "shrink-to-fit" flag
+										const isShrink = size === 0;
+
+										// Tooltip Logic (Matches your Date formatter)
+										const cellDef = column.columnDef.cell;
+										let tooltipValue: string | undefined;
+										if (typeof cellDef === "function") {
+											const result = cellDef(cell.getContext());
+											if (
+												typeof result === "string" ||
+												typeof result === "number"
+											) {
+												tooltipValue = String(result);
+											}
+										}
+										if (!tooltipValue) {
+											const nativeVal = cell.renderValue();
+											if (
+												typeof nativeVal === "string" ||
+												typeof nativeVal === "number"
+											) {
+												tooltipValue = String(nativeVal);
+											}
+										}
+
+										return (
+											<td
+												key={cell.id}
+												className={cn(
+													"px-2.5 py-2 border-r border-table-border last:border-r-0",
+													// w-[calc(...)] taps into the Tailwind spacing theme directly
+													isShrink
+														? "w-[1%]"
+														: "w-[calc(--spacing(1)*var(--size))] max-w-0",
+												)}
+												style={
+													{
+														"--size": size,
+														"--min":
+															isShrink && (minSize ?? 20) <= 20
+																? "auto"
+																: minSize,
+														"--max": maxSize,
+													} as React.CSSProperties
+												}
+											>
+												<div
+													className={cn(
+														"min-w-[calc(--spacing(1)*var(--min))]",
+														"max-w-[calc(--spacing(1)*var(--max))]",
+														isShrink ? "w-max" : "truncate w-full",
+													)}
+													title={tooltipValue}
+												>
+													{flexRender(column.columnDef.cell, cell.getContext())}
+												</div>
+											</td>
+										);
+									})}
 								</tr>
 							);
 						})}
@@ -189,6 +217,9 @@ export default function AdminTable<T>({
 						</option>
 					))}
 				</select>
+			</div>
+			<div className="mt-4 m-5 flex justify-end space-x-1">
+				{/* ... (Previous code for buttons/select remains the same) ... */}
 			</div>
 		</div>
 	);
