@@ -1,16 +1,16 @@
 "use client";
 
-import type React from "react";
-import { useEffect, useRef, useState, useCallback } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-	getImageStreamOptions,
 	getImageOptions,
+	getImageStreamOptions,
 	getNewsImageOptions,
 	getNewsImageStreamOptions,
 } from "@/api/@tanstack/react-query.gen";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import type { ImageProps as NextImageProps } from "next/image";
+import type React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type ImageKind = "image" | "news" | "event" | "user";
 export type ImageSize = "small" | "medium" | "large" | "original";
@@ -19,6 +19,7 @@ export interface ImageDisplayProps extends Omit<NextImageProps, "src" | "id"> {
 	type: ImageKind;
 	imageId: number;
 	size?: ImageSize;
+	enabled?: boolean; // Control when the image query should run
 }
 
 // Helpers to get original blob and actions using stream routes
@@ -111,6 +112,7 @@ export default function ImageDisplay({
 	onClick,
 	onLoad,
 	onError,
+	enabled = true,
 	...imgProps
 }: ImageDisplayProps) {
 	const [src, setSrc] = useState<string | undefined>(undefined);
@@ -126,7 +128,7 @@ export default function ImageDisplay({
 			if (devMode) {
 				queryOptions = {
 					...getNewsImageStreamOptions({ path: { news_id: imageId } }),
-					enabled: !!imageId,
+					enabled: !!imageId && enabled,
 					refetchOnWindowFocus: false,
 				};
 			} else {
@@ -134,7 +136,7 @@ export default function ImageDisplay({
 					...getNewsImageOptions({
 						path: { news_id: imageId, size: size },
 					}),
-					enabled: !!imageId,
+					enabled: !!imageId && enabled,
 					refetchOnWindowFocus: false,
 				};
 			}
@@ -145,7 +147,7 @@ export default function ImageDisplay({
 			if (devMode) {
 				queryOptions = {
 					...getImageStreamOptions({ path: { img_id: imageId } }),
-					enabled: !!imageId,
+					enabled: !!imageId && enabled,
 					refetchOnWindowFocus: false,
 				};
 			} else {
@@ -153,7 +155,7 @@ export default function ImageDisplay({
 					...getImageOptions({
 						path: { img_id: imageId, size: size },
 					}),
-					enabled: !!imageId,
+					enabled: !!imageId && enabled,
 					refetchOnWindowFocus: false,
 				};
 			}
