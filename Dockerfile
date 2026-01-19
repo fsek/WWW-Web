@@ -32,7 +32,7 @@ WORKDIR /app
 # Disable telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN adduser --system --uid 1001 nextjs
+RUN useradd --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
