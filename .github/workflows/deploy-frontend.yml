@@ -92,7 +92,7 @@ jobs:
             API_BASE_URL=${{ env.API_BASE_URL }}
 
       - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v3
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build-image.outputs.digest }}
