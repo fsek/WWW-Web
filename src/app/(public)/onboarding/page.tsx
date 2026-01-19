@@ -94,7 +94,13 @@ export default function OnboardingPage() {
 			<div className="max-w-3xl mx-auto">
 				<div className="flex flex-col items-center justify-center h-full space-y-6 p-8">
 					<CustomTitle text="All Done!" size={3} />
-					<p className="text-xl text-center">{program.completionMessage}</p>
+
+					<div className="text-xl prose dark:prose-invert">
+						<Markdown remarkPlugins={[remarkGfm]}>
+							{program.completionMessage}
+						</Markdown>
+					</div>
+
 					<Button
 						variant="destructive"
 						onClick={handleReset}
