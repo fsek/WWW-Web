@@ -381,7 +381,10 @@
 		"view_doc": "Visa dokumentet",
 		"page_title": "Dokument",
 		"description": "Här kan du hitta och läsa dokument som delas inom sektionen. Vissa dokument är markerade för att endast vara synliga för medlemmar.",
-		"search_title": "Sök efter titel eller kategori"
+		"search_title": "Sök efter titel eller kategori",
+		"file_name": "Filnamn",
+		"updated_at": "Uppdaterad",
+		"is_private": "Visas endast för medlemmar"
 	},
 	"guild_meeting": {
 		"important_dates": "Viktiga datum"
@@ -492,5 +495,8 @@
 		"no_end_time": "Ingen sluttid",
 		"election_table_description": "Här är en lista över alla poster som är öppna för nomineringar och kandidaturer. Gränserna för hur många som kan bli valda till varje post är ordnade enligt rekommenderad gräns först, följt av maxgränsen.",
 		"sub_election": "Valkategori"
+	},
+	"info_box": {
+		"title": "Detaljer"
 	}
 }

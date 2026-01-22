@@ -381,7 +381,10 @@
 		"view_doc": "View Document",
 		"page_title": "Documents",
 		"description": "Here you can find and view documents shared within the guild. Some documents may be only visible to members.",
-		"search_title": "Search by title or category"
+		"search_title": "Search by title or category",
+		"is_private": "Only shown to members",
+		"updated_at": "Updated At",
+		"file_name": "File Name"
 	},
 	"guild_meeting": {
 		"important_dates": "Important Dates"
@@ -492,5 +495,8 @@
 		"no_end_time": "No end time",
 		"election_table_description": "Here is a list of all posts open for nominations and candidations. The limits for how many people can be elected to each post are ordered by recommended limit first, followed by the max limit.",
 		"sub_election": "Election category"
+	},
+	"info_box": {
+		"title": "Details"
 	}
 }
