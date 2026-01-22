@@ -40,6 +40,9 @@ export default function Documents() {
 		columnHelper.accessor("created_at", {
 			header: t("main:documents.created_at"),
 			size: 0,
+			meta: {
+				tooltip: (info: DocumentRead) => info.created_at.toLocaleString(),
+			},
 			cell: (info) =>
 				new Date(info.getValue()).toLocaleDateString("sv-SE", {
 					year: "numeric",
@@ -51,6 +54,7 @@ export default function Documents() {
 			id: "view",
 			enableSorting: false,
 			size: 0,
+			meta: { tooltip: () => t("admin:documents.show_info") },
 			cell: (row: { row: Row<DocumentRead> }) => {
 				return (
 					<Button
