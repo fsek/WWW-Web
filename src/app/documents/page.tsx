@@ -23,7 +23,6 @@ export default function Documents() {
 	});
 	const [searchTitle, setSearchTitle] = useState<string>("");
 	const [selectedDocument, setSelectedDocument] = useState<DocumentRead>();
-	const [infoBoxOpen, setInfoBoxOpen] = useState<boolean>(false);
 
 	// Column setup
 	const columnHelper = createColumnHelper<DocumentRead>();
@@ -66,7 +65,6 @@ export default function Documents() {
 						onClick={(e) => {
 							e.stopPropagation();
 							setSelectedDocument(row.row.original);
-							setInfoBoxOpen(true);
 						}}
 					>
 						<Info />
@@ -101,8 +99,8 @@ export default function Documents() {
 			<main className="flex-1">
 				{selectedDocument && (
 					<InfoBox
-						open={infoBoxOpen}
-						onClose={() => setInfoBoxOpen(false)}
+						open={!!selectedDocument}
+						onClose={() => setSelectedDocument(undefined)}
 						displayData={[
 							// Look i really did try to make this better but typescript doesn't have a type system :)
 							{ label: t("documents.title"), value: selectedDocument.title },
