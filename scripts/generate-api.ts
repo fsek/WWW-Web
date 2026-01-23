@@ -64,7 +64,6 @@ async function runOpenApiTS() {
 }
 
 async function main(input: string | URL) {
-	console.log(`📥 Reading OpenAPI from ${input}...`);
 	const raw = await readInput(input);
 	const doc = JSON.parse(raw);
 
