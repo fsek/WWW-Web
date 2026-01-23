@@ -5,6 +5,7 @@ import * as fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import { URL } from "node:url";
+import { API_BASE_URL } from "../src/constants.ts";
 
 const OUTPUT_FILE = "openapi.cleaned.json";
 
@@ -63,6 +64,7 @@ async function runOpenApiTS() {
 }
 
 async function main(input: string | URL) {
+	console.log(`📥 Reading OpenAPI from ${input}...`);
 	const raw = await readInput(input);
 	const doc = JSON.parse(raw);
 
@@ -83,7 +85,27 @@ async function main(input: string | URL) {
 	}
 }
 
-const arg = process.argv[2] ?? "openapi.json";
+if (process.argv.length < 2 || process.argv.length > 3) {
+	console.error("Usage: generate-api.ts [input]");
+	console.error(
+		"  input: URL or file path to OpenAPI JSON (default: openapi.json)",
+	);
+	process.exit(1);
+}
+
+let arg = null;
+if (process.argv[2] === undefined) {
+	if (API_BASE_URL) {
+		arg = new URL("/openapi.json", API_BASE_URL);
+	} else {
+		console.error(
+			"❌ Error: must give file input or set API_BASE_URL environment variable.",
+		);
+		process.exit(1);
+	}
+} else {
+	arg = process.argv[2];
+}
 const input = (() => {
 	try {
 		return new URL(arg);

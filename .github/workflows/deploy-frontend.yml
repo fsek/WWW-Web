@@ -62,7 +62,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Generate API client
-        run: bun run deploy-generate-api
+        run: bun run generate-api src/api/openapi.json
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
