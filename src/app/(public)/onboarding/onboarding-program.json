@@ -7,14 +7,14 @@
 				{
 					"id": "welcome-message",
 					"title": "Welcome!",
-					"description": "We set up this program to help you get started with contributing to our projects. If you follow the steps in this program, you'll be able to make your first contribution in no time! Some of you have worked in groups on large projects before, while others are completely new to this way of working and these systems.\n- If you don't understand something in these tasks, you might want to search unfamiliar terms online, ask a chatbot, or ask one of the su-permen so we can give you help with the whole context.\n- If you have already used git, or coded in groups before this guide might be very easy for you. You can skip over things you feel are trivial, but try to at least read through the tasks.\n\nThe goal is to get you comfortable and confident in contributing to our projects no matter what level you start from. \n\n*This page saves your progress, so don't worry if the tab closes or you need to come back later.*",
+					"description": "We set up this program to help you get started with contributing to our projects. If you follow the steps in this program, you'll be able to make your first contribution in no time! Some of you have worked in groups on large projects before, while others are completely new to this way of working and these systems.\n- If you don't understand something in these tasks, you might want to search unfamiliar terms online, ask a chatbot, or ask one of the su-permen so we can give you help with the whole context.\n- If you have used git before, or coded in large groups on earlier projects, you might have already set up some things. Feel free to skip steps as needed.\n\nWe want you to feel ready to contribute to our projects no matter what level you start from. \n\n*This page saves your progress, so don't worry if the tab closes or you need to come back later.*",
 					"task": "I have read the text above and am ready to get started!"
 				},
 				{
 					"id": "ask-questions",
 					"title": "Ask Us Questions!",
-					"description": "Su-permen are here to help you. If you get stuck, or if anything is unclear, ask us right away! Even su-permen get stuck *all the time* on things we feel we should know. Our projects are really weird and much of the knowledge is not written down anywhere. As a general rule, if you've spent more than 15 minutes trying to figure something out it's time to ask for help, but asking earlier is always better.",
-					"task": "I understand that asking questions early saves time for everyone."
+					"description": "Su-permen are here to help you. If you get stuck, or if anything is unclear, you can ask us! As a general rule, if you've spent more than 15 minutes trying to figure something out it's time to ask for help. Even su-permen get stuck *all the time* on things we feel we should know. Our projects are really cursed at times and our documentation is basically nonexistent.",
+					"task": "Okay, I'll communicate if I get stuck!"
 				}
 			]
 		},
@@ -24,19 +24,19 @@
 				{
 					"id": "install-git",
 					"title": "Install Git",
-					"description": "Git is a version control system that we use to manage our codebase for all our projects. Read and follow [this guide to install and configure Git for our projects](https://fsek.readthedocs.io/en/latest/installing_systems/installation_web/installation.html#setting-up-git). **Don't do the Docker part, or any part past it yet!**",
+					"description": "Git is a version control system that we use to manage the codebases for all our projects. Read and follow [this guide to install and configure Git for our projects](https://fsek.readthedocs.io/en/latest/installing_systems/installation_web/installation.html#setting-up-git). **Only do the \"Setting up Git\" part for now.**",
 					"task": "Git is installed and configured."
 				},
 				{
 					"id": "set-display-name",
 					"title": "Set Your Display Name On GitHub",
-					"description": "We need to know who you are! Add your real name to your GitHub profile. You can do that [here](https://github.com/settings/profile), change your display name or add it to your bio.",
-					"task": "There is some way to identify my real identity on my GitHub profile."
+					"description": "We need to know who you are! Add your real name to your GitHub profile. You can do that [here](https://github.com/settings/profile). Either change your display name or add it to your bio.",
+					"task": "There is some way to find my real identity on my GitHub profile."
 				},
 				{
 					"id": "pick-project",
 					"title": "Pick Your Project",
-					"description": "You should focus on getting good at working on one of our projects at a time. Pick one of the app, frontend for the web or backend to focus on. Don't worry if you feel like it's a tough choice, you can always switch later on!\n\n- **Frontend**: Work here can take many forms, but generally you will be building or editing webpages with some logic or forms on them. We need more people here, so if you're unsure, this is a good choice! You don't need to be great at artistic work or have a passion for graphical design to work on the frontend.\n- **Backend**: If you like working with databases and APIs, this is the choice for you! The backend is a little more focused on logic and covering edge cases than the frontend.\n- **App**: Like the web, work here is frontend-focused. Installation might be a bit tricky (we'll help you), but if you feel drawn to mobile development, this is the way to go!\n\nCan't decide? Ask a su-perman for more information about the different projects!",
+					"description": "You should focus on getting good at working on one of our projects at a time. Pick either the frontend or the backend to focus on. Don't worry if you feel like it's a tough choice, you can always switch later on!\n\n- **Frontend**: Work here can take many forms, but generally you will be building or editing webpages with some logic or forms on them. We need more people here, so if you're unsure, this is a good choice! You don't need to be great at artistic work or have a passion for graphical design to work on the frontend.\n- **Backend**: If you like working with databases and APIs, this is the choice for you! The backend is a little more focused on logic and covering edge cases than the frontend.\n\nCan't decide? Ask a su-perman for more information about the different projects!",
 					"task": "I have picked one of them to focus on and learn first."
 				}
 			]
@@ -47,46 +47,28 @@
 				{
 					"id": "install-repo",
 					"title": "Install the Repository",
-					"description": "Depending on what project you picked, this will differ:\n\n- **Frontend**: Follow the instructions in the [WWW-Web README](https://github.com/fsek/WWW-Web).\n- **Backend**: Follow the instructions in the [WebWebWeb README](https://github.com/fsek/WebWebWeb).\n- **App**: Follow the instructions in the [app README](https://github.com/fsek/App2).\n\nMake sure to reach out to a su-perman if you run into any issues!",
-					"task": "I have successfully finished following the README and the project launches properly (you can ask us if you're unsure)."
+					"description": "Depending on what project you picked, this will differ. To learn our systems better, you'll be working on a project with some other new spiders. Su-permen will give you more information. Here are the links to install either project:\n\n- **Frontend**: Follow the instructions in the [Foobar Eats Frontend Repo](https://github.com/fsek/foobar-eats-frontend#readme).\n- **Backend**: Follow the instructions in the [Foobar Eats Backend Repo](https://github.com/fsek/foobar-eats-backend#readme).\n\nMake sure to reach out to a su-perman if you run into any issues!",
+					"task": "I have successfully finished following the README and the project launches properly."
 				}
 			]
 		},
 		{
-			"title": "First Contribution",
+			"title": "Working on the Project",
 			"items": [
 				{
-					"id": "pick-issue",
-					"title": "Choose Your First Issue",
-					"description": "Now that you have your environment set up and the project running, it's time to make your first contribution! Pick a small issue from the issue tracker of your project (one tagged as \"Onboarding Issue\" unless you know what you are doing), or ask a su-perman for a suggestion. It's important that you assign the issue to yourself so that others know you're working on it. (Click on the issue -> look at the very top of the sidebar to the right)",
-					"task": "I have picked an issue **and assigned it to myself**."
+					"id": "start-working",
+					"title": "Start the Work!",
+					"description": "Now that you have your environment set up and the project running, get to work and finish the project according to the specification you were (hopefully) given! Remember to ask for help if you get stuck.",
+					"task": "Understood."
 				},
 				{
-					"id": "work-on-issue",
-					"title": "Work on Your Issue",
-					"description": "Now that you've picked an issue, it's time to start working on it! For a simple issue like this, you don't need much testing beyond seeing that the change has been made and that the code runs without errors.",
-					"task": "I have finished working on my issue and tested my changes locally."
-				},
-				{
-					"id": "create-pr",
-					"title": "Create a Pull Request",
-					"description": "Once you've completed your changes and tested them locally, it's time to create a pull request (PR) to propose your changes to the main codebase. Push your changes to a new branch in the repository and open a PR against the main branch. Write a description of what you've done and write \"resolves #issue_number\" in the PR description to automatically close the issue when the PR is merged. Ask a su-perman if you need help with this step.",
-					"task": "I have created a pull request for my changes. It includes a description of what I've done and links to the issue it resolves."
-				},
-				{
-					"id": "request-review",
-					"title": "Request a Code Review",
-					"description": "The su-permen need to know that your PR is ready for review. Request a review from multiple su-permen using the sidebar to the right. One of them will look over your code, provide feedback, and suggest any necessary changes. Don't be discouraged if they request changes: it's all part of the learning process! If you get to this step during a meeting, tell the su-permen present that your PR is ready for review and they will review it ASAP.",
-					"task": "I have requested a code review from more than one su-perman."
-				},
-				{
-					"id": "finish-pr",
-					"title": "Finish Your Pull Request And Merge",
-					"description": "After your PR has been reviewed and approved by the su-permen, it's time to merge it into the main codebase. Once everything is in order, you can merge your PR. Congratulations on completing your first contribution!",
-					"task": "My pull request has been approved and merged into the main branch."
+					"id": "tips",
+					"title": "Tips for Working",
+					"description": "- If you don't already know how to use git, this is a great time to learn! For this project, just knowing the basics is sufficient. If you use VSCode and want to use git via the GUI, you can check out [this guide](https://code.visualstudio.com/docs/sourcecontrol/quickstart#_step-2-make-changes-and-review). We also have a [git guide here](https://fsek.readthedocs.io/en/latest/git/workflow.html) for our workflow. Use `git pull` often to stay up to date with changes from others!\n- There's a huge library of code to copy-paste from in our existing codebases. [Go here for the frontend](https://github.com/fsek/WWW-Web) and [here for the backend](https://github.com/fsek/WebWebWeb).",
+					"task": "I'm done with the project!"
 				}
 			]
 		}
 	],
-	"completionMessage": "Great job on completing the onboarding program! You now have what it takes to work on regular github issues. \n\n**What's next?**\n- Keep working like you did this time, but aim for more challenging issues tagged \"Good First Issue\" or \"Good Second Issue\".\n- Join the #frontend, #backend or #app channel in mattermost so you can discuss the specific project you're working on.\n- aluays rember: wit greit paur kams greit responsipiliti."
+	"completionMessage": "Nice! When you are done with the project, you'll get to connect it to some other group to see it all together in action. \n\n**What's next?**\n- You can start working on the actual codebase of whatever project you picked. Look at the issue tracker for issues tagged \"Good First Issue\", assign yourself to the issue using the menu to the right and make a new git branch for your work. When done, create a descriptive pull request and *request a su-perman as a reviewer* of the code. \n- Join the #frontend or #backend channel (and of course the #spindel-memes and #spindel-general channels) in mattermost so you can discuss the specific project you're working on."
 }
