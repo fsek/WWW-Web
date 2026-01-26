@@ -5,6 +5,7 @@ import * as fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import { URL } from "node:url";
+import { API_BASE_URL } from "../src/constants.ts";
 
 const OUTPUT_FILE = "openapi.cleaned.json";
 
@@ -83,16 +84,27 @@ async function main(input: string | URL) {
 	}
 }
 
-// Prefer local openapi.json if present. This is used in the github actions test runner.
-// Otherwise use the local server URL.
-const defaultInput = fs.existsSync("openapi.json")
-	? "openapi.json"
-	: "http://host.docker.internal:8000/openapi.json";
+if (process.argv.length < 2 || process.argv.length > 3) {
+	console.error("Usage: generate-api.ts [input]");
+	console.error(
+		"  input: URL or file path to OpenAPI JSON (default: openapi.json)",
+	);
+	process.exit(1);
+}
 
-const arg = process.argv[2] ?? defaultInput;
-
-console.log("ℹ️ Using OpenAPI source:", arg);
-
+let arg = null;
+if (process.argv[2] === undefined) {
+	if (API_BASE_URL) {
+		arg = new URL("/openapi.json", API_BASE_URL);
+	} else {
+		console.error(
+			"❌ Error: must give file input or set API_BASE_URL environment variable.",
+		);
+		process.exit(1);
+	}
+} else {
+	arg = process.argv[2];
+}
 const input = (() => {
 	try {
 		return new URL(arg);

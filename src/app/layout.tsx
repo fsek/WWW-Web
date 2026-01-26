@@ -6,6 +6,7 @@ import TranslationsProvider from "@/components/TranslationsProvider";
 import { ThemeProvider } from "next-themes";
 import CookieConsent from "@/components/CookieConsent";
 import { headers } from "next/headers";
+import { API_BASE_URL } from "@/constants";
 
 // Default locale as fallback
 const defaultLocale = "sv" satisfies Locale;
@@ -27,7 +28,7 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	client.setConfig({ baseUrl: "http://host.docker.internal:8000" });
+	client.setConfig({ baseUrl: API_BASE_URL });
 
 	const headersList = await headers();
 	const initialLanguage =

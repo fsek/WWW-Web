@@ -1,4 +1,5 @@
 import { defineConfig } from "@hey-api/openapi-ts";
+import { API_BASE_URL } from "./src/constants";
 
 export default defineConfig({
 	input: "openapi.cleaned.json",
