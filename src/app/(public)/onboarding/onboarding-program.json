@@ -1,0 +1,74 @@
+{
+	"title": "Onboarding For New Spiders 🕷️",
+	"pages": [
+		{
+			"title": "Welcome to the Team!",
+			"items": [
+				{
+					"id": "welcome-message",
+					"title": "Welcome!",
+					"description": "We set up this program to help you get started with contributing to our projects. If you follow the steps in this program, you'll be able to make your first contribution in no time! Some of you have worked in groups on large projects before, while others are completely new to this way of working and these systems.\n- If you don't understand something in these tasks, you might want to search unfamiliar terms online, ask a chatbot, or ask one of the su-permen so we can give you help with the whole context.\n- If you have used git before, or coded in large groups on earlier projects, you might have already set up some things. Feel free to skip steps as needed.\n\nWe want you to feel ready to contribute to our projects no matter what level you start from. \n\n*This page saves your progress, so don't worry if the tab closes or you need to come back later.*",
+					"task": "I have read the text above and am ready to get started!"
+				},
+				{
+					"id": "ask-questions",
+					"title": "Ask Us Questions!",
+					"description": "Su-permen are here to help you. If you get stuck, or if anything is unclear, you can ask us! As a general rule, if you've spent more than 15 minutes trying to figure something out it's time to ask for help. Even su-permen get stuck *all the time* on things we feel we should know. Our projects are really cursed at times and our documentation is basically nonexistent.",
+					"task": "Okay, I'll communicate if I get stuck!"
+				}
+			]
+		},
+		{
+			"title": "Environment Setup",
+			"items": [
+				{
+					"id": "install-git",
+					"title": "Install Git",
+					"description": "Git is a version control system that we use to manage the codebases for all our projects. Read and follow [this guide to install and configure Git for our projects](https://fsek.readthedocs.io/en/latest/installing_systems/installation_web/installation.html#setting-up-git). **Only do the \"Setting up Git\" part for now.**",
+					"task": "Git is installed and configured."
+				},
+				{
+					"id": "set-display-name",
+					"title": "Set Your Display Name On GitHub",
+					"description": "We need to know who you are! Add your real name to your GitHub profile. You can do that [here](https://github.com/settings/profile). Either change your display name or add it to your bio.",
+					"task": "There is some way to find my real identity on my GitHub profile."
+				},
+				{
+					"id": "pick-project",
+					"title": "Pick Your Project",
+					"description": "You should focus on getting good at working on one of our projects at a time. Pick either the frontend or the backend to focus on. Don't worry if you feel like it's a tough choice, you can always switch later on!\n\n- **Frontend**: Work here can take many forms, but generally you will be building or editing webpages with some logic or forms on them. We need more people here, so if you're unsure, this is a good choice! You don't need to be great at artistic work or have a passion for graphical design to work on the frontend.\n- **Backend**: If you like working with databases and APIs, this is the choice for you! The backend is a little more focused on logic and covering edge cases than the frontend.\n\nCan't decide? Ask a su-perman for more information about the different projects!",
+					"task": "I have picked one of them to focus on and learn first."
+				}
+			]
+		},
+		{
+			"title": "Install Your Project",
+			"items": [
+				{
+					"id": "install-repo",
+					"title": "Install the Repository",
+					"description": "Depending on what project you picked, this will differ. To learn our systems better, you'll be working on a project with some other new spiders. Su-permen will give you more information. Here are the links to install either project:\n\n- **Frontend**: Follow the instructions in the [Foobar Eats Frontend Repo](https://github.com/fsek/foobar-eats-frontend#readme).\n- **Backend**: Follow the instructions in the [Foobar Eats Backend Repo](https://github.com/fsek/foobar-eats-backend#readme).\n\nMake sure to reach out to a su-perman if you run into any issues!",
+					"task": "I have successfully finished following the README and the project launches properly."
+				}
+			]
+		},
+		{
+			"title": "Working on the Project",
+			"items": [
+				{
+					"id": "start-working",
+					"title": "Start the Work!",
+					"description": "Now that you have your environment set up and the project running, get to work and finish the project according to the specification you were (hopefully) given! Remember to ask for help if you get stuck.",
+					"task": "Understood."
+				},
+				{
+					"id": "tips",
+					"title": "Tips for Working",
+					"description": "- If you don't already know how to use git, this is a great time to learn! For this project, just knowing the basics is sufficient. If you use VSCode and want to use git via the GUI, you can check out [this guide](https://code.visualstudio.com/docs/sourcecontrol/quickstart#_step-2-make-changes-and-review). We also have a [git guide here](https://fsek.readthedocs.io/en/latest/git/workflow.html) for our workflow. Use `git pull` often to stay up to date with changes from others!\n- There's a huge library of code to copy-paste from in our existing codebases. [Go here for the frontend](https://github.com/fsek/WWW-Web) and [here for the backend](https://github.com/fsek/WebWebWeb).",
+					"task": "I'm done with the project!"
+				}
+			]
+		}
+	],
+	"completionMessage": "Nice! When you are done with the project, you'll get to connect it to some other group to see it all together in action. \n\n**What's next?**\n- You can start working on the actual codebase of whatever project you picked. Look at the issue tracker for issues tagged \"Good First Issue\", assign yourself to the issue using the menu to the right and make a new git branch for your work. When done, create a descriptive pull request and *request a su-perman as a reviewer* of the code. \n- Join the #frontend or #backend channel (and of course the #spindel-memes and #spindel-general channels) in mattermost so you can discuss the specific project you're working on."
+}
