@@ -12,14 +12,17 @@ import { getAllDocumentsOptions } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
+import { Info } from "lucide-react";
+import InfoBox from "@/widgets/InfoBox";
 
 export default function Documents() {
 	// TODO: Fix this page lmao
-	const { t } = useTranslation();
+	const { t } = useTranslation("main");
 	const { data, error, isPending } = useQuery({
 		...getAllDocumentsOptions(),
 	});
 	const [searchTitle, setSearchTitle] = useState<string>("");
+	const [selectedDocument, setSelectedDocument] = useState<DocumentRead>();
 
 	// Column setup
 	const columnHelper = createColumnHelper<DocumentRead>();
@@ -28,47 +31,43 @@ export default function Documents() {
 			header: t("main:documents.title"),
 			cell: (info) => info.getValue(),
 		}),
+
+		columnHelper.accessor("category", {
+			maxSize: 64,
+			size: 0,
+			minSize: 32,
+			header: t("main:documents.category"),
+			cell: (info) => info.getValue(),
+		}),
 		columnHelper.accessor("created_at", {
 			header: t("main:documents.created_at"),
+			size: 0,
+			meta: {
+				tooltip: (info: DocumentRead) => info.created_at.toLocaleString(),
+			},
 			cell: (info) =>
-				new Date(info.getValue()).toLocaleString("sv-SE", {
-					hour: "2-digit",
-					minute: "2-digit",
+				new Date(info.getValue()).toLocaleDateString("sv-SE", {
 					year: "numeric",
 					month: "2-digit",
 					day: "2-digit",
 				}),
 		}),
-		columnHelper.accessor("is_private", {
-			header: t("main:documents.private_explanation"),
-			cell: (info) => (info.getValue() ? t("main:yes") : t("main:no")),
-		}),
-		columnHelper.accessor("category", {
-			header: t("main:documents.category"),
-			cell: (info) => info.getValue(),
-		}),
-		columnHelper.accessor("author", {
-			header: t("main:documents.author"),
-			cell: (info) => {
-				const author = info.getValue();
-				return `${author.first_name} ${author.last_name}`;
-			},
-		}),
 		{
 			id: "view",
-			header: t("main:documents.view"),
+			enableSorting: false,
+			size: 0,
+			meta: { tooltip: () => t("admin:documents.show_info") },
 			cell: (row: { row: Row<DocumentRead> }) => {
 				return (
 					<Button
+						size="icon-sm"
 						variant="outline"
-						className={"px-2 py-1 border"}
 						onClick={(e) => {
 							e.stopPropagation();
-							const url = `/documents/${row.row.original.id}`;
-							window.open(url, "_blank", "noopener,noreferrer");
+							setSelectedDocument(row.row.original);
 						}}
 					>
-						{t("main:documents.view")}
+						<Info />
 					</Button>
 				);
 			},
@@ -88,12 +87,51 @@ export default function Documents() {
 		});
 	}, [data, searchTitle]);
 
-	const table = useCreateTable({ data: filteredData, columns });
+	const table = useCreateTable({
+		data: filteredData,
+		columns,
+		initialSorting: [{ id: "created_at", desc: true }],
+	});
 
 	return (
 		<div className="flex flex-col min-h-screen">
 			<NavBar />
 			<main className="flex-1">
+				{selectedDocument && (
+					<InfoBox
+						open={!!selectedDocument}
+						onClose={() => setSelectedDocument(undefined)}
+						displayData={[
+							// Look i really did try to make this better but typescript doesn't have a type system :)
+							{ label: t("documents.title"), value: selectedDocument.title },
+							{
+								label: t("documents.author"),
+								value: `${selectedDocument.author.first_name} ${selectedDocument.author.last_name}`,
+							},
+							{
+								label: t("documents.file_name"),
+								value: selectedDocument.file_name,
+							},
+							{
+								label: t("documents.category"),
+								value: selectedDocument.category,
+							},
+							{
+								label: t("documents.created_at"),
+								value: selectedDocument.created_at.toLocaleString(),
+							},
+							{
+								label: t("documents.updated_at"),
+								value: selectedDocument.updated_at.toLocaleString(),
+							},
+							{
+								label: t("documents.is_private"),
+								value: selectedDocument.is_private ? t("yes") : t("no"),
+							},
+						]}
+						lg_columns={3}
+					/>
+				)}
 				<div className="px-8 space-x-4 w-full lg:w-[80%] mx-auto">
 					<h3 className="text-3xl py-3 font-bold text-primary">
 						{t("main:documents.page_title")}
@@ -113,7 +151,13 @@ export default function Documents() {
 									className="w-96 border rounded px-3 py-2"
 								/>
 							</div>
-							<AdminTable table={table} />
+							<AdminTable
+								table={table}
+								onRowClick={(row) => {
+									const url = `/documents/${row.original.id}`;
+									window.open(url, "_blank", "noopener,noreferrer");
+								}}
+							/>
 						</>
 					)}
 				</div>

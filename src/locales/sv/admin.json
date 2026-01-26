@@ -192,7 +192,8 @@
 		"document_update_error": "Misslyckades att uppdatera dokumentet",
 		"document_removed": "Dokumentet har tagits bort!",
 		"document_remove_error": "Misslyckades att ta bort dokumentet",
-		"search_title": "Sök efter titel eller kategori"
+		"search_title": "Sök efter titel eller kategori",
+		"show_info": "Visa information"
 	},
 	"car": {
 		"self": "Bilbokningar",
