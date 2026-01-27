@@ -61,7 +61,7 @@
 		"dayjs": "^1.11.18",
 		"embla-carousel-autoplay": "^8.6.0",
 		"embla-carousel-react": "^8.5.2",
-		"fullcalendar": "^6.1.15",
+		"fullcalendar": "^6.1.20",
 		"i18next": "^24.2.2",
 		"i18next-browser-languagedetector": "^8.0.2",
 		"i18next-cli": "^1.25.1",
