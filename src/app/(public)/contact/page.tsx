@@ -59,14 +59,14 @@ export default function ContactPage() {
 							<ContactCard
 								id="ordf"
 								title={t("board.ordf")}
-								fullName="Ester Hagberg Kuylenstierna"
+								fullName="Algot Kullberg"
 								email="ordf@fsektionen.se"
 								highlight={highlightedId === "ordf"}
 							/>
 							<ContactCard
 								id="vice"
 								title={t("board.vice")}
-								fullName="Lovisa Werselius"
+								fullName="Alma Holmgren"
 								email="viceordf@fsektionen.se"
 								highlight={highlightedId === "vice"}
 							/>
@@ -80,14 +80,14 @@ export default function ContactPage() {
 							<ContactCard
 								id="secretary"
 								title={t("board.secretary")}
-								fullName="Hugo Klaesson"
+								fullName="Victor Liedberg"
 								email="sekreterare@fsektionen.se"
 								highlight={highlightedId === "secretary"}
 							/>
 							<ContactCard
 								id="board_members"
 								title={t("board.board_members")}
-								fullName="Rebecka Eldh, Sixten Georgsson, Samuel Eriksson, Elina Kazemi"
+								fullName="Sixten Georgsson, Samuel Eriksson, Albin Torpel"
 								email="styrelseledamoter@fsektionen.se"
 								highlight={highlightedId === "board_members"}
 							/>
@@ -117,14 +117,14 @@ export default function ContactPage() {
 							<ContactCard
 								id="festivities"
 								title={t("other.festivities")}
-								fullName="Ebba Wahlberg"
+								fullName="Emmie Andersson"
 								email="sex@fsektionen.se"
 								highlight={highlightedId === "festivities"}
 							/>
 							<ContactCard
 								id="truth"
 								title={t("other.truth")}
-								fullName="Albin Kårlin"
+								fullName="Maria Davidsson"
 								email="sanningsminister@fsektionen.se"
 								highlight={highlightedId === "truth"}
 							/>
@@ -138,28 +138,28 @@ export default function ContactPage() {
 							<ContactCard
 								id="overfos"
 								title={t("other.nollning")}
-								fullName="Överfös Victor"
+								fullName="Överfös Elina"
 								email="overfos@fsektionen.se"
 								highlight={highlightedId === "overfos"}
 							/>
 							<ContactCard
 								id="cafe"
 								title={t("other.cafe")}
-								fullName="Ellen Boström"
+								fullName="Jacob Hoas"
 								email="cafe@fsektionen.se"
 								highlight={highlightedId === "cafe"}
 							/>
 							<ContactCard
 								id="conscience"
 								title={t("other.conscience")}
-								fullName="Alicia Ahlgren"
+								fullName="Linnea Lundevall"
 								email="samvetsmastare@fsektionen.se"
 								highlight={highlightedId === "conscience"}
 							/>
 							<ContactCard
 								id="culture"
 								title={t("other.culture")}
-								fullName="Manne Mönster"
+								fullName="Abbe Belfrage"
 								email="km@fsektionen.se"
 								highlight={highlightedId === "culture"}
 							/>
@@ -173,7 +173,7 @@ export default function ContactPage() {
 							<ContactCard
 								id="treasurer"
 								title={t("other.treasurer")}
-								fullName="Anton Sundström"
+								fullName="Rasmus Pernesten"
 								email="kass@fsektionen.se"
 								highlight={highlightedId === "treasurer"}
 							/>
