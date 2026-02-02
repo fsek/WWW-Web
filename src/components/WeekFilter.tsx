@@ -37,14 +37,11 @@ export default function WeekFilter({ value, onChange }: Props) {
 
 	return (
 		<div className="w-full max-w-sm">
-			<Select
-				value={inputValue}
-				onValueChange={handleChange}
-			>
+			<Select value={inputValue} onValueChange={handleChange}>
 				<SelectTrigger
 					className={cn(
 						"p-3 text-sm font-normal w-full rounded border",
-						!inputValid && "border-red-500 text-red-500"
+						!inputValid && "border-red-500 text-red-500",
 					)}
 					aria-invalid={!inputValid}
 				>

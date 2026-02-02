@@ -1,5 +1,5 @@
 "use client";
- 
+
 import { useQuery } from "@tanstack/react-query";
 import { getGuildMeetingOptions } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";

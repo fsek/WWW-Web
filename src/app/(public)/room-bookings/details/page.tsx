@@ -1,19 +1,10 @@
 "use client";
 
-import {
-	getRoomBookingOptions,
-} from "@/api/@tanstack/react-query.gen";
+import { getRoomBookingOptions } from "@/api/@tanstack/react-query.gen";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import {
-	Calendar,
-	Clock,
-	MapPin,
-	User,
-	ArrowLeft,
-	Home,
-} from "lucide-react";
+import { Calendar, Clock, MapPin, User, ArrowLeft, Home } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

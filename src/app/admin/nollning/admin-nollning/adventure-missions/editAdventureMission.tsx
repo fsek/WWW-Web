@@ -185,7 +185,10 @@ const EditAdventureMission = ({
 									<FormItem>
 										<FormLabel>{t("nollning.missions.title_sv")}</FormLabel>
 										<FormControl>
-											<Input placeholder={t("nollning.missions.title_placeholder")} {...field} />
+											<Input
+												placeholder={t("nollning.missions.title_placeholder")}
+												{...field}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -197,7 +200,10 @@ const EditAdventureMission = ({
 									<FormItem>
 										<FormLabel>{t("nollning.missions.title_en")}</FormLabel>
 										<FormControl>
-											<Input placeholder={t("nollning.missions.title_placeholder")} {...field} />
+											<Input
+												placeholder={t("nollning.missions.title_placeholder")}
+												{...field}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
@@ -207,11 +213,15 @@ const EditAdventureMission = ({
 								name={"description_sv"}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("nollning.missions.description_sv")}</FormLabel>
+										<FormLabel>
+											{t("nollning.missions.description_sv")}
+										</FormLabel>
 										<FormControl>
 											<textarea
 												className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-												placeholder={t("nollning.missions.description_placeholder")}
+												placeholder={t(
+													"nollning.missions.description_placeholder",
+												)}
 												{...field}
 											/>
 										</FormControl>
@@ -223,11 +233,15 @@ const EditAdventureMission = ({
 								name={"description_en"}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("nollning.missions.description_en")}</FormLabel>
+										<FormLabel>
+											{t("nollning.missions.description_en")}
+										</FormLabel>
 										<FormControl>
 											<textarea
 												className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-												placeholder={t("nollning.missions.description_placeholder")}
+												placeholder={t(
+													"nollning.missions.description_placeholder",
+												)}
 												{...field}
 											/>
 										</FormControl>
@@ -245,7 +259,8 @@ const EditAdventureMission = ({
 												type="number"
 												placeholder="0"
 												value={
-													typeof field.value === "number" && !Number.isNaN(field.value)
+													typeof field.value === "number" &&
+													!Number.isNaN(field.value)
 														? field.value
 														: ""
 												}
@@ -266,7 +281,8 @@ const EditAdventureMission = ({
 												type="number"
 												placeholder="1"
 												value={
-													typeof field.value === "number" && !Number.isNaN(field.value)
+													typeof field.value === "number" &&
+													!Number.isNaN(field.value)
 														? field.value
 														: ""
 												}
@@ -287,7 +303,8 @@ const EditAdventureMission = ({
 												type="number"
 												placeholder="0"
 												value={
-													typeof field.value === "number" && !Number.isNaN(field.value)
+													typeof field.value === "number" &&
+													!Number.isNaN(field.value)
 														? field.value
 														: ""
 												}

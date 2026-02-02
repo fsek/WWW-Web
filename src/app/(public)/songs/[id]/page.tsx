@@ -49,9 +49,7 @@ export default function SongPage({ params }: SongPageProps) {
 				<Card className="flex flex-col">
 					<CardHeader>
 						<div className="justify-between w-full flex flex-row">
-							<CardTitle className="text-3xl font-bold">
-								{data.title}
-							</CardTitle>
+							<CardTitle className="text-3xl font-bold">{data.title}</CardTitle>
 							<Button
 								variant="outline"
 								className="flex items-center gap-2"
@@ -63,21 +61,27 @@ export default function SongPage({ params }: SongPageProps) {
 						</div>
 						<CardDescription className="space-y-1">
 							{data.author && (
-								<div>{t("songs.by")} {data.author}</div>
+								<div>
+									{t("songs.by")} {data.author}
+								</div>
 							)}
 							{data.melody && (
-								<div>{t("songs.melody")}: {data.melody}</div>
+								<div>
+									{t("songs.melody")}: {data.melody}
+								</div>
 							)}
 							{data.category && (
-								<div>{t("songs.category")}: {data.category.name}</div>
+								<div>
+									{t("songs.category")}: {data.category.name}
+								</div>
 							)}
-							<div>{t("songs.views")}: {data.views}</div>
+							<div>
+								{t("songs.views")}: {data.views}
+							</div>
 						</CardDescription>
 					</CardHeader>
 					<CardContent className="flex-grow">
-						<div className="whitespace-pre-wrap">
-							{data.content}
-						</div>
+						<div className="whitespace-pre-wrap">{data.content}</div>
 					</CardContent>
 				</Card>
 			</div>

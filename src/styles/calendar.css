@@ -1,93 +1,93 @@
 /* For the custom fullcalendar component. Not actually used, this is here as a guide for future styling of the calendar */
 
 :root {
-  --fc-border-color: lightgray;
-  --fc-page-bg-color: none;
+	--fc-border-color: lightgray;
+	--fc-page-bg-color: none;
 }
 .dark {
-  --fc-border-color: gray;
+	--fc-border-color: gray;
 }
 
 /* Removing borders */
 
 .fc-scrollgrid {
-  @apply border-none;
+	@apply border-none;
 }
 
 .fc tbody tr:last-child td:first-child {
-  @apply border-l-0;
+	@apply border-l-0;
 }
 
 .fc tbody tr:last-child td:last-child {
-  @apply border-r-0 border-b-0;
+	@apply border-r-0 border-b-0;
 }
 
 .fc-theme-standard th {
-  @apply border-r-0;
+	@apply border-r-0;
 }
 
 /* Setting header size */
 
 .fc-col-header-cell-cushion {
-  @apply flex h-14 items-center;
+	@apply flex h-14 items-center;
 }
 
 /* Setting left time size */
 
 .fc-timegrid-slot {
-  @apply h-6;
+	@apply h-6;
 }
 
 .fc-timegrid-slot-label-cushion {
-  @apply text-xs font-light;
+	@apply text-xs font-light;
 }
 
 /* Setting cell colors */
 
 td.fc-daygrid-day.fc-day {
-  @apply hover:bg-secondary;
+	@apply hover:bg-secondary;
 }
 
 td.fc-daygrid-day.fc-day.fc-day-today {
-  @apply bg-secondary-foreground;
+	@apply bg-secondary-foreground;
 }
 
 .fc-day-today {
-  @apply bg-inherit;
+	@apply bg-inherit;
 }
 
 .fc-day-other {
-  @apply bg-gray-200 dark:bg-secondary;
+	@apply bg-gray-200 dark:bg-secondary;
 }
 
 .fc-daygrid-day-top {
-  @apply flex flex-row h-8 w-full items-center ;
+	@apply flex flex-row h-8 w-full items-center;
 }
 
 .fc-daygrid-dot-event {
-  @apply hover:bg-blue-50;
+	@apply hover:bg-blue-50;
 }
 
 .fc-daygrid-event-harness {
-  @apply pr-2 hover:bg-none hover:scale-[1.02] transition-all hover:cursor-pointer ;
+	@apply pr-2 hover:bg-none hover:scale-[1.02] transition-all hover:cursor-pointer;
 }
 
 .fc-timegrid-event-harness {
-  @apply hover:bg-none hover:cursor-pointer;
+	@apply hover:bg-none hover:cursor-pointer;
 }
 
 .fc-event-main {
-  @apply flex w-full h-full;
+	@apply flex w-full h-full;
 }
 
 .fc-event {
-  @apply flex border-none min-w-full;
+	@apply flex border-none min-w-full;
 }
 
 .fc-daygrid-event {
-  @apply mx-1;
+	@apply mx-1;
 }
 
 .fc-timegrid-event {
-  @apply px-1;
+	@apply px-1;
 }

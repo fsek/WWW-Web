@@ -2,7 +2,11 @@ import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
 import type { AdminUserRead } from "@/api";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@radix-ui/react-collapsible";
 import { ChevronDown } from "lucide-react";
 
 export default function UserDetailsCard({
@@ -129,40 +133,47 @@ export default function UserDetailsCard({
 					)}
 				</div>
 				<hr className="my-2" />
-				{full && <>
-				<Collapsible className="group/collapsible">
-				<CollapsibleTrigger className="w-full flex items-stretch px-1 transition-colors rounded-md hover:bg-accent py-3">
-				<ChevronDown className="h-5 w-5 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
-				<p className="grow px-2 font-semibold text-sm text-muted-foreground text-left">{t("posts.self")}</p>
-				</CollapsibleTrigger>
-				<ul className="list-disc">
-				{user.posts.map((post) => <CollapsibleContent className="px-8" key={post.id}>
-					<li className="text-base">
-						{i18n.language === "sv" ? post.name_sv : post.name_en}
-					</li>
-				</CollapsibleContent>)}
-				</ul>
-				</Collapsible>
-				<Collapsible className="group/collapsible py-0">
-				<CollapsibleTrigger className="w-full flex items-stretch px-1 transition-colors rounded-md hover:bg-accent py-3">
-				<ChevronDown className="h-5 w-5 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
-				<p className="grow px-2 font-semibold text-sm text-muted-foreground text-left">{t("member.food_preference")}</p>
-				</CollapsibleTrigger>
-				<ul className="list-disc">
-				{user.standard_food_preferences?.map((food) => <CollapsibleContent className="px-8" key={food}>
-					<li className="text-base">
-						{FOOD_PREFERENCES[food]}
-					</li>
-				</CollapsibleContent>
-			)}
-			<CollapsibleContent className="px-8">
-			{user.other_food_preferences && <li className="text-base">
-						{user.other_food_preferences}
-					</li>}
-			</CollapsibleContent>
-				</ul>
-				</Collapsible></>
-				}
+				{full && (
+					<>
+						<Collapsible className="group/collapsible">
+							<CollapsibleTrigger className="w-full flex items-stretch px-1 transition-colors rounded-md hover:bg-accent py-3">
+								<ChevronDown className="h-5 w-5 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
+								<p className="grow px-2 font-semibold text-sm text-muted-foreground text-left">
+									{t("posts.self")}
+								</p>
+							</CollapsibleTrigger>
+							<ul className="list-disc">
+								{user.posts.map((post) => (
+									<CollapsibleContent className="px-8" key={post.id}>
+										<li className="text-base">
+											{i18n.language === "sv" ? post.name_sv : post.name_en}
+										</li>
+									</CollapsibleContent>
+								))}
+							</ul>
+						</Collapsible>
+						<Collapsible className="group/collapsible py-0">
+							<CollapsibleTrigger className="w-full flex items-stretch px-1 transition-colors rounded-md hover:bg-accent py-3">
+								<ChevronDown className="h-5 w-5 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
+								<p className="grow px-2 font-semibold text-sm text-muted-foreground text-left">
+									{t("member.food_preference")}
+								</p>
+							</CollapsibleTrigger>
+							<ul className="list-disc">
+								{user.standard_food_preferences?.map((food) => (
+									<CollapsibleContent className="px-8" key={food}>
+										<li className="text-base">{FOOD_PREFERENCES[food]}</li>
+									</CollapsibleContent>
+								))}
+								<CollapsibleContent className="px-8">
+									{user.other_food_preferences && (
+										<li className="text-base">{user.other_food_preferences}</li>
+									)}
+								</CollapsibleContent>
+							</ul>
+						</Collapsible>
+					</>
+				)}
 			</CardContent>
 		</Card>
 	);

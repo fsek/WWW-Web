@@ -4,7 +4,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useMemo, useState } from "react";
 import idAsNumber from "../idAsNumber";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getNollningByYearOptions, getNollningOptions } from "@/api/@tanstack/react-query.gen";
+import {
+	getNollningByYearOptions,
+	getNollningOptions,
+} from "@/api/@tanstack/react-query.gen";
 import { createColumnHelper } from "@tanstack/react-table";
 import type { AdventureMissionRead } from "@/api";
 import useCreateTable from "@/widgets/useCreateTable";
@@ -40,7 +43,10 @@ export default function AdventureMissionsPage() {
 	useEffect(() => {
 		if (!weekLoaded) return;
 		if (selectedWeek !== null) {
-			localStorage.setItem("completedMissions_weekFilter", selectedWeek.toString());
+			localStorage.setItem(
+				"completedMissions_weekFilter",
+				selectedWeek.toString(),
+			);
 		} else {
 			localStorage.removeItem("completedMissions_weekFilter");
 		}
@@ -48,12 +54,16 @@ export default function AdventureMissionsPage() {
 
 	const { data } =
 		search === null || search === "current"
-			? useSuspenseQuery(getNollningByYearOptions({
-				path: { year: new Date().getFullYear() },
-			}))
-			: useSuspenseQuery(getNollningOptions({
-				path: { nollning_id: nollningID },
-			}));
+			? useSuspenseQuery(
+					getNollningByYearOptions({
+						path: { year: new Date().getFullYear() },
+					}),
+				)
+			: useSuspenseQuery(
+					getNollningOptions({
+						path: { nollning_id: nollningID },
+					}),
+				);
 
 	// After getting the data, switch the parameter to nollningID, to make it easier to pass down
 	if (search === null || search === "current") {
@@ -65,16 +75,19 @@ export default function AdventureMissionsPage() {
 		let missions = data.missions ?? [];
 		// Filter by week if selected
 		if (selectedWeek !== null) {
-			missions = missions.filter((mission) => mission.nollning_week === selectedWeek);
+			missions = missions.filter(
+				(mission) => mission.nollning_week === selectedWeek,
+			);
 		}
 		// Filter by search term if provided
 		if (searchTerm.trim() !== "") {
 			const term = searchTerm.toLowerCase();
-			missions = missions.filter((mission) =>
-			(mission.title_en?.toLowerCase().includes(term) ||
-				mission.title_sv?.toLowerCase().includes(term) ||
-				mission.description_en?.toLowerCase().includes(term) ||
-				mission.description_sv?.toLowerCase().includes(term))
+			missions = missions.filter(
+				(mission) =>
+					mission.title_en?.toLowerCase().includes(term) ||
+					mission.title_sv?.toLowerCase().includes(term) ||
+					mission.description_en?.toLowerCase().includes(term) ||
+					mission.description_sv?.toLowerCase().includes(term),
 			);
 		}
 		return missions;
@@ -86,10 +99,13 @@ export default function AdventureMissionsPage() {
 			header: t("nollning.missions.title_header"),
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.accessor(i18n.language === "en" ? "description_en" : "description_sv", {
-			header: t("nollning.missions.description_header"),
-			cell: (info) => info.getValue(),
-		}),
+		columnHelper.accessor(
+			i18n.language === "en" ? "description_en" : "description_sv",
+			{
+				header: t("nollning.missions.description_header"),
+				cell: (info) => info.getValue(),
+			},
+		),
 		columnHelper.display({
 			id: "points",
 			header: t("nollning.missions.points_header"),
@@ -116,7 +132,9 @@ export default function AdventureMissionsPage() {
 	const router = useRouter();
 
 	return (
-		<Suspense fallback={<div>{t("nollning.group_admin.no_nollning_selected")}</div>}>
+		<Suspense
+			fallback={<div>{t("nollning.group_admin.no_nollning_selected")}</div>}
+		>
 			<div className="px-12 py-4 space-x-4 space-y-4">
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
@@ -134,15 +152,11 @@ export default function AdventureMissionsPage() {
 					</Button>
 				</div>
 				<div className="flex flex-row w-full justify-between items-end">
-					<p className="">
-						{t("nollning.missions.intro")}
-					</p>
+					<p className="">{t("nollning.missions.intro")}</p>
 				</div>
 				<CreateAdventureMission nollningID={nollningID} />
 				<div className="flex flex-row gap-3 items-center">
-					<span>
-						{t("nollning.missions.filter_label")}
-					</span>
+					<span>{t("nollning.missions.filter_label")}</span>
 					<Input
 						type="text"
 						placeholder={t("nollning.missions.search_placeholder")}
@@ -151,10 +165,7 @@ export default function AdventureMissionsPage() {
 						className="w-64"
 					/>
 					{weekLoaded && (
-						<WeekFilter
-							value={selectedWeek}
-							onChange={setSelectedWeek}
-						/>
+						<WeekFilter value={selectedWeek} onChange={setSelectedWeek} />
 					)}
 				</div>
 				<AdminTable
@@ -175,4 +186,4 @@ export default function AdventureMissionsPage() {
 			</div>
 		</Suspense>
 	);
-};
+}
