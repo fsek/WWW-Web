@@ -28,11 +28,14 @@ const Nollning = () => {
 					// Open the first item by default
 					defaultValue={data.length > 0 ? data[0].id.toString() : undefined}
 				>
-					{data.sort((a, b) => b.year - a.year).map((nollning) => { // Newer first
-						return (
-							<NollningAccordionItem key={nollning.id} nollning={nollning} />
-						);
-					})}
+					{data
+						.sort((a, b) => b.year - a.year)
+						.map((nollning) => {
+							// Newer first
+							return (
+								<NollningAccordionItem key={nollning.id} nollning={nollning} />
+							);
+						})}
 				</Accordion>
 			</div>
 		</Suspense>

@@ -39,7 +39,11 @@ interface Props {
 	minPoints?: number;
 	selectedMission: AdventureMissionRead;
 	children?: React.ReactNode;
-	onSubmit: (points: number, adventure_mission_id: number, is_accepted: acceptEnum) => void;
+	onSubmit: (
+		points: number,
+		adventure_mission_id: number,
+		is_accepted: acceptEnum,
+	) => void;
 	defaultIsAccepted?: acceptEnum;
 }
 
@@ -57,23 +61,30 @@ const MissionPointRangeDialog = ({
 }: Props) => {
 	const { t } = useTranslation("admin");
 
-	const editCompletedMissionSchema = z.object({
-		points: z.number().int(),
-		is_accepted: z.nativeEnum(ACCEPT_ENUM),
-	}).refine((data) => {
-		// Enforce point limitations
-		if (maxPoints && data.points > maxPoints) {
-			return false;
-		}
-		if (minPoints && data.points < minPoints) {
-			return false;
-		}
-		return true;
-	},
-		{
-			message: t("nollning.mission_grading.points_range", { min: minPoints ?? 0, max: maxPoints ?? "∞" }),
-			path: ["points"]
-		});
+	const editCompletedMissionSchema = z
+		.object({
+			points: z.number().int(),
+			is_accepted: z.nativeEnum(ACCEPT_ENUM),
+		})
+		.refine(
+			(data) => {
+				// Enforce point limitations
+				if (maxPoints && data.points > maxPoints) {
+					return false;
+				}
+				if (minPoints && data.points < minPoints) {
+					return false;
+				}
+				return true;
+			},
+			{
+				message: t("nollning.mission_grading.points_range", {
+					min: minPoints ?? 0,
+					max: maxPoints ?? "∞",
+				}),
+				path: ["points"],
+			},
+		);
 
 	const form = useForm<z.infer<typeof editCompletedMissionSchema>>({
 		resolver: zodResolver(editCompletedMissionSchema),
@@ -124,13 +135,19 @@ const MissionPointRangeDialog = ({
 								name={"points"}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("nollning.mission_grading.points_label")}</FormLabel>
+										<FormLabel>
+											{t("nollning.mission_grading.points_label")}
+										</FormLabel>
 										<FormControl>
 											<Input
 												type="number"
 												placeholder="0"
 												{...field}
-												value={Number.isNaN(field.value) || field.value === undefined ? "" : field.value}
+												value={
+													Number.isNaN(field.value) || field.value === undefined
+														? ""
+														: field.value
+												}
 												onChange={(e) => {
 													const val = e.target.value;
 													const num = val === "" ? "" : Number(val);
@@ -151,7 +168,9 @@ const MissionPointRangeDialog = ({
 								name={"is_accepted"}
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{t("nollning.mission_grading.status_label")}</FormLabel>
+										<FormLabel>
+											{t("nollning.mission_grading.status_label")}
+										</FormLabel>
 										<FormControl>
 											<Select
 												value={field.value}
@@ -161,9 +180,15 @@ const MissionPointRangeDialog = ({
 													<SelectValue />
 												</SelectTrigger>
 												<SelectContent>
-													<SelectItem value={ACCEPT_ENUM.ACCEPTED}>{t("nollning.mission_grading.status_accepted")}</SelectItem>
-													<SelectItem value={ACCEPT_ENUM.REVIEW}>{t("nollning.mission_grading.status_review")}</SelectItem>
-													<SelectItem value={ACCEPT_ENUM.FAILED}>{t("nollning.mission_grading.status_failed")}</SelectItem>
+													<SelectItem value={ACCEPT_ENUM.ACCEPTED}>
+														{t("nollning.mission_grading.status_accepted")}
+													</SelectItem>
+													<SelectItem value={ACCEPT_ENUM.REVIEW}>
+														{t("nollning.mission_grading.status_review")}
+													</SelectItem>
+													<SelectItem value={ACCEPT_ENUM.FAILED}>
+														{t("nollning.mission_grading.status_failed")}
+													</SelectItem>
 												</SelectContent>
 											</Select>
 										</FormControl>

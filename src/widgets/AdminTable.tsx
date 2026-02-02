@@ -7,7 +7,6 @@ import {
 	type RowData,
 } from "@tanstack/react-table";
 import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown } from "lucide-react";
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 //https://tanstack.com/table/v8/docs/guide/pagination - Pagination tutorial
@@ -25,29 +24,15 @@ export default function AdminTable<T>({
 	onRowClick,
 	rowClassName,
 	getRowProps,
-	defaultPageSize,
 }: {
 	table: Table<T>;
 	onRowClick?: (row: Row<T>) => void;
 	rowClassName?: (row: Row<T>) => string;
 	getRowProps?: (row: Row<T>) => React.HTMLProps<HTMLTableRowElement>;
-	defaultPageSize?: number;
 }) {
 	const { pageIndex } = table.getState().pagination;
 	const pageCount = table.getPageCount();
 	const { t } = useTranslation("admin");
-
-	// Set default page size if provided and not already set
-	// biome-ignore lint/correctness/useExhaustiveDependencies: we don't want to run this on every table state change
-	useEffect(() => {
-		if (
-			defaultPageSize &&
-			table.getState().pagination.pageSize !== defaultPageSize
-		) {
-			table.setPageSize(defaultPageSize);
-		}
-		// Only run on mount or when defaultPageSize changes
-	}, [defaultPageSize]);
 
 	return (
 		<div className="flex flex-col w-full">

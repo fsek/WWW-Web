@@ -67,7 +67,8 @@ export default function StartYearFilter({ value, onChange }: Props) {
 				clearable
 				renderOption={(option) => (
 					<span className="text-sm font-normal">
-						{typeof option.label === "string" || typeof option.label === "number"
+						{typeof option.label === "string" ||
+						typeof option.label === "number"
 							? option.label
 							: "Something went wrong"}
 					</span>
@@ -82,16 +83,24 @@ export default function StartYearFilter({ value, onChange }: Props) {
 				noOptionsMessage={() =>
 					!inputValid ? (
 						<span className="text-red-500 text-sm">
-							{t("nollning.group_members.year_invalid", { min: MIN_YEAR, max: currentYear })}
+							{t("nollning.group_members.year_invalid", {
+								min: MIN_YEAR,
+								max: currentYear,
+							})}
 						</span>
 					) : (
-						<span className="text-gray-500 text-sm">{t("nollning.group_members.no_years_found")}</span>
+						<span className="text-gray-500 text-sm">
+							{t("nollning.group_members.no_years_found")}
+						</span>
 					)
 				}
 			/>
 			{!inputValid && (
 				<p className="text-red-500 text-sm mt-1">
-					{t("nollning.group_members.year_invalid", { min: MIN_YEAR, max: currentYear })}
+					{t("nollning.group_members.year_invalid", {
+						min: MIN_YEAR,
+						max: currentYear,
+					})}
 				</p>
 			)}
 		</div>

@@ -38,7 +38,9 @@ export function EventDeleteForm({ id, title_sv }: EventDeleteFormProps) {
 		toast({
 			title: t("delete.toast.title"),
 			action: (
-				<ToastAction altText={t("delete.toast.dismiss_alt")}>{t("delete.toast.dismiss")}</ToastAction>
+				<ToastAction altText={t("delete.toast.dismiss_alt")}>
+					{t("delete.toast.dismiss")}
+				</ToastAction>
 			),
 		});
 	}

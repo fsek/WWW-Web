@@ -68,7 +68,9 @@ export default function NewsEditForm({
 	const queryClient = useQueryClient();
 
 	const { data: newsImage } = useQuery({
-		...getNewsImageOptions({ path: { news_id: selectedNews.id, size: "small" } }),
+		...getNewsImageOptions({
+			path: { news_id: selectedNews.id, size: "small" },
+		}),
 		retry: false,
 		throwOnError: false,
 	});

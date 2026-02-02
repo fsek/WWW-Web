@@ -60,7 +60,10 @@ export default function CompletedMissionsPage() {
 	useEffect(() => {
 		if (!weekLoaded) return;
 		if (selectedWeek !== null) {
-			localStorage.setItem("completedMissions_weekFilter", selectedWeek.toString());
+			localStorage.setItem(
+				"completedMissions_weekFilter",
+				selectedWeek.toString(),
+			);
 		} else {
 			localStorage.removeItem("completedMissions_weekFilter");
 		}
@@ -78,16 +81,19 @@ export default function CompletedMissionsPage() {
 		let missions = allAdventureMissions.data ?? [];
 		// Filter by week if selected
 		if (selectedWeek !== null) {
-			missions = missions.filter((mission) => mission.nollning_week === selectedWeek);
+			missions = missions.filter(
+				(mission) => mission.nollning_week === selectedWeek,
+			);
 		}
 		// Filter by search term if provided
 		if (searchTerm.trim() !== "") {
 			const term = searchTerm.toLowerCase();
-			missions = missions.filter((mission) =>
-			(mission.title_en?.toLowerCase().includes(term) ||
-				mission.title_sv?.toLowerCase().includes(term) ||
-				mission.description_en?.toLowerCase().includes(term) ||
-				mission.description_sv?.toLowerCase().includes(term))
+			missions = missions.filter(
+				(mission) =>
+					mission.title_en?.toLowerCase().includes(term) ||
+					mission.title_sv?.toLowerCase().includes(term) ||
+					mission.description_en?.toLowerCase().includes(term) ||
+					mission.description_sv?.toLowerCase().includes(term),
 			);
 		}
 		return missions;
@@ -215,9 +221,11 @@ export default function CompletedMissionsPage() {
 			return;
 		}
 
-
 		// If mission is already completed, toggle its state
-		if (completedMissionsID.includes(row.original.id) && completedMission.is_accepted === ACCEPT_ENUM.ACCEPTED) {
+		if (
+			completedMissionsID.includes(row.original.id) &&
+			completedMission.is_accepted === ACCEPT_ENUM.ACCEPTED
+		) {
 			editCompletedMission.mutate(
 				{
 					path: { nollning_group_id: groupID },
@@ -230,7 +238,10 @@ export default function CompletedMissionsPage() {
 				mutationOptions,
 			);
 		}
-		if (completedMissionsID.includes(row.original.id) && completedMission.is_accepted === ACCEPT_ENUM.FAILED) {
+		if (
+			completedMissionsID.includes(row.original.id) &&
+			completedMission.is_accepted === ACCEPT_ENUM.FAILED
+		) {
 			removeCompletedMission.mutate(
 				{
 					path: { nollning_group_id: groupID },
@@ -241,7 +252,10 @@ export default function CompletedMissionsPage() {
 				mutationOptions,
 			);
 		}
-		if (completedMissionsID.includes(row.original.id) && completedMission.is_accepted === ACCEPT_ENUM.REVIEW) {
+		if (
+			completedMissionsID.includes(row.original.id) &&
+			completedMission.is_accepted === ACCEPT_ENUM.REVIEW
+		) {
 			editCompletedMission.mutate(
 				{
 					path: { nollning_group_id: groupID },
@@ -271,10 +285,13 @@ export default function CompletedMissionsPage() {
 			header: t("nollning.mission_grading.header_title"),
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.accessor(i18n.language === "en" ? "description_en" : "description_sv", {
-			header: t("nollning.mission_grading.header_description"),
-			cell: (info) => info.getValue(),
-		}),
+		columnHelper.accessor(
+			i18n.language === "en" ? "description_en" : "description_sv",
+			{
+				header: t("nollning.mission_grading.header_description"),
+				cell: (info) => info.getValue(),
+			},
+		),
 		columnHelper.display({
 			id: "points",
 			header: t("nollning.mission_grading.header_points"),
@@ -304,10 +321,17 @@ export default function CompletedMissionsPage() {
 			header: t("nollning.mission_grading.header_actions"),
 			cell: ({ row }: { row: Row<AdventureMissionRead> }) => (
 				<Button
-					variant={completedMissionsID.includes(row.original.id) ? "outline" : "default"}
+					variant={
+						completedMissionsID.includes(row.original.id)
+							? "outline"
+							: "default"
+					}
 					size="sm"
 					className="text-foreground"
-					onClick={(e) => { e.stopPropagation(); handleClickAdvanced(row) }}
+					onClick={(e) => {
+						e.stopPropagation();
+						handleClickAdvanced(row);
+					}}
 				>
 					{completedMissionsID.includes(row.original.id)
 						? t("nollning.mission_grading.edit")
@@ -329,7 +353,9 @@ export default function CompletedMissionsPage() {
 			<div className="px-12 py-4 space-x-4 space-y-4">
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
-						{t("nollning.mission_grading.completed_for_group", { group: group.data.name })}
+						{t("nollning.mission_grading.completed_for_group", {
+							group: group.data.name,
+						})}
 					</h3>
 					<Button
 						variant="ghost"
@@ -342,14 +368,10 @@ export default function CompletedMissionsPage() {
 						{t("nollning.mission_grading.back")}
 					</Button>
 				</div>
-				<p className="py-3">
-					{t("nollning.mission_grading.intro")}
-				</p>
+				<p className="py-3">{t("nollning.mission_grading.intro")}</p>
 
 				<div className="flex flex-row gap-3 items-center">
-					<span>
-						{t("nollning.mission_grading.filter_label")}
-					</span>
+					<span>{t("nollning.mission_grading.filter_label")}</span>
 					<Input
 						type="text"
 						placeholder={t("nollning.mission_grading.search_placeholder")}
@@ -358,10 +380,7 @@ export default function CompletedMissionsPage() {
 						className="w-64"
 					/>
 					{weekLoaded && (
-						<WeekFilter
-							value={selectedWeek}
-							onChange={setSelectedWeek}
-						/>
+						<WeekFilter value={selectedWeek} onChange={setSelectedWeek} />
 					)}
 				</div>
 
@@ -381,9 +400,9 @@ export default function CompletedMissionsPage() {
 					maxPoints={selectedMission?.max_points ?? 0}
 					minPoints={selectedMission?.min_points ?? 0}
 					defaultIsAccepted={
-						completedAdventureMissions.data.find(
+						(completedAdventureMissions.data.find(
 							(e) => e.adventure_mission.id === selectedMission?.id,
-						)?.is_accepted as acceptEnum ?? ACCEPT_ENUM.ACCEPTED
+						)?.is_accepted as acceptEnum) ?? ACCEPT_ENUM.ACCEPTED
 					}
 					onClose={() => {
 						setEditDialogOpen(false);
@@ -393,7 +412,7 @@ export default function CompletedMissionsPage() {
 					onSubmit={(
 						points: number,
 						adventure_mission_id: number,
-						is_accepted: acceptEnum
+						is_accepted: acceptEnum,
 					) =>
 						editCompletedMission.mutate(
 							{
@@ -422,10 +441,9 @@ export default function CompletedMissionsPage() {
 										},
 									},
 									mutationOptions,
-								)
+								);
 							}
-						}
-						}
+						}}
 					>
 						{t("nollning.mission_grading.mark_uncompleted")}
 					</Button>
@@ -445,7 +463,7 @@ export default function CompletedMissionsPage() {
 					onSubmit={(
 						points: number,
 						adventure_mission_id: number,
-						is_accepted: acceptEnum
+						is_accepted: acceptEnum,
 					) =>
 						addCompletedMission.mutate(
 							{
@@ -463,4 +481,4 @@ export default function CompletedMissionsPage() {
 			</div>
 		</Suspense>
 	);
-};
+}

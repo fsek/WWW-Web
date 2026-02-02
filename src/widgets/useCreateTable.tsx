@@ -33,7 +33,8 @@ export default function createTable<T>({
 		initialState: {
 			pagination: {
 				pageIndex: 0,
-				pageSize: 10,
+				pageSize: 50,
+				...reactTableOptions?.initialState?.pagination,
 			},
 			sorting,
 			...reactTableOptions?.initialState,

@@ -110,8 +110,11 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 							{t("nollning.missions.create_title")}
 						</DialogTitle>
 					</DialogHeader>
-					<Form {...adventureMissionForm} >
-						<form onSubmit={adventureMissionForm.handleSubmit(onSubmit)} className="w-full">
+					<Form {...adventureMissionForm}>
+						<form
+							onSubmit={adventureMissionForm.handleSubmit(onSubmit)}
+							className="w-full"
+						>
 							<div className="px-8 space-x-4 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
 								<FormField
 									control={adventureMissionForm.control}
@@ -120,7 +123,10 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 										<FormItem>
 											<FormLabel>{t("nollning.missions.title_sv")}</FormLabel>
 											<FormControl>
-												<Input placeholder={t("nollning.missions.title_placeholder")} {...field} />
+												<Input
+													placeholder={t("nollning.missions.title_placeholder")}
+													{...field}
+												/>
 											</FormControl>
 										</FormItem>
 									)}
@@ -132,7 +138,10 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 										<FormItem>
 											<FormLabel>{t("nollning.missions.title_en")}</FormLabel>
 											<FormControl>
-												<Input placeholder={t("nollning.missions.title_placeholder")} {...field} />
+												<Input
+													placeholder={t("nollning.missions.title_placeholder")}
+													{...field}
+												/>
 											</FormControl>
 										</FormItem>
 									)}
@@ -142,11 +151,15 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 									name={"description_sv"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>{t("nollning.missions.description_sv")}</FormLabel>
+											<FormLabel>
+												{t("nollning.missions.description_sv")}
+											</FormLabel>
 											<FormControl>
 												<textarea
 													className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-													placeholder={t("nollning.missions.description_placeholder")}
+													placeholder={t(
+														"nollning.missions.description_placeholder",
+													)}
 													{...field}
 												/>
 											</FormControl>
@@ -158,11 +171,15 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 									name={"description_en"}
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>{t("nollning.missions.description_en")}</FormLabel>
+											<FormLabel>
+												{t("nollning.missions.description_en")}
+											</FormLabel>
 											<FormControl>
 												<textarea
 													className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-													placeholder={t("nollning.missions.description_placeholder")}
+													placeholder={t(
+														"nollning.missions.description_placeholder",
+													)}
 													{...field}
 												/>
 											</FormControl>
@@ -180,7 +197,8 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 													type="number"
 													placeholder="0"
 													value={
-														typeof field.value === "number" && !Number.isNaN(field.value)
+														typeof field.value === "number" &&
+														!Number.isNaN(field.value)
 															? field.value
 															: ""
 													}
@@ -203,7 +221,8 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 													type="number"
 													placeholder="1"
 													value={
-														typeof field.value === "number" && !Number.isNaN(field.value)
+														typeof field.value === "number" &&
+														!Number.isNaN(field.value)
 															? field.value
 															: ""
 													}
@@ -226,7 +245,8 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 													type="number"
 													placeholder="0"
 													value={
-														typeof field.value === "number" && !Number.isNaN(field.value)
+														typeof field.value === "number" &&
+														!Number.isNaN(field.value)
 															? field.value
 															: ""
 													}
@@ -238,7 +258,6 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 										</FormItem>
 									)}
 								/>
-
 							</div>
 							<div className="flex flex-row justify-end space-x-2 mt-4">
 								<Button
