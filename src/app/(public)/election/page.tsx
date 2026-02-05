@@ -225,7 +225,6 @@ export default function PublicElectionPage() {
 
 	function formatCountdown(endTime?: Date) {
 		if (!endTime) return "-";
-		const { t } = useTranslation();
 		const now = new Date();
 		const end = new Date(endTime);
 		const diffMs = end.getTime() - now.getTime();
