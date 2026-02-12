@@ -127,7 +127,7 @@ export function Footer() {
 				</div>
 
 				<div className="text-center">
-					&copy; {new Date().getFullYear()} F-sektionen. {t("footer.copyright")}
+					&copy; {new Date().getFullYear()} {t("footer.copyright")}
 				</div>
 			</div>
 		</footer>
