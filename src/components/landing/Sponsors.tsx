@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import Image from "next/image";
 
 import janestreet from "@/assets/landing/janestreet.png";
+import axislogo from "@/assets/landing/axislogo.png";
 import mh from "@/assets/landing/mh.jpg";
 import Link from "next/link";
 const Sponsors = () => {
@@ -31,6 +32,19 @@ const Sponsors = () => {
 								<Image
 									src={janestreet}
 									alt="Jane Street Logo"
+									fill
+									className="w-32 sm:w-40 md:w-40 h-auto object-contain filter brightness-0 invert transition-all duration-300 group-hover:brightness-100 group-hover:invert-0"
+								/>
+							</Link>
+						</div>
+						<div className="flex flex-col items-center group w-48 h-40">
+							<Link
+								href="https://www.axis.com/"
+								className="transition-transform hover:scale-105 hover:shadow-lg rounded-lg p-4 bg-white/20 backdrop-blur-sm border border-white/40 hover:bg-white/30 hover:border-white/60 w-full h-full flex items-center justify-center"
+							>
+								<Image
+									src={axislogo}
+									alt="Axis Communications Logo"
 									fill
 									className="w-32 sm:w-40 md:w-40 h-auto object-contain filter brightness-0 invert transition-all duration-300 group-hover:brightness-100 group-hover:invert-0"
 								/>
