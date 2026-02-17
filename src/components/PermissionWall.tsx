@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
+import Obfuscate from "react-obfuscate";
 
 function PermissionDenied() {
 	const { t } = useTranslation("main");
@@ -20,12 +21,11 @@ function PermissionDenied() {
 				</p>
 				<p className="mb-4 text-lg font-light text-muted-foreground">
 					{t("permission-wall.message")}
-					<a
-						href="mailto:spindelman@fsektionen.se"
-						className="inline-flex text-forange hover:bg-primary hover:text-white"
-					>
-						{t("permission-wall.contact")}
-					</a>
+					<Obfuscate email={"spindelman@fsektionen.se"}>
+						<p className="inline-flex text-forange hover:bg-primary hover:text-white">
+							{t("permission-wall.contact")}
+						</p>
+					</Obfuscate>
 					.
 				</p>
 				<p className="mb-4 text-lg font-light text-muted-foreground">
