@@ -1,20 +1,5 @@
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import { Button } from "@/components/ui/button";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
 	deleteSongMutation,
 	getAllSongsQueryKey,
@@ -25,10 +10,9 @@ import type { SongRead, SongCreate } from "@/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
-import { Save } from "lucide-react";
-import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { useRouter } from "next/navigation";
+import AdminForm from "@/widgets/AdminForm";
+import { Button } from "@/components/ui/button";
 
 const songEditSchema = z.object({
 	id: z.number(),
@@ -39,8 +23,6 @@ const songEditSchema = z.object({
 	category_id: z.string().min(1),
 });
 
-type SongEditFormType = z.infer<typeof songEditSchema>;
-
 interface SongEditFormProps {
 	item: SongRead | null;
 	onClose: () => void;
@@ -49,35 +31,26 @@ interface SongEditFormProps {
 export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 	const { t } = useTranslation("admin");
 	const router = useRouter();
-	const form = useForm<SongEditFormType>({
-		resolver: zodResolver(songEditSchema),
-		defaultValues: {
-			title: "",
-			author: "",
-			melody: "",
-			content: "",
-			category_id: "",
-		},
-	});
+	const [submitEnabled, setSubmitEnabled] = useState(true);
+
+	// Convert item to the zod schema format (category_id instead of category object)
+	const [convertedItem, setConvertedItem] = useState<z.infer<typeof songEditSchema> | null>(null);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: we don't care if convertedItem changes
+	useEffect(() => {
+		if (item) {
+			const convertedItem = {
+				...item,
+				category_id: item.category ? item.category.id.toString() : null,
+			} as z.infer<typeof songEditSchema>;
+			setConvertedItem(convertedItem);
+		}
+	}, [item]);
 
 	const { data: categories } = useQuery({
 		...getAllSongCategoriesOptions(),
-		enabled: !!item,
+		enabled: !!convertedItem,
 		refetchOnWindowFocus: false,
 	});
-
-	useEffect(() => {
-		if (item) {
-			form.reset({
-				id: item.id,
-				title: item.title,
-				author: item.author || "",
-				melody: item.melody || "",
-				content: item.content,
-				category_id: item.category?.id?.toString() || "",
-			});
-		}
-	}, [item, form]);
 
 	const queryClient = useQueryClient();
 
@@ -119,7 +92,7 @@ export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 		},
 	});
 
-	function handleFormSubmit(values: SongEditFormType) {
+	function handleFormSubmit(values: z.infer<typeof songEditSchema>) {
 		const updatedSong: SongCreate = {
 			title: values.title,
 			author: values.author || null,
@@ -141,11 +114,9 @@ export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 		);
 	}
 
-	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-
-	function handleRemoveSubmit() {
+	function handleRemoveSubmit(data: z.infer<typeof songEditSchema>) {
 		removeSong.mutate(
-			{ path: { song_id: form.getValues("id") } },
+			{ path: { song_id: data.id } },
 			{
 				onSuccess: () => {
 					onClose();
@@ -160,129 +131,70 @@ export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 			value: category.id.toString(),
 		})) || [];
 
+	const detailsButton = (
+		<Button
+			variant="outline"
+			type="button"
+			onClick={() => router.push(`/songs/${item?.id}`)}
+		>
+			{t("songs.view_song")}
+		</Button>
+	);
+
 	return (
-		<Dialog
+		<AdminForm
+			title={t("songs.edit_song")}
+			formType="edit"
+			gridCols={4}
 			open={!!item}
 			onOpenChange={(isOpen) => {
-				if (!isOpen) {
-					onClose();
-				}
+				if (!isOpen) onClose();
 			}}
-		>
-			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
-				<DialogHeader>
-					<DialogTitle>{t("songs.edit_song")}</DialogTitle>
-				</DialogHeader>
-				<hr />
-				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit(handleFormSubmit)}
-						className="grid gap-x-4 gap-y-3 lg:grid-cols-4"
-					>
-						<FormField
-							control={form.control}
-							name="title"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("songs.title")}</FormLabel>
-									<FormControl>
-										<Input
-											placeholder={t("songs.title_placeholder")}
-											{...field}
-										/>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="author"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("songs.author")}</FormLabel>
-									<FormControl>
-										<Input
-											placeholder={t("songs.author_placeholder")}
-											{...field}
-										/>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="melody"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("songs.melody")}</FormLabel>
-									<FormControl>
-										<Input
-											placeholder={t("songs.melody_placeholder")}
-											{...field}
-										/>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="category_id"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>{t("songs.category")}</FormLabel>
-									<FormControl>
-										<SelectFromOptions
-											options={categoryOptions}
-											value={field.value}
-											onChange={field.onChange}
-											placeholder={t("songs.select_category")}
-										/>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="content"
-							render={({ field }) => (
-								<FormItem className="lg:col-span-4">
-									<FormLabel>{t("songs.content")}</FormLabel>
-									<FormControl>
-										<Textarea
-											placeholder={t("songs.content_placeholder")}
-											rows={10}
-											{...field}
-										/>
-									</FormControl>
-								</FormItem>
-							)}
-						/>
-						<div className="space-x-2 lg:col-span-4 lg:grid-cols-subgrid">
-							<ConfirmDeleteDialog
-								open={deleteDialogOpen}
-								onOpenChange={setDeleteDialogOpen}
-								onConfirm={handleRemoveSubmit}
-								triggerText={t("songs.remove_song")}
-								title={t("songs.confirm_remove")}
-								description={t("songs.confirm_remove_text")}
-								confirmText={t("songs.remove_song")}
-								cancelText={t("cancel")}
-							/>
-							<Button type="submit" className="w-32 min-w-fit">
-								<Save />
-								{t("save")}
-							</Button>
-							<Button
-								variant="outline"
-								type="button"
-								onClick={() => router.push(`/songs/${item?.id}`)}
-							>
-								{t("songs.view_song")}
-							</Button>
-						</div>
-					</form>
-				</Form>
-			</DialogContent>
-		</Dialog>
+			inputFields={[
+				{
+					variant: "text",
+					name: "title",
+					label: t("songs.title"),
+					placeholder: t("songs.title_placeholder"),
+				},
+				{
+					variant: "text",
+					name: "author",
+					label: t("songs.author"),
+					placeholder: t("songs.author_placeholder"),
+				},
+				{
+					variant: "text",
+					name: "melody",
+					label: t("songs.melody"),
+					placeholder: t("songs.melody_placeholder"),
+				},
+				{
+					variant: "selectFromOptions",
+					name: "category_id",
+					label: t("songs.category"),
+					options: categoryOptions,
+					placeholder: t("songs.select_category"),
+				},
+				{
+					variant: "textarea",
+					name: "content",
+					label: t("songs.content"),
+					placeholder: t("songs.content_placeholder"),
+					rows: 10,
+					colSpan: 4,
+				},
+			]}
+			zodSchema={songEditSchema}
+			onSubmit={handleFormSubmit}
+			submitEnabled={submitEnabled}
+			setSubmitEnabled={setSubmitEnabled}
+			useDeleteButton
+			onDelete={handleRemoveSubmit}
+			customButtons={detailsButton}
+			showDialogButton={false}
+			editItem={convertedItem || undefined}
+			setEditItem={setConvertedItem}
+		/>
 	);
 }
