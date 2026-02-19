@@ -59,14 +59,16 @@ export default function ContactCard({
 							</div>
 							<div className="flex items-center space-x-1 text-sm text-muted-foreground hover:text-foreground overflow-y-scroll">
 								<Mail className="w-4 h-4 flex-shrink-0" />
-								<Obfuscate
-									email={email}
-									style={{
-										textDecoration: "underline",
-										color: "inherit",
-										cursor: "pointer",
-									}}
-								/>
+								<address>
+									<Obfuscate
+										email={email}
+										style={{
+											textDecoration: "underline",
+											color: "inherit",
+											cursor: "pointer",
+										}}
+									/>
+								</address>
 							</div>
 						</div>
 					</div>
