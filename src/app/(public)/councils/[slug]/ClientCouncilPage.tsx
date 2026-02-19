@@ -96,6 +96,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 						posts.map((post, idx) => {
 							const { isLoading: usersLoading, data: users = [] } =
 								postsUsersQueries[idx];
+							users.sort((a, b) => a.first_name.localeCompare(b.first_name));
 							return (
 								<div key={post.id} className="border rounded-lg p-6 bg-card">
 									<CustomTitle
@@ -122,12 +123,12 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 											<span className="italic">{t("loading")}</span>
 										) : users.length > 0 ? (
 											users.map((u) => (
-												<span
+												<div
 													key={u.id}
 													className="italic text-primary hover:underline mr-2"
 												>
 													{u.first_name} {u.last_name}
-												</span>
+												</div>
 											))
 										) : (
 											<span className="italic text-orange-600">
@@ -141,12 +142,6 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 											{t(
 												`admin:enums.elected_at_semester.${post.elected_at_semester}`,
 											)}
-										</span>
-									</p>
-									<p className="mt-4 font-semibold">
-										{t("utskott:user_limits")}:{" "}
-										<span className="italic text-muted-foreground">
-											{`${post.elected_user_recommended_limit !== 0 ? post.elected_user_recommended_limit : "N/A"} ${t("utskott:recommended")} (${post.elected_user_max_limit !== 0 ? post.elected_user_max_limit : "N/A"} max)`}
 										</span>
 									</p>
 								</div>
