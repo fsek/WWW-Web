@@ -994,7 +994,7 @@
 			"candidations_tab": "Kandidaturer",
 			"posts_tab": "Poster",
 			"manage_sub_election": "Hantera delval",
-			"missing_id": "Delvals-ID saknas.",
+			"missing_id": "ID för delval saknas.",
 			"download_csv": "Ladda ner CSV (kandidaturer)",
 			"download_csv_success": "CSV nedladdad!",
 			"download_csv_error": "Misslyckades att ladda ner CSV."
