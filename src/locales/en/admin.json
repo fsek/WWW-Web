@@ -1050,7 +1050,7 @@
 			"search_placeholder": "Search posts...",
 			"name_sv": "Name (Swedish)",
 			"name_en": "Name (English)",
-			"candidations_count": "Candidacy count"
+			"candidations_count": "Number of candidates"
 		},
 		"election_nominations": {
 			"tab_title": "Nominations",
