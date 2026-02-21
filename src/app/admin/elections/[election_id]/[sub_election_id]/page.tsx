@@ -590,7 +590,7 @@ export default function AdminElectionCandidatesPage() {
 				onOpenChange={setCandidationFormOpen}
 			/>
 
-			<Tabs defaultValue="candidates" className="w-full">
+			<Tabs defaultValue="candidations" className="w-full">
 				<TabsList className="grid w-full grid-cols-4">
 					<TabsTrigger value="candidates">
 						{t("elections.sub_election.candidates_tab")}
