@@ -576,14 +576,9 @@ export default function AdminElectionCandidatesPage() {
 					</Button>
 				</div>
 			</div>
-			<div className="mt-4 mb-2 flex flex-col gap-2 items-stretch md:flex-row md:flex-wrap">
-				<Button variant="default" onClick={() => setCandidationFormOpen(true)}>
-					{t("elections.election_candidates.add")}
-				</Button>
-				<Button variant="outline" onClick={handleDownloadCsv}>
-					{t("admin:elections.sub_election.download_csv")}
-				</Button>
-			</div>
+			<Button variant="default" onClick={() => setCandidationFormOpen(true)}>
+				{t("elections.election_candidates.add")}
+			</Button>
 			<CandidationForm
 				subElectionId={subElectionId}
 				open={candidationFormOpen}
@@ -634,7 +629,7 @@ export default function AdminElectionCandidatesPage() {
 					<p className="text-xs md:text-sm font-medium">
 						{t("elections.election_candidations.tab_description")}
 					</p>
-					<div className="mt-4 mb-2 grid grid-cols-1 gap-2 items-center md:grid-cols-2 xl:grid-cols-3">
+					<div className="mt-4 mb-2 grid grid-cols-1 grid-rows-2 gap-2 items-center md:grid-cols-2 md:grid-rows-1 xl:grid-cols-3">
 						<Input
 							placeholder={t(
 								"elections.election_candidations.search_placeholder",
@@ -642,6 +637,11 @@ export default function AdminElectionCandidatesPage() {
 							value={candidationSearch}
 							onChange={(e) => setCandidationSearch(e.target.value)}
 						/>
+						<div className="flex flex-col md:flex-row md:justify-end xl:col-span-2">
+							<Button variant="default" onClick={handleDownloadCsv}>
+								{t("admin:elections.sub_election.download_csv")}
+							</Button>
+						</div>
 					</div>
 					<Separator className="mb-4" />
 					<CandidationTable
@@ -669,21 +669,21 @@ export default function AdminElectionCandidatesPage() {
 					<p className="text-xs md:text-sm font-medium">
 						{t("elections.posts.tab_description")}
 					</p>
-					<div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-						<div className="mt-4 mb-2 grid grid-cols-1 gap-2 items-center md:grid-cols-2 xl:grid-cols-3">
-							<Input
-								placeholder={t("elections.posts.search_placeholder")}
-								value={postSearch}
-								onChange={(e) => setPostSearch(e.target.value)}
-							/>
+					<div className="mt-4 mb-2 grid grid-cols-1 grid-rows-2 gap-2 items-center md:grid-cols-2 md:grid-rows-1 xl:grid-cols-3">
+						<Input
+							placeholder={t("elections.posts.search_placeholder")}
+							value={postSearch}
+							onChange={(e) => setPostSearch(e.target.value)}
+						/>
+						<div className="flex flex-col md:flex-row md:justify-end xl:col-span-2">
+							<Button
+								variant="outline"
+								onClick={() => setMovePostOpen(true)}
+								disabled={!subElection?.election_posts?.length}
+							>
+								{t("elections.move_post", { defaultValue: "Move post" })}
+							</Button>
 						</div>
-						<Button
-							variant="outline"
-							onClick={() => setMovePostOpen(true)}
-							disabled={!subElection?.election_posts?.length}
-						>
-							{t("elections.move_post", { defaultValue: "Move post" })}
-						</Button>
 					</div>
 					<Separator className="mb-4" />
 					<AdminTable table={postTable} />
