@@ -995,14 +995,14 @@
 			"posts_tab": "Poster",
 			"manage_sub_election": "Hantera delval",
 			"missing_id": "ID för delval saknas.",
-			"download_csv": "Ladda ner CSV (kandidaturer)",
+			"download_csv": "Ladda ner kandidaturer som CSV",
 			"download_csv_success": "CSV nedladdad!",
 			"download_csv_error": "Misslyckades att ladda ner CSV."
 		},
 		"election_candidates": {
 			"title": "Kandidater",
 			"description": "Lista över kandidater i delvalet.",
-			"add": "Lägg till kandidat(ur)",
+			"add": "Lägg till kandidatur",
 			"tab_title": "Kandidater",
 			"tab_description": "Hantera alla användare som har ansökt som kandidater.",
 			"search_placeholder": "Sök efter namn eller e-post",

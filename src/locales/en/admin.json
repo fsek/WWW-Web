@@ -995,14 +995,14 @@
 			"posts_tab": "Posts",
 			"manage_sub_election": "Manage sub-election",
 			"missing_id": "Sub-election ID missing.",
-			"download_csv": "Download CSV (candidacies)",
+			"download_csv": "Download candidacies as CSV",
 			"download_csv_success": "CSV downloaded!",
 			"download_csv_error": "Failed to download CSV."
 		},
 		"election_candidates": {
 			"title": "Candidates",
 			"description": "List of candidates in the sub-election.",
-			"add": "Add candidate/candidacy",
+			"add": "Add candidacy",
 			"tab_title": "Candidates",
 			"tab_description": "Manage all users who have applied as candidates.",
 			"search_placeholder": "Search by name or email",
