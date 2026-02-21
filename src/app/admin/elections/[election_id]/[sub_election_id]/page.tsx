@@ -8,6 +8,7 @@ import {
 	getAllSubElectionNominationsOptions,
 	deleteNominationMutation,
 	getElectionOptions,
+	getAllSubElectionCandidationsCsvOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -238,6 +239,82 @@ export default function AdminElectionCandidatesPage() {
 		}
 		return map;
 	}, [subElection]);
+
+	function handleDownloadCsv() {
+		// Download CSV for current subelection using generated options (with fallback)
+		// This was created by a bot and it just works. It should be put into its
+		// own file but I couldn't get that to work properly
+		(async () => {
+			if (!Number.isFinite(subElectionId)) {
+				toast.error(t("admin:elections.sub_election.missing_id"));
+				return;
+			}
+			try {
+				const opts = getAllSubElectionCandidationsCsvOptions({
+					path: { sub_election_id: subElectionId },
+				});
+				// Try to reuse generated queryFn via queryClient
+				let result: unknown;
+				// queryClient.fetchQuery v4 expects the object signature and array queryKey.
+				const qk = opts.queryKey ?? [];
+				const queryKey = Array.isArray(qk) ? qk : [qk];
+				result = await queryClient.fetchQuery({
+					queryKey: queryKey as any[],
+					queryFn: opts.queryFn as any,
+				});
+				// Normalize to blob + disposition
+				let blob: Blob | null = null;
+				let disposition = "";
+				if (result instanceof Blob) {
+					blob = result;
+				} else if (typeof result === "string") {
+					blob = new Blob([result], { type: "text/csv" });
+				} else if (result && typeof result === "object") {
+					// generated queryFn or fallback may return an object
+					// attempt common shapes
+					if (
+						typeof result === "object" &&
+						result !== null &&
+						"blob" in result &&
+						result.blob instanceof Blob
+					) {
+						blob = (result as { blob: Blob }).blob;
+						disposition =
+							(result as { disposition?: string }).disposition || "";
+					} else if (
+						typeof result === "object" &&
+						result !== null &&
+						"data" in result &&
+						typeof (result as { data?: string }).data === "string"
+					) {
+						blob = new Blob([(result as { data: string }).data], {
+							type: "text/csv",
+						});
+					}
+				}
+				if (!blob) throw new Error("No CSV data received");
+				// extract filename from disposition if present
+				let filename = "candidations.csv";
+				const match =
+					disposition.match(/filename\*?=(?:UTF-8'')?["']?([^;"']+)["']?/i) ||
+					"";
+				if (match && (match as any)[1]) {
+					filename = decodeURIComponent((match as any)[1]);
+				}
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement("a");
+				a.href = url;
+				a.download = filename;
+				document.body.appendChild(a);
+				a.click();
+				a.remove();
+				URL.revokeObjectURL(url);
+				toast.success(t("admin:elections.sub_election.download_csv_success"));
+			} catch (err) {
+				toast.error(t("admin:elections.sub_election.download_csv_error"));
+			}
+		})();
+	}
 
 	const handleRowClick = (row: Row<CandidateRead>) => {
 		if (!subElection) return;
@@ -499,9 +576,14 @@ export default function AdminElectionCandidatesPage() {
 					</Button>
 				</div>
 			</div>
-			<Button variant="default" onClick={() => setCandidationFormOpen(true)}>
-				{t("elections.election_candidates.add")}
-			</Button>
+			<div className="mt-4 mb-2 flex flex-col gap-2 items-stretch md:flex-row">
+				<Button variant="default" onClick={() => setCandidationFormOpen(true)}>
+					{t("elections.election_candidates.add")}
+				</Button>
+				<Button variant="outline" onClick={handleDownloadCsv}>
+					{t("admin:elections.sub_election.download_csv")}
+				</Button>
+			</div>
 			<CandidationForm
 				subElectionId={subElectionId}
 				open={candidationFormOpen}
