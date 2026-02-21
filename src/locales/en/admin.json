@@ -995,7 +995,7 @@
 			"posts_tab": "Posts",
 			"manage_sub_election": "Manage sub-election",
 			"missing_id": "Sub-election ID missing.",
-			"download_csv": "Download CSV (all candidations)",
+			"download_csv": "Download CSV (candidations)",
 			"download_csv_success": "CSV downloaded!",
 			"download_csv_error": "Failed to download CSV."
 		},
