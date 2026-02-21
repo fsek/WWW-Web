@@ -576,7 +576,7 @@ export default function AdminElectionCandidatesPage() {
 					</Button>
 				</div>
 			</div>
-			<div className="mt-4 mb-2 flex flex-col gap-2 items-stretch md:flex-row">
+			<div className="mt-4 mb-2 flex flex-col gap-2 items-stretch md:flex-row md:flex-wrap">
 				<Button variant="default" onClick={() => setCandidationFormOpen(true)}>
 					{t("elections.election_candidates.add")}
 				</Button>
