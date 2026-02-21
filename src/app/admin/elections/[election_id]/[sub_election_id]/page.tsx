@@ -260,7 +260,7 @@ export default function AdminElectionCandidatesPage() {
 					queryKey: queryKey as any[],
 					queryFn: opts.queryFn as any,
 				});
-				// Normalize to blob + disposition
+
 				downloadCsvResult(result, "candidations.csv");
 
 				toast.success(t("admin:elections.sub_election.download_csv_success"));

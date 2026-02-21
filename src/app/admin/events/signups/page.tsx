@@ -192,9 +192,6 @@ export default function AdminEventSignupsPage() {
 	}
 
 	function handleDownloadCsv() {
-		// Download CSV for current event using generated options (with fallback)
-		// This was created by a bot and it just works. It should be put into its
-		// own file but I couldn't get that to work properly
 		(async () => {
 			if (!Number.isFinite(eventId)) {
 				toast.error(t("admin:event_signup.missing_id"));

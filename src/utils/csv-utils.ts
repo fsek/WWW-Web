@@ -1,7 +1,7 @@
 export function downloadCsvResult(result: unknown, default_name = "data.csv") {
+	// Normalize to blob + disposition
 	let blob: Blob | null = null;
 	let disposition = "";
-	console.log(result, typeof result);
 	if (result instanceof Blob) {
 		blob = result;
 	} else if (typeof result === "string") {
