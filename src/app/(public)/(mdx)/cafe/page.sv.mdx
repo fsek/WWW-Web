@@ -1,7 +1,21 @@
-# Hilbert Café
+import {Button} from "@/components/ui/button.tsx";
+import Image from "next/image";
+import cafeImg from "@/assets/hilbertcafe.png";
 
-**Du kan nu skriva upp dig på pass på nya webben!**
+<div className="w-full flex justify-center">
+<Image src={cafeImg} alt="Hilbert Café" width={380} height={380*0.62}/>
+</div>
+Hilbert Café är F-sektionens helt studentdrivna café. Varje dag serveras mackor,
+kaffe och kakor till en billig peng.
+Ordinarie öppettider är måndag till fredag varje undervisningsvecka mellan 08:00 -
+15:00. Beroende på bemanning kan öppettider variera.
+Eftersom caféet drivs ideellt behöver vi jobbare till caféet. Att jobba i caféet är en
+trevlig upplevelse och ett fantastiskt sätt att träffa nya människor på sektionen.
+Anmälan för att jobba pass görs i F-appen eller nedan på denna sida.
 
-[Gör det här!](/cafe-shifts)
-
-Denna sida kommer sannolikt att uppdateras och fyllas på i framtiden. Om du är ansvarig eller halvansvarig för cafét can du hjälpa spindel genom att [skicka dem](/contact#webmaster) den text ni vill ha här!
+<a href="/cafe-shifts"><Button>Skriv upp dig på ett jobbarpass här!</Button></a>
+<br/>
+Institutioner och sektioner eller andra studentföreningar på LTH och LU kan beställa
+mackor av oss till lunchföreläsningar eller liknande. Hör av dig i god tid i förväg om
+du vill beställa mackor. Om du har någon fundering är det bara att [maila
+cafémästaren](mailto:cafe@fsektionen.se).
