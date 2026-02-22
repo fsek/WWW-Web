@@ -70,7 +70,8 @@
 		"last_bumped": "Last bumped: ",
 		"no_bump": "Never bumped",
 		"bump_header": "Bump to top of list",
-		"view_news": "View News"
+		"view_news": "View News",
+		"error_image_upload": "Failed to upload image: {{error}}"
 	},
 	"events": {
 		"self": "Events",

@@ -70,7 +70,8 @@
 		"last_bumped": "Senast bumpat: ",
 		"no_bump": "Aldrig bumpat",
 		"bump_header": "Bumpa",
-		"view_news": "Visa nyhet"
+		"view_news": "Visa nyhet",
+		"error_image_upload": "Lyckades inte ladda upp bild: {{error}}"
 	},
 	"events": {
 		"self": "Evenemang",

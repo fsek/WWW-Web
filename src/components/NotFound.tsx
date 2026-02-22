@@ -42,7 +42,7 @@ export default function NotFound({ random }: { random: number }) {
 				</p>
 				<div className="mb-4 text-lg font-light text-muted-foreground">
 					{t("notFound.description")}{" "}
-					<Obfuscate email={"mailto:spindelman@fsektionen.se"}>
+					<Obfuscate email={"spindelman@fsektionen.se"}>
 						<p className="inline-flex text-forange hover:bg-primary hover:text-white">
 							{t("notFound.contact")}
 						</p>
