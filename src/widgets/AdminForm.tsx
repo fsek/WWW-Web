@@ -22,6 +22,7 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
+	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
@@ -145,11 +146,16 @@ export default function AdminForm<T extends FieldValues>({
 	// with the new data.
 	useEffect(() => {
 		if (editItem && formType === "edit") {
-			console.log("editItem", editItem);
-			genericForm.reset(editItem);
+			// Convert null values to undefined for better react form handling
+			const sanitizedData = { ...editItem };
+			for (const key in sanitizedData) {
+				if (sanitizedData[key] === null) {
+					sanitizedData[key] = undefined as T[Extract<keyof T, string>];
+				}
+			}
+			genericForm.reset(sanitizedData);
 		}
-		console.log("genericForm values after reset", genericForm.getValues());
-	}, [editItem, genericForm]);
+	}, [editItem, genericForm, formType]);
 
 	return (
 		<div className="p-3">
@@ -167,10 +173,7 @@ export default function AdminForm<T extends FieldValues>({
 			)}
 
 			{/* Show dialog if opened by the button, or if there is no button and we are in edit mode show only if there is an editItem */}
-			<Dialog
-				open={open}
-				onOpenChange={handleOpenChange}
-			>
+			<Dialog open={open} onOpenChange={handleOpenChange}>
 				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 					<DialogHeader>
 						<DialogTitle>{title}</DialogTitle>
@@ -201,6 +204,7 @@ export default function AdminForm<T extends FieldValues>({
 																{...field}
 															/>
 														</FormControl>
+														<FormMessage />
 													</FormItem>
 												)}
 											/>
@@ -223,6 +227,7 @@ export default function AdminForm<T extends FieldValues>({
 																{...field}
 															/>
 														</FormControl>
+														<FormMessage />
 													</FormItem>
 												)}
 											/>
@@ -245,6 +250,7 @@ export default function AdminForm<T extends FieldValues>({
 																{...field}
 															/>
 														</FormControl>
+														<FormMessage />
 													</FormItem>
 												)}
 											/>
