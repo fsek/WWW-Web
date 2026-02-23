@@ -22,12 +22,9 @@ export default function GalleryIndexPage() {
 	});
 
 	const albums = useMemo(() => {
-		return unsortedAlbums?.sort((a, b) =>
-			String(b.date).localeCompare(String(a.date)),
-		);
+		return unsortedAlbums?.sort((a, b) => b.date.getTime() - a.date.getTime());
 	}, [unsortedAlbums]);
 
-	console.log(unsortedAlbums);
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const pathname = usePathname();
