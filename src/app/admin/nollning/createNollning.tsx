@@ -29,7 +29,7 @@ import { useTranslation } from "react-i18next";
 const nollningSchema = z.object({
 	name: z.string().min(1),
 	description: z.string().min(1),
-	year: z.coerce.number().min(1960).max(2100),
+	year: z.coerce.number<number>().min(1960).max(2100),
 });
 
 const CreateNollning = () => {
@@ -99,7 +99,10 @@ const CreateNollning = () => {
 										<FormItem>
 											<FormLabel>{t("nollning.main.name")}</FormLabel>
 											<FormControl>
-												<Input placeholder={t("nollning.main.name_placeholder")} {...field} />
+												<Input
+													placeholder={t("nollning.main.name_placeholder")}
+													{...field}
+												/>
 											</FormControl>
 										</FormItem>
 									)}
@@ -129,7 +132,9 @@ const CreateNollning = () => {
 											<FormControl>
 												<textarea
 													className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-													placeholder={t("nollning.main.description_placeholder")}
+													placeholder={t(
+														"nollning.main.description_placeholder",
+													)}
 													{...field}
 												/>
 											</FormControl>
@@ -141,7 +146,9 @@ const CreateNollning = () => {
 									className="w-32 min-w-fit"
 									disabled={createNollning.isPending}
 								>
-									{createNollning.isPending ? t("nollning.main.creating") : t("nollning.main.create")}
+									{createNollning.isPending
+										? t("nollning.main.creating")
+										: t("nollning.main.create")}
 								</Button>
 								<DialogClose>{t("nollning.main.cancel")}</DialogClose>
 							</div>

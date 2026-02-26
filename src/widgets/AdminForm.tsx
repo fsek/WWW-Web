@@ -6,6 +6,7 @@ import {
 	type FieldValues,
 	type Path,
 	type DefaultValues,
+	type SubmitHandler,
 } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Pen, Plus } from "lucide-react";
@@ -69,9 +70,9 @@ export interface AdminFormProps<T extends FieldValues> {
 	gridCols?: number;
 	formType: "add" | "edit";
 	inputFields: AdminFormInputField<T>[];
-	zodSchema: ZodType<T>;
+	zodSchema: ZodType<T, T>;
 	defaultValues?: DefaultValues<T>;
-	onSubmit: (data: T) => void;
+	onSubmit: SubmitHandler<T>;
 	submitEnabled: boolean;
 	setSubmitEnabled: (enabled: boolean) => void;
 	useDeleteButton?: boolean;
