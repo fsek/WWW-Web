@@ -65,6 +65,8 @@ export default function AlbumsPage() {
 			cell: (info) => (
 				<div className="flex gap-2">
 					<Button
+						size="icon"
+						title={t("albums.manage")}
 						onClick={(e) => {
 							e.stopPropagation();
 							setSelectedAlbum(info.row.original);
@@ -72,17 +74,17 @@ export default function AlbumsPage() {
 						}}
 					>
 						<Pencil />
-						{t("albums.manage")}
 					</Button>
 					<Button
 						variant="outline"
+						size="icon"
+						title={t("albums.view")}
 						onClick={(e) => {
 							e.stopPropagation();
 							router.push(`/gallery/${info.row.original.id}`);
 						}}
 					>
 						<Eye />
-						{t("albums.view")}
 					</Button>
 				</div>
 			),
@@ -94,7 +96,11 @@ export default function AlbumsPage() {
 		refetchOnWindowFocus: false,
 	});
 
-	const table = useCreateTable({ data: data ?? [], columns });
+	const table = useCreateTable({
+		data: data ?? [],
+		columns,
+		initialSorting: [{ id: "date", desc: true }],
+	});
 
 	const handleRowClick = (row: Row<AlbumRead>) => {
 		setSelectedAlbum(row.original);
