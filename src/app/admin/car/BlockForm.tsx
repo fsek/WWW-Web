@@ -14,14 +14,12 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { z } from "zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-	adminGetAllUsersOptions,
 	blockUserFromCarBookingMutation,
 	getAllCarBookingBlocksQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
-import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { toast } from "sonner";
 
 import AdminChooseUser from "@/widgets/AdminChooseUser";
@@ -44,10 +42,6 @@ export default function form() {
 			reason: "",
 			user_id: 0,
 		},
-	});
-
-	const { data: users } = useQuery({
-		...adminGetAllUsersOptions(),
 	});
 
 	const queryClient = useQueryClient();
