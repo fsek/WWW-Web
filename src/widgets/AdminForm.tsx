@@ -73,8 +73,6 @@ export interface AdminFormProps<T extends FieldValues> {
 	zodSchema: ZodType<T, T>;
 	defaultValues?: DefaultValues<T>;
 	onSubmit: SubmitHandler<T>;
-	submitEnabled: boolean;
-	setSubmitEnabled: (enabled: boolean) => void;
 	useDeleteButton?: boolean;
 	requireConfirmationToDelete?: boolean;
 	onDelete?: (data: T) => void;
@@ -96,8 +94,6 @@ export default function AdminForm<T extends FieldValues>({
 	zodSchema,
 	defaultValues,
 	onSubmit,
-	submitEnabled = true,
-	setSubmitEnabled,
 	useDeleteButton = false,
 	requireConfirmationToDelete = true,
 	onDelete,
@@ -111,6 +107,7 @@ export default function AdminForm<T extends FieldValues>({
 	const [internalOpen, setInternalOpen] = useState(false);
 	const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 	const { t } = useTranslation("admin");
+	const [submitLocked, setSubmitLocked] = useState(false);
 
 	const isControlled = controlledOpen !== undefined;
 	const open = isControlled ? controlledOpen : internalOpen;
@@ -126,12 +123,21 @@ export default function AdminForm<T extends FieldValues>({
 			if (formType === "edit") {
 				setEditItem?.(null);
 			}
+		} else {
+			setSubmitLocked(false);
 		}
 	};
 
 	const genericForm = useForm<T>({
 		resolver: zodResolver(zodSchema),
 		defaultValues,
+	});
+
+	const isSubmitDisabled = genericForm.formState.isSubmitting || submitLocked;
+
+	const handleFormSubmit = genericForm.handleSubmit(async (values, event) => {
+		setSubmitLocked(true);
+		onSubmit(values, event);
 	});
 
 	const getColSpanClass = (colSpan?: number) => {
@@ -158,6 +164,12 @@ export default function AdminForm<T extends FieldValues>({
 		}
 	}, [editItem, genericForm, formType]);
 
+	useEffect(() => {
+		if (open) {
+			setSubmitLocked(false);
+		}
+	}, [open]);
+
 	return (
 		<div className="p-3">
 			{showDialogButton && (
@@ -165,7 +177,6 @@ export default function AdminForm<T extends FieldValues>({
 					onClick={() => {
 						genericForm.reset();
 						handleOpenChange(true);
-						setSubmitEnabled(true);
 					}}
 				>
 					{formType === "add" ? <Plus /> : formType === "edit" ? <Pen /> : null}
@@ -183,7 +194,7 @@ export default function AdminForm<T extends FieldValues>({
 					<hr />
 					<Form {...genericForm}>
 						<form
-							onSubmit={genericForm.handleSubmit(onSubmit)}
+							onSubmit={handleFormSubmit}
 							className={`grid gap-x-4 gap-y-3 ${getGridColsClass()}`}
 						>
 							{inputFields.map((inputField) => {
@@ -295,7 +306,7 @@ export default function AdminForm<T extends FieldValues>({
 
 								<Button
 									type="submit"
-									disabled={!submitEnabled}
+									disabled={isSubmitDisabled}
 									className="w-32 min-w-fit"
 								>
 									{formType === "add"

@@ -20,9 +20,7 @@ const songSchema = z.object({
 
 export default function SongForm() {
 	const [open, setOpen] = useState(false);
-	const [submitEnabled, setSubmitEnabled] = useState(true);
 	const { t } = useTranslation("admin");
-
 
 	const { data: categories } = useQuery({
 		...getAllSongCategoriesOptions(),
@@ -40,7 +38,6 @@ export default function SongForm() {
 			});
 			toast.success(t("songs.create_success"));
 			setOpen(false);
-			setSubmitEnabled(true);
 		},
 		onError: (error) => {
 			toast.error(
@@ -49,12 +46,10 @@ export default function SongForm() {
 					: t("songs.create_error"),
 			);
 			setOpen(false);
-			setSubmitEnabled(true);
 		},
 	});
 
 	function onSubmit(values: z.infer<typeof songSchema>) {
-		setSubmitEnabled(false);
 		createSong.mutate({
 			body: {
 				title: values.title,
@@ -116,8 +111,6 @@ export default function SongForm() {
 			]}
 			zodSchema={songSchema}
 			onSubmit={onSubmit}
-			submitEnabled={submitEnabled}
-			setSubmitEnabled={setSubmitEnabled}
 		/>
 	);
 }

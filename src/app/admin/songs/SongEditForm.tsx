@@ -31,10 +31,11 @@ interface SongEditFormProps {
 export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 	const { t } = useTranslation("admin");
 	const router = useRouter();
-	const [submitEnabled, setSubmitEnabled] = useState(true);
 
 	// Convert item to the zod schema format (category_id instead of category object)
-	const [convertedItem, setConvertedItem] = useState<z.infer<typeof songEditSchema> | null>(null);
+	const [convertedItem, setConvertedItem] = useState<z.infer<
+		typeof songEditSchema
+	> | null>(null);
 	// biome-ignore lint/correctness/useExhaustiveDependencies: we don't care if convertedItem changes
 	useEffect(() => {
 		if (item) {
@@ -187,8 +188,6 @@ export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 			]}
 			zodSchema={songEditSchema}
 			onSubmit={handleFormSubmit}
-			submitEnabled={submitEnabled}
-			setSubmitEnabled={setSubmitEnabled}
 			useDeleteButton
 			onDelete={handleRemoveSubmit}
 			customButtons={detailsButton}
