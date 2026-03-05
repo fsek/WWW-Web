@@ -91,7 +91,11 @@ export default function AdminChooseUser({
 			onChange={handleChange}
 			placeholder={placeholder}
 			noOptionsMessage={({ inputValue }) =>
-				isPending || isTyping ? t("searching") : t("user_not_found")
+				inputValue.length < 3
+					? ""
+					: isPending || isTyping
+						? t("searching")
+						: t("user_not_found")
 			}
 			classNames={{
 				container: () => `${className}`,
@@ -128,7 +132,9 @@ export default function AdminChooseUser({
 			isDisabled={isDisabled}
 			onInputChange={(input) => {
 				setQueryString(input);
-				processChange();
+				if (input.length > 2) {
+					processChange();
+				}
 			}}
 		/>
 	);

@@ -47,19 +47,8 @@ export default function SearchBar({
 	const [startingYearRangeFilter, setStartingYearRangeFilter] = useState<
 		number | null
 	>(null);
-	const [resultsOpen, setResultsOpen] = useState(false);
 	const [groupUserType, setGroupUserType] = useState<GroupUserTypes>("Mentee");
 	const popoverRef = useRef<HTMLDivElement>(null);
-
-	const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-		// Check if focus is moving to an element inside the popover
-		if (
-			popoverRef.current &&
-			!popoverRef.current.contains(event.relatedTarget)
-		) {
-			setTimeout(() => setResultsOpen(false), 10000);
-		}
-	};
 
 	return (
 		<div className="flex flex-col space-y-3">
@@ -126,56 +115,50 @@ export default function SearchBar({
 								value={nameFilter}
 								onChange={(e) => {
 									setNameFilter(e.target.value);
-									if (!resultsOpen && e.target.value.length > 0) {
-										setResultsOpen(true);
-									}
 								}}
-								onFocus={() => {
-									if (nameFilter.length > 0) {
-										setResultsOpen(true);
-									}
-								}}
-								onBlur={handleBlur}
 							/>
 						</div>
 					</PopoverTrigger>
-
-					<PopoverContent
-						ref={popoverRef}
-						onOpenAutoFocus={(e) => e.preventDefault()}
-						className="p-0"
-						side={
-							// This is a workaround for radix-ui not allowing fallback side selection
-							// see: https://github.com/radix-ui/primitives/issues/3101
-							typeof window !== "undefined" && window.innerHeight > 700
-								? "bottom"
-								: "right"
-						}
-					>
-						<Suspense
-							fallback={
-								<div className="p-4">
-									<Button
-										variant="ghost"
-										className="w-full justify-start"
-										disabled
-									>
-										{t("nollning.group_members.searching")}
-									</Button>
-								</div>
+					{nameFilter.length < 3 ? (
+						<></>
+					) : (
+						<PopoverContent
+							ref={popoverRef}
+							onOpenAutoFocus={(e) => e.preventDefault()}
+							className="p-0"
+							side={
+								// This is a workaround for radix-ui not allowing fallback side selection
+								// see: https://github.com/radix-ui/primitives/issues/3101
+								typeof window !== "undefined" && window.innerHeight > 700
+									? "bottom"
+									: "right"
 							}
 						>
-							<SearchResults
-								nameFilter={nameFilter}
-								programFilter={programFilter}
-								startYearFilter={startingYearRangeFilter}
-								excludedFromSearch={excludedFromSearch}
-								onRowClick={(user: UserRead) => {
-									onRowClick?.(user, groupUserType);
-								}}
-							/>
-						</Suspense>
-					</PopoverContent>
+							<Suspense
+								fallback={
+									<div className="p-4">
+										<Button
+											variant="ghost"
+											className="w-full justify-start"
+											disabled
+										>
+											{t("nollning.group_members.searching")}
+										</Button>
+									</div>
+								}
+							>
+								<SearchResults
+									nameFilter={nameFilter}
+									programFilter={programFilter}
+									startYearFilter={startingYearRangeFilter}
+									excludedFromSearch={excludedFromSearch}
+									onRowClick={(user: UserRead) => {
+										onRowClick?.(user, groupUserType);
+									}}
+								/>
+							</Suspense>
+						</PopoverContent>
+					)}
 				</Popover>
 			</div>
 		</div>
