@@ -6,10 +6,11 @@ import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import TwoColumnLayout from "@/components/TwoColumnLayout";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import CustomTitle from "@/components/CustomTitle";
 
 export default function GuildMeetingPage() {
-	const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation("main");
 	const { data, error, isPending } = useQuery({
 		...getGuildMeetingOptions(),
 		refetchOnWindowFocus: false,
@@ -37,13 +38,13 @@ export default function GuildMeetingPage() {
 							{t("guild_meeting.important_dates")}
 						</div>
 						<div className="prose dark:prose-invert text-sm">
-							<Markdown>{dateDescription}</Markdown>
+							<Markdown remarkPlugins={[remarkGfm]}>{dateDescription}</Markdown>
 						</div>
 					</>
 				}
 				rightColumnContent={
 					<div className="prose dark:prose-invert">
-						<Markdown>{description}</Markdown>
+						<Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>
 					</div>
 				}
 				leftFlex={1}
