@@ -14,15 +14,16 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { z } from "zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-	adminGetAllUsersOptions,
 	blockUserFromCarBookingMutation,
 	getAllCarBookingBlocksQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
-import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { toast } from "sonner";
+
+import AdminChooseUser from "@/widgets/AdminChooseUser";
+import type { Option } from "@/widgets/AdminChooseUser";
 
 export default function form() {
 	const { t } = useTranslation();
@@ -41,10 +42,6 @@ export default function form() {
 			reason: "",
 			user_id: 0,
 		},
-	});
-
-	const { data: users } = useQuery({
-		...adminGetAllUsersOptions(),
 	});
 
 	const queryClient = useQueryClient();
@@ -91,7 +88,7 @@ export default function form() {
 			</Button>
 
 			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
+				<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh]">
 					<DialogHeader>
 						<DialogTitle>{t("admin:block.create_blocking")}</DialogTitle>
 					</DialogHeader>
@@ -121,15 +118,11 @@ export default function form() {
 									<FormItem>
 										<FormLabel>{t("admin:block.blocked_user")}</FormLabel>
 										<FormControl>
-											<SelectFromOptions
-												options={
-													users?.map((user) => ({
-														value: user.id.toString(),
-														label: `${user.first_name} ${user.last_name}`,
-													})) ?? []
+											<AdminChooseUser
+												isMulti={false}
+												onChange={(user) =>
+													field.onChange((user as Option)?.value)
 												}
-												value={field.value.toString()}
-												onChange={(value) => field.onChange(Number(value))}
 												placeholder={t("admin:block.select_user")}
 												className="w-full"
 											/>
