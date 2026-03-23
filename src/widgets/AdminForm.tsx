@@ -82,6 +82,10 @@ export interface AdminFormProps<T extends FieldValues> {
 	setEditItem?: (item: T | null) => void;
 	open?: boolean;
 	onOpenChange?: (open: boolean) => void;
+	confirmDeleteDialogTitle?: string;
+	confirmDeleteDialogDescription?: string;
+	confirmDeleteDialogConfirmByTyping?: boolean;
+	confirmDeleteDialogConfirmByTypingKey?: string;
 }
 
 /* A generic admin form with a title and grid-system with generic input fields of different kinds. */
@@ -103,6 +107,10 @@ export default function AdminForm<T extends FieldValues>({
 	setEditItem,
 	open: controlledOpen,
 	onOpenChange: controlledOnOpenChange,
+	confirmDeleteDialogTitle,
+	confirmDeleteDialogDescription,
+	confirmDeleteDialogConfirmByTyping = false,
+	confirmDeleteDialogConfirmByTypingKey,
 }: AdminFormProps<T>) {
 	const [internalOpen, setInternalOpen] = useState(false);
 	const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
@@ -130,7 +138,7 @@ export default function AdminForm<T extends FieldValues>({
 
 	const genericForm = useForm<T>({
 		resolver: zodResolver(zodSchema),
-		defaultValues,
+		defaultValues: defaultValues ?? ({} as DefaultValues<T>),
 	});
 
 	const isSubmitDisabled = genericForm.formState.isSubmitting || submitLocked;
@@ -153,11 +161,11 @@ export default function AdminForm<T extends FieldValues>({
 	// with the new data.
 	useEffect(() => {
 		if (editItem && formType === "edit") {
-			// Convert null values to undefined for better react form handling
+			// Convert null values to empty strings so inputs stay controlled
 			const sanitizedData = { ...editItem };
 			for (const key in sanitizedData) {
 				if (sanitizedData[key] === null) {
-					sanitizedData[key] = undefined as T[Extract<keyof T, string>];
+					sanitizedData[key] = "" as T[Extract<keyof T, string>];
 				}
 			}
 			genericForm.reset(sanitizedData);
@@ -214,6 +222,7 @@ export default function AdminForm<T extends FieldValues>({
 															<Input
 																placeholder={inputField.placeholder}
 																{...field}
+																value={(field.value ?? "") as string}
 															/>
 														</FormControl>
 														<FormMessage />
@@ -237,6 +246,7 @@ export default function AdminForm<T extends FieldValues>({
 																placeholder={inputField.placeholder}
 																rows={inputField.rows}
 																{...field}
+																value={(field.value ?? "") as string}
 															/>
 														</FormControl>
 														<FormMessage />
@@ -260,6 +270,7 @@ export default function AdminForm<T extends FieldValues>({
 																placeholder={inputField.placeholder}
 																options={inputField.options}
 																{...field}
+																value={(field.value ?? "") as string}
 															/>
 														</FormControl>
 														<FormMessage />
@@ -286,6 +297,12 @@ export default function AdminForm<T extends FieldValues>({
 													onDelete(genericForm.getValues());
 													handleOpenChange(false);
 												}}
+												title={confirmDeleteDialogTitle}
+												description={confirmDeleteDialogDescription}
+												confirmByTyping={confirmDeleteDialogConfirmByTyping}
+												confirmByTypingKey={
+													confirmDeleteDialogConfirmByTypingKey
+												}
 											/>
 										) : (
 											<Button
