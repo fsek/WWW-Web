@@ -49,7 +49,7 @@ export default async function RootLayout({
 				{/* SuppressHydrationWarning is only one layer deep, and required by <ThemeProvider> */}
 				<html lang={i18n.language} suppressHydrationWarning>
 					<head>
-						<title>Nya F-sektionen</title>
+						<title>F-sektionen</title>
 						<link rel="preconnect" href="https://fonts.googleapis.com" />
 						<link rel="preconnect" href="https://fonts.gstatic.com" />
 						<link
