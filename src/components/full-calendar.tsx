@@ -29,6 +29,7 @@ import { EventEditForm } from "./full-calendar-edit-form";
 import { EventView } from "./full-calendar-event-view";
 import { useTranslation } from "react-i18next";
 import type { RoomEnum } from "@/api/types.gen";
+import { start } from "repl";
 
 // From: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
@@ -333,8 +334,7 @@ export default function Calendar({
 
 	const EventItem = ({ info }: EventItemProps) => {
 		const { event } = info;
-		console.log("text", info);
-		let timeText = "";
+		let [left, right] = ["", ""];
 		const startDate = event.start?.toLocaleDateString(i18n.language);
 		const endDate = event.end?.toLocaleDateString(i18n.language);
 		const startTime = event.start?.toLocaleTimeString(i18n.language, {
@@ -346,14 +346,11 @@ export default function Calendar({
 			minute: "2-digit",
 		});
 		if (startDate === endDate) {
-			timeText = `${startTime} - ${endTime}`;
+			[left, right] = [startTime ? startTime : "", endTime ? endTime : ""];
 		} else {
-			timeText = `${startDate} ${startTime} - ${endDate} ${endTime}`;
+			[left, right] = [`${startDate} ${startTime}`, `${endDate} ${endTime}`];
 		}
 		const orientation = startDate === endDate ? "flex-row" : "flex-col";
-
-		const [left, right] = timeText.split(" - ");
-
 		return (
 			<div className="overflow-hidden w-full">
 				<div
