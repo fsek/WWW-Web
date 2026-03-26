@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, type UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import {
@@ -32,7 +32,7 @@ const eventsEditSchema = z.object({
 	description_sv: z.string().max(1000).min(1),
 	description_en: z.string().max(1000).min(1),
 	location: z.string().max(100),
-	max_event_users: z.coerce.number().nonnegative(),
+	max_event_users: z.coerce.number<number>().nonnegative(),
 	priorities: z.array(z.string()).optional().default([]),
 	all_day: z.boolean(),
 	recurring: z.boolean(),
@@ -45,11 +45,12 @@ const eventsEditSchema = z.object({
 		.enum(["Alcohol", "Alcohol-Served", "None"])
 		.default("None"),
 	dress_code: z.string().max(100).optional().default(""),
-	price: z.coerce.number().nonnegative().optional().default(0),
+	price: z.coerce.number<number>().nonnegative().optional().default(0),
 	dot: z.enum(["None", "Single", "Double"]).default("None"),
 });
 
-export type EventsEditFormValues = z.infer<typeof eventsEditSchema>;
+export type EventsEditFormInput = z.input<typeof eventsEditSchema>;
+export type EventsEditFormValues = z.output<typeof eventsEditSchema>;
 
 interface EventsEditFormProps {
 	open: boolean;
@@ -67,7 +68,7 @@ export default function EventsEditForm({
 
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-	const form = useForm<EventsEditFormValues>({
+	const form = useForm<EventsEditFormInput, unknown, EventsEditFormValues>({
 		resolver: zodResolver(eventsEditSchema),
 		defaultValues: {
 			// Values for when no event is selected
@@ -204,7 +205,7 @@ export default function EventsEditForm({
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(handleFormSubmit)}>
 						<EventFormFields
-							eventsForm={form}
+							eventsForm={form as UseFormReturn<EventsEditFormInput>}
 							checkboxFields={checkboxFields}
 						/>
 

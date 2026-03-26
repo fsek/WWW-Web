@@ -29,7 +29,7 @@ import { useTranslation } from "react-i18next";
 const nollningSchema = z.object({
 	name: z.string().min(1),
 	description: z.string().min(1),
-	year: z.coerce.number().min(1960).max(2100),
+	year: z.coerce.number<number>().min(1960).max(2100),
 });
 
 const CreateNollning = () => {

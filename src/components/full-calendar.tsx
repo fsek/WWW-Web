@@ -9,7 +9,7 @@ import type {
 	EventChangeArg,
 	EventClickArg,
 	EventContentArg,
-} from "@fullcalendar/core/index.js";
+} from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";

@@ -35,7 +35,7 @@ export default function CarForm() {
 			description: z.string().min(1),
 			start_time: z.date(),
 			end_time: z.date(),
-			personal: z.boolean().default(true),
+			personal: z.boolean(),
 			council_id: z.number().int().positive(),
 		})
 		.refine(

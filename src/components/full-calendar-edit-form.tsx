@@ -86,7 +86,7 @@ export function EventEditForm({
 			end: z.date({
 				message: t("edit.error_end_time"),
 			}),
-			all_day: z.boolean().default(false),
+			all_day: z.boolean(),
 			color: z
 				.string({ error: "Please select an event color." })
 				.min(1, { message: "Must provide a title for this event." }),
@@ -121,8 +121,8 @@ export function EventEditForm({
 				: {}),
 			...(enableCarProperties
 				? {
-						personal: z.boolean().default(true),
-						confirmed: z.boolean().default(false),
+						personal: z.boolean(),
+						confirmed: z.boolean(),
 						council_id: z.number().int().positive(),
 					}
 				: {}),
