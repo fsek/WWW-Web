@@ -71,6 +71,11 @@
 				"desc": "Bläddra bland dokument som producerats av sektionen.",
 				"href": "/documents"
 			},
+			"ruling_doc": {
+				"self": "Styrdokument",
+				"desc": "Läs de grundläggande dokumenten som styr vår sektion.",
+				"href": "/styrdokument"
+			},
 			"privacy": {
 				"self": "Sekretesspolicy",
 				"desc": "Läs mer om hur vi hanterar dina personuppgifter.",
