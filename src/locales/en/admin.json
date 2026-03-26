@@ -37,6 +37,7 @@
 		"songs": "Songs",
 		"spider": "Webmaster only",
 		"nollning": "Nollning",
+		"board": "Board and others",
 		"elections": "Elections"
 	},
 	"news": {
@@ -823,6 +824,25 @@
 		"confirm_remove": "Confirm removal of song",
 		"confirm_remove_text": "Are you sure you want to remove this song?",
 		"view_song": "View Song Details"
+	},
+	"keyvals": {
+		"self": "Keyvals",
+		"title": "Manage Keyvals",
+		"description_subtitle": "WARNING: Keyvals are visible for everyone, even non logged in users. Don't put secrets here!",
+		"create_keyval": "Create Keyval",
+		"edit_keyval": "Edit Keyval",
+		"key": "Key",
+		"key_placeholder": "link_to_something",
+		"value": "Value",
+		"value_placeholder": "wow/this/could/even/be/a/relative/link",
+		"create_success": "Keyval has been created",
+		"create_error": "Could not create keyval",
+		"edit_success": "Keyval has been updated",
+		"edit_error": "Could not update keyval",
+		"remove_success": "Keyval has been removed",
+		"remove_error": "Could not remove keyval",
+		"confirm_remove": "Confirm removal of keyval",
+		"confirm_remove_text": "Are you sure you want to remove this keyval?"
 	},
 	"event_signup": {
 		"title": "Event Signups",
