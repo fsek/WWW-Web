@@ -341,7 +341,9 @@
 		"elected_user_recommended_limit": "Rekommenderad användargräns",
 		"elected_user_recommended_limit_placeholder": "Rekommenderat antal användare",
 		"elected_user_max_limit": "Maximal användargräns",
-		"elected_user_max_limit_placeholder": "Maximalt antal användare"
+		"elected_user_max_limit_placeholder": "Maximalt antal användare",
+		"email": "E-postadress",
+		"name_en": "Namn på post"
 	},
 	"user-posts": {
 		"self": "Poster åt användare",
@@ -1115,5 +1117,7 @@
 		"update_success": "Sektionsmöte uppdaterat!",
 		"update_error": "Kunde inte uppdatera sektionsmöte.",
 		"is_active_label": "Är aktivt (är synligt för användare)"
-	}
+	},
+	"save_changes": "Spara",
+	"create": "Skapa"
 }

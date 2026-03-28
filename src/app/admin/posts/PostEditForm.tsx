@@ -40,13 +40,13 @@ const postEditSchema = z.object({
 	name_en: z.string().min(2),
 	description_sv: z.string().optional(),
 	description_en: z.string().optional(),
-	email: z.string().email(),
+	email: z.email(),
 	council_id: z.number().int(),
 	doors: z.array(z.string()).optional(),
-	elected_at_semester: z.nativeEnum(ElectedAtSemesterEnum),
-	elected_by: z.nativeEnum(ElectedByEnum),
-	elected_user_recommended_limit: z.coerce.number().int().min(0),
-	elected_user_max_limit: z.coerce.number().int().min(0),
+	elected_at_semester: z.enum(ElectedAtSemesterEnum),
+	elected_by: z.enum(ElectedByEnum),
+	elected_user_recommended_limit: z.coerce.number<number>().int().min(0),
+	elected_user_max_limit: z.coerce.number<number>().int().min(0),
 });
 
 type PostEditFormType = z.infer<typeof postEditSchema>;

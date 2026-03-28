@@ -50,8 +50,8 @@ export default function CarEditForm({
 			description: z.string().min(1),
 			start_time: z.date(),
 			end_time: z.date(),
-			confirmed: z.boolean().default(false),
-			personal: z.boolean().default(true),
+			confirmed: z.boolean(),
+			personal: z.boolean(),
 			council_id: z.number().int().positive(),
 		})
 		.refine(

@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { useEvents } from "@/utils/full-calendar-event-context";
+import type { CalendarEvent } from "@/utils/full-calendar-seed";
 import { ToastAction } from "./ui/toast";
 import { useTranslation } from "react-i18next";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
@@ -74,14 +75,14 @@ export function EventAddForm({
 						.string({ error: t("add.error_description") })
 						.min(1, { message: t("add.error_description") })
 						.max(1000)
-				: z.string().optional().default(""),
+				: z.string().optional(),
 			start: z.date({
 				message: t("add.error_start_time"),
 			}),
 			end: z.date({
 				message: t("add.error_end_time"),
 			}),
-			all_day: z.boolean().default(false),
+			all_day: z.boolean(),
 			color: z
 				.string({ error: "Please select an event color." })
 				.min(1, { message: "Must provide a title for this event." }),
@@ -105,7 +106,7 @@ export function EventAddForm({
 									.string({ error: t("add.error_description") })
 									.min(1, { message: t("add.error_description") })
 									.max(1000)
-							: z.string().optional().default(""),
+							: z.string().optional(),
 						location: z.string().max(100),
 						max_event_users: z.coerce.number().nonnegative(),
 						recurring: z.boolean(),
@@ -118,15 +119,15 @@ export function EventAddForm({
 						alcohol_event_type: z
 							.enum(["Alcohol", "Alcohol-Served", "None"])
 							.default("None"),
-						dress_code: z.string().max(100).optional().default(""),
+						dress_code: z.string().max(100).optional(),
 						price: z.coerce.number().nonnegative().optional().default(0),
 						dot: z.enum(["None", "Single", "Double"]).default("None"),
-						lottery: z.boolean().default(false),
+						lottery: z.boolean(),
 					}
 				: {}),
 			...(enableCarProperties
 				? {
-						personal: z.boolean().default(true),
+						personal: z.boolean(),
 						council_id: z.number().int().positive(),
 					}
 				: {}),
@@ -304,12 +305,15 @@ export function EventAddForm({
 
 	const onSubmit = useCallback(
 		async (data: EventAddFormValues) => {
-			const newEvent = {
+			const newEvent: CalendarEvent = {
 				id: String(events.length + 1),
-				title_sv: data.title_sv ? (data.title_sv as string) : "",
-				description_sv: editDescription ? data.description_sv : "",
-				start: data.start,
-				end: data.end,
+				title_sv: typeof data.title_sv === "string" ? data.title_sv : "",
+				description_sv:
+					editDescription && typeof data.description_sv === "string"
+						? data.description_sv
+						: "",
+				start: data.start as Date,
+				end: data.end as Date,
 				all_day: data.all_day,
 				color: data.color,
 				...(enableTrueEventProperties

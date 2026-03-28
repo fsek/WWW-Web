@@ -341,7 +341,9 @@
 		"elected_user_recommended_limit": "Recommended user limit",
 		"elected_user_recommended_limit_placeholder": "Recommended number of users",
 		"elected_user_max_limit": "Maximum user limit",
-		"elected_user_max_limit_placeholder": "Maximum number of users"
+		"elected_user_max_limit_placeholder": "Maximum number of users",
+		"email": "Email address",
+		"name_en": "Post name"
 	},
 	"user-posts": {
 		"self": "User Posts",
@@ -1115,5 +1117,7 @@
 		"update_success": "Guild meeting updated!",
 		"update_error": "Could not update guild meeting.",
 		"is_active_label": "Is Active (is visible to users)"
-	}
+	},
+	"save_changes": "Save Changes",
+	"create": "Create"
 }
