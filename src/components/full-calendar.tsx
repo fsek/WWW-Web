@@ -29,6 +29,7 @@ import { EventEditForm } from "./full-calendar-edit-form";
 import { EventView } from "./full-calendar-event-view";
 import { useTranslation } from "react-i18next";
 import type { RoomEnum } from "@/api/types.gen";
+import { start } from "repl";
 
 // From: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
@@ -333,34 +334,38 @@ export default function Calendar({
 
 	const EventItem = ({ info }: EventItemProps) => {
 		const { event } = info;
-		const [left, right] = info.timeText.split(" - ");
-
+		let [left, right] = ["", ""];
+		const startDate = event.start?.toLocaleDateString(i18n.language);
+		const endDate = event.end?.toLocaleDateString(i18n.language);
+		const startTime = event.start?.toLocaleTimeString(i18n.language, {
+			hour: "2-digit",
+			minute: "2-digit",
+		});
+		const endTime = event.end?.toLocaleTimeString(i18n.language, {
+			hour: "2-digit",
+			minute: "2-digit",
+		});
+		if (startDate === endDate) {
+			[left, right] = [startTime ? startTime : "", endTime ? endTime : ""];
+		} else {
+			[left, right] = [`${startDate} ${startTime}`, `${endDate} ${endTime}`];
+		}
+		const orientation = startDate === endDate ? "flex-row" : "flex-col";
 		return (
 			<div className="overflow-hidden w-full">
-				{info.view.type === "dayGridMonth" ||
-				info.view.type === "dayGridWeek" ||
-				info.view.type === "dayGridDay" ? (
-					<div
-						style={{ backgroundColor: info.backgroundColor }}
-						className={
-							"flex flex-col rounded-md w-full px-2 py-1 line-clamp-1 text-[0.5rem] sm:text-[0.6rem] md:text-xs"
-						}
-					>
-						<p className="font-semibold text-gray-950 line-clamp-1 w-11/12">
-							{event.title}
-						</p>
-
-						<p className="text-gray-800">{left}</p>
-						<p className="text-gray-800">{right}</p>
-					</div>
-				) : (
-					<div className="flex flex-col space-y-0 text-[0.5rem] sm:text-[0.6rem] md:text-xs">
-						<p className="font-semibold w-full text-gray-950 line-clamp-1">
-							{event.title}
-						</p>
-						<p className="text-gray-800 line-clamp-1">{`${left} - ${right}`}</p>
-					</div>
-				)}
+				<div
+					style={{ backgroundColor: info.backgroundColor }}
+					className={
+						"flex flex-col rounded-md w-full px-2 py-1 line-clamp-1 text-[0.5rem] sm:text-[0.6rem] md:text-xs"
+					}
+				>
+					<p className="font-semibold text-gray-950 line-clamp-1 w-11/12">
+						{event.title}
+					</p>
+					<p className="text-gray-800">
+						{left} {startDate === endDate ? <>-</> : <br />} {right}
+					</p>
+				</div>
 			</div>
 		);
 	};
