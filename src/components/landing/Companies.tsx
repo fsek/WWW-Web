@@ -16,6 +16,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import faradImg from "@/assets/landing/FARAD-073.jpg";
+import type { JSX } from "react";
 
 interface CompaniesProps {
 	title: string;
