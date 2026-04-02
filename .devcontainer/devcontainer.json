@@ -32,7 +32,9 @@
 				"i18n-ally.localesPaths": "src/locales",
 				"i18n-ally.namespace": true,
 				"i18n-ally.pathMatcher": "{locale}/{namespaces}.json",
-				"i18n-ally.localeCountryMap": { "sv": "se" }
+				"i18n-ally.localeCountryMap": { "sv": "se" },
+				"i18n-ally.indent": 4,
+				"i18n-ally.tabStyle": "tab"
 			}
 		}
 	},

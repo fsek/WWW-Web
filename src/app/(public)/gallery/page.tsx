@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 export default function GalleryIndexPage() {
-	const { i18n, t } = useTranslation();
+	const { i18n, t } = useTranslation("main");
 	const { data: unsortedAlbums, isLoading } = useQuery({
 		...getAlbumsOptions(),
 		refetchOnWindowFocus: false,
