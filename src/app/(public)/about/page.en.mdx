@@ -1,18 +1,5 @@
 import Image from 'next/image'
-import blueLandscapeTlth from '/public/images/blue_landscape_tlth.png'
-import fLogo from '/public/images/sektioner/F.avif'
-import eLogo from '/public/images/sektioner/E.avif'
-import mLogo from '/public/images/sektioner/M.avif'
-import vLogo from '/public/images/sektioner/V.avif'
-import aLogo from '/public/images/sektioner/A.avif'
-import kLogo from '/public/images/sektioner/K.avif'
-import dLogo from '/public/images/sektioner/D.avif'
-import doktLogo from '/public/images/sektioner/Dokt.avif'
-import ingLogo from '/public/images/sektioner/ING.avif'
-import wLogo from '/public/images/sektioner/W.avif'
-import iLogo from '/public/images/sektioner/I.avif'
-import älgresan from '/public/images/algresan.jpg'
-import mattehuset from '/src/assets/mh.jpg'
+import mattehuset from '@/assets/mh.jpg'
 import GuildLogos from '@/components/GuildLogos'
 
 # About us
@@ -22,7 +9,7 @@ Each faculty within the university has a corresponding student union, i.e. a non
 for students belonging to that faculty.
 
 <a href="https://tlth.se" target="_blank" rel="noopener noreferrer">
-  <Image src={blueLandscapeTlth} alt="Teknologkåren vid LTH logo" className="w-1/5" />
+  <Image src="/images/blue_landscape_tlth.png" alt="Teknologkåren vid LTH logo" className="w-1/5" />
 </a>
 
 In our case, it is the student union [Teknologkåren vid LTH](https://www.tlth.se), which has more than 8,000
@@ -31,17 +18,17 @@ Subordinate to the Teknologkåren are 11 [guilds](https://www.tlth.se/sektioner)
 The guilds are, in turn, independent non-profit organizations that work for students at a more local level but are also linked to Teknologkåren.
 <GuildLogos
   logos={[
-    { href: "https://www.fsektionen.se/", src: fLogo, alt: "F-sektionen" },
-    { href: "https://eee.esek.se/", src: eLogo, alt: "E-sektionen" },
-    { href: "https://maskinsektionen.com/", src: mLogo, alt: "Maskinsektionen" },
-    { href: "https://vsek.se/sv/", src: vLogo, alt: "V-sektionen" },
-    { href: "http://www.asektionen.se/", src: aLogo, alt: "A-sektionen" },
-    { href: "https://ksektionen.se/", src: kLogo, alt: "K-sektionen" },
-    { href: "https://www.dsek.se/", src: dLogo, alt: "D-sektionen" },
-    { href: "https://dokt.se/", src: doktLogo, alt: "Doktorandsektionen" },
-    { href: "https://www.ingsekt.se/", src: ingLogo, alt: "Ingenjörssektionen" },
-    { href: "https://www.wsektionen.com/", src: wLogo, alt: "W-sektionen" },
-    { href: "https://isek.se/", src: iLogo, alt: "Sektionen för Industriell Ekonomi" },
+    { href: "https://www.fsektionen.se/", src: '/images/sektioner/F.avif', alt: "F-sektionen" },
+    { href: "https://eee.esek.se/", src: '/images/sektioner/E.avif', alt: "E-sektionen" },
+    { href: "https://maskinsektionen.com/", src: '/images/sektioner/M.avif', alt: "Maskinsektionen" },
+    { href: "https://vsek.se/sv/", src: '/images/sektioner/V.avif', alt: "V-sektionen" },
+    { href: "http://www.asektionen.se/", src: '/images/sektioner/A.avif', alt: "A-sektionen" },
+    { href: "https://ksektionen.se/", src: '/images/sektioner/K.avif', alt: "K-sektionen" },
+    { href: "https://www.dsek.se/", src: '/images/sektioner/D.avif', alt: "D-sektionen" },
+    { href: "https://dokt.se/", src: '/images/sektioner/Dokt.avif', alt: "Doktorandsektionen" },
+    { href: "https://www.ingsekt.se/", src: '/images/sektioner/ING.avif', alt: "Ingenjörssektionen" },
+    { href: "https://www.wsektionen.com/", src: '/images/sektioner/W.avif', alt: "W-sektionen" },
+    { href: "https://isek.se/", src: '/images/sektioner/I.avif', alt: "Sektionen för Industriell Ekonomi" },
   ]}
 />
 
@@ -68,7 +55,7 @@ The range of events is wide, and the guild strives to ensure that there is somet
 
 In addition to its weekly activities, the guild also works long-term with everything from equality and sustainability plans to analyses of the labor market and corporate collaborations.
 
-<Image src={älgresan} alt="Älgresan 2023" className="w-3/5 mt-4 rounded-lg mx-auto" />
+<Image src="/images/algresan.jpg" alt="Älgresan 2023" className="w-3/5 mt-4 rounded-lg mx-auto" />
 
 
 ## Guildspaces

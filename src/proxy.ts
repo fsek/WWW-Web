@@ -31,7 +31,7 @@ function handleAuthRedirects(request: NextRequest): NextResponse | null {
 	return null;
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
 	// Check for auth redirects first
 	const authRedirect = handleAuthRedirects(request);
 

@@ -13,8 +13,18 @@ const nextConfig = {
 const withMDX = nextMdx({
 	extension: /\.(md|mdx)$/,
 	options: {
-		remarkPlugins: [remarkGfm, remarkMath],
-		rehypePlugins: [[rehypeKatex, { strict: true, throwOnError: true }]],
+		remarkPlugins: ["remark-gfm", "remark-math"],
+		rehypePlugins: [
+			[
+				"rehype-mathjax/chtml",
+				{
+					chtml: {
+						fontURL:
+							"https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2",
+					},
+				},
+			],
+		],
 	},
 });
 export default withMDX(nextConfig);
