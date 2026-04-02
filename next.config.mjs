@@ -1,7 +1,7 @@
 import nextMdx from "@next/mdx";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
+import rehypeKatex from "rehype-mathjax";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
