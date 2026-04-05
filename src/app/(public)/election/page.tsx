@@ -50,7 +50,7 @@ export interface JoinedElectionPost {
 }
 
 export default function PublicElectionPage() {
-	const { i18n, t } = useTranslation();
+	const { i18n, t } = useTranslation("main");
 	const [search, setSearch] = useState("");
 	const [candidationOpen, setCandidationOpen] = useState(false);
 	const [nominationOpen, setNominationOpen] = useState(false);
