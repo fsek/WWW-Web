@@ -44,8 +44,9 @@ import {
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
-import { useAuthState, type RequiredPermission } from "@/lib/auth";
+import { usePermissionsState, type RequiredPermission } from "@/lib/auth";
 import { ActionEnum, TargetEnum } from "@/api";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type AdminSidebarEntry = {
 	title: string;
@@ -229,20 +230,42 @@ const groups: AdminGroup[] = [
 
 export function AdminSidebar() {
 	const { t } = useTranslation();
-	const permissions = useAuthState().getPermissions();
+	const { permissions, isLoading, isError } = usePermissionsState();
 
-	// Filter out groups and entries the user doesn't have permission to see
-	const visibleGroups = groups
-		.map((group) => {
-			return {
-				...group,
-				// Also filter out entries
-				entries: group.entries.filter((item) =>
-					permissions.hasRequiredPermissions(item.permissions ?? []),
-				),
-			};
-		})
-		.filter((group) => group.entries.length > 0);
+	if (isLoading) {
+		return (
+			<Sidebar className="text-foreground ">
+				<SidebarHeader className="px-6 py-4 decoration-3 items-center bg-[#fa7909]">
+					<h2 className="text-2xl mt-2 transition-colors">
+						{t("admin:title")}
+					</h2>
+				</SidebarHeader>
+				<SidebarContent className="px-2 gap-2 bg-[#fa7909]">
+					<div className="px-3 py-2 space-y-3">
+						<Skeleton className="h-4 w-full bg-white/30" />
+						<Skeleton className="h-9 w-full bg-white/25" />
+						<Skeleton className="h-9 w-full bg-white/25" />
+						<Skeleton className="h-9 w-full bg-white/25" />
+					</div>
+				</SidebarContent>
+			</Sidebar>
+		);
+	}
+
+	// Filter out groups and entries the user doesn't have permission to see.
+	// On permission fetch errors we fail closed and show no admin entries.
+	const visibleGroups = isError
+		? []
+		: groups
+				.map((group) => {
+					return {
+						...group,
+						entries: group.entries.filter((item) =>
+							permissions.hasRequiredPermissions(item.permissions ?? []),
+						),
+					};
+				})
+				.filter((group) => group.entries.length > 0);
 
 	return (
 		<Sidebar className="text-foreground ">
