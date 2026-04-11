@@ -1,10 +1,20 @@
 "use client";
 
+import { getMyPermissionsOptions } from "@/api/@tanstack/react-query.gen";
 import type { BearerResponse } from "@/api";
 import type { ActionEnum, TargetEnum } from "@/api";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { create } from "zustand";
 
 export type RequiredPermission = [ActionEnum, TargetEnum];
+export type UsePermissionsState = {
+	permissions: PermissionMap;
+	isLoading: boolean;
+	isError: boolean;
+	error: unknown;
+};
+
 class PermissionMap extends Map<TargetEnum, Set<ActionEnum>> {
 	/**
 	 * Checks a users permission against a list of required permissions.
@@ -15,9 +25,8 @@ class PermissionMap extends Map<TargetEnum, Set<ActionEnum>> {
 	 * Checking that a user has `view` permission for `CAR` and `manage` permission for `USER`
 	 * ```ts
 	 * import type { ActionEnum, TargetEnum } from "@/api";
-	 * import { useAuthState } from "@/lib/auth";
-	 * const auth = useAuthState();
-	 * const permissions = auth.getPermissions();
+	 * import { usePermissions } from "@/lib/auth";
+	 * const permissions = usePermissions();
 	 * const isAllowed = permissions.hasRequiredPermissions([[ActionEnum.VIEW, TargetEnum.CAR], [ActionEnum.MANAGE, TargetEnum.USER]]);
 	 * ```
 	 */
@@ -37,48 +46,50 @@ type AuthState = {
 	setAccessToken: (data: BearerResponse) => void;
 	authorizationHeader: () => string | null;
 	isAuthenticated: () => boolean;
-	getPermissions: () => PermissionMap;
 };
 
-export const useAuthState = create<AuthState>((set, get) => {
-	let permissionMap = new PermissionMap();
+function buildPermissionMap(
+	permissions: [string, string][] | null | undefined,
+): PermissionMap {
+	const map = new PermissionMap();
+	if (!permissions) return map;
 
-	function buildPermissionMap(token: BearerResponse | null): PermissionMap {
-		const map = new PermissionMap();
-		if (!token) return map;
-		try {
-			const payload = JSON.parse(
-				Buffer.from(token.access_token.split(".")[1], "base64").toString(),
-			) as { permissions: string[] };
+	for (const [actionStr, targetStr] of permissions) {
+		const actionEnum = actionStr as ActionEnum;
+		const targetEnum = targetStr as TargetEnum;
 
-			for (const entry of payload.permissions) {
-				const parts = entry.split(":");
-				if (parts.length !== 2) continue;
+		if (!actionEnum || !targetEnum) continue;
 
-				const [actionStr, targetStr] = parts;
-
-				const actionEnum = actionStr as ActionEnum;
-				const targetEnum = targetStr as TargetEnum;
-
-				if (!actionEnum || !targetEnum) continue;
-
-				if (!map.has(targetEnum)) {
-					map.set(targetEnum, new Set<ActionEnum>());
-				}
-				// biome-ignore lint/style/noNonNullAssertion: Just checked that it exists
-				map.get(targetEnum)!.add(actionEnum);
-			}
-		} catch {
-			// If decoding or parsing fails, just return an empty map
+		if (!map.has(targetEnum)) {
+			map.set(targetEnum, new Set<ActionEnum>());
 		}
-
-		return map;
+		// biome-ignore lint/style/noNonNullAssertion: Just checked that it exists
+		map.get(targetEnum)!.add(actionEnum);
 	}
 
-	function updatePermissions(token: BearerResponse | null) {
-		permissionMap = buildPermissionMap(token);
-	}
+	return map;
+}
 
+export function usePermissions(): PermissionMap {
+	return usePermissionsState().permissions;
+}
+
+export function usePermissionsState(): UsePermissionsState {
+	const { data, isLoading, isError, error } = useQuery({
+		...getMyPermissionsOptions(),
+		staleTime: 60 * 1000,
+	});
+	const permissions = useMemo(() => buildPermissionMap(data), [data]);
+
+	return {
+		permissions,
+		isLoading,
+		isError,
+		error,
+	};
+}
+
+export const useAuthState = create<AuthState>((set, get) => {
 	return {
 		accessToken: null,
 		setAccessToken(data) {
@@ -86,7 +97,6 @@ export const useAuthState = create<AuthState>((set, get) => {
 				if (state.accessToken?.access_token === data.access_token) {
 					return { accessToken: data };
 				}
-				updatePermissions(data);
 				return { accessToken: data };
 			});
 		},
@@ -113,9 +123,6 @@ export const useAuthState = create<AuthState>((set, get) => {
 		},
 		isAuthenticated() {
 			return !!get().authorizationHeader();
-		},
-		getPermissions() {
-			return permissionMap;
 		},
 	};
 });

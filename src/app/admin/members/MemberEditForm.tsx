@@ -21,7 +21,7 @@ import { toast } from "sonner";
 import { AdminChooseMultPosts } from "@/widgets/AdminChooseMultPosts";
 import { Pen, Save } from "lucide-react";
 import UserDetailsCard from "@/components/UserDetailsCard";
-import { useAuthState } from "@/lib/auth";
+import { usePermissions } from "@/lib/auth";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -73,8 +73,7 @@ export default function UserPostsEditForm({
 	const { t } = useTranslation("admin");
 	const [confirmOpen, setConfirmOpen] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
-	const auth = useAuthState();
-	const permissions = auth.getPermissions();
+	const permissions = usePermissions();
 	const queryClient = useQueryClient();
 
 	const form = useForm<UserUpdate>({

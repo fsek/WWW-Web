@@ -1,502 +1,502 @@
 {
-	"fsek": "F-sektionen",
-	"title": "Huvudsida",
-	"calendar": "Kalender",
-	"calendarText": "Här kan du se sektionens kalender med kommande evenemang. Klicka för att gå till stora kalendersidan och scrolla sedan ner för information om hur du lägger till detta i din egen kalenderapp.",
-	"welcome": "Välkommen till nya hemsidan för F-sektionen!",
-	"welcomeText": "Just nu är vi i en övergångsperiod till vår nya hemsida. Vi jobbar med att kontinuerligt förbättra design och funktionalitet, och lägga till saker som just nu saknas gentemot den gamla hemsidan. Den går fortfarande att använda på old.fsektionen.se. Eftersom vi dessutom har bytt ut servern och databasen är det nya och gamla systemet separerade: om du har gamla konton, lokalbokningar, inställningar, bilbokningar etc. så kommer de inte vara tillgängliga genom den nya webben och du kommer att behöva göra nya. OBS! Vi planerar att göra oss av med den gamla hemsidan helt inom en snar framtid, så försök att i största mån att använda den nya. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
-	"oldWebsiteButton": "Det var bättre förr...",
-	"welcomeAdmin": "Om du anser att du borde ha någon form av administratörsåtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, kontakta utskottsordförande.",
-	"adminButton": "Administrationssidan",
-	"registerButton": "Registrera nytt konto",
-	"newsTitle": "Nyheter",
-	"newsText": "Om du vill använda mer avancerad formattering, använd Mattermost som nyhetskanal tills vi har lagt till mer funktionalitet. Nyhetssidan stöder nu bilder!",
-	"cafeTitle": "Hilbert Café",
-	"cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang. Caféet har även en egen sida att tillgå, och du kan nu skriva upp dig på caféets arbetspass på en annan sida.",
-	"cafe_shift_button": "Skriv upp dig på ett arbetspass",
-	"cafe_page_button": "Huvudsidan för caféet",
-	"coolThing": "En häftig sak som distraherar dig från att se att sidan inte är klar än",
-	"back": "Tillbaka",
-	"faq": {
-		"self": "Frågor besvarade",
-		"q1": {
-			"question": "Kan jag logga in med mitt gamla konto?",
-			"answer": "Nej, eftersom vi bytt till en ny databas måste du skapa ett nytt konto, vilket du kan göra på fsektionen.se/register. Det finns många saker du inte har tillgång till innan du skapat ett konto, verifierat din mail och blivit verifierad som medlem."
-		},
-		"q2": {
-			"question": "Hur blir jag verifierad som medlem?",
-			"answer": "Skapa ett konto, verifiera din mejl och lägg till ditt Stil-ID (hi6122al-s) i användarinställningarna (kolla i övre högra hörnet). Efter detta måste du vänta på att vi ska se om du verkligen har medlemskap. I samband med terminsstart kan det ta längre tid än normalt. Om du känner att det tar för lång tid kan du kontakta din utskottsordförande, eller en fadder/föset under nollningen."
-		},
-		"q3": {
-			"question": "Vad har ni kvar att flytta över?",
-			"answer": "Det mesta finns redan överflyttat. För att läsa styrdokumenten i samlad form (de finns tillgängliga genom dokumentarkivet om du vet deras namn) eller använda motionsmaskinen kan du använda gamla hemsidan. Vi jobbar så hårt vi kan för att allt ska finnas på nya hemsidan 🧡."
-		},
-		"q4": {
-			"question": "Hjälp! Jag har inga av mina gamla adminrättigheter!",
-			"answer": "Vänta eller kontakta ditt utskottsordförande och be dem att återställa dina rättigheter."
-		},
-		"q5": {
-			"question": "Jag har problem med att anmäla mig till evenemang, visa galleriet eller andra saker!??",
-			"answer": "Vi hindrar icke-medlemmar och användare utan verifierade mailadresser från att använda många av våra tjänster. Kontrollera följande: \n\nAtt du verkligen har verifierat ditt konto (prova fsektionen.se/verify). \nAtt du är registrerad som medlem. (kolla i kontoinställningar för att kontrollera båda dessa!) \nAtt du är inloggad på rätt konto och inte har skapat flera konton, till exempel ett med din studentmail och ett annat med din privata mail. Om du har mer än ett konto och vill bli av med det dåliga, kontakta spindelman@fsektionen.se via mailet för det konto du vill ta bort."
-		}
-	},
-	"next": "Nästa",
-	"previous": "Föregående",
-	"page": "Sida",
-	"navbar": {
-		"sektionen": {
-			"self": "Sektionen",
-			"about": {
-				"self": "Om oss",
-				"desc": "Välkommen till vår sektion - lär känna oss och våra värderingar.",
-				"href": "/about"
-			},
-			"news": {
-				"self": "Nyheter",
-				"desc": "Håll dig uppdaterad med de senaste nyheterna från sektionen.",
-				"href": "/news"
-			},
-			"calendar": {
-				"self": "Kalender",
-				"desc": "Håll koll på kommande evenemang och aktiviteter.",
-				"href": "/calendar"
-			},
-			"councils": {
-				"self": "Utskott",
-				"desc": "Utforska våra utskotts arbete och engagemang.",
-				"href": "/councils"
-			},
-			"documents": {
-				"self": "Dokument",
-				"desc": "Bläddra bland dokument som producerats av sektionen.",
-				"href": "/documents"
-			},
-			"privacy": {
-				"self": "Sekretesspolicy",
-				"desc": "Läs mer om hur vi hanterar dina personuppgifter.",
-				"href": "/privacy"
-			},
-			"nollning": {
-				"self": "Nollning",
-				"desc": "Varmt välkommen till F-sektionen och grattis till din plats på civilingenjörsprogrammet i teknisk fysik, teknisk matematik eller teknisk nanovetenskap!",
-				"href": "/nollning"
-			}
-		},
-		"engage": {
-			"self": "Engagera dig",
-			"cafe": {
-				"self": "Hilbert Café",
-				"desc": "Träffa likasinnade och njut av en avslappnad atmosfär (och gratis lunch!).",
-				"href": "/cafe"
-			},
-			"positions": {
-				"self": "Bli funktionär",
-				"desc": "Vill du engagera dig i något utskott? Se hit!",
-				"href": "/positions"
-			},
-			"nollningsvol": {
-				"self": "Nollningsvolontärer",
-				"desc": "Hjälp oss att välkomna nya studenter och ge dem en bra start på studierna!",
-				"href": "/nollningsvolontar"
-			},
-			"elections": {
-				"self": "Val",
-				"desc": "Sök till sektionens poster!",
-				"href": "/election"
-			},
-			"projects": {
-				"self": "Projekt",
-				"desc": "Upptäck spännande initiativ och samarbeten inom sektionen.",
-				"href": "/projects"
-			},
-			"freja": {
-				"self": "FREJA",
-				"desc": "FREJA är en fristående organisation för dig som är kvinna eller icke-binär.",
-				"href": "https://www.frejalth.se/"
-			}
-		},
-		"services": {
-			"self": "Tjänster",
-			"car": {
-				"self": "Bilbokning",
-				"desc": "Boka bilen enkelt och smidigt för dina resor och behov.",
-				"href": "/car"
-			},
-			"rooms": {
-				"self": "Lokalbokning",
-				"desc": "Boka sektionens tre rum i Matematikhuset för personliga evenemang eller utskottsmöten.",
-				"href": "/room-bookings"
-			},
-			"tools": {
-				"self": "Verktygsutlåning",
-				"desc": "Låna sektionens verktyg för dina projekt.",
-				"href": "/tools"
-			},
-			"specialrooms": {
-				"self": "Stillarum/Bönerum",
-				"desc": "Hitta en lugn plats för reflektion eller bön.",
-				"href": "/stillarum"
-			},
-			"gallery": {
-				"self": "Galleri",
-				"desc": "Utforska vårt bildgalleri och få en inblick i sektionens historia.",
-				"href": "/gallery"
-			},
-			"calendar": {
-				"self": "Kalender",
-				"desc": "Håll koll på kommande evenemang och aktiviteter.",
-				"href": "/calendar"
-			},
-			"songs": {
-				"self": "Sångbok",
-				"desc": "Bläddra bland sångerna som sjungs på sektionens evenemang.",
-				"href": "/songs"
-			}
-		},
-		"companies": {
-			"self": "Företag",
-			"aboutCompany": {
-				"self": "Om F-sektionen",
-				"desc": "Upptäck vilka vi är och de program vi representerar.",
-				"href": "/foretag/om"
-			},
-			"offerings": {
-				"self": "Våra erbjudanden",
-				"desc": "Utforska förslag på samarbeten för att nå ut till våra medlemmar.",
-				"href": "/foretag/vi-erbjuder"
-			},
-			"farad": {
-				"self": "Farad",
-				"desc": "Läs mer om F-sektionens arbetsmarknadsmässa.",
-				"href": "https://farad.nu"
-			},
-			"contact": {
-				"self": "Företagskontakt",
-				"desc": "Kontakta oss för affärsförfrågningar och samarbeten.",
-				"href": "/contact#naringslivsutskottet"
-			}
-		},
-		"contact": {
-			"self": "Kontakt",
-			"contactPage": {
-				"self": "Kontaktsida",
-				"desc": "Här hittar du all information du behöver för att nå oss.",
-				"href": "/contact"
-			},
-			"ordf": {
-				"self": "Ordförande",
-				"desc": "För frågor om organisationen.",
-				"href": "/contact#ordf"
-			},
-			"web": {
-				"self": "Webbansvarig",
-				"desc": "För frågor om vår webbplats eller app.",
-				"href": "/contact#webmaster"
-			},
-			"anonymousForm": {
-				"self": "Anonymt kontaktformulär",
-				"desc": "För hemlig feedback eller bekymmer.",
-				"href": "https://docs.google.com/forms/d/e/1FAIpQLSdZdPl14DkdlZCKS3jzO59-FvVi2ug9nYer1jhYgERanbwHoQ/viewform"
-			},
-			"klaga": {
-				"self": "Klagomål",
-				"desc": "Skicka ett anonymt klagomål, en åsikt eller ändringsförslag till TLTH.",
-				"href": "https://www.tlth.se/klaga"
-			}
-		},
-		"booking": "Bokningar",
-		"documents": "Dokument",
-		"account-settings": "Kontoinställningar",
-		"logout": "Logga ut",
-		"logoutError": "Utloggning misslyckades. Försök igen senare.",
-		"verify": "Verifiera e-post",
-		"guild-meeting": "Sektionsmöte"
-	},
-	"footer": {
-		"contact": "Kontakt",
-		"emergencycontact": "Nödkontakt",
-		"companies": "För företag",
-		"webansvar": "Webbansvarig",
-		"ansvar": "Ansvarig utgivare",
-		"copyright": "F-sektionen. Alla rättigheter förvarade i superposition i ogenomtränglig låda."
-	},
-	"login": {
-		"login": "Logga in",
-		"invalid-email-or-password": "Fel e-postadress eller lösenord",
-		"email": "E-postadress",
-		"password": "Lösenord",
-		"title": "Logga in",
-		"registerPrompt": "Har du inget konto? Registrera dig här.",
-		"forgotPassword": "Glömt lösenord?",
-		"forgotEmailLabel": "Ange din e-post för att återställa lösenord",
-		"forgotSubmit": "Skicka återställningslänk",
-		"forgotLoading": "Skickar...",
-		"forgotSuccess": "Om din e-post finns så har en återställningslänk skickats till den.",
-		"backToLogin": "Tillbaka till inloggning",
-		"invalidEmailFormat": "Ogiltigt e-postformat"
-	},
-	"news": {
-		"self": "Nyheter",
-		"by": "Skriven av: ",
-		"pinned": "Fastnålad",
-		"see_all": "Se alla nyheter",
-		"read_more": "Läs mer"
-	},
-	"verifyMail": {
-		"loading": "Verifierar din e-post...",
-		"success": "E-postverifiering lyckades!",
-		"error": "E-postverifiering misslyckades. Länken kan ha gått ut eller varit ogiltig, eller så har du redan verifierat din e-post. Du kan gå till fsektionen.se/verify utan token för att få en ny länk.",
-		"goHome": "Gå till startsidan",
-		"noToken": "Du kan begära en ny verifieringslänk genom att ange din e-post nedan. (om du kom hit från ett mejl, kontrollera att du kopierade hela länken.)",
-		"requestSuccess": "En verifieringslänk har skickats till din e-postadress om den finns registrerad.",
-		"requestError": "Det gick inte att skicka verifieringsmejlet. Försök igen senare.",
-		"emailPlaceholder": "Ange din e-post",
-		"requestNew": "Begär ny verifieringslänk"
-	},
-	"verifyReminder": {
-		"message": "Ditt konto har inte en verifierad e-post. Du MÅSTE verifiera din e-post innan hemsidan kommer att fungera korrekt.",
-		"go": "Verifiera nu"
-	},
-	"memberBanner": {
-		"message": "Ditt konto är inte registrerat som medlem i F-sektionen. Du kan inte göra något åt detta själv. Kontakta din utskottsordförande eller annan ansvarig person inom sektionen för att bli registrerad som medlem. Innan detta kommer du inte kunna använda många av sektionens tjänster."
-	},
-	"reset-password": {
-		"title": "Återställ lösenord",
-		"password": "Nytt lösenord",
-		"retype-password": "Upprepa lösenord",
-		"passwords-do-not-match": "Lösenorden är olika",
-		"reset-password": "Återställ lösenord",
-		"resetting": "Återställer ditt lösenord...",
-		"reset-success": "Ditt lösenord har återställts!",
-		"goHome": "Gå till startsidan",
-		"reset-error": "Återställning av lösenord misslyckades.",
-		"invalid-reset-token": "Ogiltig eller saknad återställningslänk."
-	},
-	"register": {
-		"title": "Registrera ett konto",
-		"email": "E-postadress",
-		"password": "Lösenord",
-		"confirmPassword": "Bekräfta lösenord",
-		"firstName": "Förnamn",
-		"lastName": "Efternamn",
-		"telephone": "Telefonnummer med landskod (+46)",
-		"startYear": "Startår (valfritt)",
-		"submit": "Registrera",
-		"loginPrompt": "Har du redan ett konto? Logga in här.",
-		"loading": "Registrerar...",
-		"error": "Registreringen misslyckades. Kontrollera dina uppgifter och försök igen.",
-		"verifyError": "Användaren registrerades, men det gick inte att skicka verifieringsmail. Försök igen senare.",
-		"success": "Registreringen lyckades! Kontrollera din e-post för att verifiera ditt konto.",
-		"goLogin": "Gå till inloggning",
-		"passwordMismatch": "Lösenorden matchar inte. Försök igen.",
-		"passwordNoNumber": "Lösenordet måste innehålla minst ett nummer.",
-		"passwordNoLetter": "Lösenordet måste innehålla minst en bokstav (som inte är åäö).",
-		"startYearInvalid": "Startåret måste vara mellan 1960 och nuvarande år.",
-		"emailInvalid": "Ogiltig e-postadress",
-		"passwordShort": "Lösenordet måste vara minst 8 tecken",
-		"firstNameRequired": "Förnamn krävs",
-		"lastNameRequired": "Efternamn krävs",
-		"telephoneNumberRequired": "Telefonnummer krävs",
-		"gdprLabel": "Jag har läst och godkänner",
-		"privacyPolicy": "sekretesspolicyn.",
-		"gdprRequired": "Du måste godkänna sekretesspolicyn för att registrera dig."
-	},
-	"car-booking": {
-		"title": "Bilbokning",
-		"description-title": "FAQ och regler",
-		"description": "Som medlem kan du boka sektionens bil för personliga och sektionrelaterade behov. Om du är administratör kan du hantera bokningar <0>här</0> istället. Genom att boka bilen godkänner du att följa reglerna som finns <1>här</1>.",
-		"faq": {
-			"title": "Vanliga frågor",
-			"q1": "Vem kan boka bilen?",
-			"a1": "Alla medlemmar i sektionen kan boka bilen.",
-			"q2": "Biluthyrning under sommaren?",
-			"a2": "Eftersom verksamheten är pausad under sommaren är det inte lätt att hyra sektionsbilen. Kontakta styrelsen på board (at) fsektionen.se för att höra om det går att lösa.",
-			"q3": "Hur många får plats i bilen?",
-			"a3": "Bilen har plats för upp till 7 personer, inklusive föraren.",
-			"q4": "Hur stort är lastutrymmet i bilen?",
-			"a4": "Bagageutrymmet (med nedfällda baksäten) är cirka (med reservation för att det inte är en perfekt rektangel) 190 cm djupt, 130 cm brett och 80 cm högt.",
-			"q5": "Vad kostar det att hyra bilen?",
-			"a5": "Medlemmar i F-sektionen betalar en startavgift på 150 kr. Startavgiften inkluderar 20 kilometer, därefter kostar det 5 kr per påbörjad kilometer.",
-			"q6": "Vad betyder färgerna?",
-			"a6": "Olika färger visar status och ägarskap för varje bokning. En administratör (bilförmannen) måste bekräfta bokningar utanför ordinarie tider. Färgerna har följande mening: \n- Ljusorange färg innebär att det är din bokning, men den är inte bekräftad.\n- Mörkorange färg innebär att det är din bokning och den är bekräftad. \n- Grön färg markerar någon annans bekräftade bokning.\n- Gul färg visar någon annans obekräftade bokning.\n- Ljusblå färg används för bokningar som lagts till lokalt men inte hämtats från servern än. Ser du blått kan något ha gått fel, ladda då om sidan.",
-			"q7": "Jag har fler frågor!",
-			"a7": "Du kan kontakta bilförmannen bland annat genom <0>kontaktsidan</0>. Be gärna bilförmannen eller spindelmännen att lägga till frågan med svar här."
-		}
-	},
-	"room-booking": {
-		"title": "Lokalbokning",
-		"description-title": "FAQ och regler",
-		"description": "Som medlem måste du kontakta en administratör om du vill boka ett rum, men du kan se alla rumsbokningar här. Om du är administratör kan du boka rum <0>här</0> istället.",
-		"faq": {
-			"title": "Vanliga frågor",
-			"q1": "Vem kan boka lokalerna?",
-			"a1": "Endast administratörer kan boka lokalerna. Om du är medlem kan du kontakta en person från nämnden eller ditt utskottsordförande för att be dem boka ett rum.",
-			"q2": "Jag har fler frågor!",
-			"a2": "Det finns ingen huvudansvarig för lokalbokning, kontakta prylmästaren eller styrelsen om du undrar något. Du kan också be dem att lägga till frågan med svar här."
-		}
-	},
-	"loading": {
-		"basic": "Laddar innehåll...",
-		"flavor_1": "Checkar in på Hilberts hotel...",
-		"flavor_2": "Hittar determinanten...",
-		"flavor_3": "Spelar moose game...",
-		"flavor_4": "Räknar ut sista siffran i π...",
-		"flavor_5": "Jäser mer Hilbeaux...",
-		"flavor_6": "Polerar pixlar...",
-		"flavor_7": "Räknar till oändligheten...",
-		"flavor_8": "Skapar ännu en gandalftenta...",
-		"flavor_9": "Bevisar Riemannhypotesen...",
-		"flavor_10": "Byter koordinatsystem...",
-		"flavor_11": "Preppar Hilbertmackor...",
-		"flavor_12": "Väntar på Ladokavisering...",
-		"flavor_13": "Väntar tills impulssvaret dör ut...",
-		"flavor_14": "Skriver motionssvar...",
-		"flavor_15": "Kompilerar LaTeX...",
-		"flavor_16": "Homogeniserar randvillkor...",
-		"error_occurred": "Ett fel uppstod:",
-		"no_error_message": "Inget felmeddelande tillgängligt.",
-		"network_error": "Ett nätverksfel uppstod. Kontrollera din anslutning.",
-		"unauthorized": "Du är inte auktoriserad att se detta innehåll. Logga in."
-	},
-	"cookieConsent": {
-		"message": "Vi använder cookies för att förbättra din upplevelse på vår webbplats (autentisering, språk och mer). Genom att fortsätta använda webbplatsen godkänner du vår användning av cookies.",
-		"accept": "Okej"
-	},
-	"permission-wall": {
-		"stop": "Stopp",
-		"subtitle": "Sakta i backarna!",
-		"message": "Du har inte behörighet att se denna sida. Om du tror att något är fel, ",
-		"contact": "kontakta din lokala spindelman.",
-		"quote": "Här har vi begått lite småillegala saker längs vägen.",
-		"quote_author": "Mikael \"Micke P\" Persson Sundqvist",
-		"button": "Tillbaka till hemsidan"
-	},
-	"documents": {
-		"title": "Titel",
-		"created_at": "Skapad",
-		"private_explanation": "Endast medlemmar",
-		"author": "Författare",
-		"category": "Kategori",
-		"view": "Visa",
-		"view_doc": "Visa dokumentet",
-		"page_title": "Dokument",
-		"description": "Här kan du hitta och läsa dokument som delas inom sektionen. Vissa dokument är markerade för att endast vara synliga för medlemmar.",
-		"search_title": "Sök efter titel eller kategori",
-		"file_name": "Filnamn",
-		"updated_at": "Uppdaterad",
-		"is_private": "Visas endast för medlemmar"
-	},
-	"guild_meeting": {
-		"important_dates": "Viktiga datum"
-	},
-	"yes": "Ja",
-	"no": "Nej",
-	"not_found": "Hittades inte",
-	"description": "Beskrivning",
-	"event_signup": {
-		"title": "Eventanmälan",
-		"priority": "Prioritet",
-		"select_priority": "Välj prioritetsgrupp att anmäla dig med",
-		"group_name": "Gruppnamn",
-		"group_name_placeholder": "Ange gruppnamn (valfritt)",
-		"drink_package": {
-			"title": "Dryckespaket",
-			"none": "Inget",
-			"alcohol_free": "Alkoholfritt",
-			"alcohol": "Alkohol"
-		},
-		"select_drink_package": "Välj dryckespaket",
-		"button": "Anmäl dig",
-		"update_button": "Uppdatera anmälan",
-		"edit_button": "Redigera",
-		"signoff_button": "Avanmäl",
-		"success_create": "Anmälan lyckades!",
-		"success_update": "Anmälan uppdaterad!",
-		"success_signoff": "Du har avanmält dig från eventet.",
-		"error_create": "Kunde inte anmäla dig: {{error}}",
-		"error_update": "Kunde inte uppdatera anmälan: {{error}}",
-		"error_signoff": "Kunde inte avanmäla dig: {{error}}",
-		"unknown_error": "Okänt fel.",
-		"not_found": "Du är inte anmäld till detta event.",
-		"user": "Användare",
-		"status": "Status",
-		"confirmed": "Bekräftad",
-		"pending": "Väntar på bekräftelse",
-		"period_passed_signed_up": "Anmälningsperioden är slut. Om du vill ändra eller dra tillbaka din anmälan, kontakta eventansvarig.",
-		"period_passed_not_signed_up": "Anmälningsperioden är slut. Du kan inte längre anmäla dig. Om du har några frågor, vänligen kontakta eventansvarig.",
-		"food_preferences_title": "Matpreferenser",
-		"food_preferences_explainer": "Detta är dina sparade matpreferenser. Om något inte ser rätt ut kan du uppdatera dem i dina kontoinställningar.",
-		"standard_food_preferences": "Standardpreferenser:",
-		"other_food_preferences": "Övriga preferenser:",
-		"none": "Inga",
-		"signup_not_used": "Du kan inte anmäla dig till detta evenemang eftersom eventet inte använder systemet med anmälan för att delta."
-	},
-	"songs": {
-		"by": "Av",
-		"melody": "Melodi",
-		"category": "Kategori",
-		"views": "Visningar",
-		"title": "Sånger",
-		"description_subtitle": "Bläddra och sjung med i vår samling av sånger.",
-		"search_placeholder": "Sök sånger..."
-	},
-	"gallery": {
-		"title": "Galleri",
-		"select_year": "Välj år",
-		"photographers": "Fotografer"
-	},
-	"post": "Post",
-	"elections": {
-		"ended": "Avslutad",
-		"left": "kvar",
-		"day": "{{count}} dag(ar)",
-		"hour": "{{count}} h",
-		"min": "{{count}} min",
-		"no_visible_election": "Inget synligt val tillgängligt",
-		"post_name": "Postnamn",
-		"recommended_limit": "Rekommenderad gräns",
-		"max_limit": "Max gräns",
-		"candidation_count": "Kandidater",
-		"elected_by": "Vald av",
-		"council": "Utskott",
-		"end_time": "Sluttid",
-		"search_posts_placeholder": "Sök poster...",
-		"no_posts_match": "Inga poster matchar din sökning",
-		"view_my_candidations": "Visa mina kandidaturer",
-		"add_candidation": "Lägg till kandidatur",
-		"add_nomination": "Lägg till nominering",
-		"select_post": "Välj post",
-		"candidation_error": "Misslyckades att skapa kandidatur",
-		"candidation_success": "Kandidatur skapades!",
-		"nomination_error": "Misslyckades att skicka nominering",
-		"nomination_success": "Nominering skickad!",
-		"nominee_name": "Nominerade personens namn",
-		"nominee_email": "Nominerade personens e-post",
-		"motivation": "Motivering",
-		"election_limits": "Valgränser",
-		"ends_in": "Slutar om",
-		"actions": "Åtgärder",
-		"candidated_status": "Kandidaturstatus",
-		"you_have_candidated": "Du har kandiderat för denna post",
-		"candidated_at": "Kandiderade",
-		"remove_candidation": "Ta bort kandidatur",
-		"elected_at_semester": "Vald under termin",
-		"no_description": "Ingen beskrivning tillgänglig",
-		"my_candidations": {
-			"page_title": "Mina kandidaturer",
-			"page_description": "Här kan du se och hantera dina valkandidaturer"
-		},
-		"back_to_elections": "Tillbaka till val",
-		"no_candidations": "Du har inga kandidaturer",
-		"delete_candidation_success": "Kandidatur borttagen framgångsrikt",
-		"error_delete_candidation": "Misslyckades att ta bort kandidatur",
-		"limits": "Gränser",
-		"no_limit": "Ingen gräns",
-		"no_end_time": "Ingen sluttid",
-		"election_table_description": "Här är en lista över alla poster som är öppna för nomineringar och kandidaturer. Gränserna för hur många som kan bli valda till varje post är ordnade enligt rekommenderad gräns först, följt av maxgränsen.",
-		"sub_election": "Valkategori"
-	},
-	"info_box": {
-		"title": "Detaljer"
-	}
+  "fsek": "F-sektionen",
+  "title": "Huvudsida",
+  "calendar": "Kalender",
+  "calendarText": "Här kan du se sektionens kalender med kommande evenemang. Klicka för att gå till stora kalendersidan och scrolla sedan ner för information om hur du lägger till detta i din egen kalenderapp.",
+  "welcome": "Välkommen till nya hemsidan för F-sektionen!",
+  "welcomeText": "Just nu är vi i en övergångsperiod till vår nya hemsida. Vi jobbar med att kontinuerligt förbättra design och funktionalitet, och lägga till saker som just nu saknas gentemot den gamla hemsidan. Den går fortfarande att använda på old.fsektionen.se. Eftersom vi dessutom har bytt ut servern och databasen är det nya och gamla systemet separerade: om du har gamla konton, lokalbokningar, inställningar, bilbokningar etc. så kommer de inte vara tillgängliga genom den nya webben och du kommer att behöva göra nya. OBS! Vi planerar att göra oss av med den gamla hemsidan helt inom en snar framtid, så försök att i största mån att använda den nya. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
+  "oldWebsiteButton": "Det var bättre förr...",
+  "welcomeAdmin": "Om du anser att du borde ha någon form av administratörsåtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, kontakta utskottsordförande.",
+  "adminButton": "Administrationssidan",
+  "registerButton": "Registrera nytt konto",
+  "newsTitle": "Nyheter",
+  "newsText": "Om du vill använda mer avancerad formattering, använd Mattermost som nyhetskanal tills vi har lagt till mer funktionalitet. Nyhetssidan stöder nu bilder!",
+  "cafeTitle": "Hilbert Café",
+  "cafeText": "Hilbert Café är en plats för studenter att träffas, studera och umgås. Här kommer du till slut hitta mer interaktiv information om caféet, dess öppettider och engagemang. Caféet har även en egen sida att tillgå, och du kan nu skriva upp dig på caféets arbetspass på en annan sida.",
+  "cafe_shift_button": "Skriv upp dig på ett arbetspass",
+  "cafe_page_button": "Huvudsidan för caféet",
+  "coolThing": "En häftig sak som distraherar dig från att se att sidan inte är klar än",
+  "back": "Tillbaka",
+  "faq": {
+    "self": "Frågor besvarade",
+    "q1": {
+      "question": "Kan jag logga in med mitt gamla konto?",
+      "answer": "Nej, eftersom vi bytt till en ny databas måste du skapa ett nytt konto, vilket du kan göra på fsektionen.se/register. Det finns många saker du inte har tillgång till innan du skapat ett konto, verifierat din mail och blivit verifierad som medlem."
+    },
+    "q2": {
+      "question": "Hur blir jag verifierad som medlem?",
+      "answer": "Skapa ett konto, verifiera din mejl och lägg till ditt Stil-ID (hi6122al-s) i användarinställningarna (kolla i övre högra hörnet). Efter detta måste du vänta på att vi ska se om du verkligen har medlemskap. I samband med terminsstart kan det ta längre tid än normalt. Om du känner att det tar för lång tid kan du kontakta din utskottsordförande, eller en fadder/föset under nollningen."
+    },
+    "q3": {
+      "question": "Vad har ni kvar att flytta över?",
+      "answer": "Det mesta finns redan överflyttat. För att läsa styrdokumenten i samlad form (de finns tillgängliga genom dokumentarkivet om du vet deras namn) eller använda motionsmaskinen kan du använda gamla hemsidan. Vi jobbar så hårt vi kan för att allt ska finnas på nya hemsidan 🧡."
+    },
+    "q4": {
+      "question": "Hjälp! Jag har inga av mina gamla adminrättigheter!",
+      "answer": "Vänta eller kontakta ditt utskottsordförande och be dem att återställa dina rättigheter."
+    },
+    "q5": {
+      "question": "Jag har problem med att anmäla mig till evenemang, visa galleriet eller andra saker!??",
+      "answer": "Vi hindrar icke-medlemmar och användare utan verifierade mailadresser från att använda många av våra tjänster. Kontrollera följande: \n\nAtt du verkligen har verifierat ditt konto (prova fsektionen.se/verify). \nAtt du är registrerad som medlem. (kolla i kontoinställningar för att kontrollera båda dessa!) \nAtt du är inloggad på rätt konto och inte har skapat flera konton, till exempel ett med din studentmail och ett annat med din privata mail. Om du har mer än ett konto och vill bli av med det dåliga, kontakta spindelman@fsektionen.se via mailet för det konto du vill ta bort."
+    }
+  },
+  "next": "Nästa",
+  "previous": "Föregående",
+  "page": "Sida",
+  "navbar": {
+    "sektionen": {
+      "self": "Sektionen",
+      "about": {
+        "self": "Om oss",
+        "desc": "Välkommen till vår sektion - lär känna oss och våra värderingar.",
+        "href": "/about"
+      },
+      "news": {
+        "self": "Nyheter",
+        "desc": "Håll dig uppdaterad med de senaste nyheterna från sektionen.",
+        "href": "/news"
+      },
+      "calendar": {
+        "self": "Kalender",
+        "desc": "Håll koll på kommande evenemang och aktiviteter.",
+        "href": "/calendar"
+      },
+      "councils": {
+        "self": "Utskott",
+        "desc": "Utforska våra utskotts arbete och engagemang.",
+        "href": "/councils"
+      },
+      "documents": {
+        "self": "Dokument",
+        "desc": "Bläddra bland dokument som producerats av sektionen.",
+        "href": "/documents"
+      },
+      "privacy": {
+        "self": "Sekretesspolicy",
+        "desc": "Läs mer om hur vi hanterar dina personuppgifter.",
+        "href": "/privacy"
+      },
+      "nollning": {
+        "self": "Nollning",
+        "desc": "Varmt välkommen till F-sektionen och grattis till din plats på civilingenjörsprogrammet i teknisk fysik, teknisk matematik eller teknisk nanovetenskap!",
+        "href": "/nollning"
+      }
+    },
+    "engage": {
+      "self": "Engagera dig",
+      "cafe": {
+        "self": "Hilbert Café",
+        "desc": "Träffa likasinnade och njut av en avslappnad atmosfär (och gratis lunch!).",
+        "href": "/cafe"
+      },
+      "positions": {
+        "self": "Bli funktionär",
+        "desc": "Vill du engagera dig i något utskott? Se hit!",
+        "href": "/positions"
+      },
+      "nollningsvol": {
+        "self": "Nollningsvolontärer",
+        "desc": "Hjälp oss att välkomna nya studenter och ge dem en bra start på studierna!",
+        "href": "/nollningsvolontar"
+      },
+      "elections": {
+        "self": "Val",
+        "desc": "Sök till sektionens poster!",
+        "href": "/election"
+      },
+      "projects": {
+        "self": "Projekt",
+        "desc": "Upptäck spännande initiativ och samarbeten inom sektionen.",
+        "href": "/projects"
+      },
+      "freja": {
+        "self": "FREJA",
+        "desc": "FREJA är en fristående organisation för dig som är kvinna eller icke-binär.",
+        "href": "https://www.frejalth.se/"
+      }
+    },
+    "services": {
+      "self": "Tjänster",
+      "car": {
+        "self": "Bilbokning",
+        "desc": "Boka bilen enkelt och smidigt för dina resor och behov.",
+        "href": "/car"
+      },
+      "rooms": {
+        "self": "Lokalbokning",
+        "desc": "Boka sektionens tre rum i Matematikhuset för personliga evenemang eller utskottsmöten.",
+        "href": "/room-bookings"
+      },
+      "tools": {
+        "self": "Verktygsutlåning",
+        "desc": "Låna sektionens verktyg för dina projekt.",
+        "href": "/tools"
+      },
+      "specialrooms": {
+        "self": "Stillarum/Bönerum",
+        "desc": "Hitta en lugn plats för reflektion eller bön.",
+        "href": "/stillarum"
+      },
+      "gallery": {
+        "self": "Galleri",
+        "desc": "Utforska vårt bildgalleri och få en inblick i sektionens historia.",
+        "href": "/gallery"
+      },
+      "calendar": {
+        "self": "Kalender",
+        "desc": "Håll koll på kommande evenemang och aktiviteter.",
+        "href": "/calendar"
+      },
+      "songs": {
+        "self": "Sångbok",
+        "desc": "Bläddra bland sångerna som sjungs på sektionens evenemang.",
+        "href": "/songs"
+      }
+    },
+    "companies": {
+      "self": "Företag",
+      "aboutCompany": {
+        "self": "Om F-sektionen",
+        "desc": "Upptäck vilka vi är och de program vi representerar.",
+        "href": "/foretag/om"
+      },
+      "offerings": {
+        "self": "Våra erbjudanden",
+        "desc": "Utforska förslag på samarbeten för att nå ut till våra medlemmar.",
+        "href": "/foretag/vi-erbjuder"
+      },
+      "farad": {
+        "self": "Farad",
+        "desc": "Läs mer om F-sektionens arbetsmarknadsmässa.",
+        "href": "https://farad.nu"
+      },
+      "contact": {
+        "self": "Företagskontakt",
+        "desc": "Kontakta oss för affärsförfrågningar och samarbeten.",
+        "href": "/contact#naringslivsutskottet"
+      }
+    },
+    "contact": {
+      "self": "Kontakt",
+      "contactPage": {
+        "self": "Kontaktsida",
+        "desc": "Här hittar du all information du behöver för att nå oss.",
+        "href": "/contact"
+      },
+      "ordf": {
+        "self": "Ordförande",
+        "desc": "För frågor om organisationen.",
+        "href": "/contact#ordf"
+      },
+      "web": {
+        "self": "Webbansvarig",
+        "desc": "För frågor om vår webbplats eller app.",
+        "href": "/contact#webmaster"
+      },
+      "anonymousForm": {
+        "self": "Anonymt kontaktformulär",
+        "desc": "För hemlig feedback eller bekymmer.",
+        "href": "https://docs.google.com/forms/d/e/1FAIpQLSdZdPl14DkdlZCKS3jzO59-FvVi2ug9nYer1jhYgERanbwHoQ/viewform"
+      },
+      "klaga": {
+        "self": "Klagomål",
+        "desc": "Skicka ett anonymt klagomål, en åsikt eller ändringsförslag till TLTH.",
+        "href": "https://www.tlth.se/klaga"
+      }
+    },
+    "booking": "Bokningar",
+    "documents": "Dokument",
+    "account-settings": "Kontoinställningar",
+    "logout": "Logga ut",
+    "logoutError": "Utloggning misslyckades. Försök igen senare.",
+    "verify": "Verifiera e-post",
+    "guild-meeting": "Sektionsmöte"
+  },
+  "footer": {
+    "contact": "Kontakt",
+    "emergencycontact": "Nödkontakt",
+    "companies": "För företag",
+    "webansvar": "Webbansvarig",
+    "ansvar": "Ansvarig utgivare",
+    "copyright": "F-sektionen. Alla rättigheter förvarade i superposition i ogenomtränglig låda."
+  },
+  "login": {
+    "login": "Logga in",
+    "invalid-email-or-password": "Fel e-postadress eller lösenord",
+    "email": "E-postadress",
+    "password": "Lösenord",
+    "title": "Logga in",
+    "registerPrompt": "Har du inget konto? Registrera dig här.",
+    "forgotPassword": "Glömt lösenord?",
+    "forgotEmailLabel": "Ange din e-post för att återställa lösenord",
+    "forgotSubmit": "Skicka återställningslänk",
+    "forgotLoading": "Skickar...",
+    "forgotSuccess": "Om din e-post finns så har en återställningslänk skickats till den.",
+    "backToLogin": "Tillbaka till inloggning",
+    "invalidEmailFormat": "Ogiltigt e-postformat"
+  },
+  "news": {
+    "self": "Nyheter",
+    "by": "Skriven av: ",
+    "pinned": "Fastnålad",
+    "see_all": "Se alla nyheter",
+    "read_more": "Läs mer"
+  },
+  "verifyMail": {
+    "loading": "Verifierar din e-post...",
+    "success": "E-postverifiering lyckades!",
+    "error": "E-postverifiering misslyckades. Länken kan ha gått ut eller varit ogiltig, eller så har du redan verifierat din e-post. Du kan gå till fsektionen.se/verify utan token för att få en ny länk.",
+    "goHome": "Gå till startsidan",
+    "noToken": "Du kan begära en ny verifieringslänk genom att ange din e-post nedan. (om du kom hit från ett mejl, kontrollera att du kopierade hela länken.)",
+    "requestSuccess": "En verifieringslänk har skickats till din e-postadress om den finns registrerad.",
+    "requestError": "Det gick inte att skicka verifieringsmejlet. Försök igen senare.",
+    "emailPlaceholder": "Ange din e-post",
+    "requestNew": "Begär ny verifieringslänk"
+  },
+  "verifyReminder": {
+    "message": "Ditt konto har inte en verifierad e-post. Du MÅSTE verifiera din e-post innan hemsidan kommer att fungera korrekt.",
+    "go": "Verifiera nu"
+  },
+  "memberBanner": {
+    "message": "Ditt konto är inte registrerat som medlem i F-sektionen. Du kan inte göra något åt detta själv. Kontakta din utskottsordförande eller annan ansvarig person inom sektionen för att bli registrerad som medlem. Innan detta kommer du inte kunna använda många av sektionens tjänster."
+  },
+  "reset-password": {
+    "title": "Återställ lösenord",
+    "password": "Nytt lösenord",
+    "retype-password": "Upprepa lösenord",
+    "passwords-do-not-match": "Lösenorden är olika",
+    "reset-password": "Återställ lösenord",
+    "resetting": "Återställer ditt lösenord...",
+    "reset-success": "Ditt lösenord har återställts!",
+    "goHome": "Gå till startsidan",
+    "reset-error": "Återställning av lösenord misslyckades.",
+    "invalid-reset-token": "Ogiltig eller saknad återställningslänk."
+  },
+  "register": {
+    "title": "Registrera ett konto",
+    "email": "E-postadress",
+    "password": "Lösenord",
+    "confirmPassword": "Bekräfta lösenord",
+    "firstName": "Förnamn",
+    "lastName": "Efternamn",
+    "telephone": "Telefonnummer med landskod (+46)",
+    "startYear": "Startår (valfritt)",
+    "submit": "Registrera",
+    "loginPrompt": "Har du redan ett konto? Logga in här.",
+    "loading": "Registrerar...",
+    "error": "Registreringen misslyckades. Kontrollera dina uppgifter och försök igen.",
+    "verifyError": "Användaren registrerades, men det gick inte att skicka verifieringsmail. Försök igen senare.",
+    "success": "Registreringen lyckades! Kontrollera din e-post för att verifiera ditt konto.",
+    "goLogin": "Gå till inloggning",
+    "passwordMismatch": "Lösenorden matchar inte. Försök igen.",
+    "passwordNoNumber": "Lösenordet måste innehålla minst ett nummer.",
+    "passwordNoLetter": "Lösenordet måste innehålla minst en bokstav (som inte är åäö).",
+    "startYearInvalid": "Startåret måste vara mellan 1960 och nuvarande år.",
+    "emailInvalid": "Ogiltig e-postadress",
+    "passwordShort": "Lösenordet måste vara minst 8 tecken",
+    "firstNameRequired": "Förnamn krävs",
+    "lastNameRequired": "Efternamn krävs",
+    "telephoneNumberRequired": "Telefonnummer krävs",
+    "gdprLabel": "Jag har läst och godkänner",
+    "privacyPolicy": "sekretesspolicyn.",
+    "gdprRequired": "Du måste godkänna sekretesspolicyn för att registrera dig."
+  },
+  "car-booking": {
+    "title": "Bilbokning",
+    "description-title": "FAQ och regler",
+    "description": "Som medlem kan du boka sektionens bil för personliga och sektionrelaterade behov. Om du är administratör kan du hantera bokningar <0>här</0> istället. Genom att boka bilen godkänner du att följa reglerna som finns <1>här</1>.",
+    "faq": {
+      "title": "Vanliga frågor",
+      "q1": "Vem kan boka bilen?",
+      "a1": "Alla medlemmar i sektionen kan boka bilen.",
+      "q2": "Biluthyrning under sommaren?",
+      "a2": "Eftersom verksamheten är pausad under sommaren är det inte lätt att hyra sektionsbilen. Kontakta styrelsen på board (at) fsektionen.se för att höra om det går att lösa.",
+      "q3": "Hur många får plats i bilen?",
+      "a3": "Bilen har plats för upp till 7 personer, inklusive föraren.",
+      "q4": "Hur stort är lastutrymmet i bilen?",
+      "a4": "Bagageutrymmet (med nedfällda baksäten) är cirka (med reservation för att det inte är en perfekt rektangel) 190 cm djupt, 130 cm brett och 80 cm högt.",
+      "q5": "Vad kostar det att hyra bilen?",
+      "a5": "Medlemmar i F-sektionen betalar en startavgift på 150 kr. Startavgiften inkluderar 20 kilometer, därefter kostar det 5 kr per påbörjad kilometer.",
+      "q6": "Vad betyder färgerna?",
+      "a6": "Olika färger visar status och ägarskap för varje bokning. En administratör (bilförmannen) måste bekräfta bokningar utanför ordinarie tider. Färgerna har följande mening: \n- Ljusorange färg innebär att det är din bokning, men den är inte bekräftad.\n- Mörkorange färg innebär att det är din bokning och den är bekräftad. \n- Grön färg markerar någon annans bekräftade bokning.\n- Gul färg visar någon annans obekräftade bokning.\n- Ljusblå färg används för bokningar som lagts till lokalt men inte hämtats från servern än. Ser du blått kan något ha gått fel, ladda då om sidan.",
+      "q7": "Jag har fler frågor!",
+      "a7": "Du kan kontakta bilförmannen bland annat genom <0>kontaktsidan</0>. Be gärna bilförmannen eller spindelmännen att lägga till frågan med svar här."
+    }
+  },
+  "room-booking": {
+    "title": "Lokalbokning",
+    "description-title": "FAQ och regler",
+    "description": "Som medlem måste du kontakta en administratör om du vill boka ett rum, men du kan se alla rumsbokningar här. Om du är administratör kan du boka rum <0>här</0> istället.",
+    "faq": {
+      "title": "Vanliga frågor",
+      "q1": "Vem kan boka lokalerna?",
+      "a1": "Endast administratörer kan boka lokalerna. Om du är medlem kan du kontakta en person från nämnden eller ditt utskottsordförande för att be dem boka ett rum.",
+      "q2": "Jag har fler frågor!",
+      "a2": "Det finns ingen huvudansvarig för lokalbokning, kontakta prylmästaren eller styrelsen om du undrar något. Du kan också be dem att lägga till frågan med svar här."
+    }
+  },
+  "loading": {
+    "basic": "Laddar innehåll...",
+    "flavor_1": "Checkar in på Hilberts hotel...",
+    "flavor_2": "Hittar determinanten...",
+    "flavor_3": "Spelar moose game...",
+    "flavor_4": "Räknar ut sista siffran i π...",
+    "flavor_5": "Jäser mer Hilbeaux...",
+    "flavor_6": "Polerar pixlar...",
+    "flavor_7": "Räknar till oändligheten...",
+    "flavor_8": "Skapar ännu en gandalftenta...",
+    "flavor_9": "Bevisar Riemannhypotesen...",
+    "flavor_10": "Byter koordinatsystem...",
+    "flavor_11": "Preppar Hilbertmackor...",
+    "flavor_12": "Väntar på Ladokavisering...",
+    "flavor_13": "Väntar tills impulssvaret dör ut...",
+    "flavor_14": "Skriver motionssvar...",
+    "flavor_15": "Kompilerar LaTeX...",
+    "flavor_16": "Homogeniserar randvillkor...",
+    "error_occurred": "Ett fel uppstod:",
+    "no_error_message": "Inget felmeddelande tillgängligt.",
+    "network_error": "Ett nätverksfel uppstod. Kontrollera din anslutning.",
+    "unauthorized": "Du är inte auktoriserad att se detta innehåll. Logga in."
+  },
+  "cookieConsent": {
+    "message": "Vi använder cookies för att förbättra din upplevelse på vår webbplats (autentisering, språk och mer). Genom att fortsätta använda webbplatsen godkänner du vår användning av cookies.",
+    "accept": "Okej"
+  },
+  "permission-wall": {
+    "stop": "Stopp",
+    "subtitle": "Sakta i backarna!",
+    "message": "Du har inte behörighet att se denna sida. Om du tror att något är fel, ",
+    "contact": "kontakta din lokala spindelman",
+    "quote": "Här har vi begått lite småillegala saker längs vägen.",
+    "quote_author": "Mikael \"Micke P\" Persson Sundqvist",
+    "button": "Tillbaka till hemsidan"
+  },
+  "documents": {
+    "title": "Titel",
+    "created_at": "Skapad",
+    "private_explanation": "Endast medlemmar",
+    "author": "Författare",
+    "category": "Kategori",
+    "view": "Visa",
+    "view_doc": "Visa dokumentet",
+    "page_title": "Dokument",
+    "description": "Här kan du hitta och läsa dokument som delas inom sektionen. Vissa dokument är markerade för att endast vara synliga för medlemmar.",
+    "search_title": "Sök efter titel eller kategori",
+    "file_name": "Filnamn",
+    "updated_at": "Uppdaterad",
+    "is_private": "Visas endast för medlemmar"
+  },
+  "guild_meeting": {
+    "important_dates": "Viktiga datum"
+  },
+  "yes": "Ja",
+  "no": "Nej",
+  "not_found": "Hittades inte",
+  "description": "Beskrivning",
+  "event_signup": {
+    "title": "Eventanmälan",
+    "priority": "Prioritet",
+    "select_priority": "Välj prioritetsgrupp att anmäla dig med",
+    "group_name": "Gruppnamn",
+    "group_name_placeholder": "Ange gruppnamn (valfritt)",
+    "drink_package": {
+      "title": "Dryckespaket",
+      "none": "Inget",
+      "alcohol_free": "Alkoholfritt",
+      "alcohol": "Alkohol"
+    },
+    "select_drink_package": "Välj dryckespaket",
+    "button": "Anmäl dig",
+    "update_button": "Uppdatera anmälan",
+    "edit_button": "Redigera",
+    "signoff_button": "Avanmäl",
+    "success_create": "Anmälan lyckades!",
+    "success_update": "Anmälan uppdaterad!",
+    "success_signoff": "Du har avanmält dig från eventet.",
+    "error_create": "Kunde inte anmäla dig: {{error}}",
+    "error_update": "Kunde inte uppdatera anmälan: {{error}}",
+    "error_signoff": "Kunde inte avanmäla dig: {{error}}",
+    "unknown_error": "Okänt fel.",
+    "not_found": "Du är inte anmäld till detta event.",
+    "user": "Användare",
+    "status": "Status",
+    "confirmed": "Bekräftad",
+    "pending": "Väntar på bekräftelse",
+    "period_passed_signed_up": "Anmälningsperioden är slut. Om du vill ändra eller dra tillbaka din anmälan, kontakta eventansvarig.",
+    "period_passed_not_signed_up": "Anmälningsperioden är slut. Du kan inte längre anmäla dig. Om du har några frågor, vänligen kontakta eventansvarig.",
+    "food_preferences_title": "Matpreferenser",
+    "food_preferences_explainer": "Detta är dina sparade matpreferenser. Om något inte ser rätt ut kan du uppdatera dem i dina kontoinställningar.",
+    "standard_food_preferences": "Standardpreferenser:",
+    "other_food_preferences": "Övriga preferenser:",
+    "none": "Inga",
+    "signup_not_used": "Du kan inte anmäla dig till detta evenemang eftersom eventet inte använder systemet med anmälan för att delta."
+  },
+  "songs": {
+    "by": "Av",
+    "melody": "Melodi",
+    "category": "Kategori",
+    "views": "Visningar",
+    "title": "Sånger",
+    "description_subtitle": "Bläddra och sjung med i vår samling av sånger.",
+    "search_placeholder": "Sök sånger..."
+  },
+  "gallery": {
+    "title": "Galleri",
+    "select_year": "Välj år",
+    "photographers": "Fotografer"
+  },
+  "post": "Post",
+  "elections": {
+    "ended": "Avslutad",
+    "left": "kvar",
+    "day": "{{count}} dag(ar)",
+    "hour": "{{count}} h",
+    "min": "{{count}} min",
+    "no_visible_election": "Inget synligt val tillgängligt",
+    "post_name": "Postnamn",
+    "recommended_limit": "Rekommenderad gräns",
+    "max_limit": "Max gräns",
+    "candidation_count": "Kandidater",
+    "elected_by": "Vald av",
+    "council": "Utskott",
+    "end_time": "Sluttid",
+    "search_posts_placeholder": "Sök poster...",
+    "no_posts_match": "Inga poster matchar din sökning",
+    "view_my_candidations": "Visa mina kandidaturer",
+    "add_candidation": "Lägg till kandidatur",
+    "add_nomination": "Lägg till nominering",
+    "select_post": "Välj post",
+    "candidation_error": "Misslyckades att skapa kandidatur",
+    "candidation_success": "Kandidatur skapades!",
+    "nomination_error": "Misslyckades att skicka nominering",
+    "nomination_success": "Nominering skickad!",
+    "nominee_name": "Nominerade personens namn",
+    "nominee_email": "Nominerade personens e-post",
+    "motivation": "Motivering",
+    "election_limits": "Valgränser",
+    "ends_in": "Slutar om",
+    "actions": "Åtgärder",
+    "candidated_status": "Kandidaturstatus",
+    "you_have_candidated": "Du har kandiderat för denna post",
+    "candidated_at": "Kandiderade",
+    "remove_candidation": "Ta bort kandidatur",
+    "elected_at_semester": "Vald under termin",
+    "no_description": "Ingen beskrivning tillgänglig",
+    "my_candidations": {
+      "page_title": "Mina kandidaturer",
+      "page_description": "Här kan du se och hantera dina valkandidaturer"
+    },
+    "back_to_elections": "Tillbaka till val",
+    "no_candidations": "Du har inga kandidaturer",
+    "delete_candidation_success": "Kandidatur borttagen framgångsrikt",
+    "error_delete_candidation": "Misslyckades att ta bort kandidatur",
+    "limits": "Gränser",
+    "no_limit": "Ingen gräns",
+    "no_end_time": "Ingen sluttid",
+    "election_table_description": "Här är en lista över alla poster som är öppna för nomineringar och kandidaturer. Gränserna för hur många som kan bli valda till varje post är ordnade enligt rekommenderad gräns först, följt av maxgränsen.",
+    "sub_election": "Valkategori"
+  },
+  "info_box": {
+    "title": "Detaljer"
+  }
 }
