@@ -927,7 +927,7 @@
 	"programs": {
 		"self": "Programs",
 		"title": "Manage Programs",
-		"description_subtitle": "Create and manage study programs. Click on a program to edit it.",
+		"description_subtitle": "Create and manage study programs. Click on a program to edit it. There is an hour long cache period for most information on the public plugg.fsektionen.se site, so changes you make might take a bit to appear. If you want to see the changes immediately, you can clear the site data in your browser settings.",
 		"create_program": "Create program",
 		"edit_program": "Edit program",
 		"num_years": "Program years",

@@ -114,24 +114,31 @@ function addUniqueCourse(
 	courses.push(course);
 }
 
-function buildProgramHref(programId: number) {
-	return `/plugg?program=${programId}`;
+function urlFormatter(value: string | number) {
+	return String(value)
+		.toLowerCase()
+		.replace(/\s+/g, "-")
+		.replace(/[åä]/g, "a")
+		.replace(/ö/g, "o")
+		.replace(/[^a-z0-9\-]/g, "")
+		.replace(/-+/g, "-")
+		.replace(/^-|-$/g, "");
 }
 
-function buildProgramYearHref(programId: number, programYearId: number) {
-	return `/plugg?program=${programId}&year=${programYearId}`;
+function buildProgramHref(programTitle: string) {
+	return `/plugg/program/${urlFormatter(programTitle)}`;
 }
 
-function buildCourseHref(
-	programId: number,
-	programYearId: number,
-	courseId: number,
-) {
-	return `/plugg?program=${programId}&year=${programYearId}&course=${courseId}`;
+function buildProgramYearHref(programTitle: string, programYearTitle: string) {
+	return `/plugg/program/${urlFormatter(programTitle)}/year/${urlFormatter(programYearTitle)}`;
 }
 
-function buildSpecialisationHref(programId: number, specialisationId: number) {
-	return `/plugg?program=${programId}&specialisation=${specialisationId}`;
+function buildCourseHref(courseTitle: string) {
+	return `/plugg/course/${urlFormatter(courseTitle)}`;
+}
+
+function buildSpecialisationHref(specialisationTitle: string) {
+	return `/plugg/specialisation/${urlFormatter(specialisationTitle)}`;
 }
 
 function useProgramMenus(isSwedish: boolean) {
@@ -157,14 +164,6 @@ function useProgramMenus(isSwedish: boolean) {
 		...queryOptions,
 	});
 	const {
-		data: specialisationsData,
-		isLoading: isLoadingSpecialisations,
-		error: specialisationsError,
-	} = useQuery({
-		...getAllSpecialisationsOptions(),
-		...queryOptions,
-	});
-	const {
 		data: coursesData,
 		isLoading: isLoadingCourses,
 		error: coursesError,
@@ -176,7 +175,6 @@ function useProgramMenus(isSwedish: boolean) {
 	const menus = React.useMemo(() => {
 		const programs = (programsData ?? []) as ProgramRead[];
 		const programYears = (programYearsData ?? []) as ProgramYearRead[];
-		const specialisations = (specialisationsData ?? []) as SpecialisationRead[];
 		const courses = (coursesData ?? []) as CourseRead[];
 
 		const yearBuckets = new Map<number, Map<number, ProgramYearMenu>>();
@@ -215,17 +213,18 @@ function useProgramMenus(isSwedish: boolean) {
 			}
 		};
 
-		const addSpecialisation = (specialisation: SpecialisationRead) => {
-			const specialisationsForProgram = specialisationBuckets.get(
-				specialisation.program_id,
-			);
+		const addSpecialisation = (
+			specialisation: SpecialisationRead,
+			program_id: number,
+		) => {
+			const specialisationsForProgram = specialisationBuckets.get(program_id);
 			if (!specialisationsForProgram) {
 				return;
 			}
 
 			specialisationsForProgram.set(specialisation.specialisation_id, {
 				specialisationId: specialisation.specialisation_id,
-				programId: specialisation.program_id,
+				programId: program_id,
 				titleSv: specialisation.title_sv,
 				titleEn: specialisation.title_en,
 			});
@@ -236,16 +235,12 @@ function useProgramMenus(isSwedish: boolean) {
 				addYear(year);
 			}
 			for (const specialisation of program.specialisations ?? []) {
-				addSpecialisation(specialisation);
+				addSpecialisation(specialisation, program.program_id);
 			}
 		}
 
 		for (const year of programYears) {
 			addYear(year);
-		}
-
-		for (const specialisation of specialisations) {
-			addSpecialisation(specialisation);
 		}
 
 		for (const course of courses) {
@@ -310,25 +305,14 @@ function useProgramMenus(isSwedish: boolean) {
 		);
 
 		return result;
-	}, [
-		programsData,
-		programYearsData,
-		specialisationsData,
-		coursesData,
-		isSwedish,
-	]);
+	}, [programsData, programYearsData, coursesData, isSwedish]);
 
 	return {
 		menus,
-		isLoading:
-			isLoadingPrograms ||
-			isLoadingProgramYears ||
-			isLoadingSpecialisations ||
-			isLoadingCourses,
+		isLoading: isLoadingPrograms || isLoadingProgramYears || isLoadingCourses,
 		hasError:
 			Boolean(programsError) ||
 			Boolean(programYearsError) ||
-			Boolean(specialisationsError) ||
 			Boolean(coursesError),
 	};
 }
@@ -365,15 +349,17 @@ export function NavBar() {
 			<div className="xl:container mx-auto flex h-20 items-center justify-between gap-3 px-4">
 				<div className="flex items-center shrink-0 relative">
 					<div className="absolute right-full pr-3 sm:pr-5 z-50 flex items-center">
-						<Button 
-							variant="outline" 
-							size="sm" 
-							className="gap-2 whitespace-nowrap shadow-sm backdrop-blur-md bg-white/80 dark:bg-background/80 pointer-events-auto" 
+						<Button
+							variant="outline"
+							size="sm"
+							className="gap-2 whitespace-nowrap shadow-sm backdrop-blur-md bg-white/80 dark:bg-background/80 pointer-events-auto"
 							asChild
 						>
 							<Link href="/home">
 								<ArrowLeft className="h-4 w-4" />
-								<span className="hidden sm:inline">{t("plugg:navbar.back")}</span>
+								<span className="hidden sm:inline">
+									{t("plugg:navbar.back")}
+								</span>
 							</Link>
 						</Button>
 					</div>
@@ -466,7 +452,9 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 						className="rounded-md border border-border bg-background/60 p-3"
 					>
 						<MobileNavLink
-							href={buildProgramHref(program.programId)}
+							href={buildProgramHref(
+								getLocalizedTitle(isSwedish, program.titleSv, program.titleEn),
+							)}
 							className="px-0 text-base font-semibold hover:bg-transparent"
 						>
 							{getLocalizedTitle(isSwedish, program.titleSv, program.titleEn)}
@@ -476,8 +464,12 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 							<div key={year.programYearId} className="mt-3">
 								<MobileNavLink
 									href={buildProgramYearHref(
-										year.programId,
-										year.programYearId,
+										getLocalizedTitle(
+											isSwedish,
+											program.titleSv,
+											program.titleEn,
+										),
+										getLocalizedTitle(isSwedish, year.titleSv, year.titleEn),
 									)}
 									className="px-0 text-sm font-medium hover:bg-transparent"
 								>
@@ -488,11 +480,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 									{year.courses.map((course) => (
 										<MobileNavLink
 											key={course.course_id}
-											href={buildCourseHref(
-												year.programId,
-												year.programYearId,
-												course.course_id,
-											)}
+											href={buildCourseHref(course.title)}
 										>
 											{getCourseLabel(course)}
 										</MobileNavLink>
@@ -511,8 +499,11 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 										<MobileNavLink
 											key={specialisation.specialisationId}
 											href={buildSpecialisationHref(
-												specialisation.programId,
-												specialisation.specialisationId,
+												getLocalizedTitle(
+													isSwedish,
+													specialisation.titleSv,
+													specialisation.titleEn,
+												),
 											)}
 										>
 											{getLocalizedTitle(
@@ -544,7 +535,13 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 								<div className="pb-6 px-6 pt-2 w-max max-w-[90vw] md:w-[600px] lg:w-[800px] max-h-[75vh] overflow-y-auto">
 									<div className="mb-2">
 										<Link
-											href={buildProgramHref(program.programId)}
+											href={buildProgramHref(
+												getLocalizedTitle(
+													isSwedish,
+													program.titleSv,
+													program.titleEn,
+												),
+											)}
 											className="inline-flex items-center rounded-sm text-xs font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
 										>
 											{t("plugg:navbar.open_program")}
@@ -553,11 +550,22 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 									{program.years.length > 0 && (
 										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
 											{program.years.map((year) => (
-												<div key={year.programYearId} className="flex flex-col space-y-2">
+												<div
+													key={year.programYearId}
+													className="flex flex-col space-y-2"
+												>
 													<Link
 														href={buildProgramYearHref(
-															year.programId,
-															year.programYearId,
+															getLocalizedTitle(
+																isSwedish,
+																program.titleSv,
+																program.titleEn,
+															),
+															getLocalizedTitle(
+																isSwedish,
+																year.titleSv,
+																year.titleEn,
+															),
 														)}
 														className="text-base font-semibold hover:underline"
 													>
@@ -572,11 +580,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 															year.courses.map((course) => (
 																<li key={course.course_id}>
 																	<Link
-																		href={buildCourseHref(
-																			year.programId,
-																			year.programYearId,
-																			course.course_id,
-																		)}
+																		href={buildCourseHref(course.title)}
 																		className="hover:text-foreground line-clamp-2 transition-colors"
 																	>
 																		{getCourseLabel(course)}
@@ -595,10 +599,12 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 									)}
 
 									{program.specialisations.length > 0 && (
-										<div className={cn(
-											"mt-6 pt-4 border-t border-border",
-											program.years.length === 0 && "mt-0 pt-0 border-t-0"
-										)}>
+										<div
+											className={cn(
+												"mt-6 pt-4 border-t border-border",
+												program.years.length === 0 && "mt-0 pt-0 border-t-0",
+											)}
+										>
 											<p className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
 												{t("plugg:navbar.specialisations")}
 											</p>
@@ -612,8 +618,11 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 													>
 														<Link
 															href={buildSpecialisationHref(
-																specialisation.programId,
-																specialisation.specialisationId,
+																getLocalizedTitle(
+																	isSwedish,
+																	specialisation.titleSv,
+																	specialisation.titleEn,
+																),
 															)}
 														>
 															{getLocalizedTitle(

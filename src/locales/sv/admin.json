@@ -927,7 +927,7 @@
 	"programs": {
 		"self": "Program",
 		"title": "Hantera program",
-		"description_subtitle": "Skapa och hantera studieprogram. Klicka på ett program i listan nedan för att redigera det.",
+		"description_subtitle": "Skapa och hantera studieprogram. Klicka på ett program i listan nedan för att redigera det. Det finns en timmes cache på det mesta av informationen som nås genom plugg.fsektionen.se, så ändringar du gör här kanske inte syns direkt på den offentliga sidan. Om du vill testa dina ändringar direkt kan du rensa datan för fsektionen.se genom din webbläsare.",
 		"create_program": "Skapa program",
 		"edit_program": "Redigera program",
 		"num_years": "Programår",
