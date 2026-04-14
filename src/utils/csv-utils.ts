@@ -33,7 +33,6 @@ export function downloadCsvResult(result: unknown, default_name = "data.csv") {
 	let filename = default_name;
 	const match =
 		disposition.match(/filename\*?=(?:UTF-8'')?["']?([^;"']+)["']?/i) || "";
-	console.log(disposition);
 	if (match && (match as any)[1]) {
 		filename = decodeURIComponent((match as any)[1]);
 	}
