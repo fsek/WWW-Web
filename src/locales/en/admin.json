@@ -17,6 +17,8 @@
 	"milk_allergy": "Milk Protein Allergy",
 	"title_sv": "Title (Swedish)",
 	"title_en": "Title (English)",
+	"description_sv": "Description (Swedish)",
+	"description_en": "Description (English)",
 	"ends_at": "End Time",
 	"starts_at": "Start Time",
 	"signup_start": "Signup Start",
@@ -37,6 +39,7 @@
 		"songs": "Songs",
 		"spider": "Webmaster only",
 		"nollning": "Nollning",
+		"plugg": "Plugg",
 		"elections": "Elections"
 	},
 	"news": {
@@ -920,6 +923,27 @@
 			"morning": "Morning",
 			"afternoon": "Afternoon"
 		}
+	},
+	"programs": {
+		"self": "Programs",
+		"title": "Manage Programs",
+		"description_subtitle": "Create and manage study programs. Click on a program to edit it.",
+		"create_program": "Create program",
+		"edit_program": "Edit program",
+		"num_years": "Program years",
+		"num_specialisations": "Specialisations",
+		"title_en": "Title (English)",
+		"title_sv": "Title (Swedish)",
+		"description_en": "Description (English)",
+		"description_sv": "Description (Swedish)",
+		"create_success": "Program created!",
+		"create_error": "Failed to create program.",
+		"edit_success": "Program updated!",
+		"edit_error": "Failed to update program.",
+		"remove_success": "Program removed!",
+		"remove_error": "Failed to remove program.",
+		"confirm_remove": "Confirm removal of program",
+		"confirm_remove_text": "Are you sure you want to remove this program?"
 	},
 	"visible_election": {
 		"self": "Visible Election"

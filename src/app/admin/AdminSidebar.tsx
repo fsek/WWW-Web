@@ -186,6 +186,17 @@ const groups: AdminGroup[] = [
 		],
 	},
 	{
+		title: "admin:categories.plugg",
+		entries: [
+			{
+				title: "admin:programs.self",
+				url: "/admin/plugg",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.PLUGG]],
+				icon: List,
+			},
+		],
+	},
+	{
 		title: "admin:categories.elections",
 		entries: [
 			{

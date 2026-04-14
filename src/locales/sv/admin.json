@@ -17,6 +17,8 @@
 	"milk_allergy": "Mjölkproteinallergi",
 	"title_sv": "Titel (svenska)",
 	"title_en": "Titel (engelska)",
+	"description_sv": "Beskrivning (svenska)",
+	"description_en": "Beskrivning (engelska)",
 	"ends_at": "Sluttid",
 	"starts_at": "Starttid",
 	"signup_start": "Anmälningsstart",
@@ -37,6 +39,7 @@
 		"songs": "Sånger",
 		"spider": "Spindel",
 		"nollning": "Nollning",
+		"plugg": "Plugg",
 		"elections": "Val"
 	},
 	"news": {
@@ -920,6 +923,27 @@
 			"morning": "Förmiddag",
 			"afternoon": "Eftermiddag"
 		}
+	},
+	"programs": {
+		"self": "Program",
+		"title": "Hantera program",
+		"description_subtitle": "Skapa och hantera studieprogram. Klicka på ett program i listan nedan för att redigera det.",
+		"create_program": "Skapa program",
+		"edit_program": "Redigera program",
+		"num_years": "Programår",
+		"num_specialisations": "Inriktningar",
+		"title_en": "Titel (Engelska)",
+		"title_sv": "Titel (Svenska)",
+		"description_en": "Beskrivning (Engelska)",
+		"description_sv": "Beskrivning (Svenska)",
+		"create_success": "Program skapat!",
+		"create_error": "Misslyckades att skapa program.",
+		"edit_success": "Program uppdaterat!",
+		"edit_error": "Misslyckades att uppdatera program.",
+		"remove_success": "Program borttaget!",
+		"remove_error": "Misslyckades att ta bort program.",
+		"confirm_remove": "Bekräfta borttagning av program",
+		"confirm_remove_text": "Är du säker på att du vill ta bort detta program?"
 	},
 	"visible_election": {
 		"self": "Synligt val"
