@@ -23,6 +23,9 @@ import {
 	Images,
 	Gavel,
 	Vote,
+	Route,
+	BookText,
+	GraduationCap,
 } from "lucide-react";
 
 import {
@@ -190,9 +193,21 @@ const groups: AdminGroup[] = [
 		entries: [
 			{
 				title: "admin:programs.self",
-				url: "/admin/plugg",
+				url: "/admin/programs",
 				permissions: [[ActionEnum.MANAGE, TargetEnum.PLUGG]],
-				icon: List,
+				icon: GraduationCap,
+			},
+			{
+				title: "admin:specialisations.self",
+				url: "/admin/specialisations",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.PLUGG]],
+				icon: Route,
+			},
+			{
+				title: "admin:courses.self",
+				url: "/admin/courses",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.PLUGG]],
+				icon: BookText,
 			},
 		],
 	},

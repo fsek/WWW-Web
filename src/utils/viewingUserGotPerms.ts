@@ -1,8 +1,9 @@
 import type { AdminUserRead } from "@/api";
+import { ApiError } from "@/types/api-error";
 
 export default function viewingUserGotPerms(
 	userData: AdminUserRead | undefined,
-	userError: Error | null,
+	userError: ApiError | null,
 	userIsFetching: boolean,
 	permissionTarget = "user",
 ): boolean {

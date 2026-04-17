@@ -45,6 +45,12 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import {
+	buildCourseHref,
+	buildProgramHref,
+	buildProgramYearHref,
+	buildSpecialisationHref,
+} from "@/utils/pluggHrefBuilders";
 
 type ProgramYearMenu = {
 	programYearId: number;
@@ -69,6 +75,20 @@ type ProgramMenu = {
 	specialisations: SpecialisationMenu[];
 };
 
+type ProgramYearSource = {
+	program_year_id: number;
+	program_id: number;
+	title_sv: string;
+	title_en: string;
+	courses?: Array<CourseRead | SimpleCourseRead>;
+};
+
+type SpecialisationSource = {
+	specialisation_id: number;
+	title_sv: string;
+	title_en: string;
+};
+
 function getLocalizedTitle(
 	isSwedish: boolean,
 	titleSv: string,
@@ -90,7 +110,6 @@ function toSimpleCourse(
 		course_id: course.course_id,
 		title: course.title,
 		course_code: course.course_code,
-		associated_img_id: course.associated_img_id,
 	};
 }
 
@@ -112,33 +131,6 @@ function addUniqueCourse(
 		return;
 	}
 	courses.push(course);
-}
-
-function urlFormatter(value: string | number) {
-	return String(value)
-		.toLowerCase()
-		.replace(/\s+/g, "-")
-		.replace(/[åä]/g, "a")
-		.replace(/ö/g, "o")
-		.replace(/[^a-z0-9\-]/g, "")
-		.replace(/-+/g, "-")
-		.replace(/^-|-$/g, "");
-}
-
-function buildProgramHref(programTitle: string) {
-	return `/plugg/program/${urlFormatter(programTitle)}`;
-}
-
-function buildProgramYearHref(programTitle: string, programYearTitle: string) {
-	return `/plugg/program/${urlFormatter(programTitle)}/year/${urlFormatter(programYearTitle)}`;
-}
-
-function buildCourseHref(courseTitle: string) {
-	return `/plugg/course/${urlFormatter(courseTitle)}`;
-}
-
-function buildSpecialisationHref(specialisationTitle: string) {
-	return `/plugg/specialisation/${urlFormatter(specialisationTitle)}`;
 }
 
 function useProgramMenus(isSwedish: boolean) {
@@ -188,7 +180,7 @@ function useProgramMenus(isSwedish: boolean) {
 			ensureInnerMap(specialisationBuckets, program.program_id);
 		}
 
-		const addYear = (year: ProgramYearRead) => {
+		const addYear = (year: ProgramYearSource) => {
 			const yearsForProgram = yearBuckets.get(year.program_id);
 			if (!yearsForProgram) {
 				return;
@@ -201,7 +193,7 @@ function useProgramMenus(isSwedish: boolean) {
 					programId: year.program_id,
 					titleSv: year.title_sv,
 					titleEn: year.title_en,
-					courses: [...(year.courses ?? [])],
+					courses: (year.courses ?? []).map(toSimpleCourse),
 				});
 				return;
 			}
@@ -209,12 +201,12 @@ function useProgramMenus(isSwedish: boolean) {
 			existingYear.titleSv = year.title_sv;
 			existingYear.titleEn = year.title_en;
 			for (const course of year.courses ?? []) {
-				addUniqueCourse(existingYear.courses, course);
+				addUniqueCourse(existingYear.courses, toSimpleCourse(course));
 			}
 		};
 
 		const addSpecialisation = (
-			specialisation: SpecialisationRead,
+			specialisation: SpecialisationSource,
 			program_id: number,
 		) => {
 			const specialisationsForProgram = specialisationBuckets.get(program_id);

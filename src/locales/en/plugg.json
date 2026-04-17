@@ -22,5 +22,18 @@
     "section_specialisations_title": "Specialisations",
     "section_specialisations_text": "Specialisations are grouped per programme in separate dropdowns for fast access.",
     "footer_note": "Do you like design or code? Do you think you could improve this page or help with new features for the web, server or app? Apply to spindelman next fall semester!"
+  },
+  "program_page": {
+    "not_found_title": "Program not found",
+    "not_found_description": "Could not find a program matching this URL.",
+    "back_to_plugg": "Back to Plugg",
+    "years_label": "standard years added",
+    "program_years_title": "Standard years",
+    "program_years_empty": "No years added yet.",
+    "specialisations_empty": "No specialisations available yet.",
+    "program_description_fallback": "No description available for this program yet.",
+    "year_description_fallback": "No description added for this year.",
+    "specialisation_description_fallback": "No description added for this specialisation.",
+    "no_image": "No image"
   }
 }

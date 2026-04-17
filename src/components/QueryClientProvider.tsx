@@ -8,6 +8,7 @@ import type { PropsWithChildren } from "react";
 import { client } from "@/api";
 import { useAuthState } from "@/lib/auth";
 import { API_BASE_URL } from "@/constants";
+import { normalizeApiError } from "@/types/api-error";
 
 client.setConfig({ baseUrl: API_BASE_URL });
 
@@ -34,6 +35,11 @@ client.interceptors.request.use(async (request, _options) => {
 		}
 	}
 	return request;
+});
+
+// Ensure all thrown API errors have a stable shape with detail + status_code.
+client.interceptors.error.use((error, response) => {
+	return normalizeApiError(error, response.status);
 });
 
 export default function QueryClientProvider({ children }: PropsWithChildren) {

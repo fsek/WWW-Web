@@ -22,5 +22,18 @@
 		"section_specialisations_title": "Inriktningar",
 		"section_specialisations_text": "Inriktningar är grupperade per program i separata menyer för snabb åtkomst.",
 		"footer_note": "Tycker du om design eller kod? Tror du att du hade kunnat förbättra denna sida eller hjälpa till med nya funktioner till webben, servern eller appen? Sök till spindelman under nästa hösttermin!"
+	},
+	"program_page": {
+		"not_found_title": "Program hittades inte",
+		"not_found_description": "Kunde inte hitta ett program som matchar denna URL.",
+		"back_to_plugg": "Tillbaka till Plugg",
+		"years_label": "tillagda obligatorieår",
+		"program_years_title": "Obligatorieår",
+		"program_years_empty": "Inga år tillagda ännu.",
+		"specialisations_empty": "Inga inriktningar tillagda ännu.",
+		"program_description_fallback": "Ingen beskrivning tillgänglig för detta program ännu.",
+		"year_description_fallback": "Ingen beskrivning tillagd för detta år.",
+		"specialisation_description_fallback": "Ingen beskrivning tillagd för denna inriktning.",
+		"no_image": "Ingen bild"
 	}
 }
