@@ -20,7 +20,6 @@ import type {
 	CourseRead,
 	ProgramRead,
 	ProgramYearRead,
-	SimpleCourseRead,
 	SpecialisationRead,
 } from "@/api/types.gen";
 import {
@@ -57,7 +56,7 @@ type ProgramYearMenu = {
 	programId: number;
 	titleSv: string;
 	titleEn: string;
-	courses: SimpleCourseRead[];
+	courses: CourseRead[];
 };
 
 type SpecialisationMenu = {
@@ -80,7 +79,7 @@ type ProgramYearSource = {
 	program_id: number;
 	title_sv: string;
 	title_en: string;
-	courses?: Array<CourseRead | SimpleCourseRead>;
+	courses?: Array<CourseRead>;
 };
 
 type SpecialisationSource = {
@@ -97,20 +96,10 @@ function getLocalizedTitle(
 	return isSwedish ? titleSv : titleEn;
 }
 
-function getCourseLabel(course: SimpleCourseRead) {
+function getCourseLabel(course: CourseRead) {
 	return course.course_code
 		? `${course.course_code} - ${course.title}`
 		: course.title;
-}
-
-function toSimpleCourse(
-	course: CourseRead | SimpleCourseRead,
-): SimpleCourseRead {
-	return {
-		course_id: course.course_id,
-		title: course.title,
-		course_code: course.course_code,
-	};
 }
 
 function ensureInnerMap<T>(root: Map<number, Map<number, T>>, key: number) {
@@ -123,10 +112,7 @@ function ensureInnerMap<T>(root: Map<number, Map<number, T>>, key: number) {
 	return next;
 }
 
-function addUniqueCourse(
-	courses: SimpleCourseRead[],
-	course: SimpleCourseRead,
-) {
+function addUniqueCourse(courses: CourseRead[], course: CourseRead) {
 	if (courses.some((existing) => existing.course_id === course.course_id)) {
 		return;
 	}
@@ -193,7 +179,7 @@ function useProgramMenus(isSwedish: boolean) {
 					programId: year.program_id,
 					titleSv: year.title_sv,
 					titleEn: year.title_en,
-					courses: (year.courses ?? []).map(toSimpleCourse),
+					courses: year.courses ?? [],
 				});
 				return;
 			}
@@ -201,7 +187,7 @@ function useProgramMenus(isSwedish: boolean) {
 			existingYear.titleSv = year.title_sv;
 			existingYear.titleEn = year.title_en;
 			for (const course of year.courses ?? []) {
-				addUniqueCourse(existingYear.courses, toSimpleCourse(course));
+				addUniqueCourse(existingYear.courses, course);
 			}
 		};
 
@@ -236,7 +222,6 @@ function useProgramMenus(isSwedish: boolean) {
 		}
 
 		for (const course of courses) {
-			const simpleCourse = toSimpleCourse(course);
 			for (const year of course.program_years ?? []) {
 				addYear(year);
 				const yearEntry = yearBuckets
@@ -245,7 +230,7 @@ function useProgramMenus(isSwedish: boolean) {
 				if (!yearEntry) {
 					continue;
 				}
-				addUniqueCourse(yearEntry.courses, simpleCourse);
+				addUniqueCourse(yearEntry.courses, course);
 			}
 		}
 

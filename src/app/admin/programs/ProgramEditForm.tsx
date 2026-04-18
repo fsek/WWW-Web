@@ -2,14 +2,21 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import {
 	deleteProgramMutation,
+	getProgramOptions,
+	getAllSpecialisationsOptions,
 	getAllProgramsQueryKey,
 	updateProgramMutation,
 } from "@/api/@tanstack/react-query.gen";
-import type { ProgramRead, ProgramUpdate } from "@/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+	AssociationTypeEnum,
+	type ProgramRead,
+	type ProgramUpdate,
+} from "@/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import AdminForm from "@/widgets/AdminForm";
+import AssociatedImageManager from "@/components/AssociatedImageManager";
 
 const MAX_PROGRAM_TITLE = 100;
 const MAX_PROGRAM_DESC = 10000;
@@ -20,6 +27,7 @@ const programEditSchema = z.object({
 	title_en: z.string().trim().min(1).max(MAX_PROGRAM_TITLE),
 	description_sv: z.string().max(MAX_PROGRAM_DESC).optional(),
 	description_en: z.string().max(MAX_PROGRAM_DESC).optional(),
+	specialisation_ids: z.array(z.number()).optional(),
 });
 
 interface ProgramEditFormProps {
@@ -31,11 +39,28 @@ export default function ProgramEditForm({
 	onClose,
 	item,
 }: ProgramEditFormProps) {
-	const { t } = useTranslation("admin");
+	const { t, i18n } = useTranslation("admin");
+	const { data: allSpecialisations = [] } = useQuery({
+		...getAllSpecialisationsOptions(),
+		refetchOnWindowFocus: false,
+	});
+
+	const specialisationOptions = allSpecialisations
+		.map((specialisation) => ({
+			value: specialisation.specialisation_id,
+			label:
+				i18n.language === "sv"
+					? specialisation.title_sv
+					: specialisation.title_en,
+		}))
+		.sort((a, b) => a.label.localeCompare(b.label, i18n.language));
 
 	const [convertedItem, setConvertedItem] = useState<z.infer<
 		typeof programEditSchema
 	> | null>(null);
+	const [associatedImageId, setAssociatedImageId] = useState<number | null>(
+		null,
+	);
 
 	useEffect(() => {
 		if (item) {
@@ -45,12 +70,34 @@ export default function ProgramEditForm({
 				title_en: item.title_en,
 				description_sv: item.description_sv ?? "",
 				description_en: item.description_en ?? "",
+				specialisation_ids: (item.specialisations ?? []).map(
+					(specialisation) => specialisation.specialisation_id,
+				),
 			} as z.infer<typeof programEditSchema>;
 			setConvertedItem(convertedItem);
+			setAssociatedImageId(item.associated_img_id ?? null);
+		} else {
+			setAssociatedImageId(null);
 		}
 	}, [item]);
 
 	const queryClient = useQueryClient();
+
+	async function syncProgramAfterImageChange(programId: number) {
+		try {
+			const updatedProgram = await queryClient.fetchQuery({
+				...getProgramOptions({ path: { program_id: programId } }),
+			});
+
+			setAssociatedImageId(updatedProgram.associated_img_id ?? null);
+
+			queryClient.invalidateQueries({
+				queryKey: getAllProgramsQueryKey(),
+			});
+		} catch {
+			toast.error(t("admin:associated_image.sync_error"));
+		}
+	}
 
 	const updateProgram = useMutation({
 		...updateProgramMutation(),
@@ -100,6 +147,7 @@ export default function ProgramEditForm({
 			description_en: values.description_en?.trim()
 				? values.description_en
 				: null,
+			specialisation_ids: values.specialisation_ids ?? [],
 		};
 
 		updateProgram.mutate(
@@ -166,6 +214,14 @@ export default function ProgramEditForm({
 					rows: 8,
 					colSpan: 2,
 				},
+				{
+					variant: "styledMultiSelect",
+					name: "specialisation_ids",
+					label: t("programs.specialisations"),
+					placeholder: t("programs.select_specialisations"),
+					options: specialisationOptions,
+					colSpan: 4,
+				},
 			]}
 			zodSchema={programEditSchema}
 			onSubmit={handleFormSubmit}
@@ -174,8 +230,25 @@ export default function ProgramEditForm({
 			showDialogButton={false}
 			editItem={convertedItem || undefined}
 			setEditItem={setConvertedItem}
+			customButtons={
+				<AssociatedImageManager
+					associationType={AssociationTypeEnum.PROGRAM}
+					associationId={item?.program_id ?? null}
+					associatedImageId={associatedImageId}
+					onImageChanged={() => {
+						if (!item?.program_id) {
+							return;
+						}
+
+						void syncProgramAfterImageChange(item.program_id);
+					}}
+					addButtonText={t("programs.add_program_image")}
+				/>
+			}
 			confirmDeleteDialogConfirmByTyping={true}
-			confirmDeleteDialogConfirmByTypingKey={item?.title_sv || "Delete this program"}
+			confirmDeleteDialogConfirmByTypingKey={
+				item?.title_sv || "Delete this program"
+			}
 			requireConfirmationToDelete={true}
 			confirmDeleteDialogTitle={t("programs.confirm_remove")}
 			confirmDeleteDialogDescription={t("programs.confirm_remove_text")}

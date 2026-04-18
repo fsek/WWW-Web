@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { z } from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createProgramMutation,
+	getAllSpecialisationsOptions,
 	getAllProgramsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import type { ProgramCreate } from "@/api";
@@ -18,13 +19,28 @@ const programSchema = z.object({
 	title_en: z.string().trim().min(1).max(MAX_PROGRAM_TITLE),
 	description_sv: z.string().max(MAX_PROGRAM_DESC).optional(),
 	description_en: z.string().max(MAX_PROGRAM_DESC).optional(),
+	specialisation_ids: z.array(z.number()).optional(),
 });
 
 export default function ProgramForm() {
 	const [open, setOpen] = useState(false);
-	const { t } = useTranslation("admin");
+	const { t, i18n } = useTranslation("admin");
 
 	const queryClient = useQueryClient();
+	const { data: allSpecialisations = [] } = useQuery({
+		...getAllSpecialisationsOptions(),
+		refetchOnWindowFocus: false,
+	});
+
+	const specialisationOptions = allSpecialisations
+		.map((specialisation) => ({
+			value: specialisation.specialisation_id,
+			label:
+				i18n.language === "sv"
+					? specialisation.title_sv
+					: specialisation.title_en,
+		}))
+		.sort((a, b) => a.label.localeCompare(b.label, i18n.language));
 
 	const createProgram = useMutation({
 		...createProgramMutation(),
@@ -51,6 +67,7 @@ export default function ProgramForm() {
 			title_en: values.title_en,
 			description_sv: values.description_sv?.trim() ? values.description_sv : null,
 			description_en: values.description_en?.trim() ? values.description_en : null,
+			specialisation_ids: values.specialisation_ids ?? [],
 		};
 
 		createProgram.mutate({ body: payload });
@@ -68,6 +85,7 @@ export default function ProgramForm() {
 				title_en: "",
 				description_sv: "",
 				description_en: "",
+				specialisation_ids: [],
 			}}
 			inputFields={[
 				{
@@ -99,6 +117,14 @@ export default function ProgramForm() {
 					placeholder: t("description_en"),
 					rows: 8,
 					colSpan: 2,
+				},
+				{
+					variant: "styledMultiSelect",
+					name: "specialisation_ids",
+					label: t("programs.specialisations"),
+					placeholder: t("programs.select_specialisations"),
+					options: specialisationOptions,
+					colSpan: 4,
 				},
 			]}
 			zodSchema={programSchema}

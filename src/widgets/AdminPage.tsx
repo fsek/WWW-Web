@@ -86,7 +86,7 @@ export default function AdminPage<T>({
 	/**
 	 * See the docs for {@link EditComponent<T>}.
 	 */
-	editComponent: EditComponent<T>;
+	editComponent: EditComponent<T> | null;
 	headerButtons?: ReactNode;
 	columnFilters?: ColumnFiltersState;
 	onColumnFiltersChange?: OnChangeFn<ColumnFiltersState>;
@@ -303,7 +303,7 @@ export default function AdminPage<T>({
 				</div>
 			</div>
 
-			<EditComponent item={editing} onClose={() => setEditing(null)} />
+			{EditComponent && <EditComponent item={editing} onClose={() => setEditing(null)} />}
 		</>
 	);
 }

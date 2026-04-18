@@ -2,7 +2,7 @@
 
 import { use, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getDocumentFileByIdOptions } from "@/api/@tanstack/react-query.gen";
+import { getCourseDocumentFileByIdOptions } from "@/api/@tanstack/react-query.gen";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 interface DocumentPageProps {
@@ -22,8 +22,8 @@ export default function DocumentPage({ params }: DocumentPageProps) {
 		isLoading,
 		error,
 	} = useQuery({
-		...getDocumentFileByIdOptions({
-			path: { document_id: documentId },
+		...getCourseDocumentFileByIdOptions({
+			path: { course_document_id: documentId },
 		}),
 		enabled: !Number.isNaN(documentId),
 	});

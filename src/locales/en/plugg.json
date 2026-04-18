@@ -1,39 +1,77 @@
 {
-  "navbar": {
-    "back": "Back",
-    "toggle_menu": "Toggle menu",
-    "mobile_navigation": "Mobile navigation",
-    "loading": "Loading programs...",
-    "load_error": "Could not load navigation.",
-    "empty": "No programs available.",
-    "specialisations": "Specialisations",
-    "no_courses": "No courses yet",
-    "open_program": "Open program page"
-  },
-  "page": {
-    "title": "Plugg",
-    "intro": "Welcome! On this page you will find everything you need to get through your years at LTH.",
-    "contact_notice_title": "Have questions or need help?",
-    "contact_notice_text": "If you want to contribute material, report issues or have other questions, send us an email at plugg@fsektionen.se (or click this box).",
-    "section_programs_title": "Programmes",
-    "section_programs_text": "Use the top row in the navbar to switch between programmes and reveal each programme year.",
-    "section_courses_title": "Courses",
-    "section_courses_text": "Each programme year has its own course dropdown. Pick a course to jump directly to relevant material.",
-    "section_specialisations_title": "Specialisations",
-    "section_specialisations_text": "Specialisations are grouped per programme in separate dropdowns for fast access.",
-    "footer_note": "Do you like design or code? Do you think you could improve this page or help with new features for the web, server or app? Apply to spindelman next fall semester!"
-  },
-  "program_page": {
-    "not_found_title": "Program not found",
-    "not_found_description": "Could not find a program matching this URL.",
-    "back_to_plugg": "Back to Plugg",
-    "years_label": "standard years added",
-    "program_years_title": "Standard years",
-    "program_years_empty": "No years added yet.",
-    "specialisations_empty": "No specialisations available yet.",
-    "program_description_fallback": "No description available for this program yet.",
-    "year_description_fallback": "No description added for this year.",
-    "specialisation_description_fallback": "No description added for this specialisation.",
-    "no_image": "No image"
-  }
+	"navbar": {
+		"back": "To homepage",
+		"toggle_menu": "Toggle menu",
+		"mobile_navigation": "Mobile navigation",
+		"loading": "Loading programs...",
+		"load_error": "Could not load navigation.",
+		"empty": "No programs available.",
+		"specialisations": "Specialisations",
+		"no_courses": "No courses yet",
+		"open_program": "Open program page"
+	},
+	"page": {
+		"title": "Plugg",
+		"intro": "Welcome! On this page you will find everything you need to get through your years at LTH.",
+		"contact_notice_title": "Have questions or need help?",
+		"contact_notice_text": "If you want to contribute material, report issues or have other questions, send us an email at plugg@fsektionen.se (or click this box).",
+		"section_programs_title": "Programmes",
+		"section_programs_text": "Use the top row in the navbar to switch between programmes and reveal each programme year.",
+		"section_courses_title": "Courses",
+		"section_courses_text": "Each programme year has its own course dropdown. Pick a course to jump directly to relevant material.",
+		"section_specialisations_title": "Specialisations",
+		"section_specialisations_text": "Specialisations are grouped per programme in separate dropdowns for fast access.",
+		"footer_note": "Do you like design or code? Do you think you could improve this page or help with new features for the web, server or app? Apply to spindelman next fall semester!"
+	},
+	"program": {
+		"back": "Back",
+		"specialisations": "Specialisations",
+		"program_page": {
+			"years_label": "standard years added",
+			"program_years_title": "Standard years",
+			"program_years_empty": "No years added yet.",
+			"specialisations_empty": "No specialisations available yet.",
+			"program_description_fallback": "No description available for this program yet.",
+			"year_description_fallback": "No description added for this year.",
+			"specialisation_description_fallback": "No description added for this specialisation."
+		},
+		"program_year_page": {
+			"courses_label": "courses",
+			"courses_title": "Courses",
+			"no_courses": "No courses yet",
+			"year_description_fallback": "No description added for this year.",
+			"course_description_fallback": "No course description added yet."
+		}
+	},
+	"courses": {
+		"back": "Back",
+		"course_code_badge": "Course code: {{code}}",
+		"course_code_missing": "Course code unavailable",
+		"updated_badge": "Updated: {{date}}",
+		"documents_badge": "{{count}} documents",
+		"description_fallback": "No course description has been added yet.",
+		"documents": {
+			"title": "Course material",
+			"empty": "No documents have been added to this course yet.",
+			"open": "Open file",
+			"author": "Author",
+			"updated_at": "Updated",
+			"file_name": "File",
+			"general_subcategory": "General",
+			"categories": {
+				"notes": "Notes",
+				"summary": "Summary",
+				"solutions": "Solutions",
+				"other": "Other"
+			}
+		}
+	},
+	"specialisations": {
+		"back": "Back",
+		"courses_label": "courses",
+		"courses_title": "Courses",
+		"no_courses": "No courses yet",
+		"description_fallback": "No description added for this specialisation.",
+		"course_description_fallback": "No course description added yet."
+	}
 }

@@ -1,32 +1,25 @@
 "use client";
 
 import ImageDisplay from "@/components/ImageDisplay";
-import {
-	getAllProgramsOptions,
-	getProgramOptions,
-} from "@/api/@tanstack/react-query.gen";
+import { getProgramByUrlTitleOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
 import type { ProgramRead, ProgramYearRead, SpecialisationRead } from "@/api";
 import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import urlFormatter from "@/utils/urlFormatter";
 import NotFound from "@/components/NotFound";
+import InfoThumbnailCard from "@/components/InfoThumbnailCard";
 import {
 	buildProgramYearHref,
 	buildSpecialisationHref,
 } from "@/utils/pluggHrefBuilders";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 function getProgramSlug(param: string | string[] | undefined) {
 	if (Array.isArray(param)) {
@@ -46,55 +39,15 @@ function LocalizedDescription({
 		return <p className="text-sm text-muted-foreground italic">{fallback}</p>;
 	}
 
-	return <p className="text-sm leading-relaxed whitespace-pre-wrap">{text}</p>;
-}
-
-function InfoThumbnailCard({
-	title,
-	description,
-	imageId,
-	emptyDescriptionText,
-	href,
-}: {
-	title: string;
-	description: string | null;
-	imageId: number | null;
-	emptyDescriptionText: string;
-	href: string;
-}) {
 	return (
-		<Card className="h-full overflow-hidden transition-shadow hover:shadow-md">
-			{imageId ? (
-				<div className="relative h-36 w-full bg-muted">
-					<ImageDisplay
-						type="associated_img"
-						imageId={imageId}
-						alt={`Associated image for ${title}`}
-						className="object-cover"
-						size="medium"
-						fill
-					/>
-				</div>
-			) : null}
-			<CardHeader className="space-y-2 pb-2">
-				<CardTitle className="text-lg leading-tight">
-					<Link href={href} className="hover:underline">
-						{title}
-					</Link>
-				</CardTitle>
-			</CardHeader>
-			<CardContent>
-				<LocalizedDescription
-					text={description}
-					fallback={emptyDescriptionText}
-				/>
-			</CardContent>
-		</Card>
+		<div className="prose max-w-none text-sm leading-relaxed dark:prose-invert">
+			<Markdown remarkPlugins={[remarkGfm]}>{text}</Markdown>
+		</div>
 	);
 }
 
 export default function ProgramPage() {
-	const { t, i18n } = useTranslation();
+	const { t, i18n } = useTranslation("plugg");
 	const router = useRouter();
 	const params = useParams();
 	const isSwedish = (i18n.resolvedLanguage ?? i18n.language)
@@ -105,93 +58,32 @@ export default function ProgramPage() {
 	);
 
 	const {
-		data: allPrograms,
-		error: allProgramsError,
+		data: detailedProgram,
+		error: programError,
 		isPending,
 		isFetching,
 	} = useQuery({
-		...getAllProgramsOptions(),
+		...getProgramByUrlTitleOptions({
+			path: { title: programSlug },
+		}),
 		refetchOnWindowFocus: false,
-    staleTime: 60*60*1000, // 1 hour
+		staleTime: 60 * 60 * 1000, // 1 hour
 		refetchOnMount: "always",
 	});
 
-	const isLoadingAllPrograms = !allPrograms && (isPending || isFetching);
+	const isLoadingProgram = !detailedProgram && (isPending || isFetching);
 
-	const selectedProgramFromList = (allPrograms ?? []).find((program) => {
-		return (
-			urlFormatter(program.title_sv) === programSlug ||
-			urlFormatter(program.title_en) === programSlug
-		);
-	});
-
-	const hasProgramMatch = typeof selectedProgramFromList?.program_id === "number";
-	const selectedProgramId = selectedProgramFromList?.program_id;
-
-	const {
-		data: detailedProgram,
-		error: programError,
-		fetchStatus: programFetchStatus,
-		status: programStatus,
-	} = useQuery({
-		...getProgramOptions({ path: { program_id: selectedProgramId ?? 0 } }),
-		enabled: hasProgramMatch,
-		refetchOnWindowFocus: false,
-    staleTime: 60*60*1000, // 1 hour
-		refetchOnMount: "always",
-	});
-
-	const isProgramDetailActivelyLoading =
-		hasProgramMatch &&
-		!detailedProgram &&
-		programFetchStatus === "fetching";
-	const isProgramDetailStuckIdlePending =
-		hasProgramMatch &&
-		!detailedProgram &&
-		programStatus === "pending" &&
-		programFetchStatus === "idle";
-
-	if (isLoadingAllPrograms) {
+	if (isLoadingProgram) {
 		return <LoadingErrorCard />;
 	}
 
-	if (allProgramsError) {
-    // We couldn't fetch the list of programs at all
-		return <LoadingErrorCard error={allProgramsError} />;
-	}
-
-	if (isProgramDetailActivelyLoading) {
-    // We have a matching program from the list, but we're still loading the detailed data for it
-		return <LoadingErrorCard />;
-	}
-
-	if (programError && hasProgramMatch) {
-    // We have a matching program from the list, but fetching the detailed data resulted in an error
+	if (programError) {
 		return <LoadingErrorCard error={programError} />;
 	}
 
-	if (isProgramDetailStuckIdlePending) {
-    // We have a matching program from the list, but the detailed data query is stuck in pending/idle without loading. 
-		return (
-			<LoadingErrorCard
-				error={new Error("Program details request did not complete")}
-			/>
-		);
-	}
-
-	if (!detailedProgram && hasProgramMatch) {
-		return <LoadingErrorCard error={new Error("Program details are missing")} />;
-	}
-
-	if (!hasProgramMatch) {
-		const random = Math.random();
-		return (
-			<NotFound random={random} />
-		);
-	}
-
 	if (!detailedProgram) {
-		return <LoadingErrorCard />;
+		const random = Math.random();
+		return <NotFound random={random} />;
 	}
 
 	const program: ProgramRead = detailedProgram;
@@ -223,17 +115,17 @@ export default function ProgramPage() {
 				<div className="space-y-2">
 					<Button variant="outline" onClick={() => router.push("/plugg")}>
 						<ArrowLeft />
-						{t("plugg:navbar.back")}
+						{t("program.back")}
 					</Button>
 					<h1 className="text-3xl font-bold leading-tight md:text-4xl">
 						{localizedTitle}
 					</h1>
 					<div className="flex flex-wrap gap-2">
 						<Badge variant="secondary">
-							{programYears.length} {t("plugg:program_page.years_label")}
+							{programYears.length} {t("program.program_page.years_label")}
 						</Badge>
 						<Badge variant="secondary">
-							{specialisations.length} {t("plugg:navbar.specialisations")}
+							{specialisations.length} {t("program.specialisations")}
 						</Badge>
 					</div>
 				</div>
@@ -255,18 +147,18 @@ export default function ProgramPage() {
 				<CardContent className="pt-6">
 					<LocalizedDescription
 						text={localizedDescription}
-						fallback={t("plugg:program_page.program_description_fallback")}
+						fallback={t("program.program_page.program_description_fallback")}
 					/>
 				</CardContent>
 			</Card>
 
 			<section className="mb-10">
 				<h2 className="text-2xl font-semibold">
-					{t("plugg:program_page.program_years_title")}
+					{t("program.program_page.program_years_title")}
 				</h2>
 				{programYears.length === 0 ? (
 					<p className="text-sm text-muted-foreground">
-						{t("plugg:program_page.program_years_empty")}
+						{t("program.program_page.program_years_empty")}
 					</p>
 				) : (
 					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -285,7 +177,7 @@ export default function ProgramPage() {
 									imageId={year.associated_img_id}
 									href={yearHref}
 									emptyDescriptionText={t(
-										"plugg:program_page.year_description_fallback",
+										"program.program_page.year_description_fallback",
 									)}
 								/>
 							);
@@ -295,12 +187,12 @@ export default function ProgramPage() {
 			</section>
 
 			<section>
-					<h2 className="text-2xl font-semibold">
-						{t("plugg:navbar.specialisations")}
-					</h2>
+				<h2 className="text-2xl font-semibold">
+					{t("program.specialisations")}
+				</h2>
 				{specialisations.length === 0 ? (
 					<p className="text-sm text-muted-foreground">
-						{t("plugg:program_page.specialisations_empty")}
+						{t("program.program_page.specialisations_empty")}
 					</p>
 				) : (
 					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -322,7 +214,7 @@ export default function ProgramPage() {
 									imageId={specialisation.associated_img_id}
 									href={specialisationHref}
 									emptyDescriptionText={t(
-										"plugg:program_page.specialisation_description_fallback",
+										"program.program_page.specialisation_description_fallback",
 									)}
 								/>
 							);
