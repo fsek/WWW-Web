@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
 	deleteCourseDocumentMutation,
 	getAllDocumentsFromCourseQueryKey,
+	getCourseQueryKey,
 	updateCourseDocumentMutation,
 } from "@/api/@tanstack/react-query.gen";
 import { CategoryEnum, type CategoryEnum as CategoryEnumType } from "@/api";
@@ -93,6 +94,11 @@ export default function CourseEditForm({ onClose, item }: CourseEditFormProps) {
 					path: { course_id: item?.course_id ?? convertedItem?.course_id ?? 0 },
 				}),
 			});
+			queryClient.invalidateQueries({
+				queryKey: getCourseQueryKey({
+					path: { course_id: item?.course_id ?? convertedItem?.course_id ?? 0 },
+				}),
+			});
 			toast.success(t("courses.course_documents.edit_success"));
 		},
 		onError: (error) => {
@@ -111,6 +117,11 @@ export default function CourseEditForm({ onClose, item }: CourseEditFormProps) {
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: getAllDocumentsFromCourseQueryKey({
+					path: { course_id: item?.course_id ?? convertedItem?.course_id ?? 0 },
+				}),
+			});
+			queryClient.invalidateQueries({
+				queryKey: getCourseQueryKey({
 					path: { course_id: item?.course_id ?? convertedItem?.course_id ?? 0 },
 				}),
 			});
