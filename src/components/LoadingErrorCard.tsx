@@ -6,13 +6,14 @@ import { useEffect, useState, type FC } from "react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import getErrorMessage from "@/help_functions/getErrorMessage";
+import { ApiError } from "@/types/api-error";
 
 function getRandomMessage() {
 	return `main:loading.flavor_${Math.floor(Math.random() * 8) + 1}`;
 }
 
 interface LoadingErrorCardProps {
-	error?: Error | string;
+	error?: ApiError | string;
 	isLoading?: boolean;
 	loadingMessage?: string;
 	errorHomeButton?: boolean;

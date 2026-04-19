@@ -1,0 +1,77 @@
+{
+	"navbar": {
+		"back": "Till startsidan",
+		"toggle_menu": "Visa meny",
+		"mobile_navigation": "Mobil navigering",
+		"loading": "Laddar program...",
+		"load_error": "Kunde inte ladda navigeringen.",
+		"empty": "Inga program tillgängliga.",
+		"specialisations": "Inriktningar",
+		"no_courses": "Inga kurser ännu",
+		"open_program": "Öppna programsida"
+	},
+	"page": {
+		"title": "Plugg",
+		"intro": "Välkommen! På denna sida hittar du allt du behöver för att ta dig igenom alla dina år på LTH.",
+		"contact_notice_title": "Har du frågor eller behöver hjälp?",
+		"contact_notice_text": "Om du vill lägga till material, rapportera problem eller har andra frågor, skicka ett mejl till oss till plugg@fsektionen.se (eller klicka på denna ruta).",
+		"section_programs_title": "Program",
+		"section_programs_text": "Använd den översta raden i navbaren för att byta program och visa respektive årskurs.",
+		"section_courses_title": "Kurser",
+		"section_courses_text": "Varje årskurs har en egen kursmeny. Välj en kurs för att hoppa direkt till relevant material.",
+		"section_specialisations_title": "Inriktningar",
+		"section_specialisations_text": "Inriktningar är grupperade per program i separata menyer för snabb åtkomst.",
+		"footer_note": "Tycker du om design eller kod? Tror du att du hade kunnat förbättra denna sida eller hjälpa till med nya funktioner till webben, servern eller appen? Sök till spindelman under nästa hösttermin!"
+	},
+	"program": {
+		"back": "Tillbaka",
+		"specialisations": "Inriktningar",
+		"program_page": {
+			"years_label": "tillagda årskurser",
+			"program_years_title": "Årskurser",
+			"program_years_empty": "Inga årskurser tillagda ännu.",
+			"specialisations_empty": "Inga inriktningar tillagda ännu.",
+			"program_description_fallback": "Ingen beskrivning tillgänglig för detta program ännu.",
+			"year_description_fallback": "Ingen beskrivning tillagd för denna årskurs.",
+			"specialisation_description_fallback": "Ingen beskrivning tillagd för denna inriktning."
+		},
+		"program_year_page": {
+			"courses_label": "kurser",
+			"courses_title": "Kurser",
+			"no_courses": "Inga kurser ännu",
+			"year_description_fallback": "Ingen beskrivning tillagd för denna årskurs.",
+			"course_description_fallback": "Ingen kursbeskrivning tillagd ännu."
+		}
+	},
+	"courses": {
+		"back": "Tillbaka",
+		"course_code_badge": "Kurskod: {{code}}",
+		"course_code_missing": "Kurskod saknas",
+		"updated_badge": "Uppdaterad: {{date}}",
+		"documents_badge": "{{count}} dokument",
+		"description_fallback": "Ingen kursbeskrivning har lagts till ännu.",
+		"documents": {
+			"title": "Kursmaterial",
+			"empty": "Inga dokument har lagts till för denna kurs ännu.",
+			"open": "Öppna fil",
+			"author": "Författare",
+			"updated_at": "Uppdaterad",
+			"file_name": "Fil",
+			"general_subcategory": "Allmänt",
+			"categories": {
+				"notes": "Anteckningar",
+				"summary": "Sammanfattningar",
+				"solutions": "Lösningar",
+				"other": "Övrigt"
+			}
+		}
+	},
+	"specialisations": {
+		"back": "Tillbaka",
+		"courses_label": "kurser",
+		"courses_title": "Kurser",
+		"no_courses": "Inga kurser ännu",
+		"description_fallback": "Ingen beskrivning tillagd för denna specialisering.",
+		"course_description_fallback": "Ingen kursbeskrivning tillagd ännu."
+	}
+}

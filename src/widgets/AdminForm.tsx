@@ -30,6 +30,7 @@ import { useTranslation } from "react-i18next";
 import { Textarea } from "@/components/ui/textarea";
 import { SelectFromOptions } from "./SelectFromOptions";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
+import StyledMultiSelect from "@/components/StyledMultiSelect";
 
 type BaseAdminFormInputField<T extends FieldValues> = {
 	name: Path<T>;
@@ -57,12 +58,27 @@ type SelectFromOptionsAdminFormInputField<T extends FieldValues> =
 		placeholder?: string;
 	};
 
+type StyledMultiSelectAdminFormInputField<T extends FieldValues> =
+	BaseAdminFormInputField<T> & {
+		variant: "styledMultiSelect";
+		options: { value: string | number; label: string }[];
+		placeholder?: string;
+	};
+
+type FileAdminFormInputField<T extends FieldValues> =
+	BaseAdminFormInputField<T> & {
+		variant: "file";
+		accept?: string;
+	};
+
 // Implement further cases here
 
 export type AdminFormInputField<T extends FieldValues> =
 	| TextAdminFormInputField<T>
 	| TextareaAdminFormInputField<T>
-	| SelectFromOptionsAdminFormInputField<T>;
+	| SelectFromOptionsAdminFormInputField<T>
+	| StyledMultiSelectAdminFormInputField<T>
+	| FileAdminFormInputField<T>;
 
 export interface AdminFormProps<T extends FieldValues> {
 	title: string;
@@ -85,6 +101,7 @@ export interface AdminFormProps<T extends FieldValues> {
 	confirmDeleteDialogTitle?: string;
 	confirmDeleteDialogDescription?: string;
 	confirmDeleteDialogConfirmByTyping?: boolean;
+	confirmDeleteDialogConfirmByTypingText?: string;
 	confirmDeleteDialogConfirmByTypingKey?: string;
 }
 
@@ -111,6 +128,7 @@ export default function AdminForm<T extends FieldValues>({
 	confirmDeleteDialogDescription,
 	confirmDeleteDialogConfirmByTyping = false,
 	confirmDeleteDialogConfirmByTypingKey,
+	confirmDeleteDialogConfirmByTypingText = `Write "${confirmDeleteDialogConfirmByTypingKey}" to confirm deletion.`,
 }: AdminFormProps<T>) {
 	const [internalOpen, setInternalOpen] = useState(false);
 	const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
@@ -278,6 +296,69 @@ export default function AdminForm<T extends FieldValues>({
 												)}
 											/>
 										);
+									case "styledMultiSelect":
+										return (
+											<FormField
+												key={inputField.name}
+												control={genericForm.control}
+												name={inputField.name}
+												render={({ field }) => {
+													const selectedValues = Array.isArray(field.value)
+														? (field.value as Array<string | number>)
+														: [];
+													return (
+														<FormItem
+															className={getColSpanClass(inputField.colSpan)}
+														>
+															<FormLabel>{inputField.label}</FormLabel>
+															<FormControl>
+																<StyledMultiSelect
+																	isMulti
+																	placeholder={inputField.placeholder}
+																	options={inputField.options}
+																	value={inputField.options.filter((option) =>
+																		selectedValues.includes(option.value),
+																	)}
+																	onChange={(options) => {
+																		const vals = Array.isArray(options)
+																			? options.map((o) => o.value)
+																			: [];
+																		field.onChange(vals);
+																	}}
+																/>
+															</FormControl>
+															<FormMessage />
+														</FormItem>
+													);
+												}}
+											/>
+										);
+									case "file":
+										return (
+											<FormField
+												key={inputField.name}
+												control={genericForm.control}
+												name={inputField.name}
+												render={({ field: { value: _value, ...field } }) => (
+													<FormItem
+														className={getColSpanClass(inputField.colSpan)}
+													>
+														<FormLabel>{inputField.label}</FormLabel>
+														<FormControl>
+															<Input
+																{...field}
+																type="file"
+																accept={inputField.accept}
+																onChange={(event) => {
+																	field.onChange(event.target.files?.[0]);
+																}}
+															/>
+														</FormControl>
+														<FormMessage />
+													</FormItem>
+												)}
+											/>
+										);
 									// Implement further cases here
 									default:
 										return null;
@@ -300,6 +381,9 @@ export default function AdminForm<T extends FieldValues>({
 												title={confirmDeleteDialogTitle}
 												description={confirmDeleteDialogDescription}
 												confirmByTyping={confirmDeleteDialogConfirmByTyping}
+												confirmByTypingText={
+													confirmDeleteDialogConfirmByTypingText
+												}
 												confirmByTypingKey={
 													confirmDeleteDialogConfirmByTypingKey
 												}

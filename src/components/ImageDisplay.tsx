@@ -5,6 +5,8 @@ import {
 	getImageStreamOptions,
 	getNewsImageOptions,
 	getNewsImageStreamOptions,
+	getAssociatedImageOptions,
+	getAssociatedImageStreamOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -12,7 +14,7 @@ import type { ImageProps as NextImageProps } from "next/image";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export type ImageKind = "image" | "news" | "event" | "user";
+export type ImageKind = "image" | "news" | "event" | "user" | "associated_img";
 export type ImageSize = "small" | "medium" | "large" | "original";
 
 export interface ImageDisplayProps extends Omit<NextImageProps, "src" | "id"> {
@@ -40,6 +42,13 @@ export function useImageBlobActions(type: ImageKind, imageId?: number | null) {
 				});
 			// case "event":
 			// case "user":
+			case "associated_img":
+				if (devMode) {
+					return getAssociatedImageStreamOptions({ path: { img_id: imageId } });
+				}
+				return getAssociatedImageOptions({
+					path: { img_id: imageId, size: "original" },
+				});
 			default:
 				if (devMode) {
 					return getImageStreamOptions({ path: { img_id: imageId } });
@@ -143,6 +152,23 @@ export default function ImageDisplay({
 			break;
 		// case "event":
 		// case "user":
+		case "associated_img":
+			if (devMode) {
+				queryOptions = {
+					...getAssociatedImageStreamOptions({ path: { img_id: imageId } }),
+					enabled: !!imageId && enabled,
+					refetchOnWindowFocus: false,
+				};
+			} else {
+				queryOptions = {
+					...getAssociatedImageOptions({
+						path: { img_id: imageId, size: size },
+					}),
+					enabled: !!imageId && enabled,
+					refetchOnWindowFocus: false,
+				};
+			}
+			break;
 		default:
 			if (devMode) {
 				queryOptions = {
