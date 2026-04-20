@@ -4,7 +4,7 @@ import ResetPasswordForm from "@/components/ResetPasswordForm";
 import mh from "@/assets/mh.jpg";
 import Image from "next/image";
 import FLogga from "@/assets/f-logga";
-import { useRef, useState } from "react";
+import { type JSX, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
