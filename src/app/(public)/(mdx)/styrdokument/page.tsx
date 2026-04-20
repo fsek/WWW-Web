@@ -2,8 +2,6 @@
 import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
 
-// Don't copy this file, it's not generic
-
 const MDXPages: Record<string, React.ComponentType> = {
 	sv: dynamic(() => import("./page.sv.mdx")),
 	en: dynamic(() => import("./page.en.mdx")),
