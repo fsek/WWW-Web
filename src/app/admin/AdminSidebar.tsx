@@ -209,6 +209,17 @@ const groups: AdminGroup[] = [
 		],
 	},
 	{
+		title: "admin:categories.board",
+		entries: [
+			{
+				title: "admin:keyvals.self",
+				url: "/admin/keyvals",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.KEYVALS]],
+				icon: List,
+			},
+		],
+	},
+	{
 		title: "admin:categories.spider",
 		entries: [
 			{

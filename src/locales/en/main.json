@@ -71,6 +71,11 @@
 				"desc": "Here you can find all the fine documents that have been produced.",
 				"href": "/documents"
 			},
+			"ruling_doc": {
+				"self": "Regulatory Documents",
+				"desc": "Read the fundamental documents that govern our guild.",
+				"href": "/styrdokument"
+			},
 			"privacy": {
 				"self": "Privacy Policy",
 				"desc": "Learn more about how we handle your personal data.",

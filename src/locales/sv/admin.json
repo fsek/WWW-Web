@@ -37,6 +37,7 @@
 		"songs": "Sånger",
 		"spider": "Spindel",
 		"nollning": "Nollning",
+		"board": "Styrelse och liknande",
 		"elections": "Val"
 	},
 	"news": {
@@ -825,6 +826,25 @@
 		"confirm_remove": "Bekräfta borttagning av sång",
 		"confirm_remove_text": "Är du säker på att du vill ta bort denna sång?",
 		"view_song": "Visa sångdetaljer"
+	},
+	"keyvals": {
+		"self": "Nyckelvärden",
+		"title": "Hantera nyckelvärden",
+		"description_subtitle": "OBS OBS OBS! Dessa nyckelvärden är synliga för alla, även icke-inloggade. Lägg inga hemlisar här. Du kan däremot gärna lägga länkar som ska vara enkla att uppdatera, t.ex. de som finns på styrdokumentsidan.",
+		"create_keyval": "Skapa nyckelvärde",
+		"edit_keyval": "Redigera nyckelvärde",
+		"key": "Nyckel",
+		"key_placeholder": "lank_till_ngt",
+		"value": "Värde",
+		"value_placeholder": "/wow/detta/kan/t.om./vara/en/relativ/länk",
+		"create_success": "Nyckelvärdet har skapats",
+		"create_error": "Kunde inte skapa nyckelvärdet",
+		"edit_success": "Nyckelvärdet har uppdaterats",
+		"edit_error": "Kunde inte uppdatera nyckelvärdet",
+		"remove_success": "Nyckelvärdet har tagits bort",
+		"remove_error": "Kunde inte ta bort nyckelvärdet",
+		"confirm_remove": "Bekräfta borttagning av nyckelvärde",
+		"confirm_remove_text": "Är du säker på att du vill ta bort detta nyckelvärde?"
 	},
 	"event_signup": {
 		"title": "Eventanmälningar",
