@@ -4,7 +4,7 @@
 	"calendar": "Kalender",
 	"calendarText": "Här kan du se sektionens kalender med kommande evenemang. Klicka för att gå till stora kalendersidan och scrolla sedan ner för information om hur du lägger till detta i din egen kalenderapp.",
 	"welcome": "Välkommen till nya hemsidan för F-sektionen!",
-	"welcomeText": "Just nu är vi i en övergångsperiod till vår nya hemsida. Vi jobbar med att kontinuerligt förbättra design och funktionalitet, och lägga till saker som just nu saknas gentemot den gamla hemsidan. Den går fortfarande att använda på old.fsektionen.se. Eftersom vi dessutom har bytt ut servern och databasen är det nya och gamla systemet separerade: om du har gamla konton, lokalbokningar, inställningar, bilbokningar etc. så kommer de inte vara tillgängliga genom den nya webben och du kommer att behöva göra nya. OBS! Vi planerar att göra oss av med den gamla hemsidan helt inom en snar framtid, så försök att i största mån att använda den nya. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
+	"welcomeText": "Just nu är vi (fortfarande) i en övergångsperiod till vår nya hemsida. Vi jobbar med att kontinuerligt förbättra design och funktionalitet. Om du hade ett konto på den gamla hemsidan och vill fortfarande använda fsektionen.se måste du tyvärr skapa ett nytt konto. Om du har några frågor eller synpunkter, tveka inte att kontakta spindel via spindelman@fsektionen.se.",
 	"oldWebsiteButton": "Det var bättre förr...",
 	"welcomeAdmin": "Om du anser att du borde ha någon form av administratörsåtkomst, försök klicka på knappen nedan, i navigeringsfältet eller gå till fsektionen.se/admin. Om du fortfarande inte har åtkomst, kontakta utskottsordförande.",
 	"adminButton": "Administrationssidan",
@@ -28,8 +28,8 @@
 			"answer": "Skapa ett konto, verifiera din mejl och lägg till ditt Stil-ID (hi6122al-s) i användarinställningarna (kolla i övre högra hörnet). Efter detta måste du vänta på att vi ska se om du verkligen har medlemskap. I samband med terminsstart kan det ta längre tid än normalt. Om du känner att det tar för lång tid kan du kontakta din utskottsordförande, eller en fadder/föset under nollningen."
 		},
 		"q3": {
-			"question": "Vad har ni kvar att flytta över?",
-			"answer": "Det mesta finns redan överflyttat. För att läsa styrdokumenten i samlad form (de finns tillgängliga genom dokumentarkivet om du vet deras namn) eller använda motionsmaskinen kan du använda gamla hemsidan. Vi jobbar så hårt vi kan för att allt ska finnas på nya hemsidan 🧡."
+			"question": "Jag hittade en bugg eller har ett förslag! Vem kontaktar jag?",
+			"answer": "Skicka ett mail till spindelman@fsektionen.se! Det kan ta några dagar för oss att svara. Tack för att du hjälper till att göra vår hemsida eller app bättre 🧡."
 		},
 		"q4": {
 			"question": "Hjälp! Jag har inga av mina gamla adminrättigheter!",

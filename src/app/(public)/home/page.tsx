@@ -46,17 +46,6 @@ export default function MainLanding() {
 							variant="outline"
 						>
 							<Link
-								href="https://old.fsektionen.se"
-								className=" w-full md:w-auto flex justify-center to-primary-light from-primary bg-gradient-to-t text-transparent bg-clip-text"
-							>
-								{t("main:oldWebsiteButton")}
-							</Link>
-						</Button>
-						<Button
-							className="w-full md:w-auto text-xl py-3 px-6 rounded-lg flex items-center justify-center gap-2"
-							variant="outline"
-						>
-							<Link
 								href="/admin"
 								className=" w-full md:w-auto flex justify-center to-primary-light from-primary bg-gradient-to-t text-transparent bg-clip-text"
 							>
@@ -129,7 +118,7 @@ export default function MainLanding() {
 						className="text-center text-2xl font-bold mt-4 mb-2"
 					/>
 					<div className="text-left text-lg mb-8">{t("main:cafeText")}</div>
-					<div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-3 justify-center">
+					<div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-3 justify-center pb-20">
 						<Button
 							variant="outline"
 							className="w-full md:w-auto text-xl py-3 px-6 rounded-lg flex items-center justify-center gap-2"
@@ -152,14 +141,6 @@ export default function MainLanding() {
 								{t("main:cafe_shift_button")}
 							</Link>
 						</Button>
-					</div>
-
-					<CustomTitle
-						text={t("main:coolThing")}
-						className="text-center text-2xl font-bold mt-4 mb-2"
-					/>
-					<div className="overflow-clip mb-10">
-						<WaveAnimation />
 					</div>
 				</div>
 			</div>
