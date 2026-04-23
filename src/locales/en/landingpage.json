@@ -23,11 +23,6 @@
 			"contact": {
 				"label": "Contact",
 				"href": "/contact"
-			},
-			"old": {
-				"label": "Old Page",
-				"href": "https://old.fsektionen.se",
-				"className": "text-foreground/40 hover:text-foreground/60 transition-colors"
 			}
 		}
 	},

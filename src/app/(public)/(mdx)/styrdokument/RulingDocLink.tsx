@@ -65,7 +65,11 @@ export default function RulingDocLink({
 		!primaryHref && !!fallbackHref && fallbackHref !== "";
 
 	if (!href) {
-		return <>{children}</>;
+		return (
+			<span className="text-red-700" title={`Saknar nyckel ${docKey}`}>
+				{children}
+			</span>
+		);
 	}
 
 	return (
