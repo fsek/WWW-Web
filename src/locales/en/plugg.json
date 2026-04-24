@@ -47,7 +47,7 @@
 		"back": "Back",
 		"course_code_badge": "Course code: {{code}}",
 		"course_code_missing": "Course code unavailable",
-		"updated_badge": "Updated: {{date}}",
+		"updated_badge": "Page last updated: {{date}}",
 		"documents_badge": "{{count}} documents",
 		"description_fallback": "No course description has been added yet.",
 		"documents": {

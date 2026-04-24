@@ -18,6 +18,8 @@ import NotFound from "@/components/NotFound";
 import { buildCourseDocumentFileHref } from "@/utils/pluggHrefBuilders";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-mathjax";
 
 const GENERAL_SUB_CATEGORY_KEY = "__general__";
 
@@ -48,8 +50,10 @@ function LocalizedDescription({
 	}
 
 	return (
-		<div className="prose max-w-none text-sm leading-relaxed dark:prose-invert">
-			<Markdown remarkPlugins={[remarkGfm]}>{text}</Markdown>
+		<div className="prose prose-sm max-w-none leading-relaxed prose-headings:text-foreground prose-p:text-foreground/90 prose-strong:text-foreground prose-a:text-primary md:prose-base dark:prose-invert">
+			<Markdown remarkPlugins={[remarkGfm, remarkMath, rehypeKatex]}>
+				{text}
+			</Markdown>
 		</div>
 	);
 }
@@ -74,7 +78,7 @@ function CourseDocumentList({
 	const locale = isSwedish ? "sv-SE" : "en-GB";
 
 	return (
-		<Card className="overflow-hidden py-0">
+		<Card className="overflow-hidden border-border/70 bg-card py-0 shadow-sm">
 			<CardContent className="p-0">
 				<ul>
 					{documents.map((document, index) => (
@@ -83,14 +87,14 @@ function CourseDocumentList({
 								type="button"
 								variant="ghost"
 								onClick={() => onOpen(document.course_document_id)}
-								className="group h-auto w-full items-start justify-between gap-3 rounded-none px-4 py-4 text-left whitespace-normal font-normal transition-colors hover:bg-muted/40 md:px-6"
+								className="group h-auto w-full items-start justify-between gap-3 rounded-none px-4 py-5 text-left whitespace-normal font-normal transition-colors hover:bg-muted/50 md:px-6"
 							>
 								<div className="flex min-w-0 items-start gap-3 md:gap-4">
-									<div className="mt-0.5 rounded-md bg-muted p-2 text-muted-foreground">
+									<div className="mt-0.5 rounded-md bg-primary/10 p-2 text-primary">
 										<FileText className="size-4" />
 									</div>
 									<div className="min-w-0">
-										<p className="truncate text-sm font-medium md:text-base">
+										<p className="truncate text-sm font-medium md:text-base group-hover:text-foreground">
 											{document.title}
 										</p>
 										<p className="mt-1 truncate text-sm text-muted-foreground">
@@ -107,7 +111,7 @@ function CourseDocumentList({
 										</div>
 									</div>
 								</div>
-								<div className="mt-1 hidden items-center gap-1 text-sm text-primary group-hover:underline md:flex">
+								<div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground group-hover:text-foreground group-hover:underline">
 									{openLabel}
 									<ExternalLink className="size-4" />
 								</div>
@@ -243,10 +247,6 @@ export default function CoursePage() {
 					id: category,
 					label: translatedCategoryByValue[category] ?? category,
 					subCategories,
-					totalDocuments: subCategories.reduce(
-						(total, subCategory) => total + subCategory.documents.length,
-						0,
-					),
 				};
 			})
 			.sort((first, second) => {
@@ -280,30 +280,10 @@ export default function CoursePage() {
 	});
 
 	return (
-		<div className="mx-auto min-h-[calc(100vh-5rem)] w-full max-w-6xl px-4 py-8 md:px-6 md:py-10">
-			<div className="mb-6 space-y-4">
-				<Button variant="outline" onClick={() => router.back()}>
-					<ArrowLeft />
-					{t("courses.back")}
-				</Button>
-
-				<div className="space-y-2">
-					<h1 className="text-3xl font-bold leading-tight md:text-4xl">
-						{course.title}
-					</h1>
-					<div className="flex flex-wrap gap-2">
-						<Badge variant="secondary">{courseCodeBadge}</Badge>
-						<Badge variant="secondary">{courseUpdatedBadge}</Badge>
-						<Badge variant="secondary">
-							{t("courses.documents_badge", { count: courseDocuments.length })}
-						</Badge>
-					</div>
-				</div>
-			</div>
-
-			<Card className="mb-8 overflow-hidden">
+		<div className="min-h-[calc(100vh-5rem)] pb-16">
+			<section className="relative left-1/2 right-1/2 -mx-[50vw] mb-12 w-screen overflow-hidden border-b border-primary/25">
 				{course.associated_img_id ? (
-					<div className="relative h-56 w-full bg-muted md:h-72">
+					<div className="absolute inset-0">
 						<ImageDisplay
 							type="associated_img"
 							imageId={course.associated_img_id}
@@ -314,98 +294,132 @@ export default function CoursePage() {
 						/>
 					</div>
 				) : null}
-				<CardContent className="pt-6">
-					<LocalizedDescription
-						text={course.description}
-						fallback={t("courses.description_fallback")}
-					/>
-				</CardContent>
-			</Card>
+				<div className="absolute inset-0 bg-gradient-to-r from-primary/75 via-primary/60 to-primary/70" />
+				<div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.28)_0%,rgba(255,255,255,0.06)_45%,rgba(0,0,0,0.15)_100%)]" />
+				<div className="relative mx-auto flex w-full max-w-6xl flex-col gap-7 px-4 py-12 text-primary-foreground md:px-6 md:py-16">
+					<Button
+						variant="secondary"
+						onClick={() => router.back()}
+						className="w-fit border border-primary-foreground/35 bg-background/15 text-primary-foreground backdrop-blur-sm hover:bg-background/25"
+					>
+						<ArrowLeft />
+						{t("courses.back")}
+					</Button>
 
-			<section>
-				<h2 className="mb-4 text-2xl font-semibold">
-					{t("courses.documents.title")}
-				</h2>
-
-				{groupedDocuments.length === 0 ? (
-					<p className="text-sm text-muted-foreground">
-						{t("courses.documents.empty")}
-					</p>
-				) : (
-					<div className="space-y-8">
-						{groupedDocuments.map((categoryGroup) => {
-							const shouldShowTabs = categoryGroup.subCategories.length > 1;
-							const firstSubCategory = categoryGroup.subCategories[0];
-
-							return (
-								<section key={categoryGroup.id} className="space-y-4">
-									<div className="flex flex-wrap items-baseline justify-between gap-2">
-										<h3 className="text-xl font-semibold">
-											{categoryGroup.label}
-										</h3>
-										<p className="text-sm text-muted-foreground">
-											{t("courses.documents_badge", {
-												count: categoryGroup.totalDocuments,
-											})}
-										</p>
-									</div>
-
-									{shouldShowTabs ? (
-										<Tabs defaultValue={firstSubCategory?.id}>
-											<TabsList className="h-auto w-full flex-wrap justify-start gap-2 bg-transparent p-0">
-												{categoryGroup.subCategories.map((subCategory) => (
-													<TabsTrigger
-														key={`${categoryGroup.id}-${subCategory.id}`}
-														value={subCategory.id}
-														className="h-9 rounded-full border bg-muted px-4 data-[state=active]:border-primary dark:data-[state=active]:border-primary"
-													>
-														{subCategory.label}
-													</TabsTrigger>
-												))}
-											</TabsList>
-
-											{categoryGroup.subCategories.map((subCategory) => (
-												<TabsContent
-													key={`${categoryGroup.id}-content-${subCategory.id}`}
-													value={subCategory.id}
-												>
-													<CourseDocumentList
-														documents={subCategory.documents}
-														isSwedish={isSwedish}
-														authorLabel={t("courses.documents.author")}
-														updatedAtLabel={t("courses.documents.updated_at")}
-														fileNameLabel={t("courses.documents.file_name")}
-														openLabel={t("courses.documents.open")}
-														onOpen={openCourseDocument}
-													/>
-												</TabsContent>
-											))}
-										</Tabs>
-									) : firstSubCategory ? (
-										<div className="space-y-3">
-											{firstSubCategory.id !== GENERAL_SUB_CATEGORY_KEY ? (
-												<p className="text-sm text-muted-foreground">
-													{firstSubCategory.label}
-												</p>
-											) : null}
-
-											<CourseDocumentList
-												documents={firstSubCategory.documents}
-												isSwedish={isSwedish}
-												authorLabel={t("courses.documents.author")}
-												updatedAtLabel={t("courses.documents.updated_at")}
-												fileNameLabel={t("courses.documents.file_name")}
-												openLabel={t("courses.documents.open")}
-												onOpen={openCourseDocument}
-											/>
-										</div>
-									) : null}
-								</section>
-							);
-						})}
+					<div className="space-y-3">
+						<h1 className="max-w-4xl text-3xl font-bold leading-tight tracking-tight md:text-5xl">
+							{course.title}
+						</h1>
+						<div className="flex flex-wrap gap-2.5">
+							<Badge className="border border-primary/15 bg-primary-foreground/95 text-primary shadow-sm">
+								{courseCodeBadge}
+							</Badge>
+							<Badge className="border border-primary/15 bg-primary-foreground/95 text-primary shadow-sm">
+								{courseUpdatedBadge}
+							</Badge>
+						</div>
 					</div>
-				)}
+				</div>
 			</section>
+
+			<div className="mx-auto w-full max-w-6xl space-y-12 px-4 md:px-6">
+				<section className="rounded-3xl border border-border/70 bg-gradient-to-b from-muted/35 to-background px-5 py-8 md:px-10 md:py-10">
+					<div className="mx-auto min-h-24">
+						<LocalizedDescription
+							text={course.description}
+							fallback={t("courses.description_fallback")}
+						/>
+					</div>
+				</section>
+
+				<section className="space-y-7">
+					<div className="flex flex-wrap items-baseline justify-between gap-3">
+						<h2 className="text-2xl font-semibold md:text-3xl">
+							{t("courses.documents.title")}
+						</h2>
+					</div>
+
+					{groupedDocuments.length === 0 ? (
+						<Card className="border-dashed border-primary/30">
+							<CardContent className="py-8 text-sm text-muted-foreground">
+								{t("courses.documents.empty")}
+							</CardContent>
+						</Card>
+					) : (
+						<div className="space-y-8">
+							{groupedDocuments.map((categoryGroup) => {
+								const shouldShowTabs = categoryGroup.subCategories.length > 1;
+								const firstSubCategory = categoryGroup.subCategories[0];
+
+								return (
+									<section
+										key={categoryGroup.id}
+										className="space-y-4 rounded-2xl border border-border/70 bg-card p-4 md:p-6"
+									>
+										<div className="flex flex-wrap items-baseline justify-between gap-2">
+											<h3 className="text-xl font-semibold text-foreground">
+												{categoryGroup.label}
+											</h3>
+										</div>
+
+										{shouldShowTabs ? (
+											<Tabs defaultValue={firstSubCategory?.id}>
+												<TabsList className="h-auto w-full flex-wrap justify-start gap-2 rounded-xl bg-muted/55 p-1.5">
+													{categoryGroup.subCategories.map((subCategory) => (
+														<TabsTrigger
+															key={`${categoryGroup.id}-${subCategory.id}`}
+															value={subCategory.id}
+															className="h-9 rounded-lg border border-transparent px-4 text-muted-foreground data-[state=active]:border-foreground/10 data-[state=active]:bg-background data-[state=active]:text-primary dark:data-[state=active]:text-primary"
+														>
+															{subCategory.label}
+														</TabsTrigger>
+													))}
+												</TabsList>
+
+												{categoryGroup.subCategories.map((subCategory) => (
+													<TabsContent
+														key={`${categoryGroup.id}-content-${subCategory.id}`}
+														value={subCategory.id}
+														className="mt-4"
+													>
+														<CourseDocumentList
+															documents={subCategory.documents}
+															isSwedish={isSwedish}
+															authorLabel={t("courses.documents.author")}
+															updatedAtLabel={t("courses.documents.updated_at")}
+															fileNameLabel={t("courses.documents.file_name")}
+															openLabel={t("courses.documents.open")}
+															onOpen={openCourseDocument}
+														/>
+													</TabsContent>
+												))}
+											</Tabs>
+										) : firstSubCategory ? (
+											<div className="space-y-3">
+												{firstSubCategory.id !== GENERAL_SUB_CATEGORY_KEY ? (
+													<p className="text-sm font-medium text-muted-foreground">
+														{firstSubCategory.label}
+													</p>
+												) : null}
+
+												<CourseDocumentList
+													documents={firstSubCategory.documents}
+													isSwedish={isSwedish}
+													authorLabel={t("courses.documents.author")}
+													updatedAtLabel={t("courses.documents.updated_at")}
+													fileNameLabel={t("courses.documents.file_name")}
+													openLabel={t("courses.documents.open")}
+													onOpen={openCourseDocument}
+												/>
+											</div>
+										) : null}
+									</section>
+								);
+							})}
+						</div>
+					)}
+				</section>
+			</div>
 		</div>
 	);
 }

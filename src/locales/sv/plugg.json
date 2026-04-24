@@ -47,7 +47,7 @@
 		"back": "Tillbaka",
 		"course_code_badge": "Kurskod: {{code}}",
 		"course_code_missing": "Kurskod saknas",
-		"updated_badge": "Uppdaterad: {{date}}",
+		"updated_badge": "Sidan uppdaterades senast: {{date}}",
 		"documents_badge": "{{count}} dokument",
 		"description_fallback": "Ingen kursbeskrivning har lagts till ännu.",
 		"documents": {
