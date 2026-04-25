@@ -8,7 +8,9 @@
 		"empty": "No programs available.",
 		"specialisations": "Specialisations",
 		"no_courses": "No courses yet",
-		"open_program": "Open program page"
+		"open_program": "Open program page",
+		"search_placeholder": "Search for whatever...",
+		"search_no_results": "No results"
 	},
 	"page": {
 		"title": "Plugg",

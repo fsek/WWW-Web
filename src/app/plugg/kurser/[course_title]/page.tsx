@@ -21,7 +21,6 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeMathjax from "rehype-mathjax";
-import Image from "next/image";
 
 const GENERAL_SUB_CATEGORY_KEY = "__general__";
 
@@ -326,17 +325,16 @@ export default function CoursePage() {
 					</>
 				) : (
 					<>
-						<div className="absolute inset-0">
-							<Image
-								src="/images/background.svg"
-								alt="Background pattern"
-								className="absolute inset-0 h-full w-full object-cover"
-								width={800}
-								height={600}
-								loading="eager"
-							/>
-						</div>
-						<div className="absolute inset-0 bg-black/5 dark:bg-white/5" />
+						<div
+							className="absolute inset-0"
+							style={{
+								backgroundColor: "#FFA64D",
+								backgroundImage: 'url("/images/line-in-motion.svg")',
+								backgroundRepeat: "repeat",
+								backgroundSize: "128px 128px",
+							}}
+						/>
+						<div className="absolute inset-0 bg-black/10 dark:bg-white/10" />
 					</>
 				)}
 				<div className="relative mx-auto flex w-full max-w-6xl flex-col gap-7 px-4 py-12 text-primary-foreground md:px-6 md:py-16">

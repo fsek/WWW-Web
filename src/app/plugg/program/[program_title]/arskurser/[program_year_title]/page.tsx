@@ -143,17 +143,16 @@ export default function ProgramPage() {
 					</>
 				) : (
 					<>
-						<div className="absolute inset-0">
-							<Image
-								src="/images/background.svg"
-								alt="Background pattern"
-								className="absolute inset-0 h-full w-full object-cover"
-								width={800}
-								height={600}
-								loading="eager"
-							/>
-						</div>
-						<div className="absolute inset-0 bg-black/5 dark:bg-white/5" />
+						<div
+							className="absolute inset-0"
+							style={{
+								backgroundColor: "#FFA64D",
+								backgroundImage: 'url("/images/line-in-motion.svg")',
+								backgroundRepeat: "repeat",
+								backgroundSize: "128px 128px",
+							}}
+						/>
+						<div className="absolute inset-0 bg-black/10 dark:bg-white/10" />
 					</>
 				)}
 

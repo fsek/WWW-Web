@@ -4,8 +4,9 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import FLogga from "@/assets/f-logga";
 import Link from "next/link";
-import { ArrowLeft, ChevronDown, Menu } from "lucide-react";
+import { ArrowLeft, Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -13,22 +14,9 @@ import { useQuery } from "@tanstack/react-query";
 import {
 	getAllProgramsOptions,
 	getAllProgramYearsOptions,
-	getAllSpecialisationsOptions,
 	getAllCoursesOptions,
 } from "@/api/@tanstack/react-query.gen";
-import type {
-	CourseRead,
-	ProgramRead,
-	ProgramYearRead,
-	SpecialisationRead,
-} from "@/api/types.gen";
-import {
-	DropdownMenu,
-	DropdownMenuTrigger,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+import type { CourseRead, ProgramRead, ProgramYearRead } from "@/api/types.gen";
 import {
 	Sheet,
 	SheetContent,
@@ -274,18 +262,29 @@ function useProgramMenus(isSwedish: boolean) {
 			};
 		});
 
-		result.sort((a, b) =>
-			collator.compare(
-				getLocalizedTitle(isSwedish, a.titleSv, a.titleEn),
-				getLocalizedTitle(isSwedish, b.titleSv, b.titleEn),
-			),
-		);
+		result.sort((a, b) => {
+			const titleA = getLocalizedTitle(isSwedish, a.titleSv, a.titleEn);
+			const titleB = getLocalizedTitle(isSwedish, b.titleSv, b.titleEn);
+			const aPriority = titleA.trim().toLocaleLowerCase().startsWith("teknisk")
+				? 0
+				: 1;
+			const bPriority = titleB.trim().toLocaleLowerCase().startsWith("teknisk")
+				? 0
+				: 1;
+
+			if (aPriority !== bPriority) {
+				return aPriority - bPriority;
+			}
+
+			return collator.compare(titleA, titleB);
+		});
 
 		return result;
 	}, [programsData, programYearsData, coursesData, isSwedish]);
 
 	return {
 		menus,
+		allCourses: (coursesData ?? []) as CourseRead[],
 		isLoading: isLoadingPrograms || isLoadingProgramYears || isLoadingCourses,
 		hasError:
 			Boolean(programsError) ||
@@ -329,7 +328,7 @@ export function NavBar() {
 						<Button
 							variant="outline"
 							size="sm"
-							className="gap-2 whitespace-nowrap shadow-sm backdrop-blur-md bg-white/80 dark:bg-background/80 pointer-events-auto"
+							className="hidden 2xl:inline-flex gap-2 whitespace-nowrap shadow-sm backdrop-blur-md bg-white/80 dark:bg-background/80 pointer-events-auto"
 							asChild
 						>
 							<Link href="/home">
@@ -390,11 +389,81 @@ export function NavBar() {
 
 export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 	const { t, i18n } = useTranslation();
+	const [searchQuery, setSearchQuery] = React.useState("");
 	const isSwedish = (i18n.resolvedLanguage ?? i18n.language)
 		.toLowerCase()
 		.startsWith("sv");
 
-	const { menus, isLoading, hasError } = useProgramMenus(isSwedish);
+	const { menus, allCourses, isLoading, hasError } = useProgramMenus(isSwedish);
+	const searchTerm = React.useMemo(
+		() => searchQuery.trim().toLocaleLowerCase(),
+		[searchQuery],
+	);
+
+	const searchResults = React.useMemo(() => {
+		if (!searchTerm) {
+			return [] as Array<{ label: string; href: string }>;
+		}
+
+		const allItems: Array<{ label: string; href: string }> = [];
+
+		for (const program of menus) {
+			const programTitle = getLocalizedTitle(
+				isSwedish,
+				program.titleSv,
+				program.titleEn,
+			);
+			allItems.push({
+				label: programTitle,
+				href: buildProgramHref(programTitle),
+			});
+
+			for (const year of program.years) {
+				const yearTitle = getLocalizedTitle(
+					isSwedish,
+					year.titleSv,
+					year.titleEn,
+				);
+				allItems.push({
+					label: `${programTitle} - ${yearTitle}`,
+					href: buildProgramYearHref(programTitle, yearTitle),
+				});
+			}
+
+			for (const specialisation of program.specialisations) {
+				const specialisationTitle = getLocalizedTitle(
+					isSwedish,
+					specialisation.titleSv,
+					specialisation.titleEn,
+				);
+				allItems.push({
+					label: specialisationTitle,
+					href: buildSpecialisationHref(specialisationTitle),
+				});
+			}
+		}
+
+		for (const course of allCourses) {
+			allItems.push({
+				label: getCourseLabel(course),
+				href: buildCourseHref(course.title),
+			});
+		}
+
+		const seen = new Set<string>();
+		const deduped = allItems.filter((item) => {
+			const key = `${item.label}__${item.href}`;
+			if (seen.has(key)) {
+				return false;
+			}
+			seen.add(key);
+			return true;
+		});
+
+		return deduped
+			.filter((item) => item.label.toLocaleLowerCase().includes(searchTerm))
+			.slice(0, 5);
+	}, [menus, allCourses, searchTerm, isSwedish]);
 
 	if (isLoading && menus.length === 0) {
 		return (
@@ -420,9 +489,66 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 		);
 	}
 
+	const searchField = (
+		<div
+			className={cn("relative", isMobile ? "mb-3 px-2 mt-5" : "ml-auto w-48")}
+		>
+			<Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+			<Input
+				type="search"
+				value={searchQuery}
+				onChange={(event) => setSearchQuery(event.target.value)}
+				placeholder={t("plugg:navbar.search_placeholder")}
+				className="pl-9"
+			/>
+			{searchTerm && (
+				<div
+					className={cn(
+						"absolute top-[calc(100%+0.375rem)] z-50 rounded-md border bg-popover p-1 shadow-md",
+						isMobile ? "right-0" : "w-2xs",
+					)}
+				>
+					{searchResults.length > 0 ? (
+						<div className="space-y-1">
+							{searchResults.map((result) => {
+								if (isMobile) {
+									return (
+										<SheetClose key={`${result.label}-${result.href}`} asChild>
+											<Link
+												href={result.href}
+												className="block rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-accent"
+											>
+												{result.label}
+											</Link>
+										</SheetClose>
+									);
+								}
+
+								return (
+									<Link
+										key={`${result.label}-${result.href}`}
+										href={result.href}
+										className="block rounded-sm px-2 py-1.5 text-smm transition-colors hover:bg-accent"
+									>
+										{result.label}
+									</Link>
+								);
+							})}
+						</div>
+					) : (
+						<div className="px-2 py-1.5 text-sm text-muted-foreground">
+							{t("plugg:navbar.search_no_results")}
+						</div>
+					)}
+				</div>
+			)}
+		</div>
+	);
+
 	if (isMobile) {
 		return (
 			<div className="space-y-3 px-2">
+				{searchField}
 				{menus.map((program) => (
 					<div
 						key={program.programId}
@@ -452,17 +578,6 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 								>
 									{getLocalizedTitle(isSwedish, year.titleSv, year.titleEn)}
 								</MobileNavLink>
-
-								<div className="mt-1 space-y-1 border-l border-border pl-3">
-									{year.courses.map((course) => (
-										<MobileNavLink
-											key={course.course_id}
-											href={buildCourseHref(course.title)}
-										>
-											{getCourseLabel(course)}
-										</MobileNavLink>
-									))}
-								</div>
 							</div>
 						))}
 
@@ -500,12 +615,12 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 	}
 
 	return (
-		<div className="w-full">
-			<NavigationMenu className="justify-start">
+		<div className="w-full flex items-center gap-3">
+			<NavigationMenu className="justify-start flex-1">
 				<NavigationMenuList>
 					{menus.map((program) => (
 						<NavigationMenuItem key={program.programId}>
-							<NavigationMenuTrigger className="bg-transparent hover:bg-accent focus:bg-accent text-base font-medium border-2 border-transparent hover:border-foreground/30">
+							<NavigationMenuTrigger className="bg-transparent hover:bg-accent focus:bg-accent text-sm px-1 font-medium border-2 border-transparent hover:border-foreground/30">
 								{getLocalizedTitle(isSwedish, program.titleSv, program.titleEn)}
 							</NavigationMenuTrigger>
 							<NavigationMenuContent>
@@ -525,7 +640,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 										</Link>
 									</div>
 									{program.years.length > 0 && (
-										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6">
 											{program.years.map((year) => (
 												<div
 													key={year.programYearId}
@@ -619,6 +734,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 					))}
 				</NavigationMenuList>
 			</NavigationMenu>
+			{searchField}
 		</div>
 	);
 }
