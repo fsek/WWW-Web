@@ -14,12 +14,16 @@ import { ArrowLeft } from "lucide-react";
 import urlFormatter from "@/utils/urlFormatter";
 import NotFound from "@/components/NotFound";
 import InfoThumbnailCard from "@/components/InfoThumbnailCard";
+import PluggContactReminder from "@/components/PluggContactReminder";
 import {
 	buildProgramYearHref,
 	buildSpecialisationHref,
 } from "@/utils/pluggHrefBuilders";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeMathjax from "rehype-mathjax";
+import Image from "next/image";
 
 function getProgramSlug(param: string | string[] | undefined) {
 	if (Array.isArray(param)) {
@@ -40,8 +44,13 @@ function LocalizedDescription({
 	}
 
 	return (
-		<div className="prose max-w-none text-sm leading-relaxed dark:prose-invert">
-			<Markdown remarkPlugins={[remarkGfm]}>{text}</Markdown>
+		<div className="prose prose-sm max-w-none leading-relaxed prose-headings:text-foreground prose-p:text-foreground/90 prose-strong:text-foreground prose-a:text-primary md:prose-base dark:prose-invert">
+			<Markdown
+				remarkPlugins={[remarkGfm, remarkMath]}
+				rehypePlugins={[rehypeMathjax]}
+			>
+				{text}
+			</Markdown>
 		</div>
 	);
 }
@@ -110,118 +119,160 @@ export default function ProgramPage() {
 	});
 
 	return (
-		<div className="mx-auto min-h-[calc(100vh-5rem)] w-full max-w-6xl px-4 py-8 md:px-6 md:py-10">
-			<div className="mb-6 flex items-start justify-between gap-4">
-				<div className="space-y-2">
-					<Button variant="outline" onClick={() => router.push("/plugg")}>
+		<div className="min-h-[calc(100vh-5rem)] pb-16">
+			<section className="relative left-1/2 right-1/2 -mx-[50vw] mb-12 w-screen overflow-hidden border-b border-primary/25">
+				{program.associated_img_id ? (
+					<>
+						<div className="absolute inset-0">
+							<ImageDisplay
+								type="associated_img"
+								imageId={program.associated_img_id}
+								alt={`Associated image for ${localizedTitle}`}
+								className="object-cover"
+								size="large"
+								fill
+							/>
+						</div>
+						<div className="absolute inset-0 bg-black/20 dark:bg-white/20" />
+					</>
+				) : (
+					<>
+						<div className="absolute inset-0">
+							<Image
+								src="/images/background.svg"
+								alt="Background pattern"
+								className="absolute inset-0 h-full w-full object-cover"
+								width={800}
+								height={600}
+								loading="eager"
+							/>
+						</div>
+						<div className="absolute inset-0 bg-black/5 dark:bg-white/5" />
+					</>
+				)}
+
+				<div className="relative mx-auto flex w-full max-w-6xl flex-col gap-7 px-4 py-12 text-primary-foreground md:px-6 md:py-16">
+					<Button
+						variant="secondary"
+						onClick={() => router.push("/plugg")}
+						className="w-fit border border-primary-foreground/35 bg-background/15 text-primary-foreground backdrop-blur-sm hover:bg-background/25"
+					>
 						<ArrowLeft />
 						{t("program.back")}
 					</Button>
-					<h1 className="text-3xl font-bold leading-tight md:text-4xl">
-						{localizedTitle}
-					</h1>
-					<div className="flex flex-wrap gap-2">
-						<Badge variant="secondary">
-							{programYears.length} {t("program.program_page.years_label")}
-						</Badge>
-						<Badge variant="secondary">
-							{specialisations.length} {t("program.specialisations")}
-						</Badge>
+
+					<div className="space-y-3">
+						<h1 className="max-w-4xl text-3xl font-bold leading-tight tracking-tight md:text-5xl">
+							{localizedTitle}
+						</h1>
+						<div className="flex flex-wrap gap-2.5">
+							<Badge variant="secondary">
+								{programYears.length} {t("program.program_page.years_label")}
+							</Badge>
+							<Badge variant="secondary">
+								{specialisations.length} {t("program.specialisations")}
+							</Badge>
+						</div>
 					</div>
 				</div>
+			</section>
+
+			<div className="mx-auto w-full max-w-6xl space-y-12 px-4 md:px-6">
+				<div className="flex flex-col gap-5">
+					<section className="rounded-3xl border border-border/70 bg-card px-5 py-8 md:px-10 md:py-10">
+						<div className="mx-auto min-h-24">
+							<LocalizedDescription
+								text={localizedDescription}
+								fallback={t(
+									"program.program_page.program_description_fallback",
+								)}
+							/>
+						</div>
+					</section>
+
+					<PluggContactReminder />
+				</div>
+
+				<section className="space-y-5">
+					<h2 className="text-2xl font-semibold md:text-3xl">
+						{t("program.program_page.program_years_title")}
+					</h2>
+
+					{programYears.length === 0 ? (
+						<Card className="border-dashed border-primary/30">
+							<CardContent className="py-8 text-sm text-muted-foreground">
+								{t("program.program_page.program_years_empty")}
+							</CardContent>
+						</Card>
+					) : (
+						<div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+							{programYears.map((year: ProgramYearRead) => {
+								const yearTitle = isSwedish ? year.title_sv : year.title_en;
+								const yearDescription = isSwedish
+									? year.description_sv
+									: year.description_en;
+								const yearHref = buildProgramYearHref(
+									localizedTitle,
+									yearTitle,
+								);
+
+								return (
+									<InfoThumbnailCard
+										key={year.program_year_id}
+										title={yearTitle}
+										description={yearDescription}
+										imageId={year.associated_img_id}
+										href={yearHref}
+										emptyDescriptionText={t(
+											"program.program_page.year_description_fallback",
+										)}
+									/>
+								);
+							})}
+						</div>
+					)}
+				</section>
+
+				<section className="space-y-5">
+					<h2 className="text-2xl font-semibold md:text-3xl">
+						{t("program.specialisations")}
+					</h2>
+
+					{specialisations.length === 0 ? (
+						<Card className="border-dashed border-primary/30">
+							<CardContent className="py-8 text-sm text-muted-foreground">
+								{t("program.program_page.specialisations_empty")}
+							</CardContent>
+						</Card>
+					) : (
+						<div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+							{specialisations.map((specialisation: SpecialisationRead) => {
+								const specialisationTitle = isSwedish
+									? specialisation.title_sv
+									: specialisation.title_en;
+								const specialisationDescription = isSwedish
+									? specialisation.description_sv
+									: specialisation.description_en;
+								const specialisationHref =
+									buildSpecialisationHref(specialisationTitle);
+
+								return (
+									<InfoThumbnailCard
+										key={specialisation.specialisation_id}
+										title={specialisationTitle}
+										description={specialisationDescription}
+										imageId={specialisation.associated_img_id}
+										href={specialisationHref}
+										emptyDescriptionText={t(
+											"program.program_page.specialisation_description_fallback",
+										)}
+									/>
+								);
+							})}
+						</div>
+					)}
+				</section>
 			</div>
-
-			<Card className="mb-8 overflow-hidden">
-				{program.associated_img_id ? (
-					<div className="relative h-56 w-full bg-muted md:h-72">
-						<ImageDisplay
-							type="associated_img"
-							imageId={program.associated_img_id}
-							alt={`Associated image for ${localizedTitle}`}
-							className="object-cover"
-							size="large"
-							fill
-						/>
-					</div>
-				) : null}
-				<CardContent className="pt-6">
-					<LocalizedDescription
-						text={localizedDescription}
-						fallback={t("program.program_page.program_description_fallback")}
-					/>
-				</CardContent>
-			</Card>
-
-			<section className="mb-10">
-				<h2 className="text-2xl font-semibold">
-					{t("program.program_page.program_years_title")}
-				</h2>
-				{programYears.length === 0 ? (
-					<p className="text-sm text-muted-foreground">
-						{t("program.program_page.program_years_empty")}
-					</p>
-				) : (
-					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-						{programYears.map((year: ProgramYearRead) => {
-							const yearTitle = isSwedish ? year.title_sv : year.title_en;
-							const yearDescription = isSwedish
-								? year.description_sv
-								: year.description_en;
-							const yearHref = buildProgramYearHref(localizedTitle, yearTitle);
-
-							return (
-								<InfoThumbnailCard
-									key={year.program_year_id}
-									title={yearTitle}
-									description={yearDescription}
-									imageId={year.associated_img_id}
-									href={yearHref}
-									emptyDescriptionText={t(
-										"program.program_page.year_description_fallback",
-									)}
-								/>
-							);
-						})}
-					</div>
-				)}
-			</section>
-
-			<section>
-				<h2 className="text-2xl font-semibold">
-					{t("program.specialisations")}
-				</h2>
-				{specialisations.length === 0 ? (
-					<p className="text-sm text-muted-foreground">
-						{t("program.program_page.specialisations_empty")}
-					</p>
-				) : (
-					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-						{specialisations.map((specialisation: SpecialisationRead) => {
-							const specialisationTitle = isSwedish
-								? specialisation.title_sv
-								: specialisation.title_en;
-							const specialisationDescription = isSwedish
-								? specialisation.description_sv
-								: specialisation.description_en;
-							const specialisationHref =
-								buildSpecialisationHref(specialisationTitle);
-
-							return (
-								<InfoThumbnailCard
-									key={specialisation.specialisation_id}
-									title={specialisationTitle}
-									description={specialisationDescription}
-									imageId={specialisation.associated_img_id}
-									href={specialisationHref}
-									emptyDescriptionText={t(
-										"program.program_page.specialisation_description_fallback",
-									)}
-								/>
-							);
-						})}
-					</div>
-				)}
-			</section>
 		</div>
 	);
 }

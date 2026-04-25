@@ -1,7 +1,8 @@
 "use client";
 
 import CustomTitle from "@/components/CustomTitle";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import PluggContactReminder from "@/components/PluggContactReminder";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
 	Card,
 	CardContent,
@@ -10,7 +11,6 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 export default function MainLanding() {
@@ -33,16 +33,7 @@ export default function MainLanding() {
 					<CardContent className="flex flex-col gap-6 pt-2">
 						<Separator />
 
-						<Link href="mailto:plugg@fsektionen.se" className="no-underline">
-							<Alert className="border-red-200 bg-red-50 text-red-900 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-100">
-								<AlertTitle className="mb-2 text-lg font-semibold">
-									{t("plugg:page.contact_notice_title")}
-								</AlertTitle>
-								<AlertDescription className="text-sm leading-relaxed">
-									{t("plugg:page.contact_notice_text")}
-								</AlertDescription>
-							</Alert>
-						</Link>
+						<PluggContactReminder />
 
 						<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
 							<Card className="bg-card text-card-foreground gap-1">

@@ -12,14 +12,16 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
+import { AlertCircle, ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import urlFormatter from "@/utils/urlFormatter";
 import NotFound from "@/components/NotFound";
 import { buildCourseDocumentFileHref } from "@/utils/pluggHrefBuilders";
+import PluggContactReminder from "@/components/PluggContactReminder";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import rehypeKatex from "rehype-mathjax";
+import rehypeMathjax from "rehype-mathjax";
+import Image from "next/image";
 
 const GENERAL_SUB_CATEGORY_KEY = "__general__";
 
@@ -38,6 +40,10 @@ function formatDocumentDate(value: Date, locale: string) {
 	});
 }
 
+function normalizeCourseCode(value: string) {
+	return value?.trim().toUpperCase();
+}
+
 function LocalizedDescription({
 	text,
 	fallback,
@@ -51,7 +57,10 @@ function LocalizedDescription({
 
 	return (
 		<div className="prose prose-sm max-w-none leading-relaxed prose-headings:text-foreground prose-p:text-foreground/90 prose-strong:text-foreground prose-a:text-primary md:prose-base dark:prose-invert">
-			<Markdown remarkPlugins={[remarkGfm, remarkMath, rehypeKatex]}>
+			<Markdown
+				remarkPlugins={[remarkGfm, remarkMath]}
+				rehypePlugins={[rehypeMathjax]}
+			>
 				{text}
 			</Markdown>
 		</div>
@@ -61,21 +70,24 @@ function LocalizedDescription({
 function CourseDocumentList({
 	documents,
 	isSwedish,
+	currentCourseCode,
 	authorLabel,
 	updatedAtLabel,
-	fileNameLabel,
 	openLabel,
+	legacyCourseCodeWarningLabel,
 	onOpen,
 }: {
 	documents: Array<CourseDocumentRead>;
 	isSwedish: boolean;
+	currentCourseCode: string;
 	authorLabel: string;
 	updatedAtLabel: string;
-	fileNameLabel: string;
 	openLabel: string;
+	legacyCourseCodeWarningLabel: string;
 	onOpen: (courseDocumentId: number) => void;
 }) {
 	const locale = isSwedish ? "sv-SE" : "en-GB";
+	const normalizedCurrentCourseCode = normalizeCourseCode(currentCourseCode);
 
 	return (
 		<Card className="overflow-hidden border-border/70 bg-card py-0 shadow-sm">
@@ -83,39 +95,58 @@ function CourseDocumentList({
 				<ul>
 					{documents.map((document, index) => (
 						<li key={document.course_document_id}>
-							<Button
-								type="button"
-								variant="ghost"
-								onClick={() => onOpen(document.course_document_id)}
-								className="group h-auto w-full items-start justify-between gap-3 rounded-none px-4 py-5 text-left whitespace-normal font-normal transition-colors hover:bg-muted/50 md:px-6"
-							>
-								<div className="flex min-w-0 items-start gap-3 md:gap-4">
-									<div className="mt-0.5 rounded-md bg-primary/10 p-2 text-primary">
-										<FileText className="size-4" />
-									</div>
-									<div className="min-w-0">
-										<p className="truncate text-sm font-medium md:text-base group-hover:text-foreground">
-											{document.title}
-										</p>
-										<p className="mt-1 truncate text-sm text-muted-foreground">
-											{fileNameLabel}: {document.file_name}
-										</p>
-										<div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground md:text-sm">
-											<p>
-												{authorLabel}: {document.author}
-											</p>
-											<p>
-												{updatedAtLabel}:{" "}
-												{formatDocumentDate(document.updated_at, locale)}
-											</p>
+							{(() => {
+								const normalizedDocumentCode = normalizeCourseCode(
+									document.created_course_code,
+								);
+								const shouldShowLegacyCodeWarning =
+									normalizedCurrentCourseCode.length > 0 &&
+									normalizedDocumentCode.length > 0 &&
+									normalizedDocumentCode !== normalizedCurrentCourseCode;
+
+								return (
+									<Button
+										type="button"
+										variant="ghost"
+										onClick={() => onOpen(document.course_document_id)}
+										className="group h-auto w-full items-start justify-between gap-3 rounded-none px-4 py-5 text-left whitespace-normal font-normal transition-colors hover:bg-muted/50 md:px-6"
+									>
+										<div className="flex min-w-0 items-start gap-3 md:gap-4">
+											<div className="mt-0.5 rounded-md bg-primary/10 p-2 text-primary">
+												<FileText className="size-4" />
+											</div>
+											<div className="min-w-0">
+												<p className="truncate text-sm font-medium md:text-base group-hover:text-foreground">
+													{document.title}
+												</p>
+												<div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground md:text-sm">
+													<p>
+														{authorLabel}: {document.author}
+													</p>
+													<p>
+														{updatedAtLabel}:{" "}
+														{formatDocumentDate(document.updated_at, locale)}
+													</p>
+													{shouldShowLegacyCodeWarning ? (
+														// ensure it's placed on new line
+														<div className="w-full flex flex-row items-center gap-1 text-amber-700/50 dark:text-amber-300/50">
+															<AlertCircle className="size-4" />
+															<p className="font-medium">
+																{legacyCourseCodeWarningLabel}{" "}
+																{document.created_course_code}
+															</p>
+														</div>
+													) : null}
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
-								<div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground group-hover:text-foreground group-hover:underline">
-									{openLabel}
-									<ExternalLink className="size-4" />
-								</div>
-							</Button>
+										<div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground group-hover:text-foreground group-hover:underline">
+											{openLabel}
+											<ExternalLink className="size-4" />
+										</div>
+									</Button>
+								);
+							})()}
 							{index < documents.length - 1 ? <Separator /> : null}
 						</li>
 					))}
@@ -270,10 +301,7 @@ export default function CoursePage() {
 		);
 	};
 
-	const singleCourseCode = course.course_code?.trim();
-	const courseCodeBadge = singleCourseCode
-		? t("courses.course_code_badge", { code: singleCourseCode })
-		: t("courses.course_code_missing");
+	const singleCourseCode = course.course_code?.trim() || "";
 	const locale = isSwedish ? "sv-SE" : "en-GB";
 	const courseUpdatedBadge = t("courses.updated_badge", {
 		date: formatDocumentDate(course.updated_at, locale),
@@ -283,19 +311,34 @@ export default function CoursePage() {
 		<div className="min-h-[calc(100vh-5rem)] pb-16">
 			<section className="relative left-1/2 right-1/2 -mx-[50vw] mb-12 w-screen overflow-hidden border-b border-primary/25">
 				{course.associated_img_id ? (
-					<div className="absolute inset-0">
-						<ImageDisplay
-							type="associated_img"
-							imageId={course.associated_img_id}
-							alt={`Associated image for ${course.title}`}
-							className="object-cover"
-							size="large"
-							fill
-						/>
-					</div>
-				) : null}
-				<div className="absolute inset-0 bg-gradient-to-r from-primary/75 via-primary/60 to-primary/70" />
-				<div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.28)_0%,rgba(255,255,255,0.06)_45%,rgba(0,0,0,0.15)_100%)]" />
+					<>
+						<div className="absolute inset-0">
+							<ImageDisplay
+								type="associated_img"
+								imageId={course.associated_img_id}
+								alt={`Associated image for ${course.title}`}
+								className="object-cover"
+								size="large"
+								fill
+							/>
+						</div>
+						<div className="absolute inset-0 bg-black/15 dark:bg-white/15" />
+					</>
+				) : (
+					<>
+						<div className="absolute inset-0">
+							<Image
+								src="/images/background.svg"
+								alt="Background pattern"
+								className="absolute inset-0 h-full w-full object-cover"
+								width={800}
+								height={600}
+								loading="eager"
+							/>
+						</div>
+						<div className="absolute inset-0 bg-black/5 dark:bg-white/5" />
+					</>
+				)}
 				<div className="relative mx-auto flex w-full max-w-6xl flex-col gap-7 px-4 py-12 text-primary-foreground md:px-6 md:py-16">
 					<Button
 						variant="secondary"
@@ -308,29 +351,28 @@ export default function CoursePage() {
 
 					<div className="space-y-3">
 						<h1 className="max-w-4xl text-3xl font-bold leading-tight tracking-tight md:text-5xl">
-							{course.title}
+							{course.title} - {course.course_code}
 						</h1>
 						<div className="flex flex-wrap gap-2.5">
-							<Badge className="border border-primary/15 bg-primary-foreground/95 text-primary shadow-sm">
-								{courseCodeBadge}
-							</Badge>
-							<Badge className="border border-primary/15 bg-primary-foreground/95 text-primary shadow-sm">
-								{courseUpdatedBadge}
-							</Badge>
+							<Badge variant="secondary">{courseUpdatedBadge}</Badge>
 						</div>
 					</div>
 				</div>
 			</section>
 
 			<div className="mx-auto w-full max-w-6xl space-y-12 px-4 md:px-6">
-				<section className="rounded-3xl border border-border/70 bg-gradient-to-b from-muted/35 to-background px-5 py-8 md:px-10 md:py-10">
-					<div className="mx-auto min-h-24">
-						<LocalizedDescription
-							text={course.description}
-							fallback={t("courses.description_fallback")}
-						/>
-					</div>
-				</section>
+				<div className="flex flex-col gap-5">
+					<section className="rounded-3xl border border-border/70 px-5 py-8 md:px-10 bg-card md:py-10">
+						<div className="mx-auto min-h-24">
+							<LocalizedDescription
+								text={course.description}
+								fallback={t("courses.description_fallback")}
+							/>
+						</div>
+					</section>
+
+					<PluggContactReminder />
+				</div>
 
 				<section className="space-y-7">
 					<div className="flex flex-wrap items-baseline justify-between gap-3">
@@ -385,10 +427,13 @@ export default function CoursePage() {
 														<CourseDocumentList
 															documents={subCategory.documents}
 															isSwedish={isSwedish}
+															currentCourseCode={singleCourseCode}
 															authorLabel={t("courses.documents.author")}
 															updatedAtLabel={t("courses.documents.updated_at")}
-															fileNameLabel={t("courses.documents.file_name")}
 															openLabel={t("courses.documents.open")}
+															legacyCourseCodeWarningLabel={t(
+																"courses.documents.legacy_course_code_warning",
+															)}
 															onOpen={openCourseDocument}
 														/>
 													</TabsContent>
@@ -405,10 +450,13 @@ export default function CoursePage() {
 												<CourseDocumentList
 													documents={firstSubCategory.documents}
 													isSwedish={isSwedish}
+													currentCourseCode={singleCourseCode}
 													authorLabel={t("courses.documents.author")}
 													updatedAtLabel={t("courses.documents.updated_at")}
-													fileNameLabel={t("courses.documents.file_name")}
 													openLabel={t("courses.documents.open")}
+													legacyCourseCodeWarningLabel={t(
+														"courses.documents.legacy_course_code_warning",
+													)}
 													onOpen={openCourseDocument}
 												/>
 											</div>

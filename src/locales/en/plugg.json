@@ -13,8 +13,6 @@
 	"page": {
 		"title": "Plugg",
 		"intro": "Welcome! On this page you will find everything you need to get through your years at LTH.",
-		"contact_notice_title": "Have questions or need help?",
-		"contact_notice_text": "If you want to contribute material, report issues or have other questions, send us an email at plugg@fsektionen.se (or click this box).",
 		"section_programs_title": "Programmes",
 		"section_programs_text": "Use the top row in the navbar to switch between programmes and reveal each programme year.",
 		"section_courses_title": "Courses",
@@ -22,6 +20,11 @@
 		"section_specialisations_title": "Specialisations",
 		"section_specialisations_text": "Specialisations are grouped per programme in separate dropdowns for fast access.",
 		"footer_note": "Do you like design or code? Do you think you could improve this page or help with new features for the web, server or app? Apply to spindelman next fall semester!"
+	},
+	"contact_reminder": {
+		"title": "Found something missing or outdated?",
+		"text": "Help us keep this page accurate. Share corrections, upload new documents, or give us tips by emailing plugg@fsektionen.se (or click this box).",
+		"email": "plugg@fsektionen.se"
 	},
 	"program": {
 		"back": "Back",
@@ -56,7 +59,7 @@
 			"open": "Open file",
 			"author": "Author",
 			"updated_at": "Updated",
-			"file_name": "File",
+			"legacy_course_code_warning": "May be from an older course version. Course code:",
 			"general_subcategory": "General",
 			"categories": {
 				"notes": "Notes",

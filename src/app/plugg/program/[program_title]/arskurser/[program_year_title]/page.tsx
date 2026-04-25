@@ -15,8 +15,12 @@ import urlFormatter from "@/utils/urlFormatter";
 import NotFound from "@/components/NotFound";
 import { buildCourseHref } from "@/utils/pluggHrefBuilders";
 import InfoThumbnailCard from "@/components/InfoThumbnailCard";
+import PluggContactReminder from "@/components/PluggContactReminder";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeMathjax from "rehype-mathjax";
+import Image from "next/image";
 
 function getSlug(param: string | string[] | undefined) {
 	if (Array.isArray(param)) {
@@ -37,8 +41,13 @@ function LocalizedDescription({
 	}
 
 	return (
-		<div className="prose max-w-none text-sm leading-relaxed dark:prose-invert">
-			<Markdown remarkPlugins={[remarkGfm]}>{text}</Markdown>
+		<div className="prose prose-sm max-w-none leading-relaxed prose-headings:text-foreground prose-p:text-foreground/90 prose-strong:text-foreground prose-a:text-primary md:prose-base dark:prose-invert">
+			<Markdown
+				remarkPlugins={[remarkGfm, remarkMath]}
+				rehypePlugins={[rehypeMathjax]}
+			>
+				{text}
+			</Markdown>
 		</div>
 	);
 }
@@ -116,80 +125,113 @@ export default function ProgramPage() {
 	);
 
 	return (
-		<div className="mx-auto min-h-[calc(100vh-5rem)] w-full max-w-6xl px-4 py-8 md:px-6 md:py-10">
-			<div className="mb-6 flex items-start justify-between gap-4">
-				<div className="space-y-2">
+		<div className="min-h-[calc(100vh-5rem)] pb-16">
+			<section className="relative left-1/2 right-1/2 -mx-[50vw] mb-12 w-screen overflow-hidden border-b border-primary/25">
+				{programYear.associated_img_id ? (
+					<>
+						<div className="absolute inset-0">
+							<ImageDisplay
+								type="associated_img"
+								imageId={programYear.associated_img_id}
+								alt={`Associated image for ${localizedTitle}`}
+								className="object-cover"
+								size="large"
+								fill
+							/>
+						</div>
+						<div className="absolute inset-0 bg-black/20 dark:bg-white/20" />
+					</>
+				) : (
+					<>
+						<div className="absolute inset-0">
+							<Image
+								src="/images/background.svg"
+								alt="Background pattern"
+								className="absolute inset-0 h-full w-full object-cover"
+								width={800}
+								height={600}
+								loading="eager"
+							/>
+						</div>
+						<div className="absolute inset-0 bg-black/5 dark:bg-white/5" />
+					</>
+				)}
+
+				<div className="relative mx-auto flex w-full max-w-6xl flex-col gap-7 px-4 py-12 text-primary-foreground md:px-6 md:py-16">
 					<Button
-						variant="outline"
+						variant="secondary"
 						onClick={() => router.push(`/plugg/program/${programSlug}`)}
+						className="w-fit border border-primary-foreground/35 bg-background/15 text-primary-foreground backdrop-blur-sm hover:bg-background/25"
 					>
 						<ArrowLeft />
 						{t("program.back")}
 					</Button>
-					<h1 className="text-3xl font-bold leading-tight md:text-4xl">
-						{localizedTitle}
-					</h1>
-					<div className="flex flex-wrap gap-2">
-						<Badge variant="secondary">
-							{courses.length} {t("program.program_year_page.courses_label")}
-						</Badge>
+
+					<div className="space-y-3">
+						<h1 className="max-w-4xl text-3xl font-bold leading-tight tracking-tight md:text-5xl">
+							{localizedTitle}
+						</h1>
+						<div className="flex flex-wrap gap-2.5">
+							<Badge variant="secondary">
+								{courses.length} {t("program.program_year_page.courses_label")}
+							</Badge>
+						</div>
 					</div>
 				</div>
-			</div>
-
-			<Card className="mb-8 overflow-hidden">
-				{programYear.associated_img_id ? (
-					<div className="relative h-56 w-full bg-muted md:h-72">
-						<ImageDisplay
-							type="associated_img"
-							imageId={programYear.associated_img_id}
-							alt={`Associated image for ${localizedTitle}`}
-							className="object-cover"
-							size="large"
-							fill
-						/>
-					</div>
-				) : null}
-				<CardContent className="pt-6">
-					<LocalizedDescription
-						text={localizedDescription}
-						fallback={t("program.program_year_page.year_description_fallback")}
-					/>
-				</CardContent>
-			</Card>
-
-			<section>
-				<h2 className="text-2xl font-semibold">
-					{t("program.program_year_page.courses_title")}
-				</h2>
-				{courses.length === 0 ? (
-					<p className="text-sm text-muted-foreground">
-						{t("program.program_year_page.no_courses")}
-					</p>
-				) : (
-					<div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-						{courses.map((course: CourseRead) => {
-							const courseTitle = course.course_code
-								? `${course.course_code} - ${course.title}`
-								: course.title;
-							const courseHref = buildCourseHref(course.title);
-
-							return (
-								<InfoThumbnailCard
-									key={course.course_id}
-									title={courseTitle}
-									description={course.description}
-									imageId={course.associated_img_id}
-									href={courseHref}
-									emptyDescriptionText={t(
-										"program.program_year_page.course_description_fallback",
-									)}
-								/>
-							);
-						})}
-					</div>
-				)}
 			</section>
+
+			<div className="mx-auto w-full max-w-6xl space-y-12 px-4 md:px-6">
+				<div className="flex flex-col gap-5">
+					<section className="rounded-3xl border border-border/70 bg-card px-5 py-8 md:px-10 md:py-10">
+						<div className="mx-auto min-h-24">
+							<LocalizedDescription
+								text={localizedDescription}
+								fallback={t(
+									"program.program_year_page.year_description_fallback",
+								)}
+							/>
+						</div>
+					</section>
+
+					<PluggContactReminder />
+				</div>
+
+				<section className="space-y-5">
+					<h2 className="text-2xl font-semibold md:text-3xl">
+						{t("program.program_year_page.courses_title")}
+					</h2>
+
+					{courses.length === 0 ? (
+						<Card className="border-dashed border-primary/30">
+							<CardContent className="py-8 text-sm text-muted-foreground">
+								{t("program.program_year_page.no_courses")}
+							</CardContent>
+						</Card>
+					) : (
+						<div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+							{courses.map((course: CourseRead) => {
+								const courseTitle = course.course_code
+									? `${course.course_code} - ${course.title}`
+									: course.title;
+								const courseHref = buildCourseHref(course.title);
+
+								return (
+									<InfoThumbnailCard
+										key={course.course_id}
+										title={courseTitle}
+										description={course.description}
+										imageId={course.associated_img_id}
+										href={courseHref}
+										emptyDescriptionText={t(
+											"program.program_year_page.course_description_fallback",
+										)}
+									/>
+								);
+							})}
+						</div>
+					)}
+				</section>
+			</div>
 		</div>
 	);
 }

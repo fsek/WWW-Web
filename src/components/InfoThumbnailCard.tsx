@@ -33,7 +33,7 @@ export default function InfoThumbnailCard({
 		: null;
 
 	return (
-		<Card className="h-full overflow-hidden transition-shadow hover:shadow-md py-4 gap-1">
+		<Card className="h-full gap-1 overflow-hidden py-0 transition-shadow hover:shadow-md">
 			{imageId ? (
 				<div className="relative h-36 w-full bg-muted">
 					<ImageDisplay
@@ -46,7 +46,7 @@ export default function InfoThumbnailCard({
 					/>
 				</div>
 			) : null}
-			<CardHeader className="min-w-0 pb-1">
+			<CardHeader className="min-w-0 pt-4 pb-1">
 				<CardTitle className="min-w-0 text-lg leading-tight">
 					<Link
 						href={href}
@@ -57,7 +57,7 @@ export default function InfoThumbnailCard({
 					</Link>
 				</CardTitle>
 			</CardHeader>
-			<CardContent>
+			<CardContent className="pb-5">
 				{truncatedDescription ? (
 					<p
 						className="text-sm leading-relaxed"

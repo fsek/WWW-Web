@@ -13,8 +13,6 @@
 	"page": {
 		"title": "Plugg",
 		"intro": "Välkommen! På denna sida hittar du allt du behöver för att ta dig igenom alla dina år på LTH.",
-		"contact_notice_title": "Har du frågor eller behöver hjälp?",
-		"contact_notice_text": "Om du vill lägga till material, rapportera problem eller har andra frågor, skicka ett mejl till oss till plugg@fsektionen.se (eller klicka på denna ruta).",
 		"section_programs_title": "Program",
 		"section_programs_text": "Använd den översta raden i navbaren för att byta program och visa respektive årskurs.",
 		"section_courses_title": "Kurser",
@@ -22,6 +20,11 @@
 		"section_specialisations_title": "Inriktningar",
 		"section_specialisations_text": "Inriktningar är grupperade per program i separata menyer för snabb åtkomst.",
 		"footer_note": "Tycker du om design eller kod? Tror du att du hade kunnat förbättra denna sida eller hjälpa till med nya funktioner till webben, servern eller appen? Sök till spindelman under nästa hösttermin!"
+	},
+	"contact_reminder": {
+		"title": "Saknas något eller är något inaktuellt?",
+		"text": "Hjälp oss hålla denna sida uppdaterad. Skicka rättelser, nya dokument eller tips till plugg@fsektionen.se (eller klicka här).",
+		"email": "plugg@fsektionen.se"
 	},
 	"program": {
 		"back": "Tillbaka",
@@ -56,7 +59,7 @@
 			"open": "Öppna fil",
 			"author": "Författare",
 			"updated_at": "Uppdaterad",
-			"file_name": "Fil",
+			"legacy_course_code_warning": "Kan vara från en äldre kursomgång. Kurskod:",
 			"general_subcategory": "Allmänt",
 			"categories": {
 				"notes": "Anteckningar",
