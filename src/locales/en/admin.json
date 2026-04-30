@@ -1063,7 +1063,9 @@
 				"solutions": "Solutions",
 				"other": "Other"
 			}
-		}
+		},
+		"short_identifier": "Short identifier",
+		"short_identifier_placeholder": "Shorter names separated with commas."
 	},
 	"program_years": {
 		"self": "Program years",

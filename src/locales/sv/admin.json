@@ -1063,7 +1063,9 @@
 				"solutions": "Lösningar",
 				"other": "Övrigt"
 			}
-		}
+		},
+		"short_identifier": "Kort identifierare",
+		"short_identifier_placeholder": "Kortare namn separerade med kommatecken"
 	},
 	"program_years": {
 		"self": "Årskurser",

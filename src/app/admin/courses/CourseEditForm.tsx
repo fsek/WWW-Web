@@ -22,7 +22,8 @@ const MAX_COURSE_DESC = 10000;
 const courseEditSchema = z.object({
 	id: z.number(),
 	title: z.string().trim().min(1).max(MAX_COURSE_TITLE),
-	course_code: z.string().max(MAX_COURSE_CODE).optional(),
+	course_code: z.string().max(MAX_COURSE_CODE).min(1),
+	short_identifier: z.string().max(MAX_COURSE_TITLE).optional(),
 	description: z.string().max(MAX_COURSE_DESC).optional(),
 });
 
@@ -46,7 +47,8 @@ export default function CourseEditForm({ onClose, item }: CourseEditFormProps) {
 			const convertedItem = {
 				id: item.course_id,
 				title: item.title,
-				course_code: item.course_code ?? "",
+				course_code: item.course_code,
+				short_identifier: item.short_identifier ?? "",
 				description: item.description ?? "",
 			} as z.infer<typeof courseEditSchema>;
 			setConvertedItem(convertedItem);
@@ -154,7 +156,10 @@ export default function CourseEditForm({ onClose, item }: CourseEditFormProps) {
 	function handleFormSubmit(values: z.infer<typeof courseEditSchema>) {
 		const updatedCourse: CourseUpdate = {
 			title: values.title,
-			course_code: values.course_code?.trim() ? values.course_code : null,
+			course_code: values.course_code,
+			short_identifier: values.short_identifier?.trim()
+				? values.short_identifier
+				: null,
 			description: values.description?.trim() ? values.description : null,
 		};
 
@@ -186,7 +191,7 @@ export default function CourseEditForm({ onClose, item }: CourseEditFormProps) {
 		<AdminForm
 			title={t("courses.edit_course")}
 			formType="edit"
-			gridCols={2}
+			gridCols={3}
 			open={!!item}
 			onOpenChange={(isOpen) => {
 				if (!isOpen) onClose();
@@ -207,12 +212,19 @@ export default function CourseEditForm({ onClose, item }: CourseEditFormProps) {
 					colSpan: 1,
 				},
 				{
+					variant: "text",
+					name: "short_identifier",
+					label: t("courses.short_identifier"),
+					placeholder: t("courses.short_identifier_placeholder"),
+					colSpan: 1,
+				},
+				{
 					variant: "textarea",
 					name: "description",
 					label: t("courses.description"),
 					placeholder: t("courses.description"),
 					rows: 8,
-					colSpan: 2,
+					colSpan: 3,
 				},
 			]}
 			zodSchema={courseEditSchema}

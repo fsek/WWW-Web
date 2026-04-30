@@ -96,6 +96,18 @@ function getCourseLabel(course: CourseRead) {
 		: course.title;
 }
 
+function getCourseSearchText(course: CourseRead) {
+	const shortIdentifierTerms =
+		course.short_identifier
+			?.split(",")
+			.map((term) => term.trim())
+			.filter(Boolean) ?? [];
+
+	return [getCourseLabel(course), ...shortIdentifierTerms]
+		.join(" ")
+		.toLocaleLowerCase();
+}
+
 function ensureInnerMap<T>(root: Map<number, Map<number, T>>, key: number) {
 	const existing = root.get(key);
 	if (existing) {
@@ -421,7 +433,8 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 			return [] as Array<{ label: string; href: string }>;
 		}
 
-		const allItems: Array<{ label: string; href: string }> = [];
+		const allItems: Array<{ label: string; href: string; searchText: string }> =
+			[];
 
 		for (const program of menus) {
 			const programTitle = getLocalizedTitle(
@@ -432,6 +445,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 			allItems.push({
 				label: programTitle,
 				href: buildProgramHref(programTitle),
+				searchText: programTitle.toLocaleLowerCase(),
 			});
 
 			for (const year of program.years) {
@@ -443,6 +457,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 				allItems.push({
 					label: `${programTitle} - ${yearTitle}`,
 					href: buildProgramYearHref(programTitle, yearTitle),
+					searchText: `${programTitle} ${yearTitle}`.toLocaleLowerCase(),
 				});
 			}
 
@@ -455,6 +470,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 				allItems.push({
 					label: specialisationTitle,
 					href: buildSpecialisationHref(specialisationTitle),
+					searchText: specialisationTitle.toLocaleLowerCase(),
 				});
 			}
 		}
@@ -463,6 +479,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 			allItems.push({
 				label: getCourseLabel(course),
 				href: buildCourseHref(course.title),
+				searchText: getCourseSearchText(course),
 			});
 		}
 
@@ -477,7 +494,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 		});
 
 		return deduped
-			.filter((item) => item.label.toLocaleLowerCase().includes(searchTerm))
+			.filter((item) => item.searchText.includes(searchTerm))
 			.slice(0, 5);
 	}, [menus, allCourses, searchTerm, isSwedish]);
 

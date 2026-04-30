@@ -41,8 +41,8 @@ export default function Courses() {
 			header: t("courses.course_code"),
 			cell: (info) => info.getValue() || "-",
 		}),
-		columnHelper.accessor("description", {
-			header: t("courses.description"),
+		columnHelper.accessor("short_identifier", {
+			header: t("courses.short_identifier"),
 			cell: (info) => info.getValue() || "-",
 		}),
 		columnHelper.accessor("updated_at", {

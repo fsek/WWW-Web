@@ -101,6 +101,18 @@ function getCourseLabel(course: CourseRead) {
 		: course.title;
 }
 
+function getCourseSearchText(course: CourseRead) {
+	const shortIdentifierTerms =
+		course.short_identifier
+			?.split(",")
+			.map((term) => term.trim())
+			.filter(Boolean) ?? [];
+
+	return [getCourseLabel(course), ...shortIdentifierTerms]
+		.join(" ")
+		.toLocaleLowerCase();
+}
+
 function ensureInnerMap<T>(root: Map<number, Map<number, T>>, key: number) {
 	const existing = root.get(key);
 	if (existing) {
@@ -369,7 +381,7 @@ export default function MainLanding() {
 			return [] as SearchResult[];
 		}
 
-		const allItems: SearchResult[] = [];
+		const allItems: Array<SearchResult & { searchText: string }> = [];
 
 		for (const program of menus) {
 			const programTitle = getLocalizedTitle(
@@ -382,6 +394,7 @@ export default function MainLanding() {
 				href: buildProgramHref(programTitle),
 				kind: "program",
 				secondary: null,
+				searchText: programTitle.toLocaleLowerCase(),
 			});
 
 			for (const year of program.years) {
@@ -395,6 +408,7 @@ export default function MainLanding() {
 					href: buildProgramYearHref(programTitle, yearTitle),
 					kind: "program_year",
 					secondary: programTitle,
+					searchText: `${programTitle} ${yearTitle}`.toLocaleLowerCase(),
 				});
 			}
 
@@ -409,6 +423,8 @@ export default function MainLanding() {
 					href: buildSpecialisationHref(specialisationTitle),
 					kind: "specialisation",
 					secondary: programTitle,
+					searchText:
+						`${programTitle} ${specialisationTitle}`.toLocaleLowerCase(),
 				});
 			}
 		}
@@ -419,6 +435,7 @@ export default function MainLanding() {
 				href: buildCourseHref(course.title),
 				kind: "course",
 				secondary: null,
+				searchText: getCourseSearchText(course),
 			});
 		}
 
@@ -441,11 +458,7 @@ export default function MainLanding() {
 		};
 
 		return deduped
-			.filter((item) => {
-				const haystack =
-					`${item.label} ${item.secondary ?? ""}`.toLocaleLowerCase();
-				return haystack.includes(searchTerm);
-			})
+			.filter((item) => item.searchText.includes(searchTerm))
 			.sort((a, b) => {
 				const startsA = a.label.toLocaleLowerCase().startsWith(searchTerm)
 					? 0
