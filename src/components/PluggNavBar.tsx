@@ -26,6 +26,12 @@ import {
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
 	NavigationMenu,
 	NavigationMenuContent,
 	NavigationMenuItem,
@@ -276,6 +282,13 @@ function useProgramMenus(isSwedish: boolean) {
 				return aPriority - bPriority;
 			}
 
+			const specialisationCountDiff =
+				b.specialisations.length - a.specialisations.length;
+
+			if (specialisationCountDiff !== 0) {
+				return specialisationCountDiff;
+			}
+
 			return collator.compare(titleA, titleB);
 		});
 
@@ -393,8 +406,11 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 	const isSwedish = (i18n.resolvedLanguage ?? i18n.language)
 		.toLowerCase()
 		.startsWith("sv");
+	const maxVisiblePrograms = 3;
 
 	const { menus, allCourses, isLoading, hasError } = useProgramMenus(isSwedish);
+	const visiblePrograms = menus.slice(0, maxVisiblePrograms);
+	const overflowPrograms = menus.slice(maxVisiblePrograms);
 	const searchTerm = React.useMemo(
 		() => searchQuery.trim().toLocaleLowerCase(),
 		[searchQuery],
@@ -615,125 +631,166 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 	}
 
 	return (
-		<div className="w-full flex items-center gap-3">
-			<NavigationMenu className="justify-start flex-1">
-				<NavigationMenuList>
-					{menus.map((program) => (
-						<NavigationMenuItem key={program.programId}>
-							<NavigationMenuTrigger className="bg-transparent hover:bg-accent focus:bg-accent text-sm px-1 font-medium border-2 border-transparent hover:border-foreground/30">
-								{getLocalizedTitle(isSwedish, program.titleSv, program.titleEn)}
-							</NavigationMenuTrigger>
-							<NavigationMenuContent>
-								<div className="pb-6 px-6 pt-2 w-max max-w-[90vw] md:w-[600px] lg:w-[800px] max-h-[75vh] overflow-y-auto">
-									<div className="mb-2">
-										<Link
-											href={buildProgramHref(
-												getLocalizedTitle(
-													isSwedish,
-													program.titleSv,
-													program.titleEn,
-												),
-											)}
-											className="inline-flex items-center rounded-sm text-xs font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
-										>
-											{t("plugg:navbar.open_program")}
-										</Link>
-									</div>
-									{program.years.length > 0 && (
-										<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6">
-											{program.years.map((year) => (
-												<div
-													key={year.programYearId}
-													className="flex flex-col space-y-2"
-												>
-													<Link
-														href={buildProgramYearHref(
-															getLocalizedTitle(
-																isSwedish,
-																program.titleSv,
-																program.titleEn,
-															),
-															getLocalizedTitle(
-																isSwedish,
-																year.titleSv,
-																year.titleEn,
-															),
-														)}
-														className="text-base font-semibold hover:underline"
-													>
-														{getLocalizedTitle(
-															isSwedish,
-															year.titleSv,
-															year.titleEn,
-														)}
-													</Link>
-													<ul className="flex flex-col space-y-1.5 text-sm text-muted-foreground">
-														{year.courses.length > 0 ? (
-															year.courses.map((course) => (
-																<li key={course.course_id}>
-																	<Link
-																		href={buildCourseHref(course.title)}
-																		className="hover:text-foreground line-clamp-2 transition-colors"
-																	>
-																		{getCourseLabel(course)}
-																	</Link>
-																</li>
-															))
-														) : (
-															<li className="italic opacity-60">
-																{t("plugg:navbar.no_courses")}
-															</li>
-														)}
-													</ul>
-												</div>
-											))}
-										</div>
+		<div className="w-full flex min-w-0 items-center gap-3">
+			<div className="min-w-0 flex-1">
+				<NavigationMenu className="justify-start">
+					<NavigationMenuList className="flex-nowrap justify-start gap-2">
+						{visiblePrograms.map((program) => (
+							<NavigationMenuItem key={program.programId}>
+								<NavigationMenuTrigger className="bg-transparent hover:bg-accent focus:bg-accent text-sm px-1 font-medium border-2 border-transparent hover:border-foreground/30">
+									{getLocalizedTitle(
+										isSwedish,
+										program.titleSv,
+										program.titleEn,
 									)}
-
-									{program.specialisations.length > 0 && (
-										<div
-											className={cn(
-												"mt-6 pt-4 border-t border-border",
-												program.years.length === 0 && "mt-0 pt-0 border-t-0",
-											)}
-										>
-											<p className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-												{t("plugg:navbar.specialisations")}
-											</p>
-											<div className="flex flex-wrap gap-2">
-												{program.specialisations.map((specialisation) => (
-													<Button
-														key={specialisation.specialisationId}
-														asChild
-														variant="secondary"
-														className="h-9 font-medium"
+								</NavigationMenuTrigger>
+								<NavigationMenuContent>
+									<div className="pb-6 px-6 pt-2 w-max max-w-[90vw] md:w-[600px] lg:w-[800px] max-h-[75vh] overflow-y-auto">
+										<div className="mb-2">
+											<Link
+												href={buildProgramHref(
+													getLocalizedTitle(
+														isSwedish,
+														program.titleSv,
+														program.titleEn,
+													),
+												)}
+												className="inline-flex items-center rounded-sm text-xs font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+											>
+												{t("plugg:navbar.open_program")}
+											</Link>
+										</div>
+										{program.years.length > 0 && (
+											<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6">
+												{program.years.map((year) => (
+													<div
+														key={year.programYearId}
+														className="flex flex-col space-y-2"
 													>
 														<Link
-															href={buildSpecialisationHref(
+															href={buildProgramYearHref(
 																getLocalizedTitle(
 																	isSwedish,
-																	specialisation.titleSv,
-																	specialisation.titleEn,
+																	program.titleSv,
+																	program.titleEn,
+																),
+																getLocalizedTitle(
+																	isSwedish,
+																	year.titleSv,
+																	year.titleEn,
 																),
 															)}
+															className="text-base font-semibold hover:underline"
 														>
 															{getLocalizedTitle(
 																isSwedish,
-																specialisation.titleSv,
-																specialisation.titleEn,
+																year.titleSv,
+																year.titleEn,
 															)}
 														</Link>
-													</Button>
+														<ul className="flex flex-col space-y-1.5 text-sm text-muted-foreground">
+															{year.courses.length > 0 ? (
+																year.courses.map((course) => (
+																	<li key={course.course_id}>
+																		<Link
+																			href={buildCourseHref(course.title)}
+																			className="hover:text-foreground line-clamp-2 transition-colors"
+																		>
+																			{getCourseLabel(course)}
+																		</Link>
+																	</li>
+																))
+															) : (
+																<li className="italic opacity-60">
+																	{t("plugg:navbar.no_courses")}
+																</li>
+															)}
+														</ul>
+													</div>
 												))}
 											</div>
-										</div>
-									)}
-								</div>
-							</NavigationMenuContent>
-						</NavigationMenuItem>
-					))}
-				</NavigationMenuList>
-			</NavigationMenu>
+										)}
+
+										{program.specialisations.length > 0 && (
+											<div
+												className={cn(
+													"mt-6 pt-4 border-t border-border",
+													program.years.length === 0 && "mt-0 pt-0 border-t-0",
+												)}
+											>
+												<p className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+													{t("plugg:navbar.specialisations")}
+												</p>
+												<div className="flex flex-wrap gap-2">
+													{program.specialisations.map((specialisation) => (
+														<Button
+															key={specialisation.specialisationId}
+															asChild
+															variant="secondary"
+															className="h-9 font-medium"
+														>
+															<Link
+																href={buildSpecialisationHref(
+																	getLocalizedTitle(
+																		isSwedish,
+																		specialisation.titleSv,
+																		specialisation.titleEn,
+																	),
+																)}
+															>
+																{getLocalizedTitle(
+																	isSwedish,
+																	specialisation.titleSv,
+																	specialisation.titleEn,
+																)}
+															</Link>
+														</Button>
+													))}
+												</div>
+											</div>
+										)}
+									</div>
+								</NavigationMenuContent>
+							</NavigationMenuItem>
+						))}
+						{overflowPrograms.length > 0 && (
+							<NavigationMenuItem>
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Button
+											variant="ghost"
+											className="h-9 px-2 text-sm font-medium border-2 border-transparent hover:border-foreground/30 hover:bg-accent focus:bg-accent"
+										>
+											{t("plugg:navbar.more")}
+										</Button>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent align="start" className="min-w-56">
+										{overflowPrograms.map((program) => (
+											<DropdownMenuItem key={program.programId} asChild>
+												<Link
+													href={buildProgramHref(
+														getLocalizedTitle(
+															isSwedish,
+															program.titleSv,
+															program.titleEn,
+														),
+													)}
+												>
+													{getLocalizedTitle(
+														isSwedish,
+														program.titleSv,
+														program.titleEn,
+													)}
+												</Link>
+											</DropdownMenuItem>
+										))}
+									</DropdownMenuContent>
+								</DropdownMenu>
+							</NavigationMenuItem>
+						)}
+					</NavigationMenuList>
+				</NavigationMenu>
+			</div>
 			{searchField}
 		</div>
 	);
