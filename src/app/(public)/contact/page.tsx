@@ -122,6 +122,13 @@ export default function ContactPage() {
 								highlight={highlightedId === "festivities"}
 							/>
 							<ContactCard
+								id="krogare"
+								title={t("other.krogare")}
+								fullName="Hugo Klaesson"
+								email="krog@fsektionen.se"
+								highlight={highlightedId === "krogare"}
+							/>
+							<ContactCard
 								id="truth"
 								title={t("other.truth")}
 								fullName="Maria Davidsson"

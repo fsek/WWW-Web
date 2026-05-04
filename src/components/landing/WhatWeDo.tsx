@@ -6,7 +6,7 @@ import {
 	GraduationCap,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { cloneElement } from "react";
+import { cloneElement, type JSX } from "react";
 
 interface FeatureProps {
 	icon: JSX.Element;

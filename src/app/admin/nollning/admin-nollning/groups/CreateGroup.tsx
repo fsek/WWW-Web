@@ -28,14 +28,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import GroupTypeSelect from "./GroupTypeSelect";
-import { ValueSetter } from "node_modules/date-fns/parse/_lib/Setter";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 
 const GroupSchema = z.object({
 	name: z.string().min(2),
 	group_type: z.enum(["Mentor", "Mission", "Default", "Committee"]),
-	mentor_group_number: z.coerce.number().min(1).optional(),
+	mentor_group_number: z.coerce.number<number>().min(1).optional(),
 });
 
 interface Props {

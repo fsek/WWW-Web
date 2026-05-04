@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Which environment to deploy'
+        description: 'Which environment to deploy to'
         required: true
         default: 'stage'
         type: choice
@@ -28,19 +28,32 @@ jobs:
       id-token: write
 
     steps:
-      - name: Determine target
-        id: pick
-        run: echo "target=${{ github.event.inputs.target }}" >> $GITHUB_OUTPUT
-
-      - name: Checkout main
+      - name: Checkout main branch
         uses: actions/checkout@v6
         with:
           ref: main
           fetch-depth: 0
 
+      - name: Generate Deployment Context
+        id: ctx
+        run: |
+          TARGET="${{ github.event.inputs.target }}"
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          COMMIT_MSG=$(git log -1 --pretty=%B | head -n 1)
+          
+          echo "target=$TARGET" >> $GITHUB_OUTPUT
+          echo "sha_short=$SHORT_SHA" >> $GITHUB_OUTPUT
+          
+          # Write to GitHub Action UI Summary for easy visibility
+          echo "### Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment:** \`$TARGET\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** [\`$SHORT_SHA\`](https://github.com/${{ github.repository }}/commit/$SHORT_SHA)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Message:** $COMMIT_MSG" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by:** @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+
       - name: Set environment URLs
         run: |
-          if [ "${{ steps.pick.outputs.target }}" = "stage" ]; then
+          if [ "${{ steps.ctx.outputs.target }}" = "stage" ]; then
             echo "OPENAPI_JSON_URL=${{ secrets.OPENAPI_JSON_URL_STAGE }}" >> $GITHUB_ENV
             echo "API_BASE_URL=https://stage.backend.fsektionen.se"     >> $GITHUB_ENV
           else
@@ -65,23 +78,24 @@ jobs:
         run: bun run generate-api src/api/openapi.json
 
       - name: Log in to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (raw tag)
+      - name: Extract metadata (raw tags)
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ steps.pick.outputs.target }}
+            type=raw,value=${{ steps.ctx.outputs.target }}
+            type=raw,value=${{ steps.ctx.outputs.target }}-${{ steps.ctx.outputs.sha_short }}
 
       - name: Build and push Docker image
         id: build-image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: Dockerfile
@@ -90,9 +104,10 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             API_BASE_URL=${{ env.API_BASE_URL }}
+            NEXT_PUBLIC_APP_VERSION=${{ steps.ctx.outputs.sha_short }}
 
       - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v3
+        uses: actions/attest-build-provenance@v4
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build-image.outputs.digest }}

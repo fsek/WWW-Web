@@ -21,7 +21,7 @@ type NavSection = {
 } & Record<string, NavItem>;
 
 export function Footer() {
-	const { t } = useTranslation();
+	const { t } = useTranslation("main");
 	const navbarData = t("navbar", { returnObjects: true }) as Record<
 		string,
 		NavSection
@@ -31,6 +31,8 @@ export function Footer() {
 		([, value]) =>
 			typeof value === "object" && value !== null && !Array.isArray(value),
 	);
+
+	const version = process.env.NEXT_PUBLIC_APP_VERSION || "dev";
 
 	return (
 		<footer className="bg-neutral-50 dark:bg-neutral-800 py-8 px-4 w-full text-sm text-neutral-600 dark:text-neutral-400 border-t border-neutral-200 dark:border-neutral-700">
@@ -127,7 +129,8 @@ export function Footer() {
 				</div>
 
 				<div className="text-center">
-					&copy; {new Date().getFullYear()} {t("footer.copyright")}
+					&copy; {new Date().getFullYear()} {t("footer.copyright")} | Version:{" "}
+					{version}
 				</div>
 			</div>
 		</footer>

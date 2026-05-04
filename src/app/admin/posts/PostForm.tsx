@@ -32,12 +32,12 @@ const postSchema = z.object({
 	name_en: z.string().min(2),
 	description_sv: z.string().min(2),
 	description_en: z.string().min(2),
-	email: z.string().email(),
+	email: z.email(),
 	council_id: z.number().int(),
-	elected_at_semester: z.nativeEnum(ElectedAtSemesterEnum),
-	elected_by: z.nativeEnum(ElectedByEnum),
-	elected_user_recommended_limit: z.coerce.number().int().min(0),
-	elected_user_max_limit: z.coerce.number().int().min(0),
+	elected_at_semester: z.enum(ElectedAtSemesterEnum),
+	elected_by: z.enum(ElectedByEnum),
+	elected_user_recommended_limit: z.coerce.number<number>().int().min(0),
+	elected_user_max_limit: z.coerce.number<number>().int().min(0),
 });
 
 export default function PostForm() {

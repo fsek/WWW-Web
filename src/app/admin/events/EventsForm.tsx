@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
-import { useForm } from "react-hook-form";
+import { useForm, type UseFormReturn } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogTitle } from "@radix-ui/react-dialog";
@@ -28,7 +28,7 @@ const eventsSchema = z
 		description_sv: z.string().max(1000).min(1),
 		description_en: z.string().max(1000).min(1),
 		location: z.string().max(100),
-		max_event_users: z.coerce.number().nonnegative(),
+		max_event_users: z.coerce.number<number>().nonnegative(),
 		priorities: z.array(z.string()).optional().default([]),
 		all_day: z.boolean(),
 		recurring: z.boolean(),
@@ -41,7 +41,7 @@ const eventsSchema = z
 			.enum(["Alcohol", "Alcohol-Served", "None"])
 			.default("None"),
 		dress_code: z.string().max(100).optional().default(""),
-		price: z.coerce.number().nonnegative().optional().default(0),
+		price: z.coerce.number<number>().nonnegative().optional().default(0),
 		dot: z.enum(["None", "Single", "Double"]).default("None"),
 		lottery: z.boolean().default(false),
 	})
@@ -60,14 +60,15 @@ const eventsSchema = z
 	);
 
 // export form values type for use in EventFormFields.tsx
-export type EventsFormValues = z.infer<typeof eventsSchema>;
+export type EventsFormInput = z.input<typeof eventsSchema>;
+export type EventsFormValues = z.output<typeof eventsSchema>;
 
 export default function EventsForm() {
 	const { t } = useTranslation();
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 
-	const eventsForm = useForm<z.infer<typeof eventsSchema>>({
+	const eventsForm = useForm<EventsFormInput, unknown, EventsFormValues>({
 		resolver: zodResolver(eventsSchema),
 		defaultValues: {
 			title_sv: "",
@@ -125,7 +126,7 @@ export default function EventsForm() {
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof eventsSchema>) {
+	function onSubmit(values: EventsFormValues) {
 		setSubmitEnabled(false);
 		createEvents.mutate({
 			body: {
@@ -178,7 +179,7 @@ export default function EventsForm() {
 					<Form {...eventsForm}>
 						<form onSubmit={eventsForm.handleSubmit(onSubmit)}>
 							<EventFormFields
-								eventsForm={eventsForm}
+								eventsForm={eventsForm as UseFormReturn<EventsFormInput>}
 								checkboxFields={checkboxFields}
 							/>
 

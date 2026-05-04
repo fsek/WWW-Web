@@ -37,6 +37,7 @@
 		"songs": "Sånger",
 		"spider": "Spindel",
 		"nollning": "Nollning",
+		"board": "Styrelse och liknande",
 		"elections": "Val"
 	},
 	"news": {
@@ -341,7 +342,9 @@
 		"elected_user_recommended_limit": "Rekommenderad användargräns",
 		"elected_user_recommended_limit_placeholder": "Rekommenderat antal användare",
 		"elected_user_max_limit": "Maximal användargräns",
-		"elected_user_max_limit_placeholder": "Maximalt antal användare"
+		"elected_user_max_limit_placeholder": "Maximalt antal användare",
+		"email": "E-postadress",
+		"name_en": "Namn på post"
 	},
 	"user-posts": {
 		"self": "Poster åt användare",
@@ -824,6 +827,25 @@
 		"confirm_remove_text": "Är du säker på att du vill ta bort denna sång?",
 		"view_song": "Visa sångdetaljer"
 	},
+	"keyvals": {
+		"self": "Nyckelvärden",
+		"title": "Hantera nyckelvärden",
+		"description_subtitle": "OBS OBS OBS! Dessa nyckelvärden är synliga för alla, även icke-inloggade. Lägg inga hemlisar här. Du kan däremot gärna lägga länkar som ska vara enkla att uppdatera, t.ex. de som finns på styrdokumentsidan.",
+		"create_keyval": "Skapa nyckelvärde",
+		"edit_keyval": "Redigera nyckelvärde",
+		"key": "Nyckel",
+		"key_placeholder": "lank_till_ngt",
+		"value": "Värde",
+		"value_placeholder": "/wow/detta/kan/t.om./vara/en/relativ/länk",
+		"create_success": "Nyckelvärdet har skapats",
+		"create_error": "Kunde inte skapa nyckelvärdet",
+		"edit_success": "Nyckelvärdet har uppdaterats",
+		"edit_error": "Kunde inte uppdatera nyckelvärdet",
+		"remove_success": "Nyckelvärdet har tagits bort",
+		"remove_error": "Kunde inte ta bort nyckelvärdet",
+		"confirm_remove": "Bekräfta borttagning av nyckelvärde",
+		"confirm_remove_text": "Är du säker på att du vill ta bort detta nyckelvärde?"
+	},
 	"event_signup": {
 		"title": "Eventanmälningar",
 		"description": "Hantera anmälningar till detta event. Du kan söka, filtrera, bekräfta och redigera anmälningar nedan. \"Dela ut platser\" kommer att automatiskt välja ut användare som ska få plats, med lottning eller först till kvarn, och prioriteringar. Ni kan sedan kolla över listan, ändra saker som inte ser rätt ut och ta er tid. Änvändare kommer bara se om de fått en plats när ni markerar platserna som slutgiltiga med \"Bekräfta Platser\". När ni väl har gjort detta kan ni inte ändra något, så se till att ni gjort allt rätt innan dess!",
@@ -994,12 +1016,16 @@
 			"candidates_tab": "Kandidater",
 			"candidations_tab": "Kandidaturer",
 			"posts_tab": "Poster",
-			"manage_sub_election": "Hantera delval"
+			"manage_sub_election": "Hantera delval",
+			"missing_id": "ID för delval saknas.",
+			"download_csv": "Ladda ner kandidaturer som CSV",
+			"download_csv_success": "CSV nedladdad!",
+			"download_csv_error": "Misslyckades att ladda ner CSV."
 		},
 		"election_candidates": {
 			"title": "Kandidater",
 			"description": "Lista över kandidater i delvalet.",
-			"add": "Lägg till kandidat(ur)",
+			"add": "Lägg till kandidatur",
 			"tab_title": "Kandidater",
 			"tab_description": "Hantera alla användare som har ansökt som kandidater.",
 			"search_placeholder": "Sök efter namn eller e-post",
@@ -1047,7 +1073,7 @@
 			"search_placeholder": "Sök poster...",
 			"name_sv": "Namn (svenska)",
 			"name_en": "Namn (engelska)",
-			"candidations_count": "Antal kandidaturer"
+			"candidations_count": "Antal kandidater"
 		},
 		"election_nominations": {
 			"tab_title": "Nomineringar",
@@ -1115,5 +1141,7 @@
 		"update_success": "Sektionsmöte uppdaterat!",
 		"update_error": "Kunde inte uppdatera sektionsmöte.",
 		"is_active_label": "Är aktivt (är synligt för användare)"
-	}
+	},
+	"save_changes": "Spara",
+	"create": "Skapa"
 }

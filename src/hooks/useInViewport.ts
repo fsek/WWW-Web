@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
  */
 export function useInViewport<T extends Element = HTMLDivElement>(
 	rootMargin = "200px",
-): [React.RefObject<T>, boolean] {
+): [React.RefObject<T | null>, boolean] {
 	const ref = useRef<T>(null);
 	const [isInView, setIsInView] = useState(false);
 

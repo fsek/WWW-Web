@@ -4,7 +4,7 @@
 	"calendar": "Calendar",
 	"calendarText": "Here you can see the guild's calendar with upcoming events. Click to go to the full calendar page and then scroll down for information on how to add our events to your own calendar app.",
 	"welcome": "Welcome to the F-Guild website!",
-	"welcomeText": "We are currently in a transition period to our new website. We are continuously working to improve the design and functionality, and add things that are currently missing compared to the old website. By the way, it can still be used at old.fsektionen.se. Since we have also replaced the server and the database, the new and old systems are separated: if you have old accounts, room bookings, settings, car bookings, etc. they will not be available through the new web and you will have to make new ones. NOTE! We plan to get rid of the old website in the near future, so please try to use the new one as much as possible. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
+	"welcomeText": "We are currently (still somehow) in a transition period to our new website. We are continuously working to improve the design and functionality. If you had an account on the old website, you will have to make a new account to use the new website. If you have any questions or comments, please do not hesitate to contact the webmasters via spindelman@fsektionen.se.",
 	"oldWebsiteButton": "Take me back to the old site...",
 	"welcomeAdmin": "If you think you should have some sort of admin access, try clicking the button below, in the navbar or going to fsektionen.se/admin. If you still don't have access, please contact the head of your council (council boss).",
 	"adminButton": "Admin Page",
@@ -28,8 +28,8 @@
 			"answer": "Create an account, verify your email, and add your Stil-ID (hi6122mo-s) in the user settings (check the top right corner). After this, you must wait for us to verify that you are indeed a member. At the start of the semester, this may take longer than usual. If you feel that it is taking too long, you can contact your council boss or a mentor/föset during the introduction period."
 		},
 		"q3": {
-			"question": "What do you still have left to move over?",
-			"answer": "Most things are now available. To read the governing documents in their entirety (though they are available in the document archive if you know their names) or use the proposition machine (RIP), you can use the old website. We are working as diligently as possible to ensure that everything is available on the new website. 🧡"
+			"question": "I found a bug or have a suggestion! Who do I contact?",
+			"answer": "Send an email to spindelman@fsektionen.se. It might take a few days for us to respond. Thank you for helping make our website or app better 🧡."
 		},
 		"q4": {
 			"question": "Help! I don't have any of my old admin rights!",
@@ -70,6 +70,11 @@
 				"self": "Documents",
 				"desc": "Here you can find all the fine documents that have been produced.",
 				"href": "/documents"
+			},
+			"ruling_doc": {
+				"self": "Regulatory Documents",
+				"desc": "Read the fundamental documents that govern our guild.",
+				"href": "/styrdokument"
 			},
 			"privacy": {
 				"self": "Privacy Policy",
@@ -462,12 +467,12 @@
 		"end_time": "End Time",
 		"search_posts_placeholder": "Search posts...",
 		"no_posts_match": "No posts match your search",
-		"view_my_candidations": "View My Candidations",
-		"add_candidation": "Add Candidation",
+		"view_my_candidations": "View My Candidacies",
+		"add_candidation": "Add Candidacy",
 		"add_nomination": "Add Nomination",
 		"select_post": "Select post",
-		"candidation_error": "Failed to submit candidation",
-		"candidation_success": "Candidation submitted successfully!",
+		"candidation_error": "Failed to submit candidacy",
+		"candidation_success": "Candidacy submitted successfully!",
 		"nomination_error": "Failed to submit nomination",
 		"nomination_success": "Nomination submitted successfully!",
 		"nominee_name": "Nominee Name",
@@ -476,20 +481,20 @@
 		"election_limits": "Election Limits",
 		"ends_in": "Ends In",
 		"actions": "Actions",
-		"candidated_status": "Candidation Status",
+		"candidated_status": "Candidacy Status",
 		"you_have_candidated": "You have candidated for this post",
 		"candidated_at": "Candidated at",
-		"remove_candidation": "Remove Candidation",
+		"remove_candidation": "Remove Candidacy",
 		"elected_at_semester": "Elected At Semester",
 		"no_description": "No description available",
 		"my_candidations": {
-			"page_title": "My Candidations",
+			"page_title": "My Candidacies",
 			"page_description": "Here you can view and manage your election candidations"
 		},
 		"back_to_elections": "Back to Elections",
-		"no_candidations": "You have no candidations",
-		"delete_candidation_success": "Candidation deleted successfully",
-		"error_delete_candidation": "Failed to delete candidation",
+		"no_candidations": "You have no candidacies",
+		"delete_candidation_success": "Candidacy deleted successfully",
+		"error_delete_candidation": "Failed to delete candidacy",
 		"limits": "Limits",
 		"no_limit": "No limit",
 		"no_end_time": "No end time",
