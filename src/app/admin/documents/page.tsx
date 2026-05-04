@@ -26,6 +26,11 @@ export default function Documents() {
 
 	const [searchTitle, setSearchTitle] = useState<string>("");
 
+	const categories = useMemo(
+		() => [...new Set(data?.map((d) => d.category))],
+		[data],
+	);
+
 	// Column setup
 	const columnHelper = createColumnHelper<DocumentRead>();
 	const columns = [
@@ -100,7 +105,7 @@ export default function Documents() {
 				{t("admin:documents.page_title")}
 			</h3>
 			<p className="py-3">{t("admin:documents.description")}</p>
-			<DocumentsForm />
+			<DocumentsForm categories={categories} />
 
 			{/* Search input for filtering by title */}
 			<div className="py-3">
@@ -119,6 +124,7 @@ export default function Documents() {
 				open={openEditDialog}
 				onClose={() => handleClose()}
 				selectedDocument={selectedDocument as DocumentRead}
+				categories={categories}
 			/>
 		</div>
 	);
