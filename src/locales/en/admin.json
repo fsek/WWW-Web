@@ -763,6 +763,7 @@
 	"remove_confirm_title": "Confirm removal",
 	"remove_confirm_text": "Are you sure you want to remove this item?",
 	"remove_confirm_description": "A popup dialog confirming the deletion of an item.",
+	"remove_confirm_by_typing_default": "Type \"{{key}}\" below to confirm deletion.",
 	"week_selector": {
 		"placeholder": "Select week",
 		"show_all": "Show all",
@@ -1056,7 +1057,7 @@
 			"confirm_remove": "Confirm removal of course document",
 			"confirm_remove_text": "Are you sure you want to remove this course document?",
 			"file_size_error": "File size must be at most {{size}} MB.",
-			"file_type_error": "Only PDF, JPG, PNG and TXT files are allowed.",
+			"file_type_error": "Only PDF files are allowed.",
 			"categories": {
 				"notes": "Notes",
 				"summary": "Summary",

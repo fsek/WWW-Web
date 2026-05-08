@@ -763,6 +763,7 @@
 	"remove_confirm_title": "Bekräfta borttagning",
 	"remove_confirm_text": "Är du säker på att du vill ta bort detta objekt?",
 	"remove_confirm_description": "En popup-dialog som bekräftar borttagning av ett objekt.",
+	"remove_confirm_by_typing_default": "Skriv \"{{key}}\" nedan för att bekräfta borttagningen.",
 	"week_selector": {
 		"placeholder": "Välj vecka",
 		"show_all": "Visa alla",
@@ -1056,7 +1057,7 @@
 			"confirm_remove": "Bekräfta borttagning av kursdokument",
 			"confirm_remove_text": "Är du säker på att du vill ta bort detta kursdokument?",
 			"file_size_error": "Filstorleken får vara högst {{size}} MB.",
-			"file_type_error": "Endast PDF, JPG, PNG och TXT-filer är tillåtna.",
+			"file_type_error": "Endast PDF-filer är tillåtna.",
 			"categories": {
 				"notes": "Anteckningar",
 				"summary": "Sammanfattning",

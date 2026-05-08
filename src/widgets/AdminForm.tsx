@@ -128,7 +128,7 @@ export default function AdminForm<T extends FieldValues>({
 	confirmDeleteDialogDescription,
 	confirmDeleteDialogConfirmByTyping = false,
 	confirmDeleteDialogConfirmByTypingKey,
-	confirmDeleteDialogConfirmByTypingText = `Write "${confirmDeleteDialogConfirmByTypingKey}" to confirm deletion.`,
+	confirmDeleteDialogConfirmByTypingText,
 }: AdminFormProps<T>) {
 	const [internalOpen, setInternalOpen] = useState(false);
 	const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
