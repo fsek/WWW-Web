@@ -185,7 +185,7 @@ function useProgramMenus(isSwedish: boolean) {
 					programId: year.program_id,
 					titleSv: year.title_sv,
 					titleEn: year.title_en,
-					courses: year.courses ?? [],
+					courses: [...(year.courses ?? [])], // shallow clone to avoid mutating original data just in case
 				});
 				return;
 			}
@@ -256,7 +256,7 @@ function useProgramMenus(isSwedish: boolean) {
 			);
 
 			for (const year of years) {
-				year.courses.sort((a, b) =>
+				year.courses = [...year.courses].sort((a, b) =>
 					collator.compare(getCourseLabel(a), getCourseLabel(b)),
 				);
 			}

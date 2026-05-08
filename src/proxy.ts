@@ -1,9 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import i18nConfig from "@/i18nConfig";
 
-const SUBDOMAIN_HOST = "plugg.fsektionen.se"; // your specific subdomain
-const SUBDOMAIN_FOLDER = "plugg"; // matching folder in src/app/
-
 function handleLanguageHeader(response: NextResponse, request: NextRequest) {
 	const language =
 		request.cookies.get("i18next")?.value || i18nConfig.defaultLocale;
@@ -35,11 +32,14 @@ function handleAuthRedirects(request: NextRequest): NextResponse | null {
 }
 
 function handleSubdomain(request: NextRequest): NextResponse | null {
-	const hostname = request.headers.get("host") || "";
-	if (hostname !== SUBDOMAIN_HOST) return null;
+	const hostname = request.nextUrl.hostname || "";
+	if (hostname !== "plugg.fsektionen.se" && hostname !== "plugg.stage.frontend.fsektionen.se") {
+		return null;
+	} 
 
 	const pathname = request.nextUrl.pathname;
-	const rewrittenUrl = new URL(`/${SUBDOMAIN_FOLDER}${pathname}`, request.url);
+	const rewrittenUrl = new URL(request.nextUrl); // Clone and replace pathname so we keep the query parameters intact
+	rewrittenUrl.pathname = `/plugg${pathname}`;
 	return NextResponse.rewrite(rewrittenUrl);
 }
 

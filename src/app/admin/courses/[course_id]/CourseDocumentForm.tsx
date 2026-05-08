@@ -11,12 +11,7 @@ import { toast } from "sonner";
 import AdminForm from "@/widgets/AdminForm";
 import { MAX_DOC_FILE_SIZE_MB } from "@/constants";
 
-const ALLOWED_DOC_FILE_TYPES = new Set([
-	"application/pdf",
-	"image/jpeg",
-	"image/png",
-	"text/plain",
-]);
+const ALLOWED_DOC_FILE_TYPES = new Set(["application/pdf"]);
 
 interface CourseDocumentFormProps {
 	courseId: number;
