@@ -20,5 +20,5 @@ export function buildSpecialisationHref(specialisationTitle: string) {
 }
 
 export function buildCourseDocumentFileHref(courseDocumentId: number) {
-	return `/kursdokument//${courseDocumentId}`;
+	return `/plugg/kursdokument/${courseDocumentId}`;
 }
