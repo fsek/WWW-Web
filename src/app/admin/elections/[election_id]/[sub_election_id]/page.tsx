@@ -8,6 +8,7 @@ import {
 	getAllSubElectionNominationsOptions,
 	deleteNominationMutation,
 	getElectionOptions,
+	getAllSubElectionCandidationsCsvOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,6 +41,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { ArrowLeft } from "lucide-react";
 import MovePostForm from "./MovePostForm";
+import { downloadCsvResult } from "@/utils/csv-utils";
 
 const columnHelper = createColumnHelper<CandidateRead>();
 
@@ -238,6 +240,35 @@ export default function AdminElectionCandidatesPage() {
 		}
 		return map;
 	}, [subElection]);
+
+	function handleDownloadCsv() {
+		(async () => {
+			if (!Number.isFinite(subElectionId)) {
+				toast.error(t("admin:elections.sub_election.missing_id"));
+				return;
+			}
+			try {
+				const opts = getAllSubElectionCandidationsCsvOptions({
+					path: { sub_election_id: subElectionId },
+				});
+				// Try to reuse generated queryFn via queryClient
+				let result: unknown;
+				// queryClient.fetchQuery v4 expects the object signature and array queryKey.
+				const qk = opts.queryKey ?? [];
+				const queryKey = Array.isArray(qk) ? qk : [qk];
+				result = await queryClient.fetchQuery({
+					queryKey: queryKey as any[],
+					queryFn: opts.queryFn as any,
+				});
+
+				downloadCsvResult(result, "candidations.csv");
+
+				toast.success(t("admin:elections.sub_election.download_csv_success"));
+			} catch (err) {
+				toast.error(t("admin:elections.sub_election.download_csv_error"));
+			}
+		})();
+	}
 
 	const handleRowClick = (row: Row<CandidateRead>) => {
 		if (!subElection) return;
@@ -508,7 +539,7 @@ export default function AdminElectionCandidatesPage() {
 				onOpenChange={setCandidationFormOpen}
 			/>
 
-			<Tabs defaultValue="candidates" className="w-full">
+			<Tabs defaultValue="candidations" className="w-full">
 				<TabsList className="grid w-full grid-cols-4">
 					<TabsTrigger value="candidates">
 						{t("elections.sub_election.candidates_tab")}
@@ -552,7 +583,7 @@ export default function AdminElectionCandidatesPage() {
 					<p className="text-xs md:text-sm font-medium">
 						{t("elections.election_candidations.tab_description")}
 					</p>
-					<div className="mt-4 mb-2 grid grid-cols-1 gap-2 items-center md:grid-cols-2 xl:grid-cols-3">
+					<div className="mt-4 mb-2 grid grid-cols-1 grid-rows-2 gap-2 items-center md:grid-cols-2 md:grid-rows-1 xl:grid-cols-3">
 						<Input
 							placeholder={t(
 								"elections.election_candidations.search_placeholder",
@@ -560,6 +591,11 @@ export default function AdminElectionCandidatesPage() {
 							value={candidationSearch}
 							onChange={(e) => setCandidationSearch(e.target.value)}
 						/>
+						<div className="flex flex-col md:flex-row md:justify-end xl:col-span-2">
+							<Button variant="default" onClick={handleDownloadCsv}>
+								{t("admin:elections.sub_election.download_csv")}
+							</Button>
+						</div>
 					</div>
 					<Separator className="mb-4" />
 					<CandidationTable
@@ -587,21 +623,21 @@ export default function AdminElectionCandidatesPage() {
 					<p className="text-xs md:text-sm font-medium">
 						{t("elections.posts.tab_description")}
 					</p>
-					<div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-						<div className="mt-4 mb-2 grid grid-cols-1 gap-2 items-center md:grid-cols-2 xl:grid-cols-3">
-							<Input
-								placeholder={t("elections.posts.search_placeholder")}
-								value={postSearch}
-								onChange={(e) => setPostSearch(e.target.value)}
-							/>
+					<div className="mt-4 mb-2 grid grid-cols-1 grid-rows-2 gap-2 items-center md:grid-cols-2 md:grid-rows-1 xl:grid-cols-3">
+						<Input
+							placeholder={t("elections.posts.search_placeholder")}
+							value={postSearch}
+							onChange={(e) => setPostSearch(e.target.value)}
+						/>
+						<div className="flex flex-col md:flex-row md:justify-end xl:col-span-2">
+							<Button
+								variant="outline"
+								onClick={() => setMovePostOpen(true)}
+								disabled={!subElection?.election_posts?.length}
+							>
+								{t("elections.move_post", { defaultValue: "Move post" })}
+							</Button>
 						</div>
-						<Button
-							variant="outline"
-							onClick={() => setMovePostOpen(true)}
-							disabled={!subElection?.election_posts?.length}
-						>
-							{t("elections.move_post", { defaultValue: "Move post" })}
-						</Button>
 					</div>
 					<Separator className="mb-4" />
 					<AdminTable table={postTable} />

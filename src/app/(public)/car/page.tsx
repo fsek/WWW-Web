@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/accordion";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { toast } from "sonner";
+import KeyValLink from "@/components/KeyValLink";
 
 export default function Car() {
 	const router = useRouter();
@@ -293,9 +294,9 @@ export default function Car() {
 								className="text-blue-500 hover:text-blue-700 underline mr-0"
 								href="/admin/car"
 							/>
-							<Link
+							<KeyValLink
+								linkKey="link_car_booking_rules"
 								className="text-blue-500 hover:text-blue-700 underline mr-0"
-								href="https://old.fsektionen.se/dokument/276"
 							/>
 						</Trans>
 						<CustomTitle
