@@ -211,3 +211,28 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+@layer components {
+	.special-nav-item {
+		@apply !border-forange/60 !text-forange dark:!text-forange font-bold !important;
+		animation: special-nav-pulse 2s ease-in-out infinite;
+	}
+
+	.guild-meeting-nav-item {
+		@apply !border-forange/60 !important;
+	}
+
+	.election-nav-item {
+		@apply !border-forange/80 !important;
+	}
+
+	@keyframes special-nav-pulse {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.7;
+		}
+	}
+}

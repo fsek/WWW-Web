@@ -33,6 +33,7 @@ import {
 	getMeOptions,
 	authCookieLogoutMutation,
 	getGuildMeetingOptions,
+	getVisibleElectionOptions,
 } from "@/api/@tanstack/react-query.gen";
 import {
 	DropdownMenu,
@@ -58,6 +59,7 @@ type NavItem = {
 	self: string;
 	desc: string;
 	href?: string;
+	className?: string;
 };
 
 type NavSection = {
@@ -310,6 +312,11 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 		refetchOnWindowFocus: false,
 	});
 
+	const { data: electionData } = useQuery({
+		...getVisibleElectionOptions(),
+		refetchOnWindowFocus: false,
+	});
+
 	if (guildMeetingData?.is_active) {
 		sections.push([
 			"guildMeeting",
@@ -318,6 +325,21 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 					self: t("navbar.guild-meeting"),
 					desc: "",
 					href: "/guild-meeting",
+					className: "special-nav-item guild-meeting-nav-item",
+				},
+			},
+		]);
+	}
+
+	if (electionData) {
+		sections.push([
+			"election",
+			{
+				self: {
+					self: t("navbar.engage.elections.self"),
+					desc: "",
+					href: "/election",
+					className: "special-nav-item election-nav-item",
 				},
 			},
 		]);
@@ -346,6 +368,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 											"flex items-center gap-2 px-2 py-2 text-sm rounded-md transition-colors hover:bg-accent font-medium",
 											(!item.href || item.href === "#") &&
 												"opacity-50 cursor-not-allowed pointer-events-none",
+											item.className,
 										)}
 									>
 										<span>{item.self}</span>
@@ -423,6 +446,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 												"submenu-trigger !bg-transparent !hover:bg-transparent border-2 border-transparent hover:border-foreground/30 font-medium px-4 py-2",
 												(!item.href || item.href === "#") &&
 													"opacity-50 cursor-not-allowed pointer-events-none",
+												item.className,
 											)}
 										>
 											{item.self}
