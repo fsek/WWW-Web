@@ -121,6 +121,7 @@ export default function KeyvalEditForm({ onClose, item }: KeyvalEditFormProps) {
 					name: "key",
 					label: t("keyvals.key"),
 					placeholder: t("keyvals.key_placeholder"),
+					readOnly: true,
 				},
 				{
 					variant: "text",

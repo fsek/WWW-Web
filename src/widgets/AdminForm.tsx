@@ -35,6 +35,7 @@ type BaseAdminFormInputField<T extends FieldValues> = {
 	name: Path<T>;
 	label: string;
 	colSpan?: number;
+	readOnly?: boolean;
 };
 
 type TextAdminFormInputField<T extends FieldValues> =
@@ -223,6 +224,7 @@ export default function AdminForm<T extends FieldValues>({
 																placeholder={inputField.placeholder}
 																{...field}
 																value={(field.value ?? "") as string}
+																readOnly={inputField.readOnly}
 															/>
 														</FormControl>
 														<FormMessage />
