@@ -94,6 +94,18 @@
 		"contact": "President",
 		"contact2": "Vice President"
 	},
+	"processionen": {
+		"self": "The Procession",
+		"about": "Fill in",
+		"info": "The Procession is responsible for the guild's heraldic activities such as the Order Dinner and medals.",
+		"contact": "No primary contact post"
+	},
+	"valberedningen": {
+		"self": "The Nomination Committee",
+		"about": "Fill in",
+		"info": "The Nomination Committee nominates candidates for official positions with greater areas of responsibility.",
+		"contact": "No primary contact post"
+	},
 	"ovriga": {
 		"self": "Other",
 		"about": "Fill in",

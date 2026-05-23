@@ -93,6 +93,18 @@
 		"contact": "Ordförande",
 		"contact2": "Vice ordförande"
 	},
+	"processionen": {
+		"self": "Processionen",
+		"about": "Fyll i",
+		"info": "Processionen ansvarar för sektionens heraldiska verksamhet så som Ordensmiddagen och medaljer.",
+		"contact": "Ingen primär kontaktpost"
+	},
+	"valberedningen": {
+		"self": "Valberedningen",
+		"about": "Fyll i",
+		"info": "Valberedningen nominerar kandidater till funktionärsposter med större ansvarsområden.",
+		"contact": "Ingen primär kontaktpost"
+	},
 	"ovriga": {
 		"self": "Övriga",
 		"about": "Fyll i",

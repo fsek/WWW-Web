@@ -3,18 +3,20 @@
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import {
+	Archive,
+	Award,
+	Beer,
 	BookOpen,
 	Coffee,
-	Users,
-	Shield,
-	Archive,
-	Users2,
-	Server,
 	ClipboardList,
 	LayoutGrid,
-	SlidersHorizontal,
 	MoreHorizontal,
-	Beer,
+	Server,
+	Shield,
+	SlidersHorizontal,
+	Users,
+	Users2,
+	Vote,
 } from "lucide-react";
 
 const councils = [
@@ -47,6 +49,8 @@ const councils = [
 	{ key: "sexmasteriet", url: "/councils/sexmasteriet", icon: Beer },
 	{ key: "studieradet", url: "/councils/studieradet", icon: Users2 },
 	{ key: "styrelsen", url: "/councils/styrelsen", icon: Users },
+	{ key: "processionen", url: "/councils/processionen", icon: Award },
+	{ key: "valberedningen", url: "/councils/valberedningen", icon: Vote },
 	{ key: "ovriga", url: "/councils/ovriga", icon: MoreHorizontal },
 ];
 
