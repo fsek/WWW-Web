@@ -29,6 +29,12 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
+import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 
 type Status = "idle" | "loading" | "success" | "error" | "password-mismatch";
 
@@ -78,6 +84,21 @@ export default function RegistrationPage() {
 						),
 					},
 				),
+			stil_id: z
+				.string()
+				.optional()
+				.refine(
+					(val) => {
+						if (!val) return true; // Optional field
+						if (val.length !== 10) return false; // Must be exactly 10 characters
+						const validPattern = "^[a-z]{2}\\d{4}[a-z]{2}-s$";
+						if (!new RegExp(validPattern).test(val)) return false; // Must match the pattern "hi6122al-s"
+						return true;
+					},
+					{
+						message: t("register.stilIdInvalid"),
+					},
+				),
 		})
 		.refine((data) => data.password === data.confirmPassword, {
 			message: t(
@@ -120,6 +141,7 @@ export default function RegistrationPage() {
 			last_name: "",
 			telephone_number: "",
 			start_year: "",
+			stil_id: "",
 		},
 	});
 
@@ -193,6 +215,7 @@ export default function RegistrationPage() {
 				last_name: values.last_name,
 				telephone_number: phoneNumber,
 				start_year: values.start_year ? Number(values.start_year) : undefined,
+				stil_id: values.stil_id,
 			},
 		});
 	};
@@ -367,6 +390,42 @@ export default function RegistrationPage() {
 														{...field}
 													/>
 												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name="stil_id"
+										render={({ field }) => (
+											<FormItem>
+												<div className="relative">
+													<FormControl>
+														<Input
+															type="text"
+															placeholder={t("register.stilId")}
+															className="bg-background pr-10"
+															{...field}
+														/>
+													</FormControl>
+													<Popover>
+														<PopoverTrigger asChild>
+															<button
+																type="button"
+																className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+																aria-label={t("register.stilIdInfoLabel")}
+															>
+																<QuestionMarkCircledIcon className="size-4" />
+															</button>
+														</PopoverTrigger>
+														<PopoverContent
+															align="end"
+															className="w-64 text-sm"
+														>
+															{t("register.stilIdInfo")}
+														</PopoverContent>
+													</Popover>
+												</div>
 												<FormMessage />
 											</FormItem>
 										)}
