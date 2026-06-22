@@ -666,7 +666,22 @@
 			"fadder": "Fadder",
 			"nolla": "Nolla",
 			"standard": "Standardmedlem",
-			"unclear": "Oklart"
+			"unclear": "Oklart",
+			"batch_add_members": {
+				"title": "Lägg till flera medlemmar i grupp",
+				"description": "Du kan ange flera stil-id:n och/eller e-postadresser separerade med kommatecken eller en på varje rad. Systemet försöker matcha de angivna värdena mot befintliga användare och lägger till dem i gruppen. OBS: Endast existerande användare kommer att läggas till i gruppen.",
+				"input_placeholder": "Ange stil-id:n eller e-postadresser separerade med kommatecken, eller en per rad",
+				"submit": "Lägg till medlemmar",
+				"submitting": "Lägger till medlemmar...",
+				"matched_preview": "Matchade {{count}} användare",
+				"unmatched_preview": "{{count}} omatchade värden",
+				"selected_users": "Valda användare",
+				"more_users": "+{{count}} till",
+				"unmatched_values": "Omatchade värden (eller redan i gruppen)",
+				"toast_success": "Lade till {{count}} användare i gruppen",
+				"toast_partial_success": "Lade till {{count}} användare, men {{unmatched}} värden kunde inte matchas",
+				"toast_error": "Kunde inte lägga till användare i gruppen"
+			}
 		}
 	},
 	"room_bookings": {
