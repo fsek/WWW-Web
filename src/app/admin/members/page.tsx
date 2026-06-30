@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AdminTable from "@/widgets/AdminTable";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import {
@@ -40,11 +41,17 @@ import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { useAuthState, type RequiredPermission } from "@/lib/auth";
 import { ActionEnum, TargetEnum } from "@/api";
 import MemberEditForm from "./MemberEditForm";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import BatchMemberTab from "./BatchMemberTab";
+import BatchMemberingTab from "./BatchMemberingTab";
 
 const columnHelper = createColumnHelper<AdminUserRead>();
 
 export default function MembersPage() {
 	const { t } = useTranslation();
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const pathname = usePathname();
 	const queryClient = useQueryClient();
 	const {
 		data: userDetails,
@@ -70,6 +77,12 @@ export default function MembersPage() {
 	// date range filter state
 	const [dateFrom, setDateFrom] = useState<Date | undefined>(undefined);
 	const [dateTo, setDateTo] = useState<Date | undefined>(undefined);
+	const queryTab = searchParams.get("tab");
+	const [tab, setTab] = useState(
+		queryTab === "main" || queryTab === "batch" || queryTab === "batch-confirm"
+			? queryTab
+			: "main",
+	);
 
 	// compute filtered users
 	const filteredUsers = useMemo(() => {
@@ -275,109 +288,137 @@ export default function MembersPage() {
 	}
 	return (
 		<div className="px-8 space-x-4">
-			<div className="space-y-0">
-				<h3 className="text-3xl py-3 font-bold text-primary">
-					{t("admin:member.list")}
-				</h3>
-				<p className="text-xs md:text-sm font-medium">
-					{t("admin:member.list_description")}
-				</p>
-				<div className="mt-4 mb-2 flex flex-row gap-2 items-center">
-					<div className="w-xs">
-						<Input
-							placeholder={t("admin:member.search_placeholder")}
-							value={search}
-							onChange={(e) => setSearch(e.target.value)}
-							autoFocus
-						/>
-					</div>
-					{/* Date range selector */}
-					<div className="flex gap-2 items-center">
-						<AdminChooseDates value={dateFrom} onChange={setDateFrom} />
-						<span className="text-xs">
-							{t("admin:member.date_range_to") || "to"}
-						</span>
-						<AdminChooseDates value={dateTo} onChange={setDateTo} />
-					</div>
-				</div>
-				{/* Verification filter checkbox */}
-				<div className="flex items-center space-x-2 mb-4">
-					<Checkbox
-						id="verified-only"
-						checked={showVerifiedOnly}
-						onCheckedChange={() => setShowVerifiedOnly(!showVerifiedOnly)}
-					/>
-					<Label htmlFor="verified-only" className="text-sm">
-						{t("admin:member.show_verified_only")}
-					</Label>
-				</div>
-				<Separator className="mb-8" />
-				{/* Bulk member button */}
-				{hasManageUserPerms && (
-					<Button
-						className="my-2"
-						variant="default"
-						disabled={
-							filteredUsers.filter((u) => !u.is_member).length === 0 ||
-							bulkLoading
-						}
-						onClick={() => setDialogOpen(true)}
-					>
-						{bulkLoading
-							? `${t("admin:member.processing")}...`
-							: t("admin:member.bulk_member")}
-					</Button>
-				)}
-			</div>
-			<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>
-							{t("admin:member.bulk_member_confirm_title")}
-						</DialogTitle>
-						<DialogDescription>
-							{`${t("admin:member.bulk_member_confirm_desc")}: ${filteredUsers.filter((u) => !u.is_member).length}.`}
-						</DialogDescription>
-					</DialogHeader>
-					<DialogFooter>
-						<DialogClose asChild>
-							<Button variant="outline" disabled={bulkLoading}>
-								{t("admin:cancel")}
-							</Button>
-						</DialogClose>
+			<Tabs
+				value={tab}
+				onValueChange={(value) => {
+					setTab(value);
+					const params = new URLSearchParams(
+						Array.from(searchParams.entries()),
+					);
+					params.set("tab", value);
+					router.replace(`${pathname}?${params.toString()}`);
+				}}
+				className="flex flex-col w-full items-center"
+			>
+				<TabsList className="flex justify-center mb-2">
+					<TabsTrigger value="main">{t("admin:member.main")}</TabsTrigger>
+					<TabsTrigger value="batch">{t("admin:member.batch")}</TabsTrigger>
+					<TabsTrigger value="batch-confirm">
+						{t("admin:member.batch_membering")}
+					</TabsTrigger>
+				</TabsList>
+				<TabsContent value="main" className="w-full px-5 space-y-5">
+					<div className="space-y-0">
+						<h3 className="text-3xl py-3 font-bold text-primary">
+							{t("admin:member.list")}
+						</h3>
+						<p className="text-xs md:text-sm font-medium">
+							{t("admin:member.list_description")}
+						</p>
+						<div className="mt-4 mb-2 flex flex-row gap-2 items-center">
+							<div className="w-xs">
+								<Input
+									placeholder={t("admin:member.search_placeholder")}
+									value={search}
+									onChange={(e) => setSearch(e.target.value)}
+									autoFocus
+								/>
+							</div>
+							{/* Date range selector */}
+							<div className="flex gap-2 items-center">
+								<AdminChooseDates value={dateFrom} onChange={setDateFrom} />
+								<span className="text-xs">
+									{t("admin:member.date_range_to") || "to"}
+								</span>
+								<AdminChooseDates value={dateTo} onChange={setDateTo} />
+							</div>
+						</div>
+						{/* Verification filter checkbox */}
+						<div className="flex items-center space-x-2 mb-4">
+							<Checkbox
+								id="verified-only"
+								checked={showVerifiedOnly}
+								onCheckedChange={() => setShowVerifiedOnly(!showVerifiedOnly)}
+							/>
+							<Label htmlFor="verified-only" className="text-sm">
+								{t("admin:member.show_verified_only")}
+							</Label>
+						</div>
+						<Separator className="mb-8" />
+						{/* Bulk member button */}
 						{hasManageUserPerms && (
 							<Button
+								className="my-2"
 								variant="default"
-								onClick={handleBulkMember}
-								disabled={bulkLoading}
+								disabled={
+									filteredUsers.filter((u) => !u.is_member).length === 0 ||
+									bulkLoading
+								}
+								onClick={() => setDialogOpen(true)}
 							>
 								{bulkLoading
-									? t("admin:member.bulk_member_loading")
-									: t("admin:member.bulk_member_confirm")}
+									? `${t("admin:member.processing")}...`
+									: t("admin:member.bulk_member")}
 							</Button>
 						)}
-					</DialogFooter>
-				</DialogContent>
-			</Dialog>
-			<Separator />
-			{/* <AdminTable table={table} onRowClick={handleRowClick} /> */}
-			<AdminTable
-				table={table}
-				onRowClick={(row) => {
-					setSelectedUser(row.original);
-					setEditFormOpen(true);
-				}}
-			/>
-			{selectedUser && (
-				<MemberEditForm
-					open={editFormOpen}
-					onClose={() => {
-						setEditFormOpen(false);
-						setSelectedUser(null);
-					}}
-					selectedUser={selectedUser}
-				/>
-			)}
+					</div>
+					<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+						<DialogContent>
+							<DialogHeader>
+								<DialogTitle>
+									{t("admin:member.bulk_member_confirm_title")}
+								</DialogTitle>
+								<DialogDescription>
+									{`${t("admin:member.bulk_member_confirm_desc")}: ${filteredUsers.filter((u) => !u.is_member).length}.`}
+								</DialogDescription>
+							</DialogHeader>
+							<DialogFooter>
+								<DialogClose asChild>
+									<Button variant="outline" disabled={bulkLoading}>
+										{t("admin:cancel")}
+									</Button>
+								</DialogClose>
+								{hasManageUserPerms && (
+									<Button
+										variant="default"
+										onClick={handleBulkMember}
+										disabled={bulkLoading}
+									>
+										{bulkLoading
+											? t("admin:member.bulk_member_loading")
+											: t("admin:member.bulk_member_confirm")}
+									</Button>
+								)}
+							</DialogFooter>
+						</DialogContent>
+					</Dialog>
+					<Separator />
+					{/* <AdminTable table={table} onRowClick={handleRowClick} /> */}
+					<AdminTable
+						table={table}
+						onRowClick={(row) => {
+							setSelectedUser(row.original);
+							setEditFormOpen(true);
+						}}
+					/>
+					{selectedUser && (
+						<MemberEditForm
+							open={editFormOpen}
+							onClose={() => {
+								setEditFormOpen(false);
+								setSelectedUser(null);
+							}}
+							selectedUser={selectedUser}
+						/>
+					)}
+				</TabsContent>
+				<TabsContent value="batch" className="w-full px-5 space-y-5">
+					<BatchMemberTab />
+				</TabsContent>
+				<TabsContent value="batch-confirm" className="w-full px-5 space-y-5">
+					<BatchMemberingTab />
+				</TabsContent>
+			</Tabs>
 		</div>
 	);
 }
