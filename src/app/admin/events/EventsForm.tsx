@@ -39,7 +39,6 @@ const eventsSchema = z
 		is_nollning_event: z.boolean(),
 		mentor_group_types: z
 			.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
-			.optional()
 			.default([]),
 
 		alcohol_event_type: z

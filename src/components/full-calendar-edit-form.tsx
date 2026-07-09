@@ -111,6 +111,9 @@ export function EventEditForm({
 						drink_package: z.boolean(),
 						is_nollning_event: z.boolean(),
 						priorities: z.array(z.string()).optional().default([]),
+						mentor_group_types: z
+							.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
+							.default([]),
 						alcohol_event_type: z
 							.enum(["Alcohol", "Alcohol-Served", "None"])
 							.default("None"),
@@ -219,6 +222,7 @@ export function EventEditForm({
 			can_signup: false,
 			drink_package: false,
 			is_nollning_event: false,
+			mentor_group_types: [],
 			priorities: [],
 			alcohol_event_type: "None",
 			dress_code: "",
@@ -258,6 +262,7 @@ export function EventEditForm({
 							can_signup: oldEvent.can_signup,
 							drink_package: oldEvent.drink_package,
 							is_nollning_event: oldEvent.is_nollning_event,
+							mentor_group_types: oldEvent.mentor_group_types,
 							priorities: oldEvent.priorities,
 							alcohol_event_type: oldEvent.alcohol_event_type,
 							dress_code: oldEvent.dress_code,
@@ -324,6 +329,7 @@ export function EventEditForm({
 						can_signup: event?.can_signup || false,
 						drink_package: event?.drink_package || false,
 						is_nollning_event: event?.is_nollning_event || false,
+						mentor_group_types: event?.mentor_group_types || [],
 						priorities: event?.priorities || [],
 						alcohol_event_type: event?.alcohol_event_type || "None",
 						dress_code: event?.dress_code || "",
@@ -387,6 +393,7 @@ export function EventEditForm({
 						can_signup: data.can_signup,
 						drink_package: data.drink_package,
 						is_nollning_event: data.is_nollning_event,
+						mentor_group_types: data.mentor_group_types,
 						priorities: data.priorities,
 						alcohol_event_type: data.alcohol_event_type,
 						dress_code: data.dress_code,

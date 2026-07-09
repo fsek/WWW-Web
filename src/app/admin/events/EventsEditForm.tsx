@@ -41,7 +41,9 @@ const eventsEditSchema = z.object({
 	can_signup: z.boolean(),
 	drink_package: z.boolean(),
 	is_nollning_event: z.boolean(),
-	mentor_group_types: z.array(z.enum(["Mentor", "Mission"])).default([]),
+	mentor_group_types: z
+		.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
+		.default([]),
 	alcohol_event_type: z
 		.enum(["Alcohol", "Alcohol-Served", "None"])
 		.default("None"),
@@ -126,7 +128,7 @@ export default function EventsEditForm({
 					| "None",
 				dot: selectedEvent.dot as "None" | "Single" | "Double",
 				mentor_group_types: selectedEvent.mentor_group_types as Array<
-					"Mentor" | "Mission"
+					"Mentor" | "Mission" | "Default" | "Committee"
 				>,
 			});
 		}

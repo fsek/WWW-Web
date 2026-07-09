@@ -60,6 +60,7 @@ export default function MainPageCalendar({
 		can_signup: boolean;
 		drink_package: boolean;
 		is_nollning_event: boolean;
+		mentor_group_types: EventCreate["alcohol_event_type"];
 		alcohol_event_type: string;
 		dress_code: string;
 		price: number;
@@ -95,6 +96,7 @@ export default function MainPageCalendar({
 			can_signup: event.can_signup,
 			drink_package: event.drink_package,
 			is_nollning_event: event.is_nollning_event,
+			mentor_group_types: event.mentor_group_types,
 			alcohol_event_type: event.alcohol_event_type,
 			dress_code: event.dress_code,
 			price: event.price,

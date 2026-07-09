@@ -18,6 +18,7 @@ import type { UseFormReturn, Path } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { useTranslation } from "react-i18next";
 import StyledCreatableSelect from "@/components/StyledCreatableSelect";
+import AdminChooseMentorGroupTypes from "@/widgets/AdminChooseMentorGroupType";
 
 const LOCATIONS = {
 	MH: "MH",
@@ -102,6 +103,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 }: EventFormFieldsProps<T>) {
 	const { t } = useTranslation();
 
+	console.log(checkboxFields);
+
 	// Helper to check if a field exists in the form values
 	const hasField = (fieldName: string): boolean => {
 		return fieldName in eventsForm.getValues();
@@ -115,7 +118,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 	return (
 		<>
 			<Tabs defaultValue="basic" className="w-full">
-				<TabsList className="grid w-full grid-cols-4">
+				<TabsList className="grid w-full grid-cols-3">
 					<TabsTrigger value="basic">
 						{t("admin:events.basic_info")}
 					</TabsTrigger>
@@ -124,9 +127,6 @@ export default function EventFormFields<T extends EventFormCompatible>({
 					</TabsTrigger>
 					<TabsTrigger value="settings">
 						{t("admin:events.settings")}
-					</TabsTrigger>
-					<TabsTrigger value="additional">
-						{t("admin:events.additional")}
 					</TabsTrigger>
 				</TabsList>
 
@@ -434,12 +434,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							)}
 						/>
 					))}
-				</TabsContent>
 
-				<TabsContent
-					value="additional"
-					className="grid gap-x-4 gap-y-3 lg:grid-cols-2 mt-4"
-				>
 					<FormField
 						control={eventsForm.control}
 						name={"alcohol_event_type" as Path<T>}
@@ -558,6 +553,22 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								</FormItem>
 							);
 						}}
+					/>
+
+					<FormField
+						control={eventsForm.control}
+						name={"mentor_group_types" as Path<T>}
+						render={({ field }) => (
+							<FormItem className="lg:col-span-2 w-full">
+								<FormLabel>{t("admin:events.mentor_group_types")}</FormLabel>
+
+								<AdminChooseMentorGroupTypes
+									value={(field.value as string[]) ?? []}
+									onChange={(value) => field.onChange(value)}
+									className="text-sm"
+								/>
+							</FormItem>
+						)}
 					/>
 				</TabsContent>
 			</Tabs>
