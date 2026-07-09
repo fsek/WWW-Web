@@ -176,6 +176,7 @@ export default function Events() {
 		can_signup: boolean;
 		drink_package: boolean;
 		is_nollning_event: boolean;
+		mentor_group_types: EventCreate["mentor_group_types"];
 		alcohol_event_type: EventCreate["alcohol_event_type"];
 		dress_code: string;
 		price: number;
@@ -211,6 +212,8 @@ export default function Events() {
 			can_signup: event.can_signup,
 			drink_package: event.drink_package,
 			is_nollning_event: event.is_nollning_event,
+			mentor_group_types:
+				event.mentor_group_types as EventCreate["mentor_group_types"],
 			alcohol_event_type:
 				event.alcohol_event_type as EventCreate["alcohol_event_type"],
 			dress_code: event.dress_code,
@@ -253,6 +256,8 @@ export default function Events() {
 								can_signup: event.can_signup as boolean,
 								drink_package: event.drink_package as boolean,
 								is_nollning_event: event.is_nollning_event as boolean,
+								mentor_group_types:
+									event.mentor_group_types as EventCreate["mentor_group_types"],
 								alcohol_event_type: event.alcohol_event_type as
 									| "Alcohol"
 									| "Alcohol-Served"
@@ -303,6 +308,8 @@ export default function Events() {
 								can_signup: event.can_signup as boolean,
 								drink_package: event.drink_package as boolean,
 								is_nollning_event: event.is_nollning_event as boolean,
+								mentor_group_types:
+									event.mentor_group_types as EventCreate["mentor_group_types"],
 								priorities: event.priorities as EventCreate["priorities"], // This might just work
 								alcohol_event_type: event.alcohol_event_type as
 									| "Alcohol"
