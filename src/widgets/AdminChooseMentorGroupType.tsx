@@ -42,7 +42,6 @@ export function AdminChooseMentorGroupTypes({
 			const newValues = selected.map((option) =>
 				typeof option.value === "string" ? option.value : String(option.value),
 			);
-			console.log(newValues);
 			onChange(newValues);
 		} else {
 			// isMulti is true, so selected will be an array or null.
