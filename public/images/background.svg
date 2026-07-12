@@ -1,0 +1,95 @@
+<svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF8800"/>
+      <stop offset="100%" stop-color="#E67A00"/>
+    </linearGradient>
+
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8800"/>
+      <stop offset="100%" stop-color="#FF9520"/>
+    </linearGradient>
+
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8800"/>
+      <stop offset="100%" stop-color="#FFA64D"/>
+    </linearGradient>
+
+    <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8800"/>
+      <stop offset="100%" stop-color="#F28100"/>
+    </linearGradient>
+
+    <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8800"/>
+      <stop offset="100%" stop-color="#FFB366"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="400" fill="url(#bg)"/>
+
+  <path d="
+    M -10 310
+    C 60 340, 180 260, 310 290
+    C 420 315, 470 370, 620 340
+    C 800 305, 880 230, 1050 270
+    C 1130 290, 1180 310, 1210 300
+    L 1210 420
+    L -10 420
+    Z"
+    fill="url(#g1)" opacity="0.93"/>
+
+  <path d="
+    M -10 200
+    C 80 170, 200 230, 330 195
+    C 410 175, 430 140, 560 125
+    C 700 108, 790 180, 920 155
+    C 1040 133, 1130 175, 1210 160
+    L 1210 215
+    C 1130 235, 1020 200, 880 220
+    C 730 242, 650 310, 510 275
+    C 390 245, 330 265, 210 290
+    C 110 310, 40 265, -10 280
+    Z"
+    fill="url(#g2)" opacity="0.88"/>
+
+  <path d="
+    M -10 150
+    C 100 110, 170 180, 300 130
+    C 390 95, 400 50, 530 40
+    C 660 30, 730 100, 860 80
+    C 960 65, 1050 20, 1210 45
+    L 1210 80
+    C 1060 58, 960 100, 850 118
+    C 710 140, 640 75, 510 90
+    C 380 105, 360 150, 270 175
+    C 155 205, 90 150, -10 185
+    Z"
+    fill="url(#g3)" opacity="0.85"/>
+
+  <path d="
+    M -10 60
+    C 120 30, 280 100, 460 70
+    C 600 48, 640 10, 800 25
+    C 950 40, 1000 90, 1210 60
+    L 1210 130
+    C 990 165, 930 115, 780 100
+    C 620 84, 570 125, 430 150
+    C 250 180, 100 115, -10 145
+    Z"
+    fill="url(#g4)" opacity="0.80"/>
+
+  <path d="
+    M -10 20
+    C 150 -10, 350 55, 550 20
+    C 700 -5, 780 30, 950 15
+    C 1060 5, 1150 35, 1210 20
+    L 1210 48
+    C 1145 62, 1055 38, 940 50
+    C 770 68, 690 30, 540 58
+    C 335 95, 140 35, -10 60
+    Z"
+    fill="url(#g2)" opacity="0.60"/>
+
+</svg>

@@ -23,6 +23,9 @@ import {
 	Images,
 	Gavel,
 	Vote,
+	Route,
+	BookText,
+	GraduationCap,
 } from "lucide-react";
 
 import {
@@ -182,6 +185,29 @@ const groups: AdminGroup[] = [
 				url: "/admin/nollning/admin-nollning/adventure-missions?id=current",
 				permissions: [[ActionEnum.MANAGE, TargetEnum.ADVENTURE_MISSIONS]],
 				icon: Award,
+			},
+		],
+	},
+	{
+		title: "admin:categories.plugg",
+		entries: [
+			{
+				title: "admin:programs.self",
+				url: "/admin/programs",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.PLUGG]],
+				icon: GraduationCap,
+			},
+			{
+				title: "admin:specialisations.self",
+				url: "/admin/specialisations",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.PLUGG]],
+				icon: Route,
+			},
+			{
+				title: "admin:courses.self",
+				url: "/admin/courses",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.PLUGG]],
+				icon: BookText,
 			},
 		],
 	},

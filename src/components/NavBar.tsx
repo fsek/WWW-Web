@@ -82,7 +82,7 @@ export function NavBar() {
 			router.push("/");
 		},
 		onError: (error: DefaultError) => {
-			toast.error(error.message || t("navbar.logoutError", "Logout failed"));
+			toast.error(error.detail || t("navbar.logoutError", "Logout failed"));
 		},
 	});
 

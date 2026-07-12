@@ -71,7 +71,7 @@ export default function DocumentPage({ params }: DocumentPageProps) {
 
 	// Handle invalid document ID
 	if (Number.isNaN(documentId)) {
-		return <LoadingErrorCard error={new Error("Invalid document ID")} />;
+		return <LoadingErrorCard error={"Invalid document ID"} />;
 	}
 
 	// Show loading or error states

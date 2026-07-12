@@ -21,6 +21,7 @@ const i18nNamespaces = [
 	"notfound",
 	"contact",
 	"cafe",
+	"plugg",
 ] satisfies Namespace[];
 
 export default async function RootLayout({

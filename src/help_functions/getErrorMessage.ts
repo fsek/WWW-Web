@@ -1,5 +1,7 @@
+import { isApiError, normalizeApiError } from "@/types/api-error";
+
 export default function getErrorMessage(
-	error: Error | string | object,
+	error: unknown,
 	t: (key: string) => string,
 ): string {
 	if (typeof error === "string") {
@@ -13,11 +15,22 @@ export default function getErrorMessage(
 		return error.message;
 	}
 
-	if (typeof error === "object" && "detail" in error) {
-		if (error.detail === "Unauthorized") {
+	if (isApiError(error)) {
+		if (error.status_code === 401 || error.detail === "Unauthorized") {
 			return t("main:loading.unauthorized");
 		}
-		return (error as { detail: string }).detail;
+		return error.detail;
+	}
+
+	if (typeof error === "object" && error !== null) {
+		const normalized = normalizeApiError(error);
+		if (
+			normalized.status_code === 401 ||
+			normalized.detail === "Unauthorized"
+		) {
+			return t("main:loading.unauthorized");
+		}
+		return normalized.detail;
 	}
 
 	console.debug("Unexpected error type:", error);

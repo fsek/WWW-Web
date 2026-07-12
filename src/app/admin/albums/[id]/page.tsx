@@ -73,7 +73,7 @@ export default function AlbumPage({ params }: AlbumPageProps) {
 	});
 
 	if (Number.isNaN(albumId)) {
-		return <LoadingErrorCard error={new Error("Invalid album ID")} />;
+		return <LoadingErrorCard error={"Invalid album ID"} />;
 	}
 	if (error) {
 		return <LoadingErrorCard error={error} />;

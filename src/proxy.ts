@@ -31,8 +31,27 @@ function handleAuthRedirects(request: NextRequest): NextResponse | null {
 	return null;
 }
 
+function handleSubdomain(request: NextRequest): NextResponse | null {
+	const hostname = request.nextUrl.hostname || "";
+	if (hostname !== "plugg.fsektionen.se" && hostname !== "plugg.stage.frontend.fsektionen.se") {
+		return null;
+	} 
+
+	const pathname = request.nextUrl.pathname;
+	const rewrittenUrl = new URL(request.nextUrl); // Clone and replace pathname so we keep the query parameters intact
+	rewrittenUrl.pathname = `/plugg${pathname}`;
+	return NextResponse.rewrite(rewrittenUrl);
+}
+
 export function proxy(request: NextRequest) {
-	// Check for auth redirects first
+	// 1. Subdomain rewrite for plugg
+	const subdomainResponse = handleSubdomain(request);
+	if (subdomainResponse) {
+		handleLanguageHeader(subdomainResponse, request);
+		return subdomainResponse;
+	}
+
+	// 2. Auth redirects
 	const authRedirect = handleAuthRedirects(request);
 
 	if (authRedirect) {
@@ -40,7 +59,7 @@ export function proxy(request: NextRequest) {
 		return authRedirect;
 	}
 
-	// Default: continue with language header
+	// 3. Default: continue with language header
 	const response = NextResponse.next();
 	handleLanguageHeader(response, request);
 	return response;
