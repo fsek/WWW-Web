@@ -1,18 +1,23 @@
 "use client";
 
 import React from "react";
-import { DateTimePicker } from "@/components/ui/datetime-picker";
+import {
+	DateTimePicker,
+	type Granularity,
+} from "@/components/ui/datetime-picker";
 import { sv } from "date-fns/locale";
 
 interface AdminChooseDatesProps {
 	value: Date | undefined;
 	onChange: (value: Date) => void;
+	granularity?: Granularity | undefined;
 	disabled?: boolean;
 }
 
 export function AdminChooseDates({
 	value,
 	onChange,
+	granularity = "minute",
 	disabled = false,
 }: AdminChooseDatesProps) {
 	const handleDateChange = (newDate: Date | undefined) => {
@@ -30,13 +35,16 @@ export function AdminChooseDates({
 		<div className="flex flex-col gap-3 lg:flex-row lg:gap-10">
 			<div className="w-full space-y-2">
 				<DateTimePicker
-					granularity="minute"
+					granularity={granularity}
 					value={value}
 					onChange={handleDateChange}
 					weekStartsOn={1} // Monday
 					locale={sv}
 					showWeekNumber={false}
 					showOutsideDays={true}
+					displayFormat={{
+						hour24: granularity === "day" ? "PPP" : "PPP HH:mm",
+					}}
 					disabled={disabled}
 				/>
 			</div>

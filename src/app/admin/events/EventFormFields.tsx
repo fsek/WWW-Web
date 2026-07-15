@@ -106,9 +106,18 @@ export default function EventFormFields<T extends EventFormCompatible>({
 }: EventFormFieldsProps<T>) {
 	const { t } = useTranslation();
 
-	const [drinkPackageDisabled, setDrinkPackageDisabled] = useState(false);
-	const [signup, setSignup] = useState(false);
-	const [nollning, setNollning] = useState(false);
+	const [allDay, setAllDay] = useState(
+		eventsForm.getValues("all_day" as Path<T>),
+	);
+	const [drinkPackageDisabled, setDrinkPackageDisabled] = useState(
+		eventsForm.getValues("alcohol_event_type" as Path<T>) === "None",
+	);
+	const [signup, setSignup] = useState(
+		eventsForm.getValues("can_signup" as Path<T>),
+	);
+	const [nollning, setNollning] = useState(
+		eventsForm.getValues("is_nollning_event" as Path<T>),
+	);
 
 	// Helper to check if a field exists in the form values
 	const hasField = (fieldName: string): boolean => {
@@ -262,115 +271,124 @@ export default function EventFormFields<T extends EventFormCompatible>({
 			<hr className="lg:col-span-2 mt-4" />
 			<h3 className="lg:col-span-2">{t("admin:events.date_time")}</h3>
 
-			<Tabs defaultValue="picktime" className="lg:col-span-2">
-				<TabsList className="grid w-full grid-cols-2">
-					<TabsTrigger value="picktime">
-						{t("admin:events.pick_time")}
-					</TabsTrigger>
-					<TabsTrigger value="allday">{t("admin:events.all_day")}</TabsTrigger>
-				</TabsList>
-				<TabsContent
-					value="picktime"
-					className="grid gap-x-4 gap-y-3 lg:grid-cols-2"
-				>
-					<div className="grid gap-x-1 grid-cols-3">
-						<FormField
-							control={eventsForm.control}
-							name={startFieldName as Path<T>}
-							render={({ field }) => (
-								<FormItem className="col-span-2">
-									<FormLabel>{t("admin:events.start_time")}</FormLabel>
-									<AdminChooseDates
-										value={field.value as Date}
-										onChange={(newStart: Date) => {
-											field.onChange(newStart);
-											const endValue = eventsForm.getValues(
-												endFieldName as Path<T>,
-											);
-											if (
-												endValue &&
-												((endValue instanceof Date
-													? endValue
-													: typeof endValue === "string" ||
-															typeof endValue === "number"
-														? new Date(endValue)
-														: null
-												)?.getTime() ?? 0) < newStart.getTime()
-											) {
-												const newEnd = new Date(
-													newStart.getTime() + 60 * 60 * 1000,
-												);
-												eventsForm.setValue(
-													endFieldName as Path<T>,
-													newEnd as any,
-													{
-														shouldDirty: true,
-														shouldValidate: true,
-													},
-												);
-											}
-										}}
-									/>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={eventsForm.control}
-							name={"dot" as Path<T>}
-							render={({ field }) => {
-								const options = [
-									{ value: "None", label: t("admin:events.dot_none") },
-									{
-										value: "Single",
-										label: t("admin:events.dot_single"),
-									},
-									{
-										value: "Double",
-										label: t("admin:events.dot_double"),
-									},
-								];
-								const selectedOption =
-									options.find((opt) => opt.value === field.value) ??
-									options[0];
-								return (
-									<FormItem>
-										<FormLabel className="whitespace-nowrap text-ellipsis overflow-hidden">
-											{t("admin:events.select_dot")}
-										</FormLabel>
-										<SelectFromOptions
-											options={options}
-											value={selectedOption.value}
-											onChange={(value) => field.onChange(value)}
-										/>
-									</FormItem>
-								);
-							}}
-						/>
-					</div>
-					<FormField
-						control={eventsForm.control}
-						name={endFieldName as Path<T>}
-						render={({ field }) => (
+			<div className="grid gap-x-1 grid-cols-3">
+				<FormField
+					control={eventsForm.control}
+					name={startFieldName as Path<T>}
+					render={({ field }) => (
+						<FormItem className="col-span-2">
+							<FormLabel>{t("admin:events.start_time")}</FormLabel>
+							<AdminChooseDates
+								value={field.value as Date}
+								granularity={allDay ? "day" : "minute"}
+								onChange={(newStart: Date) => {
+									field.onChange(newStart);
+									const endValue = eventsForm.getValues(
+										endFieldName as Path<T>,
+									);
+									if (
+										endValue &&
+										((endValue instanceof Date
+											? endValue
+											: typeof endValue === "string" ||
+													typeof endValue === "number"
+												? new Date(endValue)
+												: null
+										)?.getTime() ?? 0) < newStart.getTime()
+									) {
+										const newEnd = new Date(
+											newStart.getTime() + 60 * 60 * 1000,
+										);
+										eventsForm.setValue(
+											endFieldName as Path<T>,
+											newEnd as any,
+											{
+												shouldDirty: true,
+												shouldValidate: true,
+											},
+										);
+									}
+								}}
+							/>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={eventsForm.control}
+					name={"dot" as Path<T>}
+					render={({ field }) => {
+						const options = [
+							{ value: "None", label: t("admin:events.dot_none") },
+							{
+								value: "Single",
+								label: t("admin:events.dot_single"),
+							},
+							{
+								value: "Double",
+								label: t("admin:events.dot_double"),
+							},
+						];
+						const selectedOption =
+							options.find((opt) => opt.value === field.value) ?? options[0];
+						return (
 							<FormItem>
-								<FormLabel>{t("admin:events.end_time")}</FormLabel>
-								<AdminChooseDates
-									value={field.value as Date}
-									onChange={field.onChange}
+								<FormLabel className="whitespace-nowrap text-ellipsis overflow-hidden">
+									{t("admin:events.select_dot")}
+								</FormLabel>
+								<SelectFromOptions
+									options={options}
+									value={selectedOption.value}
+									isDisabled={allDay}
+									onChange={(value) => field.onChange(value)}
 								/>
 							</FormItem>
-						)}
-					/>
-				</TabsContent>
+						);
+					}}
+				/>
+			</div>
+			<FormField
+				control={eventsForm.control}
+				name={endFieldName as Path<T>}
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>{t("admin:events.end_time")}</FormLabel>
+						<AdminChooseDates
+							value={field.value as Date}
+							granularity={allDay ? "day" : "minute"}
+							onChange={field.onChange}
+						/>
+					</FormItem>
+				)}
+			/>
 
-				<TabsContent></TabsContent>
-			</Tabs>
+			<FormField
+				control={eventsForm.control}
+				name={"all_day" as Path<T>}
+				render={({ field }) => (
+					<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
+						<Checkbox
+							checked={field.value as boolean}
+							onCheckedChange={(value) => {
+								field.onChange(value);
+								setAllDay(value as boolean);
+							}}
+							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+						/>
+						<div className="grid gap-1.5 font-normal">
+							<p className="text-sm leading-none font-medium">
+								{t(`admin:events.all_day`)}
+							</p>
+						</div>
+					</Label>
+				)}
+			/>
 
 			<FormField
 				control={eventsForm.control}
 				name={"recurring" as Path<T>}
 				render={({ field }) => (
-					<Label className="lg:col-span-2 hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
+					<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
 						<Checkbox
 							checked={field.value as boolean}
 							onCheckedChange={field.onChange}
@@ -634,6 +652,9 @@ export default function EventFormFields<T extends EventFormCompatible>({
 					</FormItem>
 				)}
 			/>
+
+			<hr className="lg:col-span-2 mt-4" />
+			<h3 className="lg:col-span-2">{t("admin:events.nollning")}</h3>
 
 			<FormField
 				control={eventsForm.control}

@@ -159,6 +159,7 @@
 		"settings": "Settings",
 		"additional": "Additional Information",
 		"signup": "Signup",
+		"nollning": "Introduction",
 		"success_add": "Event created!",
 		"success_edit": "Event updated!",
 		"success_delete": "Event deleted!"
