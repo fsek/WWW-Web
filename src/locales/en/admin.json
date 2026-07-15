@@ -135,7 +135,7 @@
 		"alcohol": "Alcohol allowed",
 		"alcohol_served": "Alcohol served",
 		"alcohol_not_allowed": "Alcohol not allowed",
-		"alcohol_none": "None (alcohol forbidden during nollning)",
+		"alcohol_none": "None",
 		"costs_money": "Costs Money",
 		"dot_type": "Time precision (ask your mentor about this)",
 		"dot_none": "No dots (academic timing applies)",
