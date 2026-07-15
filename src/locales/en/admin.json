@@ -138,7 +138,7 @@
 		"alcohol_none": "None",
 		"costs_money": "Costs Money",
 		"dot_type": "Time precision (ask your mentor about this)",
-		"dot_none": "No dots (academic timing applies)",
+		"dot_none": "No dots",
 		"dot_single": "Single dot",
 		"dot_double": "Double dot",
 		"select_dot": "Dots",

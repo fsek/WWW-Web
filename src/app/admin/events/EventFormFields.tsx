@@ -6,20 +6,17 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import AdminChoosePriorities from "@/widgets/AdminChoosePriorities";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { Checkbox } from "@/components/ui/checkbox";
-import { TabsList } from "@/components/ui/tabs";
 import type { UseFormReturn, Path } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { useTranslation } from "react-i18next";
 import StyledCreatableSelect from "@/components/StyledCreatableSelect";
 import AdminChooseMentorGroupTypes from "@/widgets/AdminChooseMentorGroupType";
-import { Container } from "lucide-react";
 import { useState } from "react";
 
 const LOCATIONS = {
@@ -276,7 +273,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 					control={eventsForm.control}
 					name={startFieldName as Path<T>}
 					render={({ field }) => (
-						<FormItem className="col-span-2">
+						<FormItem className="col-span-3 sm:col-span-2">
 							<FormLabel>{t("admin:events.start_time")}</FormLabel>
 							<AdminChooseDates
 								value={field.value as Date}
@@ -333,7 +330,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 						const selectedOption =
 							options.find((opt) => opt.value === field.value) ?? options[0];
 						return (
-							<FormItem>
+							<FormItem className="col-span-3 sm:col-span-1">
 								<FormLabel className="whitespace-nowrap text-ellipsis overflow-hidden">
 									{t("admin:events.select_dot")}
 								</FormLabel>
