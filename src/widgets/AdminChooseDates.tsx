@@ -10,7 +10,8 @@ import { sv } from "date-fns/locale";
 interface AdminChooseDatesProps {
 	value: Date | undefined;
 	onChange: (value: Date) => void;
-	granularity?: Granularity | undefined;
+	granularity?: Granularity;
+	placeholder?: string;
 	disabled?: boolean;
 }
 
@@ -18,6 +19,7 @@ export function AdminChooseDates({
 	value,
 	onChange,
 	granularity = "minute",
+	placeholder = undefined,
 	disabled = false,
 }: AdminChooseDatesProps) {
 	const handleDateChange = (newDate: Date | undefined) => {
@@ -45,6 +47,7 @@ export function AdminChooseDates({
 					displayFormat={{
 						hour24: granularity === "day" ? "PPP" : "PPP HH:mm",
 					}}
+					placeholder={placeholder}
 					disabled={disabled}
 				/>
 			</div>

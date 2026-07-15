@@ -107,16 +107,16 @@ export default function EventFormFields<T extends EventFormCompatible>({
 	const { t } = useTranslation();
 
 	const [allDay, setAllDay] = useState(
-		eventsForm.getValues("all_day" as Path<T>),
+		eventsForm.getValues("all_day" as Path<T>) as boolean,
 	);
 	const [drinkPackageDisabled, setDrinkPackageDisabled] = useState(
 		eventsForm.getValues("alcohol_event_type" as Path<T>) === "None",
 	);
 	const [signup, setSignup] = useState(
-		eventsForm.getValues("can_signup" as Path<T>),
+		eventsForm.getValues("can_signup" as Path<T>) as boolean,
 	);
 	const [nollning, setNollning] = useState(
-		eventsForm.getValues("is_nollning_event" as Path<T>),
+		eventsForm.getValues("is_nollning_event" as Path<T>) as boolean,
 	);
 
 	// Helper to check if a field exists in the form values
@@ -281,6 +281,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							<AdminChooseDates
 								value={field.value as Date}
 								granularity={allDay ? "day" : "minute"}
+								placeholder={t("admin:events.pick_date")}
 								onChange={(newStart: Date) => {
 									field.onChange(newStart);
 									const endValue = eventsForm.getValues(
@@ -355,6 +356,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 						<FormLabel>{t("admin:events.end_time")}</FormLabel>
 						<AdminChooseDates
 							value={field.value as Date}
+							placeholder={t("admin:events.pick_date")}
 							granularity={allDay ? "day" : "minute"}
 							onChange={field.onChange}
 						/>
@@ -590,6 +592,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 						<FormLabel>{t("admin:events.signup_start")}</FormLabel>
 						<AdminChooseDates
 							value={field.value as Date}
+							placeholder={t("admin:events.pick_date")}
 							onChange={(newSignupStart: Date) => {
 								field.onChange(newSignupStart);
 								const signupEnd = eventsForm.getValues("signup_end" as Path<T>);
@@ -630,6 +633,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 						<FormLabel>{t("admin:events.signup_end")}</FormLabel>
 						<AdminChooseDates
 							value={field.value as Date}
+							placeholder={t("admin:events.pick_date")}
 							onChange={field.onChange}
 							disabled={!signup}
 						/>
