@@ -44,6 +44,7 @@ const eventsEditSchema = z.object({
 	mentor_group_types: z
 		.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
 		.default([]),
+	allow_other_mentors: z.boolean(),
 	alcohol_event_type: z
 		.enum(["Alcohol", "Alcohol-Served", "None"])
 		.default("None"),
@@ -95,6 +96,7 @@ export default function EventsEditForm({
 			drink_package: false,
 			is_nollning_event: false,
 			mentor_group_types: [],
+			allow_other_mentors: false,
 			alcohol_event_type: "None",
 			dress_code: "",
 			price: 0,

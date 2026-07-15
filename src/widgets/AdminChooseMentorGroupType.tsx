@@ -10,6 +10,7 @@ export interface AdminChooseMentorGroupTypeProps {
 	value?: string | string[];
 	onChange?: (value: string | string[]) => void;
 	className?: string;
+	disabled?: boolean;
 }
 
 export function AdminChooseMentorGroupTypes({
@@ -17,6 +18,7 @@ export function AdminChooseMentorGroupTypes({
 	value = [],
 	onChange,
 	className = "",
+	disabled = false,
 }: AdminChooseMentorGroupTypeProps) {
 	const { t } = useTranslation("admin");
 
@@ -32,7 +34,7 @@ export function AdminChooseMentorGroupTypes({
 	// Convert current values to options format
 	const selectedOptions: Option[] = selectedValues.map((val) => ({
 		value: val,
-		label: t(`nollning.groups.${val}`),
+		label: t(`nollning.groups.${val.toLowerCase()}`),
 	}));
 
 	const handleChange = (selected: readonly Option[] | Option | null) => {
@@ -55,12 +57,13 @@ export function AdminChooseMentorGroupTypes({
 			isMulti={true}
 			options={mentor_group_types.map((type) => ({
 				value: type,
-				label: t(`nollning.groups.${type}`),
+				label: t(`nollning.groups.${type.toLowerCase()}`),
 			}))}
 			placeholder={t("events.choose_mentor_group_types")}
 			className={className}
 			value={selectedOptions}
 			onChange={handleChange}
+			isDisabled={disabled}
 		/>
 	);
 }

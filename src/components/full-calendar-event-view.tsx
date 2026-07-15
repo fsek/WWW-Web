@@ -156,6 +156,7 @@ export function EventView({
 												event.all_day ||
 												event.recurring ||
 												event.is_nollning_event ||
+												event.allow_other_mentors ||
 												event.food ||
 												event.drink_package ||
 												event.closed ||

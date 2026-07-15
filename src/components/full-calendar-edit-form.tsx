@@ -114,6 +114,7 @@ export function EventEditForm({
 						mentor_group_types: z
 							.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
 							.default([]),
+						allow_other_mentors: z.boolean(),
 						alcohol_event_type: z
 							.enum(["Alcohol", "Alcohol-Served", "None"])
 							.default("None"),
@@ -187,6 +188,7 @@ export function EventEditForm({
 					"can_signup",
 					"drink_package",
 					"is_nollning_event",
+					"allow_other_mentors",
 				]
 			: []),
 		...(enableCarProperties && !disableConfirmField ? ["confirmed"] : []),
@@ -223,6 +225,7 @@ export function EventEditForm({
 			drink_package: false,
 			is_nollning_event: false,
 			mentor_group_types: [],
+			allow_other_mentors: false,
 			priorities: [],
 			alcohol_event_type: "None",
 			dress_code: "",
@@ -263,6 +266,7 @@ export function EventEditForm({
 							drink_package: oldEvent.drink_package,
 							is_nollning_event: oldEvent.is_nollning_event,
 							mentor_group_types: oldEvent.mentor_group_types,
+							allow_other_mentors: oldEvent.allow_other_mentors,
 							priorities: oldEvent.priorities,
 							alcohol_event_type: oldEvent.alcohol_event_type,
 							dress_code: oldEvent.dress_code,
@@ -330,6 +334,7 @@ export function EventEditForm({
 						drink_package: event?.drink_package || false,
 						is_nollning_event: event?.is_nollning_event || false,
 						mentor_group_types: event?.mentor_group_types || [],
+						allow_other_mentors: event?.allow_other_mentors || false,
 						priorities: event?.priorities || [],
 						alcohol_event_type: event?.alcohol_event_type || "None",
 						dress_code: event?.dress_code || "",
@@ -394,6 +399,7 @@ export function EventEditForm({
 						drink_package: data.drink_package,
 						is_nollning_event: data.is_nollning_event,
 						mentor_group_types: data.mentor_group_types,
+						allow_other_mentors: data.allow_other_mentors,
 						priorities: data.priorities,
 						alcohol_event_type: data.alcohol_event_type,
 						dress_code: data.dress_code,

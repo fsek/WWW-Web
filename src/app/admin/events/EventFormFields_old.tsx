@@ -85,6 +85,7 @@ interface AdminEventFields extends EventFormFieldsBase {
 	drink_package?: boolean;
 	is_nollning_event?: boolean;
 	mentor_group_types?: ("Mentor" | "Mission" | "Default" | "Committee")[];
+	allow_other_mentors?: boolean;
 	lottery?: boolean;
 }
 

@@ -35,10 +35,10 @@ const GroupTypeSelect = ({ value, onChange }: Props) => {
 			<SelectContent>
 				<SelectGroup>
 					{[
-						t("nollning.groups.fadder"),
-						t("nollning.groups.uppdrag"),
-						t("nollning.groups.standard"),
-						t("nollning.groups.utskott"),
+						t("nollning.groups.mentor"),
+						t("nollning.groups.mission"),
+						t("nollning.groups.default"),
+						t("nollning.groups.committee"),
 					]?.map((item) => (
 						<SelectItem key={item} value={groupTypes[item]}>
 							{item || t("unnamed_council")}

@@ -119,6 +119,7 @@ export function EventAddForm({
 						mentor_group_types: z
 							.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
 							.default([]),
+						allow_other_mentors: z.boolean(),
 						alcohol_event_type: z
 							.enum(["Alcohol", "Alcohol-Served", "None"])
 							.default("None"),
@@ -203,6 +204,7 @@ export function EventAddForm({
 					"can_signup",
 					"drink_package",
 					"is_nollning_event",
+					"allow_other_mentors",
 					"lottery",
 				]
 			: []),
@@ -239,6 +241,7 @@ export function EventAddForm({
 			drink_package: false,
 			is_nollning_event: false,
 			mentor_group_types: [],
+			allow_other_mentors: false,
 			priorities: [],
 			alcohol_event_type: "None",
 			dress_code: "",
@@ -276,6 +279,7 @@ export function EventAddForm({
 						drink_package: false,
 						is_nollning_event: false,
 						mentor_group_types: [],
+						allow_other_mentors: false,
 						priorities: [],
 						alcohol_event_type: "None",
 						dress_code: "",
@@ -337,6 +341,7 @@ export function EventAddForm({
 							drink_package: data.drink_package,
 							is_nollning_event: data.is_nollning_event,
 							mentor_group_types: data.mentor_group_types ?? [],
+							allow_other_mentors: data.allow_other_mentors,
 							priorities: data.priorities ?? [],
 							alcohol_event_type: data.alcohol_event_type,
 							dress_code: data.dress_code,

@@ -31,6 +31,7 @@ import type { EventRead } from "@/api/types.gen";
 import SignupCard from "./SignupCard";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import da from "zod/v4/locales/da.cjs";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
@@ -210,6 +211,7 @@ export default function Page() {
 								data.all_day ||
 								data.recurring ||
 								data.is_nollning_event ||
+								data.allow_other_mentors ||
 								data.food ||
 								data.drink_package ||
 								data.closed ||
@@ -236,6 +238,12 @@ export default function Page() {
 										<Badge variant="secondary" className={featureDivClassName}>
 											<Star className={featureClassName} />
 											{t("admin:events.is_nollning_event")}
+										</Badge>
+									)}
+									{data.allow_other_mentors && (
+										<Badge variant="secondary" className={featureDivClassName}>
+											<Star className={featureClassName} />
+											{t("admin:events.allow_other_mentors")}
 										</Badge>
 									)}
 									{data.food && (
