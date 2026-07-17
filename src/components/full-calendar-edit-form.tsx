@@ -121,6 +121,7 @@ export function EventEditForm({
 						dress_code: z.string().max(100).optional().default(""),
 						price: z.coerce.number().nonnegative().optional().default(0),
 						dot: z.enum(["None", "Single", "Double"]).default("None"),
+						lottery: z.boolean(),
 					}
 				: {}),
 			...(enableCarProperties
@@ -231,6 +232,7 @@ export function EventEditForm({
 			dress_code: "",
 			price: 0,
 			dot: "None",
+			lottery: false,
 			personal: true,
 			confirmed: false,
 			room: RoomEnum.LC,
@@ -272,6 +274,7 @@ export function EventEditForm({
 							dress_code: oldEvent.dress_code,
 							price: oldEvent.price,
 							dot: oldEvent.dot,
+							lottery: oldEvent.lottery,
 						}
 					: {}),
 				...(enableCarProperties
@@ -340,6 +343,7 @@ export function EventEditForm({
 						dress_code: event?.dress_code || "",
 						price: event?.price || 0,
 						dot: event?.dot || "None",
+						lottery: event?.lottery || false,
 					}
 				: {}),
 			...(enableCarProperties
@@ -405,6 +409,7 @@ export function EventEditForm({
 						dress_code: data.dress_code,
 						price: data.price,
 						dot: data.dot,
+						lottery: data.lottery,
 					}
 				: {}),
 			...(enableCarProperties

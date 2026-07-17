@@ -170,6 +170,7 @@ export default function Calendar({
 						dress_code: info.event.extendedProps.dress_code,
 						price: info.event.extendedProps.price,
 						dot: info.event.extendedProps.dot,
+						lottery: info.event.extendedProps.lottery,
 					}
 				: {}),
 			...(enableCarProperties
@@ -240,6 +241,7 @@ export default function Calendar({
 						dress_code: info.event.extendedProps.dress_code,
 						price: info.event.extendedProps.price,
 						dot: info.event.extendedProps.dot,
+						lottery: info.event.extendedProps.lottery,
 					}
 				: {}),
 			...(enableCarProperties
@@ -305,6 +307,7 @@ export default function Calendar({
 						dress_code: info.oldEvent.extendedProps.dress_code,
 						price: info.oldEvent.extendedProps.price,
 						dot: info.oldEvent.extendedProps.dot,
+						lottery: info.oldEvent.extendedProps.lottery,
 					}
 				: {}),
 			...(enableCarProperties

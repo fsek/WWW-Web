@@ -657,21 +657,34 @@ export default function EventFormFields<T extends EventFormCompatible>({
 			<FormField
 				control={eventsForm.control}
 				name={"lottery" as Path<T>}
-				render={({ field }) => (
-					<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
-						<Checkbox
-							checked={field.value as boolean}
-							onCheckedChange={field.onChange}
-							disabled={!signup}
-							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
-						/>
-						<div className="grid gap-1.5 font-normal">
-							<p className="text-sm leading-none font-medium">
-								{t(`admin:events.lottery`)}
-							</p>
-						</div>
-					</Label>
-				)}
+				render={({ field }) => {
+					const options = [
+						{
+							value: "false",
+							label: t("admin:events.lottery_disabled"),
+						},
+						{
+							value: "true",
+							label: t("admin:events.lottery_enabled"),
+						},
+					];
+
+					return (
+						<FormItem>
+							<FormLabel>{t("admin:events.lottery")}</FormLabel>
+							<SelectFromOptions
+								options={options}
+								value={
+									field.value === "true" || field.value === true
+										? "true"
+										: "false"
+								}
+								onChange={(value) => field.onChange(value === "true")}
+								isDisabled={!signup}
+							/>
+						</FormItem>
+					);
+				}}
 			/>
 
 			<hr className="lg:col-span-2 mt-4" />

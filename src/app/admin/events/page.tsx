@@ -322,6 +322,7 @@ export default function Events() {
 								dress_code: event.dress_code as string,
 								price: event.price as number,
 								dot: event.dot as "None" | "Single" | "Double",
+								lottery: event.lottery as boolean,
 							},
 						},
 						{

@@ -51,6 +51,7 @@ const eventsEditSchema = z.object({
 	dress_code: z.string().max(100).optional().default(""),
 	price: z.coerce.number<number>().nonnegative().optional().default(0),
 	dot: z.enum(["None", "Single", "Double"]).default("None"),
+	lottery: z.boolean(),
 });
 
 export type EventsEditFormInput = z.input<typeof eventsEditSchema>;
@@ -101,6 +102,7 @@ export default function EventsEditForm({
 			dress_code: "",
 			price: 0,
 			dot: "None",
+			lottery: false,
 		},
 	});
 
