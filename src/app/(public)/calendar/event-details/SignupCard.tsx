@@ -4,7 +4,7 @@ import {
 	updateEventSignupRouteMutation,
 	eventSignupRouteMutation,
 	eventSignoffRouteMutation,
-	getMeOptions,
+	getMeForEventSignupOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -102,7 +102,7 @@ export default function SignupCard({
 		isLoading: isMeLoading,
 		isError: isMeError,
 	} = useQuery({
-		...getMeOptions(),
+		...getMeForEventSignupOptions({ path: { event_id: event.id } }),
 		refetchOnWindowFocus: false,
 	});
 
