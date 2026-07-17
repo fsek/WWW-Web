@@ -642,7 +642,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				control={eventsForm.control}
 				name={"priorities" as Path<T>}
 				render={({ field }) => (
-					<FormItem className="lg:col-span-2 w-full">
+					<FormItem className="w-full">
 						<FormLabel>{t("admin:events.priorities")}</FormLabel>
 						<AdminChoosePriorities
 							value={(field.value as string[]) ?? []}
@@ -651,6 +651,26 @@ export default function EventFormFields<T extends EventFormCompatible>({
 							disabled={!signup}
 						/>
 					</FormItem>
+				)}
+			/>
+
+			<FormField
+				control={eventsForm.control}
+				name={"lottery" as Path<T>}
+				render={({ field }) => (
+					<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
+						<Checkbox
+							checked={field.value as boolean}
+							onCheckedChange={field.onChange}
+							disabled={!signup}
+							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
+						/>
+						<div className="grid gap-1.5 font-normal">
+							<p className="text-sm leading-none font-medium">
+								{t(`admin:events.lottery`)}
+							</p>
+						</div>
+					</Label>
 				)}
 			/>
 
