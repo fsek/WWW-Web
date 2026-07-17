@@ -370,12 +370,16 @@ export default function Page() {
 
 							<div className="flex flex-wrap gap-2">
 								{data.can_signup && (
-									<Badge variant="default">
-										{t("admin:events.can_signup")}
-									</Badge>
-								)}
-								{data.lottery && (
-									<Badge variant="secondary">{t("admin:events.lottery")}</Badge>
+									<>
+										<Badge variant="default">
+											{t("admin:events.can_signup")}
+										</Badge>
+										<Badge variant="secondary">
+											{t(
+												`admin:events.lottery_${data.lottery ? "enabled" : "disabled"}`,
+											)}
+										</Badge>
+									</>
 								)}
 							</div>
 
