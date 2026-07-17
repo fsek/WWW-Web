@@ -18,6 +18,12 @@ import { useTranslation } from "react-i18next";
 import StyledCreatableSelect from "@/components/StyledCreatableSelect";
 import AdminChooseMentorGroupTypes from "@/widgets/AdminChooseMentorGroupType";
 import { useState } from "react";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
+import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 
 const LOCATIONS = {
 	MH: "MH",
@@ -205,10 +211,12 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				render={({ field }) => (
 					<FormItem className="lg:col-span-2">
 						<FormLabel>{t("admin:events.council")}</FormLabel>
-						<AdminChooseCouncil
-							value={field.value as number}
-							onChange={field.onChange}
-						/>
+						<FormControl>
+							<AdminChooseCouncil
+								value={field.value as number}
+								onChange={field.onChange}
+							/>
+						</FormControl>
 					</FormItem>
 				)}
 			/>
@@ -257,6 +265,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 						<FormControl>
 							<Input
 								type="number"
+								min={0}
 								{...field}
 								value={(field.value as number) ?? 0}
 							/>
@@ -275,39 +284,41 @@ export default function EventFormFields<T extends EventFormCompatible>({
 					render={({ field }) => (
 						<FormItem className="col-span-3 sm:col-span-2">
 							<FormLabel>{t("admin:events.start_time")}</FormLabel>
-							<AdminChooseDates
-								value={field.value as Date}
-								granularity={allDay ? "day" : "minute"}
-								placeholder={t("admin:events.pick_date")}
-								onChange={(newStart: Date) => {
-									field.onChange(newStart);
-									const endValue = eventsForm.getValues(
-										endFieldName as Path<T>,
-									);
-									if (
-										endValue &&
-										((endValue instanceof Date
-											? endValue
-											: typeof endValue === "string" ||
-													typeof endValue === "number"
-												? new Date(endValue)
-												: null
-										)?.getTime() ?? 0) < newStart.getTime()
-									) {
-										const newEnd = new Date(
-											newStart.getTime() + 60 * 60 * 1000,
-										);
-										eventsForm.setValue(
+							<FormControl>
+								<AdminChooseDates
+									value={field.value as Date}
+									granularity={allDay ? "day" : "minute"}
+									placeholder={t("admin:events.pick_date")}
+									onChange={(newStart: Date) => {
+										field.onChange(newStart);
+										const endValue = eventsForm.getValues(
 											endFieldName as Path<T>,
-											newEnd as any,
-											{
-												shouldDirty: true,
-												shouldValidate: true,
-											},
 										);
-									}
-								}}
-							/>
+										if (
+											endValue &&
+											((endValue instanceof Date
+												? endValue
+												: typeof endValue === "string" ||
+														typeof endValue === "number"
+													? new Date(endValue)
+													: null
+											)?.getTime() ?? 0) < newStart.getTime()
+										) {
+											const newEnd = new Date(
+												newStart.getTime() + 60 * 60 * 1000,
+											);
+											eventsForm.setValue(
+												endFieldName as Path<T>,
+												newEnd as any,
+												{
+													shouldDirty: true,
+													shouldValidate: true,
+												},
+											);
+										}
+									}}
+								/>
+							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -334,12 +345,14 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								<FormLabel className="whitespace-nowrap text-ellipsis overflow-hidden">
 									{t("admin:events.select_dot")}
 								</FormLabel>
-								<SelectFromOptions
-									options={options}
-									value={selectedOption.value}
-									isDisabled={allDay}
-									onChange={(value) => field.onChange(value)}
-								/>
+								<FormControl>
+									<SelectFromOptions
+										options={options}
+										value={selectedOption.value}
+										isDisabled={allDay}
+										onChange={(value) => field.onChange(value)}
+									/>
+								</FormControl>
 							</FormItem>
 						);
 					}}
@@ -351,12 +364,14 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				render={({ field }) => (
 					<FormItem>
 						<FormLabel>{t("admin:events.end_time")}</FormLabel>
-						<AdminChooseDates
-							value={field.value as Date}
-							placeholder={t("admin:events.pick_date")}
-							granularity={allDay ? "day" : "minute"}
-							onChange={field.onChange}
-						/>
+						<FormControl>
+							<AdminChooseDates
+								value={field.value as Date}
+								placeholder={t("admin:events.pick_date")}
+								granularity={allDay ? "day" : "minute"}
+								onChange={field.onChange}
+							/>
+						</FormControl>
 					</FormItem>
 				)}
 			/>
@@ -445,23 +460,25 @@ export default function EventFormFields<T extends EventFormCompatible>({
 					return (
 						<FormItem>
 							<FormLabel>{t("admin:events.alcohol_event_type")}</FormLabel>
-							<SelectFromOptions
-								options={options}
-								value={selectedOption.value}
-								onChange={(value) => {
-									field.onChange(value);
-									if (value === "None") {
-										setDrinkPackageDisabled(true);
-										eventsForm.setValue(
-											"drink_package" as Path<T>,
-											false as any,
-										);
-									} else {
-										setDrinkPackageDisabled(false);
-									}
-								}}
-								placeholder={t("admin:events.select_alcohol_event_type")}
-							/>
+							<FormControl>
+								<SelectFromOptions
+									options={options}
+									value={selectedOption.value}
+									onChange={(value) => {
+										field.onChange(value);
+										if (value === "None") {
+											setDrinkPackageDisabled(true);
+											eventsForm.setValue(
+												"drink_package" as Path<T>,
+												false as any,
+											);
+										} else {
+											setDrinkPackageDisabled(false);
+										}
+									}}
+									placeholder={t("admin:events.select_alcohol_event_type")}
+								/>
+							</FormControl>
 						</FormItem>
 					);
 				}}
@@ -530,14 +547,36 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				render={({ field }) => (
 					<FormItem className="lg:col-span-2">
 						<FormLabel>{t("admin:events.max_event_users")}</FormLabel>
-						<FormControl>
-							<Input
-								type="number"
-								placeholder={t("admin:events.max_event_users")}
-								{...field}
-								value={(field.value as number) ?? 0}
-							/>
-						</FormControl>
+						<div className="relative">
+							<FormControl>
+								<Input
+									type="number"
+									placeholder={t("admin:events.no_max_event_users")}
+									min={0}
+									{...field}
+									onBlur={(e) => {
+										field.onChange(
+											Number.parseInt(e.target.value) === 0 ? "" : e,
+										);
+									}}
+									value={(field.value as number) || ""}
+								/>
+							</FormControl>
+							<Popover>
+								<PopoverTrigger asChild>
+									<button
+										type="button"
+										className="absolute right-9 top-1/2 -translate-y-1/2 rounded-full p-1 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+										aria-label={t("admin:events.max_event_users_help_label")}
+									>
+										<QuestionMarkCircledIcon className="size-4" />
+									</button>
+								</PopoverTrigger>
+								<PopoverContent align="end" className="w-64 text-sm">
+									{t("admin:events.max_event_users_help_text")}
+								</PopoverContent>
+							</Popover>
+						</div>
 					</FormItem>
 				)}
 			/>
@@ -587,37 +626,41 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				render={({ field }) => (
 					<FormItem>
 						<FormLabel>{t("admin:events.signup_start")}</FormLabel>
-						<AdminChooseDates
-							value={field.value as Date}
-							placeholder={t("admin:events.pick_date")}
-							onChange={(newSignupStart: Date) => {
-								field.onChange(newSignupStart);
-								const signupEnd = eventsForm.getValues("signup_end" as Path<T>);
-								if (
-									signupEnd &&
-									((signupEnd instanceof Date
-										? signupEnd
-										: typeof signupEnd === "string" ||
-												typeof signupEnd === "number"
-											? new Date(signupEnd)
-											: null
-									)?.getTime() ?? 0) < newSignupStart.getTime()
-								) {
-									const newSignupEnd = new Date(
-										newSignupStart.getTime() + 60 * 60 * 1000,
-									);
-									eventsForm.setValue(
+						<FormControl>
+							<AdminChooseDates
+								value={field.value as Date}
+								placeholder={t("admin:events.pick_date")}
+								onChange={(newSignupStart: Date) => {
+									field.onChange(newSignupStart);
+									const signupEnd = eventsForm.getValues(
 										"signup_end" as Path<T>,
-										newSignupEnd as any,
-										{
-											shouldDirty: true,
-											shouldValidate: true,
-										},
 									);
-								}
-							}}
-							disabled={!signup}
-						/>
+									if (
+										signupEnd &&
+										((signupEnd instanceof Date
+											? signupEnd
+											: typeof signupEnd === "string" ||
+													typeof signupEnd === "number"
+												? new Date(signupEnd)
+												: null
+										)?.getTime() ?? 0) < newSignupStart.getTime()
+									) {
+										const newSignupEnd = new Date(
+											newSignupStart.getTime() + 60 * 60 * 1000,
+										);
+										eventsForm.setValue(
+											"signup_end" as Path<T>,
+											newSignupEnd as any,
+											{
+												shouldDirty: true,
+												shouldValidate: true,
+											},
+										);
+									}
+								}}
+								disabled={!signup}
+							/>
+						</FormControl>
 					</FormItem>
 				)}
 			/>
@@ -628,12 +671,14 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				render={({ field }) => (
 					<FormItem>
 						<FormLabel>{t("admin:events.signup_end")}</FormLabel>
-						<AdminChooseDates
-							value={field.value as Date}
-							placeholder={t("admin:events.pick_date")}
-							onChange={field.onChange}
-							disabled={!signup}
-						/>
+						<FormControl>
+							<AdminChooseDates
+								value={field.value as Date}
+								placeholder={t("admin:events.pick_date")}
+								onChange={field.onChange}
+								disabled={!signup}
+							/>
+						</FormControl>
 					</FormItem>
 				)}
 			/>
@@ -644,12 +689,14 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				render={({ field }) => (
 					<FormItem className="w-full">
 						<FormLabel>{t("admin:events.priorities")}</FormLabel>
-						<AdminChoosePriorities
-							value={(field.value as string[]) ?? []}
-							onChange={(value) => field.onChange(value)}
-							className="text-sm"
-							disabled={!signup}
-						/>
+						<FormControl>
+							<AdminChoosePriorities
+								value={(field.value as string[]) ?? []}
+								onChange={(value) => field.onChange(value)}
+								className="text-sm"
+								disabled={!signup}
+							/>
+						</FormControl>
 					</FormItem>
 				)}
 			/>
@@ -672,16 +719,34 @@ export default function EventFormFields<T extends EventFormCompatible>({
 					return (
 						<FormItem>
 							<FormLabel>{t("admin:events.lottery")}</FormLabel>
-							<SelectFromOptions
-								options={options}
-								value={
-									field.value === "true" || field.value === true
-										? "true"
-										: "false"
-								}
-								onChange={(value) => field.onChange(value === "true")}
-								isDisabled={!signup}
-							/>
+							<div className="relative">
+								<FormControl>
+									<SelectFromOptions
+										options={options}
+										value={
+											field.value === "true" || field.value === true
+												? "true"
+												: "false"
+										}
+										onChange={(value) => field.onChange(value === "true")}
+										isDisabled={!signup}
+									/>
+								</FormControl>
+								<Popover>
+									<PopoverTrigger asChild>
+										<button
+											type="button"
+											className="absolute right-9 top-1/2 -translate-y-1/2 rounded-full p-1 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+											aria-label={t("admin:events.lottery_help_label")}
+										>
+											<QuestionMarkCircledIcon className="size-4" />
+										</button>
+									</PopoverTrigger>
+									<PopoverContent align="end" className="w-64 text-sm">
+										{t("admin:events.lottery_help_text")}
+									</PopoverContent>
+								</Popover>
+							</div>
 						</FormItem>
 					);
 				}}
@@ -719,12 +784,14 @@ export default function EventFormFields<T extends EventFormCompatible>({
 					<FormItem className="w-full">
 						<FormLabel>{t("admin:events.mentor_group_types")}</FormLabel>
 
-						<AdminChooseMentorGroupTypes
-							value={(field.value as string[]) ?? []}
-							onChange={(value) => field.onChange(value)}
-							className="text-sm"
-							disabled={!nollning}
-						/>
+						<FormControl>
+							<AdminChooseMentorGroupTypes
+								value={(field.value as string[]) ?? []}
+								onChange={(value) => field.onChange(value)}
+								className="text-sm"
+								disabled={!nollning}
+							/>
+						</FormControl>
 					</FormItem>
 				)}
 			/>
