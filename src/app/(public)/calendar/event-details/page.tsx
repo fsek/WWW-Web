@@ -16,6 +16,7 @@ import {
 	Star,
 	Repeat,
 	User,
+	Tickets,
 	Beer,
 	FilePenLine,
 	ArrowLeft,
@@ -242,7 +243,7 @@ export default function Page() {
 									)}
 									{data.allow_other_mentors && (
 										<Badge variant="secondary" className={featureDivClassName}>
-											<Star className={featureClassName} />
+											<Tickets className={featureClassName} />
 											{t("admin:events.allow_other_mentors")}
 										</Badge>
 									)}
