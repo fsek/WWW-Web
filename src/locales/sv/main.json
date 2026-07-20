@@ -304,7 +304,11 @@
 		"telephoneNumberRequired": "Telefonnummer krävs",
 		"gdprLabel": "Jag har läst och godkänner",
 		"privacyPolicy": "sekretesspolicyn.",
-		"gdprRequired": "Du måste godkänna sekretesspolicyn för att registrera dig."
+		"gdprRequired": "Du måste godkänna sekretesspolicyn för att registrera dig.",
+		"stilIdInvalid": "Ogiltligt format. Läs instruktionerna till höger.",
+		"stilId": "Stil-id (med formatet hi6122al-s)",
+		"stilIdInfoLabel": "Mer information om stil-id",
+		"stilIdInfo": "Stil-id finns i adressen för din studentmejl som du fick av universitetet, och skrivs med små bokstäver. Vi accepterar bara stil-id på formatet \"ab1234cd-s\" med tio tecken inklusive \"-s\", om du har ett äldre format eller är osäker kan du lämna fältet blankt eller fylla i det senare."
 	},
 	"car-booking": {
 		"title": "Bilbokning",

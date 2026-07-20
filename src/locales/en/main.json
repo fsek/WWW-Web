@@ -304,7 +304,11 @@
 		"telephoneNumberRequired": "Telephone number required",
 		"gdprLabel": "I have read and agree to the",
 		"privacyPolicy": "privacy policy.",
-		"gdprRequired": "You must agree to the privacy policy to register."
+		"gdprRequired": "You must agree to the privacy policy to register.",
+		"stilIdInvalid": "Invalid format. Read the formatting instruction to the right.",
+		"stilId": "Stil-id (formatted like hi6122al-s)",
+		"stilIdInfoLabel": "More information about stil-id",
+		"stilIdInfo": "Stil-id is located in your student email adress given to you by the university, and must be written in lowercase. We only accept ids in the \"ab1234cd-s\" format with ten characters including the \"-s\", if your stil-id is old or you are unsure, leave it blank or add it later."
 	},
 	"car-booking": {
 		"title": "Car Booking",
