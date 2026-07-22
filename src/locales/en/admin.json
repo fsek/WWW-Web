@@ -598,7 +598,12 @@
 			"title_header": "Title",
 			"description_header": "Mission",
 			"points_header": "Allowed Points",
-			"week_header": "Week"
+			"week_header": "Week",
+			"unlock_code": "Unlock code",
+			"unlock_code_placeholder": "If added the code is needed to see mission info. Not cryptographically secure.",
+			"unlock_hint_sv": "Unlock hint (Swedish)",
+			"unlock_hint_en": "Unlock hint (English)",
+			"unlock_hint_placeholder": "The code may be found by solving this riddle: ..."
 		},
 		"mission_grading": {
 			"header_title": "Title",
