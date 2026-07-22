@@ -5,30 +5,11 @@ import {
 	getNollningByYearQueryKey,
 	getNollningQueryKey,
 } from "@/api/@tanstack/react-query.gen";
-import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogTitle,
-	DialogClose,
-	DialogHeader,
-} from "@/components/ui/dialog";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import AdminForm from "@/widgets/AdminForm";
 
 const AdventureMissionSchema = z.object({
 	title_sv: z.string().min(2),
@@ -38,42 +19,42 @@ const AdventureMissionSchema = z.object({
 	max_points: z.number().min(1),
 	min_points: z.number().min(0),
 	nollning_week: z.number().min(0).max(4),
+	unlock_code: z.string().optional(),
+	unlock_hint_sv: z.string().optional(),
+	unlock_hint_en: z.string().optional(),
 });
 
 interface Props {
 	open: boolean;
+	setOpen: (open: boolean) => void;
 	onClose: () => void;
 	selectedMission: AdventureMissionRead;
+	setSelectedMission: (mission: AdventureMissionRead | null) => void;
 	nollning_id: number;
 }
 
 const EditAdventureMission = ({
 	open,
+	setOpen,
 	onClose,
 	selectedMission,
+	setSelectedMission,
 	nollning_id,
 }: Props) => {
 	const { t } = useTranslation("admin");
-	const form = useForm<z.infer<typeof AdventureMissionSchema>>({
-		resolver: zodResolver(AdventureMissionSchema),
-		defaultValues: {
-			title_sv: "",
-			title_en: "",
-			description_sv: "",
-			description_en: "",
-			max_points: 1,
-			min_points: 0,
-			nollning_week: 0,
-		},
-	});
 
-	useEffect(() => {
-		if (open && selectedMission) {
-			form.reset({
-				...selectedMission,
-			});
-		}
-	}, [selectedMission, form, open]);
+	const cleanedSelectedMission = {
+		...selectedMission,
+		unlock_code: selectedMission.unlock_code ?? "",
+		unlock_hint_sv: selectedMission.unlock_hint_sv ?? "",
+		unlock_hint_en: selectedMission.unlock_hint_en ?? "",
+	};
+
+	function setConvertedItem(
+		item: z.infer<typeof AdventureMissionSchema> | null,
+	) {
+		setSelectedMission(item ? { ...selectedMission, ...item } : null);
+	}
 
 	const queryClient = useQueryClient();
 
@@ -133,6 +114,9 @@ const EditAdventureMission = ({
 					max_points: values.max_points,
 					min_points: values.min_points,
 					nollning_week: values.nollning_week,
+					unlock_code: values.unlock_code,
+					unlock_hint_sv: values.unlock_hint_sv,
+					unlock_hint_en: values.unlock_hint_en,
 				},
 			},
 			{
@@ -158,188 +142,82 @@ const EditAdventureMission = ({
 	}
 
 	return (
-		<Dialog
+		<AdminForm
+			title={t("nollning.missions.edit_title")}
+			formType="edit"
+			gridCols={2}
 			open={open}
-			onOpenChange={(open) => {
-				if (!open) {
-					onClose();
-				}
-			}}
-		>
-			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
-				<DialogHeader>
-					<DialogTitle>{t("nollning.missions.edit_title")}</DialogTitle>
-				</DialogHeader>
-				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit(onSubmit, (error) =>
-							console.log(error),
-						)}
-						className="w-full"
-					>
-						<div className="px-8 space-x-4 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-							<FormField
-								control={form.control}
-								name={"title_sv"}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("nollning.missions.title_sv")}</FormLabel>
-										<FormControl>
-											<Input
-												placeholder={t("nollning.missions.title_placeholder")}
-												{...field}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name={"title_en"}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("nollning.missions.title_en")}</FormLabel>
-										<FormControl>
-											<Input
-												placeholder={t("nollning.missions.title_placeholder")}
-												{...field}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name={"description_sv"}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>
-											{t("nollning.missions.description_sv")}
-										</FormLabel>
-										<FormControl>
-											<textarea
-												className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-												placeholder={t(
-													"nollning.missions.description_placeholder",
-												)}
-												{...field}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name={"description_en"}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>
-											{t("nollning.missions.description_en")}
-										</FormLabel>
-										<FormControl>
-											<textarea
-												className="w-full min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-												placeholder={t(
-													"nollning.missions.description_placeholder",
-												)}
-												{...field}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name={"min_points"}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("nollning.missions.min_points")}</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												placeholder="0"
-												value={
-													typeof field.value === "number" &&
-													!Number.isNaN(field.value)
-														? field.value
-														: ""
-												}
-												onChange={(e) => field.onChange(e.target.valueAsNumber)}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name={"max_points"}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("nollning.missions.max_points")}</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												placeholder="1"
-												value={
-													typeof field.value === "number" &&
-													!Number.isNaN(field.value)
-														? field.value
-														: ""
-												}
-												onChange={(e) => field.onChange(e.target.valueAsNumber)}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name={"nollning_week"}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>{t("nollning.missions.week")}</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												placeholder="0"
-												value={
-													typeof field.value === "number" &&
-													!Number.isNaN(field.value)
-														? field.value
-														: ""
-												}
-												onChange={(e) => field.onChange(e.target.valueAsNumber)}
-											/>
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-						</div>
-						<div className="flex flex-row justify-end space-x-2 mt-4">
-							<Button
-								type="button"
-								variant="outline"
-								onClick={onClose}
-								className="w-32 min-w-fit"
-							>
-								{t("nollning.missions.cancel")}
-							</Button>
-							<Button type="submit" className="w-32 min-w-fit">
-								{t("nollning.missions.save")}
-							</Button>
-							<Button
-								variant="destructive"
-								type="button"
-								className="w-32 min-w-fit"
-								onClick={onDelete}
-							>
-								{t("nollning.missions.delete")}
-							</Button>
-						</div>
-					</form>
-				</Form>
-			</DialogContent>
-		</Dialog>
+			onOpenChange={setOpen}
+			inputFields={[
+				{
+					variant: "text",
+					name: "title_sv",
+					label: t("nollning.missions.title_sv"),
+					placeholder: t("nollning.missions.title_placeholder"),
+				},
+				{
+					variant: "text",
+					name: "title_en",
+					label: t("nollning.missions.title_en"),
+					placeholder: t("nollning.missions.title_placeholder"),
+				},
+				{
+					variant: "textarea",
+					name: "description_sv",
+					label: t("nollning.missions.description_sv"),
+					placeholder: t("nollning.missions.description_placeholder"),
+				},
+				{
+					variant: "textarea",
+					name: "description_en",
+					label: t("nollning.missions.description_en"),
+					placeholder: t("nollning.missions.description_placeholder"),
+				},
+				{
+					variant: "number",
+					name: "min_points",
+					label: t("nollning.missions.min_points"),
+					placeholder: "0",
+				},
+				{
+					variant: "number",
+					name: "max_points",
+					label: t("nollning.missions.max_points"),
+					placeholder: "1",
+				},
+				{
+					variant: "number",
+					name: "nollning_week",
+					label: t("nollning.missions.week"),
+					placeholder: "0",
+				},
+				{
+					variant: "text",
+					name: "unlock_code",
+					label: t("nollning.missions.unlock_code"),
+					placeholder: t("nollning.missions.unlock_code_placeholder"),
+				},
+				{
+					variant: "text",
+					name: "unlock_hint_sv",
+					label: t("nollning.missions.unlock_hint_sv"),
+					placeholder: t("nollning.missions.unlock_hint_placeholder"),
+				},
+				{
+					variant: "text",
+					name: "unlock_hint_en",
+					label: t("nollning.missions.unlock_hint_en"),
+					placeholder: t("nollning.missions.unlock_hint_placeholder"),
+				},
+			]}
+			zodSchema={AdventureMissionSchema}
+			showDialogButton={false}
+			onSubmit={onSubmit}
+			onDelete={onDelete}
+			useDeleteButton
+			editItem={cleanedSelectedMission}
+			setEditItem={setConvertedItem}
+		/>
 	);
 };
 

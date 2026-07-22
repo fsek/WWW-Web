@@ -57,12 +57,18 @@ type SelectFromOptionsAdminFormInputField<T extends FieldValues> =
 		placeholder?: string;
 	};
 
+type NumberAdminFormInputField<T extends FieldValues> =
+	BaseAdminFormInputField<T> & {
+		variant: "number";
+		placeholder?: string;
+	};
 // Implement further cases here
 
 export type AdminFormInputField<T extends FieldValues> =
 	| TextAdminFormInputField<T>
 	| TextareaAdminFormInputField<T>
-	| SelectFromOptionsAdminFormInputField<T>;
+	| SelectFromOptionsAdminFormInputField<T>
+	| NumberAdminFormInputField<T>;
 
 export interface AdminFormProps<T extends FieldValues> {
 	title: string;
@@ -78,6 +84,7 @@ export interface AdminFormProps<T extends FieldValues> {
 	onDelete?: (data: T) => void;
 	customButtons?: React.ReactNode;
 	showDialogButton?: boolean;
+	dialogButtonText?: string;
 	editItem?: T | null;
 	setEditItem?: (item: T | null) => void;
 	open?: boolean;
@@ -103,6 +110,7 @@ export default function AdminForm<T extends FieldValues>({
 	onDelete,
 	customButtons,
 	showDialogButton = true,
+	dialogButtonText,
 	editItem,
 	setEditItem,
 	open: controlledOpen,
@@ -188,7 +196,7 @@ export default function AdminForm<T extends FieldValues>({
 					}}
 				>
 					{formType === "add" ? <Plus /> : formType === "edit" ? <Pen /> : null}
-					{title}
+					{dialogButtonText || title}
 				</Button>
 			)}
 
@@ -271,6 +279,38 @@ export default function AdminForm<T extends FieldValues>({
 																options={inputField.options}
 																{...field}
 																value={(field.value ?? "") as string}
+															/>
+														</FormControl>
+														<FormMessage />
+													</FormItem>
+												)}
+											/>
+										);
+									case "number":
+										return (
+											<FormField
+												key={inputField.name}
+												control={genericForm.control}
+												name={inputField.name}
+												render={({ field }) => (
+													<FormItem
+														className={getColSpanClass(inputField.colSpan)}
+													>
+														<FormLabel>{inputField.label}</FormLabel>
+														<FormControl>
+															<Input
+																type="number"
+																placeholder={inputField.placeholder}
+																{...field}
+																value={
+																	typeof field.value === "number" &&
+																	!Number.isNaN(field.value)
+																		? field.value
+																		: ""
+																}
+																onChange={(e) =>
+																	field.onChange(e.target.valueAsNumber)
+																}
 															/>
 														</FormControl>
 														<FormMessage />
