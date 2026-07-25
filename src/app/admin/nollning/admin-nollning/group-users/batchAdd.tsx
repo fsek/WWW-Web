@@ -14,11 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-	groupUserTypes,
-	type GroupUserTypes,
-	toGroupUserType,
-} from "./searchBar";
+import { type GroupUserTypes, toGroupUserType } from "./searchBar";
 
 interface Props {
 	excludedFromSearch?: GroupUserRead[];
@@ -203,7 +199,9 @@ export default function BatchAddBox({
 						</ul>
 					</div>
 				) : null}
-				{unmatchedValues.length > 0 ? (
+				{!allUsersQuery.isLoading &&
+				!allUsersQuery.isFetching &&
+				unmatchedValues.length > 0 ? (
 					<div className="space-y-2">
 						<p className="text-sm font-medium text-destructive">
 							{t("nollning.group_members.batch_add_members.unmatched_values")}
@@ -212,6 +210,10 @@ export default function BatchAddBox({
 							{unmatchedValues.join(", ")}
 						</p>
 					</div>
+				) : allUsersQuery.isLoading || allUsersQuery.isFetching ? (
+					<p className="text-sm text-muted-foreground">
+						{t("nollning.group_members.batch_add_members.loading")}
+					</p>
 				) : null}
 			</div>
 			<Button

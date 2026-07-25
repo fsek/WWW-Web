@@ -674,13 +674,13 @@
 				"submit": "Add members",
 				"submitting": "Adding members...",
 				"matched_preview": "Matched {{count}} users",
-				"unmatched_preview": "{{count}} unmatched values",
 				"selected_users": "Selected users",
 				"more_users": "+{{count}} more",
 				"unmatched_values": "Unmatched values (or already added users)",
 				"toast_success": "Added {{count}} users to the group",
 				"toast_partial_success": "Added {{count}} users, but {{unmatched}} values could not be matched",
-				"toast_error": "Failed to add users to the group"
+				"toast_error": "Failed to add users to the group",
+				"loading": "Loading..."
 			}
 		}
 	},
