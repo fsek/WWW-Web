@@ -369,7 +369,8 @@
 		"contact": "kontakta din lokala spindelman",
 		"quote": "Här har vi begått lite småillegala saker längs vägen.",
 		"quote_author": "Mikael \"Micke P\" Persson Sundqvist",
-		"button": "Tillbaka till hemsidan"
+		"button": "Tillbaka till hemsidan",
+		"error": "Misslyckades med att hämta dina behörigheter."
 	},
 	"documents": {
 		"title": "Titel",

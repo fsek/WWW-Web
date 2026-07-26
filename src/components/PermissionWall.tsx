@@ -55,6 +55,7 @@ export default function PermissionWall({
 	mustHave?: "any" | "all";
 	children: ReactNode;
 }) {
+	const { t } = useTranslation("main");
 	const {
 		permissions: perm,
 		isLoading,
@@ -68,7 +69,7 @@ export default function PermissionWall({
 
 	if (isError) {
 		const errorMessage =
-			error instanceof Error ? error : "Failed to load permissions";
+			error instanceof Error ? error : t("permission-wall.error");
 		return <LoadingErrorCard error={errorMessage} isLoading={false} />;
 	}
 

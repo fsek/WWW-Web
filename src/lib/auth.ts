@@ -93,12 +93,7 @@ export const useAuthState = create<AuthState>((set, get) => {
 	return {
 		accessToken: null,
 		setAccessToken(data) {
-			set((state) => {
-				if (state.accessToken?.access_token === data.access_token) {
-					return { accessToken: data };
-				}
-				return { accessToken: data };
-			});
+			set({ accessToken: data });
 		},
 		authorizationHeader() {
 			const accessToken = get().accessToken;
