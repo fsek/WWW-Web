@@ -24,9 +24,9 @@ function PermissionDenied() {
 				<div className="mb-4 text-lg font-light text-muted-foreground">
 					{t("permission-wall.message")}
 					<Obfuscate email={"spindelman@fsektionen.se"}>
-						<div className="inline-flex text-forange hover:bg-primary hover:text-white">
+						<span className="inline-flex text-forange hover:bg-primary hover:text-white">
 							{t("permission-wall.contact")}
-						</div>
+						</span>
 					</Obfuscate>
 					.
 				</div>
