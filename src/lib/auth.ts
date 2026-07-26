@@ -52,7 +52,12 @@ function buildPermissionMap(
 		const actionEnum = actionStr as ActionEnum;
 		const targetEnum = targetStr as TargetEnum;
 
-		if (!actionEnum || !targetEnum) continue;
+		if (!actionEnum || !targetEnum) {
+			console.warn(
+				`Unknown permission from backend: ${actionStr}:${targetStr}`,
+			);
+			continue;
+		}
 
 		if (!map.has(targetEnum)) {
 			map.set(targetEnum, new Set<ActionEnum>());
