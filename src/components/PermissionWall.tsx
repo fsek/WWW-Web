@@ -15,12 +15,12 @@ function PermissionDenied() {
 	return (
 		<div className="flex items-center justify-center min-h-screen bg-background text-foreground">
 			<section className="text-center">
-				<div className="mb-4 text-7xl font-extrabold tracking-tight lg:text-9xl text-destructive">
+				<h1 className="mb-4 text-7xl font-extrabold tracking-tight lg:text-9xl text-destructive">
 					{t("permission-wall.stop")}
-				</div>
-				<div className="mb-4 text-3xl font-bold md:text-4xl">
+				</h1>
+				<p className="mb-4 text-3xl font-bold md:text-4xl">
 					{t("permission-wall.subtitle")}
-				</div>
+				</p>
 				<div className="mb-4 text-lg font-light text-muted-foreground">
 					{t("permission-wall.message")}
 					<Obfuscate email={"spindelman@fsektionen.se"}>
@@ -30,10 +30,10 @@ function PermissionDenied() {
 					</Obfuscate>
 					.
 				</div>
-				<div className="mb-4 text-lg font-light text-muted-foreground">
+				<p className="mb-4 text-lg font-light text-muted-foreground">
 					<i>{t("permission-wall.quote")}</i> -{" "}
 					{t("permission-wall.quote_author")}
-				</div>
+				</p>
 				<Button
 					type="button"
 					onClick={() => router.back()}
