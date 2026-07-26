@@ -55,23 +55,19 @@ export default function PermissionWall({
 	mustHave?: "any" | "all";
 	children: ReactNode;
 }) {
-	const { t } = useTranslation("main");
-	const {
-		permissions: perm,
-		isLoading,
-		isError,
-		error,
-	} = usePermissionsState();
+	const permissionsState = usePermissionsState();
 
-	if (isLoading) {
+	if (permissionsState.isPending) {
 		return <LoadingErrorCard />;
 	}
 
-	if (isError) {
-		const errorMessage =
-			error instanceof Error ? error : t("permission-wall.error");
-		return <LoadingErrorCard error={errorMessage} isLoading={false} />;
+	if (permissionsState.isError) {
+		return (
+			<LoadingErrorCard error={permissionsState.error} isLoading={false} />
+		);
 	}
+
+	const perm = permissionsState.permissions;
 
 	let allowed = false;
 	if (mustHave === "all") {

@@ -8,14 +8,8 @@ import { useMemo } from "react";
 import { create } from "zustand";
 
 export type RequiredPermission = [ActionEnum, TargetEnum];
-export type UsePermissionsState = {
-	permissions: PermissionMap;
-	isLoading: boolean;
-	isError: boolean;
-	error: unknown;
-};
 
-class PermissionMap extends Map<TargetEnum, Set<ActionEnum>> {
+export class PermissionMap extends Map<TargetEnum, Set<ActionEnum>> {
 	/**
 	 * Checks a users permission against a list of required permissions.
 	 *
@@ -74,20 +68,20 @@ export function usePermissions(): PermissionMap {
 	return usePermissionsState().permissions;
 }
 
-export function usePermissionsState(): UsePermissionsState {
-	const { data, isLoading, isError, error } = useQuery({
+export function usePermissionsState() {
+	const query = useQuery({
 		...getMyPermissionsOptions(),
 		staleTime: 60 * 1000,
 	});
-	const permissions = useMemo(() => buildPermissionMap(data), [data]);
+	const permissions = useMemo(
+		() => buildPermissionMap(query.data),
+		[query.data],
+	);
 
-	return {
-		permissions,
-		isLoading,
-		isError,
-		error,
-	};
+	return { ...query, permissions };
 }
+
+export type UsePermissionsState = ReturnType<typeof usePermissionsState>;
 
 export const useAuthState = create<AuthState>((set, get) => {
 	return {
