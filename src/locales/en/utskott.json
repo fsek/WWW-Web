@@ -49,6 +49,12 @@
 		"info": "The Corporate Relations Committee works to create connections between students and companies.",
 		"contact": "Head of Corporate Relations"
 	},
+	"processionen": {
+		"self": "The Procession",
+		"about": "Fill in",
+		"info": "The Procession is responsible for the ceremonial activities of the guild.",
+		"contact": "Chief Herald of Arms"
+	},
 	"prylmasteriet": {
 		"self": "The Facilities Committee",
 		"about": "Fill in",
@@ -93,6 +99,12 @@
 		"info": "The Board leads the F-guild and is responsible for its operations.",
 		"contact": "President",
 		"contact2": "Vice President"
+	},
+	"valberedningen": {
+		"self": "The Nomination Committee",
+		"about": "Fill in",
+		"info": "The Nomination Committee is responsible for nominating candidates for the guild's most important positions.",
+		"contact": "Members of the Nomination Committee"
 	},
 	"ovriga": {
 		"self": "Other",
