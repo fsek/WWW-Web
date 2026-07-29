@@ -1,7 +1,7 @@
 "use client";
 
 import { getSingleEventOptions } from "@/api/@tanstack/react-query.gen";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import {
@@ -22,6 +22,7 @@ import {
 	ArrowLeft,
 	Shirt,
 	WineIcon,
+	Goal,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
@@ -32,7 +33,6 @@ import type { EventRead } from "@/api/types.gen";
 import SignupCard from "./SignupCard";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import da from "zod/v4/locales/da.cjs";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
@@ -90,6 +90,29 @@ export default function Page() {
 		currentDate <= signupEnd;
 
 	const signupPeriodPassed = currentDate > signupEnd;
+
+	let mentorGroupTypeBadge = undefined;
+
+	if (data.is_nollning_event) {
+		const isMentor = data.mentor_group_types.includes("Mentor");
+		const isMission = data.mentor_group_types.includes("Mission");
+
+		if (isMentor && !isMission) {
+			mentorGroupTypeBadge = (
+				<Badge variant="secondary" className={featureDivClassName}>
+					<Users className={featureClassName} />
+					{t("admin:events.nollning_event_mentor")}
+				</Badge>
+			);
+		} else if (isMission && !isMentor) {
+			mentorGroupTypeBadge = (
+				<Badge variant="secondary" className={featureDivClassName}>
+					<Goal className={featureClassName} />
+					{t("admin:events.nollning_event_mission")}
+				</Badge>
+			);
+		}
+	}
 
 	return (
 		<Suspense fallback={<div>{t("admin:events.no_event_selected")}</div>}>
@@ -236,11 +259,12 @@ export default function Page() {
 										</Badge>
 									)}
 									{data.is_nollning_event && (
-										<Badge variant="secondary" className={featureDivClassName}>
+										<Badge variant="default" className={featureDivClassName}>
 											<Star className={featureClassName} />
 											{t("admin:events.is_nollning_event")}
 										</Badge>
 									)}
+									{mentorGroupTypeBadge}
 									{data.allow_other_mentors && (
 										<Badge variant="secondary" className={featureDivClassName}>
 											<Tickets className={featureClassName} />

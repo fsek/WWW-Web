@@ -169,7 +169,9 @@
 		"nollning": "Introduction",
 		"success_add": "Event created!",
 		"success_edit": "Event updated!",
-		"success_delete": "Event deleted!"
+		"success_delete": "Event deleted!",
+		"nollning_event_mentor": "With mentor group",
+		"nollning_event_mission": "With mission group"
 	},
 	"documents": {
 		"self": "Documents",

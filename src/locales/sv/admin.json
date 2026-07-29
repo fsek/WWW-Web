@@ -169,7 +169,9 @@
 		"nollning": "Nollning",
 		"success_add": "Event skapades 💰",
 		"success_edit": "Event uppdaterades 🤪",
-		"success_delete": "Event togs bort 🤯"
+		"success_delete": "Event togs bort 🤯",
+		"nollning_event_mentor": "Med faddergruppen",
+		"nollning_event_mission": "Med uppdragsgruppen"
 	},
 	"documents": {
 		"self": "Dokument",
