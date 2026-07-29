@@ -22,7 +22,6 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
-import { Separator } from "@/components/ui/separator";
 import { AdminCheckboxFormItem } from "@/widgets/AdminCheckboxFormItem";
 import { AdminFormSectionDivider } from "@/widgets/AdminFormSectionDivider";
 
@@ -106,7 +105,6 @@ interface EventFormFieldsProps<T extends EventFormCompatible> {
 
 export default function EventFormFields<T extends EventFormCompatible>({
 	eventsForm,
-	checkboxFields,
 }: EventFormFieldsProps<T>) {
 	const { t } = useTranslation();
 
@@ -742,6 +740,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				)}
 			/>
 
+			{/* TODO: This may be unintuitive, change to just a switch between "Mentor", "Mission" and "All" and hope that föset doesn't need more specific settings? */}
 			<FormField
 				control={eventsForm.control}
 				name={"mentor_group_types" as Path<T>}
