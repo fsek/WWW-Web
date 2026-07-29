@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import CouncilGrid from "@/components/councilgrid";
 import CustomTitle from "@/components/CustomTitle";
+import ledningenht25 from '@/assets/ledningenht25.jpg'
+import balen from '@/assets/balen.jpg'
 
 # Utskott och övriga enheter
 
@@ -23,7 +25,7 @@ Utöver utskotten finns de flera andra enheter på sektionen att agera sig till 
 * **Externa representanter**: Instutionsrepresentanter och programledningsledamöter för F-sektionens program i diverse institutionsstyrelser tillhörande LTH.
 * **Revisionen**: Duo som granskar och följer styrelsens arbete och sektionens bokföring.
 
-<Image src="/images/ledningenht25.jpg" alt="Ledningen HT25" className="w-3/5 mt-4 rounded-lg mx-auto" width="1000" height="600" />
+<Image src={ledningenht25} alt="Ledningen HT25" className="w-3/5 h-auto mt-4 rounded-lg mx-auto" />
 
 <CustomTitle text={"Utskott"} />
 <CouncilGrid />
@@ -41,4 +43,4 @@ Ett projekt kan handla om nästan vad som helst, och kan bli beviljad budget, lo
 Ansökan sker till *Presidiet* (Ordförande och Vice Ordförande) genom att skicka in en projektplan med utsedd projektledare via mail.
 Mer information finns att läsa på [Projekt-sidan](https://fsektionen.se/projects).
 
-<Image src="/images/balen.jpg" alt="Ett gäng ur n24 vid Alces Florentina 2025" className="w-3/5 mt-4 rounded-lg mx-auto" width="1000" height="600"/>
+<Image src={balen} alt="Ett gäng ur n24 vid Alces Florentina 2025" className="w-3/5 h-auto mt-4 rounded-lg mx-auto" />
