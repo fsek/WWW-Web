@@ -37,7 +37,7 @@ export function AdminChooseCouncil({
 			value={value.toString()}
 			onValueChange={(val) => onChange(Number(val))}
 		>
-			<SelectTrigger className="w-full">
+			<SelectTrigger className="w-full border-border hover:border-ring dark:bg-input/30 dark:border-border dark:hover:border-ring">
 				<SelectValue placeholder={t("select_council")} />
 			</SelectTrigger>
 			<SelectContent>

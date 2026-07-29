@@ -11,9 +11,7 @@ import { AdminChooseCouncil } from "@/widgets/AdminChooseCouncil";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import AdminChoosePriorities from "@/widgets/AdminChoosePriorities";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
-import { Checkbox } from "@/components/ui/checkbox";
 import type { UseFormReturn, Path } from "react-hook-form";
-import { Label } from "@/components/ui/label";
 import { useTranslation } from "react-i18next";
 import StyledCreatableSelect from "@/components/StyledCreatableSelect";
 import AdminChooseMentorGroupTypes from "@/widgets/AdminChooseMentorGroupType";
@@ -24,6 +22,9 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
+import { Separator } from "@/components/ui/separator";
+import { AdminCheckboxFormItem } from "@/widgets/AdminCheckboxFormItem";
+import { AdminFormSectionDivider } from "@/widgets/AdminFormSectionDivider";
 
 const LOCATIONS = {
 	MH: "MH",
@@ -274,8 +275,10 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				)}
 			/>
 
-			<hr className="lg:col-span-2 mt-4" />
-			<h3 className="lg:col-span-2">{t("admin:events.date_time")}</h3>
+			<AdminFormSectionDivider
+				title={t("admin:events.date_time")}
+				className="lg:col-span-2"
+			/>
 
 			<div className="grid gap-x-1 grid-cols-3">
 				<FormField
@@ -380,21 +383,14 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				control={eventsForm.control}
 				name={"all_day" as Path<T>}
 				render={({ field }) => (
-					<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
-						<Checkbox
-							checked={field.value as boolean}
-							onCheckedChange={(value) => {
-								field.onChange(value);
-								setAllDay(value as boolean);
-							}}
-							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
-						/>
-						<div className="grid gap-1.5 font-normal">
-							<p className="text-sm leading-none font-medium">
-								{t(`admin:events.all_day`)}
-							</p>
-						</div>
-					</Label>
+					<AdminCheckboxFormItem
+						label={t(`admin:events.all_day`)}
+						checked={field.value as boolean}
+						onCheckedChange={(value) => {
+							field.onChange(value);
+							setAllDay(value as boolean);
+						}}
+					/>
 				)}
 			/>
 
@@ -402,38 +398,29 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				control={eventsForm.control}
 				name={"recurring" as Path<T>}
 				render={({ field }) => (
-					<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
-						<Checkbox
-							checked={field.value as boolean}
-							onCheckedChange={field.onChange}
-							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
-						/>
-						<div className="grid gap-1.5 font-normal">
-							<p className="text-sm leading-none font-medium">
-								{t(`admin:events.recurring`)}
-							</p>
-						</div>
-					</Label>
+					<AdminCheckboxFormItem
+						label={t(`admin:events.recurring`)}
+						checked={field.value as boolean}
+						onCheckedChange={field.onChange}
+					/>
 				)}
 			/>
-			<hr className="lg:col-span-2 mt-4" />
-			<h3 className="lg:col-span-2">{t("admin:events.settings")}</h3>
+
+			<AdminFormSectionDivider
+				title={t("admin:events.settings")}
+				className="lg:col-span-2"
+			/>
+
 			<FormField
 				control={eventsForm.control}
 				name={"food" as Path<T>}
 				render={({ field }) => (
-					<Label className="lg:col-span-2 hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
-						<Checkbox
-							checked={field.value as boolean}
-							onCheckedChange={field.onChange}
-							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
-						/>
-						<div className="grid gap-1.5 font-normal">
-							<p className="text-sm leading-none font-medium">
-								{t(`admin:events.food`)}
-							</p>
-						</div>
-					</Label>
+					<AdminCheckboxFormItem
+						label={t(`admin:events.food`)}
+						checked={field.value as boolean}
+						onCheckedChange={field.onChange}
+						className="lg:col-span-2"
+					/>
 				)}
 			/>
 
@@ -487,19 +474,12 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				control={eventsForm.control}
 				name={"drink_package" as Path<T>}
 				render={({ field }) => (
-					<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
-						<Checkbox
-							checked={field.value as boolean}
-							onCheckedChange={field.onChange}
-							disabled={drinkPackageDisabled}
-							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
-						/>
-						<div className="grid gap-1.5 font-normal">
-							<p className="text-sm leading-none font-medium">
-								{t(`admin:events.drink_package`)}
-							</p>
-						</div>
-					</Label>
+					<AdminCheckboxFormItem
+						label={t(`admin:events.drink_package`)}
+						checked={field.value as boolean}
+						onCheckedChange={field.onChange}
+						disabled={drinkPackageDisabled}
+					/>
 				)}
 			/>
 			<FormField
@@ -538,8 +518,11 @@ export default function EventFormFields<T extends EventFormCompatible>({
 					</FormItem>
 				)}
 			/>
-			<hr className="lg:col-span-2 mt-4" />
-			<h3 className="lg:col-span-2">{t("admin:events.signup")}</h3>
+
+			<AdminFormSectionDivider
+				title={t("admin:events.signup")}
+				className="lg:col-span-2"
+			/>
 
 			<FormField
 				control={eventsForm.control}
@@ -584,40 +567,26 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				control={eventsForm.control}
 				name={"can_signup" as Path<T>}
 				render={({ field }) => (
-					<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
-						<Checkbox
-							checked={field.value as boolean}
-							onCheckedChange={(value) => {
-								field.onChange(value);
-								setSignup(value as boolean);
-							}}
-							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
-						/>
-						<div className="grid gap-1.5 font-normal">
-							<p className="text-sm leading-none font-medium">
-								{t(`admin:events.can_signup`)}
-							</p>
-						</div>
-					</Label>
+					<AdminCheckboxFormItem
+						label={t(`admin:events.can_signup`)}
+						checked={field.value as boolean}
+						onCheckedChange={(value) => {
+							field.onChange(value);
+							setSignup(value as boolean);
+						}}
+					/>
 				)}
 			/>
 			<FormField
 				control={eventsForm.control}
 				name={"closed" as Path<T>}
 				render={({ field }) => (
-					<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
-						<Checkbox
-							checked={field.value as boolean}
-							onCheckedChange={field.onChange}
-							disabled={!signup}
-							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
-						/>
-						<div className="grid gap-1.5 font-normal">
-							<p className="text-sm leading-none font-medium">
-								{t(`admin:events.closed`)}
-							</p>
-						</div>
-					</Label>
+					<AdminCheckboxFormItem
+						label={t(`admin:events.closed`)}
+						checked={field.value as boolean}
+						onCheckedChange={field.onChange}
+						disabled={!signup}
+					/>
 				)}
 			/>
 			<FormField
@@ -752,28 +721,24 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				}}
 			/>
 
-			<hr className="lg:col-span-2 mt-4" />
-			<h3 className="lg:col-span-2">{t("admin:events.nollning")}</h3>
+			<AdminFormSectionDivider
+				title={t("admin:events.nollning")}
+				className="lg:col-span-2"
+			/>
 
 			<FormField
 				control={eventsForm.control}
 				name={"is_nollning_event" as Path<T>}
 				render={({ field }) => (
-					<Label className="lg:col-span-2 hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
-						<Checkbox
-							checked={field.value as boolean}
-							onCheckedChange={(value) => {
-								field.onChange(value);
-								setNollning(value as boolean);
-							}}
-							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
-						/>
-						<div className="grid gap-1.5 font-normal">
-							<p className="text-sm leading-none font-medium">
-								{t(`admin:events.is_nollning_event`)}
-							</p>
-						</div>
-					</Label>
+					<AdminCheckboxFormItem
+						label={t(`admin:events.is_nollning_event`)}
+						checked={field.value as boolean}
+						onCheckedChange={(value) => {
+							field.onChange(value);
+							setNollning(value as boolean);
+						}}
+						className="lg:col-span-2"
+					/>
 				)}
 			/>
 
@@ -800,19 +765,12 @@ export default function EventFormFields<T extends EventFormCompatible>({
 				control={eventsForm.control}
 				name={"allow_other_mentors" as Path<T>}
 				render={({ field }) => (
-					<Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-muted-foreground has-[[aria-checked=true]]:bg-accent">
-						<Checkbox
-							checked={field.value as boolean}
-							onCheckedChange={field.onChange}
-							className="data-[state=checked]:border-[var(--wavelength-612-color-light)] data-[state=checked]:bg-[var(--wavelength-612-color-light)] data-[state=checked]:text-white"
-							disabled={!nollning}
-						/>
-						<div className="grid gap-1.5 font-normal">
-							<p className="text-sm leading-none font-medium">
-								{t(`admin:events.allow_other_mentors`)}
-							</p>
-						</div>
-					</Label>
+					<AdminCheckboxFormItem
+						label={t(`admin:events.allow_other_mentors`)}
+						checked={field.value as boolean}
+						onCheckedChange={field.onChange}
+						disabled={!nollning}
+					/>
 				)}
 			/>
 		</div>

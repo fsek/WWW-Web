@@ -5,6 +5,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 export function SelectFromOptions({
 	options,
@@ -27,7 +28,12 @@ export function SelectFromOptions({
 			onValueChange={(option) => onChange(option ?? "")}
 			disabled={isDisabled}
 		>
-			<SelectTrigger className={className}>
+			<SelectTrigger
+				className={cn(
+					"mt-0 mb-0 transition-all border-border hover:border-ring dark:bg-input/30 dark:border-border dark:hover:border-ring",
+					className,
+				)}
+			>
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
 			<SelectContent>

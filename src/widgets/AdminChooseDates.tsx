@@ -37,6 +37,7 @@ export function AdminChooseDates({
 		<div className="flex flex-col gap-3 lg:flex-row lg:gap-10">
 			<div className="w-full space-y-2">
 				<DateTimePicker
+					className="border-border hover:border-ring dark:bg-input/30 dark:border-border dark:hover:border-ring"
 					granularity={granularity}
 					value={value}
 					onChange={handleDateChange}
