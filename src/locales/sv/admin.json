@@ -870,8 +870,14 @@
 		"error_create": "Misslyckades att skapa anmälan: {{error}}",
 		"unknown_error": "Okänt fel",
 		"priority": "Prioritet",
+		"priority_group": {
+			"nolla": "Nolla",
+			"gruppfadder": "Gruppfadder",
+			"uppdragsfadder": "Uppdragsfadder",
+			"fotograf": "Fotograf"
+		},
 		"group_name": "Gruppnamn",
-		"group_name_placeholder": "Sök eller skriv fritt.",
+		"group_name_placeholder": "Sök eller skriv fritt",
 		"group_name_placeholder_free": "Ange gruppnamn",
 		"created_at": "Anmälan skapad",
 		"drink_package": {

@@ -1,15 +1,14 @@
-import { useTranslation } from "react-i18next";
-import CreatableSelect from "react-select/creatable";
-import type { OnChangeValue, OptionProps } from "react-select";
-import { components } from "react-select";
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import Select, { type OnChangeValue, type OptionProps } from "react-select";
+import { components } from "react-select";
 
 export type Option = {
 	value: string | number;
 	label: string;
 };
 
-interface StyledCreatableSelectProps {
+interface StyledMultiSelectProps {
 	isMulti?: boolean;
 	options: Option[];
 	value?: Option | Option[] | null;
@@ -39,7 +38,7 @@ function CustomOption(props: OptionProps<Option, boolean>) {
 /*
 This is basically all Claude. Sorry!
 */
-export default function StyledCreatableSelect({
+export default function StyledMultiSelect({
 	isMulti = false,
 	options,
 	value,
@@ -47,8 +46,8 @@ export default function StyledCreatableSelect({
 	placeholder,
 	className = "",
 	isDisabled = false,
-	isClearable = true,
-}: StyledCreatableSelectProps) {
+	isClearable = false,
+}: StyledMultiSelectProps) {
 	const { t } = useTranslation("admin");
 
 	const handleChange = (selected: OnChangeValue<Option, boolean>) => {
@@ -57,7 +56,7 @@ export default function StyledCreatableSelect({
 	};
 
 	return (
-		<CreatableSelect
+		<Select
 			isMulti={isMulti}
 			options={options}
 			unstyled

@@ -429,37 +429,24 @@ export default function Page() {
 												<div className="flex flex-wrap items-center gap-2">
 													{data.priorities.map((p, idx) => {
 														const raw = p.priority;
-														let label = raw;
-														let isSpecial = false;
-														if (i18n.language === "en") {
-															switch (raw) {
-																case "Nolla":
-																	label = "Mentee (new student)";
-																	isSpecial = true;
-																	break;
-																case "Gruppfadder":
-																	label = "Mentor (group)";
-																	isSpecial = true;
-																	break;
-																case "Uppdragsfadder":
-																	label = "Mentor (mission)";
-																	isSpecial = true;
-																	break;
-																case "Fotograf":
-																	label = "Photographer";
-																	isSpecial = true;
-																	break;
-																default:
-																	break;
-															}
-														}
+														const label = t(
+															`admin:event_signup.priority_group.${raw.toLowerCase()}`,
+															raw,
+														);
+														const isSpecial = [
+															"nolla",
+															"gruppfadder",
+															"uppdragsfadder",
+															"fotograf",
+														].includes(raw.toLowerCase());
+
 														return (
-															<span
+															<Badge
 																key={raw}
-																className={isSpecial ? "font-semibold" : ""}
+																variant={isSpecial ? "default" : "secondary"}
 															>
-																{`${label}${idx < data.priorities.length - 1 ? ", " : ""}`}
-															</span>
+																{label}
+															</Badge>
 														);
 													})}
 												</div>

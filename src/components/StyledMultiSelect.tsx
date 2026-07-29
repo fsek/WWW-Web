@@ -1,6 +1,7 @@
-import { ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import Select, { type OnChangeValue } from "react-select";
+import Select, { type OnChangeValue, type OptionProps } from "react-select";
+import { components } from "react-select";
 
 export type Option = {
 	value: string | number;
@@ -18,9 +19,22 @@ interface StyledMultiSelectProps {
 	isClearable?: boolean;
 }
 
-/*
-This is basically all Claude. Sorry!
-*/
+function CustomOption(props: OptionProps<Option, boolean>) {
+	const { children, isSelected } = props;
+	return (
+		<components.Option {...props}>
+			<span className="relative flex w-full items-center pr-6">
+				{children}
+				{isSelected && (
+					<span className="absolute right-0 flex size-3.5 items-center justify-center">
+						<CheckIcon className="size-4" />
+					</span>
+				)}
+			</span>
+		</components.Option>
+	);
+}
+
 export default function StyledMultiSelect({
 	isMulti = false,
 	options,
@@ -54,6 +68,12 @@ export default function StyledMultiSelect({
 						<ChevronDownIcon className="text-muted-foreground size-4 opacity-50 pointer-events-none" />
 					</div>
 				),
+				ClearIndicator: ({ innerProps }) => (
+					<div {...innerProps}>
+						<XIcon className="text-muted-foreground size-4 opacity-50 hover:opacity-70 transition-all" />
+					</div>
+				),
+				Option: CustomOption,
 			}}
 			classNames={{
 				container: () => `${className}`,
