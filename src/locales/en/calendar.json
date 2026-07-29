@@ -74,8 +74,8 @@
 			"dismiss": "Dismiss",
 			"dismiss_alt": "Click here to dismiss."
 		},
-		"button": "Add Event",
-		"add": "Add Event",
+		"button": "Add event",
+		"add": "Add event",
 		"title": "Title",
 		"description": "Description",
 		"placeholder": {
