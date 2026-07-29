@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
 import {
 	DateTimePicker,
 	type Granularity,
 } from "@/components/ui/datetime-picker";
-import { sv } from "date-fns/locale";
+import { enUS, sv } from "date-fns/locale";
+import type { DayPickerLocale } from "react-day-picker";
+import { useTranslation } from "react-i18next";
 
 interface AdminChooseDatesProps {
 	value: Date | undefined;
@@ -13,6 +14,7 @@ interface AdminChooseDatesProps {
 	granularity?: Granularity;
 	placeholder?: string;
 	disabled?: boolean;
+	locale?: Partial<DayPickerLocale>;
 }
 
 export function AdminChooseDates({
@@ -21,6 +23,7 @@ export function AdminChooseDates({
 	granularity = "minute",
 	placeholder = undefined,
 	disabled = false,
+	locale = undefined,
 }: AdminChooseDatesProps) {
 	const handleDateChange = (newDate: Date | undefined) => {
 		if (newDate) {
@@ -42,7 +45,10 @@ export function AdminChooseDates({
 					value={value}
 					onChange={handleDateChange}
 					weekStartsOn={1} // Monday
-					locale={sv}
+					locale={
+						locale ??
+						(useTranslation().i18n.language.startsWith("sv") ? sv : enUS)
+					}
 					showWeekNumber={false}
 					showOutsideDays={true}
 					displayFormat={{
