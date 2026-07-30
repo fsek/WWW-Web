@@ -53,11 +53,13 @@ import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import VerificationReminder from "./VerificationReminder";
 import MemberBanner from "./MemberBanner";
+import { useAuthState } from "@/lib/auth";
 
 type NavItem = {
 	self: string;
 	desc: string;
 	href?: string;
+	special?: boolean;
 };
 
 type NavSection = {
@@ -90,8 +92,7 @@ export function NavBar() {
 		logoutMutation.mutate({});
 	}, [logoutMutation]);
 
-	const showAdmin =
-		user?.is_member && Array.isArray(user.posts) && user.posts.length > 0;
+	const showAdmin = useAuthState().getPermissions().size > 0;
 
 	return (
 		<header className="sticky top-0 z-50 w-full border-transparent  bg-white/50 dark:bg-background/40  backdrop-blur-md">
@@ -318,6 +319,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 					self: t("navbar.guild-meeting"),
 					desc: "",
 					href: "/guild-meeting",
+					special: true,
 				},
 			},
 		]);
