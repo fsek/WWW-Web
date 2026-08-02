@@ -1,9 +1,6 @@
-import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
-import { getEventPrioritiesOptions } from "@/api/@tanstack/react-query.gen";
 import StyledMultiSelect, { type Option } from "@/components/StyledMultiSelect";
-import { _0Enum } from "@/api";
-import { object } from "zod";
+import { MENTOR_GROUP_TYPE_ENUM } from "@/constants";
+import { useTranslation } from "react-i18next";
 
 export interface AdminChooseMentorGroupTypeProps {
 	mentor_group_types?: string[];
@@ -22,11 +19,10 @@ export function AdminChooseMentorGroupTypes({
 }: AdminChooseMentorGroupTypeProps) {
 	const { t } = useTranslation("admin");
 
-	const availableMentorGroupTypes = Object.values(_0Enum);
-
-	if (!mentor_group_types || mentor_group_types.length === 0) {
-		mentor_group_types = availableMentorGroupTypes;
-	}
+	const availableMentorGroupTypes: readonly string[] =
+		mentor_group_types && mentor_group_types.length > 0
+			? mentor_group_types
+			: Object.values(MENTOR_GROUP_TYPE_ENUM);
 
 	// Convert string value to array if needed
 	const selectedValues = Array.isArray(value) ? value : value ? [value] : [];
@@ -55,7 +51,7 @@ export function AdminChooseMentorGroupTypes({
 	return (
 		<StyledMultiSelect
 			isMulti={true}
-			options={mentor_group_types.map((type) => ({
+			options={availableMentorGroupTypes.map((type) => ({
 				value: type,
 				label: t(`nollning.groups.${type.toLowerCase()}`),
 			}))}
