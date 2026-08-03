@@ -147,6 +147,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									value={(field.value as string) ?? ""}
 								/>
 							</FormControl>
+
+							<FormMessage />
 						</FormItem>
 					)}
 				/>
@@ -164,6 +166,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									value={(field.value as string) ?? ""}
 								/>
 							</FormControl>
+
+							<FormMessage />
 						</FormItem>
 					)}
 				/>
@@ -182,6 +186,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									value={(field.value as string) ?? ""}
 								/>
 							</FormControl>
+
+							<FormMessage />
 						</FormItem>
 					)}
 				/>
@@ -200,6 +206,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									value={(field.value as string) ?? ""}
 								/>
 							</FormControl>
+
+							<FormMessage />
 						</FormItem>
 					)}
 				/>
@@ -252,6 +260,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								}))}
 							/>
 						</FormControl>
+
+						<FormMessage />
 					</FormItem>
 				)}
 			/>
@@ -269,6 +279,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								value={(field.value as number) ?? 0}
 							/>
 						</FormControl>
+
+						<FormMessage />
 					</FormItem>
 				)}
 			/>
@@ -320,6 +332,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									}}
 								/>
 							</FormControl>
+
 							<FormMessage />
 						</FormItem>
 					)}
@@ -373,6 +386,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								onChange={field.onChange}
 							/>
 						</FormControl>
+
+						<FormMessage />
 					</FormItem>
 				)}
 			/>
@@ -464,6 +479,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									placeholder={t("admin:events.select_alcohol_event_type")}
 								/>
 							</FormControl>
+
+							<FormMessage />
 						</FormItem>
 					);
 				}}
@@ -513,6 +530,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								}))}
 							/>
 						</FormControl>
+
+						<FormMessage />
 					</FormItem>
 				)}
 			/>
@@ -543,6 +562,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 									value={(field.value as number) || ""}
 								/>
 							</FormControl>
+
+							<FormMessage />
 							<Popover>
 								<PopoverTrigger asChild>
 									<button
@@ -628,6 +649,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								disabled={!signup}
 							/>
 						</FormControl>
+
+						<FormMessage />
 					</FormItem>
 				)}
 			/>
@@ -646,6 +669,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								disabled={!signup}
 							/>
 						</FormControl>
+
+						<FormMessage />
 					</FormItem>
 				)}
 			/>
@@ -664,6 +689,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								disabled={!signup}
 							/>
 						</FormControl>
+
+						<FormMessage />
 					</FormItem>
 				)}
 			/>
@@ -699,6 +726,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 										isDisabled={!signup}
 									/>
 								</FormControl>
+
+								<FormMessage />
 								<Popover>
 									<PopoverTrigger asChild>
 										<button
@@ -756,6 +785,8 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								disabled={!nollning}
 							/>
 						</FormControl>
+
+						<FormMessage />
 					</FormItem>
 				)}
 			/>

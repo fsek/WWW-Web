@@ -100,7 +100,9 @@ export function EventAddForm({
 						council_id: z.number().int().positive(),
 						signup_start: z.date(),
 						signup_end: z.date(),
-						title_en: z.string().min(1),
+						title_en: z
+							.string({ error: t("add.error_title") })
+							.min(1, { message: t("add.error_title") }),
 						description_en: editDescription
 							? z
 									.string({ error: t("add.error_description") })

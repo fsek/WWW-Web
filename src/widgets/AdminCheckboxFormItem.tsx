@@ -2,7 +2,12 @@
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
+import {
+	FormControl,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
 
 interface AdminCheckboxFormItemProps {
 	label: string;
@@ -40,6 +45,8 @@ export function AdminCheckboxFormItem({
 				</FormControl>
 				<span>{label}</span>
 			</FormLabel>
+
+			<FormMessage />
 		</FormItem>
 	);
 }

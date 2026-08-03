@@ -95,7 +95,9 @@ export function EventEditForm({
 						council_id: z.number().int().positive(),
 						signup_start: z.date(),
 						signup_end: z.date(),
-						title_en: z.string().min(1),
+						title_en: z
+							.string({ error: t("edit.error_title") })
+							.min(1, { message: t("edit.error_title") }),
 						description_en: editDescription
 							? z
 									.string({ error: t("add.error_description") })
