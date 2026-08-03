@@ -33,6 +33,10 @@ import type { EventRead } from "@/api/types.gen";
 import SignupCard from "./SignupCard";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import {
+	EventFeatureBadges,
+	EventSignupBadges,
+} from "@/components/event-badges";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
@@ -75,9 +79,6 @@ export default function Page() {
 		}).format(new Date(date));
 	};
 
-	const featureDivClassName = "flex items-center gap-1 text-sm";
-	const featureClassName = "w-10 h-10";
-
 	// Check if signup is allowed right now
 	const currentDate = new Date();
 	// It doesn't work without this
@@ -90,29 +91,6 @@ export default function Page() {
 		currentDate <= signupEnd;
 
 	const signupPeriodPassed = currentDate > signupEnd;
-
-	let mentorGroupTypeBadge = undefined;
-
-	if (data.is_nollning_event) {
-		const isMentor = data.mentor_group_types.includes("Mentor");
-		const isMission = data.mentor_group_types.includes("Mission");
-
-		if (isMentor && !isMission) {
-			mentorGroupTypeBadge = (
-				<Badge variant="secondary" className={featureDivClassName}>
-					<Users className={featureClassName} />
-					{t("admin:events.nollning_event_mentor")}
-				</Badge>
-			);
-		} else if (isMission && !isMentor) {
-			mentorGroupTypeBadge = (
-				<Badge variant="secondary" className={featureDivClassName}>
-					<Goal className={featureClassName} />
-					{t("admin:events.nollning_event_mission")}
-				</Badge>
-			);
-		}
-	}
 
 	return (
 		<Suspense fallback={<div>{t("admin:events.no_event_selected")}</div>}>
@@ -231,75 +209,12 @@ export default function Page() {
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							{!(
-								data.all_day ||
-								data.recurring ||
-								data.is_nollning_event ||
-								data.allow_other_mentors ||
-								data.food ||
-								data.drink_package ||
-								data.closed ||
-								data.price !== 0
-							) ? (
-								<p className="text-muted-foreground text-sm">
-									{t("admin:events.no_features")}
-								</p>
-							) : (
-								<div className="flex flex-wrap gap-2">
-									{data.all_day && (
-										<Badge variant="secondary" className={featureDivClassName}>
-											<Calendar className={featureClassName} />
-											{t("admin:events.all_day")}
-										</Badge>
-									)}
-									{data.recurring && (
-										<Badge variant="secondary" className={featureDivClassName}>
-											<Repeat className={featureClassName} />
-											{t("admin:events.recurring")}
-										</Badge>
-									)}
-									{data.is_nollning_event && (
-										<Badge variant="default" className={featureDivClassName}>
-											<Star className={featureClassName} />
-											{t("admin:events.is_nollning_event")}
-										</Badge>
-									)}
-									{mentorGroupTypeBadge}
-									{data.allow_other_mentors && (
-										<Badge variant="secondary" className={featureDivClassName}>
-											<Tickets className={featureClassName} />
-											{t("admin:events.allow_other_mentors")}
-										</Badge>
-									)}
-									{data.food && (
-										<Badge variant="outline" className={featureDivClassName}>
-											<Utensils className={featureClassName} />
-											{t("admin:events.food")}
-										</Badge>
-									)}
-									{data.drink_package && (
-										<Badge variant="outline" className={featureDivClassName}>
-											<Beer className={featureClassName} />
-											{t("admin:events.drink_package")}
-										</Badge>
-									)}
-									{data.price !== 0 && (
-										<Badge variant="outline" className={featureDivClassName}>
-											<CreditCard className={featureClassName} />
-											{t("admin:events.costs_money")}
-										</Badge>
-									)}
-									{data.closed && (
-										<Badge
-											variant="destructive"
-											className={featureDivClassName}
-										>
-											<Lock className={featureClassName} />
-											{t("admin:events.closed")}
-										</Badge>
-									)}
-								</div>
-							)}
+							<EventFeatureBadges
+								event={data}
+								containerClassName="flex flex-wrap gap-2"
+								badgeClassName="flex items-center gap-1 text-sm"
+								iconClassName="h-10 w-10"
+							/>
 						</CardContent>
 					</Card>
 
@@ -381,32 +296,10 @@ export default function Page() {
 								</>
 							)}
 
-							{data.can_signup === false && (
-								<p className="text-sm text-muted-foreground">
-									{t("admin:events.signup_not_used")}
-								</p>
-							)}
-
-							{(data.signup_start === null || data.signup_end === null) && (
-								<p className="text-sm text-muted-foreground">
-									{t("admin:events.signup_not_available")}
-								</p>
-							)}
-
-							<div className="flex flex-wrap gap-2">
-								{data.can_signup && (
-									<>
-										<Badge variant="default">
-											{t("admin:events.can_signup")}
-										</Badge>
-										<Badge variant="secondary">
-											{t(
-												`admin:events.lottery_${data.lottery ? "enabled" : "disabled"}`,
-											)}
-										</Badge>
-									</>
-								)}
-							</div>
+							<EventSignupBadges
+								event={data}
+								containerClassName="flex flex-wrap gap-2"
+							/>
 
 							{data.price > 0 && (
 								<div className="flex items-center gap-2">
