@@ -25,9 +25,14 @@ export function AdminCheckboxFormItem({
 	disabled = false,
 }: AdminCheckboxFormItemProps) {
 	return (
-		<FormItem className={cn("flex", className)}>
+		<FormItem className={cn("flex flex-col items-start space-y-0", className)}>
+			{/* Ugly hack to properly align checkbox item with other form elements (that have their form labels above).
+			div will stay at height 0 on rows containing just checkboxes (i.e. where parent isn't stretched taller than the FormLabel requires),
+			and will grow to at most the max-h below (take a deep breath). Should be equivalent to one line of normal FormLabel text.
+			Someone with more of a soul could probably find a neater way to fix this. I do not have a soul. */}
+			<div className="w-full max-h-[calc(var(--text-sm)+2*var(--spacing)+2px)] basis-0 grow" />{" "}
 			<FormLabel
-				className="min-h-[38px] w-full self-end flex items-center gap-3 px-3 py-1 rounded-md text-sm font-normal border 
+				className="min-h-[38px] w-full flex items-center gap-3 px-3 py-1 rounded-md text-sm font-normal border 
  bg-background text-foreground
  border-border hover:border-ring dark:bg-input/30 dark:border-border dark:hover:border-ring shadow-xs
  has-aria-checked:border-muted-foreground has-aria-checked:bg-accent dark:has-aria-checked:bg-accent
@@ -45,7 +50,6 @@ export function AdminCheckboxFormItem({
 				</FormControl>
 				<span>{label}</span>
 			</FormLabel>
-
 			<FormMessage />
 		</FormItem>
 	);

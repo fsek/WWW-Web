@@ -182,6 +182,24 @@ export function EventAddForm({
 		)
 		.refine(
 			(data) => {
+				if (enableTrueEventProperties) {
+					if (
+						data.is_nollning_event &&
+						(data.mentor_group_types as string[]).length < 1
+					) {
+						return false;
+					}
+				}
+
+				return true;
+			},
+			{
+				message: t("error_missing_group_type"),
+				path: ["mentor_group_types"],
+			},
+		)
+		.refine(
+			(data) => {
 				if (enableCarProperties) {
 					// Check if personal is false and council_id is not set
 					if (data.personal === false && !data.council_id) {
