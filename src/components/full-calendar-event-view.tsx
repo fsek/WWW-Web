@@ -79,9 +79,6 @@ export function EventView({
 	const { t, i18n } = useTranslation("calendar");
 	const router = useRouter();
 
-	const featureDivClassName = "flex items-center gap-1";
-	const featureClassName = "h-3 w-3";
-
 	// Calculate if the event should be editable
 
 	const { data } = useQuery({
@@ -285,6 +282,7 @@ export function EventView({
 								event={event as unknown as EventRead}
 								containerClassName="flex flex-wrap gap-2 m-2 "
 								badgeClassName="text-sm"
+								showMissingTexts={false}
 							/>
 						)}
 					</AlertDialogHeader>

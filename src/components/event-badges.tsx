@@ -19,6 +19,7 @@ interface EventBadgesProps {
 	containerClassName?: string;
 	badgeClassName?: string;
 	iconClassName?: string;
+	showMissingTexts?: boolean;
 }
 
 export function EventFeatureBadges({
@@ -26,6 +27,7 @@ export function EventFeatureBadges({
 	containerClassName = "",
 	badgeClassName = "",
 	iconClassName = "",
+	showMissingTexts = true,
 }: EventBadgesProps) {
 	const { t } = useTranslation();
 
@@ -41,10 +43,12 @@ export function EventFeatureBadges({
 			event.price !== 0
 		)
 	) {
-		return (
+		return showMissingTexts ? (
 			<p className="text-muted-foreground text-sm">
 				{t("admin:events.no_features")}
 			</p>
+		) : (
+			<></>
 		);
 	}
 
@@ -130,22 +134,27 @@ export function EventSignupBadges({
 	event,
 	containerClassName = "",
 	badgeClassName = "",
+	showMissingTexts = true,
 }: EventBadgesProps) {
 	const { t } = useTranslation();
 
 	if (!event.can_signup) {
-		return (
+		return showMissingTexts ? (
 			<p className="text-sm text-muted-foreground">
 				{t("admin:events.signup_not_used")}
 			</p>
+		) : (
+			<></>
 		);
 	}
 
 	if (event.signup_start === null || event.signup_end === null) {
-		return (
+		return showMissingTexts ? (
 			<p className="text-sm text-muted-foreground">
 				{t("admin:events.signup_not_available")}
 			</p>
+		) : (
+			<></>
 		);
 	}
 
