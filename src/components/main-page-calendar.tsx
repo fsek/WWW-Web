@@ -60,7 +60,7 @@ export default function MainPageCalendar({
 		can_signup: boolean;
 		drink_package: boolean;
 		is_nollning_event: boolean;
-		mentor_group_types: EventCreate["alcohol_event_type"];
+		mentor_group_types: EventCreate["mentor_group_types"];
 		allow_other_mentors: boolean;
 		alcohol_event_type: string;
 		dress_code: string;
