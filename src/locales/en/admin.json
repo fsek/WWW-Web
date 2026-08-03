@@ -92,7 +92,7 @@
 		"description": "Description",
 		"features": "Features",
 		"location": "Location",
-		"location_placeholder": "Select or enter free text",
+		"location_placeholder": "Select location or enter free text",
 		"no_location": "No location to display",
 		"max_event_users": "Max event participants",
 		"max_event_users_help_label": "About removing the limit",
@@ -130,7 +130,7 @@
 		"event_not_found": "Event not found.",
 		"no_event_selected": "No event selected.",
 		"dress_code": "Dress code",
-		"dress_code_placeholder": "Select or enter free text",
+		"dress_code_placeholder": "Select dress code or enter free text",
 		"pick_date": "Pick a date",
 		"no_dress_code": "None specified",
 		"alcohol_event_type": "Alcohol policy",
@@ -1163,6 +1163,10 @@
 		"update_error": "Could not update guild meeting.",
 		"is_active_label": "Is Active (is visible to users)"
 	},
-	"save_changes": "Save Changes",
-	"create": "Create"
+	"save_changes": "Save changes",
+	"create": "Create",
+	"create_option": "Create \"{{value}}\"",
+	"select": "Select",
+	"no_options": "No options",
+	"select_or_type": "Select or enter free text"
 }

@@ -58,6 +58,7 @@ export default function StyledMultiSelect({
 			options={options}
 			unstyled
 			placeholder={placeholder || t("select")}
+			noOptionsMessage={() => t("no_options")}
 			value={value}
 			onChange={handleChange}
 			isDisabled={isDisabled}
@@ -65,12 +66,12 @@ export default function StyledMultiSelect({
 			components={{
 				DropdownIndicator: ({ innerProps }) => (
 					<div {...innerProps}>
-						<ChevronDownIcon className="text-muted-foreground size-4 opacity-50 pointer-events-none" />
+						<ChevronDownIcon className="text-muted-foreground size-4 opacity-50 hover:opacity-70 transition-all cursor-pointer" />
 					</div>
 				),
 				ClearIndicator: ({ innerProps }) => (
 					<div {...innerProps}>
-						<XIcon className="text-muted-foreground size-4 opacity-50 hover:opacity-70 transition-all" />
+						<XIcon className="text-muted-foreground size-4 opacity-50 hover:opacity-70 transition-all cursor-pointer" />
 					</div>
 				),
 				Option: CustomOption,
@@ -81,7 +82,7 @@ export default function StyledMultiSelect({
 					`min-h-9 rounded-md border px-3 py-1 text-sm
           bg-transparent dark:bg-input/30
           border-input shadow-xs
-          !cursor-pointer
+          !cursor-text
 					aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none
 					transition-[color,box-shadow]
           ${isFocused ? "border-ring ring-[3px] ring-ring/50" : ""}`,

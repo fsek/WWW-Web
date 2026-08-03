@@ -1,14 +1,14 @@
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import Select, { type OnChangeValue, type OptionProps } from "react-select";
-import { components } from "react-select";
+import CreatableSelect from "react-select/creatable";
+import { components, type OnChangeValue, type OptionProps } from "react-select";
 
 export type Option = {
 	value: string | number;
 	label: string;
 };
 
-interface StyledMultiSelectProps {
+interface StyledCreatableSelectProps {
 	isMulti?: boolean;
 	options: Option[];
 	value?: Option | Option[] | null;
@@ -38,7 +38,7 @@ function CustomOption(props: OptionProps<Option, boolean>) {
 /*
 This is basically all Claude. Sorry!
 */
-export default function StyledMultiSelect({
+export default function StyledCreatableSelectProps({
 	isMulti = false,
 	options,
 	value,
@@ -46,8 +46,8 @@ export default function StyledMultiSelect({
 	placeholder,
 	className = "",
 	isDisabled = false,
-	isClearable = false,
-}: StyledMultiSelectProps) {
+	isClearable = true,
+}: StyledCreatableSelectProps) {
 	const { t } = useTranslation("admin");
 
 	const handleChange = (selected: OnChangeValue<Option, boolean>) => {
@@ -56,11 +56,12 @@ export default function StyledMultiSelect({
 	};
 
 	return (
-		<Select
+		<CreatableSelect
 			isMulti={isMulti}
 			options={options}
 			unstyled
-			placeholder={placeholder || t("select")}
+			placeholder={placeholder || t("select_or_type")}
+			formatCreateLabel={(value) => t("create_option", { value })}
 			value={value}
 			onChange={handleChange}
 			isDisabled={isDisabled}
@@ -68,12 +69,12 @@ export default function StyledMultiSelect({
 			components={{
 				DropdownIndicator: ({ innerProps }) => (
 					<div {...innerProps}>
-						<ChevronDownIcon className="text-muted-foreground size-4 opacity-50 pointer-events-none" />
+						<ChevronDownIcon className="text-muted-foreground size-4 opacity-50 hover:opacity-70 transition-all cursor-pointer" />
 					</div>
 				),
 				ClearIndicator: ({ innerProps }) => (
 					<div {...innerProps}>
-						<XIcon className="text-muted-foreground size-4 opacity-50 hover:opacity-70 transition-all" />
+						<XIcon className="text-muted-foreground size-4 opacity-50 hover:opacity-70 transition-all cursor-pointer" />
 					</div>
 				),
 				Option: CustomOption,
@@ -84,7 +85,7 @@ export default function StyledMultiSelect({
 					`min-h-9 rounded-md border px-3 py-1 text-sm
           bg-transparent dark:bg-input/30
           border-input shadow-xs
-          !cursor-pointer
+          !cursor-text
 					aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none
 					transition-[color,box-shadow]
           ${isFocused ? "border-ring ring-[3px] ring-ring/50" : ""}`,

@@ -92,7 +92,7 @@
 		"description": "Beskrivning",
 		"features": "Egenskaper",
 		"location": "Plats",
-		"location_placeholder": "Välj eller skriv in fritext",
+		"location_placeholder": "Välj plats eller skriv in fritext",
 		"no_location": "Ingen plats att visa",
 		"max_event_users": "Max antal deltagare",
 		"max_event_users_help_label": "Om att ta bort begränsningen",
@@ -130,7 +130,7 @@
 		"event_not_found": "Eventet hittades inte.",
 		"no_event_selected": "Inget event valt.",
 		"dress_code": "Klädkod",
-		"dress_code_placeholder": "Välj eller skriv in fritext",
+		"dress_code_placeholder": "Välj klädkod eller skriv in fritext",
 		"pick_date": "Välj ett datum",
 		"no_dress_code": "Ingen angiven",
 		"alcohol_event_type": "Alkoholpolicy",
@@ -1164,5 +1164,9 @@
 		"is_active_label": "Är aktivt (är synligt för användare)"
 	},
 	"save_changes": "Spara",
-	"create": "Skapa"
+	"create": "Skapa",
+	"create_option": "Skapa \"{{value}}\"",
+	"select": "Välj",
+	"no_options": "Inga alternativ",
+	"select_or_type": "Välj eller skriv in fritext"
 }
