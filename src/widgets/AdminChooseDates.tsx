@@ -25,6 +25,8 @@ export function AdminChooseDates({
 	disabled = false,
 	locale = undefined,
 }: AdminChooseDatesProps) {
+	const { i18n } = useTranslation();
+
 	const handleDateChange = (newDate: Date | undefined) => {
 		if (newDate) {
 			const adjustedDate = new Date(newDate.getTime());
@@ -36,6 +38,8 @@ export function AdminChooseDates({
 		}
 	};
 
+	locale ??= i18n.language.startsWith("en") ? enUS : sv;
+
 	return (
 		<div className="flex flex-col gap-3 lg:flex-row lg:gap-10">
 			<div className="w-full space-y-2">
@@ -45,10 +49,7 @@ export function AdminChooseDates({
 					value={value}
 					onChange={handleDateChange}
 					weekStartsOn={1} // Monday
-					locale={
-						locale ??
-						(useTranslation().i18n.language.startsWith("sv") ? sv : enUS)
-					}
+					locale={locale}
 					showWeekNumber={false}
 					showOutsideDays={true}
 					displayFormat={{
