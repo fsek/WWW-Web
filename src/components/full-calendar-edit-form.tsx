@@ -115,7 +115,7 @@ export function EventEditForm({
 						priorities: z.array(z.string()).optional().default([]),
 						mentor_group_types: z
 							.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
-							.default(["Mentor", "Mission", "Default", "Committee"]),
+							.default(["Mentor"]),
 						allow_other_mentors: z.boolean(),
 						alcohol_event_type: z
 							.enum(["Alcohol", "Alcohol-Served", "None"])
@@ -245,7 +245,7 @@ export function EventEditForm({
 			can_signup: false,
 			drink_package: false,
 			is_nollning_event: false,
-			mentor_group_types: ["Mentor", "Mission", "Default", "Committee"],
+			mentor_group_types: ["Mentor"],
 			allow_other_mentors: false,
 			priorities: [],
 			alcohol_event_type: "None",
@@ -356,12 +356,7 @@ export function EventEditForm({
 						can_signup: event?.can_signup || false,
 						drink_package: event?.drink_package || false,
 						is_nollning_event: event?.is_nollning_event || false,
-						mentor_group_types: event?.mentor_group_types || [
-							"Mentor",
-							"Mission",
-							"Default",
-							"Committee",
-						],
+						mentor_group_types: event?.mentor_group_types || ["Mentor"],
 						allow_other_mentors: event?.allow_other_mentors || false,
 						priorities: event?.priorities || [],
 						alcohol_event_type: event?.alcohol_event_type || "None",

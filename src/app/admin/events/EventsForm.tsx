@@ -39,7 +39,7 @@ const eventsSchema = z
 		is_nollning_event: z.boolean(),
 		mentor_group_types: z
 			.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
-			.default(["Mentor", "Mission", "Default", "Committee"]),
+			.default(["Mentor"]),
 		allow_other_mentors: z.boolean(),
 
 		alcohol_event_type: z
@@ -95,7 +95,7 @@ export default function EventsForm() {
 			can_signup: false,
 			drink_package: false,
 			is_nollning_event: false,
-			mentor_group_types: ["Mentor", "Mission", "Default", "Committee"],
+			mentor_group_types: ["Mentor"],
 			allow_other_mentors: false,
 			alcohol_event_type: "None",
 			dress_code: "",
