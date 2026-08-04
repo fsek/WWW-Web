@@ -674,13 +674,13 @@
 				"submit": "Lägg till medlemmar",
 				"submitting": "Lägger till medlemmar...",
 				"matched_preview": "Matchade {{count}} användare",
-				"unmatched_preview": "{{count}} omatchade värden",
 				"selected_users": "Valda användare",
-				"more_users": "+{{count}} till",
+				"more_users": "+{{count}} till, klicka för att visa alla",
 				"unmatched_values": "Omatchade värden (eller redan i gruppen)",
 				"toast_success": "Lade till {{count}} användare i gruppen",
 				"toast_partial_success": "Lade till {{count}} användare, men {{unmatched}} värden kunde inte matchas",
-				"toast_error": "Kunde inte lägga till användare i gruppen"
+				"toast_error": "Kunde inte lägga till användare i gruppen. {{added}} användare lades till, men {{failed}} kunde inte läggas till.",
+				"loading": "Laddar..."
 			}
 		}
 	},
