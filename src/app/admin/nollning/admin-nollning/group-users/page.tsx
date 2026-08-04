@@ -169,7 +169,7 @@ function GroupUsersContent({
 
 	const addUserBatch = useMutation({
 		...addUserToGroupMutation(),
-		throwOnError: true,
+		throwOnError: false,
 	});
 
 	const handleAddUser = (
