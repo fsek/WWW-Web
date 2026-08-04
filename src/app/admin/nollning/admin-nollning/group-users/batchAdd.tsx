@@ -32,7 +32,7 @@ const parseIdentifiers = (value: string) =>
 		new Set(
 			value
 				.split(/[\n,]/)
-				.map((identifier) => identifier.trim())
+				.map(normalizeIdentifier)
 				.filter(Boolean), // remove empty entries
 		),
 	);
@@ -45,6 +45,7 @@ export default function BatchAddBox({
 	const [identifierInput, setIdentifierInput] = useState("");
 	const [groupUserType, setGroupUserType] = useState<GroupUserTypes>("Mentee");
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [showAllUsers, setShowAllUsers] = useState(false);
 	const allUsersQuery = useQuery({
 		...adminGetAllUsersOptions(),
 		enabled: identifierInput.trim().length > 0,
@@ -182,18 +183,31 @@ export default function BatchAddBox({
 						<p className="text-sm font-medium">
 							{t("nollning.group_members.batch_add_members.selected_users")}
 						</p>
-						<ul className="space-y-1 text-sm text-muted-foreground">
-							{resolvedUsers.slice(0, 5).map((user) => (
-								<li key={user.id}>
-									{user.first_name} {user.last_name} · {user.email}
-									{user.stil_id ? ` · ${user.stil_id}` : ""}
-								</li>
-							))}
-							{resolvedUsers.length > 5 ? (
+						<ul className="space-y-1 text-sm text-muted-foreground overflow-y-scroll max-h-60">
+							{showAllUsers
+								? resolvedUsers.map((user) => (
+										<li key={user.id}>
+											{user.first_name} {user.last_name} · {user.email}
+											{user.stil_id ? ` · ${user.stil_id}` : ""}
+										</li>
+									))
+								: resolvedUsers.slice(0, 5).map((user) => (
+										<li key={user.id}>
+											{user.first_name} {user.last_name} · {user.email}
+											{user.stil_id ? ` · ${user.stil_id}` : ""}
+										</li>
+									))}
+							{!showAllUsers && resolvedUsers.length > 5 ? (
 								<li>
-									{t("nollning.group_members.batch_add_members.more_users", {
-										count: resolvedUsers.length - 5,
-									})}
+									<Button
+										variant="link"
+										className="p-0 text-sm text-muted-foreground hover:underline"
+										onClick={() => setShowAllUsers(true)}
+									>
+										{t("nollning.group_members.batch_add_members.more_users", {
+											count: resolvedUsers.length - 5,
+										})}
+									</Button>
 								</li>
 							) : null}
 						</ul>
