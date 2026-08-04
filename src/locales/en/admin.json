@@ -923,7 +923,8 @@
 		"confirm_places_input": "Type CONFIRM to confirm you are completely done with managing handed out spots.",
 		"confirm_places_input_key": "CONFIRM",
 		"search_placeholder": "Search signups by name, group, priority, email",
-		"event_users_confirmed_description": "The spots have been confirmed, no editing!"
+		"event_users_confirmed_description": "The spots have been confirmed, no editing!",
+		"error_nollning_no_group": "You cannot sign up for an introduction event without a group!"
 	},
 	"cafe_shifts": {
 		"self": "Cafe Shifts",

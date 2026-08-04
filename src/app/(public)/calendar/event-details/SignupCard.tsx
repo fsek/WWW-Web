@@ -45,12 +45,6 @@ import type {
 import StyledCreatableSelect from "@/components/StyledCreatableSelect";
 import { SelectMyPriorities } from "@/components/SelectMyPriorities";
 
-const signupSchema = z.object({
-	priority: z.string().optional().nullable(),
-	group_name: z.string().optional().nullable(),
-	drinkPackage: z.enum(["None", "AlcoholFree", "Alcohol"]),
-});
-
 interface SignupCardProps {
 	event: EventRead;
 	availablePriorities: string[];
@@ -71,6 +65,27 @@ export default function SignupCard({
 	const [isEditing, setIsEditing] = useState(false);
 	const { t } = useTranslation("admin");
 	const queryClient = useQueryClient();
+
+	const signupSchema = z
+		.object({
+			priority: z.string().optional().nullable(),
+			group_name: z.string().optional().nullable(),
+			drinkPackage: z.enum(["None", "AlcoholFree", "Alcohol"]),
+		})
+		.refine(
+			(data) => {
+				if (event.is_nollning_event) {
+					if (!data.group_name) {
+						return false;
+					}
+				}
+				return true;
+			},
+			{
+				error: t("event_signup.error_nollning_no_group"),
+				path: ["group_name"],
+			},
+		);
 
 	const FOOD_PREFERENCES = [
 		{ value: "Vegetarian", label: "Vegetarian" },
@@ -344,45 +359,53 @@ export default function SignupCard({
 							<FormField
 								control={form.control}
 								name="group_name"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="font-semibold mb-2 text-med">
-											{t("event_signup.group_name")}
-										</FormLabel>
-										<FormControl>
-											<StyledCreatableSelect
-												isClearable
-												placeholder={t("event_signup.group_name_placeholder")}
-												{...field}
-												value={
-													field.value
-														? {
-																label: String(field.value),
-																value: String(field.value),
-															}
-														: null
-												}
-												onChange={(options) => {
-													const vals = Array.isArray(options)
-														? options.map((o) => o.value)
-														: options && "value" in options
-															? options.value
-															: null;
-													field.onChange(vals);
-												}}
-												options={
-													Array.isArray(meData?.groups)
-														? meData.groups.map((group) => ({
-																value: group.name,
-																label: group.name,
-															}))
-														: []
-												}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
+								render={({ field }) => {
+									const groupOptions = meData?.groups || [];
+									const value =
+										field.value ||
+										(groupOptions.length === 1 ? groupOptions[0].name : null);
+									return (
+										<FormItem>
+											<FormLabel className="font-semibold mb-2 text-med">
+												{t("event_signup.group_name")}
+											</FormLabel>
+											<FormControl>
+												<StyledCreatableSelect
+													isClearable={
+														!(
+															event.is_nollning_event &&
+															groupOptions.length === 1
+														)
+													}
+													placeholder={t("event_signup.group_name_placeholder")}
+													{...field}
+													allowCreatingOptions={!event.is_nollning_event}
+													value={
+														value
+															? {
+																	label: String(value),
+																	value: String(value),
+																}
+															: null
+													}
+													onChange={(options) => {
+														const vals = Array.isArray(options)
+															? options.map((o) => o.value)
+															: options && "value" in options
+																? options.value
+																: null;
+														field.onChange(vals);
+													}}
+													options={groupOptions.map((group) => ({
+														value: group.name,
+														label: group.name,
+													}))}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									);
+								}}
 							/>
 
 							<FormField

@@ -17,6 +17,7 @@ interface StyledCreatableSelectProps {
 	className?: string;
 	isDisabled?: boolean;
 	isClearable?: boolean;
+	allowCreatingOptions?: boolean;
 }
 
 function CustomOption(props: OptionProps<Option, boolean>) {
@@ -47,6 +48,7 @@ export default function StyledCreatableSelectProps({
 	className = "",
 	isDisabled = false,
 	isClearable = true,
+	allowCreatingOptions = true,
 }: StyledCreatableSelectProps) {
 	const { t } = useTranslation("admin");
 
@@ -62,10 +64,12 @@ export default function StyledCreatableSelectProps({
 			unstyled
 			placeholder={placeholder || t("select_or_type")}
 			formatCreateLabel={(value) => t("create_option", { value })}
+			noOptionsMessage={() => t("no_options")}
 			value={value}
 			onChange={handleChange}
 			isDisabled={isDisabled}
 			isClearable={isClearable}
+			isValidNewOption={allowCreatingOptions ? undefined : () => false} // only override default function if allowCreatingOptions is set to false
 			components={{
 				DropdownIndicator: ({ innerProps }) => (
 					<div {...innerProps}>

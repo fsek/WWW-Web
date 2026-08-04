@@ -923,7 +923,8 @@
 		"confirm_places_input": "Skriv BEKRÄFTA för att bekräfta att du är färdig med hanteringen av utdelade platser.",
 		"confirm_places_input_key": "BEKRÄFTA",
 		"search_placeholder": "Sök anmälningar efter namn, grupp, prioritet, e-post",
-		"event_users_confirmed_description": "Platserna har bekräftats, ingen redigering är möjlig."
+		"event_users_confirmed_description": "Platserna har bekräftats, ingen redigering är möjlig.",
+		"error_nollning_no_group": "Du kan inte anmäla dig till ett nollningsevent utan en grupp!"
 	},
 	"cafe_shifts": {
 		"self": "Cafépass",
