@@ -36,6 +36,7 @@
 		"councils": "Poster och utskott",
 		"songs": "Sånger",
 		"spider": "Spindel",
+		"games": "Spel",
 		"nollning": "Nollning",
 		"board": "Styrelse och liknande",
 		"elections": "Val"
@@ -1141,6 +1142,11 @@
 		"update_success": "Sektionsmöte uppdaterat!",
 		"update_error": "Kunde inte uppdatera sektionsmöte.",
 		"is_active_label": "Är aktivt (är synligt för användare)"
+	},
+	"enclose_moose": {
+		"self": "Enclose Moose",
+		"page_title": "Hantera Enclose Moose",
+		"page_description": "Här kan du skapa och hantera nivåer och resultat för appens spel Enclose Moose."
 	},
 	"save_changes": "Spara",
 	"create": "Skapa"

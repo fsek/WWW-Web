@@ -36,6 +36,7 @@
 		"councils": "Councils and Posts",
 		"songs": "Songs",
 		"spider": "Webmaster only",
+		"games": "Games",
 		"nollning": "Nollning",
 		"board": "Board and others",
 		"elections": "Elections"
@@ -1141,6 +1142,11 @@
 		"update_success": "Guild meeting updated!",
 		"update_error": "Could not update guild meeting.",
 		"is_active_label": "Is Active (is visible to users)"
+	},
+	"enclose_moose": {
+		"self": "Enclose Moose",
+		"page_title": "Manage Enclose Moose",
+		"page_description": "Here you can create and edit levels and scores for the app's Enclose Moose game."
 	},
 	"save_changes": "Save Changes",
 	"create": "Create"
