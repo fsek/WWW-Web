@@ -401,7 +401,7 @@ export default function UserPostsEditForm({
 								>
 									{t("cancel")}
 								</Button>
-								<Button onClick={() => form.handleSubmit(onSubmit)}>
+								<Button onClick={form.handleSubmit(onSubmit)}>
 									<Save />
 									{t("save")}
 								</Button>

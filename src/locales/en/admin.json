@@ -666,7 +666,22 @@
 			"fadder": "Mentor",
 			"nolla": "Mentee",
 			"standard": "Default member",
-			"unclear": "Unclear"
+			"unclear": "Unclear",
+			"batch_add_members": {
+				"title": "Batch add members to group",
+				"description": "You can enter multiple stil-ids and/or email addresses separated by commas or newlines. The system will try to match the entered values to existing users and add them to the group. Note: Only existing users can be added to the group.",
+				"input_placeholder": "Enter stil-ids or email addresses separated by commas, or one per line",
+				"submit": "Add members",
+				"submitting": "Adding members...",
+				"matched_preview": "Matched {{count}} users",
+				"selected_users": "Selected users",
+				"more_users": "+{{count}} more, click to show all",
+				"unmatched_values": "Unmatched values (or already added users)",
+				"toast_success": "Added {{count}} users to the group",
+				"toast_partial_success": "Added {{count}} users, but {{unmatched}} values could not be matched",
+				"toast_error": "Failed to add users to the group. {{added}} users added, {{failed}} could not be added.",
+				"loading": "Loading..."
+			}
 		}
 	},
 	"room_bookings": {

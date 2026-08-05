@@ -27,10 +27,10 @@ interface Props {
 	) => void;
 }
 
-const groupUserTypes = ["Default", "Mentee", "Mentor"] as const;
-type GroupUserTypes = (typeof groupUserTypes)[number];
+export const groupUserTypes = ["Default", "Mentee", "Mentor"] as const;
+export type GroupUserTypes = (typeof groupUserTypes)[number];
 
-function toGroupUserType(s: string): GroupUserTypes {
+export function toGroupUserType(s: string): GroupUserTypes {
 	if (groupUserTypes.includes(s as GroupUserTypes)) {
 		return s as GroupUserTypes;
 	}
