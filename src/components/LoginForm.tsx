@@ -122,7 +122,19 @@ export default function LoginForm() {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				method="post"
+				className="space-y-4 w-full"
+			>
+				{/*
+					Without method="post", a native (pre-hydration or JS-disabled) submit would
+					default to GET and serialize the credentials into the URL as
+					?email=...&password=..., leaking them into history, referer headers, and logs.
+					This doesn't make the POST request function, but does keep passwords from 
+					leaking into browser history. Doesn't change default behavior since React
+					will override the form submission after hydration.
+				*/}
 				<h1 className="text-3xl font-bold text-center">{t("login.title")}</h1>
 				<div className="text-center text-sm mb-2">
 					<Button
