@@ -1,26 +1,39 @@
 "use client";
 
-import { ActionEnum, TargetEnum } from "../../../api";
+import {
+	type EncloseMooseLevelRead,
+	mooseGetAllLevelsOptions,
+} from "../../../api";
 import { useTranslation } from "react-i18next";
-import PermissionWall from "@/components/PermissionWall";
-import { Suspense } from "react";
-import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import AdminPage from "@/widgets/AdminPage";
+import { useQuery } from "@tanstack/react-query";
+import { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import EncloseMooseLevelEditForm from "./EncloseMooseLevelEditForm";
+import EncloseMooseLevelForm from "./EncloseMooseLevelForm";
 
 export default function EncloseMoose() {
 	const { t } = useTranslation("admin");
 
+	const columnHelper = createColumnHelper<EncloseMooseLevelRead>();
+
+	const columns: ColumnDef<EncloseMooseLevelRead, any>[] = [
+		columnHelper.accessor("name", {
+			header: t("enclose_moose.name"),
+			cell: (info) => info.getValue(),
+		}),
+	];
+
 	return (
-		<PermissionWall
-			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.ENCLOSE_MOOSE]]}
-		>
-			<Suspense fallback={<LoadingErrorCard isLoading={true} />}>
-				<div className="px-8 space-x-4">
-					<h3 className="text-3xl py-3 font-bold text-primary">
-						{t("admin:enclose_moose.page_title")}
-					</h3>
-					<p className="py-3">{t("admin:enclose_moose.page_description")}</p>
-				</div>
-			</Suspense>
-		</PermissionWall>
+		<AdminPage
+			title={t("enclose_moose.page_title")}
+			description={t("enclose_moose.page_description")}
+			queryResult={useQuery({
+				...mooseGetAllLevelsOptions(),
+				refetchOnWindowFocus: false,
+			})}
+			columns={columns}
+			editComponent={EncloseMooseLevelEditForm}
+			headerButtons={<EncloseMooseLevelForm />}
+		/>
 	);
 }
