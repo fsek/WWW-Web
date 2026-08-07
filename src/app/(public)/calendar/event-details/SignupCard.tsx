@@ -4,7 +4,7 @@ import {
 	updateEventSignupRouteMutation,
 	eventSignupRouteMutation,
 	eventSignoffRouteMutation,
-	getMeOptions,
+	getMeForEventSignupOptions,
 } from "@/api/@tanstack/react-query.gen";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,12 +45,6 @@ import type {
 import StyledCreatableSelect from "@/components/StyledCreatableSelect";
 import { SelectMyPriorities } from "@/components/SelectMyPriorities";
 
-const signupSchema = z.object({
-	priority: z.string().optional().nullable(),
-	group_name: z.string().optional().nullable(),
-	drinkPackage: z.enum(["None", "AlcoholFree", "Alcohol"]),
-});
-
 interface SignupCardProps {
 	event: EventRead;
 	availablePriorities: string[];
@@ -71,6 +65,27 @@ export default function SignupCard({
 	const [isEditing, setIsEditing] = useState(false);
 	const { t } = useTranslation("admin");
 	const queryClient = useQueryClient();
+
+	const signupSchema = z
+		.object({
+			priority: z.string().optional().nullable(),
+			group_name: z.string().optional().nullable(),
+			drinkPackage: z.enum(["None", "AlcoholFree", "Alcohol"]),
+		})
+		.refine(
+			(data) => {
+				if (event.is_nollning_event) {
+					if (!data.group_name) {
+						return false;
+					}
+				}
+				return true;
+			},
+			{
+				error: t("event_signup.error_nollning_no_group"),
+				path: ["group_name"],
+			},
+		);
 
 	const FOOD_PREFERENCES = [
 		{ value: "Vegetarian", label: "Vegetarian" },
@@ -102,7 +117,7 @@ export default function SignupCard({
 		isLoading: isMeLoading,
 		isError: isMeError,
 	} = useQuery({
-		...getMeOptions(),
+		...getMeForEventSignupOptions({ path: { event_id: event.id } }),
 		refetchOnWindowFocus: false,
 	});
 
@@ -115,22 +130,26 @@ export default function SignupCard({
 		},
 	});
 
+	// Preselect the user's group when there is only one to choose from
+	const defaultGroupName =
+		meData?.groups?.length === 1 ? meData.groups[0].name : "";
+
 	// Reset form when signupData changes (including when it's cleared)
 	useEffect(() => {
 		if (signupData) {
 			form.reset({
 				priority: signupData.priority || "",
-				group_name: signupData.group_name || "",
+				group_name: signupData.group_name || defaultGroupName,
 				drinkPackage: signupData.drinkPackage || "None",
 			});
 		} else {
 			form.reset({
 				priority: "",
-				group_name: "",
+				group_name: defaultGroupName,
 				drinkPackage: "None",
 			});
 		}
-	}, [signupData, form]);
+	}, [signupData, defaultGroupName, form]);
 
 	const createSignupMutation = useMutation({
 		...eventSignupRouteMutation(),
@@ -171,7 +190,7 @@ export default function SignupCard({
 	const signoffMutation = useMutation({
 		...eventSignoffRouteMutation(),
 		onSuccess: () => {
-			toast.success(t("event_signup.success_signoff"));
+			toast.success(t("main:event_signup.success_signoff"));
 			// Remove old signup so buttons disappear
 			queryClient.removeQueries({
 				queryKey: getMeEventSignupQueryKey({ path: { event_id: event.id } }),
@@ -181,13 +200,13 @@ export default function SignupCard({
 			setIsEditing(false);
 			form.reset({
 				priority: "",
-				group_name: "",
+				group_name: defaultGroupName,
 				drinkPackage: "None",
 			});
 		},
 		onError: (error) => {
 			toast.error(
-				t("event_signup.error_signoff", {
+				t("main:event_signup.error_signoff", {
 					error: error?.detail || t("event_signup.unknown_error"),
 				}),
 			);
@@ -344,45 +363,50 @@ export default function SignupCard({
 							<FormField
 								control={form.control}
 								name="group_name"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel className="font-semibold mb-2 text-med">
-											{t("event_signup.group_name")}
-										</FormLabel>
-										<FormControl>
-											<StyledCreatableSelect
-												isClearable
-												placeholder={t("event_signup.group_name_placeholder")}
-												{...field}
-												value={
-													field.value
-														? {
-																label: String(field.value),
-																value: String(field.value),
-															}
-														: null
-												}
-												onChange={(options) => {
-													const vals = Array.isArray(options)
-														? options.map((o) => o.value)
-														: options && "value" in options
-															? options.value
-															: null;
-													field.onChange(vals);
-												}}
-												options={
-													Array.isArray(meData?.groups)
-														? meData.groups.map((group) => ({
-																value: group.name,
-																label: group.name,
-															}))
-														: []
-												}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
+								render={({ field }) => {
+									const groupOptions = meData?.groups || [];
+									return (
+										<FormItem>
+											<FormLabel className="font-semibold mb-2 text-med">
+												{t("event_signup.group_name")}
+											</FormLabel>
+											<FormControl>
+												<StyledCreatableSelect
+													isClearable={
+														!(
+															event.is_nollning_event &&
+															groupOptions.length === 1
+														)
+													}
+													placeholder={t("event_signup.group_name_placeholder")}
+													{...field}
+													allowCreatingOptions={!event.is_nollning_event}
+													value={
+														field.value
+															? {
+																	label: String(field.value),
+																	value: String(field.value),
+																}
+															: null
+													}
+													onChange={(options) => {
+														const vals = Array.isArray(options)
+															? options.map((o) => o.value)
+															: options && "value" in options
+																? options.value
+																: null;
+														field.onChange(vals);
+													}}
+													options={groupOptions.map((group) => ({
+														value: group.name,
+														label: group.name,
+													}))}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									);
+								}}
 							/>
 
 							<FormField
