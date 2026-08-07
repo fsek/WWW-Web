@@ -130,22 +130,26 @@ export default function SignupCard({
 		},
 	});
 
+	// Preselect the user's group when there is only one to choose from
+	const defaultGroupName =
+		meData?.groups?.length === 1 ? meData.groups[0].name : "";
+
 	// Reset form when signupData changes (including when it's cleared)
 	useEffect(() => {
 		if (signupData) {
 			form.reset({
 				priority: signupData.priority || "",
-				group_name: signupData.group_name || "",
+				group_name: signupData.group_name || defaultGroupName,
 				drinkPackage: signupData.drinkPackage || "None",
 			});
 		} else {
 			form.reset({
 				priority: "",
-				group_name: "",
+				group_name: defaultGroupName,
 				drinkPackage: "None",
 			});
 		}
-	}, [signupData, form]);
+	}, [signupData, defaultGroupName, form]);
 
 	const createSignupMutation = useMutation({
 		...eventSignupRouteMutation(),
@@ -186,7 +190,7 @@ export default function SignupCard({
 	const signoffMutation = useMutation({
 		...eventSignoffRouteMutation(),
 		onSuccess: () => {
-			toast.success(t("event_signup.success_signoff"));
+			toast.success(t("main:event_signup.success_signoff"));
 			// Remove old signup so buttons disappear
 			queryClient.removeQueries({
 				queryKey: getMeEventSignupQueryKey({ path: { event_id: event.id } }),
@@ -196,13 +200,13 @@ export default function SignupCard({
 			setIsEditing(false);
 			form.reset({
 				priority: "",
-				group_name: "",
+				group_name: defaultGroupName,
 				drinkPackage: "None",
 			});
 		},
 		onError: (error) => {
 			toast.error(
-				t("event_signup.error_signoff", {
+				t("main:event_signup.error_signoff", {
 					error: error?.detail || t("event_signup.unknown_error"),
 				}),
 			);
@@ -361,9 +365,6 @@ export default function SignupCard({
 								name="group_name"
 								render={({ field }) => {
 									const groupOptions = meData?.groups || [];
-									const value =
-										field.value ||
-										(groupOptions.length === 1 ? groupOptions[0].name : null);
 									return (
 										<FormItem>
 											<FormLabel className="font-semibold mb-2 text-med">
@@ -381,10 +382,10 @@ export default function SignupCard({
 													{...field}
 													allowCreatingOptions={!event.is_nollning_event}
 													value={
-														value
+														field.value
 															? {
-																	label: String(value),
-																	value: String(value),
+																	label: String(field.value),
+																	value: String(field.value),
 																}
 															: null
 													}
