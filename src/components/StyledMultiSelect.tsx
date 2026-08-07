@@ -1,5 +1,7 @@
+import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import Select, { type OnChangeValue } from "react-select";
+import Select, { type OnChangeValue, type OptionProps } from "react-select";
+import { components } from "react-select";
 
 export type Option = {
 	value: string | number;
@@ -15,6 +17,22 @@ interface StyledMultiSelectProps {
 	className?: string;
 	isDisabled?: boolean;
 	isClearable?: boolean;
+}
+
+function CustomOption(props: OptionProps<Option, boolean>) {
+	const { children, isSelected } = props;
+	return (
+		<components.Option {...props}>
+			<span className="relative flex w-full items-center pr-6">
+				{children}
+				{isSelected && (
+					<span className="absolute right-0 flex size-3.5 items-center justify-center">
+						<CheckIcon className="size-4" />
+					</span>
+				)}
+			</span>
+		</components.Option>
+	);
 }
 
 export default function StyledMultiSelect({
@@ -40,20 +58,34 @@ export default function StyledMultiSelect({
 			options={options}
 			unstyled
 			placeholder={placeholder || t("select")}
+			noOptionsMessage={() => t("no_options")}
 			value={value}
 			onChange={handleChange}
 			isDisabled={isDisabled}
 			isClearable={isClearable}
+			components={{
+				DropdownIndicator: ({ innerProps }) => (
+					<div {...innerProps}>
+						<ChevronDownIcon className="text-muted-foreground size-4 opacity-50 hover:opacity-70 transition-all cursor-pointer" />
+					</div>
+				),
+				ClearIndicator: ({ innerProps }) => (
+					<div {...innerProps}>
+						<XIcon className="text-muted-foreground size-4 opacity-50 hover:opacity-70 transition-all cursor-pointer" />
+					</div>
+				),
+				Option: CustomOption,
+			}}
 			classNames={{
 				container: () => `${className}`,
 				control: ({ isFocused }) =>
-					`min-h-[38px] rounded-md px-3 py-1 text-sm border 
-          bg-background text-foreground
-          ${
-						isFocused
-							? "border-ring ring-2 ring-ring/20 dark:border-ring dark:ring-ring/20"
-							: "border-border hover:border-ring dark:border-border dark:hover:border-ring"
-					}`,
+					`min-h-9 rounded-md border px-3 py-1 text-sm
+          bg-transparent dark:bg-input/30
+          border-input shadow-xs
+          !cursor-text
+					aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:pointer-events-none
+					transition-[color,box-shadow]
+          ${isFocused ? "border-ring ring-[3px] ring-ring/50" : ""}`,
 				multiValue: () =>
 					"bg-primary text-primary-foreground dark:bg-primary dark:text-primary-foreground rounded px-2 py-1 m-0.5 text-xs",
 				multiValueLabel: () =>
@@ -61,20 +93,17 @@ export default function StyledMultiSelect({
 				multiValueRemove: () =>
 					"text-primary-foreground hover:bg-destructive dark:text-foreground dark:hover:bg-destructive rounded-r px-1",
 				menu: () =>
-					"mt-1 border border-border dark:border-border rounded-md shadow-lg bg-popover dark:bg-popover z-50",
-				menuList: () => "py-1 max-h-60 overflow-auto",
-				option: ({ isFocused, isSelected }) =>
-					`px-3 py-2 text-sm cursor-pointer ${
-						isSelected
-							? "bg-primary text-primary-foreground dark:bg-primary dark:text-primary-foreground"
-							: isFocused
-								? "bg-muted text-foreground dark:bg-muted dark:text-foreground"
-								: "text-foreground hover:bg-muted dark:text-foreground dark:hover:bg-muted"
+					"mt-2 border bg-popover text-popover-foreground rounded-md shadow-md z-50",
+				menuList: () => "p-1 max-h-60 overflow-auto",
+				option: ({ isFocused }) =>
+					`relative flex items-center rounded-sm py-1.5 px-2 !text-sm !cursor-pointer select-none ${
+						isFocused
+							? "bg-accent text-accent-foreground"
+							: "text-popover-foreground"
 					}`,
-				placeholder: () => "text-muted-foreground dark:text-muted-foreground",
-				input: () => "text-foreground dark:text-foreground",
-				noOptionsMessage: () =>
-					"text-muted-foreground dark:text-muted-foreground py-2 px-3 text-sm",
+				placeholder: () => "text-muted-foreground",
+				input: () => "text-foreground",
+				noOptionsMessage: () => "text-muted-foreground py-2 px-3 text-sm",
 			}}
 		/>
 	);

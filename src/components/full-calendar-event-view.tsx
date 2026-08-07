@@ -29,6 +29,8 @@ import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { getMeOptions } from "@/api/@tanstack/react-query.gen";
 import { useRouter } from "next/navigation";
+import { EventFeatureBadges, EventSignupBadges } from "./event-badges";
+import type { EventRead } from "@/api";
 
 interface EventViewProps {
 	event?: CalendarEvent;
@@ -76,9 +78,6 @@ export function EventView({
 	const { eventViewOpen, setEventViewOpen } = useEvents();
 	const { t, i18n } = useTranslation("calendar");
 	const router = useRouter();
-
-	const featureDivClassName = "flex items-center gap-1";
-	const featureClassName = "h-3 w-3";
 
 	// Calculate if the event should be editable
 
@@ -152,85 +151,12 @@ export function EventView({
 									<tr>
 										<th>{t("admin:events.features")}</th>
 										<td>
-											{!(
-												event.all_day ||
-												event.recurring ||
-												event.is_nollning_event ||
-												event.food ||
-												event.drink_package ||
-												event.closed ||
-												event.price !== 0
-											) ? (
-												<p className="text-muted-foreground text-sm">
-													{t("admin:events.no_features")}
-												</p>
-											) : (
-												<div className="flex flex-wrap gap-2">
-													{event.all_day === true && enableAllDay && (
-														<Badge
-															variant="secondary"
-															className={featureDivClassName}
-														>
-															<Calendar className={featureClassName} />
-															{t("admin:events.all_day")}
-														</Badge>
-													)}
-													{event.recurring === true && (
-														<Badge
-															variant="secondary"
-															className={featureDivClassName}
-														>
-															<Repeat className={featureClassName} />
-															{t("admin:events.recurring")}
-														</Badge>
-													)}
-													{event.is_nollning_event === true && (
-														<Badge
-															variant="secondary"
-															className={featureDivClassName}
-														>
-															<Star className={featureClassName} />
-															{t("admin:events.is_nollning_event")}
-														</Badge>
-													)}
-													{event.food === true && (
-														<Badge
-															variant="outline"
-															className={featureDivClassName}
-														>
-															<Utensils className={featureClassName} />
-															{t("admin:events.food")}
-														</Badge>
-													)}
-													{event.drink_package === true && (
-														<Badge
-															variant="outline"
-															className={featureDivClassName}
-														>
-															<Beer className={featureClassName} />
-															{t("admin:events.drink_package")}
-														</Badge>
-													)}
-													{event.price !== 0 && (
-														<Badge
-															variant="outline"
-															className={featureDivClassName}
-														>
-															<CreditCard className={featureClassName} />
-															{t("admin:events.costs_money")}
-														</Badge>
-													)}
-													{event.closed === true && (
-														<Badge
-															variant="destructive"
-															className={featureDivClassName}
-														>
-															<Lock className={featureClassName} />
-															{t("admin:events.closed")}
-														</Badge>
-													)}
-												</div>
-											)}
+											<EventFeatureBadges
+												event={event as unknown as EventRead}
+												containerClassName="flex flex-wrap gap-2"
+												badgeClassName="flex items-center gap-1"
+												iconClassName="h-3 w-3"
+											/>
 										</td>
 									</tr>
 								)}
@@ -352,13 +278,12 @@ export function EventView({
 							</tbody>
 						</table>
 						{event && enableTrueEventProperties && (
-							<div className="flex flex-wrap gap-2 m-2 flex-row">
-								{event.can_signup === true && (
-									<Badge variant="default" className="text-sm">
-										{t("admin:events.can_signup")}
-									</Badge>
-								)}
-							</div>
+							<EventSignupBadges
+								event={event as unknown as EventRead}
+								containerClassName="flex flex-wrap gap-2 m-2 "
+								badgeClassName="text-sm"
+								showMissingTexts={false}
+							/>
 						)}
 					</AlertDialogHeader>
 					<AlertDialogFooter>

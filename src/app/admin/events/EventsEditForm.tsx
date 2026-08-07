@@ -41,12 +41,17 @@ const eventsEditSchema = z.object({
 	can_signup: z.boolean(),
 	drink_package: z.boolean(),
 	is_nollning_event: z.boolean(),
+	mentor_group_types: z
+		.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
+		.default(["Mentor"]),
+	allow_other_mentors: z.boolean(),
 	alcohol_event_type: z
 		.enum(["Alcohol", "Alcohol-Served", "None"])
 		.default("None"),
 	dress_code: z.string().max(100).optional().default(""),
 	price: z.coerce.number<number>().nonnegative().optional().default(0),
 	dot: z.enum(["None", "Single", "Double"]).default("None"),
+	lottery: z.boolean(),
 });
 
 export type EventsEditFormInput = z.input<typeof eventsEditSchema>;
@@ -68,8 +73,21 @@ export default function EventsEditForm({
 
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
+	// Add refinement now that we have access to t()
+	const schema = eventsEditSchema.refine(
+		(data) =>
+			!(
+				data.is_nollning_event &&
+				(data.mentor_group_types as string[]).length < 1
+			),
+		{
+			message: t("calendar:error_missing_group_type"),
+			path: ["mentor_group_types"],
+		},
+	);
+
 	const form = useForm<EventsEditFormInput, unknown, EventsEditFormValues>({
-		resolver: zodResolver(eventsEditSchema),
+		resolver: zodResolver(schema),
 		defaultValues: {
 			// Values for when no event is selected
 			title_sv: "",
@@ -91,10 +109,13 @@ export default function EventsEditForm({
 			can_signup: false,
 			drink_package: false,
 			is_nollning_event: false,
+			mentor_group_types: ["Mentor"],
+			allow_other_mentors: false,
 			alcohol_event_type: "None",
 			dress_code: "",
 			price: 0,
 			dot: "None",
+			lottery: false,
 		},
 	});
 
@@ -123,6 +144,9 @@ export default function EventsEditForm({
 					| "Alcohol-Served"
 					| "None",
 				dot: selectedEvent.dot as "None" | "Single" | "Double",
+				mentor_group_types: selectedEvent.mentor_group_types as Array<
+					"Mentor" | "Mission" | "Default" | "Committee"
+				>,
 			});
 		}
 	}, [selectedEvent, form, open]);
@@ -188,6 +212,7 @@ export default function EventsEditForm({
 	}
 
 	// TODO: Fix how this entire form is created in code. Way too much code duplication.
+	// (AMEN sister)
 	return (
 		<Dialog
 			open={open}

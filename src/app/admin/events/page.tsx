@@ -176,6 +176,8 @@ export default function Events() {
 		can_signup: boolean;
 		drink_package: boolean;
 		is_nollning_event: boolean;
+		mentor_group_types: EventCreate["mentor_group_types"];
+		allow_other_mentors: boolean;
 		alcohol_event_type: EventCreate["alcohol_event_type"];
 		dress_code: string;
 		price: number;
@@ -211,6 +213,9 @@ export default function Events() {
 			can_signup: event.can_signup,
 			drink_package: event.drink_package,
 			is_nollning_event: event.is_nollning_event,
+			mentor_group_types:
+				event.mentor_group_types as EventCreate["mentor_group_types"],
+			allow_other_mentors: event.allow_other_mentors,
 			alcohol_event_type:
 				event.alcohol_event_type as EventCreate["alcohol_event_type"],
 			dress_code: event.dress_code,
@@ -253,6 +258,9 @@ export default function Events() {
 								can_signup: event.can_signup as boolean,
 								drink_package: event.drink_package as boolean,
 								is_nollning_event: event.is_nollning_event as boolean,
+								mentor_group_types:
+									event.mentor_group_types as EventCreate["mentor_group_types"],
+								allow_other_mentors: event.allow_other_mentors as boolean,
 								alcohol_event_type: event.alcohol_event_type as
 									| "Alcohol"
 									| "Alcohol-Served"
@@ -303,6 +311,9 @@ export default function Events() {
 								can_signup: event.can_signup as boolean,
 								drink_package: event.drink_package as boolean,
 								is_nollning_event: event.is_nollning_event as boolean,
+								mentor_group_types:
+									event.mentor_group_types as EventCreate["mentor_group_types"],
+								allow_other_mentors: event.allow_other_mentors as boolean,
 								priorities: event.priorities as EventCreate["priorities"], // This might just work
 								alcohol_event_type: event.alcohol_event_type as
 									| "Alcohol"
@@ -311,6 +322,7 @@ export default function Events() {
 								dress_code: event.dress_code as string,
 								price: event.price as number,
 								dot: event.dot as "None" | "Single" | "Double",
+								lottery: event.lottery as boolean,
 							},
 						},
 						{

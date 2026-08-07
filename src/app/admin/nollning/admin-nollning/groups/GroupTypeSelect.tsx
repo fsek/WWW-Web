@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/select";
 import { useTranslation } from "react-i18next";
 import React from "react";
+import { MENTOR_GROUP_TYPE_ENUM } from "@/constants";
 
 interface Props {
 	value: string;
@@ -16,16 +17,6 @@ interface Props {
 
 const GroupTypeSelect = ({ value, onChange }: Props) => {
 	const { t } = useTranslation("admin");
-	const groupTypes: { [key: string]: string } = {
-		Fadder: "Mentor",
-		Uppdrag: "Mission",
-		Standard: "Default",
-		Utskott: "Committee",
-		Mentor: "Mentor",
-		Mission: "Mission",
-		Default: "Default",
-		Committee: "Committee",
-	};
 
 	return (
 		<Select value={value.toString()} onValueChange={(val) => onChange(val)}>
@@ -34,14 +25,9 @@ const GroupTypeSelect = ({ value, onChange }: Props) => {
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
-					{[
-						t("nollning.groups.fadder"),
-						t("nollning.groups.uppdrag"),
-						t("nollning.groups.standard"),
-						t("nollning.groups.utskott"),
-					]?.map((item) => (
-						<SelectItem key={item} value={groupTypes[item]}>
-							{item || t("unnamed_council")}
+					{Object.values(MENTOR_GROUP_TYPE_ENUM).map((type) => (
+						<SelectItem key={type} value={type}>
+							{t(`nollning.groups.${type.toLowerCase()}`)}
 						</SelectItem>
 					))}
 				</SelectGroup>

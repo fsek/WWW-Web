@@ -37,6 +37,11 @@ const eventsSchema = z
 		can_signup: z.boolean(),
 		drink_package: z.boolean(),
 		is_nollning_event: z.boolean(),
+		mentor_group_types: z
+			.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
+			.default(["Mentor"]),
+		allow_other_mentors: z.boolean(),
+
 		alcohol_event_type: z
 			.enum(["Alcohol", "Alcohol-Served", "None"])
 			.default("None"),
@@ -68,8 +73,21 @@ export default function EventsForm() {
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 
+	// Add refinement now that we have access to t()
+	const schema = eventsSchema.refine(
+		(data) =>
+			!(
+				data.is_nollning_event &&
+				(data.mentor_group_types as string[]).length < 1
+			),
+		{
+			message: t("calendar:error_missing_group_type"),
+			path: ["mentor_group_types"],
+		},
+	);
+
 	const eventsForm = useForm<EventsFormInput, unknown, EventsFormValues>({
-		resolver: zodResolver(eventsSchema),
+		resolver: zodResolver(schema),
 		defaultValues: {
 			title_sv: "",
 			title_en: "",
@@ -90,6 +108,8 @@ export default function EventsForm() {
 			can_signup: false,
 			drink_package: false,
 			is_nollning_event: false,
+			mentor_group_types: ["Mentor"],
+			allow_other_mentors: false,
 			alcohol_event_type: "None",
 			dress_code: "",
 			price: 0,
@@ -106,6 +126,7 @@ export default function EventsForm() {
 		"can_signup",
 		"drink_package",
 		"is_nollning_event",
+		"allow_other_mentors",
 		"lottery",
 	] as const;
 
@@ -149,6 +170,8 @@ export default function EventsForm() {
 				can_signup: values.can_signup,
 				drink_package: values.drink_package,
 				is_nollning_event: values.is_nollning_event,
+				mentor_group_types: values.mentor_group_types,
+				allow_other_mentors: values.allow_other_mentors,
 				alcohol_event_type: values.alcohol_event_type,
 				dress_code: values.dress_code,
 				price: values.price,
