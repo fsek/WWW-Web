@@ -73,8 +73,21 @@ export default function EventsEditForm({
 
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
+	// Add refinement now that we have access to t()
+	const schema = eventsEditSchema.refine(
+		(data) =>
+			!(
+				data.is_nollning_event &&
+				(data.mentor_group_types as string[]).length < 1
+			),
+		{
+			message: t("calendar:error_missing_group_type"),
+			path: ["mentor_group_types"],
+		},
+	);
+
 	const form = useForm<EventsEditFormInput, unknown, EventsEditFormValues>({
-		resolver: zodResolver(eventsEditSchema),
+		resolver: zodResolver(schema),
 		defaultValues: {
 			// Values for when no event is selected
 			title_sv: "",

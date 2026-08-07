@@ -73,8 +73,21 @@ export default function EventsForm() {
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 
+	// Add refinement now that we have access to t()
+	const schema = eventsSchema.refine(
+		(data) =>
+			!(
+				data.is_nollning_event &&
+				(data.mentor_group_types as string[]).length < 1
+			),
+		{
+			message: t("calendar:error_missing_group_type"),
+			path: ["mentor_group_types"],
+		},
+	);
+
 	const eventsForm = useForm<EventsFormInput, unknown, EventsFormValues>({
-		resolver: zodResolver(eventsSchema),
+		resolver: zodResolver(schema),
 		defaultValues: {
 			title_sv: "",
 			title_en: "",

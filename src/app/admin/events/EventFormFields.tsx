@@ -224,6 +224,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 								onChange={field.onChange}
 							/>
 						</FormControl>
+						<FormMessage />
 					</FormItem>
 				)}
 			/>
@@ -367,6 +368,7 @@ export default function EventFormFields<T extends EventFormCompatible>({
 										onChange={(value) => field.onChange(value)}
 									/>
 								</FormControl>
+								<FormMessage />
 							</FormItem>
 						);
 					}}
