@@ -60,7 +60,10 @@ export default function handleBatchAdd(
 		stil_id: string | null;
 	}[] = [];
 	if (isComplexFormat) {
-		const lines = batchInput.split(";");
+		// A trailing separator or a blank row is not an error, just an empty segment
+		const lines = batchInput
+			.split(";")
+			.filter((line) => line.trim().length > 0);
 
 		for (const line of lines) {
 			const parts = line.split(",").map((part) => part.trim());
@@ -131,6 +134,15 @@ export default function handleBatchAdd(
 						}),
 					};
 				}
+			}
+
+			// The backend rejects the whole batch if a row identifies nobody
+			if (!email && !phoneNumber && !stilId) {
+				return {
+					success: false,
+					errorType: "INVALID_FORMAT",
+					message: t("admin:member.batch_missing_identifier", { row: line }),
+				};
 			}
 
 			result.push({

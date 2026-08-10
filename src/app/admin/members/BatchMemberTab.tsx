@@ -106,6 +106,7 @@ export default function BatchMemberTab() {
 				queryKey: getAllPreregMemberInfoQueryKey(),
 			});
 			setBatchDialogOpen(false);
+			setBatchInput("");
 			toast.success(
 				t("admin:member.multi_prereg_saved", { collideCount: result.length }),
 			);
@@ -475,6 +476,7 @@ export default function BatchMemberTab() {
 				onOpenChange={(open) => {
 					if (!open) {
 						setBatchDialogOpen(false);
+						setBatchInput("");
 					}
 				}}
 			>
@@ -493,6 +495,7 @@ export default function BatchMemberTab() {
 							<textarea
 								id="batch-prereg-input"
 								className="border rounded p-2 w-full h-40"
+								value={batchInput}
 								onChange={(e) => setBatchInput(e.target.value)}
 							/>
 						</div>
