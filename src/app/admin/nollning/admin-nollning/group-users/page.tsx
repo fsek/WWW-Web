@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import React, { Suspense, useState } from "react";
+import { Suspense, useState } from "react";
 import idAsNumber from "../idAsNumber";
 import {
 	useMutation,
@@ -15,7 +15,12 @@ import {
 	removeUserFromGroupMutation,
 } from "@/api/@tanstack/react-query.gen";
 import { createColumnHelper } from "@tanstack/react-table";
-import type { GroupAddUser, GroupUserRead, UserRead } from "@/api";
+import type {
+	AdminUserRead,
+	GroupAddUser,
+	GroupUserRead,
+	UserRead,
+} from "@/api";
 import useCreateTable from "@/widgets/useCreateTable";
 import AdminTable from "@/widgets/AdminTable";
 import {
@@ -27,6 +32,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import SearchBar from "./searchBar";
+import BatchAddBox from "./batchAdd";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { DialogTitle } from "@radix-ui/react-dialog";
@@ -42,6 +48,26 @@ export default function GroupUsersPage() {
 	const nollningID = idAsNumber(searchID);
 	const groupID = idAsNumber(searchGroup);
 
+	if (nollningID < 0 || groupID < 0) {
+		return (
+			<div className="px-12 py-4">
+				<h3>{t("nollning.group_members.no_group_selected")}</h3>
+			</div>
+		);
+	}
+
+	return <GroupUsersContent groupID={groupID} nollningID={nollningID} />;
+}
+
+function GroupUsersContent({
+	groupID,
+	nollningID,
+}: {
+	groupID: number;
+	nollningID: number;
+}) {
+	const { t } = useTranslation("admin");
+
 	const [selectedUser, setSelectedUser] = useState<GroupUserRead | null>(null);
 	const [openRemoveUser, setOpenRemoveUser] = useState(false);
 
@@ -50,6 +76,7 @@ export default function GroupUsersPage() {
 			path: { id: groupID },
 		}),
 	});
+	const queryClient = useQueryClient();
 
 	const columnHelper = createColumnHelper<GroupUserRead>();
 	const columns = [
@@ -93,8 +120,6 @@ export default function GroupUsersPage() {
 		data: group.data?.group_users ?? [],
 		columns,
 	});
-
-	const queryClient = useQueryClient();
 
 	function onClose() {
 		setOpenRemoveUser(false);
@@ -142,6 +167,11 @@ export default function GroupUsersPage() {
 		},
 	});
 
+	const addUserBatch = useMutation({
+		...addUserToGroupMutation(),
+		throwOnError: false,
+	});
+
 	const handleAddUser = (
 		user: UserRead,
 		groupUserType: GroupAddUser["group_user_type"],
@@ -150,6 +180,73 @@ export default function GroupUsersPage() {
 			path: { id: groupID },
 			body: { user_id: user.id, group_user_type: groupUserType },
 		});
+	};
+
+	const handleBatchAdd = async ({
+		users,
+		groupUserType,
+		unmatchedValues,
+	}: {
+		users: AdminUserRead[];
+		groupUserType: GroupAddUser["group_user_type"];
+		unmatchedValues: string[];
+	}) => {
+		let addedCount = 0;
+		let failedCount = 0;
+
+		for (const user of users) {
+			try {
+				await addUserBatch.mutateAsync({
+					path: { id: groupID },
+					body: { user_id: user.id, group_user_type: groupUserType },
+				});
+				addedCount += 1;
+			} catch {
+				failedCount += 1;
+			}
+		}
+
+		queryClient.invalidateQueries({
+			queryKey: getSingleGroupQueryKey({
+				path: { id: groupID },
+			}),
+		});
+
+		if (addedCount > 0 && failedCount === 0 && unmatchedValues.length === 0) {
+			toast.success(
+				t("nollning.group_members.batch_add_members.toast_success", {
+					count: addedCount,
+				}),
+			);
+			return;
+		}
+
+		if (addedCount > 0 && failedCount === 0) {
+			toast.success(
+				t("nollning.group_members.batch_add_members.toast_partial_success", {
+					count: addedCount,
+					unmatched: unmatchedValues.length,
+				}),
+			);
+			return;
+		}
+
+		if (addedCount > 0 && failedCount > 0) {
+			toast.error(
+				t("nollning.group_members.batch_add_members.toast_error", {
+					added: addedCount,
+					failed: failedCount,
+				}),
+			);
+			return;
+		}
+
+		toast.error(
+			t("nollning.group_members.batch_add_members.toast_error", {
+				added: 0,
+				failed: failedCount,
+			}),
+		);
 	};
 
 	const router = useRouter();
@@ -162,7 +259,7 @@ export default function GroupUsersPage() {
 				</div>
 			}
 		>
-			<div className="px-12 py-4  space-y-4 ">
+			<div className="px-12 py-4 space-y-4 ">
 				<div className="justify-between w-full flex flex-row">
 					<h3 className="text-3xl py-3 font-bold text-primary">
 						{t("nollning.group_members.header_group_members", {
@@ -180,31 +277,34 @@ export default function GroupUsersPage() {
 						{t("nollning.group_members.back")}
 					</Button>
 				</div>
-				<div className="space-y-4 flex flex-row space-x-8">
+				<p className="text-sm text-muted-foreground">
+					{t("nollning.group_members.info_text", {
+						group: group.data.name,
+					})}
+				</p>
+				<div className="space-y-4 space-x-8">
 					<div className="space-x-4">
-						<div className="flex flex-row space-y-2">
-							<div className="border border-card-foreground/20 rounded-lg bg-card mb-5 w-sm">
-								<div className="space-x-4 space-y-4 flex-2 p-4">
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full mb-4 max-w-6xl">
+							<div className="border border-card-foreground/20 rounded-lg bg-card">
+								<div className="space-y-4 p-4">
 									<h3 className="text-xl">
 										{t("nollning.group_members.add_members")}
 									</h3>
-
 									<SearchBar
 										excludedFromSearch={group.data.group_users}
 										onRowClick={handleAddUser}
 									/>
 								</div>
 							</div>
-							<div className="border border-card-foreground/20 rounded-lg bg-card mb-5 mx-5 w-sm">
-								<div className="space-x-4 space-y-4 flex-2 p-4">
+							<div className="border border-card-foreground/20 rounded-lg bg-card">
+								<div className="space-y-4 p-4">
 									<h3 className="text-xl">
-										{t("nollning.group_members.info_header")}
+										{t("nollning.group_members.batch_add_members.title")}
 									</h3>
-									<p className="text-sm text-muted-foreground">
-										{t("nollning.group_members.info_text", {
-											group: group.data.name,
-										})}
-									</p>
+									<BatchAddBox
+										excludedFromSearch={group.data.group_users}
+										onSubmit={handleBatchAdd}
+									/>
 								</div>
 							</div>
 						</div>

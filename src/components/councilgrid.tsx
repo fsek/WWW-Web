@@ -5,16 +5,19 @@ import { useTranslation } from "react-i18next";
 import {
 	BookOpen,
 	Coffee,
-	Users,
 	Shield,
-	Archive,
-	Users2,
+	Wrench,
 	Server,
-	ClipboardList,
-	LayoutGrid,
-	SlidersHorizontal,
+	PartyPopper,
+	University,
+	Handshake,
 	MoreHorizontal,
 	Beer,
+	Medal,
+	Gavel,
+	Megaphone,
+	BriefcaseBusiness,
+	Vote,
 } from "lucide-react";
 
 const councils = [
@@ -23,21 +26,22 @@ const councils = [
 	{
 		key: "externa-representanter",
 		url: "/councils/externa-representanter",
-		icon: Users,
+		icon: University,
 	},
 	{ key: "foset", url: "/councils/foset", icon: Shield },
 	{
 		key: "kulturministeriet",
 		url: "/councils/kulturministeriet",
-		icon: LayoutGrid,
+		icon: PartyPopper,
 	},
 	{
 		key: "naringslivsutskottet",
 		url: "/councils/naringslivsutskottet",
-		icon: ClipboardList,
+		icon: BriefcaseBusiness,
 	},
-	{ key: "prylmasteriet", url: "/councils/prylmasteriet", icon: Archive },
-	{ key: "samvetet", url: "/councils/samvetet", icon: SlidersHorizontal },
+	{ key: "processionen", url: "/councils/processionen", icon: Medal },
+	{ key: "prylmasteriet", url: "/councils/prylmasteriet", icon: Wrench },
+	{ key: "samvetet", url: "/councils/samvetet", icon: Handshake },
 	{
 		key: "sanningsministeriet",
 		url: "/councils/sanningsministeriet",
@@ -45,8 +49,9 @@ const councils = [
 	},
 	{ key: "sekret-service", url: "/councils/sekret-service", icon: Shield },
 	{ key: "sexmasteriet", url: "/councils/sexmasteriet", icon: Beer },
-	{ key: "studieradet", url: "/councils/studieradet", icon: Users2 },
-	{ key: "styrelsen", url: "/councils/styrelsen", icon: Users },
+	{ key: "studieradet", url: "/councils/studieradet", icon: Megaphone },
+	{ key: "styrelsen", url: "/councils/styrelsen", icon: Gavel },
+	{ key: "valberedningen", url: "/councils/valberedningen", icon: Vote },
 	{ key: "ovriga", url: "/councils/ovriga", icon: MoreHorizontal },
 ];
 

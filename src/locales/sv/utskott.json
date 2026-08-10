@@ -48,6 +48,12 @@
 		"info": "Näringslivsutskottet arbetar med att skapa kontakter mellan studenter och företag.",
 		"contact": "Näringslivsansvarig"
 	},
+	"processionen": {
+		"self": "Processionen",
+		"about": "Fyll i",
+		"info": "Processionen ansvarar för sektionens ceremoniella verksamhet.",
+		"contact": "Sektionshärold"
+	},
 	"prylmasteriet": {
 		"self": "Prylmästeriet",
 		"about": "Fyll i",
@@ -92,6 +98,12 @@
 		"info": "Det är styrelsen som leder F-sektionen och ansvarar för dess verksamhet.",
 		"contact": "Ordförande",
 		"contact2": "Vice ordförande"
+	},
+	"valberedningen": {
+		"self": "Valberedningen",
+		"about": "Fyll i",
+		"info": "Valberedningen ansvarar för att nominera kandidater till sektionens viktigaste poster.",
+		"contact": "Valberedningsledarmöterna"
 	},
 	"ovriga": {
 		"self": "Övriga",
