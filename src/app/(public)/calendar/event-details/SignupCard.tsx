@@ -66,6 +66,10 @@ export default function SignupCard({
 	const { t } = useTranslation("admin");
 	const queryClient = useQueryClient();
 
+	// Priorities related to nollning events. We don't want people with only these to skip the group_name requirement
+	// since their priorities are tied to a group_name.
+	const NOLLNING_PRIORITIES = ["Nolla", "Gruppfadder", "Uppdragsfadder"];
+
 	const signupSchema = z
 		.object({
 			priority: z.string().optional().nullable(),
@@ -73,12 +77,28 @@ export default function SignupCard({
 			drinkPackage: z.enum(["None", "AlcoholFree", "Alcohol"]),
 		})
 		.refine(
-			(data) => {
-				if (event.is_nollning_event) {
-					if (!data.group_name) {
-						return false;
-					}
+			(data) => { // Group name check
+				// Only nollning events require a group
+				if (!event.is_nollning_event) {
+					return true;
 				}
+
+				// A group was picked, nothing more to check
+				if (data.group_name) {
+					return true;
+				}
+
+				// No group and no priority to fall back on
+				if (!data.priority) {
+					return false;
+				}
+
+				// Without a group, the priority has to be a non-nollning one
+				// (i.e. from a post) since nollning priorities come from a group
+				if (NOLLNING_PRIORITIES.includes(data.priority)) { // True if the user's priorities are only nollning ones
+					return false;
+				}
+
 				return true;
 			},
 			{
@@ -221,14 +241,14 @@ export default function SignupCard({
 		if (!meData) return;
 		const updateSubmitData: EventSignupUpdate = {
 			user_id: meData.id,
-			priority: values.priority || undefined,
+			priority: values.priority || null,
 			group_name: values.group_name || null,
 			drinkPackage: values.drinkPackage,
 		};
 
 		const createSubmitData: EventSignupCreate = {
 			user_id: meData.id,
-			priority: values.priority || undefined,
+			priority: values.priority || null,
 			group_name: values.group_name || null,
 			drinkPackage: values.drinkPackage,
 		};
