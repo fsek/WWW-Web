@@ -221,14 +221,14 @@ export default function SignupCard({
 		if (!meData) return;
 		const updateSubmitData: EventSignupUpdate = {
 			user_id: meData.id,
-			priority: values.priority || undefined,
+			priority: values.priority || null,
 			group_name: values.group_name || null,
 			drinkPackage: values.drinkPackage,
 		};
 
 		const createSubmitData: EventSignupCreate = {
 			user_id: meData.id,
-			priority: values.priority || undefined,
+			priority: values.priority || null,
 			group_name: values.group_name || null,
 			drinkPackage: values.drinkPackage,
 		};
