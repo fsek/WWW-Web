@@ -25,6 +25,7 @@ function validateEmail(email: string): boolean {
 }
 
 function validateStilId(stilId: string): boolean {
+	// hi6122al-s for example, no capital letters but it's called with .toLowerCase() beforehand
 	const stilIdRegex = /^[a-z]{2}\d{4}[a-z]{2}-s$/;
 	return stilIdRegex.test(stilId);
 }
@@ -123,8 +124,8 @@ export default function handleBatchAdd(
 			if (parts[2].length === 0) {
 				stilId = null;
 			} else {
-				if (validateStilId(parts[2])) {
-					stilId = parts[2];
+				if (validateStilId(parts[2].toLowerCase())) {
+					stilId = parts[2].toLowerCase();
 				} else {
 					return {
 						success: false,
@@ -178,8 +179,8 @@ export default function handleBatchAdd(
 						}),
 					};
 				}
-			} else if (validateStilId(identifier)) {
-				stilIds.push(identifier);
+			} else if (validateStilId(identifier.toLowerCase())) {
+				stilIds.push(identifier.toLowerCase());
 			} else {
 				return {
 					success: false,
