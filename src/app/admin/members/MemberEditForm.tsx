@@ -112,11 +112,11 @@ export default function UserPostsEditForm({
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: adminGetAllUsersQueryKey() });
 			onClose();
-			toast.success(t("member.delete_success", "User deleted."));
+			toast.success(t("member.delete_success"));
 		},
 		onError: (e) => {
 			toast.error(
-				t("member.delete_error", "Failed to delete selectedUser: {details}", {
+				t("member.delete_error", {
 					details: e.detail,
 				}),
 			);
@@ -128,12 +128,12 @@ export default function UserPostsEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: adminGetAllUsersQueryKey() });
-			toast.success(t("member.update_success", "User updated successfully!"));
+			toast.success(t("member.update_success"));
 			setIsEditing(false);
 			onClose?.();
 		},
 		onError: () => {
-			toast.error(t("member.update_error", "Failed to update user."));
+			toast.error(t("member.update_error"));
 		},
 	});
 
@@ -168,7 +168,7 @@ export default function UserPostsEditForm({
 		>
 			<DialogContent className="min-w-fit lg:max-w-7xl max-h-[80vh] overflow-y-auto">
 				<DialogHeader>
-					<DialogTitle>{t("member.edit", "Manage User")}</DialogTitle>
+					<DialogTitle>{t("member.edit")}</DialogTitle>
 				</DialogHeader>
 				<hr />
 				<div className="py-4">
@@ -370,7 +370,7 @@ export default function UserPostsEditForm({
 																/>
 															</FormControl>
 															<span className="text-sm text-muted-foreground">
-																{t("stil-id_subtitle")}
+																{t("member.stil-id_subtitle")}
 															</span>
 														</>
 													) : (
@@ -401,7 +401,7 @@ export default function UserPostsEditForm({
 								>
 									{t("cancel")}
 								</Button>
-								<Button onClick={() => form.handleSubmit(onSubmit)}>
+								<Button onClick={form.handleSubmit(onSubmit)}>
 									<Save />
 									{t("save")}
 								</Button>
