@@ -667,8 +667,8 @@
 			"week_header": "Vecka",
 			"unlock_code": "Upplåsningskod",
 			"unlock_code_placeholder": "Om tillagd krävs koden för att se uppdragsinfo. Ej kryptografiskt säker.",
-			"unlock_hint_sv": "Upplåsningshint (Svenska)",
-			"unlock_hint_en": "Upplåsningshint (Engelska)",
+			"unlock_hint_sv": "Ledtråd för upplåsning (svenska)",
+			"unlock_hint_en": "Ledtråd för upplåsning (engelska)",
 			"unlock_hint_placeholder": "Koden som krävs kan hittas genom att lösa denna gåta: ..."
 		},
 		"mission_grading": {
