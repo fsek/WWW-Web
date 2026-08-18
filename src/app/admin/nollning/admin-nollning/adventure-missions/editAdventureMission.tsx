@@ -227,7 +227,12 @@ const EditAdventureMission = ({
 					placeholder: t("nollning.missions.mission_category_placeholder"),
 					options: Object.values(MISSION_CATEGORY_ENUM).map((value) => ({
 						value,
-						label: value,
+						label: t(
+							`nollning.missions.mission_category_value.${value.toLowerCase()}`,
+							{
+								defaultValue: value,
+							},
+						),
 					})),
 				},
 			]}

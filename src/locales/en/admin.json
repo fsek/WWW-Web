@@ -671,7 +671,16 @@
 			"unlock_hint_placeholder": "The code may be found by solving this riddle: ...",
 			"mission_category": "Category",
 			"mission_category_placeholder": "Select a category",
-			"mission_category_header": "Category"
+			"mission_category_header": "Category",
+			"mission_category_value": {
+				"barbiedans": "Barbie Dance",
+				"fadder": "Mentor",
+				"kreativ": "Creative",
+				"resa": "Travel",
+				"spel": "Game",
+				"tävling": "Competition",
+				"älg": "Moose"
+			}
 		},
 		"mission_grading": {
 			"header_title": "Title",

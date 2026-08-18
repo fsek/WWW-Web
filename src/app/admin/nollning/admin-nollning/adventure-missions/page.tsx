@@ -129,7 +129,13 @@ export default function AdventureMissionsPage() {
 		}),
 		columnHelper.accessor("mission_category", {
 			header: t("nollning.missions.mission_category_header"),
-			cell: (info) => info.getValue(),
+			cell: (info) =>
+				t(
+					`nollning.missions.mission_category_value.${info.getValue().toLowerCase()}`,
+					{
+						defaultValue: info.getValue(),
+					},
+				),
 		}),
 	];
 
