@@ -128,16 +128,6 @@ export default function EncloseMooseLevelEditForm({
 		);
 	}
 
-	const detailsButton = (
-		<Button
-			variant="outline"
-			type="button"
-			onClick={() => router.push(`/enclose_moose/levels/${item?.level_id}`)}
-		>
-			{t("enclose_moose.view_level")}
-		</Button>
-	);
-
 	return (
 		<AdminForm
 			title={t("enclose_moose.edit_level")}
@@ -170,6 +160,7 @@ export default function EncloseMooseLevelEditForm({
 					variant: "number",
 					name: "day_index",
 					label: t("enclose_moose.day_index"),
+					placeholder: t("enclose_moose.day_index_placeholder"),
 				},
 				{
 					variant: "textarea",

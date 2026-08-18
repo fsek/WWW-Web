@@ -1261,7 +1261,8 @@
 		"encoded_grid": "Level string",
 		"encoded_grid_placeholder": "Paste your encoded level string into this box!",
 		"wall_budget": "Wall budget",
-		"wall_budget_placeholder": "Wall budget"
+		"wall_budget_placeholder": "Wall budget",
+		"edit_level": "Edit level"
 	},
 	"save_changes": "Save changes",
 	"create": "Create",

@@ -1261,7 +1261,8 @@
 		"encoded_grid": "Nivåsträng",
 		"encoded_grid_placeholder": "Klistra in din nivåsträng här!",
 		"wall_budget": "Murbudget",
-		"wall_budget_placeholder": "Murbudget"
+		"wall_budget_placeholder": "Murbudget",
+		"edit_level": "Redigera nivå"
 	},
 	"save_changes": "Spara",
 	"create": "Skapa",
