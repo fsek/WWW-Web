@@ -10,6 +10,8 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import AdminForm from "@/widgets/AdminForm";
+import { useMemo } from "react";
+import { MISSION_CATEGORY_ENUM, type MissionCategory } from "@/constants";
 
 const AdventureMissionSchema = z.object({
 	title_sv: z.string().min(2),
@@ -22,6 +24,7 @@ const AdventureMissionSchema = z.object({
 	unlock_code: z.string().optional(),
 	unlock_hint_sv: z.string().optional(),
 	unlock_hint_en: z.string().optional(),
+	mission_category: z.enum(Object.values(MISSION_CATEGORY_ENUM)),
 });
 
 interface Props {
@@ -42,13 +45,20 @@ const EditAdventureMission = ({
 	nollning_id,
 }: Props) => {
 	const { t } = useTranslation("admin");
-
-	const cleanedSelectedMission = {
-		...selectedMission,
-		unlock_code: selectedMission.unlock_code ?? "",
-		unlock_hint_sv: selectedMission.unlock_hint_sv ?? "",
-		unlock_hint_en: selectedMission.unlock_hint_en ?? "",
-	};
+	const cleanedSelectedMission = useMemo(
+		() => ({
+			...selectedMission,
+			unlock_code: selectedMission.unlock_code ?? "",
+			unlock_hint_sv: selectedMission.unlock_hint_sv ?? "",
+			unlock_hint_en: selectedMission.unlock_hint_en ?? "",
+			mission_category: Object.values(MISSION_CATEGORY_ENUM).includes(
+				selectedMission.mission_category as MissionCategory,
+			) // If the mission category is not valid, default to "Spel"
+				? (selectedMission.mission_category as MissionCategory)
+				: MISSION_CATEGORY_ENUM.GAME,
+		}),
+		[selectedMission],
+	);
 
 	function setConvertedItem(
 		item: z.infer<typeof AdventureMissionSchema> | null,
@@ -117,6 +127,7 @@ const EditAdventureMission = ({
 					unlock_code: values.unlock_code,
 					unlock_hint_sv: values.unlock_hint_sv,
 					unlock_hint_en: values.unlock_hint_en,
+					mission_category: values.mission_category,
 				},
 			},
 			{
@@ -208,6 +219,21 @@ const EditAdventureMission = ({
 					name: "unlock_hint_en",
 					label: t("nollning.missions.unlock_hint_en"),
 					placeholder: t("nollning.missions.unlock_hint_placeholder"),
+				},
+				{
+					variant: "selectFromOptions",
+					name: "mission_category",
+					label: t("nollning.missions.mission_category"),
+					placeholder: t("nollning.missions.mission_category_placeholder"),
+					options: Object.values(MISSION_CATEGORY_ENUM).map((value) => ({
+						value,
+						label: t(
+							`nollning.missions.mission_category_value.${value.toLowerCase()}`,
+							{
+								defaultValue: value,
+							},
+						),
+					})),
 				},
 			]}
 			zodSchema={AdventureMissionSchema}
