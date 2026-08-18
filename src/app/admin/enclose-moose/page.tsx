@@ -27,11 +27,11 @@ export default function EncloseMoose() {
 
 	const columns: ColumnDef<EncloseMooseLevelRead, any>[] = [
 		columnHelper.accessor("name_sv", {
-			header: t("enclose_moose.name_sv"),
+			header: t("enclose_moose.level_name_sv"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("name_en", {
-			header: t("enclose_moose.name_en"),
+			header: t("enclose_moose.level_name_en"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("release_date", {
@@ -40,7 +40,12 @@ export default function EncloseMoose() {
 		}),
 		columnHelper.accessor("day_index", {
 			header: t("enclose_moose.day_index"),
-			cell: (info) => info.getValue() ?? t("enclose_moose.day_index_missing"),
+			cell: (info) =>
+				info.getValue() ?? (
+					<span className="italic text-muted-foreground">
+						{t("enclose_moose.day_index_missing")}
+					</span>
+				),
 		}),
 		// {
 		// 	id: "view",

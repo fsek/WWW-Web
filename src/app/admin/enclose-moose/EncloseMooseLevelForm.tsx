@@ -22,10 +22,14 @@ export default function EncloseMooseLevelForm() {
 		day_index: z
 			.int({ error: t("enclose_moose.day_index_invalid") })
 			.optional(),
-		name_sv: z.string().min(1, { error: t("enclose_moose.name_invalid") }),
-		name_en: z.string().min(1, { error: t("enclose_moose.name_invalid") }),
+		name_sv: z
+			.string({ error: t("enclose_moose.level_name_invalid") })
+			.min(1, { error: t("enclose_moose.level_name_invalid") }),
+		name_en: z
+			.string({ error: t("enclose_moose.level_name_invalid") })
+			.min(1, { error: t("enclose_moose.level_name_invalid") }),
 		encoded_grid: z
-			.string()
+			.string({ error: t("enclose_moose.encoded_grid_invalid") })
 			.min(1, { error: t("enclose_moose.encoded_grid_invalid") }),
 		wall_budget: z
 			.int({ error: t("enclose_moose.wall_budget_invalid") })
@@ -77,14 +81,14 @@ export default function EncloseMooseLevelForm() {
 				{
 					variant: "text",
 					name: "name_sv",
-					label: t("enclose_moose.name_sv"),
-					placeholder: t("enclose_moose.name_sv_placeholder"),
+					label: t("enclose_moose.level_name_sv"),
+					placeholder: t("enclose_moose.level_name_sv_placeholder"),
 				},
 				{
 					variant: "text",
 					name: "name_en",
-					label: t("enclose_moose.name_en"),
-					placeholder: t("enclose_moose.name_en_placeholder"),
+					label: t("enclose_moose.level_name_en"),
+					placeholder: t("enclose_moose.level_name_en_placeholder"),
 				},
 				{
 					variant: "datetime",
@@ -96,6 +100,7 @@ export default function EncloseMooseLevelForm() {
 					variant: "number",
 					name: "day_index",
 					label: t("enclose_moose.day_index"),
+					placeholder: t("enclose_moose.day_index_placeholder"),
 				},
 				{
 					variant: "textarea",
@@ -104,12 +109,13 @@ export default function EncloseMooseLevelForm() {
 					placeholder: t("enclose_moose.encoded_grid_placeholder"),
 					monospace: true,
 					colSpan: 2,
-					rows: 10,
+					rows: 20,
 				},
 				{
 					variant: "number",
 					name: "wall_budget",
 					label: t("enclose_moose.wall_budget"),
+					placeholder: t("enclose_moose.wall_budget_placeholder"),
 					min: 0,
 				},
 			]}

@@ -151,14 +151,14 @@ export default function EncloseMooseLevelEditForm({
 				{
 					variant: "text",
 					name: "name_sv",
-					label: t("enclose_moose.name_sv"),
-					placeholder: t("enclose_moose.name_sv_placeholder"),
+					label: t("enclose_moose.level_name_sv"),
+					placeholder: t("enclose_moose.level_name_sv_placeholder"),
 				},
 				{
 					variant: "text",
 					name: "name_en",
-					label: t("enclose_moose.name_en"),
-					placeholder: t("enclose_moose.name_en_placeholder"),
+					label: t("enclose_moose.level_name_en"),
+					placeholder: t("enclose_moose.level_name_en_placeholder"),
 				},
 				{
 					variant: "datetime",
@@ -184,6 +184,7 @@ export default function EncloseMooseLevelEditForm({
 					variant: "number",
 					name: "wall_budget",
 					label: t("enclose_moose.wall_budget"),
+					placeholder: t("enclose_moose.wall_budget_placeholder"),
 					min: 0,
 				},
 			]}
