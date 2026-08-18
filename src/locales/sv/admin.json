@@ -668,7 +668,10 @@
 			"unlock_code_placeholder": "Om tillagd krävs koden för att se uppdragsinfo. Ej kryptografiskt säker.",
 			"unlock_hint_sv": "Ledtråd för upplåsning (svenska)",
 			"unlock_hint_en": "Ledtråd för upplåsning (engelska)",
-			"unlock_hint_placeholder": "Koden som krävs kan hittas genom att lösa denna gåta: ..."
+			"unlock_hint_placeholder": "Koden som krävs kan hittas genom att lösa denna gåta: ...",
+			"mission_category": "Kategori",
+			"mission_category_placeholder": "Välj en kategori",
+			"mission_category_header": "Kategori"
 		},
 		"mission_grading": {
 			"header_title": "Titel",

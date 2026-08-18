@@ -10,6 +10,7 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import AdminForm from "@/widgets/AdminForm";
+import { MISSION_CATEGORY_ENUM } from "@/constants";
 
 const AdventureMissionSchema = z.object({
 	title_sv: z.string().min(2),
@@ -22,6 +23,7 @@ const AdventureMissionSchema = z.object({
 	unlock_code: z.string().optional(),
 	unlock_hint_sv: z.string().optional(),
 	unlock_hint_en: z.string().optional(),
+	mission_category: z.enum(Object.values(MISSION_CATEGORY_ENUM)),
 });
 
 interface Props {
@@ -64,6 +66,7 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 				unlock_code: values.unlock_code,
 				unlock_hint_sv: values.unlock_hint_sv,
 				unlock_hint_en: values.unlock_hint_en,
+				mission_category: values.mission_category,
 			},
 			path: { nollning_id: nollningID },
 		});
@@ -137,6 +140,16 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 					label: t("nollning.missions.unlock_hint_en"),
 					placeholder: t("nollning.missions.unlock_hint_placeholder"),
 				},
+				{
+					variant: "selectFromOptions",
+					name: "mission_category",
+					label: t("nollning.missions.mission_category"),
+					placeholder: t("nollning.missions.mission_category_placeholder"),
+					options: Object.values(MISSION_CATEGORY_ENUM).map((value) => ({
+						value,
+						label: value,
+					})),
+				},
 			]}
 			zodSchema={AdventureMissionSchema}
 			onSubmit={onSubmit}
@@ -153,6 +166,7 @@ const CreateAdventureMission = ({ nollningID }: Props) => {
 				unlock_code: "",
 				unlock_hint_sv: "",
 				unlock_hint_en: "",
+				mission_category: MISSION_CATEGORY_ENUM.GAME, // Matches backend default
 			}}
 		/>
 	);

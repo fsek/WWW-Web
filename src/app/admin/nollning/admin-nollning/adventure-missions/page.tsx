@@ -127,6 +127,10 @@ export default function AdventureMissionsPage() {
 			header: t("nollning.missions.week_header"),
 			cell: (info) => info.getValue(),
 		}),
+		columnHelper.accessor("mission_category", {
+			header: t("nollning.missions.mission_category_header"),
+			cell: (info) => info.getValue(),
+		}),
 	];
 
 	const table = useCreateTable({ data: filteredAdventureMissions, columns });

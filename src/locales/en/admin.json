@@ -668,7 +668,10 @@
 			"unlock_code_placeholder": "If added, the code is needed to see mission info. Not cryptographically secure.",
 			"unlock_hint_sv": "Unlock hint (Swedish)",
 			"unlock_hint_en": "Unlock hint (English)",
-			"unlock_hint_placeholder": "The code may be found by solving this riddle: ..."
+			"unlock_hint_placeholder": "The code may be found by solving this riddle: ...",
+			"mission_category": "Category",
+			"mission_category_placeholder": "Select a category",
+			"mission_category_header": "Category"
 		},
 		"mission_grading": {
 			"header_title": "Title",
