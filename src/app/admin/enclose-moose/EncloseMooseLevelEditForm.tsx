@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import {
-	mooseGetAllLevelsQueryKey,
+	mooseAdminGetAllLevelsQueryKey,
 	mooseAdminUpdateLevelMutation,
 	mooseAdminDeleteLevelMutation,
 } from "@/api/@tanstack/react-query.gen";
@@ -12,12 +12,14 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import AdminForm from "@/widgets/AdminForm";
 import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
 
 const encloseMooseLevelEditSchema = z.object({
-	level_id: z.string(),
+	level_id: z.int(),
 	release_date: z.date(),
 	day_index: z.int().optional(),
-	name: z.string(),
+	name_sv: z.string(),
+	name_en: z.string(),
 	encoded_grid: z.string(),
 	wall_budget: z.int(),
 });
@@ -55,7 +57,7 @@ export default function EncloseMooseLevelEditForm({
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: mooseGetAllLevelsQueryKey(),
+				queryKey: mooseAdminGetAllLevelsQueryKey(),
 			});
 			toast.success(t("enclose_moose.edit_success"));
 		},
@@ -69,12 +71,12 @@ export default function EncloseMooseLevelEditForm({
 		},
 	});
 
-	const removeSong = useMutation({
+	const removeLevel = useMutation({
 		...mooseAdminDeleteLevelMutation(),
 		throwOnError: false,
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: mooseGetAllLevelsQueryKey(),
+				queryKey: mooseAdminGetAllLevelsQueryKey(),
 			});
 			toast.success(t("enclose_moose.remove_success"));
 		},
@@ -92,10 +94,10 @@ export default function EncloseMooseLevelEditForm({
 		values: z.infer<typeof encloseMooseLevelEditSchema>,
 	) {
 		const updatedLevel: EncloseMooseLevelUpdate = {
-			name: values.name,
+			name_sv: values.name_sv,
+			name_en: values.name_en,
 			day_index: values.day_index,
-			release_date: values.release_date,
-
+			release_date: format(values.release_date, "yyyy-MM-dd") as any,
 			encoded_grid: values.encoded_grid,
 			wall_budget: values.wall_budget,
 		};
@@ -116,7 +118,7 @@ export default function EncloseMooseLevelEditForm({
 	function handleRemoveSubmit(
 		data: z.infer<typeof encloseMooseLevelEditSchema>,
 	) {
-		removeSong.mutate(
+		removeLevel.mutate(
 			{ path: { level_id: data.level_id } },
 			{
 				onSuccess: () => {
@@ -130,7 +132,7 @@ export default function EncloseMooseLevelEditForm({
 		<Button
 			variant="outline"
 			type="button"
-			onClick={() => router.push(`/songs/${item?.id}`)}
+			onClick={() => router.push(`/enclose_moose/levels/${item?.level_id}`)}
 		>
 			{t("enclose_moose.view_level")}
 		</Button>
@@ -140,7 +142,7 @@ export default function EncloseMooseLevelEditForm({
 		<AdminForm
 			title={t("enclose_moose.edit_level")}
 			formType="edit"
-			gridCols={4}
+			gridCols={2}
 			open={!!item}
 			onOpenChange={(isOpen) => {
 				if (!isOpen) onClose();
@@ -148,16 +150,48 @@ export default function EncloseMooseLevelEditForm({
 			inputFields={[
 				{
 					variant: "text",
-					name: "name",
-					label: t("enclose_moose.name"),
-					placeholder: t("enclose_moose.name_placeholder"),
+					name: "name_sv",
+					label: t("enclose_moose.name_sv"),
+					placeholder: t("enclose_moose.name_sv_placeholder"),
+				},
+				{
+					variant: "text",
+					name: "name_en",
+					label: t("enclose_moose.name_en"),
+					placeholder: t("enclose_moose.name_en_placeholder"),
+				},
+				{
+					variant: "datetime",
+					name: "release_date",
+					label: t("enclose_moose.release_date"),
+					granularity: "day",
+				},
+				{
+					variant: "number",
+					name: "day_index",
+					label: t("enclose_moose.day_index"),
+				},
+				{
+					variant: "textarea",
+					name: "encoded_grid",
+					label: t("enclose_moose.encoded_grid"),
+					placeholder: t("enclose_moose.encoded_grid_placeholder"),
+					monospace: true,
+					colSpan: 2,
+					rows: 10,
+				},
+				{
+					variant: "number",
+					name: "wall_budget",
+					label: t("enclose_moose.wall_budget"),
+					min: 0,
 				},
 			]}
 			zodSchema={encloseMooseLevelEditSchema}
 			onSubmit={handleFormSubmit}
 			useDeleteButton
 			onDelete={handleRemoveSubmit}
-			customButtons={detailsButton}
+			// customButtons={detailsButton}
 			showDialogButton={false}
 			editItem={convertedItem || undefined}
 			setEditItem={setConvertedItem}

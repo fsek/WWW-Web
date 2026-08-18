@@ -279,7 +279,6 @@ export function NavBar() {
 				<VerificationReminder showBanner={user?.is_verified === false} />
 				<MemberBanner showBanner={user?.is_member === false} />
 			</div>
-			<Toaster position="top-center" richColors />
 		</header>
 	);
 }

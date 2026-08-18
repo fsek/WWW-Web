@@ -5,7 +5,7 @@ import { enUS, sv } from "date-fns/locale";
 import type { DayPickerLocale } from "react-day-picker";
 import { useTranslation } from "react-i18next";
 
-type Granularity = "day" | "hour" | "minute" | "second";
+export type Granularity = "day" | "hour" | "minute" | "second";
 interface AdminChooseDatesProps {
 	value: Date | undefined;
 	onChange: (value: Date) => void;

@@ -11,20 +11,26 @@ import {
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import AdminForm from "@/widgets/AdminForm";
-
-const encloseMooseLevelSchema = z.object({
-	level_id: z.string(),
-	release_date: z.date(),
-	day_index: z.int().optional(),
-	name: z.string(),
-	encoded_grid: z.string(),
-	wall_budget: z.int(),
-});
+import { format } from "date-fns";
 
 export default function EncloseMooseLevelForm() {
 	const [open, setOpen] = useState(false);
 	const { t } = useTranslation("admin");
 
+	const encloseMooseLevelSchema = z.object({
+		release_date: z.date({ error: t("enclose_moose.release_date_invalid") }),
+		day_index: z
+			.int({ error: t("enclose_moose.day_index_invalid") })
+			.optional(),
+		name_sv: z.string().min(1, { error: t("enclose_moose.name_invalid") }),
+		name_en: z.string().min(1, { error: t("enclose_moose.name_invalid") }),
+		encoded_grid: z
+			.string()
+			.min(1, { error: t("enclose_moose.encoded_grid_invalid") }),
+		wall_budget: z
+			.int({ error: t("enclose_moose.wall_budget_invalid") })
+			.min(0, { error: t("enclose_moose.wall_budget_invalid") }),
+	});
 	const queryClient = useQueryClient();
 
 	const createLevel = useMutation({
@@ -42,17 +48,18 @@ export default function EncloseMooseLevelForm() {
 					? error.detail
 					: t("enclose_moose.create_level_error"),
 			);
-			setOpen(false);
+
+			// setOpen(false);
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof encloseMooseLevelSchema>) {
-		createLevel.mutate({
+	async function onSubmit(values: z.infer<typeof encloseMooseLevelSchema>) {
+		await createLevel.mutateAsync({
 			body: {
-				level_id: values.level_id,
-				name: values.name,
+				name_sv: values.name_sv,
+				name_en: values.name_en,
 				day_index: values.day_index,
-				release_date: values.release_date,
+				release_date: format(values.release_date, "yyyy-MM-dd") as any,
 				encoded_grid: values.encoded_grid,
 				wall_budget: values.wall_budget,
 			},
@@ -63,15 +70,47 @@ export default function EncloseMooseLevelForm() {
 		<AdminForm
 			title={t("enclose_moose.create_level")}
 			formType="add"
-			gridCols={4}
+			gridCols={2}
 			open={open}
 			onOpenChange={setOpen}
 			inputFields={[
 				{
 					variant: "text",
-					name: "name",
-					label: t("enclose_moose.name"),
-					placeholder: t("enclose_moose.name_placeholder"),
+					name: "name_sv",
+					label: t("enclose_moose.name_sv"),
+					placeholder: t("enclose_moose.name_sv_placeholder"),
+				},
+				{
+					variant: "text",
+					name: "name_en",
+					label: t("enclose_moose.name_en"),
+					placeholder: t("enclose_moose.name_en_placeholder"),
+				},
+				{
+					variant: "datetime",
+					name: "release_date",
+					label: t("enclose_moose.release_date"),
+					granularity: "day",
+				},
+				{
+					variant: "number",
+					name: "day_index",
+					label: t("enclose_moose.day_index"),
+				},
+				{
+					variant: "textarea",
+					name: "encoded_grid",
+					label: t("enclose_moose.encoded_grid"),
+					placeholder: t("enclose_moose.encoded_grid_placeholder"),
+					monospace: true,
+					colSpan: 2,
+					rows: 10,
+				},
+				{
+					variant: "number",
+					name: "wall_budget",
+					label: t("enclose_moose.wall_budget"),
+					min: 0,
 				},
 			]}
 			zodSchema={encloseMooseLevelSchema}
