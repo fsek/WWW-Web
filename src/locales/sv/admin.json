@@ -663,7 +663,12 @@
 			"title_header": "Titel",
 			"description_header": "Uppdrag",
 			"points_header": "Tillåtna poäng",
-			"week_header": "Vecka"
+			"week_header": "Vecka",
+			"unlock_code": "Upplåsningskod",
+			"unlock_code_placeholder": "Om tillagd krävs koden för att se uppdragsinfo. Ej kryptografiskt säker.",
+			"unlock_hint_sv": "Ledtråd för upplåsning (svenska)",
+			"unlock_hint_en": "Ledtråd för upplåsning (engelska)",
+			"unlock_hint_placeholder": "Koden som krävs kan hittas genom att lösa denna gåta: ..."
 		},
 		"mission_grading": {
 			"header_title": "Titel",

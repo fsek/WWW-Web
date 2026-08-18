@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import idAsNumber from "../idAsNumber";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
@@ -15,7 +15,7 @@ import AdminTable from "@/widgets/AdminTable";
 import CreateAdventureMission from "./createAdventureMission";
 import EditAdventureMission from "./editAdventureMission";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
 import WeekFilter from "@/components/WeekFilter";
@@ -97,7 +97,14 @@ export default function AdventureMissionsPage() {
 	const columns = [
 		columnHelper.accessor(i18n.language === "en" ? "title_en" : "title_sv", {
 			header: t("nollning.missions.title_header"),
-			cell: (info) => info.getValue(),
+			cell: (info) => (
+				<div className="flex items-center gap-1">
+					{info.row.original.unlock_code && (
+						<Lock className="w-4 h-4 shrink-0" />
+					)}
+					{info.getValue()}
+				</div>
+			),
 		}),
 		columnHelper.accessor(
 			i18n.language === "en" ? "description_en" : "description_sv",
@@ -178,8 +185,10 @@ export default function AdventureMissionsPage() {
 				{selectedMission && (
 					<EditAdventureMission
 						open={open}
+						setOpen={setOpen}
 						onClose={onClose}
 						selectedMission={selectedMission}
+						setSelectedMission={setSelectedMission}
 						nollning_id={nollningID}
 					/>
 				)}
