@@ -115,6 +115,29 @@ export default function BatchAddBox({
 		[identifierList, userLookup],
 	);
 
+	const inGroupIdentifiers = useMemo(() => {
+		const identifiers = new Set(
+			// excludedFromSearch is a list of all groupusers in the current group
+			excludedFromSearch.map(({ user }) => normalizeIdentifier(user.email)),
+		);
+		for (const user of allUsers) {
+			if (excludedUserIds.has(user.id) && user.stil_id) {
+				identifiers.add(normalizeIdentifier(user.stil_id));
+			}
+		}
+		return identifiers;
+	}, [excludedFromSearch, excludedUserIds, allUsers]);
+
+	// find all values from batch add which are already in the group
+	const valuesInGroup = unmatchedValues.filter((value) =>
+		inGroupIdentifiers.has(value),
+	);
+
+	// find all values from batch add which did not match any user in the database, users who don't exist
+	const unresolvedValues = unmatchedValues.filter(
+		(value) => !inGroupIdentifiers.has(value),
+	);
+
 	const handleSubmit = async () => {
 		if (!onSubmit || resolvedUsers.length === 0) {
 			return;
@@ -124,7 +147,7 @@ export default function BatchAddBox({
 			await onSubmit({
 				users: resolvedUsers,
 				groupUserType,
-				unmatchedValues,
+				unmatchedValues: unresolvedValues,
 			});
 			setIdentifierInput("");
 		} finally {
@@ -217,12 +240,30 @@ export default function BatchAddBox({
 				!allUsersQuery.isFetching &&
 				unmatchedValues.length > 0 ? (
 					<div className="space-y-2">
-						<p className="text-sm font-medium text-destructive">
-							{t("nollning.group_members.batch_add_members.unmatched_values")}
-						</p>
-						<p className="text-sm text-destructive/90 wrap-break-word">
-							{unmatchedValues.join(", ")}
-						</p>
+						{unresolvedValues.length > 0 && (
+							<div className="space-y-2">
+								<p className="text-sm font-medium text-destructive">
+									{t(
+										"nollning.group_members.batch_add_members.unmatched_values",
+									)}
+								</p>
+								<p className="text-sm text-destructive/90 wrap-break-word">
+									{unresolvedValues.join(", ")}
+								</p>
+							</div>
+						)}
+						{valuesInGroup.length > 0 && (
+							<div className="space-y-2">
+								<p className="text-sm font-medium text-muted-foreground">
+									{t(
+										"nollning.group_members.batch_add_members.values_already_in_group",
+									)}
+								</p>
+								<p className="text-sm text-muted-foreground wrap-break-word">
+									{valuesInGroup.join(", ")}
+								</p>
+							</div>
+						)}
 					</div>
 				) : allUsersQuery.isLoading || allUsersQuery.isFetching ? (
 					<p className="text-sm text-muted-foreground">
