@@ -14,16 +14,6 @@ import AdminForm from "@/widgets/AdminForm";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 
-const encloseMooseLevelEditSchema = z.object({
-	level_id: z.int(),
-	release_date: z.date(),
-	day_index: z.int().optional(),
-	name_sv: z.string(),
-	name_en: z.string(),
-	encoded_grid: z.string(),
-	wall_budget: z.int(),
-});
-
 interface EncloseMooseLevelEditFormProps {
 	item: EncloseMooseLevelRead | null;
 	onClose: () => void;
@@ -35,6 +25,26 @@ export default function EncloseMooseLevelEditForm({
 }: EncloseMooseLevelEditFormProps) {
 	const { t } = useTranslation("admin");
 	const router = useRouter();
+
+	const encloseMooseLevelEditSchema = z.object({
+		release_date: z.date({ error: t("enclose_moose.release_date_invalid") }),
+		day_index: z
+			.int({ error: t("enclose_moose.day_index_invalid") })
+			.nullable()
+			.optional(),
+		name_sv: z
+			.string({ error: t("enclose_moose.level_name_invalid") })
+			.min(1, { error: t("enclose_moose.level_name_invalid") }),
+		name_en: z
+			.string({ error: t("enclose_moose.level_name_invalid") })
+			.min(1, { error: t("enclose_moose.level_name_invalid") }),
+		encoded_grid: z
+			.string({ error: t("enclose_moose.encoded_grid_invalid") })
+			.min(1, { error: t("enclose_moose.encoded_grid_invalid") }),
+		wall_budget: z
+			.int({ error: t("enclose_moose.wall_budget_invalid") })
+			.min(0, { error: t("enclose_moose.wall_budget_invalid") }),
+	});
 
 	// Convert item to the zod schema format (category_id instead of category object)
 	const [convertedItem, setConvertedItem] = useState<z.infer<
