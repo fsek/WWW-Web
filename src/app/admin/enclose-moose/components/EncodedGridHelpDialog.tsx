@@ -29,7 +29,6 @@ export default function EncodedGridHelpDialog() {
 						</DialogTitle>
 					</DialogHeader>
 					<Trans
-						//i18nKey="admin:enclose_moose.edit_help.step1"
 						components={{
 							editor: (
 								// biome-ignore lint/a11y/useAnchorContent:

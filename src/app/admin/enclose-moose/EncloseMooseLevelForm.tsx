@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { z } from "zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-	createSongMutation,
-	getAllSongsQueryKey,
-	getAllSongCategoriesOptions,
 	mooseAdminCreateLevelMutation,
 	mooseAdminGetAllLevelsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
