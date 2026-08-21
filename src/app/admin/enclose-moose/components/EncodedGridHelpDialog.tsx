@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { HelpCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import Link from "next/link";
 
 export default function EncodedGridHelpDialog() {
 	const { t } = useTranslation("admin");
@@ -31,12 +32,10 @@ export default function EncodedGridHelpDialog() {
 					<Trans
 						components={{
 							editor: (
-								// biome-ignore lint/a11y/useAnchorContent:
-								<a
+								<Link
 									className="underline text-primary hover:text-foreground transition-colors"
 									href="https://enclose.horse/edit"
 									target="_blank"
-									rel="noreferrer"
 								/>
 							),
 							command: (
