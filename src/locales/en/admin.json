@@ -1266,7 +1266,10 @@
 		"edit_success": "Successfully edited level!",
 		"edit_error": "Could not edit level",
 		"remove_success": "Level removed successfully!",
-		"remove_error": "Could not remove level"
+		"remove_error": "Could not remove level",
+		"view_all_levels": "Show all levels",
+		"view_daily_levels": "Show only daily levels",
+		"view_bonus_levels": "Show only bonus levels"
 	},
 	"save_changes": "Save changes",
 	"create": "Create",

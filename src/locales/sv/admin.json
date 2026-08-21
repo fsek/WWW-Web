@@ -1266,7 +1266,10 @@
 		"edit_success": "Nivån har redigerats!",
 		"edit_error": "Kunde inte redigera nivån",
 		"remove_success": "Nivån har raderats!",
-		"remove_error": "Kunde inte radera nivån"
+		"remove_error": "Kunde inte radera nivån",
+		"view_bonus_levels": "Visa enbart bonusnivåer",
+		"view_daily_levels": "Visa enbart dagliga nivåer",
+		"view_all_levels": "Visa alla nivåer"
 	},
 	"save_changes": "Spara",
 	"create": "Skapa",
