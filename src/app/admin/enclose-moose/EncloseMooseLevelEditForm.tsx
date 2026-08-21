@@ -11,8 +11,8 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import AdminForm from "@/widgets/AdminForm";
-import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
+import EncodedGridHelpDialog from "./components/EncodedGridHelpDialog";
 
 interface EncloseMooseLevelEditFormProps {
 	item: EncloseMooseLevelRead | null;
@@ -109,7 +109,9 @@ export default function EncloseMooseLevelEditForm({
 			name_en: values.name_en,
 			day_index: values.day_index,
 			release_date: format(values.release_date, "yyyy-MM-dd") as any,
-			encoded_grid: values.encoded_grid.replace(/\\n/g, "\n"),
+			encoded_grid: values.encoded_grid
+				.replace(/\\n/g, "\n")
+				.replace(/^"+|"+$/g, ""),
 			wall_budget: values.wall_budget,
 		};
 
@@ -194,7 +196,7 @@ export default function EncloseMooseLevelEditForm({
 			onSubmit={handleFormSubmit}
 			useDeleteButton
 			onDelete={handleRemoveSubmit}
-			// customButtons={detailsButton}
+			customButtons={<EncodedGridHelpDialog />}
 			showDialogButton={false}
 			editItem={convertedItem || undefined}
 			setEditItem={setConvertedItem}

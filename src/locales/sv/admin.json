@@ -1269,7 +1269,17 @@
 		"remove_error": "Kunde inte radera nivån",
 		"view_bonus_levels": "Visa enbart bonusnivåer",
 		"view_daily_levels": "Visa enbart dagliga nivåer",
-		"view_all_levels": "Visa alla nivåer"
+		"view_all_levels": "Visa alla nivåer",
+		"edit_help": {
+			"button": "Hur hittar jag en nivåsträng?",
+			"title": "Hur man hittar nivåsträngen",
+			"steps": [
+				"Skapa en nivå i enclose.horse <editor>nivåredigerare</editor>.",
+				"Publicera nivån och tryck därefter på \"Play Now\".",
+				"Öppna utvecklarverktygen, navigera till konsolen och skriv in följande kommando: <command>window.__LEVEL__.map</command>",
+				"Kopiera resultatet. Det är din nivåsträng!"
+			]
+		}
 	},
 	"save_changes": "Spara",
 	"create": "Skapa",

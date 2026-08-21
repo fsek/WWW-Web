@@ -1269,7 +1269,17 @@
 		"remove_error": "Could not remove level",
 		"view_all_levels": "Show all levels",
 		"view_daily_levels": "Show only daily levels",
-		"view_bonus_levels": "Show only bonus levels"
+		"view_bonus_levels": "Show only bonus levels",
+		"edit_help": {
+			"button": "How do I find a level string?",
+			"title": "How to find the level string",
+			"steps": [
+				"Create a level in enclose.horse's <editor>level editor</editor>.",
+				"Publish the level, and then click \"Play Now\".",
+				"Open DevTools, navigate to the console and type in the following command: <command>window.__LEVEL__.map</command>",
+				"Copy the result. That's your level string!"
+			]
+		}
 	},
 	"save_changes": "Save changes",
 	"create": "Create",

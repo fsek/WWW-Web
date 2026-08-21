@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import AdminForm from "@/widgets/AdminForm";
 import { format } from "date-fns";
+import EncodedGridHelpDialog from "./components/EncodedGridHelpDialog";
 
 export default function EncloseMooseLevelForm() {
 	const [open, setOpen] = useState(false);
@@ -63,7 +64,9 @@ export default function EncloseMooseLevelForm() {
 				name_en: values.name_en,
 				day_index: values.day_index,
 				release_date: format(values.release_date, "yyyy-MM-dd") as any,
-				encoded_grid: values.encoded_grid.replace(/\\n/g, "\n"),
+				encoded_grid: values.encoded_grid
+					.replace(/\\n/g, "\n")
+					.replace(/^"+|"+$/g, ""),
 				wall_budget: values.wall_budget,
 			},
 		});
@@ -118,6 +121,7 @@ export default function EncloseMooseLevelForm() {
 					min: 0,
 				},
 			]}
+			customButtons={<EncodedGridHelpDialog />}
 			zodSchema={encloseMooseLevelSchema}
 			onSubmit={onSubmit}
 		/>
