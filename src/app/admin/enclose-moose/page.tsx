@@ -116,6 +116,10 @@ export default function EncloseMoose() {
 			}
 			columnFilters={columnFilters}
 			onColumnFiltersChange={setColumnFilters}
+			initialSorting={[
+				{ id: "release_date", desc: true },
+				{ id: "day_index", desc: true },
+			]}
 		/>
 	);
 }
