@@ -21,6 +21,7 @@ export default function EncloseMooseLevelForm() {
 		release_date: z.date({ error: t("enclose_moose.release_date_invalid") }),
 		day_index: z
 			.int({ error: t("enclose_moose.day_index_invalid") })
+			.nullable()
 			.optional(),
 		name_sv: z
 			.string({ error: t("enclose_moose.level_name_invalid") })
@@ -64,7 +65,7 @@ export default function EncloseMooseLevelForm() {
 				name_en: values.name_en,
 				day_index: values.day_index,
 				release_date: format(values.release_date, "yyyy-MM-dd") as any,
-				encoded_grid: values.encoded_grid,
+				encoded_grid: values.encoded_grid.replace(/\\n/g, "\n"),
 				wall_budget: values.wall_budget,
 			},
 		});

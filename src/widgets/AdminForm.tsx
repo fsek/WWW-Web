@@ -331,7 +331,11 @@ export default function AdminForm<T extends FieldValues>({
 																		: ""
 																}
 																onChange={(e) =>
-																	field.onChange(e.target.valueAsNumber)
+																	field.onChange(
+																		!Number.isNaN(e.target.valueAsNumber)
+																			? e.target.valueAsNumber
+																			: null,
+																	)
 																}
 															/>
 														</FormControl>

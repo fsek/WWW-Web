@@ -109,7 +109,7 @@ export default function EncloseMooseLevelEditForm({
 			name_en: values.name_en,
 			day_index: values.day_index,
 			release_date: format(values.release_date, "yyyy-MM-dd") as any,
-			encoded_grid: values.encoded_grid,
+			encoded_grid: values.encoded_grid.replace(/\\n/g, "\n"),
 			wall_budget: values.wall_budget,
 		};
 
