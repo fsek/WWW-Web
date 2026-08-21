@@ -669,7 +669,19 @@
 			"unlock_code_placeholder": "If added, the code is needed to see mission info. Not cryptographically secure.",
 			"unlock_hint_sv": "Unlock hint (Swedish)",
 			"unlock_hint_en": "Unlock hint (English)",
-			"unlock_hint_placeholder": "The code may be found by solving this riddle: ..."
+			"unlock_hint_placeholder": "The code may be found by solving this riddle: ...",
+			"mission_category": "Category",
+			"mission_category_placeholder": "Select a category",
+			"mission_category_header": "Category",
+			"mission_category_value": {
+				"barbiedans": "Barbie Dance",
+				"fadder": "Mentor",
+				"kreativ": "Creative",
+				"resa": "Travel",
+				"spel": "Game",
+				"tävling": "Competition",
+				"älg": "Moose"
+			}
 		},
 		"mission_grading": {
 			"header_title": "Title",
@@ -748,7 +760,8 @@
 				"matched_preview": "Matched {{count}} users",
 				"selected_users": "Selected users",
 				"more_users": "+{{count}} more, click to show all",
-				"unmatched_values": "Unmatched values (or already added users)",
+				"unmatched_values": "Unmatched values",
+				"values_already_in_group": "Already in the group",
 				"toast_success": "Added {{count}} users to the group",
 				"toast_partial_success": "Added {{count}} users, but {{unmatched}} values could not be matched",
 				"toast_error": "Failed to add users to the group. {{added}} users added, {{failed}} could not be added.",
