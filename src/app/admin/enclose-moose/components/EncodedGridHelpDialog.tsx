@@ -14,6 +14,7 @@ export default function EncodedGridHelpDialog() {
 		<>
 			<Button
 				variant="outline"
+				type="button"
 				onClick={(e) => {
 					e.preventDefault();
 					setOpen(true);

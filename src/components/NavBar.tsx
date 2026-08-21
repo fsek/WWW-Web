@@ -48,7 +48,6 @@ import {
 	SheetClose,
 	SheetTitle,
 } from "@/components/ui/sheet";
-import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import VerificationReminder from "./VerificationReminder";
