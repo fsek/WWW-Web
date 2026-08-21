@@ -27,6 +27,7 @@ export default function EncloseMooseLevelEditForm({
 	const router = useRouter();
 
 	const encloseMooseLevelEditSchema = z.object({
+		level_id: z.int(),
 		release_date: z.date({ error: t("enclose_moose.release_date_invalid") }),
 		day_index: z
 			.int({ error: t("enclose_moose.day_index_invalid") })
