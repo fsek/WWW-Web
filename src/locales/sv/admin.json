@@ -1239,7 +1239,7 @@
 	"enclose_moose": {
 		"self": "Enclose Moose",
 		"page_title": "Hantera Enclose Moose-nivåer",
-		"page_description": "Här kan du skapa och hantera nivåer och resultat för appens spel Inhägna Älg.",
+		"page_description": "Här kan du skapa och hantera nivåer för fappens spel Inhägna Älg.",
 		"level_name_sv": "Nivånamn (svenska)",
 		"level_name_en": "Nivånamn (engelska)",
 		"release_date": "Utgivningsdatum",

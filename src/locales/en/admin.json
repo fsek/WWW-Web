@@ -1239,7 +1239,7 @@
 	"enclose_moose": {
 		"self": "Enclose Moose",
 		"page_title": "Manage Enclose Moose levels",
-		"page_description": "Here you can create and edit levels and scores for the app's Enclose Moose game.",
+		"page_description": "Here you can create and edit levels for the fapp's Enclose Moose game.",
 		"level_name_sv": "Level name (Swedish)",
 		"level_name_en": "Level name (English)",
 		"release_date": "Release date",
