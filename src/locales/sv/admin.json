@@ -1262,7 +1262,11 @@
 		"encoded_grid_placeholder": "Klistra in din nivåsträng här!",
 		"wall_budget": "Murbudget",
 		"wall_budget_placeholder": "Murbudget",
-		"edit_level": "Redigera nivå"
+		"edit_level": "Redigera nivå",
+		"edit_success": "Nivån har redigerats!",
+		"edit_error": "Kunde inte redigera nivån",
+		"remove_success": "Nivån har raderats!",
+		"remove_error": "Kunde inte radera nivån"
 	},
 	"save_changes": "Spara",
 	"create": "Skapa",

@@ -1262,7 +1262,11 @@
 		"encoded_grid_placeholder": "Paste your encoded level string into this box!",
 		"wall_budget": "Wall budget",
 		"wall_budget_placeholder": "Wall budget",
-		"edit_level": "Edit level"
+		"edit_level": "Edit level",
+		"edit_success": "Successfully edited level!",
+		"edit_error": "Could not edit level",
+		"remove_success": "Level removed successfully!",
+		"remove_error": "Could not remove level"
 	},
 	"save_changes": "Save changes",
 	"create": "Create",

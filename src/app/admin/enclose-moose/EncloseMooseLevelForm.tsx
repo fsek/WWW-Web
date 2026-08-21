@@ -53,8 +53,6 @@ export default function EncloseMooseLevelForm() {
 					? error.detail
 					: t("enclose_moose.create_level_error"),
 			);
-
-			// setOpen(false);
 		},
 	});
 

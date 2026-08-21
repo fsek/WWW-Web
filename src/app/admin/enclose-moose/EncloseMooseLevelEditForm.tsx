@@ -56,6 +56,7 @@ export default function EncloseMooseLevelEditForm({
 		if (item) {
 			const convertedItem = {
 				...item,
+				day_index: item.day_index ?? undefined,
 			} as z.infer<typeof encloseMooseLevelEditSchema>;
 			setConvertedItem(convertedItem);
 		}
@@ -78,7 +79,6 @@ export default function EncloseMooseLevelEditForm({
 					? error.detail
 					: t("enclose_moose.edit_error"),
 			);
-			onClose();
 		},
 	});
 
@@ -101,7 +101,7 @@ export default function EncloseMooseLevelEditForm({
 		},
 	});
 
-	function handleFormSubmit(
+	async function handleFormSubmit(
 		values: z.infer<typeof encloseMooseLevelEditSchema>,
 	) {
 		const updatedLevel: EncloseMooseLevelUpdate = {
@@ -113,7 +113,7 @@ export default function EncloseMooseLevelEditForm({
 			wall_budget: values.wall_budget,
 		};
 
-		updateLevel.mutate(
+		await updateLevel.mutateAsync(
 			{
 				path: { level_id: values.level_id },
 				body: updatedLevel,
