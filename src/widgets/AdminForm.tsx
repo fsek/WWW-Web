@@ -328,7 +328,7 @@ export default function AdminForm<T extends FieldValues>({
 																	typeof field.value === "number" &&
 																	!Number.isNaN(field.value)
 																		? field.value
-																		: undefined
+																		: ""
 																}
 																onChange={(e) =>
 																	field.onChange(
