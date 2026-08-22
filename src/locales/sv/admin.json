@@ -918,7 +918,7 @@
 		"confirm_remove": "Bekräfta borttagning av sång",
 		"confirm_remove_text": "Är du säker på att du vill ta bort denna sång?",
 		"view_song": "Visa sångdetaljer",
-		"song_title": "Sångtitel",
+		"song_title": "Titel",
 		"song_title_invalid": "Vänligen ange en sångtitel",
 		"content_invalid": "Vänligen lägg till en sångtext",
 		"category_invalid": "Vänligen ange en sångkategori"

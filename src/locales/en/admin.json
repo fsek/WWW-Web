@@ -927,7 +927,7 @@
 		"confirm_remove": "Confirm removal of song",
 		"confirm_remove_text": "Are you sure you want to remove this song?",
 		"view_song": "View song details",
-		"song_title": "Song title",
+		"song_title": "Title",
 		"song_title_invalid": "Please enter a song title",
 		"content_invalid": "Please add lyrics for the song",
 		"category_invalid": "Please select a song category"
