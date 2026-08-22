@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { API_BASE_URL } from "@/constants";
+import { API_BASE_URL, MENTOR_GROUP_TYPE_ENUM } from "@/constants";
+import { GroupUserTypeEnum } from "@/api";
 
 interface EventExtendedProps {
 	description?: string;
@@ -122,10 +123,12 @@ function generateICS(events: CalendarEvent[]) {
 		if (event.extendedProps?.is_nollning_event) {
 			let translated_nollning_text = "Nollningsevent.";
 			if (event.extendedProps?.mentor_group_types) {
-				const mentor =
-					event.extendedProps?.mentor_group_types.includes("Mentor");
-				const mission =
-					event.extendedProps?.mentor_group_types.includes("Mission");
+				const mentor = event.extendedProps?.mentor_group_types.includes(
+					MENTOR_GROUP_TYPE_ENUM.MENTOR,
+				);
+				const mission = event.extendedProps?.mentor_group_types.includes(
+					MENTOR_GROUP_TYPE_ENUM.MISSION,
+				);
 				if (mentor && !mission) {
 					translated_nollning_text = "Nollningsevent (med faddergruppen).";
 				} else if (mission && !mentor) {
