@@ -72,6 +72,7 @@ type DateTimeAdminFormInputField<T extends FieldValues> =
 	BaseAdminFormInputField<T> & {
 		variant: "datetime";
 		granularity?: Granularity;
+		placeholder?: string;
 	};
 // Implement further cases here
 
@@ -358,7 +359,7 @@ export default function AdminForm<T extends FieldValues>({
 														<FormControl>
 															<AdminChooseDates
 																value={field.value as Date}
-																placeholder={t("admin:events.pick_date")}
+																placeholder={inputField.placeholder}
 																granularity={inputField.granularity}
 																onChange={field.onChange}
 															/>

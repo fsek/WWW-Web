@@ -1283,7 +1283,8 @@
 				"Öppna utvecklarverktygen, navigera till konsolen och skriv in följande kommando: <command>window.__LEVEL__.map</command>",
 				"Kopiera resultatet. Det är din nivåsträng!"
 			]
-		}
+		},
+		"release_date_placeholder": "Välj ett utgivningsdatum"
 	},
 	"save_changes": "Spara",
 	"create": "Skapa",

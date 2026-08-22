@@ -1292,7 +1292,8 @@
 				"Open DevTools, navigate to the console and type in the following command: <command>window.__LEVEL__.map</command>",
 				"Copy the result. That's your level string!"
 			]
-		}
+		},
+		"release_date_placeholder": "Pick a release date"
 	},
 	"save_changes": "Save changes",
 	"create": "Create",

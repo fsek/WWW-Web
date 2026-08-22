@@ -93,6 +93,7 @@ export default function EncloseMooseLevelForm() {
 					variant: "datetime",
 					name: "release_date",
 					label: t("enclose_moose.release_date"),
+					placeholder: t("enclose_moose.release_date_placeholder"),
 					granularity: "day",
 				},
 				{
