@@ -30,6 +30,7 @@ import { useTranslation } from "react-i18next";
 import { Textarea } from "@/components/ui/textarea";
 import { SelectFromOptions } from "./SelectFromOptions";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
+import { AdminChooseDates, type Granularity } from "./AdminChooseDates";
 
 type BaseAdminFormInputField<T extends FieldValues> = {
 	name: Path<T>;
@@ -46,6 +47,7 @@ type TextAdminFormInputField<T extends FieldValues> =
 type TextareaAdminFormInputField<T extends FieldValues> =
 	BaseAdminFormInputField<T> & {
 		variant: "textarea";
+		monospace?: boolean;
 		rows?: number;
 		placeholder?: string;
 	};
@@ -60,6 +62,16 @@ type SelectFromOptionsAdminFormInputField<T extends FieldValues> =
 type NumberAdminFormInputField<T extends FieldValues> =
 	BaseAdminFormInputField<T> & {
 		variant: "number";
+		min?: number;
+		max?: number;
+		step?: number;
+		placeholder?: string;
+	};
+
+type DateTimeAdminFormInputField<T extends FieldValues> =
+	BaseAdminFormInputField<T> & {
+		variant: "datetime";
+		granularity?: Granularity;
 		placeholder?: string;
 	};
 // Implement further cases here
@@ -68,7 +80,8 @@ export type AdminFormInputField<T extends FieldValues> =
 	| TextAdminFormInputField<T>
 	| TextareaAdminFormInputField<T>
 	| SelectFromOptionsAdminFormInputField<T>
-	| NumberAdminFormInputField<T>;
+	| NumberAdminFormInputField<T>
+	| DateTimeAdminFormInputField<T>;
 
 export interface AdminFormProps<T extends FieldValues> {
 	title: string;
@@ -153,7 +166,11 @@ export default function AdminForm<T extends FieldValues>({
 
 	const handleFormSubmit = genericForm.handleSubmit(async (values, event) => {
 		setSubmitLocked(true);
-		onSubmit(values, event);
+		try {
+			await onSubmit(values, event);
+		} catch {
+			setSubmitLocked(false);
+		}
 	});
 
 	const getColSpanClass = (colSpan?: number) => {
@@ -253,6 +270,9 @@ export default function AdminForm<T extends FieldValues>({
 															<Textarea
 																placeholder={inputField.placeholder}
 																rows={inputField.rows}
+																className={
+																	inputField.monospace ? "font-mono" : ""
+																}
 																{...field}
 																value={(field.value ?? "") as string}
 															/>
@@ -301,6 +321,9 @@ export default function AdminForm<T extends FieldValues>({
 															<Input
 																type="number"
 																placeholder={inputField.placeholder}
+																min={inputField.min}
+																max={inputField.max}
+																step={inputField.step}
 																{...field}
 																value={
 																	typeof field.value === "number" &&
@@ -309,8 +332,36 @@ export default function AdminForm<T extends FieldValues>({
 																		: ""
 																}
 																onChange={(e) =>
-																	field.onChange(e.target.valueAsNumber)
+																	field.onChange(
+																		!Number.isNaN(e.target.valueAsNumber)
+																			? e.target.valueAsNumber
+																			: null,
+																	)
 																}
+															/>
+														</FormControl>
+														<FormMessage />
+													</FormItem>
+												)}
+											/>
+										);
+									case "datetime":
+										return (
+											<FormField
+												key={inputField.name}
+												control={genericForm.control}
+												name={inputField.name}
+												render={({ field }) => (
+													<FormItem
+														className={getColSpanClass(inputField.colSpan)}
+													>
+														<FormLabel>{inputField.label}</FormLabel>
+														<FormControl>
+															<AdminChooseDates
+																value={field.value as Date}
+																placeholder={inputField.placeholder}
+																granularity={inputField.granularity}
+																onChange={field.onChange}
 															/>
 														</FormControl>
 														<FormMessage />

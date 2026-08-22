@@ -68,6 +68,7 @@ export default function AdminPage<T>({
 	columnFilters,
 	onColumnFiltersChange,
 	columnVisibility,
+	initialSorting,
 }: {
 	/**
 	 * Page title.
@@ -91,8 +92,9 @@ export default function AdminPage<T>({
 	columnFilters?: ColumnFiltersState;
 	onColumnFiltersChange?: OnChangeFn<ColumnFiltersState>;
 	columnVisibility?: VisibilityState;
+	initialSorting?: SortingState;
 }) {
-	const [sorting, setSorting] = useState<SortingState>([]);
+	const [sorting, setSorting] = useState<SortingState>(initialSorting ?? []);
 
 	// If the global filter is set, the data is filtered in a fuzzy manner.
 	//
@@ -113,6 +115,7 @@ export default function AdminPage<T>({
 		getFilteredRowModel: getFilteredRowModel(),
 		onSortingChange: setSorting,
 		globalFilterFn: fuzzyFilter,
+		initialSorting,
 		initialState: {
 			columnVisibility,
 		},

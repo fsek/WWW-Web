@@ -48,7 +48,6 @@ import {
 	SheetClose,
 	SheetTitle,
 } from "@/components/ui/sheet";
-import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import VerificationReminder from "./VerificationReminder";
@@ -279,7 +278,6 @@ export function NavBar() {
 				<VerificationReminder showBanner={user?.is_verified === false} />
 				<MemberBanner showBanner={user?.is_member === false} />
 			</div>
-			<Toaster position="top-center" richColors />
 		</header>
 	);
 }
