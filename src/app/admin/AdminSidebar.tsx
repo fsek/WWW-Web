@@ -23,6 +23,7 @@ import {
 	Images,
 	Gavel,
 	Vote,
+	Fence,
 } from "lucide-react";
 
 import {
@@ -159,6 +160,17 @@ const groups: AdminGroup[] = [
 				url: "/admin/songs",
 				permissions: [[ActionEnum.MANAGE, TargetEnum.SONG]],
 				icon: Music3,
+			},
+		],
+	},
+	{
+		title: "admin:categories.games",
+		entries: [
+			{
+				title: "admin:enclose_moose.self",
+				url: "/admin/enclose-moose",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.ENCLOSE_MOOSE]],
+				icon: Fence,
 			},
 		],
 	},
