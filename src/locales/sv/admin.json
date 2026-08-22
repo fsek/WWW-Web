@@ -888,14 +888,15 @@
 		"remove_success": "Sångkategorin har tagits bort",
 		"remove_error": "Kunde inte ta bort sångkategori",
 		"confirm_remove": "Bekräfta borttagning av sångkategori",
-		"confirm_remove_text": "Är du säker på att du vill ta bort denna sångkategori?"
+		"confirm_remove_text": "Är du säker på att du vill ta bort denna sångkategori?",
+		"name_invalid": "Vänligen ange ett kategorinamn"
 	},
 	"songs": {
 		"self": "Sånger",
-		"title": "Hantera Sånger",
+		"title": "Hantera sånger",
 		"description_subtitle": "Här kan du skapa och hantera sånger.",
-		"create_song": "Skapa Sång",
-		"edit_song": "Redigera Sång",
+		"create_song": "Skapa sång",
+		"edit_song": "Redigera sång",
 		"title_placeholder": "Sångtitel",
 		"author": "Författare",
 		"author_placeholder": "Sångförfattare",
@@ -913,10 +914,14 @@
 		"edit_error": "Kunde inte uppdatera sång",
 		"remove_success": "Sången har tagits bort",
 		"remove_error": "Kunde inte ta bort sång",
-		"remove_song": "Ta bort Sång",
+		"remove_song": "Ta bort sång",
 		"confirm_remove": "Bekräfta borttagning av sång",
 		"confirm_remove_text": "Är du säker på att du vill ta bort denna sång?",
-		"view_song": "Visa sångdetaljer"
+		"view_song": "Visa sångdetaljer",
+		"song_title": "Sångtitel",
+		"song_title_invalid": "Vänligen ange en sångtitel",
+		"content_invalid": "Vänligen lägg till en sångtext",
+		"category_invalid": "Vänligen ange en sångkategori"
 	},
 	"keyvals": {
 		"self": "Nyckelvärden",
