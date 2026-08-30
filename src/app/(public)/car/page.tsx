@@ -3,7 +3,7 @@
 // Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
 import { useState } from "react";
-import type { CarBookingRead } from "@/api/index";
+import { ActionEnum, TargetEnum, type CarBookingRead } from "@/api/index";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createCarBookingMutation,
@@ -35,6 +35,7 @@ import {
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { toast } from "sonner";
 import KeyValLink from "@/components/KeyValLink";
+import { useAuthState } from "@/lib/auth";
 
 export default function Car() {
 	const router = useRouter();
@@ -42,6 +43,7 @@ export default function Car() {
 	const queryClient = useQueryClient();
 	const [, setOpen] = useState(false);
 	const [, setSubmitEnabled] = useState(true);
+	const auth = useAuthState();
 
 	const {
 		data: bookingData,
@@ -289,7 +291,15 @@ export default function Car() {
 							size={3}
 							fullUnderline
 						/>
-						<Trans i18nKey="main:car-booking.description">
+						<Trans
+							i18nKey={
+								auth
+									.getPermissions()
+									.hasRequiredPermissions([[ActionEnum.VIEW, TargetEnum.CAR]])
+									? "main:car-booking.description-admin"
+									: "main:car-booking.description"
+							}
+						>
 							<Link
 								className="text-blue-500 hover:text-blue-700 underline mr-0"
 								href="/admin/car"

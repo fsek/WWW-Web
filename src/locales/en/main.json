@@ -313,7 +313,8 @@
 	"car-booking": {
 		"title": "Car Booking",
 		"description-title": "FAQ and rules",
-		"description": "As a member, you can book the guild car for your personal and guild-related needs. If you are an admin, you can manage bookings <0>here</0> instead. By booking the car, you agree to follow the rules found <1>here</1>.",
+		"description": "As a member, you can book the guild car for your personal and guild-related needs. By booking the car, you agree to follow the rules found <1>here</1>.",
+		"description-admin": "As a member, you can book the guild car for your personal and guild-related needs. If you are an admin, you can manage bookings <0>here</0> instead. By booking the car, you agree to follow the rules found <1>here</1>.",
 		"faq": {
 			"title": "Frequently Asked Questions",
 			"q1": "Who can book the car?",

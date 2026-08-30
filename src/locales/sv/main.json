@@ -313,7 +313,8 @@
 	"car-booking": {
 		"title": "Bilbokning",
 		"description-title": "FAQ och regler",
-		"description": "Som medlem kan du boka sektionens bil för personliga och sektionrelaterade behov. Om du är administratör kan du hantera bokningar <0>här</0> istället. Genom att boka bilen godkänner du att följa reglerna som finns <1>här</1>.",
+		"description": "Som medlem kan du boka sektionens bil för personliga och sektionrelaterade behov. Genom att boka bilen godkänner du att följa reglerna som finns <1>här</1>.",
+		"description-admin": "Som medlem kan du boka sektionens bil för personliga och sektionrelaterade behov. Om du är administratör kan du hantera bokningar <0>här</0> istället. Genom att boka bilen godkänner du att följa reglerna som finns <1>här</1>.",
 		"faq": {
 			"title": "Vanliga frågor",
 			"q1": "Vem kan boka bilen?",
