@@ -28,6 +28,7 @@ import {
 	type DefaultError,
 	useMutation,
 	useQuery,
+	useQueryClient,
 } from "@tanstack/react-query";
 import {
 	getMeOptions,
@@ -70,6 +71,7 @@ export function NavBar() {
 		...getMeOptions(),
 		refetchOnWindowFocus: false,
 	});
+	const queryClient = useQueryClient();
 	const loginHandler = useLoginHandler();
 	const logoutMutation = useMutation({
 		...authCookieLogoutMutation({ credentials: "include" }),
@@ -78,6 +80,7 @@ export function NavBar() {
 			// obviously this is not secure enough for real authentication
 			document.cookie =
 				"auth_status=unauthenticated; path=/; SameSite=Strict; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+			queryClient.clear();
 			router.push("/");
 		},
 		onError: (error: DefaultError) => {
