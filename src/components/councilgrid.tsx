@@ -18,6 +18,7 @@ import {
 	Megaphone,
 	BriefcaseBusiness,
 	Vote,
+	Wine,
 } from "lucide-react";
 
 const councils = [
@@ -29,6 +30,7 @@ const councils = [
 		icon: University,
 	},
 	{ key: "foset", url: "/councils/foset", icon: Shield },
+	{ key: "krogeriet", url: "/councils/krogeriet", icon: Wine },
 	{
 		key: "kulturministeriet",
 		url: "/councils/kulturministeriet",

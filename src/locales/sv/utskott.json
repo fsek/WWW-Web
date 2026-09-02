@@ -36,6 +36,12 @@
 		"info": "Föset har hand om nollningen, som är vad vi kallar välkomnandet av nya studenter till F-sektionen.",
 		"contact": "Överfös"
 	},
+	"krogeriet": {
+		"self": "Krögeriet",
+		"about": "Fyll i",
+		"info": "Krögeriet ansvarar över alkoholservering för sektionens icke serveringsfokuserade utskott.",
+		"contact": "Krögare"
+	},
 	"kulturministeriet": {
 		"self": "Kulturministeriet",
 		"about": "Fyll i",
