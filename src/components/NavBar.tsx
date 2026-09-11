@@ -554,7 +554,7 @@ function NavBarStandaloneLink({
 				(!item.href || item.href === "#") &&
 					"opacity-50 cursor-not-allowed pointer-events-none",
 				item.special &&
-					`special-navbar-link special-navbar-phase-${animationIndex % 4} border-transparent hover:border-transparent`,
+					`special-navbar-link special-navbar-phase-${animationIndex % 4} border-none hover:border-none`,
 			)}
 			{...props}
 		>

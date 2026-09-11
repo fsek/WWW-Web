@@ -1,7 +1,9 @@
 .special-navbar-link {
 	--special-primary: var(--color-primary);
 	--special-primary-light: color-mix(in srgb, var(--special-primary) 83%, white);
+	--special-primary-mid: color-mix(in srgb, var(--special-primary) 92%, white);
 	--special-primary-dark: color-mix(in srgb, var(--special-primary) 85%, black);
+	--special-primary-deep: color-mix(in srgb, var(--special-primary) 72%, black);
 	--special-gradient-duration: 4s;
 	--special-glow-duration: 2.4s;
 	--special-hover-duration: 1000ms;
@@ -21,20 +23,23 @@
 	isolation: isolate;
 	background: linear-gradient(
 		115deg,
+		var(--special-primary-deep),
 		var(--special-primary-dark),
 		var(--special-primary),
+		var(--special-primary-mid),
 		var(--special-primary-dark),
 		var(--special-primary-light),
+		var(--special-primary-mid),
 		var(--special-primary)
 	);
-	background-size: 350% 350%;
+	background-size: 300% 300%;
 
 	color: var(--color-primary-foreground);
 	box-shadow: 0 0 0 1px
 		color-mix(in srgb, var(--special-primary) 55%, transparent), 0 0 12px
 		color-mix(in srgb, var(--special-primary) 30%, transparent);
 	animation: special-navbar-gradient var(--special-gradient-duration)
-		ease-in-out infinite, special-navbar-glow var(--special-glow-duration)
+		ease-in-out infinite alternate, special-navbar-glow var(--special-glow-duration)
 		ease-in-out infinite;
 	transition: background-position var(--special-background-transition-duration)
 		ease, box-shadow var(--special-transition-duration) ease, filter
@@ -67,11 +72,10 @@
 }
 
 @keyframes special-navbar-gradient {
-	0%,
-	100% {
+	0% {
 		background-position: var(--special-gradient-start);
 	}
-	50% {
+	100% {
 		background-position: var(--special-gradient-end);
 	}
 }
