@@ -86,7 +86,7 @@ export default function MainLanding() {
 				</div>
 			</div>
 
-			<div className="w-screen">
+			<div className="w-full">
 				<Sponsors />
 			</div>
 

@@ -37,6 +37,12 @@
 		"info": "The Introduction Committee is responsible for the welcoming and orientation of new students to the F-guild.",
 		"contact": "Överfös"
 	},
+	"krogeriet": {
+		"self": "The Tavern Committee",
+		"about": "Fill in",
+		"info": "The Tavern Committee is responsible for alcohol service on behalf of the guild's committees that do not run serving operations of their own.",
+		"contact": "Chief Tavern Officer"
+	},
 	"kulturministeriet": {
 		"self": "Ministry of Culture",
 		"about": "Fill in",

@@ -73,7 +73,7 @@ export default function ContactPage() {
 							<ContactCard
 								id="preses"
 								title={t("board.preses")}
-								fullName="Malte Callsen"
+								fullName="Albin Torpel"
 								email="preses@fsektionen.se"
 								highlight={highlightedId === "preses"}
 							/>
@@ -87,7 +87,7 @@ export default function ContactPage() {
 							<ContactCard
 								id="board_members"
 								title={t("board.board_members")}
-								fullName="Sixten Georgsson, Samuel Eriksson, Albin Torpel"
+								fullName="Alicia Ahlgren, Alva Rosberg, Jacob Hoas, Nina Westling"
 								email="styrelseledamoter@fsektionen.se"
 								highlight={highlightedId === "board_members"}
 							/>
@@ -103,7 +103,7 @@ export default function ContactPage() {
 							<ContactCard
 								id="facilities"
 								title={t("other.facilities")}
-								fullName="Alva Rosberg"
+								fullName="Erik Mällroth Franzén"
 								email="prylm@fsektionen.se"
 								highlight={highlightedId === "facilities"}
 							/>
@@ -152,7 +152,7 @@ export default function ContactPage() {
 							<ContactCard
 								id="cafe"
 								title={t("other.cafe")}
-								fullName="Jacob Hoas"
+								fullName="Albin Björk"
 								email="cafe@fsektionen.se"
 								highlight={highlightedId === "cafe"}
 							/>
@@ -226,7 +226,7 @@ export default function ContactPage() {
 							<ContactCard
 								id="spindelforman"
 								title={t("web.spider")}
-								fullName="Manfred Malmros"
+								fullName="Felix Hellborg"
 								email="spindelforman@fsektionen.se"
 								highlight={highlightedId === "spindelforman"}
 							/>

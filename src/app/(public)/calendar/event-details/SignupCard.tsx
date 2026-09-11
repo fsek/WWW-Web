@@ -90,7 +90,11 @@ export default function SignupCard({
 
 				// No group and no priority to fall back on
 				if (!data.priority) {
-					return false;
+					// return false;
+					// Regular members who are not involved in the nollning and who have no priority
+					// must be allowed to sign up. Checking this is kinda difficult, so let's just 
+					// allow people with no priorities and no group name to sign up, and rely on the backend to reject.
+					return true; 
 				}
 
 				// Without a group, the priority has to be a non-nollning one
