@@ -14,15 +14,6 @@ import { useRouter } from "next/navigation";
 import AdminForm from "@/widgets/AdminForm";
 import { Button } from "@/components/ui/button";
 
-const songEditSchema = z.object({
-	id: z.number(),
-	title: z.string().min(2),
-	author: z.string().optional(),
-	melody: z.string().optional(),
-	content: z.string().min(1),
-	category_id: z.string().min(1),
-});
-
 interface SongEditFormProps {
 	item: SongRead | null;
 	onClose: () => void;
@@ -31,6 +22,21 @@ interface SongEditFormProps {
 export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 	const { t } = useTranslation("admin");
 	const router = useRouter();
+
+	const songEditSchema = z.object({
+		id: z.number(),
+		title: z
+			.string({ error: t("songs.song_title_invalid") })
+			.min(2, { error: t("songs.song_title_invalid") }),
+		author: z.string().optional(),
+		melody: z.string().optional(),
+		content: z
+			.string({ error: t("songs.content_invalid") })
+			.min(1, { error: t("songs.content_invalid") }),
+		category_id: z
+			.string({ error: t("songs.category_invalid") })
+			.min(1, { error: t("songs.category_invalid") }),
+	});
 
 	// Convert item to the zod schema format (category_id instead of category object)
 	const [convertedItem, setConvertedItem] = useState<z.infer<
@@ -70,7 +76,6 @@ export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 					? error.detail
 					: t("songs.edit_error"),
 			);
-			onClose();
 		},
 	});
 
@@ -93,7 +98,7 @@ export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 		},
 	});
 
-	function handleFormSubmit(values: z.infer<typeof songEditSchema>) {
+	async function handleFormSubmit(values: z.infer<typeof songEditSchema>) {
 		const updatedSong: SongCreate = {
 			title: values.title,
 			author: values.author || null,
@@ -102,7 +107,7 @@ export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 			category_id: Number.parseInt(values.category_id),
 		};
 
-		updateSong.mutate(
+		await updateSong.mutateAsync(
 			{
 				path: { song_id: values.id },
 				body: updatedSong,
@@ -155,7 +160,7 @@ export default function SongEditForm({ onClose, item }: SongEditFormProps) {
 				{
 					variant: "text",
 					name: "title",
-					label: t("songs.title"),
+					label: t("songs.song_title"),
 					placeholder: t("songs.title_placeholder"),
 				},
 				{
