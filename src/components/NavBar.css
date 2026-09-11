@@ -39,8 +39,8 @@
 		color-mix(in srgb, var(--special-primary) 55%, transparent), 0 0 12px
 		color-mix(in srgb, var(--special-primary) 30%, transparent);
 	animation: special-navbar-gradient var(--special-gradient-duration)
-		ease-in-out infinite alternate, special-navbar-glow var(--special-glow-duration)
-		ease-in-out infinite;
+		ease-in-out infinite alternate, special-navbar-glow
+		var(--special-glow-duration) ease-in-out infinite;
 	transition: background-position var(--special-background-transition-duration)
 		ease, box-shadow var(--special-transition-duration) ease, filter
 		var(--special-transition-duration) ease;
