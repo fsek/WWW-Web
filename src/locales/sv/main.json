@@ -215,7 +215,9 @@
 		"logout": "Logga ut",
 		"logoutError": "Utloggning misslyckades. Försök igen senare.",
 		"verify": "Verifiera e-post",
-		"guild-meeting": "Sektionsmöte"
+		"guild-meeting": "Sektionsmöte",
+		"guild-meeting-now": "{{title}}",
+		"election-now": "{{title}}"
 	},
 	"footer": {
 		"contact": "Kontakt",

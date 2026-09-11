@@ -33,6 +33,7 @@ import {
 	getMeOptions,
 	authCookieLogoutMutation,
 	getGuildMeetingOptions,
+	getVisibleElectionOptions,
 } from "@/api/@tanstack/react-query.gen";
 import {
 	DropdownMenu,
@@ -52,11 +53,14 @@ import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import VerificationReminder from "./VerificationReminder";
 import MemberBanner from "./MemberBanner";
+import { useAuthState } from "@/lib/auth";
+import "./NavBar.css";
 
 type NavItem = {
 	self: string;
 	desc: string;
 	href?: string;
+	special?: boolean;
 };
 
 type NavSection = {
@@ -64,7 +68,7 @@ type NavSection = {
 } & Record<string, NavItem>;
 
 export function NavBar() {
-	const { t } = useTranslation();
+	const { t } = useTranslation("main");
 	const router = useRouter();
 	const { data: user } = useQuery({
 		...getMeOptions(),
@@ -89,8 +93,7 @@ export function NavBar() {
 		logoutMutation.mutate({});
 	}, [logoutMutation]);
 
-	const showAdmin =
-		user?.is_member && Array.isArray(user.posts) && user.posts.length > 0;
+	const showAdmin = useAuthState().getPermissions().size > 0;
 
 	return (
 		<header className="sticky top-0 z-50 w-full border-transparent  bg-white/50 dark:bg-background/40  backdrop-blur-md">
@@ -292,7 +295,7 @@ function useLoginHandler() {
 }
 
 export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation("main");
 	const navbarData = t("navbar", { returnObjects: true }) as Record<
 		string,
 		NavSection
@@ -313,9 +316,41 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 			"guildMeeting",
 			{
 				self: {
-					self: t("navbar.guild-meeting"),
+					self: t("navbar.guild-meeting-now", {
+						title:
+							i18n.language === "en"
+								? guildMeetingData.title_en
+								: guildMeetingData.title_sv,
+					}),
+
 					desc: "",
 					href: "/guild-meeting",
+					special: true,
+				},
+			},
+		]);
+	}
+
+	const { data: electionData } = useQuery({
+		...getVisibleElectionOptions(),
+		refetchOnWindowFocus: false,
+	});
+
+	if (electionData?.visible) {
+		sections.push([
+			"election",
+			{
+				self: {
+					self: t("navbar.election-now", {
+						title:
+							i18n.language === "en"
+								? electionData.title_en
+								: electionData.title_sv,
+					}),
+
+					desc: "",
+					href: "/election",
+					special: true,
 				},
 			},
 		]);
@@ -331,26 +366,19 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 		// Mobile vertical layout
 		return (
 			<div className="space-y-4">
-				{sections.map(([sectionKey, section]) => {
+				{sections.map(([sectionKey, section], sectionIndex) => {
 					// Standalone item
 					if (isStandaloneItem(section)) {
 						const item = section.self;
 						return (
 							<div key={sectionKey} className="space-y-2">
 								<SheetClose asChild>
-									<Link
-										href={item.href || "#"}
-										className={cn(
-											"flex items-center gap-2 px-2 py-2 text-sm rounded-md transition-colors hover:bg-accent font-medium",
-											(!item.href || item.href === "#") &&
-												"opacity-50 cursor-not-allowed pointer-events-none",
-										)}
-									>
-										<span>{item.self}</span>
-										{item.href?.startsWith("https://") && (
-											<ExternalLink className="w-4 h-4" />
-										)}
-									</Link>
+									<NavBarStandaloneLink
+										className="flex items-center"
+										item={item}
+										isMobile={isMobile}
+										animationIndex={sectionIndex}
+									/>
 								</SheetClose>
 							</div>
 						);
@@ -404,7 +432,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
                   custom-navmenu
                 "
 			>
-				{sections.map(([sectionKey, section]) => {
+				{sections.map(([sectionKey, section], sectionIndex) => {
 					// Standalone item support for desktop
 					if (isStandaloneItem(section)) {
 						const item = section.self;
@@ -415,22 +443,12 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 							>
 								<NavigationMenuItem className="bg-transparent hover:bg-transparent">
 									<NavigationMenuLink asChild>
-										<Link
-											href={item.href || "#"}
-											className={cn(
-												"submenu-trigger !bg-transparent !hover:bg-transparent border-2 border-transparent hover:border-foreground/30 font-medium px-4 py-2",
-												(!item.href || item.href === "#") &&
-													"opacity-50 cursor-not-allowed pointer-events-none",
-											)}
-										>
-											{item.self}
-											{item.href?.startsWith("https://") && (
-												<ExternalLink
-													className="inline w-6 h-6 ml-1"
-													aria-label="External link"
-												/>
-											)}
-										</Link>
+										<NavBarStandaloneLink
+											className="submenu-trigger"
+											item={item}
+											isMobile={isMobile}
+											animationIndex={sectionIndex}
+										/>
 									</NavigationMenuLink>
 								</NavigationMenuItem>
 							</NavigationMenuList>
@@ -511,3 +529,42 @@ const ListItem = React.forwardRef<
 	);
 });
 ListItem.displayName = "ListItem";
+
+function NavBarStandaloneLink({
+	className,
+	item,
+	isMobile = false,
+	animationIndex = 0,
+	...props
+}: {
+	item: NavItem;
+	isMobile?: boolean;
+	className?: string;
+	animationIndex?: number;
+}) {
+	return (
+		<Link
+			href={item.href || "#"}
+			className={cn(
+				className,
+				"font-medium whitespace-nowrap",
+				isMobile
+					? "gap-2 px-2 py-2 text-sm rounded-md transition-colors hover:bg-accent"
+					: "h-9 px-4 py-0 ml-4 flex justify-center bg-transparent hover:bg-transparent border-2 border-transparent hover:border-foreground/30",
+				(!item.href || item.href === "#") &&
+					"opacity-50 cursor-not-allowed pointer-events-none",
+				item.special &&
+					`special-navbar-link special-navbar-phase-${animationIndex % 4} border-none hover:border-none`,
+			)}
+			{...props}
+		>
+			{item.self}
+			{item.href?.startsWith("https://") && (
+				<ExternalLink
+					className="inline w-6 h-6 ml-1"
+					aria-label="External link"
+				/>
+			)}
+		</Link>
+	);
+}

@@ -1,0 +1,127 @@
+.special-navbar-link {
+	--special-primary: var(--color-primary);
+	--special-primary-light: color-mix(in srgb, var(--special-primary) 83%, white);
+	--special-primary-mid: color-mix(in srgb, var(--special-primary) 92%, white);
+	--special-primary-dark: color-mix(in srgb, var(--special-primary) 85%, black);
+	--special-primary-deep: color-mix(in srgb, var(--special-primary) 72%, black);
+	--special-gradient-duration: 4s;
+	--special-glow-duration: 2.4s;
+	--special-hover-duration: 1000ms;
+	--special-transition-duration: 360ms;
+	--special-background-transition-duration: calc(
+		var(--special-transition-duration) -
+		40ms
+	);
+	--special-reduced-transition-duration: calc(
+		var(--special-transition-duration) /
+		2
+	);
+	--special-gradient-start: 0% 35%;
+	--special-gradient-end: 100% 65%;
+	position: relative;
+	overflow: hidden;
+	isolation: isolate;
+	background: linear-gradient(
+		115deg,
+		var(--special-primary-deep),
+		var(--special-primary-dark),
+		var(--special-primary),
+		var(--special-primary-mid),
+		var(--special-primary-dark),
+		var(--special-primary-light),
+		var(--special-primary-mid),
+		var(--special-primary)
+	);
+	background-size: 300% 300%;
+
+	color: var(--color-primary-foreground);
+	box-shadow: 0 0 0 1px
+		color-mix(in srgb, var(--special-primary) 55%, transparent), 0 0 12px
+		color-mix(in srgb, var(--special-primary) 30%, transparent);
+	animation: special-navbar-gradient var(--special-gradient-duration)
+		ease-in-out infinite alternate, special-navbar-glow
+		var(--special-glow-duration) ease-in-out infinite;
+	transition: background-position var(--special-background-transition-duration)
+		ease, box-shadow var(--special-transition-duration) ease, filter
+		var(--special-transition-duration) ease, transform
+		var(--special-transition-duration) cubic-bezier(0.22, 1, 0.36, 1);
+	will-change: background-position, transform;
+}
+
+.special-navbar-link:hover {
+	background-position: 100% 50%;
+	filter: brightness(1.06) saturate(1.1);
+	transform: translateY(-1px) scale(1.015);
+	animation: special-navbar-hover var(--special-hover-duration)
+		cubic-bezier(0.22, 1, 0.36, 1) both;
+	box-shadow: 0 0 0 1px
+		color-mix(in srgb, var(--special-primary-light) 65%, transparent), 0 2px 4px
+		color-mix(in srgb, var(--special-primary-deep) 30%, transparent), 0 0 18px
+		color-mix(in srgb, var(--special-primary) 45%, transparent);
+}
+
+.special-navbar-link:active {
+	transform: translateY(0) scale(0.985);
+}
+
+.special-navbar-phase-1 {
+	animation-delay: calc(var(--special-gradient-duration) * -0.25),
+		calc(var(--special-glow-duration) * -0.25);
+}
+
+.special-navbar-phase-2 {
+	animation-delay: calc(var(--special-gradient-duration) * -0.5),
+		calc(var(--special-glow-duration) * -0.5);
+}
+
+.special-navbar-phase-3 {
+	animation-delay: calc(var(--special-gradient-duration) * -0.75),
+		calc(var(--special-glow-duration) * -0.75);
+}
+
+@keyframes special-navbar-gradient {
+	0% {
+		background-position: var(--special-gradient-start);
+	}
+	100% {
+		background-position: var(--special-gradient-end);
+	}
+}
+
+@keyframes special-navbar-hover {
+	0% {
+		background-position: var(--special-gradient-start);
+	}
+	100% {
+		background-position: var(--special-gradient-end);
+	}
+}
+
+@keyframes special-navbar-glow {
+	0%,
+	100% {
+		box-shadow: 0 0 0 1px
+			color-mix(in srgb, var(--special-primary) 55%, transparent), 0 0 12px
+			color-mix(in srgb, var(--special-primary) 30%, transparent);
+	}
+	50% {
+		box-shadow: 0 0 0 1px
+			color-mix(in srgb, var(--special-primary-light) 72%, transparent), 0 0
+			20px color-mix(in srgb, var(--special-primary) 45%, transparent);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.special-navbar-link {
+		animation: none;
+		transition: background-position var(--special-reduced-transition-duration)
+			ease, box-shadow var(--special-reduced-transition-duration) ease, filter
+			var(--special-reduced-transition-duration) ease;
+	}
+
+	.special-navbar-link:hover {
+		background-position: 100% 50%;
+		transform: none;
+		animation: none;
+	}
+}

@@ -215,7 +215,9 @@
 		"logout": "Log out",
 		"logoutError": "Logout failed. Please try again later.",
 		"verify": "Verify Email",
-		"guild-meeting": "Guild Meeting"
+		"guild-meeting": "Guild Meeting",
+		"guild-meeting-now": "{{title}}",
+		"election-now": "{{title}}"
 	},
 	"footer": {
 		"contact": "Contact",
