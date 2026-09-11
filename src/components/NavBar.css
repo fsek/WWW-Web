@@ -43,17 +43,25 @@
 		var(--special-glow-duration) ease-in-out infinite;
 	transition: background-position var(--special-background-transition-duration)
 		ease, box-shadow var(--special-transition-duration) ease, filter
-		var(--special-transition-duration) ease;
+		var(--special-transition-duration) ease, transform
+		var(--special-transition-duration) cubic-bezier(0.22, 1, 0.36, 1);
+	will-change: background-position, transform;
 }
 
 .special-navbar-link:hover {
 	background-position: 100% 50%;
-	filter: brightness(1.03);
+	filter: brightness(1.06) saturate(1.1);
+	transform: translateY(-1px) scale(1.015);
 	animation: special-navbar-hover var(--special-hover-duration)
 		cubic-bezier(0.22, 1, 0.36, 1) both;
 	box-shadow: 0 0 0 1px
-		color-mix(in srgb, var(--special-primary-light) 65%, transparent), 0 0 13px
-		color-mix(in srgb, var(--special-primary) 36%, transparent);
+		color-mix(in srgb, var(--special-primary-light) 65%, transparent), 0 2px 4px
+		color-mix(in srgb, var(--special-primary-deep) 30%, transparent), 0 0 18px
+		color-mix(in srgb, var(--special-primary) 45%, transparent);
+}
+
+.special-navbar-link:active {
+	transform: translateY(0) scale(0.985);
 }
 
 .special-navbar-phase-1 {
@@ -113,6 +121,7 @@
 
 	.special-navbar-link:hover {
 		background-position: 100% 50%;
+		transform: none;
 		animation: none;
 	}
 }
