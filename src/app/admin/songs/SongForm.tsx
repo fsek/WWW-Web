@@ -10,14 +10,6 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import AdminForm from "@/widgets/AdminForm";
 
-const songSchema = z.object({
-	title: z.string().min(2),
-	author: z.string().optional(),
-	melody: z.string().optional(),
-	content: z.string().min(1),
-	category_id: z.string().min(1),
-});
-
 export default function SongForm() {
 	const [open, setOpen] = useState(false);
 	const { t } = useTranslation("admin");
@@ -26,6 +18,20 @@ export default function SongForm() {
 		...getAllSongCategoriesOptions(),
 		enabled: open,
 		refetchOnWindowFocus: false,
+	});
+
+	const songSchema = z.object({
+		title: z
+			.string({ error: t("songs.song_title_invalid") })
+			.min(2, { error: t("songs.song_title_invalid") }),
+		author: z.string().optional(),
+		melody: z.string().optional(),
+		content: z
+			.string({ error: t("songs.content_invalid") })
+			.min(1, { error: t("songs.content_invalid") }),
+		category_id: z
+			.string({ error: t("songs.category_invalid") })
+			.min(1, { error: t("songs.category_invalid") }),
 	});
 
 	const queryClient = useQueryClient();
@@ -45,12 +51,11 @@ export default function SongForm() {
 					? error.detail
 					: t("songs.create_error"),
 			);
-			setOpen(false);
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof songSchema>) {
-		createSong.mutate({
+	async function onSubmit(values: z.infer<typeof songSchema>) {
+		await createSong.mutateAsync({
 			body: {
 				title: values.title,
 				author: values.author || null,

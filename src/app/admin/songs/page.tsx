@@ -2,11 +2,7 @@
 
 import { getAllSongsOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
-import {
-	type ColumnDef,
-	createColumnHelper,
-	type Row,
-} from "@tanstack/react-table";
+import { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import type { SongRead } from "../../../api";
 import SongEditForm from "./SongEditForm";
 import { useTranslation } from "react-i18next";
@@ -21,7 +17,7 @@ export default function Songs() {
 	// biome-ignore lint/suspicious/noExplicitAny: any is kind of needed here
 	const columns: ColumnDef<SongRead, any>[] = [
 		columnHelper.accessor("title", {
-			header: t("songs.title"),
+			header: t("songs.song_title"),
 			cell: (info) => info.getValue(),
 		}),
 		columnHelper.accessor("author", {
