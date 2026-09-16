@@ -1,127 +1,162 @@
-.special-navbar-link {
-	--special-primary: var(--color-primary);
-	--special-primary-light: color-mix(in srgb, var(--special-primary) 83%, white);
-	--special-primary-mid: color-mix(in srgb, var(--special-primary) 92%, white);
-	--special-primary-dark: color-mix(in srgb, var(--special-primary) 85%, black);
-	--special-primary-deep: color-mix(in srgb, var(--special-primary) 72%, black);
-	--special-gradient-duration: 4s;
-	--special-glow-duration: 2.4s;
-	--special-hover-duration: 1000ms;
-	--special-transition-duration: 360ms;
-	--special-background-transition-duration: calc(
-		var(--special-transition-duration) -
-		40ms
-	);
-	--special-reduced-transition-duration: calc(
-		var(--special-transition-duration) /
-		2
-	);
-	--special-gradient-start: 0% 35%;
-	--special-gradient-end: 100% 65%;
-	position: relative;
-	overflow: hidden;
-	isolation: isolate;
-	background: linear-gradient(
-		115deg,
-		var(--special-primary-deep),
-		var(--special-primary-dark),
-		var(--special-primary),
-		var(--special-primary-mid),
-		var(--special-primary-dark),
-		var(--special-primary-light),
-		var(--special-primary-mid),
-		var(--special-primary)
-	);
-	background-size: 300% 300%;
+/* Thanks Claude😘 */
 
-	color: var(--color-primary-foreground);
-	box-shadow: 0 0 0 1px
-		color-mix(in srgb, var(--special-primary) 55%, transparent), 0 0 12px
-		color-mix(in srgb, var(--special-primary) 30%, transparent);
-	animation: special-navbar-gradient var(--special-gradient-duration)
-		ease-in-out infinite alternate, special-navbar-glow
-		var(--special-glow-duration) ease-in-out infinite;
-	transition: background-position var(--special-background-transition-duration)
-		ease, box-shadow var(--special-transition-duration) ease, filter
-		var(--special-transition-duration) ease, transform
-		var(--special-transition-duration) cubic-bezier(0.22, 1, 0.36, 1);
-	will-change: background-position, transform;
-}
-
-.special-navbar-link:hover {
-	background-position: 100% 50%;
-	filter: brightness(1.06) saturate(1.1);
-	transform: translateY(-1px) scale(1.015);
-	animation: special-navbar-hover var(--special-hover-duration)
-		cubic-bezier(0.22, 1, 0.36, 1) both;
-	box-shadow: 0 0 0 1px
-		color-mix(in srgb, var(--special-primary-light) 65%, transparent), 0 2px 4px
-		color-mix(in srgb, var(--special-primary-deep) 30%, transparent), 0 0 18px
-		color-mix(in srgb, var(--special-primary) 45%, transparent);
-}
-
-.special-navbar-link:active {
-	transform: translateY(0) scale(0.985);
-}
-
-.special-navbar-phase-1 {
-	animation-delay: calc(var(--special-gradient-duration) * -0.25),
-		calc(var(--special-glow-duration) * -0.25);
-}
-
-.special-navbar-phase-2 {
-	animation-delay: calc(var(--special-gradient-duration) * -0.5),
-		calc(var(--special-glow-duration) * -0.5);
-}
-
-.special-navbar-phase-3 {
-	animation-delay: calc(var(--special-gradient-duration) * -0.75),
-		calc(var(--special-glow-duration) * -0.75);
-}
-
-@keyframes special-navbar-gradient {
-	0% {
-		background-position: var(--special-gradient-start);
+/* @layer components keeps this below Tailwind's utility layer, so a
+   utility class applied directly to the element (e.g. via `className`)
+   can still override these rules regardless of import order. */
+@layer components {
+	/* Shared custom properties, declared once instead of duplicated
+   across .special-navbar-link and .special-navbar-bubble. */
+	:where(.special-navbar-link, .special-navbar-bubble) {
+		/* Set via inline style (`style={{ '--special-phase': i }}`) per
+	   instance; defaults to 0 (no delay) when not provided. */
+		--special-phase: 0;
+		--special-primary: var(--color-primary);
+		--special-primary-light: color-mix(
+			in srgb,
+			var(--special-primary) 83%,
+			white
+		);
+		--special-primary-mid: color-mix(in srgb, var(--special-primary) 92%, white);
+		--special-primary-dark: color-mix(
+			in srgb,
+			var(--special-primary) 85%,
+			black
+		);
+		--special-primary-deep: color-mix(
+			in srgb,
+			var(--special-primary) 72%,
+			black
+		);
+		--special-gradient-duration: 4s;
+		--special-glow-duration: 2.4s;
+		--special-gradient-start: 0% 35%;
+		--special-gradient-end: 100% 65%;
+		/* Rest-state glow shadow: shared between .special-navbar-bubble (a
+	   static snapshot of it) and special-navbar-glow's 0%/100% keyframes,
+	   so the two can't drift apart. */
+		--special-glow-shadow-rest: 0 0 0 1px
+			color-mix(in srgb, var(--special-primary) 65%, transparent), 0 0 6px
+			color-mix(in srgb, var(--special-primary) 50%, transparent), 0 0 12px
+			color-mix(in srgb, var(--special-primary) 35%, transparent);
+		--special-gradient: linear-gradient(
+			115deg,
+			var(--special-primary-deep),
+			var(--special-primary-dark),
+			var(--special-primary),
+			var(--special-primary-mid),
+			var(--special-primary-dark),
+			var(--special-primary-light),
+			var(--special-primary-mid),
+			var(--special-primary)
+		);
+		background: var(--special-gradient);
+		background-size: 300% 300%;
+		animation: special-navbar-gradient var(--special-gradient-duration)
+			ease-in-out infinite alternate, special-navbar-glow
+			var(--special-glow-duration) ease-in-out infinite;
+		/* Only hint properties that can actually be promoted to their own
+	   compositor layer. background-position and box-shadow always repaint
+	   regardless of will-change, so listing them here just wastes memory. */
+		will-change: transform;
 	}
-	100% {
-		background-position: var(--special-gradient-end);
-	}
-}
 
-@keyframes special-navbar-hover {
-	0% {
-		background-position: var(--special-gradient-start);
-	}
-	100% {
-		background-position: var(--special-gradient-end);
-	}
-}
-
-@keyframes special-navbar-glow {
-	0%,
-	100% {
+	.special-navbar-link {
+		--special-hover-duration: 1000ms;
+		--special-transition-duration: 360ms;
+		--special-background-transition-duration: calc(
+			var(--special-transition-duration) -
+			40ms
+		);
+		--special-reduced-transition-duration: calc(
+			var(--special-transition-duration) /
+			2
+		);
+		position: relative;
+		overflow: hidden;
+		isolation: isolate;
+		color: var(--color-primary-foreground);
 		box-shadow: 0 0 0 1px
 			color-mix(in srgb, var(--special-primary) 55%, transparent), 0 0 12px
 			color-mix(in srgb, var(--special-primary) 30%, transparent);
+		transition: background-position
+			var(--special-background-transition-duration) ease, box-shadow
+			var(--special-transition-duration) ease, filter
+			var(--special-transition-duration) ease, transform
+			var(--special-transition-duration) cubic-bezier(0.22, 1, 0.36, 1);
 	}
-	50% {
-		box-shadow: 0 0 0 1px
-			color-mix(in srgb, var(--special-primary-light) 72%, transparent), 0 0
-			20px color-mix(in srgb, var(--special-primary) 45%, transparent);
-	}
-}
 
-@media (prefers-reduced-motion: reduce) {
-	.special-navbar-link {
-		animation: none;
-		transition: background-position var(--special-reduced-transition-duration)
-			ease, box-shadow var(--special-reduced-transition-duration) ease, filter
-			var(--special-reduced-transition-duration) ease;
+	.special-navbar-bubble {
+		box-shadow: var(--special-glow-shadow-rest);
+		filter: saturate(1.05) brightness(1.04);
 	}
 
 	.special-navbar-link:hover {
 		background-position: 100% 50%;
-		transform: none;
-		animation: none;
+		filter: brightness(1.06) saturate(1.1);
+		transform: translateY(-1px) scale(1.015);
+		/* Reuses special-navbar-gradient's keyframe body — only the timing
+	   (duration/easing/fill-mode) differs for the hover state, so no
+	   separate keyframe block is needed. */
+		animation: special-navbar-gradient var(--special-hover-duration)
+			cubic-bezier(0.22, 1, 0.36, 1) both;
+		box-shadow: 0 0 0 1px
+			color-mix(in srgb, var(--special-primary-light) 65%, transparent), 0 2px
+			4px color-mix(in srgb, var(--special-primary-deep) 30%, transparent), 0 0
+			18px color-mix(in srgb, var(--special-primary) 45%, transparent);
 	}
-}
+
+	.special-navbar-link:active {
+		transform: translateY(0) scale(0.985);
+	}
+
+	/* Delay derives from --special-phase directly (set inline per instance),
+   so any integer works — no fixed set of phase classes to run out of,
+   and no risk of the two calc() values drifting out of sync. */
+	:where(.special-navbar-link, .special-navbar-bubble) {
+		animation-delay: calc(
+				var(--special-gradient-duration) *
+				-0.25 *
+				var(--special-phase)
+			), calc(var(--special-glow-duration) * -0.25 * var(--special-phase));
+	}
+
+	@keyframes special-navbar-gradient {
+		0% {
+			background-position: var(--special-gradient-start);
+		}
+		100% {
+			background-position: var(--special-gradient-end);
+		}
+	}
+
+	@keyframes special-navbar-glow {
+		0%,
+		100% {
+			box-shadow: var(--special-glow-shadow-rest);
+		}
+		50% {
+			box-shadow: 0 0 0 1px
+				color-mix(in srgb, var(--special-primary-light) 70%, transparent), 0 0
+				8px color-mix(in srgb, var(--special-primary) 60%, transparent), 0 0
+				14px color-mix(in srgb, var(--special-primary) 42%, transparent);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		:where(.special-navbar-link, .special-navbar-bubble) {
+			animation: none;
+		}
+
+		.special-navbar-link {
+			transition: background-position var(--special-reduced-transition-duration)
+				ease, box-shadow var(--special-reduced-transition-duration) ease, filter
+				var(--special-reduced-transition-duration) ease;
+		}
+
+		.special-navbar-link:hover {
+			background-position: 100% 50%;
+			transform: none;
+			animation: none;
+		}
+	}
+} /* end @layer components */

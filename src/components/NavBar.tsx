@@ -55,6 +55,7 @@ import VerificationReminder from "./VerificationReminder";
 import MemberBanner from "./MemberBanner";
 import { useAuthState } from "@/lib/auth";
 import "./NavBar.css";
+import type { ElectionMemberRead, GuildMeetingRead } from "@/api";
 
 type NavItem = {
 	self: string;
@@ -95,16 +96,32 @@ export function NavBar() {
 
 	const showAdmin = useAuthState().getPermissions().size > 0;
 
+	const { data: guildMeetingData } = useQuery({
+		...getGuildMeetingOptions(),
+		refetchOnWindowFocus: false,
+	});
+
+	const { data: electionData } = useQuery({
+		...getVisibleElectionOptions(),
+		refetchOnWindowFocus: false,
+	});
+
+	const showHamburgerBubble =
+		guildMeetingData?.is_active || electionData?.visible;
+
 	return (
 		<header className="sticky top-0 z-50 w-full border-transparent  bg-white/50 dark:bg-background/40  backdrop-blur-md">
-			<div className="flex flex-col">
-				<div className="xl:container flex items-center justify-between h-20 px-4 mx-auto">
+			<div className="flex flex-col items-center">
+				<div className="container flex items-center justify-between h-20 px-4">
 					<div className="flex items-center gap-4">
 						<Link href="/home" className="flex items-center">
 							<FLogga className="size-14 mr-3" />
 						</Link>
-						<div className="hidden lg:flex">
-							<NavBarMenu />
+						<div className="hidden xl:flex">
+							<NavBarMenu
+								guildMeetingData={guildMeetingData}
+								electionData={electionData}
+							/>
 						</div>
 					</div>
 					<div className="flex items-center gap-2">
@@ -171,11 +188,14 @@ export function NavBar() {
 						</div>
 
 						{/* Mobile hamburger menu */}
-						<div className="lg:hidden">
+						<div className="xl:hidden">
 							<Sheet>
 								<SheetTrigger asChild>
-									<Button variant="ghost" size="icon">
+									<Button variant="ghost" size="icon" className="relative">
 										<Menu className="h-5 w-5" />
+										{showHamburgerBubble && (
+											<span className="special-navbar-bubble absolute right-2 top-2 h-2 w-2 rounded-full" />
+										)}
 										<span className="sr-only">Toggle menu</span>
 									</Button>
 								</SheetTrigger>
@@ -193,7 +213,11 @@ export function NavBar() {
 										aria-labelledby="mobile-nav-title"
 									>
 										<div className="px-2">
-											<NavBarMenu isMobile />
+											<NavBarMenu
+												isMobile
+												guildMeetingData={guildMeetingData}
+												electionData={electionData}
+											/>
 										</div>
 
 										<div className="px-2 pt-4 border-t">
@@ -294,7 +318,15 @@ function useLoginHandler() {
 	}, [router, pathname]);
 }
 
-export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
+export function NavBarMenu({
+	isMobile = false,
+	guildMeetingData = undefined,
+	electionData = undefined,
+}: {
+	isMobile?: boolean;
+	guildMeetingData?: GuildMeetingRead;
+	electionData?: ElectionMemberRead;
+}) {
 	const { t, i18n } = useTranslation("main");
 	const navbarData = t("navbar", { returnObjects: true }) as Record<
 		string,
@@ -306,21 +338,18 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 			typeof value === "object" && value !== null && !Array.isArray(value),
 	);
 
-	const { data: guildMeetingData } = useQuery({
-		...getGuildMeetingOptions(),
-		refetchOnWindowFocus: false,
-	});
+	const specialButtons: [string, NavSection][] = [];
 
 	if (guildMeetingData?.is_active) {
-		sections.push([
+		specialButtons.push([
 			"guildMeeting",
 			{
 				self: {
 					self: t("navbar.guild-meeting-now", {
 						title:
-							i18n.language === "en"
+							(i18n.language === "en"
 								? guildMeetingData.title_en
-								: guildMeetingData.title_sv,
+								: guildMeetingData.title_sv) || t("navbar.guild-meeting"),
 					}),
 
 					desc: "",
@@ -331,21 +360,16 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 		]);
 	}
 
-	const { data: electionData } = useQuery({
-		...getVisibleElectionOptions(),
-		refetchOnWindowFocus: false,
-	});
-
 	if (electionData?.visible) {
-		sections.push([
+		specialButtons.push([
 			"election",
 			{
 				self: {
 					self: t("navbar.election-now", {
 						title:
-							i18n.language === "en"
+							(i18n.language === "en"
 								? electionData.title_en
-								: electionData.title_sv,
+								: electionData.title_sv) || t("navbar.election"),
 					}),
 
 					desc: "",
@@ -354,6 +378,12 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 				},
 			},
 		]);
+	}
+
+	if (isMobile) {
+		sections.unshift(...specialButtons);
+	} else {
+		sections.push(...specialButtons);
 	}
 
 	const isStandaloneItem = (
@@ -365,7 +395,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 	if (isMobile) {
 		// Mobile vertical layout
 		return (
-			<div className="space-y-4">
+			<div className={cn("space-y-3", specialButtons.length && "mt-8")}>
 				{sections.map(([sectionKey, section], sectionIndex) => {
 					// Standalone item
 					if (isStandaloneItem(section)) {
@@ -390,7 +420,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 					) as [string, NavItem][];
 
 					return (
-						<div key={sectionKey} className="space-y-2">
+						<div key={sectionKey} className="space-y-2 pt-1">
 							<div>
 								<h3 className="font-medium text-sm text-muted-foreground px-2">
 									{typeof section.self === "string" ? section.self : ""}
@@ -428,7 +458,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 		<div className="flex items-center bg-transparent rounded-md px-2 py-1">
 			<NavigationMenu
 				className="
-                  w-full max-w-full flex items-center
+                  w-full max-w-full flex items-center flex-wrap justify-start
                   custom-navmenu
                 "
 			>
@@ -553,9 +583,13 @@ function NavBarStandaloneLink({
 					: "h-9 px-4 py-0 ml-4 flex justify-center bg-transparent hover:bg-transparent border-2 border-transparent hover:border-foreground/30",
 				(!item.href || item.href === "#") &&
 					"opacity-50 cursor-not-allowed pointer-events-none",
-				item.special &&
-					`special-navbar-link special-navbar-phase-${animationIndex % 4} border-none hover:border-none`,
+				item.special && "special-navbar-link border-none hover:border-none",
 			)}
+			style={
+				item.special
+					? ({ "--special-phase": animationIndex } as React.CSSProperties)
+					: undefined
+			}
 			{...props}
 		>
 			{item.self}
