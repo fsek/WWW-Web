@@ -583,7 +583,8 @@ function NavBarStandaloneLink({
 					: "h-9 px-4 py-0 ml-4 flex justify-center bg-transparent hover:bg-transparent border-2 border-transparent hover:border-foreground/30",
 				(!item.href || item.href === "#") &&
 					"opacity-50 cursor-not-allowed pointer-events-none",
-				item.special && "special-navbar-link border-none hover:border-none",
+				item.special &&
+					"special-navbar-link border-none text-primary-foreground hover:border-none hover:text-primary-foreground",
 			)}
 			style={
 				item.special
