@@ -458,7 +458,7 @@ export function NavBarMenu({
 		<div className="flex items-center bg-transparent rounded-md px-2 py-1">
 			<NavigationMenu
 				className="
-                  w-full max-w-full flex items-center flex-wrap justify-start
+                  w-full max-w-full flex items-center
                   custom-navmenu
                 "
 			>
