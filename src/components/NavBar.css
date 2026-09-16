@@ -7,9 +7,6 @@
 	/* Shared custom properties, declared once instead of duplicated
    across .special-navbar-link and .special-navbar-bubble. */
 	:where(.special-navbar-link, .special-navbar-bubble) {
-		/* Set via inline style (`style={{ '--special-phase': i }}`) per
-	   instance; defaults to 0 (no delay) when not provided. */
-		--special-phase: 0;
 		--special-primary: var(--color-primary);
 		--special-primary-light: color-mix(
 			in srgb,
@@ -61,6 +58,10 @@
 	}
 
 	.special-navbar-link {
+		/* Set via inline style (`style={{ '--special-phase': i }}`) per
+	   instance; defaults to 0 (no delay) when not provided. Only links
+	   get staggered — bubbles all animate in sync. */
+		--special-phase: 0;
 		--special-hover-duration: 1000ms;
 		--special-transition-duration: 360ms;
 		--special-background-transition-duration: calc(
@@ -83,6 +84,14 @@
 			var(--special-transition-duration) ease, filter
 			var(--special-transition-duration) ease, transform
 			var(--special-transition-duration) cubic-bezier(0.22, 1, 0.36, 1);
+		/* Delay derives from --special-phase directly (set inline per
+	   instance), so any integer works — no fixed set of phase classes
+	   to run out of. Bubbles aren't staggered, so this only applies here. */
+		animation-delay: calc(
+				var(--special-gradient-duration) *
+				-0.25 *
+				var(--special-phase)
+			), calc(var(--special-glow-duration) * -0.25 * var(--special-phase));
 	}
 
 	.special-navbar-bubble {
@@ -107,17 +116,6 @@
 
 	.special-navbar-link:active {
 		transform: translateY(0) scale(0.985);
-	}
-
-	/* Delay derives from --special-phase directly (set inline per instance),
-   so any integer works — no fixed set of phase classes to run out of,
-   and no risk of the two calc() values drifting out of sync. */
-	:where(.special-navbar-link, .special-navbar-bubble) {
-		animation-delay: calc(
-				var(--special-gradient-duration) *
-				-0.25 *
-				var(--special-phase)
-			), calc(var(--special-glow-duration) * -0.25 * var(--special-phase));
 	}
 
 	@keyframes special-navbar-gradient {
