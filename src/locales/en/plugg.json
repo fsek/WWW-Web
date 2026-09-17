@@ -45,19 +45,21 @@
 	"contact_reminder": {
 		"title": "Found something missing or outdated?",
 		"text": "Help us keep this page accurate. Share corrections, upload new documents, or give us tips by emailing plugg@fsektionen.se (or click this box).",
-		"email": "plugg@fsektionen.se"
+		"email": "plugg@fsektionen.se",
+		"text_short": "Send corrections, new documents or tips to"
 	},
 	"program": {
 		"back": "Back",
 		"specialisations": "Specialisations",
 		"program_page": {
-			"years_label": "standard years added",
+			"years_label": "years",
 			"program_years_title": "Standard years",
 			"program_years_empty": "No years added yet.",
 			"specialisations_empty": "No specialisations available yet.",
 			"program_description_fallback": "No description available for this program yet.",
 			"year_description_fallback": "No description added for this year.",
-			"specialisation_description_fallback": "No description added for this specialisation."
+			"specialisation_description_fallback": "No description added for this specialisation.",
+			"specialisations_label": "specialisations"
 		},
 		"program_year_page": {
 			"courses_label": "courses",
@@ -71,7 +73,7 @@
 		"back": "Back",
 		"course_code_badge": "Course code: {{code}}",
 		"course_code_missing": "Course code unavailable",
-		"updated_badge": "Page last updated: {{date}}",
+		"updated_badge": "Updated {{date}}",
 		"documents_badge": "{{count}} documents",
 		"description_fallback": "No course description has been added yet.",
 		"documents": {
@@ -97,5 +99,8 @@
 		"no_courses": "No courses yet",
 		"description_fallback": "No description added for this specialisation.",
 		"course_description_fallback": "No course description added yet."
+	},
+	"breadcrumb": {
+		"home": "Study pages"
 	}
 }

@@ -561,7 +561,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 									<Link
 										key={`${result.label}-${result.href}`}
 										href={result.href}
-										className="block rounded-sm px-2 py-1.5 text-smm transition-colors hover:bg-accent"
+										className="block rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-accent"
 									>
 										{result.label}
 									</Link>

@@ -1,17 +1,7 @@
 "use client";
 
-import CustomTitle from "@/components/CustomTitle";
 import ImageDisplay from "@/components/ImageDisplay";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
 	getAllCoursesOptions,
 	getAllProgramsOptions,
@@ -24,18 +14,18 @@ import {
 	buildProgramYearHref,
 	buildSpecialisationHref,
 } from "@/utils/pluggHrefBuilders";
+import stripMarkdown from "@/utils/stripMarkdown";
 import { useQuery } from "@tanstack/react-query";
-import {
-	ArrowRight,
-	BookText,
-	Calendar,
-	GraduationCap,
-	Route,
-	Search,
-} from "lucide-react";
+import { Search } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
+import {
+	pluggDisplay,
+	pluggGraphPaper,
+	pluggHighlightHover,
+} from "@/utils/pluggStyles";
+import { cn } from "@/lib/utils";
 
 type ProgramYearMenu = {
 	programYearId: number;
@@ -130,15 +120,6 @@ function addUniqueCourse(courses: CourseRead[], course: CourseRead) {
 	}
 
 	courses.push(course);
-}
-
-function truncateDescription(text: string, maxChars: number) {
-	const normalizedText = text.replace(/\s+/g, " ").trim();
-	if (normalizedText.length <= maxChars) {
-		return normalizedText;
-	}
-
-	return `${normalizedText.slice(0, maxChars).trimEnd()}...`;
 }
 
 export default function MainLanding() {
@@ -495,210 +476,205 @@ export default function MainLanding() {
 		course: t("plugg:page.search_kind_course"),
 	};
 
-	const kindIcon: Record<SearchResultKind, React.ReactNode> = {
-		program: <GraduationCap className="size-4" />,
-		program_year: <Calendar className="size-4" />,
-		specialisation: <Route className="size-4" />,
-		course: <BookText className="size-4" />,
-	};
-
 	const contactEmail = t("plugg:contact_reminder.email");
 
 	return (
-		<div className="min-h-[calc(100vh-5rem)] bg-background text-foreground">
-			<section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-12 md:py-16">
-				<Card className="bg-card text-card-foreground border-border/70 shadow-sm">
-					<CardHeader className="pb-2">
-						<CustomTitle
-							text={t("plugg:page.title")}
-							className="mb-1 text-3xl font-bold tracking-tight md:text-4xl"
-						/>
-						<CardDescription className="text-base leading-relaxed md:text-lg">
-							{t("plugg:page.intro")}
-						</CardDescription>
-					</CardHeader>
+		<div className="min-h-[calc(100vh-5rem)] pb-20 text-foreground">
+			<section className="relative isolate">
+				<div
+					aria-hidden="true"
+					className={`${pluggGraphPaper} absolute inset-0 -z-10 opacity-70`}
+				/>
 
-					<CardContent className="flex flex-col gap-6 pt-2">
-						<div className="rounded-2xl border border-primary/25 bg-orange-50 text-card-foreground dark:bg-orange-950/30 p-4 md:p-6">
-							<p className="mb-3 text-sm font-semibold text-foreground/90 md:text-base">
-								{t("plugg:page.search_title")}
-							</p>
-							<div className="relative">
-								<Search className="pointer-events-none absolute left-5 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" />
-								<Input
-									type="search"
-									value={searchQuery}
-									onChange={(event) => setSearchQuery(event.target.value)}
-									placeholder={t("plugg:page.search_placeholder")}
-									className="h-14 rounded-xl border-border/70 bg-background pl-14 text-base md:text-lg"
-								/>
-							</div>
+				<div className="mx-auto w-full max-w-6xl px-4 pt-12 pb-10 md:px-6 md:pt-20 md:pb-14">
+					<h1
+						className={`${pluggDisplay} max-w-4xl text-balance text-6xl sm:text-7xl md:text-8xl`}
+					>
+						{t("plugg:page.title")}
+					</h1>
+					<p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-muted-foreground">
+						{t("plugg:page.intro")}
+					</p>
 
-							<div className="mt-4">
-								{searchTerm &&
-									(isSearchLoading ? (
-										<div className="rounded-xl border border-dashed border-border/80 bg-background/70 p-4 text-sm text-muted-foreground">
-											{t("plugg:navbar.loading")}
-										</div>
-									) : searchHasError ? (
-										<div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
-											{t("plugg:navbar.load_error")}
-										</div>
-									) : searchResults.length === 0 ? (
-										<div className="rounded-xl border border-dashed border-border/80 bg-background/70 p-4 text-sm text-muted-foreground">
-											{t("plugg:page.search_empty")}
-										</div>
-									) : (
-										<div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-											{searchResults.map((result) => (
+					<div className="mt-10 max-w-3xl">
+						<label
+							htmlFor="plugg-search"
+							className="block text-sm font-medium text-muted-foreground"
+						>
+							{t("plugg:page.search_title")}
+						</label>
+						<div className="relative">
+							<Search className="pointer-events-none absolute left-0 top-1/2 size-6 -translate-y-1/2 text-foreground" />
+							<input
+								id="plugg-search"
+								type="search"
+								autoComplete="off"
+								value={searchQuery}
+								onChange={(event) => setSearchQuery(event.target.value)}
+								placeholder={t("plugg:page.search_placeholder")}
+								className="h-16 w-full border-0 border-b-4 border-foreground bg-transparent pl-10 text-xl font-medium outline-none placeholder:font-normal placeholder:text-muted-foreground/70 focus:border-primary md:text-2xl"
+							/>
+						</div>
+
+						{searchTerm ? (
+							<div className="mt-2" aria-live="polite">
+								{isSearchLoading ? (
+									<p className="py-4 text-muted-foreground">
+										{t("plugg:navbar.loading")}
+									</p>
+								) : searchHasError ? (
+									<p className="py-4 text-destructive">
+										{t("plugg:navbar.load_error")}
+									</p>
+								) : searchResults.length === 0 ? (
+									<p className="py-4 text-muted-foreground">
+										{t("plugg:page.search_empty")}
+									</p>
+								) : (
+									<ul className="max-h-[30rem] divide-y divide-border overflow-y-auto">
+										{searchResults.map((result) => (
+											<li key={`${result.kind}-${result.label}-${result.href}`}>
 												<Link
-													key={`${result.kind}-${result.label}-${result.href}`}
 													href={result.href}
-													className="group flex items-center justify-between gap-3 rounded-lg border border-border/70 bg-background/80 px-3 py-2.5 transition-colors hover:border-primary/40 hover:bg-background"
+													className="group grid grid-cols-[6.5rem_1fr] items-baseline gap-x-4 py-3 outline-none focus-visible:bg-muted/60"
 												>
-													<div className="min-w-0">
-														<p className="truncate text-sm font-medium md:text-base">
-															{result.label}
-														</p>
+													<span className="text-sm text-muted-foreground">
+														{kindLabel[result.kind]}
+													</span>
+													<span className="min-w-0">
+														<span className="font-medium">
+															<span className={pluggHighlightHover}>
+																{result.label}
+															</span>
+														</span>
 														{result.secondary ? (
-															<p className="truncate text-xs text-muted-foreground md:text-sm">
+															<span className="block truncate text-sm text-muted-foreground">
 																{result.secondary}
-															</p>
+															</span>
 														) : null}
-													</div>
-													<div className="flex shrink-0 items-center gap-2">
-														<Badge
-															variant="secondary"
-															className="inline-flex items-center gap-1"
-														>
-															{kindIcon[result.kind]}
-															<span>{kindLabel[result.kind]}</span>
-														</Badge>
-														<ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-													</div>
+													</span>
 												</Link>
-											))}
-										</div>
-									))}
+											</li>
+										))}
+									</ul>
+								)}
 							</div>
-						</div>
+						) : null}
+					</div>
+				</div>
 
-						<div className="space-y-3">
-							<div className="flex items-end justify-between gap-3">
-								<h2 className="text-xl font-semibold tracking-tight md:text-2xl">
-									{t("plugg:page.program_list_title")}
-								</h2>
-							</div>
-
-							{isLoadingPrograms ? (
-								<div className="rounded-lg border border-dashed border-border p-6 text-sm text-muted-foreground">
-									{t("plugg:navbar.loading")}
-								</div>
-							) : programsError ? (
-								<div className="rounded-lg border border-destructive/40 bg-destructive/5 p-6 text-sm text-destructive">
-									{t("plugg:navbar.load_error")}
-								</div>
-							) : programCards.length === 0 ? (
-								<div className="rounded-lg border border-dashed border-border p-6 text-sm text-muted-foreground">
-									{t("plugg:page.program_list_empty")}
-								</div>
-							) : (
-								<div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-									{programCards.map((program) => (
-										<Card
-											key={program.programId}
-											className="group h-full overflow-hidden border-border/70 py-0 transition-all hover:shadow-lg"
-										>
-											<div className="relative h-40 w-full overflow-hidden bg-muted">
-												{program.imageId ? (
-													<>
-														<ImageDisplay
-															type="associated_img"
-															imageId={program.imageId}
-															alt={`Associated image for ${program.title}`}
-															className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-															size="medium"
-															fill
-														/>
-														<div className="absolute inset-0 bg-black/10 dark:bg-white/10" />
-													</>
-												) : (
-													<>
-														<div
-															className="absolute inset-0"
-															style={{
-																backgroundColor: "#FFA64D",
-																backgroundImage:
-																	'url("/images/line-in-motion.svg")',
-																backgroundRepeat: "repeat",
-																backgroundSize: "64px 64px",
-															}}
-														/>
-														<div className="absolute inset-0 bg-black/5 dark:bg-white/5" />
-													</>
-												)}
-												<div className="absolute bottom-3 left-3 right-3">
-													<p className="line-clamp-2 text-lg font-semibold text-white drop-shadow-sm">
-														{program.title}
-													</p>
-												</div>
-											</div>
-											<CardContent className="p-4 flex flex-col justify-between h-full">
-												<p className="min-h-10 text-sm leading-relaxed text-muted-foreground">
-													{program.description
-														? truncateDescription(program.description, 130)
-														: t("plugg:page.program_description_fallback")}
-												</p>
-												<Button asChild variant="secondary" className="w-full">
-													<Link href={buildProgramHref(program.title)}>
-														{t("plugg:page.open_program")}
-														<ArrowRight className="size-4" />
-													</Link>
-												</Button>
-											</CardContent>
-										</Card>
-									))}
-								</div>
-							)}
-						</div>
-
-						<Separator />
-
-						<Card className="overflow-hidden border-primary/25 bg-orange-50 text-card-foreground dark:bg-orange-950/30 gap-1">
-							<CardHeader className="pb-2">
-								<CardDescription className="text-sm font-semibold uppercase tracking-wide text-primary">
-									{t("plugg:page.contact_card_eyebrow")}
-								</CardDescription>
-								<h3 className="text-2xl font-semibold leading-tight md:text-3xl">
-									{t("plugg:page.contact_card_title")}
-								</h3>
-							</CardHeader>
-							<CardContent className="text-sm leading-relaxed text-foreground/90 md:text-base">
-								<p>{t("plugg:page.contact_card_text")}</p>
-								<p className="text-muted-foreground">
-									{t("plugg:page.contact_card_note")}
-								</p>
-								<Button asChild size="lg" className="mt-1">
-									<Link href={`mailto:${contactEmail}`}>
-										{t("plugg:page.contact_card_cta")}
-									</Link>
-								</Button>
-							</CardContent>
-						</Card>
-
-						<Card className="overflow-hidden border-primary/25 bg-card text-card-foreground/70 gap-1">
-							<CardHeader className="pb-0">
-								<h2 className="text-2xl font-semibold leading-tight md:text-xl">
-									{t("plugg:page.advertisement_title")}
-								</h2>
-							</CardHeader>
-							<CardContent className="text-sm leading-relaxed md:text-base">
-								<p>{t("plugg:page.advertisement_text")}</p>
-							</CardContent>
-						</Card>
-					</CardContent>
-				</Card>
+				<div className="mx-auto w-full max-w-6xl px-4 md:px-6">
+					<div className="border-t-4 border-primary" />
+				</div>
 			</section>
+
+			<div className="mx-auto mt-14 w-full max-w-6xl space-y-20 px-4 md:mt-20 md:px-6">
+				<section>
+					<h2 className={`${pluggDisplay} pb-4 text-4xl md:text-5xl`}>
+						{t("plugg:page.program_list_title")}
+					</h2>
+
+					{isLoadingPrograms ? (
+						<div className="divide-y divide-border border-y border-foreground/80">
+							{[0, 1, 2].map((index) => (
+								<div key={index} className="py-6">
+									<Skeleton className="h-10 w-2/5" />
+									<Skeleton className="mt-3 h-4 w-3/5" />
+								</div>
+							))}
+						</div>
+					) : programsError ? (
+						<p className="border-y border-border py-6 text-destructive">
+							{t("plugg:navbar.load_error")}
+						</p>
+					) : programCards.length === 0 ? (
+						<p className="border-y border-border py-6 text-muted-foreground">
+							{t("plugg:page.program_list_empty")}
+						</p>
+					) : (
+						<ul className="divide-y divide-border border-y border-foreground/80">
+							{programCards.map((program) => (
+								<li key={program.programId}>
+									<Link
+										href={buildProgramHref(program.title)}
+										className="group block py-8 outline-none focus-visible:bg-muted/60 md:py-10"
+									>
+										{program.imageId ? (
+											<>
+												<span className="relative block aspect-[16/9] overflow-hidden bg-muted sm:aspect-[21/9] md:rounded-t-md lg:aspect-[3/1]">
+													<ImageDisplay
+														type="associated_img"
+														imageId={program.imageId}
+														alt=""
+														className="object-cover"
+														size="large"
+														sizes="(min-width: 1152px) 1104px, 100vw"
+														fill
+													/>
+												</span>
+												{/* Same paper label on the photo as the page hero */}
+												<span className="block border-t-4 border-primary">
+													<span className="relative -mt-12 block w-fit max-w-[85%] bg-background pt-3 pr-6 sm:-mt-16 md:-mt-20 md:pt-5 md:pr-10">
+														<span
+															className={`${pluggDisplay} text-4xl text-balance sm:text-5xl md:text-6xl`}
+														>
+															<span className={pluggHighlightHover}>
+																{program.title}
+															</span>
+														</span>
+													</span>
+												</span>
+											</>
+										) : (
+											<span
+												className={`${pluggDisplay} block text-4xl text-balance sm:text-5xl md:text-6xl`}
+											>
+												<span className={pluggHighlightHover}>
+													{program.title}
+												</span>
+											</span>
+										)}
+										<span className="mt-3 line-clamp-3 block max-w-[62ch] leading-relaxed text-muted-foreground">
+											{program.description
+												? stripMarkdown(program.description)
+												: t("plugg:page.program_description_fallback")}
+										</span>
+									</Link>
+								</li>
+							))}
+						</ul>
+					)}
+				</section>
+
+				<div className="grid grid-cols-1 gap-x-12 gap-y-10 border-t border-dashed border-foreground/40 pt-8 md:grid-cols-[3fr_2fr]">
+					<section className="max-w-[60ch]">
+						<h2 className="text-2xl font-semibold leading-tight tracking-tight">
+							{t("plugg:page.contact_card_title")}
+						</h2>
+						<p className="mt-3 leading-relaxed text-foreground/90">
+							{t("plugg:page.contact_card_text")}
+						</p>
+						<p className="mt-3 leading-relaxed text-muted-foreground">
+							{t("plugg:page.contact_card_note")}
+						</p>
+						<a
+							href={`mailto:${contactEmail}`}
+							className="mt-5 inline-block text-lg font-semibold underline decoration-primary decoration-4 underline-offset-[6px] hover:decoration-[6px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+						>
+							{contactEmail}
+						</a>
+					</section>
+
+					<section className="max-w-[46ch] md:border-l md:border-border md:pl-12">
+						<h2 className="text-xl font-semibold leading-tight tracking-tight">
+							{t("plugg:page.advertisement_title")}
+						</h2>
+						<p className="mt-3 leading-relaxed text-muted-foreground">
+							{t("plugg:page.advertisement_text")}
+						</p>
+					</section>
+				</div>
+			</div>
 		</div>
 	);
 }

@@ -44,19 +44,21 @@
 	"contact_reminder": {
 		"title": "Saknas något eller är något inaktuellt?",
 		"text": "Hjälp oss hålla denna sida uppdaterad. Skicka rättelser, nya dokument eller tips till plugg@fsektionen.se (eller klicka här).",
-		"email": "plugg@fsektionen.se"
+		"email": "plugg@fsektionen.se",
+		"text_short": "Skicka rättelser, nya dokument eller tips till"
 	},
 	"program": {
 		"back": "Tillbaka",
 		"specialisations": "Inriktningar",
 		"program_page": {
-			"years_label": "tillagda årskurser",
+			"years_label": "årskurser",
 			"program_years_title": "Årskurser",
 			"program_years_empty": "Inga årskurser tillagda ännu.",
 			"specialisations_empty": "Inga inriktningar tillagda ännu.",
 			"program_description_fallback": "Ingen beskrivning tillgänglig för detta program ännu.",
 			"year_description_fallback": "Ingen beskrivning tillagd för denna årskurs.",
-			"specialisation_description_fallback": "Ingen beskrivning tillagd för denna inriktning."
+			"specialisation_description_fallback": "Ingen beskrivning tillagd för denna inriktning.",
+			"specialisations_label": "inriktningar"
 		},
 		"program_year_page": {
 			"courses_label": "kurser",
@@ -70,7 +72,7 @@
 		"back": "Tillbaka",
 		"course_code_badge": "Kurskod: {{code}}",
 		"course_code_missing": "Kurskod saknas",
-		"updated_badge": "Sidan uppdaterades senast: {{date}}",
+		"updated_badge": "Uppdaterad {{date}}",
 		"documents_badge": "{{count}} dokument",
 		"description_fallback": "Ingen kursbeskrivning har lagts till ännu.",
 		"documents": {
@@ -96,5 +98,8 @@
 		"no_courses": "Inga kurser ännu",
 		"description_fallback": "Ingen beskrivning tillagd för denna specialisering.",
 		"course_description_fallback": "Ingen kursbeskrivning tillagd ännu."
+	},
+	"breadcrumb": {
+		"home": "Pluggsidor"
 	}
 }
