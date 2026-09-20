@@ -98,18 +98,18 @@ export default function Elections() {
 		),
 		columnHelper.accessor(
 			(row) => {
-				if (row.sub_elections) {
-					const num_candidates = row.sub_elections.reduce(
-						(acc, sub) => acc + (sub.candidates ? sub.candidates.length : 0),
-						0,
-					);
-					return num_candidates;
+				let num_candidations = 0;
+				for (const subelection of row.sub_elections ?? []) {
+					for (const candidates of subelection.candidates ?? []) {
+						num_candidations += candidates.candidations?.length ?? 0;
+					}
 				}
-				return 0;
+
+				return num_candidations;
 			},
 			{
-				id: "candidates_count",
-				header: t("elections.sub_candidates_count"),
+				id: "candidations_count",
+				header: t("elections.sub_candidations_count"),
 				cell: (info) => info.getValue(),
 			},
 		),

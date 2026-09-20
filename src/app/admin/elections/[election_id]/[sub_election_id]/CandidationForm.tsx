@@ -15,12 +15,12 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createCandidationMutation,
+	electionsGetSubElectionOptions,
 	electionsGetSubElectionQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Plus, Save, X } from "lucide-react";
@@ -88,6 +88,14 @@ export default function CandidationForm({
 		});
 	}
 
+	const { data: subElection } = useQuery({
+		...electionsGetSubElectionOptions({
+			path: { sub_election_id: subElectionId },
+		}),
+		enabled: Number.isFinite(subElectionId),
+		refetchOnWindowFocus: false,
+	});
+
 	return (
 		<div className="p-3">
 			<Button
@@ -124,6 +132,7 @@ export default function CandidationForm({
 										<FormLabel>{t("admin:user")}</FormLabel>
 										<FormControl>
 											<AdminChooseUser
+												placeholder={t("admin:select_user_placeholder")}
 												onChange={(user) => {
 													field.onChange((user as Option)?.value);
 												}}
@@ -143,7 +152,11 @@ export default function CandidationForm({
 											<SelectOnePost
 												value={field.value}
 												onChange={field.onChange}
-												filterList={[]}
+												filterList={
+													subElection?.election_posts?.map(
+														(post) => post.post_id,
+													) ?? []
+												}
 											/>
 										</FormControl>
 										<FormMessage />

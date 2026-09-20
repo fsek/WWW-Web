@@ -1062,7 +1062,7 @@
 		"earliest_end_time": "Tidigaste sluttid (delval)",
 		"sub_elections": "Delval",
 		"sub_posts_count": "Poster (totalt)",
-		"sub_candidates_count": "Kandidater (totalt)",
+		"sub_candidations_count": "Kandidaturer (totalt)",
 		"actions": "Åtgärder",
 		"edit": "Redigera",
 		"create": "Skapa",
@@ -1123,7 +1123,8 @@
 			"missing_id": "ID för delval saknas.",
 			"download_csv": "Ladda ner kandidaturer som CSV",
 			"download_csv_success": "CSV nedladdad!",
-			"download_csv_error": "Misslyckades att ladda ner CSV."
+			"download_csv_error": "Misslyckades att ladda ner CSV.",
+			"candidations_count": "Kandidaturer"
 		},
 		"election_candidates": {
 			"title": "Kandidater",
@@ -1199,7 +1200,10 @@
 		"target_sub_election": "Mål-delval",
 		"select_post": "Välj post",
 		"select_sub_election": "Välj delval",
-		"move_post_hint": "Välj en post och ett mål-delval för att flytta den."
+		"move_post_hint": "Välj en post och ett mål-delval för att flytta den.",
+		"description_sv": "Beskrivning (svenska)",
+		"description": "Beskrivning",
+		"description_en": "Beskrivning (engelska)"
 	},
 	"enums": {
 		"elected_at_semester": {
@@ -1296,5 +1300,8 @@
 	"create_option": "Skapa \"{{value}}\"",
 	"select": "Välj",
 	"no_options": "Inga alternativ",
-	"select_or_type": "Välj eller skriv in fritext"
+	"select_or_type": "Välj eller skriv in fritext",
+	"select_post_placeholder": "Välj post...",
+	"unnamed_post": "Namnlös post",
+	"select_user_placeholder": "Välj användare..."
 }
