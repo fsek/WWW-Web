@@ -58,7 +58,7 @@ export default function SubElections() {
 				return num_candidations;
 			},
 			{
-				id: "candidates_count",
+				id: "candidations_count",
 				header: t("elections.sub_election.candidations_count"),
 				cell: (info) => info.getValue(),
 			},
