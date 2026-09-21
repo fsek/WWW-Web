@@ -13,6 +13,8 @@ interface StyledMultiSelectProps {
 	options: Option[];
 	value?: Option | Option[] | null;
 	onChange?: (selected: readonly Option[] | Option | null) => void;
+	onInputChange?: (inputValue: string, actionMeta: unknown) => void;
+	noOptionsMessage?: (obj: { inputValue: string }) => string;
 	placeholder?: string;
 	className?: string;
 	isDisabled?: boolean;
@@ -40,6 +42,8 @@ export default function StyledMultiSelect({
 	options,
 	value,
 	onChange,
+	onInputChange,
+	noOptionsMessage,
 	placeholder,
 	className = "",
 	isDisabled = false,
@@ -58,9 +62,10 @@ export default function StyledMultiSelect({
 			options={options}
 			unstyled
 			placeholder={placeholder || t("select")}
-			noOptionsMessage={() => t("no_options")}
+			noOptionsMessage={noOptionsMessage ?? (() => t("no_options"))}
 			value={value}
 			onChange={handleChange}
+			onInputChange={onInputChange}
 			isDisabled={isDisabled}
 			isClearable={isClearable}
 			components={{

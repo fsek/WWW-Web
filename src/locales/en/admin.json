@@ -1071,7 +1071,7 @@
 		"earliest_end_time": "Earliest end (sub-elections)",
 		"sub_elections": "Sub-elections",
 		"sub_posts_count": "Posts (total)",
-		"sub_candidates_count": "Candidates (total)",
+		"sub_candidations_count": "Candidacies (total)",
 		"actions": "Actions",
 		"edit": "Edit",
 		"create": "Create",
@@ -1132,7 +1132,8 @@
 			"missing_id": "Sub-election ID missing.",
 			"download_csv": "Download candidacies as CSV",
 			"download_csv_success": "CSV downloaded!",
-			"download_csv_error": "Failed to download CSV."
+			"download_csv_error": "Failed to download CSV.",
+			"candidations_count": "Candidacies"
 		},
 		"election_candidates": {
 			"title": "Candidates",
@@ -1208,7 +1209,10 @@
 		"target_sub_election": "Target sub-election",
 		"select_post": "Select post",
 		"select_sub_election": "Select sub-election",
-		"move_post_hint": "Select a post and a target sub-election to move it."
+		"move_post_hint": "Select a post and a target sub-election to move it.",
+		"description_sv": "Description (Swedish)",
+		"description": "Description",
+		"description_en": "Description (English)"
 	},
 	"enums": {
 		"elected_at_semester": {
@@ -1305,5 +1309,8 @@
 	"create_option": "Create \"{{value}}\"",
 	"select": "Select",
 	"no_options": "No options",
-	"select_or_type": "Select or enter free text"
+	"select_or_type": "Select or enter free text",
+	"select_post_placeholder": "Select post...",
+	"unnamed_post": "Unnamed post",
+	"select_user_placeholder": "Select user..."
 }

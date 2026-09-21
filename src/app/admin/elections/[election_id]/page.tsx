@@ -48,11 +48,21 @@ export default function SubElections() {
 			header: t("elections.sub_election.posts_count"),
 			cell: (info) => info.getValue(),
 		}),
-		columnHelper.accessor((row) => row.candidates?.length ?? 0, {
-			id: "candidates_count",
-			header: t("elections.sub_election.candidates_count"),
-			cell: (info) => info.getValue(),
-		}),
+		columnHelper.accessor(
+			(row) => {
+				let num_candidations = 0;
+				for (const candidates of row.candidates ?? []) {
+					num_candidations += candidates.candidations?.length ?? 0;
+				}
+
+				return num_candidations;
+			},
+			{
+				id: "candidations_count",
+				header: t("elections.sub_election.candidations_count"),
+				cell: (info) => info.getValue(),
+			},
+		),
 		columnHelper.display({
 			id: "actions",
 			header: t("elections.sub_election.actions"),

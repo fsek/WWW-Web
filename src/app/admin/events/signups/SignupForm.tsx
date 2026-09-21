@@ -33,7 +33,8 @@ import {
 import { Plus, Save, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import AdminChooseUser, { type Option } from "@/widgets/AdminChooseUser";
+import AdminChooseUser from "@/widgets/AdminChooseUser";
+import type { Option } from "@/components/StyledMultiSelect";
 import type { EventSignupCreate } from "@/api/types.gen";
 import AdminChooseOnePriority from "@/widgets/AdminChooseOnePriority";
 

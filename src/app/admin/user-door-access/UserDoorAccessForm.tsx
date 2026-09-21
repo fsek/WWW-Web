@@ -35,7 +35,8 @@ import { useTranslation } from "react-i18next";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 import { toast } from "sonner";
 import { DoorEnum } from "@/api";
-import AdminChooseUser, { type Option } from "@/widgets/AdminChooseUser";
+import AdminChooseUser from "@/widgets/AdminChooseUser";
+import type { Option } from "@/components/StyledMultiSelect";
 
 export default function UserDoorAccessForm() {
 	const [open, setOpen] = useState(false);
