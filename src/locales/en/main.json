@@ -217,7 +217,8 @@
 		"verify": "Verify Email",
 		"guild-meeting": "Guild Meeting",
 		"guild-meeting-now": "{{title}}",
-		"election-now": "{{title}}"
+		"election-now": "{{title}}",
+		"election": "Election"
 	},
 	"footer": {
 		"contact": "Contact",

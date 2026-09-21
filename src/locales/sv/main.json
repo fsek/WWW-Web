@@ -217,7 +217,8 @@
 		"verify": "Verifiera e-post",
 		"guild-meeting": "Sektionsmöte",
 		"guild-meeting-now": "{{title}}",
-		"election-now": "{{title}}"
+		"election-now": "{{title}}",
+		"election": "Val"
 	},
 	"footer": {
 		"contact": "Kontakt",
