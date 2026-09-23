@@ -408,7 +408,13 @@
 		"remove_success": "Permission borttagen!",
 		"remove_error": "Kunde inte ta bort permission.",
 		"confirm_remove": "Bekräfta borttagning",
-		"confirm_remove_text": "Är du säker på att du vill ta bort denna permission?"
+		"confirm_remove_text": "Är du säker på att du vill ta bort denna permission?",
+		"posts": "Poster",
+		"posts_with_permission": "Poster med denna permission",
+		"no_posts": "Inga poster har denna permission.",
+		"search_target": "Sök mål...",
+		"search_action": "Sök åtgärd...",
+		"search_posts": "Sök post..."
 	},
 	"member": {
 		"self": "Medlemmar",

@@ -69,6 +69,7 @@ export default function AdminPage<T>({
 	onColumnFiltersChange,
 	columnVisibility,
 	initialSorting,
+	hideGlobalSearch = false,
 }: {
 	/**
 	 * Page title.
@@ -93,6 +94,11 @@ export default function AdminPage<T>({
 	onColumnFiltersChange?: OnChangeFn<ColumnFiltersState>;
 	columnVisibility?: VisibilityState;
 	initialSorting?: SortingState;
+	/**
+	 * Hide the global search input, e.g. when the page provides its own
+	 * per-column filter inputs via `headerButtons` and `columnFilters`.
+	 */
+	hideGlobalSearch?: boolean;
 }) {
 	const [sorting, setSorting] = useState<SortingState>(initialSorting ?? []);
 
@@ -145,12 +151,14 @@ export default function AdminPage<T>({
 				</div>
 
 				<header className="flex items-center flex-wrap mb-4 gap-2">
-					<Input
-						className="w-md mr-auto"
-						placeholder={searchPlaceholder || t("admin:search_placeholder")}
-						value={globalFilter}
-						onChange={(e) => setGlobalFilter(e.target.value)}
-					/>
+					{!hideGlobalSearch && (
+						<Input
+							className="w-md mr-auto"
+							placeholder={searchPlaceholder || t("admin:search_placeholder")}
+							value={globalFilter}
+							onChange={(e) => setGlobalFilter(e.target.value)}
+						/>
+					)}
 					{headerButtons}
 				</header>
 

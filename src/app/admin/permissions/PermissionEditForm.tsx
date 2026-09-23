@@ -7,23 +7,21 @@ import {
 	removePermissionMutation,
 	getAllPermissionsQueryKey,
 } from "@/api/@tanstack/react-query.gen";
-import type { PermissionRead } from "../../../api";
+import type { PermissionWithPosts } from "./page";
 import { useTranslation } from "react-i18next";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { toast } from "sonner";
 
 interface PermissionEditFormProps {
-	open: boolean;
+	item: PermissionWithPosts | null;
 	onClose: () => void;
-	selectedPermission: PermissionRead;
 }
 
 export default function PermissionEditForm({
-	open,
+	item: selectedPermission,
 	onClose,
-	selectedPermission,
 }: PermissionEditFormProps) {
-	const { t } = useTranslation("admin");
+	const { t, i18n } = useTranslation("admin");
 	const [confirmOpen, setConfirmOpen] = useState(false);
 
 	const queryClient = useQueryClient();
@@ -44,7 +42,10 @@ export default function PermissionEditForm({
 		},
 	});
 
+	if (!selectedPermission) return null;
+
 	function handleRemove() {
+		if (!selectedPermission) return;
 		removePermission.mutate(
 			{
 				body: {
@@ -62,7 +63,7 @@ export default function PermissionEditForm({
 
 	return (
 		<Dialog
-			open={open}
+			open={!!selectedPermission}
 			onOpenChange={(isOpen) => {
 				if (!isOpen) {
 					onClose();
@@ -88,6 +89,28 @@ export default function PermissionEditForm({
 							{t("permissions.action", "Action")}:{" "}
 						</span>
 						<span>{selectedPermission.action}</span>
+					</div>
+					<div className="mb-4">
+						<span className="font-semibold">
+							{t("permissions.posts_with_permission", "Posts with permission")}{" "}
+							({selectedPermission.posts.length}):
+						</span>
+						{selectedPermission.posts.length > 0 ? (
+							<ul className="list-disc pl-6 mt-1">
+								{selectedPermission.posts.map((post) => (
+									<li key={post.id}>
+										{i18n.language === "en" ? post.name_en : post.name_sv}
+									</li>
+								))}
+							</ul>
+						) : (
+							<p className="mt-1 text-muted-foreground">
+								{t(
+									"permissions.no_posts",
+									"No posts have this permission.",
+								)}
+							</p>
+						)}
 					</div>
 					<ConfirmDeleteDialog
 						open={confirmOpen}

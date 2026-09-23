@@ -408,7 +408,13 @@
 		"remove_success": "Permission removed!",
 		"remove_error": "Could not remove permission.",
 		"confirm_remove": "Confirm removal",
-		"confirm_remove_text": "Are you sure you want to remove this permission?"
+		"confirm_remove_text": "Are you sure you want to remove this permission?",
+		"posts": "Posts",
+		"posts_with_permission": "Posts with this permission",
+		"no_posts": "No posts have this permission.",
+		"search_target": "Search target...",
+		"search_action": "Search action...",
+		"search_posts": "Search post..."
 	},
 	"member": {
 		"self": "Members",
