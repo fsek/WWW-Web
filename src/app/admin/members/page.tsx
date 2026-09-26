@@ -38,7 +38,7 @@ import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
-import { useAuthState, type RequiredPermission } from "@/lib/auth";
+import { usePermissions, type RequiredPermission } from "@/lib/auth";
 import { ActionEnum, TargetEnum } from "@/api";
 import MemberEditForm from "./MemberEditForm";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -61,7 +61,7 @@ export default function MembersPage() {
 	} = useQuery({
 		...adminGetAllUsersOptions(),
 	});
-	const permissions = useAuthState().getPermissions();
+	const permissions = usePermissions();
 	const hasManageUserPerms = permissions.hasRequiredPermissions([
 		[ActionEnum.MANAGE, TargetEnum.USER],
 	] as RequiredPermission[]);

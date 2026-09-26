@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/form";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import ChangeEmailPassForm from "@/components/ChangeEmailPassForm";
+import getErrorMessage from "@/help_functions/getErrorMessage";
 
 export default function AccountSettingsPage() {
 	const { t } = useTranslation("user-settings");
@@ -116,13 +117,7 @@ export default function AccountSettingsPage() {
 			toast.success(t("user-settings:update-success"));
 		},
 		onError: (error) => {
-			toast.error(
-				typeof error === "string"
-					? error
-					: error instanceof Error
-						? error.message
-						: t("user-settings:update-error"),
-			);
+			toast.error(getErrorMessage(error, t));
 		},
 		onSettled: () => setIsSaving(false),
 	});
