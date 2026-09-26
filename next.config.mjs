@@ -8,6 +8,7 @@ const nextConfig = {
 	output: "standalone",
 	// Configure `pageExtensions` to include MDX files
 	pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
+	allowedDevOrigins: ["127.0.0.1", "localhost"],
 };
 
 const withMDX = nextMdx({

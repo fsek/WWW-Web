@@ -135,7 +135,7 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:user-posts.self",
 				url: "/admin/user-posts",
-				permissions: [[ActionEnum.MANAGE, TargetEnum.POST]],
+				permissions: [[ActionEnum.MANAGE, TargetEnum.USER_POST]],
 				icon: UserPen,
 			},
 			{

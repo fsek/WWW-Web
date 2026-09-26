@@ -3,7 +3,12 @@
 // Now using: https://github.com/robskinney/shadcn-ui-fullcalendar-example
 
 import { useMemo, useState } from "react";
-import type { AdminUserRead, CarBookingRead } from "@/api/index";
+import {
+	ActionEnum,
+	TargetEnum,
+	type AdminUserRead,
+	type CarBookingRead,
+} from "@/api/index";
 import CarForm from "./CarForm";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -40,6 +45,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import CarBlockingTab from "./CarBlockingTab";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import PermissionWall from "@/components/PermissionWall";
 
 const columnHelper = createColumnHelper<CarBookingRead>();
 
@@ -269,182 +275,193 @@ export default function Car() {
 		}) ?? [];
 
 	return (
-		<div className="px-8 space-x-4">
-			<h3 className="text-3xl py-3  font-bold  text-primary">
-				{t("admin:car.title")}
-			</h3>
-			<p className="py-3">{t("admin:car.description")}</p>
-			<Separator />
-			{isFetching ? (
-				<LoadingErrorCard />
-			) : (
-				<EventsProvider
-					initialCalendarEvents={events}
-					eventColor="#f6ad55" // TODO: use tailwind
-					carEvents={true}
-					handleAdd={(event) => {
-						handleEventAdd.mutate(
-							{
-								body: {
-									description: event.description_sv,
-									start_time: event.start,
-									end_time: event.end,
-									personal: (event.personal as boolean) ?? true,
-									council_id: event.council_id
-										? (event.council_id as number)
-										: undefined,
+		<PermissionWall
+			requiredPermissions={[
+				[ActionEnum.VIEW, TargetEnum.CAR],
+				[ActionEnum.VIEW, TargetEnum.CAR],
+			]}
+			mustHave="any"
+		>
+			<div className="px-8 space-x-4">
+				<h3 className="text-3xl py-3  font-bold  text-primary">
+					{t("admin:car.title")}
+				</h3>
+				<p className="py-3">{t("admin:car.description")}</p>
+				<Separator />
+				{isFetching ? (
+					<LoadingErrorCard />
+				) : (
+					<EventsProvider
+						initialCalendarEvents={events}
+						eventColor="#f6ad55" // TODO: use tailwind
+						carEvents={true}
+						handleAdd={(event) => {
+							handleEventAdd.mutate(
+								{
+									body: {
+										description: event.description_sv,
+										start_time: event.start,
+										end_time: event.end,
+										personal: (event.personal as boolean) ?? true,
+										council_id: event.council_id
+											? (event.council_id as number)
+											: undefined,
+									},
 								},
-							},
-							{
-								onError: (error) => {
-									toast.error(
-										t("admin:car.error_add") +
-											(error?.detail ? `: ${error.detail}` : ""),
-									);
+								{
+									onError: (error) => {
+										toast.error(
+											t("admin:car.error_add") +
+												(error?.detail ? `: ${error.detail}` : ""),
+										);
+									},
 								},
-							},
-						);
-					}}
-					handleDelete={(id) => {
-						handleEventDelete.mutate(
-							{ path: { booking_id: Number(id) } },
-							{
-								onError: (error) => {
-									toast.error(
-										t("admin:car.error_delete") +
-											(error?.detail ? `: ${error.detail}` : ""),
-									);
-									// TODO: Show error message to user
+							);
+						}}
+						handleDelete={(id) => {
+							handleEventDelete.mutate(
+								{ path: { booking_id: Number(id) } },
+								{
+									onError: (error) => {
+										toast.error(
+											t("admin:car.error_delete") +
+												(error?.detail ? `: ${error.detail}` : ""),
+										);
+										// TODO: Show error message to user
+									},
 								},
-							},
-						);
-					}}
-					handleEdit={(event) => {
-						if (!event.id) {
-							toast.error(t("admin:car.error_missing_id"));
-							return;
-						}
+							);
+						}}
+						handleEdit={(event) => {
+							if (!event.id) {
+								toast.error(t("admin:car.error_missing_id"));
+								return;
+							}
 
-						if (!event.title_sv) {
-							const msg = "Missing title";
-							toast.error(msg);
-							throw new Error(msg);
-						}
+							if (!event.title_sv) {
+								const msg = "Missing title";
+								toast.error(msg);
+								throw new Error(msg);
+							}
 
-						handleEventEdit.mutate(
-							{
-								path: { booking_id: Number(event.id) },
-								body: {
-									description: event.description_sv,
-									start_time: event.start,
-									end_time: event.end,
-									personal: (event.personal as boolean) ?? true,
-									council_id: event.council_id
-										? (event.council_id as number)
-										: undefined,
-									confirmed: (event.confirmed as boolean) ?? false,
+							handleEventEdit.mutate(
+								{
+									path: { booking_id: Number(event.id) },
+									body: {
+										description: event.description_sv,
+										start_time: event.start,
+										end_time: event.end,
+										personal: (event.personal as boolean) ?? true,
+										council_id: event.council_id
+											? (event.council_id as number)
+											: undefined,
+										confirmed: (event.confirmed as boolean) ?? false,
+									},
 								},
-							},
-							{
-								onError: (error) => {
-									toast.error(
-										t("admin:car.error_edit") +
-											(error?.detail ? `: ${error.detail}` : ""),
+								{
+									onError: (error) => {
+										toast.error(
+											t("admin:car.error_edit") +
+												(error?.detail ? `: ${error.detail}` : ""),
+										);
+										// TODO: Show error message to user
+									},
+								},
+							);
+						}}
+					>
+						<div className="py-4">
+							<Tabs
+								value={tab}
+								onValueChange={(value) => {
+									setTab(value);
+									const params = new URLSearchParams(
+										Array.from(searchParams.entries()),
 									);
-									// TODO: Show error message to user
-								},
-							},
-						);
-					}}
-				>
-					<div className="py-4">
-						<Tabs
-							value={tab}
-							onValueChange={(value) => {
-								setTab(value);
-								const params = new URLSearchParams(
-									Array.from(searchParams.entries()),
-								);
-								params.set("tab", value);
-								router.replace(`${pathname}?${params.toString()}`);
-							}}
-							className="flex flex-col w-full items-center"
-						>
-							<TabsList className="flex justify-center mb-2 ">
-								<TabsTrigger value="calendar">
-									{t("admin:car.calendar")}
-								</TabsTrigger>
-								<TabsTrigger value="list">{t("admin:car.list")}</TabsTrigger>
-								<TabsTrigger value="blockings">
-									{t("admin:car.blockings")}
-								</TabsTrigger>
-							</TabsList>
-							<TabsContent value="calendar" className="w-full px-5 space-y-5">
-								<div className="space-y-0">
-									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl text-primary">
+									params.set("tab", value);
+									router.replace(`${pathname}?${params.toString()}`);
+								}}
+								className="flex flex-col w-full items-center"
+							>
+								<TabsList className="flex justify-center mb-2 ">
+									<TabsTrigger value="calendar">
 										{t("admin:car.calendar")}
-									</h2>
-									<p className="text-xs md:text-sm font-medium ">
-										{t("admin:car.calendar_description")}
-									</p>
-								</div>
+									</TabsTrigger>
+									<TabsTrigger value="list">{t("admin:car.list")}</TabsTrigger>
+									<TabsTrigger value="blockings">
+										{t("admin:car.blockings")}
+									</TabsTrigger>
+								</TabsList>
+								<TabsContent value="calendar" className="w-full px-5 space-y-5">
+									<div className="space-y-0">
+										<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl text-primary">
+											{t("admin:car.calendar")}
+										</h2>
+										<p className="text-xs md:text-sm font-medium ">
+											{t("admin:car.calendar_description")}
+										</p>
+									</div>
 
-								<Separator />
-								<Calendar
-									showDescription={true}
-									editDescription={true}
-									handleOpenDetails={(event) => {
-										if (event) {
-											router.push(`/car/booking-details?id=${event.id}`);
-										}
-									}}
-									disableEdit={false} // Also disables delete, add and dragging
-									enableAllDay={false}
-									enableCarProperties={true}
-									// Provide and persist the calendar view across tab switches
-									defaultView={calendarView}
-									onViewChange={setCalendarView}
-									// Provide and persist the viewed date across tab switches
-									defaultDate={calendarDate}
-									onDateChange={setCalendarDate}
-								/>
-							</TabsContent>
-							<TabsContent value="list" className="w-full px-5 space-y-5">
-								<div className="space-y-0">
-									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl text-primary">
-										{t("admin:car.list")}
-									</h2>
-									<p className="text-xs md:text-sm font-medium ">
-										{t("admin:car.list_description")}
-									</p>
-								</div>
-								<div className="flex">
-									<CarForm />
-									<Button
-										variant={showOnlyCurrent ? "default" : "outline"}
-										className="my-auto"
-										onClick={() => setShowOnlyCurrent((v) => !v)}
-									>
-										{showOnlyCurrent
-											? t("admin:car.show_all_bookings")
-											: t("admin:car.hide_past_bookings")}
-									</Button>
-								</div>
-								<Separator />
-								<AdminTable table={table} onRowClick={handleRowClick} />
-								<CarEditForm
-									open={openEditDialog}
-									onClose={() => handleClose()}
-									selectedBooking={selectedBooking as CarBookingRead}
-								/>
-							</TabsContent>
-							<TabsContent value="blockings" className="w-full px-5 space-y-5">
-								<CarBlockingTab />
-							</TabsContent>
-						</Tabs>
-					</div>
-				</EventsProvider>
-			)}
-		</div>
+									<Separator />
+									<Calendar
+										showDescription={true}
+										editDescription={true}
+										handleOpenDetails={(event) => {
+											if (event) {
+												router.push(`/car/booking-details?id=${event.id}`);
+											}
+										}}
+										disableEdit={false} // Also disables delete, add and dragging
+										enableAllDay={false}
+										enableCarProperties={true}
+										// Provide and persist the calendar view across tab switches
+										defaultView={calendarView}
+										onViewChange={setCalendarView}
+										// Provide and persist the viewed date across tab switches
+										defaultDate={calendarDate}
+										onDateChange={setCalendarDate}
+									/>
+								</TabsContent>
+								<TabsContent value="list" className="w-full px-5 space-y-5">
+									<div className="space-y-0">
+										<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl text-primary">
+											{t("admin:car.list")}
+										</h2>
+										<p className="text-xs md:text-sm font-medium ">
+											{t("admin:car.list_description")}
+										</p>
+									</div>
+									<div className="flex">
+										<CarForm />
+										<Button
+											variant={showOnlyCurrent ? "default" : "outline"}
+											className="my-auto"
+											onClick={() => setShowOnlyCurrent((v) => !v)}
+										>
+											{showOnlyCurrent
+												? t("admin:car.show_all_bookings")
+												: t("admin:car.hide_past_bookings")}
+										</Button>
+									</div>
+									<Separator />
+									<AdminTable table={table} onRowClick={handleRowClick} />
+									<CarEditForm
+										open={openEditDialog}
+										onClose={() => handleClose()}
+										selectedBooking={selectedBooking as CarBookingRead}
+									/>
+								</TabsContent>
+								<TabsContent
+									value="blockings"
+									className="w-full px-5 space-y-5"
+								>
+									<CarBlockingTab />
+								</TabsContent>
+							</Tabs>
+						</div>
+					</EventsProvider>
+				)}
+			</div>
+		</PermissionWall>
 	);
 }
