@@ -25,7 +25,7 @@ export default function VerificationReminder({
 	if (!displayBanner) return null;
 
 	return (
-		<div className="bg-background/90 dark:bg-background/80 backdrop-blur-md border-t border-border shadow-lg">
+		<div className="w-full bg-background/90 dark:bg-background/80 backdrop-blur-md border-t border-border shadow-lg">
 			<div className="max-w-7xl mx-auto px-4 py-1">
 				<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
 					<div className="text-xs sm:text-sm text-muted-foreground flex-1 leading-relaxed">
