@@ -129,7 +129,7 @@ export function NavBar() {
 						<ThemeToggle />
 
 						{/* Desktop user menu */}
-						<div className="hidden lg:flex">
+						<div className="hidden xl:flex">
 							{user ? (
 								<>
 									{showAdmin && (
