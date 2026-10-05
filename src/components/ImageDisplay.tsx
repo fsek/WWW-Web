@@ -56,6 +56,7 @@ export function useImageBlobActions(type: ImageKind, imageId?: number | null) {
 		const data = await (queryClient.fetchQuery as any)(opts);
 
 		let blob: Blob | null = null;
+
 		if (typeof Blob !== "undefined" && data instanceof Blob) {
 			blob = data;
 		} else if (
@@ -76,6 +77,7 @@ export function useImageBlobActions(type: ImageKind, imageId?: number | null) {
 	// Open original in a new tab
 	const openInNewTabOriginal = useCallback(async () => {
 		const { url } = await getOriginalAsBlobUrl();
+		
 		window.open(url, "_blank", "noopener,noreferrer");
 		// Revoke after a short delay to avoid revoking before the browser reads it
 		// 10 seconds should be more than enough
@@ -116,6 +118,9 @@ export default function ImageDisplay({
 	...imgProps
 }: ImageDisplayProps) {
 	const [src, setSrc] = useState<string | undefined>(undefined);
+	const [aspectRatio, setAspectRatio] = useState<number | null>(null);
+
+
 	const lastBlobUrlRef = useRef<string | undefined>(undefined);
 
 	const devMode = process.env.NEXT_PUBLIC_ENV === "development";
@@ -173,6 +178,7 @@ export default function ImageDisplay({
 			lastBlobUrlRef.current = undefined;
 		}
 		setSrc(undefined);
+		setAspectRatio(null);
 
 		if (!query.data) return;
 
@@ -213,6 +219,32 @@ export default function ImageDisplay({
 		setSrc(undefined);
 	}, [query.data]);
 
+	// Set aspect ration
+
+		useEffect(() => {
+		if (!src) {
+			setAspectRatio(null);
+			return;
+		}
+
+		const image = new window.Image();
+
+		image.onload = () => {
+			if (image.naturalWidth && image.naturalHeight) {
+				setAspectRatio(
+					image.naturalWidth / image.naturalHeight,
+				);
+			}
+		};
+
+		image.src = src;
+
+		return () => {
+			image.onload = null;
+		};
+	}, [src]);
+
+
 	// Cleanup on unmount
 	useEffect(() => {
 		return () => {
@@ -224,21 +256,28 @@ export default function ImageDisplay({
 	}, []);
 
 	// Show nothing while loading or if there is no usable src
-	if (query.isLoading || !src) return <p>{alt ?? `${type} ${imageId}`}</p>;
+	if (query.isLoading || !src || !aspectRatio) return <p>{alt ?? `${type} ${imageId}`}</p>;
 	if (query.isError) return <p>{alt ?? `${type} ${imageId}`}</p>;
 
 	return (
-		<Image
-			src={src}
-			alt={alt ?? `${type} ${imageId}`}
-			className={className}
-			style={style}
-			loading={loading}
-			draggable={draggable}
-			onClick={onClick}
-			onLoad={onLoad}
-			onError={onError}
-			{...imgProps}
-		/>
+		<div
+			className={`relative w-full`}
+			style={{
+				aspectRatio,
+			}}
+		>
+			<Image
+						src={src}
+						alt={alt ?? `${type} ${imageId}`}
+						className={className}
+						style={style}
+						loading={loading}
+						draggable={draggable}
+						onClick={onClick}
+						onLoad={onLoad}
+						onError={onError}
+						{...imgProps}
+					/>
+		</div>
 	);
 }

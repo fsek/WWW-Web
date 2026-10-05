@@ -117,18 +117,16 @@ export default function MainPageNews({ mini = false }: MainPageNewsProps) {
 									)}
 							</CardDescription>
 						</CardHeader>
-						<CardContent className="flex-grow">
-							{imageExists[news.id] && (
-								<div className="relative h-60 mb-2 mx-auto w-[50%]">
-									<ImageDisplay
-										type="news"
-										imageId={news.id}
-										alt={`News image for ${news.title_en}`}
-										className="object-cover rounded-lg w-full h-full"
-										size="large"
-										fill
-									/>
-								</div>
+						<CardContent className="grow">
+							{true && (
+								<ImageDisplay
+									type="news"
+									imageId={news.id}
+									alt={`News image for ${news.title_en}`}
+									className="object-contain w-full h-full rounded-lg"
+									size="large"
+									fill
+								/>
 							)}
 							{(() => {
 								const content =

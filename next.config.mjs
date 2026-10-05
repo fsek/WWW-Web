@@ -8,6 +8,9 @@ const nextConfig = {
 	output: "standalone",
 	// Configure `pageExtensions` to include MDX files
 	pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
+	images: {
+		domains: ["picsum.photos"],
+	},
 };
 
 const withMDX = nextMdx({
