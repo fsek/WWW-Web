@@ -12,7 +12,7 @@ function getRandomMessage() {
 }
 
 interface LoadingErrorCardProps {
-	error?: Error | string;
+	error?: Error | string | object;
 	isLoading?: boolean;
 	loadingMessage?: string;
 	errorHomeButton?: boolean;

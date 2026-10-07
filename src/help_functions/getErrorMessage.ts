@@ -24,6 +24,41 @@ export default function getErrorMessage(
 			return detail;
 		}
 
+		// FastAPI/pydantic validation errors (HTTP 422) come back as
+		// { detail: [{ type, loc, msg, input, ctx? }, ...] }.
+		// We don't want to use input since that could echo back sensitive information
+		if (Array.isArray(detail)) {
+			const messages = detail.flatMap((item) => {
+				const { loc, msg } = (item ?? {}) as { loc?: unknown; msg?: unknown };
+				if (typeof msg !== "string" || msg.length === 0) {
+					return [];
+				}
+
+				// loc is e.g. ["body", "telephone_number"]
+				// used to give context for what field the error is for
+				const field = (Array.isArray(loc) ? loc : [])
+					.filter(
+						(part) =>
+							typeof part === "string" &&
+							part !== "body" &&
+							part !== "query" &&
+							part !== "path",
+					)
+					.pop() as string | undefined;
+
+				if (!field) {
+					return [msg];
+				}
+
+				const label = field.replace(/_/g, " ");
+				return [`${label}: ${msg}`];
+			});
+
+			if (messages.length > 0) {
+				return messages.join("\n");
+			}
+		}
+
 		// fastapi-users returns errors as { code, reason }
 		// basically only relevant for registration errors
 		if (
