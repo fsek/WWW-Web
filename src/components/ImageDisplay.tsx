@@ -77,7 +77,7 @@ export function useImageBlobActions(type: ImageKind, imageId?: number | null) {
 	// Open original in a new tab
 	const openInNewTabOriginal = useCallback(async () => {
 		const { url } = await getOriginalAsBlobUrl();
-		
+
 		window.open(url, "_blank", "noopener,noreferrer");
 		// Revoke after a short delay to avoid revoking before the browser reads it
 		// 10 seconds should be more than enough
@@ -119,7 +119,6 @@ export default function ImageDisplay({
 }: ImageDisplayProps) {
 	const [src, setSrc] = useState<string | undefined>(undefined);
 	const [aspectRatio, setAspectRatio] = useState<number | null>(null);
-
 
 	const lastBlobUrlRef = useRef<string | undefined>(undefined);
 
@@ -221,7 +220,7 @@ export default function ImageDisplay({
 
 	// Set aspect ration
 
-		useEffect(() => {
+	useEffect(() => {
 		if (!src) {
 			setAspectRatio(null);
 			return;
@@ -231,9 +230,7 @@ export default function ImageDisplay({
 
 		image.onload = () => {
 			if (image.naturalWidth && image.naturalHeight) {
-				setAspectRatio(
-					image.naturalWidth / image.naturalHeight,
-				);
+				setAspectRatio(image.naturalWidth / image.naturalHeight);
 			}
 		};
 
@@ -243,7 +240,6 @@ export default function ImageDisplay({
 			image.onload = null;
 		};
 	}, [src]);
-
 
 	// Cleanup on unmount
 	useEffect(() => {
@@ -256,28 +252,29 @@ export default function ImageDisplay({
 	}, []);
 
 	// Show nothing while loading or if there is no usable src
-	if (query.isLoading || !src || !aspectRatio) return <p>{alt ?? `${type} ${imageId}`}</p>;
+	if (query.isLoading || !src || !aspectRatio)
+		return <p>{alt ?? `${type} ${imageId}`}</p>;
 	if (query.isError) return <p>{alt ?? `${type} ${imageId}`}</p>;
 
 	return (
 		<div
-			className={`relative w-full`}
+			className={"relative w-full max-h-full"}
 			style={{
 				aspectRatio,
 			}}
 		>
 			<Image
-						src={src}
-						alt={alt ?? `${type} ${imageId}`}
-						className={className}
-						style={style}
-						loading={loading}
-						draggable={draggable}
-						onClick={onClick}
-						onLoad={onLoad}
-						onError={onError}
-						{...imgProps}
-					/>
+				src={src}
+				alt={alt ?? `${type} ${imageId}`}
+				className={className}
+				style={style}
+				loading={loading}
+				draggable={draggable}
+				onClick={onClick}
+				onLoad={onLoad}
+				onError={onError}
+				{...imgProps}
+			/>
 		</div>
 	);
 }
