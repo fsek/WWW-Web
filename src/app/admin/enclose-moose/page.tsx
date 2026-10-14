@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import {
 	type EncloseMooseLevelRead,
 	mooseAdminGetAllLevelsOptions,
@@ -21,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import { useState } from "react";
+import PermissionWall from "@/components/PermissionWall";
 
 export default function EncloseMoose() {
 	const { t } = useTranslation("admin");
@@ -83,43 +85,47 @@ export default function EncloseMoose() {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
 	return (
-		<AdminPage
-			title={t("enclose_moose.page_title")}
-			description={t("enclose_moose.page_description")}
-			queryResult={useQuery({
-				...mooseAdminGetAllLevelsOptions(),
-				refetchOnWindowFocus: false,
-			})}
-			columns={columns}
-			editComponent={EncloseMooseLevelEditForm}
-			headerButtons={
-				<>
-					<SelectFromOptions
-						className="w-auto"
-						options={[
-							{ value: "all", label: t("enclose_moose.view_all_levels") },
-							{ value: "daily", label: t("enclose_moose.view_daily_levels") },
-							{ value: "bonus", label: t("enclose_moose.view_bonus_levels") },
-						]}
-						value={filterValue}
-						onChange={(newFilter) => {
-							setColumnFilters(() =>
-								newFilter === "all"
-									? []
-									: [{ id: "day_index", value: newFilter }],
-							);
-							setFilterValue(newFilter);
-						}}
-					/>
-					<EncloseMooseLevelForm />
-				</>
-			}
-			columnFilters={columnFilters}
-			onColumnFiltersChange={setColumnFilters}
-			initialSorting={[
-				{ id: "release_date", desc: true },
-				{ id: "day_index", desc: true },
-			]}
-		/>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.ENCLOSE_MOOSE]]}
+		>
+			<AdminPage
+				title={t("enclose_moose.page_title")}
+				description={t("enclose_moose.page_description")}
+				queryResult={useQuery({
+					...mooseAdminGetAllLevelsOptions(),
+					refetchOnWindowFocus: false,
+				})}
+				columns={columns}
+				editComponent={EncloseMooseLevelEditForm}
+				headerButtons={
+					<>
+						<SelectFromOptions
+							className="w-auto"
+							options={[
+								{ value: "all", label: t("enclose_moose.view_all_levels") },
+								{ value: "daily", label: t("enclose_moose.view_daily_levels") },
+								{ value: "bonus", label: t("enclose_moose.view_bonus_levels") },
+							]}
+							value={filterValue}
+							onChange={(newFilter) => {
+								setColumnFilters(() =>
+									newFilter === "all"
+										? []
+										: [{ id: "day_index", value: newFilter }],
+								);
+								setFilterValue(newFilter);
+							}}
+						/>
+						<EncloseMooseLevelForm />
+					</>
+				}
+				columnFilters={columnFilters}
+				onColumnFiltersChange={setColumnFilters}
+				initialSorting={[
+					{ id: "release_date", desc: true },
+					{ id: "day_index", desc: true },
+				]}
+			/>
+		</PermissionWall>
 	);
 }

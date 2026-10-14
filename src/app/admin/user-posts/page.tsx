@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import type { AdminUserRead } from "@/api";
 import { adminGetAllUsersOptions } from "@/api/@tanstack/react-query.gen";
 import { AdminChooseMultPosts } from "@/widgets/AdminChooseMultPosts";
@@ -13,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import UserPostsEditForm from "./UserPostsEditForm";
 import AdminPage from "@/widgets/AdminPage";
 import { useState } from "react";
+import PermissionWall from "@/components/PermissionWall";
 
 const columnHelper = createColumnHelper<AdminUserRead>();
 
@@ -83,33 +85,37 @@ export default function UserPostsPage() {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
 	return (
-		<AdminPage
-			title={t("admin:user-posts.list")}
-			description={t("admin:user-posts.list_description")}
-			queryResult={useQuery({
-				...adminGetAllUsersOptions(),
-			})}
-			columns={columns}
-			searchPlaceholder={t("admin:user-posts.search_placeholder")}
-			editComponent={UserPostsEditForm}
-			headerButtons={
-				<AdminChooseMultPosts
-					value={
-						(columnFilters.find((f) => f.id === "posts")?.value as number[]) ||
-						[]
-					}
-					onChange={(postIds) => {
-						setColumnFilters((old) => {
-							const otherFilters = old.filter((f) => f.id !== "posts");
-							if (postIds.length === 0) return otherFilters;
-							return [...otherFilters, { id: "posts", value: postIds }];
-						});
-					}}
-				/>
-			}
-			columnFilters={columnFilters}
-			onColumnFiltersChange={setColumnFilters}
-			columnVisibility={{ hidden_column: false }}
-		/>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.USER]]}
+		>
+			<AdminPage
+				title={t("admin:user-posts.list")}
+				description={t("admin:user-posts.list_description")}
+				queryResult={useQuery({
+					...adminGetAllUsersOptions(),
+				})}
+				columns={columns}
+				searchPlaceholder={t("admin:user-posts.search_placeholder")}
+				editComponent={UserPostsEditForm}
+				headerButtons={
+					<AdminChooseMultPosts
+						value={
+							(columnFilters.find((f) => f.id === "posts")
+								?.value as number[]) || []
+						}
+						onChange={(postIds) => {
+							setColumnFilters((old) => {
+								const otherFilters = old.filter((f) => f.id !== "posts");
+								if (postIds.length === 0) return otherFilters;
+								return [...otherFilters, { id: "posts", value: postIds }];
+							});
+						}}
+					/>
+				}
+				columnFilters={columnFilters}
+				onColumnFiltersChange={setColumnFilters}
+				columnVisibility={{ hidden_column: false }}
+			/>
+		</PermissionWall>
 	);
 }

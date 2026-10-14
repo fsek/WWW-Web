@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import { getAllSongsOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
 import { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
@@ -8,6 +9,7 @@ import SongEditForm from "./SongEditForm";
 import { useTranslation } from "react-i18next";
 import AdminPage from "@/widgets/AdminPage";
 import SongForm from "./SongForm";
+import PermissionWall from "@/components/PermissionWall";
 
 export default function Songs() {
 	const { t } = useTranslation("admin");
@@ -39,16 +41,20 @@ export default function Songs() {
 	];
 
 	return (
-		<AdminPage
-			title={t("songs.title")}
-			description={t("songs.description_subtitle")}
-			queryResult={useQuery({
-				...getAllSongsOptions(),
-				refetchOnWindowFocus: false,
-			})}
-			columns={columns}
-			editComponent={SongEditForm}
-			headerButtons={<SongForm />}
-		/>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.SONGS]]}
+		>
+			<AdminPage
+				title={t("songs.title")}
+				description={t("songs.description_subtitle")}
+				queryResult={useQuery({
+					...getAllSongsOptions(),
+					refetchOnWindowFocus: false,
+				})}
+				columns={columns}
+				editComponent={SongEditForm}
+				headerButtons={<SongForm />}
+			/>
+		</PermissionWall>
 	);
 }

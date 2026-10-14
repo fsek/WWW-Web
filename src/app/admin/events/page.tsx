@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import { useMemo, useState } from "react";
 import EventsForm from "./EventsForm";
 import EventsEditForm from "./EventsEditForm";
@@ -29,6 +30,7 @@ import { Separator } from "@/components/ui/separator";
 import Calendar from "@/components/full-calendar";
 import { useRouter } from "next/navigation";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
+import PermissionWall from "@/components/PermissionWall";
 
 // Column setup
 const columnHelper = createColumnHelper<EventRead>();
@@ -226,184 +228,188 @@ export default function Events() {
 		})) ?? [];
 
 	return (
-		<div className="px-8 space-x-4">
-			<h3 className="text-3xl py-3 font-bold text-primary">
-				{t("admin:events.page_title")}
-			</h3>
-			<p className="py-3">{t("admin:events.page_description")}</p>
-			<EventsProvider
-				initialCalendarEvents={events}
-				eventColor="#f6ad55"
-				handleAdd={(event) =>
-					addBooking.mutate(
-						{
-							body: {
-								// Having to define this sux, having to type "as string" also does. Basically TODO: fix pls
-								council_id: event.council_id as number,
-								starts_at: event.start,
-								ends_at: event.end,
-								signup_start: event.signup_start as Date,
-								signup_end: event.signup_end as Date,
-								title_sv: event.title_sv,
-								title_en: event.title_en as string,
-								description_sv: event.description_sv,
-								description_en: event.description_en as string,
-								location: event.location as string,
-								max_event_users: event.max_event_users as number,
-								priorities: event.priorities as EventCreate["priorities"], // This might just work
-								all_day: event.all_day as boolean,
-								recurring: event.recurring as boolean,
-								food: event.food as boolean,
-								closed: event.closed as boolean,
-								can_signup: event.can_signup as boolean,
-								drink_package: event.drink_package as boolean,
-								is_nollning_event: event.is_nollning_event as boolean,
-								mentor_group_types:
-									event.mentor_group_types as EventCreate["mentor_group_types"],
-								allow_other_mentors: event.allow_other_mentors as boolean,
-								alcohol_event_type: event.alcohol_event_type as
-									| "Alcohol"
-									| "Alcohol-Served"
-									| "None",
-								dress_code: event.dress_code as string,
-								price: event.price as number,
-								dot: event.dot as "None" | "Single" | "Double",
-								lottery: event.lottery as boolean,
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.EVENTS]]}
+		>
+			<div className="px-8 space-x-4">
+				<h3 className="text-3xl py-3 font-bold text-primary">
+					{t("admin:events.page_title")}
+				</h3>
+				<p className="py-3">{t("admin:events.page_description")}</p>
+				<EventsProvider
+					initialCalendarEvents={events}
+					eventColor="#f6ad55"
+					handleAdd={(event) =>
+						addBooking.mutate(
+							{
+								body: {
+									// Having to define this sux, having to type "as string" also does. Basically TODO: fix pls
+									council_id: event.council_id as number,
+									starts_at: event.start,
+									ends_at: event.end,
+									signup_start: event.signup_start as Date,
+									signup_end: event.signup_end as Date,
+									title_sv: event.title_sv,
+									title_en: event.title_en as string,
+									description_sv: event.description_sv,
+									description_en: event.description_en as string,
+									location: event.location as string,
+									max_event_users: event.max_event_users as number,
+									priorities: event.priorities as EventCreate["priorities"], // This might just work
+									all_day: event.all_day as boolean,
+									recurring: event.recurring as boolean,
+									food: event.food as boolean,
+									closed: event.closed as boolean,
+									can_signup: event.can_signup as boolean,
+									drink_package: event.drink_package as boolean,
+									is_nollning_event: event.is_nollning_event as boolean,
+									mentor_group_types:
+										event.mentor_group_types as EventCreate["mentor_group_types"],
+									allow_other_mentors: event.allow_other_mentors as boolean,
+									alcohol_event_type: event.alcohol_event_type as
+										| "Alcohol"
+										| "Alcohol-Served"
+										| "None",
+									dress_code: event.dress_code as string,
+									price: event.price as number,
+									dot: event.dot as "None" | "Single" | "Double",
+									lottery: event.lottery as boolean,
+								},
 							},
-						},
-						{
-							onError: () => toast.error(t("admin:events.error_add")),
-						},
-					)
-				}
-				handleDelete={(id) =>
-					deleteBooking.mutate(
-						{ path: { event_id: Number(id) } },
-						{
-							onError: () => toast.error(t("admin:events.error_delete")),
-						},
-					)
-				}
-				handleEdit={(event) => {
-					if (!event.id) {
-						toast.error(t("admin:events.error_missing_id"));
-						return;
+							{
+								onError: () => toast.error(t("admin:events.error_add")),
+							},
+						)
 					}
-					editBooking.mutate(
-						{
-							path: { event_id: Number(event.id) },
-							body: {
-								council_id: event.council_id as number,
-								starts_at: event.start,
-								ends_at: event.end,
-								signup_start: event.signup_start as Date,
-								signup_end: event.signup_end as Date,
-								title_sv: event.title_sv,
-								title_en: event.title_en as string,
-								description_sv: event.description_sv,
-								description_en: event.description_en as string,
-								location: event.location as string,
-								max_event_users: event.max_event_users as number,
-								all_day: event.all_day as boolean,
-								recurring: event.recurring as boolean,
-								food: event.food as boolean,
-								closed: event.closed as boolean,
-								can_signup: event.can_signup as boolean,
-								drink_package: event.drink_package as boolean,
-								is_nollning_event: event.is_nollning_event as boolean,
-								mentor_group_types:
-									event.mentor_group_types as EventCreate["mentor_group_types"],
-								allow_other_mentors: event.allow_other_mentors as boolean,
-								priorities: event.priorities as EventCreate["priorities"], // This might just work
-								alcohol_event_type: event.alcohol_event_type as
-									| "Alcohol"
-									| "Alcohol-Served"
-									| "None",
-								dress_code: event.dress_code as string,
-								price: event.price as number,
-								dot: event.dot as "None" | "Single" | "Double",
-								lottery: event.lottery as boolean,
+					handleDelete={(id) =>
+						deleteBooking.mutate(
+							{ path: { event_id: Number(id) } },
+							{
+								onError: () => toast.error(t("admin:events.error_delete")),
 							},
-						},
-						{
-							onError: () => toast.error(t("admin:events.error_edit")),
-						},
-					);
-				}}
-			>
-				<div className="py-4">
-					<Tabs
-						defaultValue="calendar"
-						className="flex flex-col w-full items-center"
-					>
-						<TabsList className="flex justify-center mb-2">
-							<TabsTrigger value="calendar">
-								{t("admin:events.calendar")}
-							</TabsTrigger>
-							<TabsTrigger value="list">{t("admin:events.list")}</TabsTrigger>
-						</TabsList>
-						<TabsContent value="calendar" className="w-full px-5 space-y-5">
-							<div className="space-y-0">
-								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+						)
+					}
+					handleEdit={(event) => {
+						if (!event.id) {
+							toast.error(t("admin:events.error_missing_id"));
+							return;
+						}
+						editBooking.mutate(
+							{
+								path: { event_id: Number(event.id) },
+								body: {
+									council_id: event.council_id as number,
+									starts_at: event.start,
+									ends_at: event.end,
+									signup_start: event.signup_start as Date,
+									signup_end: event.signup_end as Date,
+									title_sv: event.title_sv,
+									title_en: event.title_en as string,
+									description_sv: event.description_sv,
+									description_en: event.description_en as string,
+									location: event.location as string,
+									max_event_users: event.max_event_users as number,
+									all_day: event.all_day as boolean,
+									recurring: event.recurring as boolean,
+									food: event.food as boolean,
+									closed: event.closed as boolean,
+									can_signup: event.can_signup as boolean,
+									drink_package: event.drink_package as boolean,
+									is_nollning_event: event.is_nollning_event as boolean,
+									mentor_group_types:
+										event.mentor_group_types as EventCreate["mentor_group_types"],
+									allow_other_mentors: event.allow_other_mentors as boolean,
+									priorities: event.priorities as EventCreate["priorities"], // This might just work
+									alcohol_event_type: event.alcohol_event_type as
+										| "Alcohol"
+										| "Alcohol-Served"
+										| "None",
+									dress_code: event.dress_code as string,
+									price: event.price as number,
+									dot: event.dot as "None" | "Single" | "Double",
+									lottery: event.lottery as boolean,
+								},
+							},
+							{
+								onError: () => toast.error(t("admin:events.error_edit")),
+							},
+						);
+					}}
+				>
+					<div className="py-4">
+						<Tabs
+							defaultValue="calendar"
+							className="flex flex-col w-full items-center"
+						>
+							<TabsList className="flex justify-center mb-2">
+								<TabsTrigger value="calendar">
 									{t("admin:events.calendar")}
-								</h2>
-								<p className="text-xs md:text-sm font-medium">
-									{t("admin:events.calendar_description")}
-								</p>
-							</div>
+								</TabsTrigger>
+								<TabsTrigger value="list">{t("admin:events.list")}</TabsTrigger>
+							</TabsList>
+							<TabsContent value="calendar" className="w-full px-5 space-y-5">
+								<div className="space-y-0">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+										{t("admin:events.calendar")}
+									</h2>
+									<p className="text-xs md:text-sm font-medium">
+										{t("admin:events.calendar_description")}
+									</p>
+								</div>
 
-							<Separator />
-							<Calendar
-								showDescription={true}
-								editDescription={true} // Note that setting this to false wont work with events. (not implemented in the list view)
-								handleOpenDetails={(event) => {
-									if (event) {
-										router.push(`/calendar/event-details?id=${event.id}`);
-									}
-								}}
-								disableEdit={false} // Also disables delete, add and dragging
-								enableAllDay={true}
-								enableTrueEventProperties={true}
-								// Provide and persist the calendar view across tab switches
-								defaultView={calendarView}
-								onViewChange={setCalendarView}
-								// Provide and persist the viewed date across tab switches
-								defaultDate={calendarDate}
-								onDateChange={setCalendarDate}
-								showManageSignupsButton={true}
-							/>
-						</TabsContent>
-						<TabsContent value="list" className="w-full px-5 space-y-5">
-							<div className="space-y-0">
-								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
-									{t("admin:events.list")}
-								</h2>
-								<p className="text-xs md:text-sm font-medium">
-									{t("admin:events.list_description")}
-								</p>
-							</div>
-							{/* Search input for filtering by title/location */}
-							<div className="py-3">
-								<input
-									type="search"
-									placeholder={t("admin:events.search_title")}
-									value={searchTitle}
-									onChange={(e) => setSearchTitle(e.target.value)}
-									className="w-96 border rounded px-3 py-2"
+								<Separator />
+								<Calendar
+									showDescription={true}
+									editDescription={true} // Note that setting this to false wont work with events. (not implemented in the list view)
+									handleOpenDetails={(event) => {
+										if (event) {
+											router.push(`/calendar/event-details?id=${event.id}`);
+										}
+									}}
+									disableEdit={false} // Also disables delete, add and dragging
+									enableAllDay={true}
+									enableTrueEventProperties={true}
+									// Provide and persist the calendar view across tab switches
+									defaultView={calendarView}
+									onViewChange={setCalendarView}
+									// Provide and persist the viewed date across tab switches
+									defaultDate={calendarDate}
+									onDateChange={setCalendarDate}
+									showManageSignupsButton={true}
 								/>
-							</div>
-							<EventsForm />
-							<Separator />
-							<AdminTable table={table} onRowClick={handleRowClick} />
-							<EventsEditForm
-								open={openEditDialog}
-								onClose={() => handleClose()}
-								selectedEvent={selectedEvent as EventRead}
-							/>
-						</TabsContent>
-					</Tabs>
-				</div>
-			</EventsProvider>
-		</div>
+							</TabsContent>
+							<TabsContent value="list" className="w-full px-5 space-y-5">
+								<div className="space-y-0">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+										{t("admin:events.list")}
+									</h2>
+									<p className="text-xs md:text-sm font-medium">
+										{t("admin:events.list_description")}
+									</p>
+								</div>
+								{/* Search input for filtering by title/location */}
+								<div className="py-3">
+									<input
+										type="search"
+										placeholder={t("admin:events.search_title")}
+										value={searchTitle}
+										onChange={(e) => setSearchTitle(e.target.value)}
+										className="w-96 border rounded px-3 py-2"
+									/>
+								</div>
+								<EventsForm />
+								<Separator />
+								<AdminTable table={table} onRowClick={handleRowClick} />
+								<EventsEditForm
+									open={openEditDialog}
+									onClose={() => handleClose()}
+									selectedEvent={selectedEvent as EventRead}
+								/>
+							</TabsContent>
+						</Tabs>
+					</div>
+				</EventsProvider>
+			</div>
+		</PermissionWall>
 	);
 }

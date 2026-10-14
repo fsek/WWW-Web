@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import { useMemo, useState } from "react";
 import DocumentsForm from "./DocumentsForm";
 import DocumentsEditForm from "./DocumentsEditForm";
@@ -12,6 +13,7 @@ import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 
 import type { DocumentRead } from "@/api";
 import { getAllDocumentsOptions } from "@/api/@tanstack/react-query.gen";
+import PermissionWall from "@/components/PermissionWall";
 
 export default function Documents() {
 	const { t } = useTranslation();
@@ -100,32 +102,36 @@ export default function Documents() {
 	}
 
 	return (
-		<div className="px-8 space-x-4">
-			<h3 className="text-3xl py-3 font-bold text-primary">
-				{t("admin:documents.page_title")}
-			</h3>
-			<p className="py-3">{t("admin:documents.description")}</p>
-			<DocumentsForm categories={categories} />
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.DOCUMENTS]]}
+		>
+			<div className="px-8 space-x-4">
+				<h3 className="text-3xl py-3 font-bold text-primary">
+					{t("admin:documents.page_title")}
+				</h3>
+				<p className="py-3">{t("admin:documents.description")}</p>
+				<DocumentsForm categories={categories} />
 
-			{/* Search input for filtering by title */}
-			<div className="py-3">
-				<input
-					type="search"
-					placeholder={t("admin:documents.search_title")}
-					value={searchTitle}
-					onChange={(e) => setSearchTitle(e.target.value)}
-					className="w-96 border rounded px-3 py-2"
+				{/* Search input for filtering by title */}
+				<div className="py-3">
+					<input
+						type="search"
+						placeholder={t("admin:documents.search_title")}
+						value={searchTitle}
+						onChange={(e) => setSearchTitle(e.target.value)}
+						className="w-96 border rounded px-3 py-2"
+					/>
+				</div>
+
+				<AdminTable table={table} onRowClick={handleRowClick} />
+
+				<DocumentsEditForm
+					open={openEditDialog}
+					onClose={() => handleClose()}
+					selectedDocument={selectedDocument as DocumentRead}
+					categories={categories}
 				/>
 			</div>
-
-			<AdminTable table={table} onRowClick={handleRowClick} />
-
-			<DocumentsEditForm
-				open={openEditDialog}
-				onClose={() => handleClose()}
-				selectedDocument={selectedDocument as DocumentRead}
-				categories={categories}
-			/>
-		</div>
+		</PermissionWall>
 	);
 }
