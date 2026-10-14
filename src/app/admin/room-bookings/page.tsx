@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import { useState } from "react";
 import RoomBookingForm from "./RoomBookingForm";
 import RoomBookingEditForm from "./RoomBookingEditForm";
@@ -32,6 +33,7 @@ import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import type { RoomEnum } from "@/api";
 import { toast } from "sonner";
+import PermissionWall from "@/components/PermissionWall";
 
 // Column setup
 const columnHelper = createColumnHelper<RoomBookingRead>();
@@ -202,170 +204,176 @@ export default function RoomBookings() {
 	};
 
 	return (
-		<div className="px-8 space-x-4">
-			<h3 className="text-3xl py-3 font-bold text-primary">
-				{t("admin:room_bookings.page_title")}
-			</h3>
-			<p className="py-3">{t("admin:room_bookings.page_description")}</p>
-			<div className="py-2 w-64">
-				<SelectFromOptions
-					placeholder={t("admin:room_bookings.select_room") || "Välj rum"}
-					options={[
-						{ value: "LC", label: "LC" },
-						{ value: "Alumni", label: "Alumni" },
-						{ value: "SK", label: "SK" },
-						{ value: "Hilbert Cafe", label: "Hilbert Cafe" },
-						{ value: "All", label: t("admin:room_bookings.all_rooms") },
-					]}
-					value={selectedRoom}
-					onChange={(value) => setSelectedRoom(value as RoomEnum | "All")}
-				/>
-			</div>
-			{/* Debug info to show current visible range */}
-			{/* <div className="py-2 text-sm text-muted-foreground">
-				Visible range: {visibleDateRange.start.toLocaleDateString()} - {visibleDateRange.end.toLocaleDateString()}
-			</div> */}
-			<EventsProvider
-				initialCalendarEvents={events}
-				eventColor="#f6ad55"
-				handleAdd={(event) =>
-					addBooking.mutate(
-						{
-							body: {
-								// Having to define this sux, having to type "as number" also does. Basically TODO: fix this
-								room: event.room as `${RoomEnum}`,
-								start_time: event.start,
-								end_time: event.end,
-								description: event.description_sv,
-								council_id: event.council_id as number,
-								recur_interval_days: event.recur_interval_days as
-									| number
-									| undefined,
-								recur_until: event.recur_until as Date | undefined,
-							},
-						},
-						{
-							onError: () => toast.error(t("admin:room_bookings.error_add")),
-							onSuccess: () => {
-								toast.success(t("admin:room_bookings.success_add"));
-							},
-						},
-					)
-				}
-				handleDelete={(id) =>
-					deleteBooking.mutate(
-						{ path: { booking_id: Number(id) } },
-						{
-							onError: () =>
-								toast.error(`${t("admin:room_bookings.error_delete")} ${id}`),
-							onSuccess: () => {
-								toast.success(t("admin:room_bookings.success_delete"));
-							},
-						},
-					)
-				}
-				handleEdit={(event) => {
-					if (!event.id) {
-						toast.error(t("admin:room_bookings.error_missing_id"));
-						return;
-					}
-					editBooking.mutate(
-						{
-							path: { booking_id: Number(event.id) },
-							body: {
-								start_time: event.start,
-								end_time: event.end,
-								description: event.description_sv,
-							},
-						},
-						{
-							onError: () =>
-								toast.error(
-									`${t("admin:room_bookings.error_edit")} ${event.id}`,
-								),
-							onSuccess: () => {
-								toast.success(t("admin:room_bookings.success_edit"));
-							},
-						},
-					);
-				}}
-			>
-				<div className="py-4">
-					<Tabs
-						value={tab}
-						onValueChange={(value) => {
-							setTab(value);
-							const params = new URLSearchParams(
-								Array.from(searchParams.entries()),
-							);
-							params.set("tab", value);
-							router.replace(`${pathname}?${params.toString()}`);
-						}}
-						className="flex flex-col w-full items-center"
-					>
-						<TabsList className="flex justify-center mb-2">
-							<TabsTrigger value="calendar">
-								{t("admin:room_bookings.calendar")}
-							</TabsTrigger>
-							<TabsTrigger value="list">
-								{t("admin:room_bookings.list")}
-							</TabsTrigger>
-						</TabsList>
-						<TabsContent value="calendar" className="w-full px-5 space-y-5">
-							<div className="space-y-0">
-								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
-									{t("admin:room_bookings.calendar")}
-								</h2>
-								<p className="text-xs md:text-sm font-medium">
-									{t("admin:room_bookings.calendar_description")}
-								</p>
-							</div>
-
-							<Separator />
-							<Calendar
-								showDescription={true}
-								editDescription={true}
-								handleOpenDetails={(event) => {
-									if (event) {
-										router.push(`/room-bookings/details?id=${event.id}`);
-									}
-								}}
-								disableEdit={false}
-								enableAllDay={false}
-								enableRoomBookingProperties={true}
-								defaultRoom={selectedRoom === "All" ? undefined : selectedRoom}
-								onDateRangeChange={handleDateRangeChange}
-								// Provide and persist the calendar view across tab switches
-								defaultView={calendarView}
-								onViewChange={setCalendarView}
-								// Provide and persist the viewed date across tab switches
-								defaultDate={calendarDate}
-								onDateChange={setCalendarDate}
-							/>
-						</TabsContent>
-						<TabsContent value="list" className="w-full px-5 space-y-5">
-							<div className="space-y-0">
-								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
-									{t("admin:room_bookings.list")}
-								</h2>
-								<p className="text-xs md:text-sm font-medium">
-									{t("admin:room_bookings.list_description")}
-								</p>
-							</div>
-							<RoomBookingForm
-								defaultRoom={selectedRoom === "All" ? "LC" : selectedRoom}
-							/>
-							<Separator />
-							<AdminTable table={table} onRowClick={handleRowClick} />
-							<RoomBookingEditForm
-								open={openEditDialog}
-								onClose={() => handleClose()}
-								selectedRoomBooking={selectedRoomBooking as RoomBookingRead}
-							/>
-						</TabsContent>
-					</Tabs>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.ROOM_BOOKINGS]]}
+		>
+			<div className="px-8 space-x-4">
+				<h3 className="text-3xl py-3 font-bold text-primary">
+					{t("admin:room_bookings.page_title")}
+				</h3>
+				<p className="py-3">{t("admin:room_bookings.page_description")}</p>
+				<div className="py-2 w-64">
+					<SelectFromOptions
+						placeholder={t("admin:room_bookings.select_room") || "Välj rum"}
+						options={[
+							{ value: "LC", label: "LC" },
+							{ value: "Alumni", label: "Alumni" },
+							{ value: "SK", label: "SK" },
+							{ value: "Hilbert Cafe", label: "Hilbert Cafe" },
+							{ value: "All", label: t("admin:room_bookings.all_rooms") },
+						]}
+						value={selectedRoom}
+						onChange={(value) => setSelectedRoom(value as RoomEnum | "All")}
+					/>
 				</div>
-			</EventsProvider>
-		</div>
+				{/* Debug info to show current visible range */}
+				{/* <div className="py-2 text-sm text-muted-foreground">
+					Visible range: {visibleDateRange.start.toLocaleDateString()} - {visibleDateRange.end.toLocaleDateString()}
+				</div> */}
+				<EventsProvider
+					initialCalendarEvents={events}
+					eventColor="#f6ad55"
+					handleAdd={(event) =>
+						addBooking.mutate(
+							{
+								body: {
+									// Having to define this sux, having to type "as number" also does. Basically TODO: fix this
+									room: event.room as `${RoomEnum}`,
+									start_time: event.start,
+									end_time: event.end,
+									description: event.description_sv,
+									council_id: event.council_id as number,
+									recur_interval_days: event.recur_interval_days as
+										| number
+										| undefined,
+									recur_until: event.recur_until as Date | undefined,
+								},
+							},
+							{
+								onError: () => toast.error(t("admin:room_bookings.error_add")),
+								onSuccess: () => {
+									toast.success(t("admin:room_bookings.success_add"));
+								},
+							},
+						)
+					}
+					handleDelete={(id) =>
+						deleteBooking.mutate(
+							{ path: { booking_id: Number(id) } },
+							{
+								onError: () =>
+									toast.error(`${t("admin:room_bookings.error_delete")} ${id}`),
+								onSuccess: () => {
+									toast.success(t("admin:room_bookings.success_delete"));
+								},
+							},
+						)
+					}
+					handleEdit={(event) => {
+						if (!event.id) {
+							toast.error(t("admin:room_bookings.error_missing_id"));
+							return;
+						}
+						editBooking.mutate(
+							{
+								path: { booking_id: Number(event.id) },
+								body: {
+									start_time: event.start,
+									end_time: event.end,
+									description: event.description_sv,
+								},
+							},
+							{
+								onError: () =>
+									toast.error(
+										`${t("admin:room_bookings.error_edit")} ${event.id}`,
+									),
+								onSuccess: () => {
+									toast.success(t("admin:room_bookings.success_edit"));
+								},
+							},
+						);
+					}}
+				>
+					<div className="py-4">
+						<Tabs
+							value={tab}
+							onValueChange={(value) => {
+								setTab(value);
+								const params = new URLSearchParams(
+									Array.from(searchParams.entries()),
+								);
+								params.set("tab", value);
+								router.replace(`${pathname}?${params.toString()}`);
+							}}
+							className="flex flex-col w-full items-center"
+						>
+							<TabsList className="flex justify-center mb-2">
+								<TabsTrigger value="calendar">
+									{t("admin:room_bookings.calendar")}
+								</TabsTrigger>
+								<TabsTrigger value="list">
+									{t("admin:room_bookings.list")}
+								</TabsTrigger>
+							</TabsList>
+							<TabsContent value="calendar" className="w-full px-5 space-y-5">
+								<div className="space-y-0">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+										{t("admin:room_bookings.calendar")}
+									</h2>
+									<p className="text-xs md:text-sm font-medium">
+										{t("admin:room_bookings.calendar_description")}
+									</p>
+								</div>
+
+								<Separator />
+								<Calendar
+									showDescription={true}
+									editDescription={true}
+									handleOpenDetails={(event) => {
+										if (event) {
+											router.push(`/room-bookings/details?id=${event.id}`);
+										}
+									}}
+									disableEdit={false}
+									enableAllDay={false}
+									enableRoomBookingProperties={true}
+									defaultRoom={
+										selectedRoom === "All" ? undefined : selectedRoom
+									}
+									onDateRangeChange={handleDateRangeChange}
+									// Provide and persist the calendar view across tab switches
+									defaultView={calendarView}
+									onViewChange={setCalendarView}
+									// Provide and persist the viewed date across tab switches
+									defaultDate={calendarDate}
+									onDateChange={setCalendarDate}
+								/>
+							</TabsContent>
+							<TabsContent value="list" className="w-full px-5 space-y-5">
+								<div className="space-y-0">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+										{t("admin:room_bookings.list")}
+									</h2>
+									<p className="text-xs md:text-sm font-medium">
+										{t("admin:room_bookings.list_description")}
+									</p>
+								</div>
+								<RoomBookingForm
+									defaultRoom={selectedRoom === "All" ? "LC" : selectedRoom}
+								/>
+								<Separator />
+								<AdminTable table={table} onRowClick={handleRowClick} />
+								<RoomBookingEditForm
+									open={openEditDialog}
+									onClose={() => handleClose()}
+									selectedRoomBooking={selectedRoomBooking as RoomBookingRead}
+								/>
+							</TabsContent>
+						</Tabs>
+					</div>
+				</EventsProvider>
+			</div>
+		</PermissionWall>
 	);
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import { getAllCouncilsOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
 import { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
@@ -9,6 +10,7 @@ import CouncilForm from "./CouncilForm";
 import CouncilEditForm from "./CouncilEditForm";
 import { useTranslation } from "react-i18next";
 import AdminPage from "@/widgets/AdminPage";
+import PermissionWall from "@/components/PermissionWall";
 
 export default function Councils() {
 	const { t, i18n } = useTranslation("admin");
@@ -31,15 +33,19 @@ export default function Councils() {
 	];
 
 	return (
-		<AdminPage
-			title={t("councils.title")}
-			description={t("councils.description_subtitle")}
-			queryResult={useQuery({
-				...getAllCouncilsOptions(),
-			})}
-			columns={columns}
-			editComponent={CouncilEditForm}
-			headerButtons={<CouncilForm />}
-		/>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.COUNCILS]]}
+		>
+			<AdminPage
+				title={t("councils.title")}
+				description={t("councils.description_subtitle")}
+				queryResult={useQuery({
+					...getAllCouncilsOptions(),
+				})}
+				columns={columns}
+				editComponent={CouncilEditForm}
+				headerButtons={<CouncilForm />}
+			/>
+		</PermissionWall>
 	);
 }
