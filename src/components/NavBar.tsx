@@ -54,7 +54,7 @@ import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import VerificationReminder from "./VerificationReminder";
 import MemberBanner from "./MemberBanner";
-import { useAuthState } from "@/lib/auth";
+import { useAuthState, usePermissions } from "@/lib/auth";
 import "./NavBar.css";
 import type { ElectionMemberRead, GuildMeetingRead } from "@/api";
 
@@ -99,7 +99,7 @@ export function NavBar() {
 		logoutMutation.mutate({});
 	}, [logoutMutation]);
 
-	const showAdmin = useAuthState().getPermissions().size > 0;
+	const showAdmin = usePermissions().size > 0;
 
 	const { data: guildMeetingData } = useQuery({
 		...getGuildMeetingOptions(),
