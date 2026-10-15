@@ -54,6 +54,7 @@ import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import VerificationReminder from "./VerificationReminder";
 import MemberBanner from "./MemberBanner";
+import { useAuthState } from "@/lib/auth";
 
 type NavItem = {
 	self: string;
@@ -81,6 +82,8 @@ export function NavBar() {
 			// obviously this is not secure enough for real authentication
 			document.cookie =
 				"auth_status=unauthenticated; path=/; SameSite=Strict; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+			// Clear token so we don't send it anywhere
+			useAuthState.setState({ accessToken: null });
 			queryClient.clear();
 			router.push("/");
 		},

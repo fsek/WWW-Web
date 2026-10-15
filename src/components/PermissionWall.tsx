@@ -61,7 +61,7 @@ export default function PermissionWall({
 		return <LoadingErrorCard />;
 	}
 
-	if (permissionsState.isError) {
+	if (permissionsState.isError && !permissionsState.data) {
 		return (
 			<LoadingErrorCard error={permissionsState.error} isLoading={false} />
 		);

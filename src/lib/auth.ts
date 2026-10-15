@@ -2,7 +2,7 @@
 
 import { getMyPermissionsOptions } from "@/api/@tanstack/react-query.gen";
 import type { BearerResponse } from "@/api";
-import type { ActionEnum, TargetEnum } from "@/api";
+import { ActionEnum, TargetEnum } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { create } from "zustand";
@@ -52,7 +52,11 @@ function buildPermissionMap(
 		const actionEnum = actionStr as ActionEnum;
 		const targetEnum = targetStr as TargetEnum;
 
-		if (!actionEnum || !targetEnum) {
+		if (
+			// Actually check if the enums are valid instead of just casting type
+			!Object.values(ActionEnum).includes(actionEnum) ||
+			!Object.values(TargetEnum).includes(targetEnum)
+		) {
 			console.warn(
 				`Unknown permission from backend: ${actionStr}:${targetStr}`,
 			);
