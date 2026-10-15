@@ -68,7 +68,7 @@ export default function EmergencyCard() {
 						/>
 					</address>
 					<br />
-					{t("emergency.text_car.name2")} - Alva:{" "}
+					{t("emergency.text_car.name2")} - Erik:{" "}
 					<address>
 						<Obfuscate
 							email="prylm@fsektionen.se"
@@ -76,7 +76,7 @@ export default function EmergencyCard() {
 						/>
 						<br />
 						<Obfuscate
-							tel="+46 076-027 21 07"
+							tel="+46 073-638 43 05"
 							style={{ textDecoration: "underline" }}
 						/>
 					</address>

@@ -108,5 +108,6 @@
 		"troubleshoot_verify": "Klicka på verifieringsknappen för att kontrollera om flödet är tillgängligt. Om det fungerar, försök lägga till länken i din kalenderapp igen.",
 		"troubleshoot_click": "Om knappen för att kopiera länken eller lägga till kalendern automatiskt inte fungerar, försök kopiera länken manuellt.",
 		"troubleshoot_contact": "Kontakta spindelman@fsektionen.se om du fortfarande har problem eller om någon av snabblänkarna inte fungerar."
-	}
+	},
+	"error_missing_group_type": "Vänligen ange åtminstone en grupptyp för eventet. 🥺🙏"
 }

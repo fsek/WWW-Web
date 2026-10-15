@@ -23,7 +23,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 import AdminChooseUser from "@/widgets/AdminChooseUser";
-import type { Option } from "@/widgets/AdminChooseUser";
+import type { Option } from "@/components/StyledMultiSelect";
 
 export default function form() {
 	const { t } = useTranslation();

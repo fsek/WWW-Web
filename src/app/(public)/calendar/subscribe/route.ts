@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { API_BASE_URL } from "@/constants";
+import { API_BASE_URL, MENTOR_GROUP_TYPE_ENUM } from "@/constants";
+import { GroupUserTypeEnum } from "@/api";
 
 interface EventExtendedProps {
 	description?: string;
@@ -8,6 +9,7 @@ interface EventExtendedProps {
 	dot?: string;
 	alcohol_event_type?: string;
 	is_nollning_event?: boolean;
+	mentor_group_types?: string[];
 	can_signup?: boolean;
 }
 
@@ -118,6 +120,23 @@ function generateICS(events: CalendarEvent[]) {
 		if (event.extendedProps?.dress_code) {
 			descriptionParts.push(`Klädkod: ${event.extendedProps.dress_code}`);
 		}
+		if (event.extendedProps?.is_nollning_event) {
+			let translated_nollning_text = "Nollningsevent.";
+			if (event.extendedProps?.mentor_group_types) {
+				const mentor = event.extendedProps?.mentor_group_types.includes(
+					MENTOR_GROUP_TYPE_ENUM.MENTOR,
+				);
+				const mission = event.extendedProps?.mentor_group_types.includes(
+					MENTOR_GROUP_TYPE_ENUM.MISSION,
+				);
+				if (mentor && !mission) {
+					translated_nollning_text = "Nollningsevent (med faddergruppen).";
+				} else if (mission && !mentor) {
+					translated_nollning_text = "Nollningsevent (med uppdragsgruppen).";
+				}
+			}
+			descriptionParts.push(translated_nollning_text);
+		}
 		if (event.extendedProps?.can_signup) {
 			descriptionParts.push("Anmälan krävs.");
 		}
@@ -193,6 +212,7 @@ async function fetchLatestEvents() {
 						dot: event.dot,
 						alcohol_event_type: event.alcohol_event_type,
 						is_nollning_event: event.is_nollning_event,
+						mentor_group_types: event.mentor_group_types,
 						can_signup: event.can_signup,
 					},
 				}))

@@ -8,6 +8,7 @@ export interface AdminChoosePrioritiesProps {
 	value?: string | string[];
 	onChange?: (value: string | string[]) => void;
 	className?: string;
+	disabled?: boolean;
 }
 
 export function AdminChoosePriorities({
@@ -15,6 +16,7 @@ export function AdminChoosePriorities({
 	value = [],
 	onChange,
 	className = "",
+	disabled = false,
 }: AdminChoosePrioritiesProps) {
 	const { t } = useTranslation("admin");
 
@@ -74,6 +76,7 @@ export function AdminChoosePriorities({
 			className={className}
 			value={selectedOptions}
 			onChange={handleChange}
+			isDisabled={disabled}
 		/>
 	);
 }

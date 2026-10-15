@@ -15,18 +15,19 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createCandidationMutation,
+	electionsGetSubElectionOptions,
 	electionsGetSubElectionQueryKey,
 } from "@/api/@tanstack/react-query.gen";
 import { Plus, Save, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import AdminChooseUser, { type Option } from "@/widgets/AdminChooseUser";
+import AdminChooseUser from "@/widgets/AdminChooseUser";
+import type { Option } from "@/components/StyledMultiSelect";
 import SelectOnePost from "@/components/SelectOnePost";
 import getErrorMessage from "@/help_functions/getErrorMessage";
 
@@ -88,6 +89,14 @@ export default function CandidationForm({
 		});
 	}
 
+	const { data: subElection } = useQuery({
+		...electionsGetSubElectionOptions({
+			path: { sub_election_id: subElectionId },
+		}),
+		enabled: Number.isFinite(subElectionId),
+		refetchOnWindowFocus: false,
+	});
+
 	return (
 		<div className="p-3">
 			<Button
@@ -124,6 +133,7 @@ export default function CandidationForm({
 										<FormLabel>{t("admin:user")}</FormLabel>
 										<FormControl>
 											<AdminChooseUser
+												placeholder={t("admin:select_user_placeholder")}
 												onChange={(user) => {
 													field.onChange((user as Option)?.value);
 												}}
@@ -143,7 +153,11 @@ export default function CandidationForm({
 											<SelectOnePost
 												value={field.value}
 												onChange={field.onChange}
-												filterList={[]}
+												filterList={
+													subElection?.election_posts?.map(
+														(post) => post.post_id,
+													) ?? []
+												}
 											/>
 										</FormControl>
 										<FormMessage />

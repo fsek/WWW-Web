@@ -9,7 +9,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import AdminChooseUser, { type Option } from "@/widgets/AdminChooseUser";
+import AdminChooseUser from "@/widgets/AdminChooseUser";
+import type { Option } from "@/components/StyledMultiSelect";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserPlus } from "lucide-react";
 import { useState } from "react";

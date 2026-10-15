@@ -24,8 +24,13 @@ import {
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { MAX_DOC_FILE_SIZE_MB } from "@/constants";
+import StyledCreatableSelect from "@/components/StyledCreatableSelect";
 
-export default function DocumentsForm() {
+interface DocumentsFormProps {
+	categories: string[];
+}
+
+export default function DocumentsForm({ categories }: DocumentsFormProps) {
 	const { t } = useTranslation();
 	const [open, setOpen] = useState(false);
 	const [submitEnabled, setSubmitEnabled] = useState(true);
@@ -158,9 +163,34 @@ export default function DocumentsForm() {
 									<FormItem className="lg:col-span-2">
 										<FormLabel>{t("admin:documents.category")}</FormLabel>
 										<FormControl>
-											<Input
-												placeholder={t("admin:documents.category")}
+											<StyledCreatableSelect
+												isClearable
+												placeholder={t("")}
 												{...field}
+												value={
+													field.value
+														? {
+																label: String(field.value),
+																value: String(field.value),
+															}
+														: null
+												}
+												onChange={(options) => {
+													const vals = Array.isArray(options)
+														? options.map((o) => o.value)
+														: options && "value" in options
+															? options.value
+															: null;
+													field.onChange(vals);
+												}}
+												options={
+													Array.isArray(categories)
+														? categories.map((category) => ({
+																value: category,
+																label: category,
+															}))
+														: []
+												}
 											/>
 										</FormControl>
 										<FormMessage />

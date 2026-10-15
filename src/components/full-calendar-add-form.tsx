@@ -100,7 +100,9 @@ export function EventAddForm({
 						council_id: z.number().int().positive(),
 						signup_start: z.date(),
 						signup_end: z.date(),
-						title_en: z.string().min(1),
+						title_en: z
+							.string({ error: t("add.error_title") })
+							.min(1, { message: t("add.error_title") }),
 						description_en: editDescription
 							? z
 									.string({ error: t("add.error_description") })
@@ -116,6 +118,10 @@ export function EventAddForm({
 						drink_package: z.boolean(),
 						is_nollning_event: z.boolean(),
 						priorities: z.array(z.string()).optional().default([]),
+						mentor_group_types: z
+							.array(z.enum(["Mentor", "Mission", "Default", "Committee"]))
+							.default(["Mentor"]),
+						allow_other_mentors: z.boolean(),
 						alcohol_event_type: z
 							.enum(["Alcohol", "Alcohol-Served", "None"])
 							.default("None"),
@@ -176,6 +182,24 @@ export function EventAddForm({
 		)
 		.refine(
 			(data) => {
+				if (enableTrueEventProperties) {
+					if (
+						data.is_nollning_event &&
+						(data.mentor_group_types as string[]).length < 1
+					) {
+						return false;
+					}
+				}
+
+				return true;
+			},
+			{
+				message: t("error_missing_group_type"),
+				path: ["mentor_group_types"],
+			},
+		)
+		.refine(
+			(data) => {
 				if (enableCarProperties) {
 					// Check if personal is false and council_id is not set
 					if (data.personal === false && !data.council_id) {
@@ -200,6 +224,7 @@ export function EventAddForm({
 					"can_signup",
 					"drink_package",
 					"is_nollning_event",
+					"allow_other_mentors",
 					"lottery",
 				]
 			: []),
@@ -235,6 +260,8 @@ export function EventAddForm({
 			can_signup: false,
 			drink_package: false,
 			is_nollning_event: false,
+			mentor_group_types: ["Mentor"],
+			allow_other_mentors: false,
 			priorities: [],
 			alcohol_event_type: "None",
 			dress_code: "",
@@ -271,6 +298,8 @@ export function EventAddForm({
 						can_signup: false,
 						drink_package: false,
 						is_nollning_event: false,
+						mentor_group_types: ["Mentor"],
+						allow_other_mentors: false,
 						priorities: [],
 						alcohol_event_type: "None",
 						dress_code: "",
@@ -331,6 +360,8 @@ export function EventAddForm({
 							can_signup: data.can_signup,
 							drink_package: data.drink_package,
 							is_nollning_event: data.is_nollning_event,
+							mentor_group_types: data.mentor_group_types ?? [],
+							allow_other_mentors: data.allow_other_mentors,
 							priorities: data.priorities ?? [],
 							alcohol_event_type: data.alcohol_event_type,
 							dress_code: data.dress_code,

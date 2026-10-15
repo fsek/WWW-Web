@@ -1,7 +1,7 @@
 "use client";
 
 import { getSingleEventOptions } from "@/api/@tanstack/react-query.gen";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import {
@@ -16,11 +16,13 @@ import {
 	Star,
 	Repeat,
 	User,
+	Tickets,
 	Beer,
 	FilePenLine,
 	ArrowLeft,
 	Shirt,
 	WineIcon,
+	Goal,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
@@ -31,6 +33,10 @@ import type { EventRead } from "@/api/types.gen";
 import SignupCard from "./SignupCard";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import {
+	EventFeatureBadges,
+	EventSignupBadges,
+} from "@/components/event-badges";
 
 function idAsNumber(value: string | null): number {
 	if (value === null || value.trim() === "") return -1;
@@ -72,9 +78,6 @@ export default function Page() {
 			timeStyle: "short",
 		}).format(new Date(date));
 	};
-
-	const featureDivClassName = "flex items-center gap-1 text-sm";
-	const featureClassName = "w-10 h-10";
 
 	// Check if signup is allowed right now
 	const currentDate = new Date();
@@ -206,67 +209,12 @@ export default function Page() {
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							{!(
-								data.all_day ||
-								data.recurring ||
-								data.is_nollning_event ||
-								data.food ||
-								data.drink_package ||
-								data.closed ||
-								data.price !== 0
-							) ? (
-								<p className="text-muted-foreground text-sm">
-									{t("admin:events.no_features")}
-								</p>
-							) : (
-								<div className="flex flex-wrap gap-2">
-									{data.all_day && (
-										<Badge variant="secondary" className={featureDivClassName}>
-											<Calendar className={featureClassName} />
-											{t("admin:events.all_day")}
-										</Badge>
-									)}
-									{data.recurring && (
-										<Badge variant="secondary" className={featureDivClassName}>
-											<Repeat className={featureClassName} />
-											{t("admin:events.recurring")}
-										</Badge>
-									)}
-									{data.is_nollning_event && (
-										<Badge variant="secondary" className={featureDivClassName}>
-											<Star className={featureClassName} />
-											{t("admin:events.is_nollning_event")}
-										</Badge>
-									)}
-									{data.food && (
-										<Badge variant="outline" className={featureDivClassName}>
-											<Utensils className={featureClassName} />
-											{t("admin:events.food")}
-										</Badge>
-									)}
-									{data.drink_package && (
-										<Badge variant="outline" className={featureDivClassName}>
-											<Beer className={featureClassName} />
-											{t("admin:events.drink_package")}
-										</Badge>
-									)}
-									{data.price !== 0 && (
-										<Badge variant="outline" className={featureDivClassName}>
-											<CreditCard className={featureClassName} />
-											{t("admin:events.costs_money")}
-										</Badge>
-									)}
-									{data.closed && (
-										<Badge
-											variant="destructive"
-											className={featureDivClassName}
-										>
-											<Lock className={featureClassName} />
-											{t("admin:events.closed")}
-										</Badge>
-									)}
-								</div>
-							)}
+							<EventFeatureBadges
+								event={data}
+								containerClassName="flex flex-wrap gap-2"
+								badgeClassName="flex items-center gap-1 text-sm"
+								iconClassName="h-10 w-10"
+							/>
 						</CardContent>
 					</Card>
 
@@ -348,28 +296,10 @@ export default function Page() {
 								</>
 							)}
 
-							{data.can_signup === false && (
-								<p className="text-sm text-muted-foreground">
-									{t("admin:events.signup_not_used")}
-								</p>
-							)}
-
-							{(data.signup_start === null || data.signup_end === null) && (
-								<p className="text-sm text-muted-foreground">
-									{t("admin:events.signup_not_available")}
-								</p>
-							)}
-
-							<div className="flex flex-wrap gap-2">
-								{data.can_signup && (
-									<Badge variant="default">
-										{t("admin:events.can_signup")}
-									</Badge>
-								)}
-								{data.lottery && (
-									<Badge variant="secondary">{t("admin:events.lottery")}</Badge>
-								)}
-							</div>
+							<EventSignupBadges
+								event={data}
+								containerClassName="flex flex-wrap gap-2"
+							/>
 
 							{data.price > 0 && (
 								<div className="flex items-center gap-2">
@@ -392,37 +322,24 @@ export default function Page() {
 												<div className="flex flex-wrap items-center gap-2">
 													{data.priorities.map((p, idx) => {
 														const raw = p.priority;
-														let label = raw;
-														let isSpecial = false;
-														if (i18n.language === "en") {
-															switch (raw) {
-																case "Nolla":
-																	label = "Mentee (new student)";
-																	isSpecial = true;
-																	break;
-																case "Gruppfadder":
-																	label = "Mentor (group)";
-																	isSpecial = true;
-																	break;
-																case "Uppdragsfadder":
-																	label = "Mentor (mission)";
-																	isSpecial = true;
-																	break;
-																case "Fotograf":
-																	label = "Photographer";
-																	isSpecial = true;
-																	break;
-																default:
-																	break;
-															}
-														}
+														const label = t(
+															`admin:event_signup.priority_group.${raw.toLowerCase()}`,
+															raw,
+														);
+														const isSpecial = [
+															"nolla",
+															"gruppfadder",
+															"uppdragsfadder",
+															"fotograf",
+														].includes(raw.toLowerCase());
+
 														return (
-															<span
+															<Badge
 																key={raw}
-																className={isSpecial ? "font-semibold" : ""}
+																variant={isSpecial ? "default" : "secondary"}
 															>
-																{`${label}${idx < data.priorities.length - 1 ? ", " : ""}`}
-															</span>
+																{label}
+															</Badge>
 														);
 													})}
 												</div>

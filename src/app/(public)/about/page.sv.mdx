@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import mattehuset from '@/assets/mh.jpg'
+import blue_landscape_tlth from '@/assets/blue_landscape_tlth.png'
+import algresan from '@/assets/algresan.jpg'
 import GuildLogos from '@/components/GuildLogos'
 
 # Om oss
@@ -9,7 +11,7 @@ Varje fakultet inom universitetet har en motsvarande studentkår, det vill säga
 för studenter som tillhör den fakulteten. 
 
 <a href="https://tlth.se" target="_blank" rel="noopener noreferrer">
-  <Image src="/images/blue_landscape_tlth.png" alt="Teknologkåren vid LTH logotyp" className="w-1/5" />
+  <Image src={blue_landscape_tlth} alt="Teknologkåren vid LTH logotyp" className="w-1/5 h-auto" />
 </a>
 
 I vårat fall är den studentkåren [Teknologkåren vid LTH](https://www.tlth.se), som har fler än 8000
@@ -55,14 +57,14 @@ Utbudet på evenemang är brett och sektionen strävar efter att det ska finnas 
 
 Utöver det veckovisa arbetar sektionen även långsiktigt med allt utifrån likabehandling- och hållbarhetsplaner till analyser av arbetsmarknaden och företagssamarbeten. 
 
-<Image src="/images/algresan.jpg" alt="Älgresan 2023" className="w-3/5 mt-4 rounded-lg mx-auto" />
+<Image src={algresan} alt="Älgresan 2023" className="w-3/5 h-auto mt-4 rounded-lg mx-auto" />
 
 
 ## Sektionslokaler
 F-sektionen håller hus i Mattehuset (Sölvegatan 18, 223 62 Lund), mitt i LTH Campus. 
 Här hittar du bland annat uppehållsrum, mikrovågsugnar och gött häng. I Mattehuset finns även Hilbert Café som vi driver, och här kan du bland annat köpa gott kaffe, baguetter och sallader.
 
-<Image src={mattehuset} alt="Mattehuset" className="w-3/5 mt-4 rounded-lg mx-auto" />
+<Image src={mattehuset} alt="Mattehuset" className="w-3/5 h-auto mt-4 rounded-lg mx-auto" />
 
 ## Informationskanaler
 Våra primära informationskanaler är [nyhetsflödet](news) här på hemsidan och vårt [Mattermost-team](https://mm.fsektionen.se), då främst i kanalerna *Announcements* och *Announcements from the Board*. För att kunna logga in på Mattermost måste du först skapa ett konto här på hemsidan och bli manuellt verifierad att du är medlem i sektionen.

@@ -117,7 +117,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 											{post.email}
 										</Link>
 									</p>
-									<p className="mt-4 font-semibold">
+									<div className="mt-4 font-semibold">
 										{t("utskott:vemhar")}:{" "}
 										{usersLoading ? (
 											<span className="italic">{t("loading")}</span>
@@ -135,7 +135,7 @@ export default function ClientCouncilPage({ slug }: { slug: string }) {
 												{t("utskott:no_user")}
 											</span>
 										)}
-									</p>
+									</div>
 									<p className="mt-4 font-semibold">
 										{t("utskott:elected_at_semester")}:{" "}
 										<span className="italic text-muted-foreground">

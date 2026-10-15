@@ -37,6 +37,12 @@
 		"info": "The Introduction Committee is responsible for the welcoming and orientation of new students to the F-guild.",
 		"contact": "Överfös"
 	},
+	"krogeriet": {
+		"self": "The Tavern Committee",
+		"about": "Fill in",
+		"info": "The Tavern Committee is responsible for alcohol service on behalf of the guild's committees that do not run serving operations of their own.",
+		"contact": "Chief Tavern Officer"
+	},
 	"kulturministeriet": {
 		"self": "Ministry of Culture",
 		"about": "Fill in",
@@ -48,6 +54,12 @@
 		"about": "Fill in",
 		"info": "The Corporate Relations Committee works to create connections between students and companies.",
 		"contact": "Head of Corporate Relations"
+	},
+	"processionen": {
+		"self": "The Procession",
+		"about": "Fill in",
+		"info": "The Procession is responsible for the ceremonial activities of the guild.",
+		"contact": "Chief Herald of Arms"
 	},
 	"prylmasteriet": {
 		"self": "The Facilities Committee",
@@ -93,6 +105,12 @@
 		"info": "The Board leads the F-guild and is responsible for its operations.",
 		"contact": "President",
 		"contact2": "Vice President"
+	},
+	"valberedningen": {
+		"self": "The Nomination Committee",
+		"about": "Fill in",
+		"info": "The Nomination Committee is responsible for nominating candidates for the guild's most important positions.",
+		"contact": "Members of the Nomination Committee"
 	},
 	"ovriga": {
 		"self": "Other",

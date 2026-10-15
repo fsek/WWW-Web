@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import mattehuset from '@/assets/mh.jpg'
+import blue_landscape_tlth from '@/assets/blue_landscape_tlth.png'
+import algresan from '@/assets/algresan.jpg'
 import GuildLogos from '@/components/GuildLogos'
 
 # About us
@@ -9,7 +11,7 @@ Each faculty within the university has a corresponding student union, i.e. a non
 for students belonging to that faculty.
 
 <a href="https://tlth.se" target="_blank" rel="noopener noreferrer">
-  <Image src="/images/blue_landscape_tlth.png" alt="Teknologkåren vid LTH logo" className="w-1/5" />
+  <Image src={blue_landscape_tlth} alt="Teknologkåren vid LTH logo" className="w-1/5 h-auto" />
 </a>
 
 In our case, it is the student union [Teknologkåren vid LTH](https://www.tlth.se), which has more than 8,000
@@ -55,13 +57,13 @@ The range of events is wide, and the guild strives to ensure that there is somet
 
 In addition to its weekly activities, the guild also works long-term with everything from equality and sustainability plans to analyses of the labor market and corporate collaborations.
 
-<Image src="/images/algresan.jpg" alt="Älgresan 2023" className="w-3/5 mt-4 rounded-lg mx-auto" />
+<Image src={algresan} alt="Älgresan 2023" className="w-3/5 h-auto mt-4 rounded-lg mx-auto" />
 
 
 ## Guildspaces
 The F guild is located in Mattehuset (Sölvegatan 18, 223 62 Lund), in the middle of LTH Campus. 
 Here you will find a lounge, microwaves, and a nice place to hang out. Mattehuset also houses Hilbert Café, which we run, where you can buy good coffee, baguettes, and salads, among other things.
-<Image src={mattehuset} alt="Mattehuset" className="w-3/5 mt-4 rounded-lg mx-auto" />
+<Image src={mattehuset} alt="Mattehuset" className="w-3/5 h-auto mt-4 rounded-lg mx-auto" />
 
 ## Channels of information
 Our primary information channels are the [news feed](news) here on the website and our [Mattermost](https://mm.fsektionen.se) team, primarily in the Announcements and Announcements from the Board channels. To log in to Mattermost, you must first create an account here on the website and be

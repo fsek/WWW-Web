@@ -23,6 +23,7 @@ import {
 	Images,
 	Gavel,
 	Vote,
+	Fence,
 } from "lucide-react";
 
 import {
@@ -164,6 +165,17 @@ const groups: AdminGroup[] = [
 		],
 	},
 	{
+		title: "admin:categories.games",
+		entries: [
+			{
+				title: "admin:enclose_moose.self",
+				url: "/admin/enclose-moose",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.ENCLOSE_MOOSE]],
+				icon: Fence,
+			},
+		],
+	},
+	{
 		title: "admin:categories.nollning",
 		entries: [
 			{
@@ -206,6 +218,17 @@ const groups: AdminGroup[] = [
 				url: "/admin/guild-meeting",
 				permissions: [[ActionEnum.MANAGE, TargetEnum.GUILD_MEETING]],
 				icon: Users,
+			},
+		],
+	},
+	{
+		title: "admin:categories.board",
+		entries: [
+			{
+				title: "admin:keyvals.self",
+				url: "/admin/keyvals",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.KEYVALS]],
+				icon: List,
 			},
 		],
 	},

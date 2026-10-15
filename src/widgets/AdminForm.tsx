@@ -30,6 +30,7 @@ import { useTranslation } from "react-i18next";
 import { Textarea } from "@/components/ui/textarea";
 import { SelectFromOptions } from "./SelectFromOptions";
 import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
+import { AdminChooseDates, type Granularity } from "./AdminChooseDates";
 
 type BaseAdminFormInputField<T extends FieldValues> = {
 	name: Path<T>;
@@ -46,6 +47,7 @@ type TextAdminFormInputField<T extends FieldValues> =
 type TextareaAdminFormInputField<T extends FieldValues> =
 	BaseAdminFormInputField<T> & {
 		variant: "textarea";
+		monospace?: boolean;
 		rows?: number;
 		placeholder?: string;
 	};
@@ -57,12 +59,29 @@ type SelectFromOptionsAdminFormInputField<T extends FieldValues> =
 		placeholder?: string;
 	};
 
+type NumberAdminFormInputField<T extends FieldValues> =
+	BaseAdminFormInputField<T> & {
+		variant: "number";
+		min?: number;
+		max?: number;
+		step?: number;
+		placeholder?: string;
+	};
+
+type DateTimeAdminFormInputField<T extends FieldValues> =
+	BaseAdminFormInputField<T> & {
+		variant: "datetime";
+		granularity?: Granularity;
+		placeholder?: string;
+	};
 // Implement further cases here
 
 export type AdminFormInputField<T extends FieldValues> =
 	| TextAdminFormInputField<T>
 	| TextareaAdminFormInputField<T>
-	| SelectFromOptionsAdminFormInputField<T>;
+	| SelectFromOptionsAdminFormInputField<T>
+	| NumberAdminFormInputField<T>
+	| DateTimeAdminFormInputField<T>;
 
 export interface AdminFormProps<T extends FieldValues> {
 	title: string;
@@ -78,6 +97,7 @@ export interface AdminFormProps<T extends FieldValues> {
 	onDelete?: (data: T) => void;
 	customButtons?: React.ReactNode;
 	showDialogButton?: boolean;
+	dialogButtonText?: string;
 	editItem?: T | null;
 	setEditItem?: (item: T | null) => void;
 	open?: boolean;
@@ -103,6 +123,7 @@ export default function AdminForm<T extends FieldValues>({
 	onDelete,
 	customButtons,
 	showDialogButton = true,
+	dialogButtonText,
 	editItem,
 	setEditItem,
 	open: controlledOpen,
@@ -145,7 +166,11 @@ export default function AdminForm<T extends FieldValues>({
 
 	const handleFormSubmit = genericForm.handleSubmit(async (values, event) => {
 		setSubmitLocked(true);
-		onSubmit(values, event);
+		try {
+			await onSubmit(values, event);
+		} catch {
+			setSubmitLocked(false);
+		}
 	});
 
 	const getColSpanClass = (colSpan?: number) => {
@@ -188,7 +213,7 @@ export default function AdminForm<T extends FieldValues>({
 					}}
 				>
 					{formType === "add" ? <Plus /> : formType === "edit" ? <Pen /> : null}
-					{title}
+					{dialogButtonText || title}
 				</Button>
 			)}
 
@@ -245,6 +270,9 @@ export default function AdminForm<T extends FieldValues>({
 															<Textarea
 																placeholder={inputField.placeholder}
 																rows={inputField.rows}
+																className={
+																	inputField.monospace ? "font-mono" : ""
+																}
 																{...field}
 																value={(field.value ?? "") as string}
 															/>
@@ -271,6 +299,69 @@ export default function AdminForm<T extends FieldValues>({
 																options={inputField.options}
 																{...field}
 																value={(field.value ?? "") as string}
+															/>
+														</FormControl>
+														<FormMessage />
+													</FormItem>
+												)}
+											/>
+										);
+									case "number":
+										return (
+											<FormField
+												key={inputField.name}
+												control={genericForm.control}
+												name={inputField.name}
+												render={({ field }) => (
+													<FormItem
+														className={getColSpanClass(inputField.colSpan)}
+													>
+														<FormLabel>{inputField.label}</FormLabel>
+														<FormControl>
+															<Input
+																type="number"
+																placeholder={inputField.placeholder}
+																min={inputField.min}
+																max={inputField.max}
+																step={inputField.step}
+																{...field}
+																value={
+																	typeof field.value === "number" &&
+																	!Number.isNaN(field.value)
+																		? field.value
+																		: ""
+																}
+																onChange={(e) =>
+																	field.onChange(
+																		!Number.isNaN(e.target.valueAsNumber)
+																			? e.target.valueAsNumber
+																			: null,
+																	)
+																}
+															/>
+														</FormControl>
+														<FormMessage />
+													</FormItem>
+												)}
+											/>
+										);
+									case "datetime":
+										return (
+											<FormField
+												key={inputField.name}
+												control={genericForm.control}
+												name={inputField.name}
+												render={({ field }) => (
+													<FormItem
+														className={getColSpanClass(inputField.colSpan)}
+													>
+														<FormLabel>{inputField.label}</FormLabel>
+														<FormControl>
+															<AdminChooseDates
+																value={field.value as Date}
+																placeholder={inputField.placeholder}
+																granularity={inputField.granularity}
+																onChange={field.onChange}
 															/>
 														</FormControl>
 														<FormMessage />

@@ -27,17 +27,20 @@ import { ConfirmDeleteDialog } from "@/components/ConfirmDeleteDialog";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
+import StyledCreatableSelect from "@/components/StyledCreatableSelect";
 
 interface DocumentsEditFormProps {
 	open: boolean;
 	onClose: () => void;
 	selectedDocument: DocumentRead;
+	categories: string[];
 }
 
 export default function DocumentsEditForm({
 	open,
 	onClose,
 	selectedDocument,
+	categories,
 }: DocumentsEditFormProps) {
 	const { t } = useTranslation();
 	const router = useRouter();
@@ -176,9 +179,34 @@ export default function DocumentsEditForm({
 								<FormItem className="lg:col-span-2">
 									<FormLabel>{t("admin:documents.category")}</FormLabel>
 									<FormControl>
-										<Input
-											placeholder={t("admin:documents.category")}
+										<StyledCreatableSelect
+											isClearable
+											placeholder={t("")}
 											{...field}
+											value={
+												field.value
+													? {
+															label: String(field.value),
+															value: String(field.value),
+														}
+													: null
+											}
+											onChange={(options) => {
+												const vals = Array.isArray(options)
+													? options.map((o) => o.value)
+													: options && "value" in options
+														? options.value
+														: null;
+												field.onChange(vals);
+											}}
+											options={
+												Array.isArray(categories)
+													? categories.map((category) => ({
+															value: category,
+															label: category,
+														}))
+													: []
+											}
 										/>
 									</FormControl>
 									<FormMessage />

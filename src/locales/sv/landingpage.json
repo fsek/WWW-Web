@@ -23,11 +23,6 @@
 			"contact": {
 				"label": "Kontakt",
 				"href": "/contact"
-			},
-			"old": {
-				"label": "Gamla sidan",
-				"href": "https://old.fsektionen.se",
-				"className": "text-foreground/40 hover:text-foreground/60 transition-colors"
 			}
 		}
 	},
@@ -71,7 +66,7 @@
 	},
 	"councils": {
 		"title": "Utskotten som gör F-sektionen till det den är",
-		"subtitle": "F-sektionen består av flera utskott som fokuserar på olika aspekter av organisationen och studentlivet. Klicka på ett utskott för att lära dig mer om det på dess huvudsida."
+		"subtitle": "F-sektionen består av flera utskott som fokuserar på olika aspekter av organisationen och studentlivet."
 	},
 	"nollning": {
 		"title": "Nollningen - Introduktion för nyantagna",

@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes";
 import CookieConsent from "@/components/CookieConsent";
 import { headers } from "next/headers";
 import { API_BASE_URL } from "@/constants";
+import { ToasterProvider } from "@/components/ToasterProvider";
 
 // Default locale as fallback
 const defaultLocale = "sv" satisfies Locale;
@@ -49,7 +50,7 @@ export default async function RootLayout({
 				{/* SuppressHydrationWarning is only one layer deep, and required by <ThemeProvider> */}
 				<html lang={i18n.language} suppressHydrationWarning>
 					<head>
-						<title>Nya F-sektionen</title>
+						<title>F-sektionen</title>
 						<link rel="preconnect" href="https://fonts.googleapis.com" />
 						<link rel="preconnect" href="https://fonts.gstatic.com" />
 						<link
@@ -62,6 +63,7 @@ export default async function RootLayout({
 							<div id="root" className="flex flex-col min-h-screen">
 								<div className="flex-grow">{children}</div>
 								<CookieConsent />
+								<ToasterProvider />
 							</div>
 						</ThemeProvider>
 					</body>

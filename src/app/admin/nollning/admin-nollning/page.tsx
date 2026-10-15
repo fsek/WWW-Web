@@ -89,13 +89,13 @@ export default function Page() {
 				const groupType = info.getValue();
 				switch (groupType) {
 					case "Mentor":
-						return t("nollning.group_admin.fadder");
+						return t("nollning.group_admin.mentor");
 					case "Mission":
-						return t("nollning.group_admin.uppdrag");
+						return t("nollning.group_admin.mission");
 					case "Default":
-						return t("nollning.group_admin.standard");
+						return t("nollning.group_admin.default");
 					case "Committee":
-						return t("nollning.group_admin.utskott");
+						return t("nollning.group_admin.committee");
 					default:
 						return t("nollning.group_admin.unknown_type");
 				}

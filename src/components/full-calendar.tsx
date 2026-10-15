@@ -164,10 +164,13 @@ export default function Calendar({
 						can_signup: info.event.extendedProps.can_signup,
 						drink_package: info.event.extendedProps.drink_package,
 						is_nollning_event: info.event.extendedProps.is_nollning_event,
+						mentor_group_types: info.event.extendedProps.mentor_group_types,
+						allow_other_mentors: info.event.extendedProps.allow_other_mentors,
 						alcohol_event_type: info.event.extendedProps.alcohol_event_type,
 						dress_code: info.event.extendedProps.dress_code,
 						price: info.event.extendedProps.price,
 						dot: info.event.extendedProps.dot,
+						lottery: info.event.extendedProps.lottery,
 					}
 				: {}),
 			...(enableCarProperties
@@ -232,10 +235,13 @@ export default function Calendar({
 						can_signup: info.event.extendedProps.can_signup,
 						drink_package: info.event.extendedProps.drink_package,
 						is_nollning_event: info.event.extendedProps.is_nollning_event,
+						mentor_group_types: info.event.extendedProps.mentor_group_types,
+						allow_other_mentors: info.event.extendedProps.allow_other_mentors,
 						alcohol_event_type: info.event.extendedProps.alcohol_event_type,
 						dress_code: info.event.extendedProps.dress_code,
 						price: info.event.extendedProps.price,
 						dot: info.event.extendedProps.dot,
+						lottery: info.event.extendedProps.lottery,
 					}
 				: {}),
 			...(enableCarProperties
@@ -294,10 +300,14 @@ export default function Calendar({
 						can_signup: info.oldEvent.extendedProps.can_signup,
 						drink_package: info.oldEvent.extendedProps.drink_package,
 						is_nollning_event: info.oldEvent.extendedProps.is_nollning_event,
+						mentor_group_types: info.oldEvent.extendedProps.mentor_group_types,
+						allow_other_mentors:
+							info.oldEvent.extendedProps.allow_other_mentors,
 						alcohol_event_type: info.oldEvent.extendedProps.alcohol_event_type,
 						dress_code: info.oldEvent.extendedProps.dress_code,
 						price: info.oldEvent.extendedProps.price,
 						dot: info.oldEvent.extendedProps.dot,
+						lottery: info.oldEvent.extendedProps.lottery,
 					}
 				: {}),
 			...(enableCarProperties

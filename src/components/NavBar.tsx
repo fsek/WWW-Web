@@ -34,6 +34,7 @@ import {
 	getMeOptions,
 	authCookieLogoutMutation,
 	getGuildMeetingOptions,
+	getVisibleElectionOptions,
 } from "@/api/@tanstack/react-query.gen";
 import {
 	DropdownMenu,
@@ -49,17 +50,19 @@ import {
 	SheetClose,
 	SheetTitle,
 } from "@/components/ui/sheet";
-import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import VerificationReminder from "./VerificationReminder";
 import MemberBanner from "./MemberBanner";
 import { useAuthState } from "@/lib/auth";
+import "./NavBar.css";
+import type { ElectionMemberRead, GuildMeetingRead } from "@/api";
 
 type NavItem = {
 	self: string;
 	desc: string;
 	href?: string;
+	special?: boolean;
 };
 
 type NavSection = {
@@ -67,7 +70,7 @@ type NavSection = {
 } & Record<string, NavItem>;
 
 export function NavBar() {
-	const { t } = useTranslation();
+	const { t } = useTranslation("main");
 	const router = useRouter();
 	const { data: user } = useQuery({
 		...getMeOptions(),
@@ -96,19 +99,34 @@ export function NavBar() {
 		logoutMutation.mutate({});
 	}, [logoutMutation]);
 
-	const showAdmin =
-		user?.is_member && Array.isArray(user.posts) && user.posts.length > 0;
+	const showAdmin = useAuthState().getPermissions().size > 0;
+
+	const { data: guildMeetingData } = useQuery({
+		...getGuildMeetingOptions(),
+		refetchOnWindowFocus: false,
+	});
+
+	const { data: electionData } = useQuery({
+		...getVisibleElectionOptions(),
+		refetchOnWindowFocus: false,
+	});
+
+	const showHamburgerBubble =
+		guildMeetingData?.is_active || electionData?.visible;
 
 	return (
 		<header className="sticky top-0 z-50 w-full border-transparent  bg-white/50 dark:bg-background/40  backdrop-blur-md">
-			<div className="flex flex-col">
-				<div className="xl:container flex items-center justify-between h-20 px-4 mx-auto">
+			<div className="flex flex-col items-center">
+				<div className="container flex items-center justify-between h-20 px-4">
 					<div className="flex items-center gap-4">
 						<Link href="/home" className="flex items-center">
 							<FLogga className="size-14 mr-3" />
 						</Link>
-						<div className="hidden lg:flex">
-							<NavBarMenu />
+						<div className="hidden xl:flex">
+							<NavBarMenu
+								guildMeetingData={guildMeetingData}
+								electionData={electionData}
+							/>
 						</div>
 					</div>
 					<div className="flex items-center gap-2">
@@ -116,7 +134,7 @@ export function NavBar() {
 						<ThemeToggle />
 
 						{/* Desktop user menu */}
-						<div className="hidden lg:flex">
+						<div className="hidden xl:flex">
 							{user ? (
 								<>
 									{showAdmin && (
@@ -175,11 +193,14 @@ export function NavBar() {
 						</div>
 
 						{/* Mobile hamburger menu */}
-						<div className="lg:hidden">
+						<div className="xl:hidden">
 							<Sheet>
 								<SheetTrigger asChild>
-									<Button variant="ghost" size="icon">
+									<Button variant="ghost" size="icon" className="relative">
 										<Menu className="h-5 w-5" />
+										{showHamburgerBubble && (
+											<span className="special-navbar-bubble absolute right-2 top-2 h-2 w-2 rounded-full" />
+										)}
 										<span className="sr-only">Toggle menu</span>
 									</Button>
 								</SheetTrigger>
@@ -197,7 +218,11 @@ export function NavBar() {
 										aria-labelledby="mobile-nav-title"
 									>
 										<div className="px-2">
-											<NavBarMenu isMobile />
+											<NavBarMenu
+												isMobile
+												guildMeetingData={guildMeetingData}
+												electionData={electionData}
+											/>
 										</div>
 
 										<div className="px-2 pt-4 border-t">
@@ -285,7 +310,6 @@ export function NavBar() {
 				<VerificationReminder showBanner={user?.is_verified === false} />
 				<MemberBanner showBanner={user?.is_member === false} />
 			</div>
-			<Toaster position="top-center" richColors />
 		</header>
 	);
 }
@@ -299,8 +323,16 @@ function useLoginHandler() {
 	}, [router, pathname]);
 }
 
-export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
-	const { t } = useTranslation();
+export function NavBarMenu({
+	isMobile = false,
+	guildMeetingData = undefined,
+	electionData = undefined,
+}: {
+	isMobile?: boolean;
+	guildMeetingData?: GuildMeetingRead;
+	electionData?: ElectionMemberRead;
+}) {
+	const { t, i18n } = useTranslation("main");
 	const navbarData = t("navbar", { returnObjects: true }) as Record<
 		string,
 		NavSection
@@ -311,22 +343,52 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 			typeof value === "object" && value !== null && !Array.isArray(value),
 	);
 
-	const { data: guildMeetingData } = useQuery({
-		...getGuildMeetingOptions(),
-		refetchOnWindowFocus: false,
-	});
+	const specialButtons: [string, NavSection][] = [];
 
 	if (guildMeetingData?.is_active) {
-		sections.push([
+		specialButtons.push([
 			"guildMeeting",
 			{
 				self: {
-					self: t("navbar.guild-meeting"),
+					self: t("navbar.guild-meeting-now", {
+						title:
+							(i18n.language === "en"
+								? guildMeetingData.title_en
+								: guildMeetingData.title_sv) || t("navbar.guild-meeting"),
+					}),
+
 					desc: "",
 					href: "/guild-meeting",
+					special: true,
 				},
 			},
 		]);
+	}
+
+	if (electionData?.visible) {
+		specialButtons.push([
+			"election",
+			{
+				self: {
+					self: t("navbar.election-now", {
+						title:
+							(i18n.language === "en"
+								? electionData.title_en
+								: electionData.title_sv) || t("navbar.election"),
+					}),
+
+					desc: "",
+					href: "/election",
+					special: true,
+				},
+			},
+		]);
+	}
+
+	if (isMobile) {
+		sections.unshift(...specialButtons);
+	} else {
+		sections.push(...specialButtons);
 	}
 
 	const isStandaloneItem = (
@@ -338,27 +400,20 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 	if (isMobile) {
 		// Mobile vertical layout
 		return (
-			<div className="space-y-4">
-				{sections.map(([sectionKey, section]) => {
+			<div className={cn("space-y-3", specialButtons.length && "mt-8")}>
+				{sections.map(([sectionKey, section], sectionIndex) => {
 					// Standalone item
 					if (isStandaloneItem(section)) {
 						const item = section.self;
 						return (
 							<div key={sectionKey} className="space-y-2">
 								<SheetClose asChild>
-									<Link
-										href={item.href || "#"}
-										className={cn(
-											"flex items-center gap-2 px-2 py-2 text-sm rounded-md transition-colors hover:bg-accent font-medium",
-											(!item.href || item.href === "#") &&
-												"opacity-50 cursor-not-allowed pointer-events-none",
-										)}
-									>
-										<span>{item.self}</span>
-										{item.href?.startsWith("https://") && (
-											<ExternalLink className="w-4 h-4" />
-										)}
-									</Link>
+									<NavBarStandaloneLink
+										className="flex items-center"
+										item={item}
+										isMobile={isMobile}
+										animationIndex={sectionIndex}
+									/>
 								</SheetClose>
 							</div>
 						);
@@ -370,7 +425,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 					) as [string, NavItem][];
 
 					return (
-						<div key={sectionKey} className="space-y-2">
+						<div key={sectionKey} className="space-y-2 pt-1">
 							<div>
 								<h3 className="font-medium text-sm text-muted-foreground px-2">
 									{typeof section.self === "string" ? section.self : ""}
@@ -412,7 +467,7 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
                   custom-navmenu
                 "
 			>
-				{sections.map(([sectionKey, section]) => {
+				{sections.map(([sectionKey, section], sectionIndex) => {
 					// Standalone item support for desktop
 					if (isStandaloneItem(section)) {
 						const item = section.self;
@@ -423,22 +478,12 @@ export function NavBarMenu({ isMobile = false }: { isMobile?: boolean }) {
 							>
 								<NavigationMenuItem className="bg-transparent hover:bg-transparent">
 									<NavigationMenuLink asChild>
-										<Link
-											href={item.href || "#"}
-											className={cn(
-												"submenu-trigger !bg-transparent !hover:bg-transparent border-2 border-transparent hover:border-foreground/30 font-medium px-4 py-2",
-												(!item.href || item.href === "#") &&
-													"opacity-50 cursor-not-allowed pointer-events-none",
-											)}
-										>
-											{item.self}
-											{item.href?.startsWith("https://") && (
-												<ExternalLink
-													className="inline w-6 h-6 ml-1"
-													aria-label="External link"
-												/>
-											)}
-										</Link>
+										<NavBarStandaloneLink
+											className="submenu-trigger"
+											item={item}
+											isMobile={isMobile}
+											animationIndex={sectionIndex}
+										/>
 									</NavigationMenuLink>
 								</NavigationMenuItem>
 							</NavigationMenuList>
@@ -519,3 +564,47 @@ const ListItem = React.forwardRef<
 	);
 });
 ListItem.displayName = "ListItem";
+
+function NavBarStandaloneLink({
+	className,
+	item,
+	isMobile = false,
+	animationIndex = 0,
+	...props
+}: {
+	item: NavItem;
+	isMobile?: boolean;
+	className?: string;
+	animationIndex?: number;
+}) {
+	return (
+		<Link
+			href={item.href || "#"}
+			className={cn(
+				className,
+				"font-medium whitespace-nowrap",
+				isMobile
+					? "gap-2 px-2 py-2 text-sm rounded-md hover:bg-accent"
+					: "h-9 px-4 py-0 ml-4 flex justify-center bg-transparent hover:bg-transparent border-2 border-transparent hover:border-foreground/30",
+				(!item.href || item.href === "#") &&
+					"opacity-50 cursor-not-allowed pointer-events-none",
+				item.special &&
+					"special-navbar-link border-none text-primary-foreground hover:border-none hover:text-primary-foreground",
+			)}
+			style={
+				item.special
+					? ({ "--special-phase": animationIndex } as React.CSSProperties)
+					: undefined
+			}
+			{...props}
+		>
+			{item.self}
+			{item.href?.startsWith("https://") && (
+				<ExternalLink
+					className="inline w-6 h-6 ml-1"
+					aria-label="External link"
+				/>
+			)}
+		</Link>
+	);
+}

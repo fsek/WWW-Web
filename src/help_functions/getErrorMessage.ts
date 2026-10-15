@@ -14,10 +14,28 @@ export default function getErrorMessage(
 	}
 
 	if (typeof error === "object" && "detail" in error) {
-		if (error.detail === "Unauthorized") {
+		const { detail } = error as { detail: unknown };
+
+		if (detail === "Unauthorized") {
 			return t("main:loading.unauthorized");
 		}
-		return (error as { detail: string }).detail;
+
+		if (typeof detail === "string") {
+			return detail;
+		}
+
+		// fastapi-users returns errors as { code, reason }
+		// basically only relevant for registration errors
+		if (
+			!Array.isArray(detail) &&
+			typeof detail === "object" &&
+			detail !== null
+		) {
+			const { reason } = detail as { reason?: unknown };
+			if (typeof reason === "string") {
+				return reason;
+			}
+		}
 	}
 
 	console.debug("Unexpected error type:", error);

@@ -70,7 +70,7 @@ const SubscribeInfo = () => {
 	return (
 		<section className="p-4 md:p-6 bg-background rounded-md shadow-sm max-w-7xl mx-auto mb-10">
 			<header className="mb-4">
-				<h2 className="text-lg md:text-2xl font-semibold">
+				<h2 className="text-lg md:text-2xl font-semibold" id="subscribe">
 					{t("calendar:subscribe.subscribe_title")}
 				</h2>
 				<p className="text-sm text-muted-foreground mt-1">
