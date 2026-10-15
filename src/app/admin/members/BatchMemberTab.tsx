@@ -41,7 +41,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { ActionEnum, TargetEnum } from "@/api";
-import { useAuthState, type RequiredPermission } from "@/lib/auth";
+import { usePermissions, type RequiredPermission } from "@/lib/auth";
 import normalizePartialPhoneNumber from "@/help_functions/normalizePartialPhoneNumber";
 import normalizePhoneNumber from "@/help_functions/normalizePhoneNumber";
 import AdminTable from "@/widgets/AdminTable";
@@ -60,7 +60,7 @@ function toNullable(value: string) {
 export default function BatchMemberTab() {
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
-	const permissions = useAuthState().getPermissions();
+	const permissions = usePermissions();
 	const hasManagePreregMemberPerms = permissions.hasRequiredPermissions([
 		[ActionEnum.MANAGE, TargetEnum.USER],
 	] as RequiredPermission[]);

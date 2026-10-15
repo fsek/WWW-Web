@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAuthState } from "@/lib/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -32,6 +32,7 @@ const emailPasswordSchema = z.object({
 export default function LoginForm() {
 	const { t } = useTranslation();
 	const router = useRouter();
+	const queryClient = useQueryClient();
 	const searchParams = useSearchParams();
 	const [submitEnabled, setSubmitEnabled] = useState(true);
 	const auth = useAuthState();
@@ -66,9 +67,10 @@ export default function LoginForm() {
 		},
 		onSuccess: (data) => {
 			auth.setAccessToken(data);
+			queryClient.clear(); // After logging in, we want fresh data
 			const next = searchParams.get("next") || "/home";
 			router.push(next);
-			// Set a cookie to indicate the user is not authenticated, just for the middleware to check if it should redirect
+			// Set a cookie to indicate the user is now authenticated, just for the middleware to check if it should redirect
 			// obviously this is not secure enough for real authentication
 			const expires = new Date();
 			expires.setFullYear(expires.getFullYear() + 1);

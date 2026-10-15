@@ -29,7 +29,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { ActionEnum, TargetEnum } from "@/api";
-import { useAuthState, type RequiredPermission } from "@/lib/auth";
+import { usePermissions, type RequiredPermission } from "@/lib/auth";
 import AdminTable from "@/widgets/AdminTable";
 import { AdminChooseDates } from "@/widgets/AdminChooseDates";
 
@@ -54,7 +54,7 @@ function normalize(value?: string | null) {
 export default function BatchMemberingTab() {
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
-	const permissions = useAuthState().getPermissions();
+	const permissions = usePermissions();
 	const hasManageUserPerms = permissions.hasRequiredPermissions([
 		[ActionEnum.MANAGE, TargetEnum.USER],
 	] as RequiredPermission[]);

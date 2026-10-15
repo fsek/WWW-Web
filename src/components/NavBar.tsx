@@ -28,6 +28,7 @@ import {
 	type DefaultError,
 	useMutation,
 	useQuery,
+	useQueryClient,
 } from "@tanstack/react-query";
 import {
 	getMeOptions,
@@ -53,7 +54,7 @@ import { toast } from "sonner";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import VerificationReminder from "./VerificationReminder";
 import MemberBanner from "./MemberBanner";
-import { useAuthState } from "@/lib/auth";
+import { useAuthState, usePermissions } from "@/lib/auth";
 import "./NavBar.css";
 import type { ElectionMemberRead, GuildMeetingRead } from "@/api";
 
@@ -75,6 +76,7 @@ export function NavBar() {
 		...getMeOptions(),
 		refetchOnWindowFocus: false,
 	});
+	const queryClient = useQueryClient();
 	const loginHandler = useLoginHandler();
 	const logoutMutation = useMutation({
 		...authCookieLogoutMutation({ credentials: "include" }),
@@ -83,6 +85,9 @@ export function NavBar() {
 			// obviously this is not secure enough for real authentication
 			document.cookie =
 				"auth_status=unauthenticated; path=/; SameSite=Strict; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+			// Clear token so we don't send it anywhere
+			useAuthState.setState({ accessToken: null });
+			queryClient.clear();
 			router.push("/");
 		},
 		onError: (error: DefaultError) => {
@@ -94,7 +99,7 @@ export function NavBar() {
 		logoutMutation.mutate({});
 	}, [logoutMutation]);
 
-	const showAdmin = useAuthState().getPermissions().size > 0;
+	const showAdmin = usePermissions().size > 0;
 
 	const { data: guildMeetingData } = useQuery({
 		...getGuildMeetingOptions(),
