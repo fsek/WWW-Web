@@ -45,8 +45,9 @@ import {
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
-import { useAuthState, type RequiredPermission } from "@/lib/auth";
+import { usePermissionsState, type RequiredPermission } from "@/lib/auth";
 import { ActionEnum, TargetEnum } from "@/api";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type AdminSidebarEntry = {
 	title: string;
@@ -252,7 +253,7 @@ const groups: AdminGroup[] = [
 
 export function AdminSidebar() {
 	const { t } = useTranslation();
-	const permissions = useAuthState().getPermissions();
+	const { permissions, isPending } = usePermissionsState();
 
 	// Filter out groups and entries the user doesn't have permission to see
 	const visibleGroups = groups
@@ -273,6 +274,14 @@ export function AdminSidebar() {
 				<h2 className="text-2xl mt-2 transition-colors">{t("admin:title")}</h2>
 			</SidebarHeader>
 			<SidebarContent className="px-2 gap-2 bg-[#fa7909]">
+				{isPending && (
+					<div className="px-3 py-2 space-y-3">
+						<Skeleton className="h-4 w-full bg-white/30" />
+						<Skeleton className="h-9 w-full bg-white/25" />
+						<Skeleton className="h-9 w-full bg-white/25" />
+						<Skeleton className="h-9 w-full bg-white/25" />
+					</div>
+				)}
 				{visibleGroups.map(({ title, entries }, groupIndex) => (
 					<Collapsible defaultOpen className="group/collapsible" key={title}>
 						<SidebarGroup className="mb-0 p-0">
