@@ -18,27 +18,21 @@
 	"coolThing": "A cool thing that distracts you from seeing that the page is not finished yet",
 	"back": "Back",
 	"faq": {
-		"self": "Questions answered",
-		"q1": {
-			"question": "Can I log in with my old account?",
-			"answer": "No, since we switched to a new database you need to create a new account. You can do that at fsektionen.se/register. There are many things you won't have access to until you create an account, verify your email, and become verified as a member."
-		},
-		"q2": {
-			"question": "How do I become verified as a member?",
-			"answer": "Create an account, verify your email, and add your Stil-ID (hi6122mo-s) in the user settings (check the top right corner). After this, you must wait for us to verify that you are indeed a member. At the start of the semester, this may take longer than usual. If you feel that it is taking too long, you can contact your council boss or a mentor/föset during the introduction period."
-		},
-		"q3": {
-			"question": "I found a bug or have a suggestion! Who do I contact?",
-			"answer": "Send an email to spindelman@fsektionen.se. It might take a few days for us to respond. Thank you for helping make our website or app better 🧡."
-		},
-		"q4": {
-			"question": "Help! I don't have any of my old admin rights!",
-			"answer": "Please wait or contact your council boss and ask them to give you the appropriate permissions."
-		},
-		"q5": {
-			"question": "I am having problems signing up to events, viewing the gallery, or other things!??",
-			"answer": "We prevent non-members and users without verified email addresses from using many of our services. Check the following: \n\nThat you really have verified your account (try fsektionen.se/verify). \nThat you are registered as a member. (look in account settings to check for both of these!) \nThat you are logged in to the correct account and have not created multiple accounts, for example one with your student email and another with your personal email. If you have more than one account and want to get rid of the bad one, contact spindelman@fsektionen.se via the email of the account you want to delete."
-		}
+		"title": "Questions answered",
+		"items": [
+			{
+				"question": "How do I become verified as a member?",
+				"answer": "Create an account, verify your email, and add your Stil-ID (hi6122mo-s) in the user settings (check the top right corner). After this, you must wait for us to verify that you are indeed a member. At the start of the semester, this may take longer than usual. If you feel that it is taking too long, you can contact your council boss or a mentor/föset during the introduction period."
+			},
+			{
+				"question": "I found a bug or have a suggestion! Who do I contact?",
+				"answer": "Send an email to <fmail>spindelman@fsektionen.se</fmail>. It might take a few days for us to respond. Thank you for helping make our website or app better 🧡."
+			},
+			{
+				"question": "I am having problems signing up to events, viewing the gallery, or other things!??",
+				"answer": "We prevent non-members and users without verified email addresses from using many of our services. Check the following: \n\nThat you really have verified your account (try <flink to='https://fsektionen.se/verify'>fsektionen.se/verify</flink>). \nThat you are registered as a member. (look in account settings to check for both of these!) \nThat you are logged in to the correct account and have not created multiple accounts, for example one with your student email and another with your personal email. If you have more than one account and want to get rid of the bad one, contact <fmail>spindelman@fsektionen.se</fmail> via the email of the account you want to delete."
+			}
+		]
 	},
 	"next": "Next",
 	"previous": "Previous",
@@ -187,6 +181,11 @@
 				"self": "Contact Page",
 				"desc": "Find all the information you need to get in touch with us.",
 				"href": "/contact"
+			},
+			"mattermost": {
+				"self": "Mattermost",
+				"desc": "Most communication in the guild is done via Mattermost.",
+				"href": "https://mm.fsektionen.se"
 			},
 			"ordf": {
 				"self": "President",

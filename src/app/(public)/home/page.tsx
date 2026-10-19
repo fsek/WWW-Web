@@ -5,7 +5,7 @@ import WaveAnimation from "@/components/WaveAnimation";
 
 import CustomTitle from "@/components/CustomTitle";
 import TitleBanner from "@/components/TitleBanner";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import MainPageCalendar from "@/components/main-page-calendar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -17,13 +17,10 @@ import {
 	AccordionTrigger,
 	AccordionContent,
 } from "@/components/ui/accordion";
+import { FLink, FMail } from "@/components/FLink";
 
 export default function MainLanding() {
-	const { t } = useTranslation();
-
-	type FaqItem = { question: string; answer: string };
-	type FaqTranslation = { self?: string } & Record<string, FaqItem>;
-	const faq = t("faq", { returnObjects: true }) as FaqTranslation;
+	const { t } = useTranslation("main");
 
 	return (
 		<>
@@ -39,19 +36,7 @@ export default function MainLanding() {
 						className="text-center text-2xl font-bold mt-4 mb-2"
 					/>
 					<div className="text-left text-lg mb-8">{t("main:welcomeText")}</div>
-					<div className="text-left text-lg mb-8">{t("main:welcomeAdmin")}</div>
 					<div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3 justify-center">
-						<Button
-							className="w-full md:w-auto text-xl py-3 px-6 rounded-lg flex items-center justify-center gap-2"
-							variant="outline"
-						>
-							<Link
-								href="/admin"
-								className=" w-full md:w-auto flex justify-center to-primary-light from-primary bg-gradient-to-t text-transparent bg-clip-text"
-							>
-								{t("main:adminButton")}
-							</Link>
-						</Button>
 						<Button
 							className="w-full md:w-auto text-xl py-3 px-6 rounded-lg flex items-center justify-center gap-2"
 							variant="default"
@@ -66,22 +51,30 @@ export default function MainLanding() {
 					</div>
 					{/* FAQ Accordion */}
 					<CustomTitle
-						text={faq.self || t("main:faq")}
+						text={t("faq.title")}
 						className="text-center text-2xl font-bold mt-4 mb-2"
 					/>
 					<Accordion type="single" collapsible className="mb-8">
-						{Object.entries(faq)
-							.filter(([key]) => key.startsWith("q"))
-							.map(([key, value]) => (
-								<AccordionItem key={key} value={key}>
-									<AccordionTrigger>
-										{(value as { question: string }).question}
-									</AccordionTrigger>
+						<Trans
+							components={{
+								flink: <FLink />,
+								fmail: <FMail />,
+							}}
+						>
+							{(
+								t("faq.items", { returnObjects: true }) as {
+									question: string;
+									answer: string;
+								}[]
+							).map((item) => (
+								<AccordionItem key={item.question} value={item.answer}>
+									<AccordionTrigger>{item.question}</AccordionTrigger>
 									<AccordionContent className="whitespace-pre-wrap">
-										{(value as { answer: string }).answer}
+										{item.answer}
 									</AccordionContent>
 								</AccordionItem>
 							))}
+						</Trans>
 					</Accordion>
 				</div>
 			</div>

@@ -18,27 +18,21 @@
 	"coolThing": "En häftig sak som distraherar dig från att se att sidan inte är klar än",
 	"back": "Tillbaka",
 	"faq": {
-		"self": "Frågor besvarade",
-		"q1": {
-			"question": "Kan jag logga in med mitt gamla konto?",
-			"answer": "Nej, eftersom vi bytt till en ny databas måste du skapa ett nytt konto, vilket du kan göra på fsektionen.se/register. Det finns många saker du inte har tillgång till innan du skapat ett konto, verifierat din mail och blivit verifierad som medlem."
-		},
-		"q2": {
-			"question": "Hur blir jag verifierad som medlem?",
-			"answer": "Skapa ett konto, verifiera din mejl och lägg till ditt Stil-ID (hi6122al-s) i användarinställningarna (kolla i övre högra hörnet). Efter detta måste du vänta på att vi ska se om du verkligen har medlemskap. I samband med terminsstart kan det ta längre tid än normalt. Om du känner att det tar för lång tid kan du kontakta din utskottsordförande, eller en fadder/föset under nollningen."
-		},
-		"q3": {
-			"question": "Jag hittade en bugg eller har ett förslag! Vem kontaktar jag?",
-			"answer": "Skicka ett mail till spindelman@fsektionen.se! Det kan ta några dagar för oss att svara. Tack för att du hjälper till att göra vår hemsida eller app bättre 🧡."
-		},
-		"q4": {
-			"question": "Hjälp! Jag har inga av mina gamla adminrättigheter!",
-			"answer": "Vänta eller kontakta ditt utskottsordförande och be dem att återställa dina rättigheter."
-		},
-		"q5": {
-			"question": "Jag har problem med att anmäla mig till evenemang, visa galleriet eller andra saker!??",
-			"answer": "Vi hindrar icke-medlemmar och användare utan verifierade mailadresser från att använda många av våra tjänster. Kontrollera följande: \n\nAtt du verkligen har verifierat ditt konto (prova fsektionen.se/verify). \nAtt du är registrerad som medlem. (kolla i kontoinställningar för att kontrollera båda dessa!) \nAtt du är inloggad på rätt konto och inte har skapat flera konton, till exempel ett med din studentmail och ett annat med din privata mail. Om du har mer än ett konto och vill bli av med det dåliga, kontakta spindelman@fsektionen.se via mailet för det konto du vill ta bort."
-		}
+		"title": "Frågor besvarade",
+		"items": [
+			{
+				"question": "Hur blir jag verifierad som medlem?",
+				"answer": "Skapa ett konto, verifiera din mejl och lägg till ditt Stil-ID (hi6122al-s) i användarinställningarna (kolla i övre högra hörnet). Efter detta måste du vänta på att vi ska se om du verkligen har medlemskap. I samband med terminsstart kan det ta längre tid än normalt. Om du känner att det tar för lång tid kan du kontakta din utskottsordförande, eller en fadder/föset under nollningen."
+			},
+			{
+				"question": "Jag hittade en bugg eller har ett förslag! Vem kontaktar jag?",
+				"answer": "Skicka ett mail till <fmail>spindelman@fsektionen.se</fmail>! Det kan ta några dagar för oss att svara. Tack för att du hjälper till att göra vår hemsida eller app bättre 🧡."
+			},
+			{
+				"question": "Jag har problem med att anmäla mig till evenemang, visa galleriet eller andra saker!??",
+				"answer": "Vi hindrar icke-medlemmar och användare utan verifierade mailadresser från att använda många av våra tjänster. Kontrollera följande: \n\nAtt du verkligen har verifierat ditt konto (prova <flink to='https://fsektionen.se/verify'>fsektionen.se/verify</flink>). \nAtt du är registrerad som medlem. (kolla i kontoinställningar för att kontrollera båda dessa!) \nAtt du är inloggad på rätt konto och inte har skapat flera konton, till exempel ett med din studentmail och ett annat med din privata mail. Om du har mer än ett konto och vill bli av med det dåliga, kontakta <fmail>spindelman@fsektionen.se</fmail> via mailet för det konto du vill ta bort."
+			}
+		]
 	},
 	"next": "Nästa",
 	"previous": "Föregående",
@@ -187,6 +181,11 @@
 				"self": "Kontaktsida",
 				"desc": "Här hittar du all information du behöver för att nå oss.",
 				"href": "/contact"
+			},
+			"mattermost": {
+				"self": "Mattermost",
+				"desc": "Majoriteten av all kommunikation på sektionen sker via Mattermost.",
+				"href": "https://mm.fsektionen.se"
 			},
 			"ordf": {
 				"self": "Ordförande",
