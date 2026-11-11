@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import { getAllSongCategoriesOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
 import { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
@@ -8,6 +9,7 @@ import SongCategoryForm from "./SongCategoryForm";
 import SongCategoryEditForm from "./SongCategoryEditForm";
 import { useTranslation } from "react-i18next";
 import AdminPage from "@/widgets/AdminPage";
+import PermissionWall from "@/components/PermissionWall";
 
 export default function SongCategories() {
 	const { t } = useTranslation("admin");
@@ -22,16 +24,20 @@ export default function SongCategories() {
 		}),
 	];
 	return (
-		<AdminPage
-			title={t("song_categories.title")}
-			description={t("song_categories.description_subtitle")}
-			queryResult={useQuery({
-				...getAllSongCategoriesOptions(),
-				refetchOnWindowFocus: false,
-			})}
-			columns={columns}
-			editComponent={SongCategoryEditForm}
-			headerButtons={<SongCategoryForm />}
-		/>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.SONG_CATEGORIES]]}
+		>
+			<AdminPage
+				title={t("song_categories.title")}
+				description={t("song_categories.description_subtitle")}
+				queryResult={useQuery({
+					...getAllSongCategoriesOptions(),
+					refetchOnWindowFocus: false,
+				})}
+				columns={columns}
+				editComponent={SongCategoryEditForm}
+				headerButtons={<SongCategoryForm />}
+			/>
+		</PermissionWall>
 	);
 }

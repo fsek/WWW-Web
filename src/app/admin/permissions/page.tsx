@@ -10,6 +10,7 @@ import {
 	type ColumnFiltersState,
 	createColumnHelper,
 } from "@tanstack/react-table";
+import { ActionEnum, TargetEnum } from "../../../api";
 import { useState } from "react";
 
 import type { PermissionRead, PostRead } from "../../../api";
@@ -20,6 +21,7 @@ import PermissionEditForm from "./PermissionEditForm";
 import { useTranslation } from "react-i18next";
 
 export type PermissionWithPosts = PermissionRead & { posts: PostRead[] };
+import PermissionWall from "@/components/PermissionWall";
 
 // Column setup
 const columnHelper = createColumnHelper<PermissionWithPosts>();
@@ -90,47 +92,51 @@ export default function Permissions() {
 	);
 
 	return (
-		<AdminPage
-			title={t("permissions.title", "Permissions")}
-			description={t("permissions.description")}
-			queryResult={
-				{
-					...permissionsQuery,
-					data,
-					isPending: permissionsQuery.isPending || postsQuery.isPending,
-					error: permissionsQuery.error ?? postsQuery.error,
-				} as UseQueryResult<PermissionWithPosts[]>
-			}
-			columns={columns}
-			editComponent={PermissionEditForm}
-			hideGlobalSearch
-			columnFilters={columnFilters}
-			onColumnFiltersChange={setColumnFilters}
-			headerButtons={
-				<>
-					<div className="flex flex-wrap gap-2 mr-auto">
-						<Input
-							className="w-56"
-							placeholder={t("permissions.search_target", "Search target...")}
-							value={filterValue("target")}
-							onChange={(e) => setFilter("target", e.target.value)}
-						/>
-						<Input
-							className="w-56"
-							placeholder={t("permissions.search_action", "Search action...")}
-							value={filterValue("action")}
-							onChange={(e) => setFilter("action", e.target.value)}
-						/>
-						<Input
-							className="w-56"
-							placeholder={t("permissions.search_posts", "Search post...")}
-							value={filterValue("posts")}
-							onChange={(e) => setFilter("posts", e.target.value)}
-						/>
-					</div>
-					<PermissionForm />
-				</>
-			}
-		/>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.PERMISSIONS]]}
+		>
+			<AdminPage
+				title={t("permissions.title", "Permissions")}
+				description={t("permissions.description")}
+				queryResult={
+					{
+						...permissionsQuery,
+						data,
+						isPending: permissionsQuery.isPending || postsQuery.isPending,
+						error: permissionsQuery.error ?? postsQuery.error,
+					} as UseQueryResult<PermissionWithPosts[]>
+				}
+				columns={columns}
+				editComponent={PermissionEditForm}
+				hideGlobalSearch
+				columnFilters={columnFilters}
+				onColumnFiltersChange={setColumnFilters}
+				headerButtons={
+					<>
+						<div className="flex flex-wrap gap-2 mr-auto">
+							<Input
+								className="w-56"
+								placeholder={t("permissions.search_target", "Search target...")}
+								value={filterValue("target")}
+								onChange={(e) => setFilter("target", e.target.value)}
+							/>
+							<Input
+								className="w-56"
+								placeholder={t("permissions.search_action", "Search action...")}
+								value={filterValue("action")}
+								onChange={(e) => setFilter("action", e.target.value)}
+							/>
+							<Input
+								className="w-56"
+								placeholder={t("permissions.search_posts", "Search post...")}
+								value={filterValue("posts")}
+								onChange={(e) => setFilter("posts", e.target.value)}
+							/>
+						</div>
+						<PermissionForm />
+					</>
+				}
+			/>
+		</PermissionWall>
 	);
 }

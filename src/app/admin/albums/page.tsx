@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import type { AlbumRead, PhotographerInAlbumRead } from "@/api";
 import { getAlbumsOptions } from "@/api/@tanstack/react-query.gen";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
@@ -15,6 +16,7 @@ import AlbumsForm from "./AlbumsForm";
 import { Button } from "@/components/ui/button";
 import { Eye, Pencil } from "lucide-react";
 import AlbumsEditForm from "./AlbumsEditForm";
+import PermissionWall from "@/components/PermissionWall";
 
 const columnHelper = createColumnHelper<AlbumRead>();
 
@@ -108,26 +110,30 @@ export default function AlbumsPage() {
 	};
 
 	return (
-		<div className="px-8 space-x-4">
-			<Suspense fallback={<LoadingErrorCard />}>
-				<h3 className="text-3xl py-3 font-bold text-primary">
-					{t("albums.page_title")}
-				</h3>
-				<p className="py-3">{t("albums.page_description")}</p>
-				<p className="text-destructive">{t("albums.warning")}</p>
-				<AlbumsForm />
-				<AdminTable table={table} onRowClick={handleRowClick} />
-				{selectedAlbum && (
-					<AlbumsEditForm
-						open={editFormOpen}
-						onClose={() => {
-							setEditFormOpen(false);
-							setSelectedAlbum(null);
-						}}
-						selectedAlbum={selectedAlbum}
-					/>
-				)}
-			</Suspense>
-		</div>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.ALBUMS]]}
+		>
+			<div className="px-8 space-x-4">
+				<Suspense fallback={<LoadingErrorCard />}>
+					<h3 className="text-3xl py-3 font-bold text-primary">
+						{t("albums.page_title")}
+					</h3>
+					<p className="py-3">{t("albums.page_description")}</p>
+					<p className="text-destructive">{t("albums.warning")}</p>
+					<AlbumsForm />
+					<AdminTable table={table} onRowClick={handleRowClick} />
+					{selectedAlbum && (
+						<AlbumsEditForm
+							open={editFormOpen}
+							onClose={() => {
+								setEditFormOpen(false);
+								setSelectedAlbum(null);
+							}}
+							selectedAlbum={selectedAlbum}
+						/>
+					)}
+				</Suspense>
+			</div>
+		</PermissionWall>
 	);
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import { useState, useEffect, useMemo } from "react";
 import CafeShiftsForm from "./CafeShiftsForm";
 import CafeShiftsEditForm from "./CafeShiftsEditForm";
@@ -30,6 +31,7 @@ import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import MultiShiftsAddForm from "./MultiShiftAddForm";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import PermissionWall from "@/components/PermissionWall";
 
 // Column setup
 const columnHelper = createColumnHelper<CafeShiftRead>();
@@ -187,140 +189,145 @@ export default function CafeShifts() {
 		})) ?? [];
 
 	return (
-		<div className="px-8 space-x-4">
-			<h3 className="text-3xl py-3 font-bold text-primary">
-				{t("admin:cafe_shifts.title")}
-			</h3>
-			<p className="py-3">{t("admin:cafe_shifts.description")}</p>
-			<EventsProvider
-				initialCalendarEvents={events}
-				handleAdd={(event) =>
-					addShift.mutate(
-						{
-							body: {
-								starts_at: event.start,
-								ends_at: event.end,
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.CAFE_SHIFTS]]}
+		>
+			<div className="px-8 space-x-4">
+				<h3 className="text-3xl py-3 font-bold text-primary">
+					{t("admin:cafe_shifts.title")}
+				</h3>
+				<p className="py-3">{t("admin:cafe_shifts.description")}</p>
+				<EventsProvider
+					initialCalendarEvents={events}
+					handleAdd={(event) =>
+						addShift.mutate(
+							{
+								body: {
+									starts_at: event.start,
+									ends_at: event.end,
+								},
 							},
-						},
-						{
-							onError: (err) => toast.error(t("admin:cafe_shifts.error_add")),
-						},
-					)
-				}
-				handleDelete={(id) =>
-					deleteShift.mutate(
-						{ path: { shift_id: Number(id) } },
-						{
-							onError: (err) =>
-								toast.error(t("admin:cafe_shifts.error_delete")),
-						},
-					)
-				}
-				handleEdit={(event) => {
-					if (!event.id) {
-						toast.error(t("admin:cafe_shifts.error_missing_id"));
-						return;
+							{
+								onError: (err) => toast.error(t("admin:cafe_shifts.error_add")),
+							},
+						)
 					}
-					editShift.mutate(
-						{
-							path: { shift_id: Number(event.id) },
-							body: {
-								starts_at: event.start,
-								ends_at: event.end,
-								user_id:
-									(event as CalendarEvent<CustomShiftData>).user_id || null,
+					handleDelete={(id) =>
+						deleteShift.mutate(
+							{ path: { shift_id: Number(id) } },
+							{
+								onError: (err) =>
+									toast.error(t("admin:cafe_shifts.error_delete")),
 							},
-						},
-						{
-							onError: (err) => toast.error(t("admin:cafe_shifts.error_edit")),
-						},
-					);
-				}}
-			>
-				<MultiShiftsAddForm />
-				<div className="py-4">
-					<Tabs
-						value={tab}
-						onValueChange={(value) => {
-							setTab(value);
-							const params = new URLSearchParams(
-								Array.from(searchParams.entries()),
-							);
-							params.set("tab", value);
-							router.replace(`${pathname}?${params.toString()}`);
-						}}
-						className="flex flex-col w-full items-center"
-					>
-						<TabsList className="flex justify-center mb-2">
-							<TabsTrigger value="calendar">
-								{t("admin:cafe_shifts.calendar")}
-							</TabsTrigger>
-							<TabsTrigger value="list">
-								{t("admin:cafe_shifts.list")}
-							</TabsTrigger>
-						</TabsList>
-						<TabsContent value="calendar" className="w-full px-5 space-y-5">
-							<div className="space-y-0">
-								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+						)
+					}
+					handleEdit={(event) => {
+						if (!event.id) {
+							toast.error(t("admin:cafe_shifts.error_missing_id"));
+							return;
+						}
+						editShift.mutate(
+							{
+								path: { shift_id: Number(event.id) },
+								body: {
+									starts_at: event.start,
+									ends_at: event.end,
+									user_id:
+										(event as CalendarEvent<CustomShiftData>).user_id || null,
+								},
+							},
+							{
+								onError: (err) =>
+									toast.error(t("admin:cafe_shifts.error_edit")),
+							},
+						);
+					}}
+				>
+					<MultiShiftsAddForm />
+					<div className="py-4">
+						<Tabs
+							value={tab}
+							onValueChange={(value) => {
+								setTab(value);
+								const params = new URLSearchParams(
+									Array.from(searchParams.entries()),
+								);
+								params.set("tab", value);
+								router.replace(`${pathname}?${params.toString()}`);
+							}}
+							className="flex flex-col w-full items-center"
+						>
+							<TabsList className="flex justify-center mb-2">
+								<TabsTrigger value="calendar">
 									{t("admin:cafe_shifts.calendar")}
-								</h2>
-								<p className="text-xs md:text-sm font-medium">
-									{t("admin:cafe_shifts.calendar_description")}
-								</p>
-							</div>
-
-							<Separator />
-							<Calendar
-								showDescription={false}
-								editDescription={false}
-								handleOpenDetails={(shift) => {
-									if (shift) {
-										router.push(`/cafe-shifts/${shift.id}`);
-									}
-								}}
-								disableEdit={false}
-								enableAllDay={false}
-								enableCafeShiftProperties={true}
-								// Provide and persist the calendar view across tab switches
-								defaultView={calendarView}
-								onViewChange={setCalendarView}
-								// Provide and persist the viewed date across tab switches
-								defaultDate={calendarDate}
-								onDateChange={setCalendarDate}
-							/>
-						</TabsContent>
-						<TabsContent value="list" className="w-full px-5 space-y-5">
-							<div className="space-y-0">
-								<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+								</TabsTrigger>
+								<TabsTrigger value="list">
 									{t("admin:cafe_shifts.list")}
-								</h2>
-								<p className="text-xs md:text-sm font-medium">
-									{t("admin:cafe_shifts.list_description")}
-								</p>
-							</div>
-							<div className="flex">
-								<CafeShiftsForm />
-								<Button
-									variant={showOnlyCurrent ? "default" : "outline"}
-									className="my-auto ml-2"
-									onClick={() => setShowOnlyCurrent((v) => !v)}
-								>
-									{showOnlyCurrent
-										? t("admin:cafe_shifts.show_all_shifts")
-										: t("admin:cafe_shifts.hide_past_shifts")}
-								</Button>
-							</div>
-							<Separator />
-							<AdminTable table={table} onRowClick={handleRowClick} />
-							<CafeShiftsEditForm
-								open={openEditDialog}
-								onClose={() => handleClose()}
-								selectedShift={selectedShift as CafeShiftRead}
-							/>
-						</TabsContent>
-					</Tabs>
-				</div>
-			</EventsProvider>
-		</div>
+								</TabsTrigger>
+							</TabsList>
+							<TabsContent value="calendar" className="w-full px-5 space-y-5">
+								<div className="space-y-0">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+										{t("admin:cafe_shifts.calendar")}
+									</h2>
+									<p className="text-xs md:text-sm font-medium">
+										{t("admin:cafe_shifts.calendar_description")}
+									</p>
+								</div>
+
+								<Separator />
+								<Calendar
+									showDescription={false}
+									editDescription={false}
+									handleOpenDetails={(shift) => {
+										if (shift) {
+											router.push(`/cafe-shifts/${shift.id}`);
+										}
+									}}
+									disableEdit={false}
+									enableAllDay={false}
+									enableCafeShiftProperties={true}
+									// Provide and persist the calendar view across tab switches
+									defaultView={calendarView}
+									onViewChange={setCalendarView}
+									// Provide and persist the viewed date across tab switches
+									defaultDate={calendarDate}
+									onDateChange={setCalendarDate}
+								/>
+							</TabsContent>
+							<TabsContent value="list" className="w-full px-5 space-y-5">
+								<div className="space-y-0">
+									<h2 className="flex items-center text-2xl font-semibold tracking-tight md:text-3xl">
+										{t("admin:cafe_shifts.list")}
+									</h2>
+									<p className="text-xs md:text-sm font-medium">
+										{t("admin:cafe_shifts.list_description")}
+									</p>
+								</div>
+								<div className="flex">
+									<CafeShiftsForm />
+									<Button
+										variant={showOnlyCurrent ? "default" : "outline"}
+										className="my-auto ml-2"
+										onClick={() => setShowOnlyCurrent((v) => !v)}
+									>
+										{showOnlyCurrent
+											? t("admin:cafe_shifts.show_all_shifts")
+											: t("admin:cafe_shifts.hide_past_shifts")}
+									</Button>
+								</div>
+								<Separator />
+								<AdminTable table={table} onRowClick={handleRowClick} />
+								<CafeShiftsEditForm
+									open={openEditDialog}
+									onClose={() => handleClose()}
+									selectedShift={selectedShift as CafeShiftRead}
+								/>
+							</TabsContent>
+						</Tabs>
+					</div>
+				</EventsProvider>
+			</div>
+		</PermissionWall>
 	);
 }

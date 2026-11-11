@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import { getKeyvalsOptions } from "@/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
 import { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
@@ -8,6 +9,7 @@ import KeyvalEditForm from "./KeyvalEditForm";
 import { useTranslation } from "react-i18next";
 import AdminPage from "@/widgets/AdminPage";
 import KeyvalForm from "./KeyvalForm";
+import PermissionWall from "@/components/PermissionWall";
 
 export default function Keyvals() {
 	const { t } = useTranslation("admin");
@@ -27,16 +29,20 @@ export default function Keyvals() {
 	];
 
 	return (
-		<AdminPage
-			title={t("keyvals.title")}
-			description={t("keyvals.description_subtitle")}
-			queryResult={useQuery({
-				...getKeyvalsOptions(),
-				refetchOnWindowFocus: false,
-			})}
-			columns={columns}
-			editComponent={KeyvalEditForm}
-			headerButtons={<KeyvalForm />}
-		/>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.KEYVALS]]}
+		>
+			<AdminPage
+				title={t("keyvals.title")}
+				description={t("keyvals.description_subtitle")}
+				queryResult={useQuery({
+					...getKeyvalsOptions(),
+					refetchOnWindowFocus: false,
+				})}
+				columns={columns}
+				editComponent={KeyvalEditForm}
+				headerButtons={<KeyvalForm />}
+			/>
+		</PermissionWall>
 	);
 }

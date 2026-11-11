@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import type { AliasRead } from "@/api";
 import { aliasListAliasesOptions } from "@/api/@tanstack/react-query.gen";
 import { Input } from "@/components/ui/input";
@@ -18,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import SourceForm from "./SourceForm";
 import { useAliasColumns } from "./hooks/useAliasColumns";
+import PermissionWall from "@/components/PermissionWall";
 
 // Use fake data instead of API
 const useFakeData = false;
@@ -126,29 +128,33 @@ export default function MailAliasPage() {
 	}
 
 	return (
-		<div className="px-8 space-x-4">
-			<div className="space-y-0">
-				<h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
-					{t("admin:mail_aliases.list")}
-				</h3>
-				<p className="text-xs md:text-sm font-medium">
-					{t("admin:mail_aliases.list_description")}
-				</p>
-				<div className="mt-4 mb-2 flex flex-row gap-2 items-center flex-wrap">
-					<div className="w-xs">
-						<Input
-							placeholder={t("admin:mail_aliases.search_placeholder")}
-							value={search}
-							onChange={(e) => setSearch(e.target.value)}
-							autoFocus
-						/>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.MAIL_ALIASES]]}
+		>
+			<div className="px-8 space-x-4">
+				<div className="space-y-0">
+					<h3 className="text-3xl py-3 underline underline-offset-4 text-primary">
+						{t("admin:mail_aliases.list")}
+					</h3>
+					<p className="text-xs md:text-sm font-medium">
+						{t("admin:mail_aliases.list_description")}
+					</p>
+					<div className="mt-4 mb-2 flex flex-row gap-2 items-center flex-wrap">
+						<div className="w-xs">
+							<Input
+								placeholder={t("admin:mail_aliases.search_placeholder")}
+								value={search}
+								onChange={(e) => setSearch(e.target.value)}
+								autoFocus
+							/>
+						</div>
 					</div>
+					<Separator className="mb-8" />
 				</div>
-				<Separator className="mb-8" />
+				<SourceForm />
+				<Separator />
+				<AdminTable table={table} />
 			</div>
-			<SourceForm />
-			<Separator />
-			<AdminTable table={table} />
-		</div>
+		</PermissionWall>
 	);
 }

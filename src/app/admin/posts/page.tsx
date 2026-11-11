@@ -1,5 +1,6 @@
 "use client";
 
+import { ActionEnum, TargetEnum } from "../../../api";
 import {
 	getAllCouncilsOptions,
 	getAllPostsOptions,
@@ -17,6 +18,7 @@ import PostForm from "./PostForm";
 import PostEditForm from "./PostEditForm";
 import { useTranslation } from "react-i18next";
 import AdminPage from "@/widgets/AdminPage";
+import PermissionWall from "@/components/PermissionWall";
 
 export default function Posts() {
 	const { t, i18n } = useTranslation("admin");
@@ -72,15 +74,19 @@ export default function Posts() {
 	];
 
 	return (
-		<AdminPage
-			title={t("posts.title")}
-			description={t("posts.description")}
-			queryResult={useQuery({
-				...getAllPostsOptions(),
-			})}
-			columns={columns}
-			editComponent={PostEditForm}
-			headerButtons={<PostForm />}
-		/>
+		<PermissionWall
+			requiredPermissions={[[ActionEnum.MANAGE, TargetEnum.POSTS]]}
+		>
+			<AdminPage
+				title={t("posts.title")}
+				description={t("posts.description")}
+				queryResult={useQuery({
+					...getAllPostsOptions(),
+				})}
+				columns={columns}
+				editComponent={PostEditForm}
+				headerButtons={<PostForm />}
+			/>
+		</PermissionWall>
 	);
 }
