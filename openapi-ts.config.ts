@@ -5,7 +5,7 @@ export default defineConfig({
 	input: "openapi.cleaned.json",
 	//input: "http://127.0.0.1:8000",
 	input: "http://127.0.0.1:8000/openapi.json",
-	output: { path: "src/api", lint: "biome", format: "biome" },
+	output: { path: "src/api" },
 	parser: {
 		transforms: {
 			enums: "root", // <- make enums reusable
@@ -18,7 +18,7 @@ export default defineConfig({
 			name: "@hey-api/transformers",
 		},
 		{
-			asClass: true,
+			operations: { strategy: "byTags" },
 			name: "@hey-api/sdk",
 			// Really jank unfortunately, there is no way to preprocess input,
 			// so we have to find the index of '-' in the generated name and take the subslice from that index onwards
