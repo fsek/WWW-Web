@@ -71,7 +71,6 @@ type NavSection = {
 
 export function NavBar() {
 	const { t } = useTranslation("main");
-	const router = useRouter();
 	const { data: user } = useQuery({
 		...getMeOptions(),
 		refetchOnWindowFocus: false,
@@ -88,7 +87,8 @@ export function NavBar() {
 			// Clear token so we don't send it anywhere
 			useAuthState.setState({ accessToken: null });
 			queryClient.clear();
-			router.push("/");
+			// Full page load so cached user data in React Query is discarded too
+			window.location.assign("/");
 		},
 		onError: (error: DefaultError) => {
 			toast.error(error.message || t("navbar.logoutError", "Logout failed"));
@@ -319,7 +319,7 @@ function useLoginHandler() {
 	const pathname = usePathname();
 	const router = useRouter();
 	return React.useCallback(() => {
-		router.push(`/login?next=${pathname}`);
+		router.push(`/login?next=${encodeURIComponent(pathname)}`);
 	}, [router, pathname]);
 }
 

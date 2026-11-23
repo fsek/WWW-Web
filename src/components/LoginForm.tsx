@@ -29,6 +29,21 @@ const emailPasswordSchema = z.object({
 	password: z.string(),
 });
 
+// Only allow redirects within our own site, otherwise ?next=https://evil.example
+// would send the user to an attacker's page right after logging in.
+function getSafeRedirect(next: string | null): string {
+	if (!next) return "/home";
+	try {
+		const url = new URL(next, window.location.origin);
+		// A pathname like //evil.example would be read as a different host by the browser
+		if (url.origin !== window.location.origin || url.pathname.startsWith("//"))
+			return "/home";
+		return url.pathname + url.search + url.hash;
+	} catch {
+		return "/home";
+	}
+}
+
 export default function LoginForm() {
 	const { t } = useTranslation();
 	const router = useRouter();
@@ -68,8 +83,7 @@ export default function LoginForm() {
 		onSuccess: (data) => {
 			auth.setAccessToken(data);
 			queryClient.clear(); // After logging in, we want fresh data
-			const next = searchParams.get("next") || "/home";
-			router.push(next);
+			router.push(getSafeRedirect(searchParams.get("next")));
 			// Set a cookie to indicate the user is now authenticated, just for the middleware to check if it should redirect
 			// obviously this is not secure enough for real authentication
 			const expires = new Date();
