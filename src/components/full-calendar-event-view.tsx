@@ -22,6 +22,7 @@ import {
 	Beer,
 	CreditCard,
 	Lock,
+	Check,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -37,6 +38,7 @@ interface EventViewProps {
 	showDescription: boolean;
 	editDescription: boolean;
 	handleOpenDetails?: ((event?: CalendarEvent) => void) | null;
+	handleConfirm?: ((event?: CalendarEvent) => void) | null;
 	disableEdit: boolean;
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
@@ -65,6 +67,7 @@ export function EventView({
 	showDescription,
 	editDescription,
 	handleOpenDetails,
+	handleConfirm,
 	disableEdit,
 	enableAllDay = true,
 	enableTrueEventProperties = false,
@@ -275,6 +278,16 @@ export function EventView({
 										<td>{event.room as string}</td>
 									</tr>
 								)}
+								{event &&
+									enableRoomBookingProperties &&
+									typeof event.confirmed === "boolean" && (
+										<tr>
+											<th>{t("admin:room_bookings.confirmed")}</th>
+											<td>
+												{event.confirmed ? t("admin:yes") : t("admin:no")}
+											</td>
+										</tr>
+									)}
 							</tbody>
 						</table>
 						{event && enableTrueEventProperties && (
@@ -294,6 +307,19 @@ export function EventView({
 									onClick={() => handleOpenDetails(event)}
 								>
 									{t("details")}
+								</Button>
+							)}
+							{handleConfirm != null && event?.confirmed === false && (
+								<Button
+									variant="outline"
+									className="border-yellow-500 text-yellow-700 bg-yellow-50"
+									onClick={() => {
+										handleConfirm(event);
+										setEventViewOpen(false);
+									}}
+								>
+									<Check />
+									{t("admin:room_bookings.confirm")}
 								</Button>
 							)}
 							{showManageSignupsButton && event?.id && (

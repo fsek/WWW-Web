@@ -13,6 +13,18 @@
 			"a3": "Kontakta Cafemästaren eller Kardinalbagge på cafe@fsektionen.se."
 		}
 	},
+	"leaderboard": {
+		"link": "Se topplistan",
+		"title": "Cafétopplista",
+		"description": "Vem har jobbat flest pass i Hilbert Café den här perioden? Topplistan nollställs varje läsperiod.",
+		"since": "Räknar pass sedan {{date}}.",
+		"not_started": "Ingen topplista har startats än. Kom tillbaka senare!",
+		"empty": "Inga pass har jobbats än den här perioden.",
+		"rank": "Plats",
+		"name": "Namn",
+		"shifts": "Pass",
+		"to_shifts": "Till cafépassen"
+	},
 	"no_shift_selected": "Inget pass valt.",
 	"back": "Tillbaka",
 	"shift_details": "Passdetaljer",

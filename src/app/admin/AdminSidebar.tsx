@@ -18,6 +18,7 @@ import {
 	House,
 	Mail,
 	ChefHat,
+	Trophy,
 	ListMusic,
 	Music3,
 	Images,
@@ -53,6 +54,8 @@ type AdminSidebarEntry = {
 	title: string;
 	url: string;
 	permissions?: RequiredPermission[];
+	// Whether the user needs all of the permissions (default) or just one of them
+	mustHave?: "any" | "all";
 	icon: ForwardRefExoticComponent<
 		Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
 	>;
@@ -105,6 +108,12 @@ const groups: AdminGroup[] = [
 				permissions: [[ActionEnum.MANAGE, TargetEnum.CAFE]],
 				icon: ChefHat,
 			},
+			{
+				title: "admin:cafe_leaderboard.self",
+				url: "/admin/cafe-leaderboard",
+				permissions: [[ActionEnum.MANAGE, TargetEnum.CAFE]],
+				icon: Trophy,
+			},
 		],
 	},
 	{
@@ -119,7 +128,12 @@ const groups: AdminGroup[] = [
 			{
 				title: "admin:room_bookings.self",
 				url: "/admin/room-bookings",
-				permissions: [[ActionEnum.MANAGE, TargetEnum.ROOM_BOOKINGS]],
+				// Cafe managers need access to confirm Hilbert Cafe bookings
+				permissions: [
+					[ActionEnum.MANAGE, TargetEnum.ROOM_BOOKINGS],
+					[ActionEnum.MANAGE, TargetEnum.CAFE],
+				],
+				mustHave: "any",
 				icon: House,
 			},
 		],
@@ -261,9 +275,15 @@ export function AdminSidebar() {
 			return {
 				...group,
 				// Also filter out entries
-				entries: group.entries.filter((item) =>
-					permissions.hasRequiredPermissions(item.permissions ?? []),
-				),
+				entries: group.entries.filter((item) => {
+					const required = item.permissions ?? [];
+					if (item.mustHave === "any" && required.length > 0) {
+						return required.some((req) =>
+							permissions.hasRequiredPermissions([req]),
+						);
+					}
+					return permissions.hasRequiredPermissions(required);
+				}),
 			};
 		})
 		.filter((group) => group.entries.length > 0);

@@ -69,6 +69,7 @@ export default function RoomBookings() {
 		council_name_sv: string;
 		council_name_en: string;
 		user_id: number;
+		confirmed: boolean;
 	}
 
 	// Transform the fetched data into CalendarEvent type
@@ -95,6 +96,7 @@ export default function RoomBookings() {
 					council_name_en: booking.council?.name_en ?? undefined,
 					council_id: booking.council?.id ?? undefined,
 					user_id: booking.user.id,
+					confirmed: booking.confirmed,
 				};
 			}) ?? [];
 

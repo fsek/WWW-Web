@@ -24,6 +24,9 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Trans } from "react-i18next";
+import Link from "next/link";
+import { Trophy } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function CafeShifts() {
 	const router = useRouter();
@@ -124,6 +127,12 @@ export default function CafeShifts() {
 							fullUnderline
 						/>
 						<p>{t("cafe_shifts.description_long_text")}</p>
+						<Button asChild variant="outline" className="mt-4">
+							<Link href="/cafe-leaderboard">
+								<Trophy />
+								{t("leaderboard.link")}
+							</Link>
+						</Button>
 						<CustomTitle
 							text={t("cafe_shifts.faq.title")}
 							className="mt-4"
