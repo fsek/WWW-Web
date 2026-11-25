@@ -4,7 +4,16 @@ import { getRoomBookingOptions } from "@/api/@tanstack/react-query.gen";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { Calendar, Clock, MapPin, User, ArrowLeft, Home } from "lucide-react";
+import {
+	Calendar,
+	CircleCheck,
+	CircleAlert,
+	Clock,
+	MapPin,
+	User,
+	ArrowLeft,
+	Home,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -128,6 +137,17 @@ export default function Page() {
 								</span>
 							</div>
 						)}
+						<div className="flex flex-wrap items-center gap-2">
+							{bookingData.confirmed ? (
+								<CircleCheck className="w-4 h-4 text-green-600" />
+							) : (
+								<CircleAlert className="w-4 h-4 text-yellow-600" />
+							)}
+							<span>
+								{t("admin:room_bookings.confirmed")}:{" "}
+								{bookingData.confirmed ? t("admin:yes") : t("admin:no")}
+							</span>
+						</div>
 					</CardContent>
 				</Card>
 

@@ -49,6 +49,8 @@ interface CalendarProps {
 	showDescription: boolean;
 	editDescription?: boolean;
 	handleOpenDetails?: ((event?: CalendarEvent) => void) | null;
+	// If set, shows a confirm button in the event popup for unconfirmed events
+	handleConfirm?: ((event?: CalendarEvent) => void) | null;
 	disableEdit?: boolean;
 	enableAllDay?: boolean;
 	enableTrueEventProperties?: boolean;
@@ -75,6 +77,7 @@ export default function Calendar({
 	showDescription,
 	editDescription,
 	handleOpenDetails,
+	handleConfirm,
 	disableEdit,
 	enableAllDay = true,
 	enableTrueEventProperties = false,
@@ -189,6 +192,7 @@ export default function Calendar({
 						council_id: info.event.extendedProps.council_id,
 						council_name_sv: info.event.extendedProps.council_name_sv,
 						council_name_en: info.event.extendedProps.council_name_en,
+						confirmed: info.event.extendedProps.confirmed,
 					}
 				: {}),
 			...(enableCafeShiftProperties
@@ -260,6 +264,7 @@ export default function Calendar({
 						council_id: info.event.extendedProps.council_id,
 						council_name_sv: info.event.extendedProps.council_name_sv,
 						council_name_en: info.event.extendedProps.council_name_en,
+						confirmed: info.event.extendedProps.confirmed,
 					}
 				: {}),
 			...(enableCafeShiftProperties
@@ -629,6 +634,7 @@ export default function Calendar({
 				showDescription={showDescription}
 				editDescription={editDescription ?? false}
 				handleOpenDetails={handleOpenDetails}
+				handleConfirm={handleConfirm}
 				disableEdit={disableEdit ?? false}
 				enableAllDay={enableAllDay}
 				enableTrueEventProperties={enableTrueEventProperties}

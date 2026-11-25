@@ -33,3 +33,5 @@ export const MISSION_CATEGORY_ENUM = {
 
 export type MissionCategory =
 	(typeof MISSION_CATEGORY_ENUM)[keyof typeof MISSION_CATEGORY_ENUM];
+
+export const CAFE_LEADERBOARD_START_KEY = "cafe_leaderboard_start";

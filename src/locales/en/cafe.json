@@ -13,6 +13,18 @@
 			"a3": "Contact the Head of the Café or the Cardinal Beetle at cafe@fsektionen.se."
 		}
 	},
+	"leaderboard": {
+		"link": "See the leaderboard",
+		"title": "Cafe Leaderboard",
+		"description": "Who has worked the most shifts in Hilbert Café this period? The leaderboard is reset every study period.",
+		"since": "Counting shifts since {{date}}.",
+		"not_started": "No leaderboard has been started yet. Check back later!",
+		"empty": "No shifts have been worked yet this period.",
+		"rank": "Rank",
+		"name": "Name",
+		"shifts": "Shifts",
+		"to_shifts": "Go to cafe shifts"
+	},
 	"no_shift_selected": "No shift selected.",
 	"back": "Back",
 	"shift_details": "Shift details",

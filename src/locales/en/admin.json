@@ -839,7 +839,11 @@
 		"every_month": "Every month",
 		"recurrence": "Select recurrence frequency",
 		"recurrence_warning": "Be careful! You can create up to 50 bookings at once, but must edit or remove them individually! You cannot undo the recurrence after creating the bookings.",
-		"recurrence_end": "Recurrence end date (inclusive)"
+		"recurrence_end": "Recurrence end date (inclusive)",
+		"confirm": "Confirm",
+		"success_confirm": "Booking confirmed!",
+		"error_confirm": "Failed to confirm booking",
+		"show_only_unconfirmed": "Show only unconfirmed bookings"
 	},
 	"searching": "Searching",
 	"user_not_found": "No users found",
@@ -1025,7 +1029,7 @@
 	"cafe_shifts": {
 		"self": "Cafe Shifts",
 		"title": "Cafe Shifts",
-		"description": "Create and manage cafe shift slots. Use the calendar or list to add, edit, and assign shifts. Use the button below to add multiple shifts at once. The shifts are added between 08:00-10:00, 10:00-13:00 on each work day.",
+		"description": "Create and manage cafe shift slots. Use the calendar or list to add, edit, and assign shifts. Use the button below to add multiple shifts at once. The shifts are added between 08:00-10:00, 10:00-12:00 on each work day.",
 		"create_shift": "Create Shift",
 		"edit_shift": "Edit Shift",
 		"assigned_user": "Assigned User",
@@ -1058,6 +1062,20 @@
 			"morning": "Morning",
 			"afternoon": "Afternoon"
 		}
+	},
+	"cafe_leaderboard": {
+		"self": "Cafe Leaderboard",
+		"title": "Cafe Leaderboard",
+		"description": "The leaderboard counts how many cafe shifts each person has worked since the start date. Reset it at the start of each study period by picking a new start date. Shifts from the future will not be counted yet.",
+		"reset_title": "Set leaderboard start date",
+		"current_start": "The current leaderboard counts shifts from {{date}}.",
+		"no_start": "The leaderboard has not been started yet.",
+		"reset": "Set leaderboard start date",
+		"confirm_title": "Set start date?",
+		"confirm_text": "The leaderboard will count shifts from {{date}}. Shifts before this date will no longer show on the leaderboard.",
+		"success_reset": "Leaderboard reset!",
+		"error_reset": "Failed to set start date.",
+		"current_title": "Current leaderboard"
 	},
 	"visible_election": {
 		"self": "Visible Election"

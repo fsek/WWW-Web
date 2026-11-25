@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import RoomBookingForm from "./RoomBookingForm";
 import RoomBookingEditForm from "./RoomBookingEditForm";
 import {
 	createRoomBookingMutation,
 	removeRoomBookingMutation,
 	updateRoomBookingMutation,
+	confirmRoomBookingMutation,
 	getAllRoomBookingsOptions,
 	getAllRoomBookingsQueryKey,
 	getBookingsByRoomOptions,
+	getBookingsByRoomQueryKey,
 	getRoomBookingsBetweenTimesMutation,
 } from "@/api/@tanstack/react-query.gen";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -31,11 +33,16 @@ import Calendar from "@/components/full-calendar";
 import { LoadingErrorCard } from "@/components/LoadingErrorCard";
 import { SelectFromOptions } from "@/widgets/SelectFromOptions";
 import type { RoomEnum } from "@/api";
+import { ActionEnum, TargetEnum } from "@/api";
+import { usePermissions } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
 import { toast } from "sonner";
+import getErrorMessage from "@/help_functions/getErrorMessage";
 
 // Column setup
 const columnHelper = createColumnHelper<RoomBookingRead>();
-const columns = [
+const baseColumns = [
 	// This might not be the best way to do this, see the car booking page for alternative
 	columnHelper.accessor("room", {
 		header: "Rum",
@@ -67,7 +74,20 @@ export default function RoomBookings() {
 	const { t } = useTranslation();
 	const queryClient = useQueryClient();
 
-	const [selectedRoom, setSelectedRoom] = useState<RoomEnum | "All">("All");
+	const permissions = usePermissions();
+	const canManageBookings = permissions.hasRequiredPermissions([
+		[ActionEnum.MANAGE, TargetEnum.ROOM_BOOKINGS],
+	]);
+	// Confirming bookings is (for now) hardcoded to the cafe in the backend
+	const canConfirm = permissions.hasRequiredPermissions([
+		[ActionEnum.MANAGE, TargetEnum.CAFE],
+	]);
+
+	// Cafe people without room booking permissions mostly care about the cafe
+	const [selectedRoom, setSelectedRoom] = useState<RoomEnum | "All">(
+		canConfirm && !canManageBookings ? "Hilbert Cafe" : "All",
+	);
+	const [showOnlyUnconfirmed, setShowOnlyUnconfirmed] = useState(false);
 
 	// Tab state from query string, default to "calendar"
 	const initialTab = searchParams.get("tab") || "calendar";
@@ -119,9 +139,71 @@ export default function RoomBookings() {
 	const [selectedRoomBooking, setSelectedRoomBooking] =
 		useState<RoomBookingRead | null>(null);
 
-	const table = useCreateTable({ data: data ?? [], columns });
+	const invalidateBookings = () => {
+		queryClient.invalidateQueries({ queryKey: getAllRoomBookingsQueryKey() });
+		queryClient.invalidateQueries({
+			queryKey: getBookingsByRoomQueryKey({
+				query: { room: selectedRoom as `${RoomEnum}` },
+			}),
+		});
+	};
+
+	const confirmBooking = useMutation({
+		...confirmRoomBookingMutation(),
+		onSuccess: () => {
+			invalidateBookings();
+			toast.success(t("admin:room_bookings.success_confirm"));
+		},
+		onError: (err) => {
+			toast.error(
+				`${t("admin:room_bookings.error_confirm")}: ${getErrorMessage(err, t)}`,
+			);
+		},
+		throwOnError: false,
+	});
+
+	const columns = [
+		...baseColumns,
+		columnHelper.accessor("confirmed", {
+			header: t("admin:room_bookings.confirmed"),
+			cell: (info) => {
+				if (info.getValue()) return t("admin:yes");
+				if (!canConfirm) return t("admin:no");
+				return (
+					<Button
+						variant="outline"
+						size="sm"
+						className="border-yellow-500 text-yellow-700 bg-yellow-50"
+						disabled={confirmBooking.isPending}
+						onClick={(e) => {
+							// Don't open the edit dialog
+							e.stopPropagation();
+							confirmBooking.mutate({
+								path: { booking_id: info.row.original.id },
+							});
+						}}
+					>
+						<Check />
+						{t("admin:room_bookings.confirm")}
+					</Button>
+				);
+			},
+		}),
+	];
+
+	const tableData = useMemo(() => {
+		if (!data) return [];
+		if (showOnlyUnconfirmed) {
+			return (data as RoomBookingRead[]).filter((b) => !b.confirmed);
+		}
+		return data as RoomBookingRead[];
+	}, [data, showOnlyUnconfirmed]);
+
+	const table = useCreateTable({ data: tableData, columns });
 
 	function handleRowClick(row: Row<RoomBookingRead>) {
+		// Only room booking managers are allowed to edit bookings
+		if (!canManageBookings) return;
 		setSelectedRoomBooking(row.original);
 		setOpenEditDialog(true);
 	}
@@ -177,6 +259,7 @@ export default function RoomBookings() {
 		council_id: number;
 		council_name_sv: string;
 		council_name_en: string;
+		confirmed: boolean;
 	}
 
 	// Map fetched bookings to calendar events
@@ -194,6 +277,9 @@ export default function RoomBookings() {
 			end: booking.end_time,
 			description_sv: booking.description,
 			description_en: booking.description,
+			confirmed: booking.confirmed,
+			// Yellow for bookings that still need to be confirmed
+			backgroundColor: booking.confirmed ? undefined : "#e6e600",
 		})) ?? [];
 
 	// Handler for when calendar date range changes
@@ -330,7 +416,17 @@ export default function RoomBookings() {
 										router.push(`/room-bookings/details?id=${event.id}`);
 									}
 								}}
-								disableEdit={false}
+								handleConfirm={
+									canConfirm
+										? (event) => {
+												if (!event?.id) return;
+												confirmBooking.mutate({
+													path: { booking_id: Number(event.id) },
+												});
+											}
+										: null
+								}
+								disableEdit={!canManageBookings}
 								enableAllDay={false}
 								enableRoomBookingProperties={true}
 								defaultRoom={selectedRoom === "All" ? undefined : selectedRoom}
@@ -352,9 +448,19 @@ export default function RoomBookings() {
 									{t("admin:room_bookings.list_description")}
 								</p>
 							</div>
-							<RoomBookingForm
-								defaultRoom={selectedRoom === "All" ? "LC" : selectedRoom}
-							/>
+							{canManageBookings && (
+								<RoomBookingForm
+									defaultRoom={selectedRoom === "All" ? "LC" : selectedRoom}
+								/>
+							)}
+							<Button
+								variant="outline"
+								onClick={() => setShowOnlyUnconfirmed((v) => !v)}
+							>
+								{showOnlyUnconfirmed
+									? t("admin:room_bookings.show_all_bookings")
+									: t("admin:room_bookings.show_only_unconfirmed")}
+							</Button>
 							<Separator />
 							<AdminTable table={table} onRowClick={handleRowClick} />
 							<RoomBookingEditForm
